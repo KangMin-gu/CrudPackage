@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="email">
+
+    <!-- 발송코드변경 -->
+     <update id="sendstate" parameterType="saas.crud.crm.email.dto.EmailDto">
+        UPDATE TB150020 SET RLTCODE = #{rltcode} WHERE EMAILLOGID = #{emaillogid};
+     </update>
+
+    <!--예약 / 다이렉트 전부가져오기 -->
+    <select id="allTarget" parameterType="saas.crud.crm.email.dto.EmailDto" resultType="hashMap">
+       SELECT TOP 300 * FROM TB150020 WHERE CONVERT(DATE, #{today}) = CONVERT(DATE, SENDDATETIME) AND RLTCODE = 10;
+    </select>
+
+</mapper>

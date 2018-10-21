@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task.xsd">
+
+		
+		<!-- md5 암복호화 설정 -->
+		<beans:bean id="environmentVariablesConfiguration"
+			class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+			<beans:property name="algorithm" value="PBEWithMD5AndDES" />
+			<beans:property name="passwordEnvName"
+				value="APP_ENCRYPTION_PASSWORD" />
+		</beans:bean>
+		<beans:bean id="configurationEncryptor"
+			class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+			<beans:property name="config"
+				ref="environmentVariablesConfiguration" />
+			<beans:property name="password" value="jasyptPass" />
+		</beans:bean>
+		<beans:bean id="propertyConfig" class="org.jasypt.spring3.properties.EncryptablePropertyPlaceholderConfigurer">
+			<beans:constructor-arg ref="configurationEncryptor" />
+			<beans:property name="locations">
+				<beans:list>
+					<beans:value>/WEB-INF/crud/properties/db.properties</beans:value>
+				</beans:list>
+			</beans:property>
+		</beans:bean>
+
+
+		<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<beans:property name="location">
+				<beans:value>/WEB-INF/crud/properties/db.properties</beans:value>
+			</beans:property>
+		</beans:bean>
+		
+		<!--  DB 및 sqlsession 설정 --> 
+		<beans:bean  id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+			<beans:property name="driverClass" value="${jdbc.driver}"/>
+			<beans:property name="url" value="${jdbc.url}"/>
+			<beans:property name="username" value="${jdbc.username}"/>
+			<beans:property name="password" value="${jdbc.password}"/>
+		</beans:bean>
+		
+			
+		<beans:bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<beans:property name="dataSource" ref="dataSource"/>
+			<beans:property name="configLocation" value="classpath:DB/mssql/Configuration.xml"/>
+ 		</beans:bean>
+
+		<beans:bean class="org.mybatis.spring.SqlSessionTemplate"> 
+			<beans:constructor-arg name="sqlSessionFactory" ref="sessionFactory"/>
+		</beans:bean>
+ 
+		<!--message.properties 다국어 기본 설정 idea-root.xml 참조 -->	    
+	    <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	        <beans:property name="defaultLocale" value="ko"/>
+	    </beans:bean>
+	    
+	   	<interceptors>
+	        <beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	            <beans:property name="paramName" value="lang"/>
+	        </beans:bean>
+	    </interceptors>
+	       
+	    
+	<!--cache설정 -->
+	<cache:annotation-driven cache-manager="cacheManager" />
+	<beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+	    <beans:property name="cacheManager">
+	        <beans:bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+	            <beans:property name="configLocation" value="/WEB-INF/crud/crud-ehcache.xml" />
+	            <beans:property name="shared" value="true" />
+	        </beans:bean>
+	    </beans:property>
+	</beans:bean>
+	
+
+	<!-- 어노테이션 설정 -->
+	<annotation-driven />
+	<cache:annotation-driven />
+	<default-servlet-handler/>
+	<task:annotation-driven />
+	<aop:aspectj-autoproxy/>
+	
+	<resources mapping="/resources/**" location="/resources/" />
+	
+	
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	
+	<context:component-scan base-package="saas.crud.crm.home.*" />
+	<context:component-scan base-package="saas.crud.crm.util" />
+	<context:component-scan base-package="saas.crud.crm.aspect" />
+	<context:component-scan base-package="saas.crud.crm.vc.*" />
+	
+	
+</beans:beans>

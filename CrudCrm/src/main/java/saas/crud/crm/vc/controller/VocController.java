@@ -17,13 +17,13 @@ public class VocController {
 	@Autowired
 	private VocService vcService;
 
-	@RequestMapping(value="/voc", method=RequestMethod.GET)
+	@RequestMapping(value="vc/voc", method=RequestMethod.GET)
 	public String vocPage() {
 		
 		return "vc/voc";
 	}
 	
-	@RequestMapping(value="/satis", method=RequestMethod.GET)
+	@RequestMapping(value="vc/satis", method=RequestMethod.GET)
 	public String vocSatis() {
 		
 		return "vc/satis";

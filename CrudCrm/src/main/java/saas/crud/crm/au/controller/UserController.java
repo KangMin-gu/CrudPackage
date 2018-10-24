@@ -1,0 +1,54 @@
+package saas.crud.crm.au.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.service.UserService;
+
+@Controller
+public class UserController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@Autowired
+	private UserService urService;
+	
+	//로그인폼요청
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public ModelAndView loginForm(HttpServletRequest request, @ModelAttribute ModelAndView mView) {
+		
+		String url=request.getParameter("url");
+		if(url==null){
+			url=request.getContextPath()+"/";
+		}
+		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고 
+		mView.addObject("url", url);
+		mView.setViewName("au/login");
+		
+		return mView;
+	}
+	
+	//로그인 요청
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public ModelAndView login(HttpServletRequest request, @ModelAttribute UserDto urDto) {
+		ModelAndView mView = urService.login(request, urDto);
+		mView.setViewName("au/loginResult");
+		return mView;
+	}
+	
+	//로그아웃
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "redirect:/";
+	}
+}

@@ -110,7 +110,7 @@
 							</ul></li>
 
 
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>
+						<li><a href="${pageContext.request.contextPath}/logout"> <i class="fa fa-sign-out"></i>
 								로그아웃
 						</a></li>
 					<!--	right sidebar 추후 추가기능

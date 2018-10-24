@@ -108,10 +108,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	
-	<context:component-scan base-package="saas.crud.crm.home.*" />
 	<context:component-scan base-package="saas.crud.crm.util" />
 	<context:component-scan base-package="saas.crud.crm.aspect" />
+	
+	<context:component-scan base-package="saas.crud.crm.home.*" />
+	<context:component-scan base-package="saas.crud.crm.au.*" />
 	<context:component-scan base-package="saas.crud.crm.vc.*" />
 	
 	

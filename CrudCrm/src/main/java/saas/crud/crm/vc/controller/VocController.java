@@ -22,5 +22,11 @@ public class VocController {
 		
 		return "vc/voc";
 	}
+	
+	@RequestMapping(value="/satis", method=RequestMethod.GET)
+	public String vocSatis() {
+		
+		return "vc/satis";
+	}
 
 }

@@ -23,8 +23,8 @@
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
-	${requestScope [ 'javax.servlet.forward.servlet_path']}
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
+
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Basic Form</h2>
@@ -45,8 +45,10 @@
                 </div>
             </div>		
 		
+		
 <!-- Content -->		
 			<div class="wrapper wrapper-content animated fadeIn">
+			
 				
 			</div>
 <!-- Content End -->

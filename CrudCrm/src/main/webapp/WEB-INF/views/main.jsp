@@ -19,51 +19,11 @@
 <body>
 	<div id="wrapper">
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-		
-				<li class="active">
-                   <a href="${pageContext.request.contextPath}/"><i class="fa fa-th-large"></i> <span class="nav-label">메인</span></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">고객관리</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>                        
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">서비스관리</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>                      
-                    </ul>
-                </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/voc"><i class="fa fa-phone"></i> <span class="nav-label">VOC</span></a>                 
-                </li>
-                <li >
-                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">리포트</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>    
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>
-                    </ul>
-                </li>
-             </ul>
-        </div>
-    </nav>
-    
     
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-		
+	 ${pageContext.request.contextPath} 
+
 			<div class="wrapper wrapper-content animated fadeIn">
 				<div class="p-w-md m-t-sm">
 					<div class="row">

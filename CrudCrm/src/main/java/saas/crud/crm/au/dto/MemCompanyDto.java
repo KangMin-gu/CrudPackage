@@ -1,5 +1,7 @@
 package saas.crud.crm.au.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemCompanyDto {
 	
 	private int SITEID; //사이트 ID PK
@@ -22,7 +24,7 @@ public class MemCompanyDto {
 	private String MOBILE3; //휴대폰3
 	private String EMAIL; //이메일
 	private String STIEMEMO; //사이트메모
-	private String SITELOGO; //사이트로고
+	private MultipartFile SITELOGO; //사이트로고
 	private String BSCOND; //업종
 	private String COTYPE; //업태
 	private String BSTYPE; //종목
@@ -38,7 +40,7 @@ public class MemCompanyDto {
 	public MemCompanyDto(int sITEID, String sITENAME, String bSNO, String iNCNO, int zIPCODE, String uPRADDRESS,
 			String lWRADDRESS, String fREGDATE, String eXPIRDATE, String tELNO1, String tELNO2, String tELNO3,
 			String fAXTEL1, String fAXTEL2, String fAXTEL3, String mOBILE1, String mOBILE2, String mOBILE3,
-			String eMAIL, String sTIEMEMO, String sITELOGO, String bSCOND, String cOTYPE, String bSTYPE,
+			String eMAIL, String sTIEMEMO, MultipartFile sITELOGO, String bSCOND, String cOTYPE, String bSTYPE,
 			String cTIADDRESS, String sWITCHTEL, String rEGDATE, String rEGUSER, String eDTDATE, String eDTUSER) {
 		super();
 		SITEID = sITEID;
@@ -233,11 +235,11 @@ public class MemCompanyDto {
 		STIEMEMO = sTIEMEMO;
 	}
 
-	public String getSITELOGO() {
+	public MultipartFile getSITELOGO() {
 		return SITELOGO;
 	}
 
-	public void setSITELOGO(String sITELOGO) {
+	public void setSITELOGO(MultipartFile sITELOGO) {
 		SITELOGO = sITELOGO;
 	}
 
@@ -313,5 +315,6 @@ public class MemCompanyDto {
 		EDTUSER = eDTUSER;
 	}
 
+	
 	
 }

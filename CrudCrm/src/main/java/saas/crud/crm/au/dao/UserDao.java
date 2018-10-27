@@ -1,7 +1,10 @@
 package saas.crud.crm.au.dao;
 
-import saas.crud.crm.au.dto.UserDto;
+import java.util.List;
+import java.util.Map;
+
 
 public interface UserDao {
-	public UserDto getData(String userId);
+	public Map<String, Object> getData(String userId);
+	public List<Map<String,String>> getMenu(String userId); 
 }

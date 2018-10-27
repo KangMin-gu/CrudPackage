@@ -1,6 +1,7 @@
 package saas.crud.crm.au.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +40,8 @@ public class UserController {
 	
 	//로그인 요청
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public ModelAndView login(HttpServletRequest request, @ModelAttribute UserDto urDto) {
-		ModelAndView mView = urService.login(request, urDto);
-		mView.setViewName("au/loginResult");
-		return mView;
+	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {
+		 urService.login(response, request, urDto);
 	}
 	
 	//로그아웃

@@ -1,6 +1,12 @@
 package saas.crud.crm.au.service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +26,16 @@ public class UserServiceImpl implements UserService{
 	private PasswordEncoder encoder;
 	
 	@Override
-	public ModelAndView login(HttpServletRequest request, UserDto urDto) {
+	public ModelAndView login(HttpServletResponse response, HttpServletRequest request, UserDto urDto) {
 		
-		UserDto resultDto = urDao.getData(urDto.getUSERID());
+		Map<String, Object> urInfo = urDao.getData(urDto.getUSERID());
 		String pwd = urDto.getUSERPASSWORD();
 		
 		boolean isValid = false;
 		
-		if(resultDto != null) {
-			//boolean isMatch=encoder.matches(urDto.getUSERPASSWORD(), resultDto.getUSERPASSWORD());
-			boolean isMatch = pwd.equals(resultDto.getUSERPASSWORD());
+		if(urInfo != null) {
+			//boolean isMatch=encoder.matches(urDto.getUSERPASSWORD(), urInfo.get("USERPASSWORD"));
+			boolean isMatch = pwd.equals(urInfo.get("USERPASSWORD"));
 			if(isMatch) {
 				isValid = true;
 			}
@@ -37,22 +43,85 @@ public class UserServiceImpl implements UserService{
 		
 		ModelAndView mView = new ModelAndView();
 		String url=request.getParameter("url");
-				
-		if(isValid){	
-			//세션 등록 
-			request.getSession().setAttribute("USERID", resultDto.getUSERID()); //사용자아이디
-			request.getSession().setAttribute("USERNAME", resultDto.getUSERNAME()); //사용자이름
-			request.getSession().setAttribute("USERNO", resultDto.getUSERNO()); //사용자 PK
-			request.getSession().setAttribute("SITEID", resultDto.getSITEID()); //사용자 사이트번호
-			request.getSession().setAttribute("USERLANG", resultDto.getUSERLANG()); //사용자 언어
-			request.getSession().setAttribute("CHK_AUTH", resultDto.getCHK_AUTH()); //사용자 권한
+		StringBuffer buf = new StringBuffer();
+		
+		if(isValid){
 			
-			mView.addObject("msg", resultDto.getUSERID()+" 님 로그인 되었습니다.");
-			mView.addObject("url", url);
+			List<Map<String,String>> urMenu = urDao.getMenu(urDto.getUSERID());
+			
+			
+		
+			for(int i=0; i<urMenu.size(); i++) {	
+				
+				String menVal = urMenu.get(i).get("MENUVAL");
+				//메뉴 코드 세션 분기처리
+				if(menVal.equals("10000")) {
+					request.getSession().setAttribute("cm", menVal);
+				}else if(menVal.equals("20000")) {
+					request.getSession().setAttribute("sa", menVal);
+				}else if(menVal.equals("30000")) {
+					request.getSession().setAttribute("sv", menVal);
+				}else if(menVal.equals("40000")) {
+					request.getSession().setAttribute("cp", menVal);
+				}else if(menVal.equals("50000")) {
+					request.getSession().setAttribute("vc", menVal);
+				}else if(menVal.equals("60000")) {
+					request.getSession().setAttribute("rp", menVal);
+				}else if(menVal.equals("90000")) {
+					request.getSession().setAttribute("au", menVal);
+				}
+
+			}
+			
+			//사용자정보 세션 등록 
+			request.getSession().setAttribute("USERID", urInfo.get("USERID")); //사용자아이디
+			request.getSession().setAttribute("USERNAME", urInfo.get("USERNAME")); //사용자이름
+			request.getSession().setAttribute("USERNO", urInfo.get("USERNO")); //사용자 PK
+			request.getSession().setAttribute("SITEID", urInfo.get("SITEID")); //사용자 사이트번호
+			request.getSession().setAttribute("SITENAME", urInfo.get("SITENAME")); //사용자 언어
+			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
+			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
+			
+			
+			
+			if(url != null) {
+				buf.append("<script>alert('환영합니다.'); location.href='");
+			 	buf.append(url);
+			 	buf.append("';</script>");
+			}else {
+				buf.append("<script>alert('환영합니다.'); location.href='/';</script>");
+			}
+			 		
+			response.setContentType("text/html; charset=UTF-8");
+				 
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println(buf);					 
+				out.flush();
+			} catch (IOException e) {					
+				e.printStackTrace();
+			}
+				
 		}else{//아이디 혹은 비밀번호가 틀린 경우 
-			mView.addObject("msg", "아이디 혹은 비밀번호가 틀려요");
-			String location=request.getContextPath();
-			mView.addObject("url", location);		
+			//추후 contextPath 를 쓸지 requestURI 를쓸지 세션로그아웃시 있던페이지로가는 URL 체크해야함.
+			//String location=request.getContextPath();
+			String location=request.getRequestURI();
+			
+			buf.append("<script>alert('아이디 혹은 비밀번호가 틀립니다.'); location.href='");
+		 	buf.append(location);
+		 	buf.append("';</script>");
+		 	
+		 	response.setContentType("text/html; charset=UTF-8");
+			 
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println(buf);					 
+				out.flush();
+			} catch (IOException e) {					
+				e.printStackTrace();
+			}
 		}
 				
 		return mView;

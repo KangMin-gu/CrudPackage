@@ -1,5 +1,8 @@
 package saas.crud.crm.au.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,10 +16,19 @@ public class UserDaoImpl implements UserDao{
 	private SqlSession session;
 	
 	@Override
-	public UserDto getData(String userId) {
-		UserDto urDto = session.selectOne("idCheck", userId);
+	public Map<String, Object> getData(String userId) {
 		
-		return urDto;
+		Map<String, Object> urInfo= session.selectOne("user.idCheck", userId);
+		
+		return urInfo;
+	}
+
+	@Override
+	public List<Map<String,String>> getMenu(String userId) {
+		
+		List<Map<String,String>> urMenu = session.selectList("user.urMenu", userId);
+		
+		return urMenu;
 	}
 	
 }

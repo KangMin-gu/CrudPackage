@@ -34,6 +34,8 @@ public class MemCompanyDto {
 	private String REGUSER; //등록자
 	private String EDTDATE; //수정일시
 	private String EDTUSER; //수정자
+	private String CALLNAME; //회사약어
+	private String SITESIZE; //회사규모
 	
 	public MemCompanyDto() {}
 
@@ -41,7 +43,8 @@ public class MemCompanyDto {
 			String lWRADDRESS, String fREGDATE, String eXPIRDATE, String tELNO1, String tELNO2, String tELNO3,
 			String fAXTEL1, String fAXTEL2, String fAXTEL3, String mOBILE1, String mOBILE2, String mOBILE3,
 			String eMAIL, String sTIEMEMO, MultipartFile sITELOGO, String bSCOND, String cOTYPE, String bSTYPE,
-			String cTIADDRESS, String sWITCHTEL, String rEGDATE, String rEGUSER, String eDTDATE, String eDTUSER) {
+			String cTIADDRESS, String sWITCHTEL, String rEGDATE, String rEGUSER, String eDTDATE, String eDTUSER,
+			String cALLNAME, String sITESIZE) {
 		super();
 		SITEID = sITEID;
 		SITENAME = sITENAME;
@@ -73,6 +76,8 @@ public class MemCompanyDto {
 		REGUSER = rEGUSER;
 		EDTDATE = eDTDATE;
 		EDTUSER = eDTUSER;
+		CALLNAME = cALLNAME;
+		SITESIZE = sITESIZE;
 	}
 
 	public int getSITEID() {
@@ -315,6 +320,21 @@ public class MemCompanyDto {
 		EDTUSER = eDTUSER;
 	}
 
-	
+	public String getCALLNAME() {
+		return CALLNAME;
+	}
+
+	public void setCALLNAME(String cALLNAME) {
+		CALLNAME = cALLNAME;
+	}
+
+	public String getSITESIZE() {
+		return SITESIZE;
+	}
+
+	public void setSITESIZE(String sITESIZE) {
+		SITESIZE = sITESIZE;
+	}
+
 	
 }

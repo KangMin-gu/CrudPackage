@@ -141,6 +141,6 @@
 	<context:component-scan base-package="saas.crud.crm.home.*" />
 	<context:component-scan base-package="saas.crud.crm.au.*" />
 	<context:component-scan base-package="saas.crud.crm.vc.*" />
-	
+	<context:component-scan base-package="saas.crud.crm.nt.*" />
 	
 </beans:beans>

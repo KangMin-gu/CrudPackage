@@ -25,7 +25,7 @@
 	
 			<div class="wrapper wrapper-content animated fadeIn">
 				<div class="p-w-md m-t-sm">
-					<div class="row">
+					<div class="row">					
 						<div class="col-sm-4">
 							<h1 class="m-b-xs">26,900</h1>
 							<small> Sales in current month </small>

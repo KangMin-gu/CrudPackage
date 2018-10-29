@@ -78,18 +78,19 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("USERNAME", urInfo.get("USERNAME")); //사용자이름
 			request.getSession().setAttribute("USERNO", urInfo.get("USERNO")); //사용자 PK
 			request.getSession().setAttribute("SITEID", urInfo.get("SITEID")); //사용자 사이트번호
-			request.getSession().setAttribute("SITENAME", urInfo.get("SITENAME")); //사용자 언어
+			request.getSession().setAttribute("SITENAME", urInfo.get("SITENAME")); //사이트 이름
+			request.getSession().setAttribute("CALLNAME", urInfo.get("CALLNAME")); //사이트 약어
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
 			
 			
 			
 			if(url != null) {
-				buf.append("<script>alert('환영합니다.'); location.href='");
+				buf.append("<script>location.href='");
 			 	buf.append(url);
 			 	buf.append("';</script>");
 			}else {
-				buf.append("<script>alert('환영합니다.'); location.href='/';</script>");
+				buf.append("<script>location.href='/';</script>");
 			}
 			 		
 			response.setContentType("text/html; charset=UTF-8");
@@ -99,7 +100,8 @@ public class UserServiceImpl implements UserService{
 				out = response.getWriter();
 				out.println(buf);					 
 				out.flush();
-			} catch (IOException e) {					
+			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 				

@@ -20,13 +20,13 @@
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="dropdown-item" href="profile.html">내 정보</a></li>
-                            <li><a class="dropdown-item" href="mailbox.html">내부통지</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/note/inbox">내부통지</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
-                        <a href="${pageContext.request.contextPath}/">CRUD</a>
+                        <a href="${pageContext.request.contextPath}/">${CALLNAME }</a>
                     </div>
                 </li>
  	
@@ -111,31 +111,32 @@
                 </c:if>
                 
                
-            	<c:if test="${au  eq '90000' }">
-	                <c:if test="${CHK_AUTH eq '20' || CHK_AUTH eq '30'}">
-		                <li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ad' }"> class="active"</c:if>>
-		                    <a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
-		                    <ul class="nav nav-second-level collapse">
-		                        <li><a href="form_basic.html">회원 관리</a></li>
-		                        <li><a href="form_basic.html">회원사 코드관리</a></li>
-		                        <li><a href="form_basic.html">회원사 관리</a></li>
-		                        <li><a href="form_basic.html">서비스 관리</a></li>
-		                        <li><a href="form_basic.html">VOC 관리</a></li>
-		                    </ul>
-		                </li>
-	                </c:if>
-                </c:if>		
+	            <c:if test="${au  eq '90000' }">
+		           <c:if test="${CHK_AUTH eq '20' || CHK_AUTH eq '30'}">
+			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ad' }"> class="active"</c:if>>
+			       			<a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
+			       			<ul class="nav nav-second-level collapse">
+			       				<li><a href="form_basic.html">회원 관리</a></li>
+			       				<li><a href="form_basic.html">회원사 코드관리</a></li>
+			       				<li><a href="form_basic.html">회원사 관리</a></li>
+			       				<li><a href="form_basic.html">서비스 관리</a></li>
+			       				<li><a href="form_basic.html">VOC 관리</a></li>
+			       			</ul>
+			       		</li>
+		         	</c:if>
+              	
                 		
-	            <c:if test="${CHK_AUTH eq '30'}">
-		           <li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ma' }"> class="active"</c:if>>
-		              <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
-		              <ul class="nav nav-second-level collapse">
-		                 <li><a href="form_basic.html">회원사 관리</a></li>
-		                 <li><a href="form_basic.html">공통코드</a></li>
-		                 <li><a href="form_basic.html">라이센스 관리</a></li>
-		              </ul>
-		            </li>
-	            </c:if>
+		         	<c:if test="${CHK_AUTH eq '30'}">
+			        	<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ma' }"> class="active"</c:if>>
+			          	 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
+			          	 <ul class="nav nav-second-level collapse">
+							<li><a href="form_basic.html">회원사 관리</a></li>
+							<li><a href="form_basic.html">공통코드</a></li>
+							<li><a href="form_basic.html">라이센스 관리</a></li>
+						</ul>
+			        	</li>
+		         	</c:if>
+	       		 </c:if>	
              </ul>
         </div>
     </nav>

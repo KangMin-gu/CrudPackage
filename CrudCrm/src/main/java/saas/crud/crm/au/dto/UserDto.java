@@ -23,7 +23,7 @@ public class UserDto {
 	private int CTIID; //CTI ID
 	private String CTIPASS; //CTI PASSWORD
 	private String PWDCHANGEDATE; //비밀번호 변경일시
-	private int ISDELETED; //사용여부 0 / 1
+	private int ISDELETE; //사용여부 0 / 1
 	private String REGDATE; //등록일시
 	private int REGUSER; //등록자 
 	private String EDTDATE; //수정일시
@@ -34,7 +34,7 @@ public class UserDto {
 	public UserDto(int uSERNO, int sITEID, String uSERID, String uSERNAME, String uSERPASSWORD, String uSERDESC,
 			String eMAIL, int dEPTID, int cHK_AUTH, String eNTERDATE, String uSERLANG, String mOBILE1, String mOBILE2,
 			String mOBILE3, String tELNO1, String tELNO2, String tELNO3, String uSERDUTY, int cTIID, String cTIPASS,
-			String pWDCHANGEDATE, int iSDELETED, String rEGDATE, int rEGUSER, String eDTDATE, int eDTUSER) {
+			String pWDCHANGEDATE, int iSDELETE, String rEGDATE, int rEGUSER, String eDTDATE, int eDTUSER) {
 		super();
 		USERNO = uSERNO;
 		SITEID = sITEID;
@@ -57,7 +57,7 @@ public class UserDto {
 		CTIID = cTIID;
 		CTIPASS = cTIPASS;
 		PWDCHANGEDATE = pWDCHANGEDATE;
-		ISDELETED = iSDELETED;
+		ISDELETE = iSDELETE;
 		REGDATE = rEGDATE;
 		REGUSER = rEGUSER;
 		EDTDATE = eDTDATE;
@@ -232,12 +232,12 @@ public class UserDto {
 		PWDCHANGEDATE = pWDCHANGEDATE;
 	}
 
-	public int getISDELETED() {
-		return ISDELETED;
+	public int getISDELETE() {
+		return ISDELETE;
 	}
 
-	public void setISDELETED(int iSDELETED) {
-		ISDELETED = iSDELETED;
+	public void setISDELETE(int iSDELETE) {
+		ISDELETE = iSDELETE;
 	}
 
 	public String getREGDATE() {
@@ -271,5 +271,7 @@ public class UserDto {
 	public void setEDTUSER(int eDTUSER) {
 		EDTUSER = eDTUSER;
 	}
+
+	
 	
 }

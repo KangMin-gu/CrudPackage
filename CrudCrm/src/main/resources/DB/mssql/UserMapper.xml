@@ -3,7 +3,8 @@
 <mapper namespace="user">
 
     <select id="idCheck" parameterType="String" resultType="hashMap">
-     	SELECT *, B.SITENAME AS SITENAME FROM TB980010 AS A
+     	SELECT *
+     	FROM TB980010 AS A
 		INNER JOIN TB980070 AS B ON A.SITEID = B.SITEID
 		WHERE USERID = #{userid}
     </select>

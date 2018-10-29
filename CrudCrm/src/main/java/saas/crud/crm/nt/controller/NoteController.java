@@ -1,5 +1,7 @@
 package saas.crud.crm.nt.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.nt.dto.NoteDto;
 import saas.crud.crm.nt.service.NoteService;
 
 @Controller
@@ -23,7 +26,7 @@ public class NoteController {
 	//받은 통지
 	@RequestMapping(value="/note/inbox", method=RequestMethod.GET)
 	public ModelAndView noteInbox(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
+		ModelAndView mView = ntService.noteInbox(request);
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -49,6 +52,22 @@ public class NoteController {
 	public ModelAndView noteOutDetail(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("nt/notedetail");
+		return mView;
+	}
+	
+	//받은 중요통지함
+	@RequestMapping(value="/note/import", method=RequestMethod.GET)
+	public ModelAndView noteImport(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("nt/notelist");
+		return mView;
+	}
+	
+	//받은 중요통지상세
+	@RequestMapping(value="/note/import/{noticeid}", method=RequestMethod.GET)
+	public ModelAndView noteImportDetail(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("nt/notelist");
 		return mView;
 	}
 	

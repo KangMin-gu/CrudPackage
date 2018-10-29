@@ -15,89 +15,78 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 </head>
 
 <body>
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-		       <li>
-                   <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">메인</span></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">고객관리</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>                        
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">서비스관리</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>                      
-                    </ul>
-                </li>
-                <li class="active">
-                    <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">VOC</span></a>                 
-                </li>
-                <li >
-                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">리포트</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>    
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="form_basic.html">Basic form</a></li>
-                    </ul>
-                </li>
-             </ul>
-        </div>
-    </nav>
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
-		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Basic Form</h2>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a>Forms</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <strong>Basic Form</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-            </div>		
-		
-		
+		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>           				
 <!-- Content -->		
-			<div class="wrapper wrapper-content animated fadeIn">
-			
-				
-			</div>
+			<div class="wrapper wrapper-content">
+        	<div class="row">
+	            <div class="col-lg-2">
+	                <%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
+	            </div>
+            <div class="col-lg-10 animated fadeInRight">
+	            <div class="mail-box-header">
+	                <h2>
+	                    ${CALLNAME }
+	                </h2>
+	            </div>
+	            <form:form action="" method="post">
+	                <div class="mail-box">
+		                <div class="mail-body">		                    
+		                        <div class="form-group row">
+		                        	<label class="col-sm-2 col-form-label">받는이:</label>
+		                            <div class="col-sm-10">
+		                            	<input type="text" class="form-control">
+		                            </div>
+		                        </div>
+		                        <div class="form-group row">
+		                        	<label class="col-sm-2 col-form-label">참조:</label>
+		                            <div class="col-sm-10">
+		                            	<input type="text" class="form-control">
+		                            </div>
+		                        </div>
+		                        <div class="form-group row">
+		                        	<label class="col-sm-2 col-form-label">제목:</label>
+		                            <div class="col-sm-10">
+		                            	<input type="text" class="form-control" value="">
+		                            </div>
+		                        </div>
+		                        <div class="form-group row">
+		                        	<label class="col-sm-2 col-form-label">첨부파일:</label>
+		                            <div class="col-sm-10">
+		                            	<input type="text" class="form-control" value="">
+		                            </div>
+		                        </div>	                 
+		                </div>
+		                <div class="mail-text h-200">
+			                <div class="summernote" style="height:100px;"></div>
+							<div class="clearfix"></div>
+		                </div>                
+		                <div class="mail-body text-right tooltip-demo">
+		                        <a href="mailbox.html" class="btn btn-sm btn-primary" data-toggle="tooltip"><i class="fa fa-reply"></i> 발송</a>
+		                        <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>	                        
+		                </div>
+		                <div class="clearfix"></div>		                
+		               </div>
+	              </form:form>   
+            	</div>
+        	</div>
+        </div>
 <!-- Content End -->
-
-			
+	
 <!-- foot -->
 			<div class="footer">
 				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
 			</div>
 		</div>
+		
 <!-- right side -->
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
@@ -105,7 +94,13 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>				
-
+<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>				
+<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
+<script>
+	$(document).ready(function() {
+		$('.summernote').summernote();	
+		$('.note-editable').css('height','300px');
+	});
+</script>
 </body>
 </html>

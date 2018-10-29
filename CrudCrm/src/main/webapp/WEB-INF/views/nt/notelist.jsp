@@ -32,31 +32,7 @@
 			      <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-2">
-                <div class="ibox ">
-                    <div class="ibox-content mailbox-content">
-                        <div class="file-manager">
-                            <a class="btn btn-block btn-primary compose-mail" href="mail_compose.html">통지 쓰기</a>
-                            <div class="space-25"></div>
-                            <h5>Folders</h5>
-                            <ul class="folder-list m-b-md" style="padding: 0">
-                                <li><a href="${pageContext.request.contextPath}/note/inbox"> <i class="fa fa-inbox "></i> 받은 통지함 <span class="label label-warning float-right">16</span> </a></li>
-                                <li><a href="${pageContext.request.contextPath}/note/outbox"> <i class="fa fa-envelope-o"></i> 보낸 통지함</a></li>
-                                <li><a href="${pageContext.request.contextPath}/note/import"> <i class="fa fa-certificate"></i> 중요 통지함 <span class="label label-danger float-right">2</span></a></li>   
-                                <li><a href="${pageContext.request.contextPath}/note/trush"> <i class="fa fa-trash-o"></i> 휴지통</a></li>                             
-                                <li><a href="${pageContext.request.contextPath}/note/set"> <i class="fa fa-cog"></i>카테고리 설정</a></li>                               
-                            </ul>
-                            <h5>Categories</h5>
-                            <ul class="category-list" style="padding: 0">
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Work </a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Documents</a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Social</a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Advertising</a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Clients</a></li>
-                            </ul>	                      
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
+                <%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
             </div>
             <div class="col-lg-10 animated fadeInRight">
             <div class="mail-box-header">
@@ -287,13 +263,13 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>		
-  <script>
+<script>
         $(document).ready(function(){
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
         });
-  </script>
+</script>
 </body>
 </html>

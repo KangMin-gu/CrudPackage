@@ -110,9 +110,9 @@
 	                </li>
                 </c:if>
                 
-               
+       
 	            <c:if test="${au  eq '90000' }">
-		           <c:if test="${CHK_AUTH eq '20' || CHK_AUTH eq '30'}">
+		           <c:if test="${CHKAUTH eq '20' || CHKAUTH eq '30'}">
 			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ad' }"> class="active"</c:if>>
 			       			<a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
 			       			<ul class="nav nav-second-level collapse">
@@ -126,7 +126,7 @@
 		         	</c:if>
               	
                 		
-		         	<c:if test="${CHK_AUTH eq '30'}">
+		         	<c:if test="${CHKAUTH eq '30'}">
 			        	<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ma' }"> class="active"</c:if>>
 			          	 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
 			          	 <ul class="nav nav-second-level collapse">

@@ -5,8 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoteDto {
 	
 	private int NOTICEID; //내부통지번호
-	private String TOUSERID; //보내는이
-	private String CCUSERID; //참조
+	private String TOUSERNO; //보내는이
+	private String CCUSERNO; //참조
 	private String LNKURL; //링크
 	private int NTCWAYEMAIL; //통지매체 email 
 	private int NTCWAYSMS; //통지매체 sms 
@@ -29,14 +29,14 @@ public class NoteDto {
 	
 	public NoteDto () {}
 
-	public NoteDto(int nOTICEID, String tOUSERID, String cCUSERID, String lNKURL, int nTCWAYEMAIL, int nTCWAYSMS,
+	public NoteDto(int nOTICEID, String tOUSERNO, String cCUSERNO, String lNKURL, int nTCWAYEMAIL, int nTCWAYSMS,
 			int cHKRLTCODE, String cHKRLTDATE, int rEADCHEK, String rEADDATE, String eMAIL, String mOBILE1,
 			String mOBILE2, String mOBILE3, String tITLE, String cONTENTS, String rEGDATE, int rEGUSER, int iSDELETE,
 			int sITEID, int iMPORTANT, MultipartFile fILEPATH) {
 		super();
 		NOTICEID = nOTICEID;
-		TOUSERID = tOUSERID;
-		CCUSERID = cCUSERID;
+		TOUSERNO = tOUSERNO;
+		CCUSERNO = cCUSERNO;
 		LNKURL = lNKURL;
 		NTCWAYEMAIL = nTCWAYEMAIL;
 		NTCWAYSMS = nTCWAYSMS;
@@ -66,20 +66,20 @@ public class NoteDto {
 		NOTICEID = nOTICEID;
 	}
 
-	public String getTOUSERID() {
-		return TOUSERID;
+	public String getTOUSERNO() {
+		return TOUSERNO;
 	}
 
-	public void setTOUSERID(String tOUSERID) {
-		TOUSERID = tOUSERID;
+	public void setTOUSERNO(String tOUSERNO) {
+		TOUSERNO = tOUSERNO;
 	}
 
-	public String getCCUSERID() {
-		return CCUSERID;
+	public String getCCUSERNO() {
+		return CCUSERNO;
 	}
 
-	public void setCCUSERID(String cCUSERID) {
-		CCUSERID = cCUSERID;
+	public void setCCUSERNO(String cCUSERNO) {
+		CCUSERNO = cCUSERNO;
 	}
 
 	public String getLNKURL() {

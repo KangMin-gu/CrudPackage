@@ -1,5 +1,9 @@
 package saas.crud.crm.nt.service;
 
-public interface NoteService {
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.servlet.ModelAndView;
+
+public interface NoteService {
+	public ModelAndView noteInbox(HttpServletRequest request);
 }

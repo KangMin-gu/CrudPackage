@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PagingCommon {
 	
-	private static final int PAGE_ROW_COUNT=10;
-	private static final int PAGE_DISPLAY_COUNT=10;
+	//private int PAGE_ROW_COUNT=10;
+	//private int PAGE_DISPLAY_COUNT=10;
 	
 	//리스트 형식 페이징처리 공통모듈 
-	public Map<String, Integer> paging(HttpServletRequest request, int totalRows) {
+	public Map<String, Integer> paging(HttpServletRequest request, int totalRows, int PAGE_ROW_COUNT, int PAGE_DISPLAY_COUNT) {
+		
 		/*
 		 * 
 		 * 		해당 service 에서 넘겨줄 값

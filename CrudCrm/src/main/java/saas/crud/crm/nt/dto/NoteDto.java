@@ -4,234 +4,234 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class NoteDto {
 	
-	private int NOTICEID; //내부통지번호
-	private String TOUSERNO; //보내는이
-	private String CCUSERNO; //참조
-	private String LNKURL; //링크
-	private int NTCWAYEMAIL; //통지매체 email 
-	private int NTCWAYSMS; //통지매체 sms 
-	private int CHKRLTCODE; //통지 읽음 체크 
-	private String CHKRLTDATE; //읽은 날짜 
-	private int READCHEK; //통지 내용 체크 
-	private String READDATE; //통지 읽음 날짜 
-	private String EMAIL; //이메일주소 
-	private String MOBILE1; 
-	private String MOBILE2;
-	private String MOBILE3;
-	private String TITLE; //제목 
-	private String CONTENTS; //내용 
-	private String REGDATE; //등록일 
-	private int REGUSER; //등록자 
-	private int ISDELETE; //삭제여부 
-	private int SITEID; //사이트 
-	private int IMPORTANT; //중요메일여부
-	private MultipartFile FILEPATH; //첨부파일
+	private int noticeid; //내부통지번호
+	private int touserno; //보내는이
+	private int ccuserno; //참조
+	private String lnkurl; //링크
+	private int ntcwayemail; //통지매체 email 
+	private int ntcwaysms; //통지매체 sms 
+	private int chkrltcode; //통지 읽음 체크 
+	private String chkrltdate; //읽은 날짜 
+	private int readchek; //통지 내용 체크 
+	private String readdate; //통지 읽음 날짜 
+	private String email; //이메일주소 
+	private String mobile1; 
+	private String mobile2;
+	private String mobile3;
+	private String title; //제목 
+	private String contents; //내용 
+	private String regdate; //등록일 
+	private int reguser; //등록자 
+	private int isdelete; //삭제여부 
+	private int siteid; //사이트 
+	private int important; //중요메일여부
+	private MultipartFile filepath; //첨부파일
 	
 	public NoteDto () {}
 
-	public NoteDto(int nOTICEID, String tOUSERNO, String cCUSERNO, String lNKURL, int nTCWAYEMAIL, int nTCWAYSMS,
-			int cHKRLTCODE, String cHKRLTDATE, int rEADCHEK, String rEADDATE, String eMAIL, String mOBILE1,
-			String mOBILE2, String mOBILE3, String tITLE, String cONTENTS, String rEGDATE, int rEGUSER, int iSDELETE,
-			int sITEID, int iMPORTANT, MultipartFile fILEPATH) {
+	public NoteDto(int noticeid, int touserno, int ccuserno, String lnkurl, int ntcwayemail, int ntcwaysms,
+			int chkrltcode, String chkrltdate, int readchek, String readdate, String email, String mobile1,
+			String mobile2, String mobile3, String title, String contents, String regdate, int reguser, int isdelete,
+			int siteid, int important, MultipartFile filepath) {
 		super();
-		NOTICEID = nOTICEID;
-		TOUSERNO = tOUSERNO;
-		CCUSERNO = cCUSERNO;
-		LNKURL = lNKURL;
-		NTCWAYEMAIL = nTCWAYEMAIL;
-		NTCWAYSMS = nTCWAYSMS;
-		CHKRLTCODE = cHKRLTCODE;
-		CHKRLTDATE = cHKRLTDATE;
-		READCHEK = rEADCHEK;
-		READDATE = rEADDATE;
-		EMAIL = eMAIL;
-		MOBILE1 = mOBILE1;
-		MOBILE2 = mOBILE2;
-		MOBILE3 = mOBILE3;
-		TITLE = tITLE;
-		CONTENTS = cONTENTS;
-		REGDATE = rEGDATE;
-		REGUSER = rEGUSER;
-		ISDELETE = iSDELETE;
-		SITEID = sITEID;
-		IMPORTANT = iMPORTANT;
-		FILEPATH = fILEPATH;
+		this.noticeid = noticeid;
+		this.touserno = touserno;
+		this.ccuserno = ccuserno;
+		this.lnkurl = lnkurl;
+		this.ntcwayemail = ntcwayemail;
+		this.ntcwaysms = ntcwaysms;
+		this.chkrltcode = chkrltcode;
+		this.chkrltdate = chkrltdate;
+		this.readchek = readchek;
+		this.readdate = readdate;
+		this.email = email;
+		this.mobile1 = mobile1;
+		this.mobile2 = mobile2;
+		this.mobile3 = mobile3;
+		this.title = title;
+		this.contents = contents;
+		this.regdate = regdate;
+		this.reguser = reguser;
+		this.isdelete = isdelete;
+		this.siteid = siteid;
+		this.important = important;
+		this.filepath = filepath;
 	}
 
-	public int getNOTICEID() {
-		return NOTICEID;
+	public int getNoticeid() {
+		return noticeid;
 	}
 
-	public void setNOTICEID(int nOTICEID) {
-		NOTICEID = nOTICEID;
+	public void setNoticeid(int noticeid) {
+		this.noticeid = noticeid;
 	}
 
-	public String getTOUSERNO() {
-		return TOUSERNO;
+	public int getTouserno() {
+		return touserno;
 	}
 
-	public void setTOUSERNO(String tOUSERNO) {
-		TOUSERNO = tOUSERNO;
+	public void setTouserno(int touserno) {
+		this.touserno = touserno;
 	}
 
-	public String getCCUSERNO() {
-		return CCUSERNO;
+	public int getCcuserno() {
+		return ccuserno;
 	}
 
-	public void setCCUSERNO(String cCUSERNO) {
-		CCUSERNO = cCUSERNO;
+	public void setCcuserno(int ccuserno) {
+		this.ccuserno = ccuserno;
 	}
 
-	public String getLNKURL() {
-		return LNKURL;
+	public String getLnkurl() {
+		return lnkurl;
 	}
 
-	public void setLNKURL(String lNKURL) {
-		LNKURL = lNKURL;
+	public void setLnkurl(String lnkurl) {
+		this.lnkurl = lnkurl;
 	}
 
-	public int getNTCWAYEMAIL() {
-		return NTCWAYEMAIL;
+	public int getNtcwayemail() {
+		return ntcwayemail;
 	}
 
-	public void setNTCWAYEMAIL(int nTCWAYEMAIL) {
-		NTCWAYEMAIL = nTCWAYEMAIL;
+	public void setNtcwayemail(int ntcwayemail) {
+		this.ntcwayemail = ntcwayemail;
 	}
 
-	public int getNTCWAYSMS() {
-		return NTCWAYSMS;
+	public int getNtcwaysms() {
+		return ntcwaysms;
 	}
 
-	public void setNTCWAYSMS(int nTCWAYSMS) {
-		NTCWAYSMS = nTCWAYSMS;
+	public void setNtcwaysms(int ntcwaysms) {
+		this.ntcwaysms = ntcwaysms;
 	}
 
-	public int getCHKRLTCODE() {
-		return CHKRLTCODE;
+	public int getChkrltcode() {
+		return chkrltcode;
 	}
 
-	public void setCHKRLTCODE(int cHKRLTCODE) {
-		CHKRLTCODE = cHKRLTCODE;
+	public void setChkrltcode(int chkrltcode) {
+		this.chkrltcode = chkrltcode;
 	}
 
-	public String getCHKRLTDATE() {
-		return CHKRLTDATE;
+	public String getChkrltdate() {
+		return chkrltdate;
 	}
 
-	public void setCHKRLTDATE(String cHKRLTDATE) {
-		CHKRLTDATE = cHKRLTDATE;
+	public void setChkrltdate(String chkrltdate) {
+		this.chkrltdate = chkrltdate;
 	}
 
-	public int getREADCHEK() {
-		return READCHEK;
+	public int getReadchek() {
+		return readchek;
 	}
 
-	public void setREADCHEK(int rEADCHEK) {
-		READCHEK = rEADCHEK;
+	public void setReadchek(int readchek) {
+		this.readchek = readchek;
 	}
 
-	public String getREADDATE() {
-		return READDATE;
+	public String getReaddate() {
+		return readdate;
 	}
 
-	public void setREADDATE(String rEADDATE) {
-		READDATE = rEADDATE;
+	public void setReaddate(String readdate) {
+		this.readdate = readdate;
 	}
 
-	public String getEMAIL() {
-		return EMAIL;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEMAIL(String eMAIL) {
-		EMAIL = eMAIL;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getMOBILE1() {
-		return MOBILE1;
+	public String getMobile1() {
+		return mobile1;
 	}
 
-	public void setMOBILE1(String mOBILE1) {
-		MOBILE1 = mOBILE1;
+	public void setMobile1(String mobile1) {
+		this.mobile1 = mobile1;
 	}
 
-	public String getMOBILE2() {
-		return MOBILE2;
+	public String getMobile2() {
+		return mobile2;
 	}
 
-	public void setMOBILE2(String mOBILE2) {
-		MOBILE2 = mOBILE2;
+	public void setMobile2(String mobile2) {
+		this.mobile2 = mobile2;
 	}
 
-	public String getMOBILE3() {
-		return MOBILE3;
+	public String getMobile3() {
+		return mobile3;
 	}
 
-	public void setMOBILE3(String mOBILE3) {
-		MOBILE3 = mOBILE3;
+	public void setMobile3(String mobile3) {
+		this.mobile3 = mobile3;
 	}
 
-	public String getTITLE() {
-		return TITLE;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTITLE(String tITLE) {
-		TITLE = tITLE;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getCONTENTS() {
-		return CONTENTS;
+	public String getContents() {
+		return contents;
 	}
 
-	public void setCONTENTS(String cONTENTS) {
-		CONTENTS = cONTENTS;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 
-	public String getREGDATE() {
-		return REGDATE;
+	public String getRegdate() {
+		return regdate;
 	}
 
-	public void setREGDATE(String rEGDATE) {
-		REGDATE = rEGDATE;
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 
-	public int getREGUSER() {
-		return REGUSER;
+	public int getReguser() {
+		return reguser;
 	}
 
-	public void setREGUSER(int rEGUSER) {
-		REGUSER = rEGUSER;
+	public void setReguser(int reguser) {
+		this.reguser = reguser;
 	}
 
-	public int getISDELETE() {
-		return ISDELETE;
+	public int getIsdelete() {
+		return isdelete;
 	}
 
-	public void setISDELETE(int iSDELETE) {
-		ISDELETE = iSDELETE;
+	public void setIsdelete(int isdelete) {
+		this.isdelete = isdelete;
 	}
 
-	public int getSITEID() {
-		return SITEID;
+	public int getSiteid() {
+		return siteid;
 	}
 
-	public void setSITEID(int sITEID) {
-		SITEID = sITEID;
+	public void setSiteid(int siteid) {
+		this.siteid = siteid;
 	}
 
-	public int getIMPORTANT() {
-		return IMPORTANT;
+	public int getImportant() {
+		return important;
 	}
 
-	public void setIMPORTANT(int iMPORTANT) {
-		IMPORTANT = iMPORTANT;
+	public void setImportant(int important) {
+		this.important = important;
 	}
 
-	public MultipartFile getFILEPATH() {
-		return FILEPATH;
+	public MultipartFile getFilepath() {
+		return filepath;
 	}
 
-	public void setFILEPATH(MultipartFile fILEPATH) {
-		FILEPATH = fILEPATH;
+	public void setFilepath(MultipartFile filepath) {
+		this.filepath = filepath;
 	}
 
 	

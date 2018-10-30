@@ -2,276 +2,274 @@ package saas.crud.crm.au.dto;
 
 public class UserDto {
 	
-	private int USERNO; //회원번호 PK
-	private int SITEID; //회원소속 회원사
-	private String USERID; //회원 ID
-	private String USERNAME; //회원 이름
-	private String USERPASSWORD; //회원비밀번호
-	private String USERDESC; //회원 설명
-	private String EMAIL; 
-	private int DEPTID; //부서번호
-	private int CHK_AUTH; //권한체크 10 / 20 / 30 
-	private String ENTERDATE; //가입일자
-	private String USERLANG; //언어
-	private String MOBILE1; 
-	private String MOBILE2;
-	private String MOBILE3;
-	private String TELNO1;
-	private String TELNO2;
-	private String TELNO3;
-	private String USERDUTY; //직책
-	private int CTIID; //CTI ID
-	private String CTIPASS; //CTI PASSWORD
-	private String PWDCHANGEDATE; //비밀번호 변경일시
-	private int ISDELETE; //사용여부 0 / 1
-	private String REGDATE; //등록일시
-	private int REGUSER; //등록자 
-	private String EDTDATE; //수정일시
-	private int EDTUSER; //수정자
+	private int userno; //회원번호 PK
+	private int siteid; //회원소속 회원사
+	private String userid; //회원 ID
+	private String username; //회원 이름
+	private String userpassword; //회원비밀번호
+	private String userdesc; //회원 설명
+	private String email; 
+	private int deptid; //부서번호
+	private int chk_auth; //권한체크 10 / 20 / 30 
+	private String enterdate; //가입일자
+	private String userlang; //언어
+	private String mobile1; 
+	private String mobile2;
+	private String mobile3;
+	private String telno1;
+	private String telno2;
+	private String telno3;
+	private String userduty; //직책
+	private int ctiid; //ctI ID
+	private String ctipass; //CTI PASSWORD
+	private String pwdchangedate; //비밀번호 변경일시
+	private int isdelete; //사용여부 0 / 1
+	private String regdate; //등록일시
+	private int reguser; //등록자 
+	private String edtdate; //수정일시
+	private int edtuser; //수정자
 	
 	public UserDto () {}
 
-	public UserDto(int uSERNO, int sITEID, String uSERID, String uSERNAME, String uSERPASSWORD, String uSERDESC,
-			String eMAIL, int dEPTID, int cHK_AUTH, String eNTERDATE, String uSERLANG, String mOBILE1, String mOBILE2,
-			String mOBILE3, String tELNO1, String tELNO2, String tELNO3, String uSERDUTY, int cTIID, String cTIPASS,
-			String pWDCHANGEDATE, int iSDELETE, String rEGDATE, int rEGUSER, String eDTDATE, int eDTUSER) {
+	public UserDto(int userno, int siteid, String userid, String username, String userpassword, String userdesc,
+			String email, int deptid, int chk_auth, String enterdate, String userlang, String mobile1, String mobile2,
+			String mobile3, String telno1, String telno2, String telno3, String userduty, int ctiid, String ctipass,
+			String pwdchangedate, int isdelete, String regdate, int reguser, String edtdate, int edtuser) {
 		super();
-		USERNO = uSERNO;
-		SITEID = sITEID;
-		USERID = uSERID;
-		USERNAME = uSERNAME;
-		USERPASSWORD = uSERPASSWORD;
-		USERDESC = uSERDESC;
-		EMAIL = eMAIL;
-		DEPTID = dEPTID;
-		CHK_AUTH = cHK_AUTH;
-		ENTERDATE = eNTERDATE;
-		USERLANG = uSERLANG;
-		MOBILE1 = mOBILE1;
-		MOBILE2 = mOBILE2;
-		MOBILE3 = mOBILE3;
-		TELNO1 = tELNO1;
-		TELNO2 = tELNO2;
-		TELNO3 = tELNO3;
-		USERDUTY = uSERDUTY;
-		CTIID = cTIID;
-		CTIPASS = cTIPASS;
-		PWDCHANGEDATE = pWDCHANGEDATE;
-		ISDELETE = iSDELETE;
-		REGDATE = rEGDATE;
-		REGUSER = rEGUSER;
-		EDTDATE = eDTDATE;
-		EDTUSER = eDTUSER;
+		this.userno = userno;
+		this.siteid = siteid;
+		this.userid = userid;
+		this.username = username;
+		this.userpassword = userpassword;
+		this.userdesc = userdesc;
+		this.email = email;
+		this.deptid = deptid;
+		this.chk_auth = chk_auth;
+		this.enterdate = enterdate;
+		this.userlang = userlang;
+		this.mobile1 = mobile1;
+		this.mobile2 = mobile2;
+		this.mobile3 = mobile3;
+		this.telno1 = telno1;
+		this.telno2 = telno2;
+		this.telno3 = telno3;
+		this.userduty = userduty;
+		this.ctiid = ctiid;
+		this.ctipass = ctipass;
+		this.pwdchangedate = pwdchangedate;
+		this.isdelete = isdelete;
+		this.regdate = regdate;
+		this.reguser = reguser;
+		this.edtdate = edtdate;
+		this.edtuser = edtuser;
 	}
 
-	public int getUSERNO() {
-		return USERNO;
+	public int getUserno() {
+		return userno;
 	}
 
-	public void setUSERNO(int uSERNO) {
-		USERNO = uSERNO;
+	public void setUserno(int userno) {
+		this.userno = userno;
 	}
 
-	public int getSITEID() {
-		return SITEID;
+	public int getSiteid() {
+		return siteid;
 	}
 
-	public void setSITEID(int sITEID) {
-		SITEID = sITEID;
+	public void setSiteid(int siteid) {
+		this.siteid = siteid;
 	}
 
-	public String getUSERID() {
-		return USERID;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUSERID(String uSERID) {
-		USERID = uSERID;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	public String getUSERNAME() {
-		return USERNAME;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUSERNAME(String uSERNAME) {
-		USERNAME = uSERNAME;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getUSERPASSWORD() {
-		return USERPASSWORD;
+	public String getUserpassword() {
+		return userpassword;
 	}
 
-	public void setUSERPASSWORD(String uSERPASSWORD) {
-		USERPASSWORD = uSERPASSWORD;
+	public void setUserpassword(String userpassword) {
+		this.userpassword = userpassword;
 	}
 
-	public String getUSERDESC() {
-		return USERDESC;
+	public String getUserdesc() {
+		return userdesc;
 	}
 
-	public void setUSERDESC(String uSERDESC) {
-		USERDESC = uSERDESC;
+	public void setUserdesc(String userdesc) {
+		this.userdesc = userdesc;
 	}
 
-	public String getEMAIL() {
-		return EMAIL;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEMAIL(String eMAIL) {
-		EMAIL = eMAIL;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public int getDEPTID() {
-		return DEPTID;
+	public int getDeptid() {
+		return deptid;
 	}
 
-	public void setDEPTID(int dEPTID) {
-		DEPTID = dEPTID;
+	public void setDeptid(int deptid) {
+		this.deptid = deptid;
 	}
 
-	public int getCHK_AUTH() {
-		return CHK_AUTH;
+	public int getChk_auth() {
+		return chk_auth;
 	}
 
-	public void setCHK_AUTH(int cHK_AUTH) {
-		CHK_AUTH = cHK_AUTH;
+	public void setChk_auth(int chk_auth) {
+		this.chk_auth = chk_auth;
 	}
 
-	public String getENTERDATE() {
-		return ENTERDATE;
+	public String getEnterdate() {
+		return enterdate;
 	}
 
-	public void setENTERDATE(String eNTERDATE) {
-		ENTERDATE = eNTERDATE;
+	public void setEnterdate(String enterdate) {
+		this.enterdate = enterdate;
 	}
 
-	public String getUSERLANG() {
-		return USERLANG;
+	public String getUserlang() {
+		return userlang;
 	}
 
-	public void setUSERLANG(String uSERLANG) {
-		USERLANG = uSERLANG;
+	public void setUserlang(String userlang) {
+		this.userlang = userlang;
 	}
 
-	public String getMOBILE1() {
-		return MOBILE1;
+	public String getMobile1() {
+		return mobile1;
 	}
 
-	public void setMOBILE1(String mOBILE1) {
-		MOBILE1 = mOBILE1;
+	public void setMobile1(String mobile1) {
+		this.mobile1 = mobile1;
 	}
 
-	public String getMOBILE2() {
-		return MOBILE2;
+	public String getMobile2() {
+		return mobile2;
 	}
 
-	public void setMOBILE2(String mOBILE2) {
-		MOBILE2 = mOBILE2;
+	public void setMobile2(String mobile2) {
+		this.mobile2 = mobile2;
 	}
 
-	public String getMOBILE3() {
-		return MOBILE3;
+	public String getMobile3() {
+		return mobile3;
 	}
 
-	public void setMOBILE3(String mOBILE3) {
-		MOBILE3 = mOBILE3;
+	public void setMobile3(String mobile3) {
+		this.mobile3 = mobile3;
 	}
 
-	public String getTELNO1() {
-		return TELNO1;
+	public String getTelno1() {
+		return telno1;
 	}
 
-	public void setTELNO1(String tELNO1) {
-		TELNO1 = tELNO1;
+	public void setTelno1(String telno1) {
+		this.telno1 = telno1;
 	}
 
-	public String getTELNO2() {
-		return TELNO2;
+	public String getTelno2() {
+		return telno2;
 	}
 
-	public void setTELNO2(String tELNO2) {
-		TELNO2 = tELNO2;
+	public void setTelno2(String telno2) {
+		this.telno2 = telno2;
 	}
 
-	public String getTELNO3() {
-		return TELNO3;
+	public String getTelno3() {
+		return telno3;
 	}
 
-	public void setTELNO3(String tELNO3) {
-		TELNO3 = tELNO3;
+	public void setTelno3(String telno3) {
+		this.telno3 = telno3;
 	}
 
-	public String getUSERDUTY() {
-		return USERDUTY;
+	public String getUserduty() {
+		return userduty;
 	}
 
-	public void setUSERDUTY(String uSERDUTY) {
-		USERDUTY = uSERDUTY;
+	public void setUserduty(String userduty) {
+		this.userduty = userduty;
 	}
 
-	public int getCTIID() {
-		return CTIID;
+	public int getCtiid() {
+		return ctiid;
 	}
 
-	public void setCTIID(int cTIID) {
-		CTIID = cTIID;
+	public void setCtiid(int ctiid) {
+		this.ctiid = ctiid;
 	}
 
-	public String getCTIPASS() {
-		return CTIPASS;
+	public String getCtipass() {
+		return ctipass;
 	}
 
-	public void setCTIPASS(String cTIPASS) {
-		CTIPASS = cTIPASS;
+	public void setCtipass(String ctipass) {
+		this.ctipass = ctipass;
 	}
 
-	public String getPWDCHANGEDATE() {
-		return PWDCHANGEDATE;
+	public String getPwdchangedate() {
+		return pwdchangedate;
 	}
 
-	public void setPWDCHANGEDATE(String pWDCHANGEDATE) {
-		PWDCHANGEDATE = pWDCHANGEDATE;
+	public void setPwdchangedate(String pwdchangedate) {
+		this.pwdchangedate = pwdchangedate;
 	}
 
-	public int getISDELETE() {
-		return ISDELETE;
+	public int getIsdelete() {
+		return isdelete;
 	}
 
-	public void setISDELETE(int iSDELETE) {
-		ISDELETE = iSDELETE;
+	public void setIsdelete(int isdelete) {
+		this.isdelete = isdelete;
 	}
 
-	public String getREGDATE() {
-		return REGDATE;
+	public String getRegdate() {
+		return regdate;
 	}
 
-	public void setREGDATE(String rEGDATE) {
-		REGDATE = rEGDATE;
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 
-	public int getREGUSER() {
-		return REGUSER;
+	public int getReguser() {
+		return reguser;
 	}
 
-	public void setREGUSER(int rEGUSER) {
-		REGUSER = rEGUSER;
+	public void setReguser(int reguser) {
+		this.reguser = reguser;
 	}
 
-	public String getEDTDATE() {
-		return EDTDATE;
+	public String getEdtdate() {
+		return edtdate;
 	}
 
-	public void setEDTDATE(String eDTDATE) {
-		EDTDATE = eDTDATE;
+	public void setEdtdate(String edtdate) {
+		this.edtdate = edtdate;
 	}
 
-	public int getEDTUSER() {
-		return EDTUSER;
+	public int getEdtuser() {
+		return edtuser;
 	}
 
-	public void setEDTUSER(int eDTUSER) {
-		EDTUSER = eDTUSER;
+	public void setEdtuser(int edtuser) {
+		this.edtuser = edtuser;
 	}
-
-	
 	
 }

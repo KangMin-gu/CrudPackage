@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public ModelAndView login(HttpServletResponse response, HttpServletRequest request, UserDto urDto) {
 		
-		Map<String, Object> urInfo = urDao.getData(urDto.getUSERID());
-		String pwd = urDto.getUSERPASSWORD();
+		Map<String, Object> urInfo = urDao.getData(urDto.getUserid());
+		String pwd = urDto.getUserpassword();
 		
 		boolean isValid = false;
 		
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
 		
 		if(isValid){
 			
-			List<Map<String,String>> urMenu = urDao.getMenu(urDto.getUSERID());
+			List<Map<String,String>> urMenu = urDao.getMenu(urDto.getUserid());
 			
 			
 		

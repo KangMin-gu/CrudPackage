@@ -12,11 +12,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.email.dto.EmailDto" alias="emailDto" />
 		<typeAlias type="saas.crud.crm.au.dto.UserDto" alias="userDto" />
 		<typeAlias type="saas.crud.crm.au.dto.MemCompanyDto" alias="memCompanyDto" />
+		<typeAlias type="saas.crud.crm.nt.dto.NoteDto" alias="noteDto" />
+		<typeAlias type="saas.crud.crm.nt.dto.NoteCategoryDto" alias="noteCategoryDto" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="DB/mssql/EmailMapper.xml" />
-		<mapper resource="DB/mssql/UserMapper.xml" />		
+		<mapper resource="DB/mssql/UserMapper.xml" />
+		<mapper resource="DB/mssql/NoteMapper.xml" />			
 	</mappers>
 	
 </configuration>

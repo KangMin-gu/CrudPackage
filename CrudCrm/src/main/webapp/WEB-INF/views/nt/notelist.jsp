@@ -5,6 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -28,225 +29,122 @@
 
 
 		
-<!-- Content -->		
-			      <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-2">
-                <%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
-            </div>
-            <div class="col-lg-10 animated fadeInRight">
-            <div class="mail-box-header">
+<!-- Content -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-2">
+						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
+					</div>
+					<div class="col-lg-10 animated fadeInRight">
+						<div class="mail-box-header">
+							
+							<form:form method="post" action="${pageContext.request.contextPath}/note/inbox" class="float-right mail-search">							
+								<div class="input-group">
+									<select id="condition" name="condition" class="form-control mr-4">
+	                                    <option value="titleContent">제목+내용</option>	                                    
+	                                    <option value="title">제목</option>
+	                                    <option value="sender">보낸이</option>
+	                                    <option value="sendDate">수신일</option>  
+                                    </select>
+									
+									<input id="keyword" name="keyword" type="text" class="form-control form-control-sm" id="keyword" name="keyword" value="${keyword }" placeholder="검색어">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-sm btn-primary">검색</button>
+									</div>
+								</div>
+							</form:form> 
+							<h2>${NOTENAME } (${notReadVal })</h2>
+							<div class="mail-tools tooltip-demo m-t-md">
+								<div class="btn-group float-right">
+									<!--   <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
+                        			<button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button> -->
+									<ul class="pagination">
+										<c:choose>
+											<c:when test="${page.startPageNum ne 1 }">
+												<li><a
+													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.startPageNum-1 }&">&laquo;</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&laquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+										<c:forEach var="i" begin="${page.startPageNum }"
+											end="${page.endPageNum }">
+											<c:choose>
+												<c:when test="${i eq page.pageNum }">
+													<li class="active"><a
+														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }">${i }</a></li>
+												</c:when>
+												<c:otherwise>
+													<li><a
+														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }">${i }</a></li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										<c:choose>
+											<c:when test="${page.endPageNum lt page.totalPageCount }">
+												<li><a
+													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.endPageNum+1 }">&raquo;</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&raquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</ul>
+								</div>
 
-                <form method="get" action="index.html" class="float-right mail-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" name="search" placeholder="Search email">
-                        <div class="input-group-btn">
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <h2>
-                    ${NOTENAME } (16)
-                </h2>
-                <div class="mail-tools tooltip-demo m-t-md">
-                    <div class="btn-group float-right">
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
+								<button class="btn btn-white btn-sm" data-toggle="tooltip"
+									data-placement="left" title="새로고침">
+									<i class="fa fa-refresh"></i>
+								</button>
+								<button class="btn btn-white btn-sm" data-toggle="tooltip"
+									data-placement="top" title="읽은 통지">
+									<i class="fa fa-eye"></i>
+								</button>
+								<button class="btn btn-white btn-sm" data-toggle="tooltip"
+									data-placement="top" title="중요 통지">
+									<i class="fa fa-exclamation"></i>
+								</button>
+								<button class="btn btn-white btn-sm" data-toggle="tooltip"
+									data-placement="top" title="휴지통으로 이동">
+									<i class="fa fa-trash-o"></i>
+								</button>
 
-                    </div>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i></button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as important"><i class="fa fa-exclamation"></i> </button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-
-                </div>
-            </div>
-                <div class="mail-box">
-
-                <table class="table table-hover table-mail">
-                <tbody>
-                <tr class="unread">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Anna Smith</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
-                    <td class=""><i class="fa fa-paperclip"></i></td>
-                    <td class="text-right mail-date">6.10 AM</td>
-                </tr>
-                <tr class="unread">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks" checked>
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Jack Nowak</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Aldus PageMaker including versions of Lorem Ipsum.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">8.22 PM</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Facebook</a> <span class="label label-danger float-right">!</span> </td>
-                    <td class="mail-subject"><a href="mail_detail.html">Many desktop publishing packages and web page editors.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Jan 16</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Mailchip</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">There are many variations of passages of Lorem Ipsum.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Mar 22</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Alex T.</a> <span class="label label-danger float-right">!</span></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
-                    <td class=""><i class="fa fa-paperclip"></i></td>
-                    <td class="text-right mail-date">December 22</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Monica Ryther</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">The standard chunk of Lorem Ipsum used.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Jun 12</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Sandra Derick</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Contrary to popular belief.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">May 28</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Patrick Pertners</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">If you are going to use a passage of Lorem </a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">May 28</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Michael Fox</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Humour, or non-characteristic words etc.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Dec 9</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Damien Ritz</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Oor Lorem Ipsum is that it has a more-or-less normal.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Jun 11</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Anna Smith</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
-                    <td class=""><i class="fa fa-paperclip"></i></td>
-                    <td class="text-right mail-date">6.10 AM</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Jack Nowak</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Aldus PageMaker including versions of Lorem Ipsum.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">8.22 PM</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Mailchip</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">There are many variations of passages of Lorem Ipsum.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Mar 22</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Alex T.</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
-                    <td class=""><i class="fa fa-paperclip"></i></td>
-                    <td class="text-right mail-date">December 22</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Monica Ryther</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">The standard chunk of Lorem Ipsum used.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Jun 12</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Sandra Derick</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Contrary to popular belief.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">May 28</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Patrick Pertners</a> </td>
-                    <td class="mail-subject"><a href="mail_detail.html">If you are going to use a passage of Lorem </a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">May 28</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Michael Fox</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Humour, or non-characteristic words etc.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Dec 9</td>
-                </tr>
-                <tr class="read">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td class="mail-ontact"><a href="mail_detail.html">Damien Ritz</a></td>
-                    <td class="mail-subject"><a href="mail_detail.html">Oor Lorem Ipsum is that it has a more-or-less normal.</a></td>
-                    <td class=""></td>
-                    <td class="text-right mail-date">Jun 11</td>
-                </tr>
-                </tbody>
-                </table>
-
-
-                </div>
-            </div>
-        </div>
-        </div>
-<!-- Content End -->
+							</div>
+						</div>
+						<div class="mail-box">
+							<jsp:useBean id="toDay" class="java.util.Date" />
+							<fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd" var="nowDate"/>
+							<table class="table table-hover table-mail">
+								<tbody>
+									<c:forEach var="tmp" items="${noteList }">
+										<tr<c:choose>
+	                 						<c:when test="${tmp.READCHEK eq 0 }">class="unread"</c:when>
+	                 						<c:otherwise>class="read"</c:otherwise>
+	                 					</c:choose>>
+											<td class="check-mail"><input type="checkbox" class="i-checks" value="${tmp.NOTICEID }"></td>
+											<td class="mail-ontact">${tmp.SENDER }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
+											<td class="mail-subject"><a href="${pageContext.request.contextPath}/note/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
+											<td class="text-right mail-date">
+												<c:choose>
+													<c:when test="${nowDate >  tmp.SENDDATE}">${tmp.SENDDATE }</c:when>
+			                 						<c:otherwise>${tmp.SENDDATETIME }</c:otherwise>
+												</c:choose>																	
+											</td>
+											<td class="text-right"><c:if test="${tmp.FILEPATH ne null }"><i class="fa fa-paperclip"></i></c:if></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Content End -->
 
 			
 <!-- foot -->
@@ -269,7 +167,7 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
-        });
+        });        
 </script>
 </body>
 </html>

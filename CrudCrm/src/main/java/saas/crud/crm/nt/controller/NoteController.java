@@ -26,11 +26,19 @@ public class NoteController {
 	//받은 통지
 	@RequestMapping(value="/note/inbox", method=RequestMethod.GET)
 	public ModelAndView noteInbox(HttpServletRequest request) {
-		ModelAndView mView = ntService.noteInbox(request);
+		ModelAndView mView = ntService.noteInbox(request);		
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
 	
+	//검색
+	@RequestMapping(value="/note/inbox", method=RequestMethod.POST)
+	public ModelAndView notesearch(HttpServletRequest request) {
+		ModelAndView mView = ntService.noteInbox(request);	
+		mView.setViewName("nt/notelist");
+		return mView;
+	}
+/*	
 	//받은 통지상세
 	@RequestMapping(value="/note/inbox/{noticeid}", method=RequestMethod.GET)
 	public ModelAndView noteInDetail(HttpServletRequest request) {
@@ -110,4 +118,5 @@ public class NoteController {
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
+*/
 }

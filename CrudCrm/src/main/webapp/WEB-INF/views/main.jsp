@@ -22,7 +22,6 @@
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-	
 			<div class="wrapper wrapper-content animated fadeIn">
 				<div class="p-w-md m-t-sm">
 					<div class="row">					

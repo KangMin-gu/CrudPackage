@@ -1,5 +1,8 @@
 package saas.crud.crm.nt.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,15 +27,21 @@ public class NoteDaoImpl implements NoteDao{
 	
 	//게시판 총 갯수
 	@Override
-	public int notetotalRows(NoteDto ntDto) {
-		int totalRows = session.selectOne("note.totalRows", ntDto);
+	public int notetotalRows(Map<String, Object> noteVal) {
+		int totalRows = session.selectOne("note.totalRows", noteVal);
 		return totalRows;
 	}
 	
 	@Override
-	public ModelAndView noteInbox(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, Object>> noteInbox(Map<String, Object> inBoxVal) {
+		List<Map<String, Object>> note = session.selectList("note.inbox", inBoxVal);
+		return note;
+	}
+
+	@Override
+	public int notReadVal(Map<String, Object> noteVal) {
+		int notReadVal = session.selectOne("note.notReadVal", noteVal);
+		return notReadVal;
 	}
 
 	

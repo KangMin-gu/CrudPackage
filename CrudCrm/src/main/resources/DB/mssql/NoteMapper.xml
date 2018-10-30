@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="note">
+	<!-- 총 통지갯수 -->
+	<select id="totalRows" parameterType="hashMap" resultType="int">
+	SELECT COUNT(*) AS totalRows FROM
+		( SELECT A.SITEID, TITLE, TOUSERNO, A.REGUSER, B.USERNAME AS USERNAME FROM t_notice AS A
+			INNER JOIN TB980010 AS B ON A.REGUSER = B.USERNO 
+			<where>
+				<if test="title != null">
+					OR TITLE LIKE '%'+#{title}+'%'
+				</if>
+				<if test="sender != null">
+					OR USERNAME LIKE '%'+#{sender}+'%'
+				</if>
+				<if test="contents != null">
+					OR CONTENTS LIKE '%'+#{contents}+'%'
+				</if>
+			</where>
+		) AS C 
+	WHERE C.SITEID = #{siteid} AND C.TOUSERNO = #{touserno}
+	</select>
+	
+	<select id="inbox" parameterType="hashMap" resultType="hashMap">
+		select * FROM
+		(SELECT B.USERNAME AS USERNAME, TOUSERNO, READCHEK, TITLE, A.SITEID AS SITEID, A.ISDELETE AS ISDELETE, NTCWAYEMAIL, CONTENTS, C.USERNAME AS SENDER, IMPORTANT, CONVERT(VARCHAR(10), A.REGDATE, 120) AS SENDDATE, A.REGDATE AS SENDDATETIME, NOTICEID, A.FILEPATH AS FILEPATH, ROW_NUMBER() OVER(order by NOTICEID DESC) AS ROWNUM
+		FROM t_notice AS A
+		INNER JOIN TB980010 AS B ON A.TOUSERNO = B.USERNO
+		INNER JOIN TB980010 AS C ON A.REGUSER = C.USERNO
+		<where>
+			<if test="title != null">
+				OR TITLE LIKE '%'+#{title}+'%'
+			</if>
+			<if test="sender != null">
+				OR C.USERNAME LIKE '%'+#{sender}+'%'
+			</if>
+			<if test="contents != null">
+				OR CONTENTS LIKE '%'+#{contents}+'%'
+			</if>
+		</where>
+		) AS result
+		WHERE result.ISDELETE = 0 AND result.SITEID = #{siteid} AND result.TOUSERNO = #{touserno} AND result.NTCWAYEMAIL = 1
+			AND result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.NOTICEID DESC
+	</select>
+	
+	<select id="notReadVal" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) AS notReadVal FROM
+			( SELECT A.SITEID, TITLE, TOUSERNO, READCHEK, A.REGUSER, B.USERNAME AS USERNAME FROM t_notice AS A
+				INNER JOIN TB980010 AS B ON A.REGUSER = B.USERNO 
+				<where>
+					<if test="title != null">
+						OR TITLE LIKE '%'+#{title}+'%'
+					</if>
+					<if test="sender != null">
+						OR USERNAME LIKE '%'+#{sender}+'%'
+					</if>
+					<if test="contents != null">
+						OR CONTENTS LIKE '%'+#{contents}+'%'
+					</if>
+				</where>
+			) AS C 
+		WHERE C.SITEID = #{siteid} AND C.TOUSERNO = #{touserno} AND C.READCHEK = 0;
+	</select>
+</mapper>

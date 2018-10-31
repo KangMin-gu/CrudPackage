@@ -40,7 +40,6 @@
                                             <td>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control reset" name="userName" id="userName" value="${search.userName }">
-
                                                 </div>
                                             </td>
                                         </tr>
@@ -162,31 +161,7 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/daterangepicker/daterangepicker.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
-	<script>
-    $( document ).ready(function() {
-    	
-    	$('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    	
-        $('.input-daterange').datepicker({
-            keyboardNavigation: false,
-            forceParse: false,
-            autoclose: true
-        });
-    });
-    
-    $('.resets').click(function(e){
-    	e.preventDefault();
-    	$('.reset').val('');
-    });
-
-	</script>			
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 
 </body>
 </html>

@@ -266,11 +266,11 @@
                                         <tr>
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
-                                                <div class="input-group">
+                                                <div class="input-group test">
                                                     <input type="text" class="form-control required" name="owner_" id="owner_" value="${memCompany.OWNER_ }">
                                                     <input type="hidden" name="owner" id="owner" value="${memCompany.OWNER }">
                                                     <span class="input-group-addon">
-                                                        <a onclick="javascript:ownerWindow();"><i class="fa fa-search"></i></a>
+                                                        <a><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
                                             </td>
@@ -357,12 +357,12 @@
 		         }
 		     }).open();
 		 });
-		
-		
 	});
-	function ownerWindow(){
-		openNewWindow('/common/user');
-	};
+	
+	$('.test').click(function(e){
+		debugger;
+		openNewWindow('/common/user',e.target.id);
+	});
 		
 	</script>		
 

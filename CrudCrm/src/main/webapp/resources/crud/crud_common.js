@@ -1,22 +1,33 @@
-
-	function openNewWindow(url){
+	// 부모 window 가 실행
+	function openNewWindow(url,target){
 		var name= "영업담당자";
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
 		var specs= "menubar=no,status=no,toolbar=no,innerWidth=1200,innerHeight=1000";
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
+		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
+		setTimeout(function(){
+			$(newWindow.document.body).append('<input type="hidden" id="parentid" name="parentid" value="'+target+'">');	
+		},1000);
+		
+		
 	}
+	// 자식 window가 실행
 	// 영업 담당자 및 담당자 가지고옴
 	//tr -> 실제로 클릭한 tr 자체
 	function parentUser(tr){
+		// 접수자, 담당자가 겹치는 경우에 발생할 것 같아서 한번에 처리 할수 있게 수정작업함..
+		// parentid => 버튼을 눌렀을때의 id 값
+		var parentid = $('#parentid').val();
 		// opener -> 부모의 window를 의미함.
 		// tr.getAttribute("value") -> tr 값에 value를 넣어두었는데 해당 value 값을 가지고옴 => 여기서는 영업담당자의 키값(USERNO)
-		opener.$("#owner").val(tr.getAttribute("value"));
+		// 버튼을 눌렀을때의 id 값의 next값 즉 Owner_ 옆의 Owner 값(DB에 들어갈값)
+		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
-		opener.$("#owner_").val(tr.children.userName.textContent);
+		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
+		opener.$("#"+parentid).val(tr.children.userName.textContent);
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
-		
 	}
 	
 	$('.save').click(function(e){		

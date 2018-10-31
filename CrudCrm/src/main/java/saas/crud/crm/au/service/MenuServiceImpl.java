@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dao.MenuDao;
 import saas.crud.crm.au.dto.MemCompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
@@ -20,6 +21,9 @@ public class MenuServiceImpl implements MenuService{
 
 	@Autowired
 	MenuDao menuDao;
+	
+	@Autowired
+	LicenseDao liceseDao;
 	
 	@Override
 	public ModelAndView menuList(HttpServletRequest request) {
@@ -71,10 +75,12 @@ public class MenuServiceImpl implements MenuService{
 	public ModelAndView menuRead(HttpServletRequest request, int menuno) {
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> search = new HashMap<>();
 		
 		Map<String,Object> menuInfo =  menuDao.menuRead(menuno);
-		
+		List<Map<String,Object>> licenseInfo = liceseDao.licenseList(search);
 		mView.addObject("menu",menuInfo);
+		mView.addObject("license",licenseInfo);
 
 		return mView;
 	}

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.MemCompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
+import saas.crud.crm.au.service.LicenseService;
 import saas.crud.crm.au.service.MenuService;
 
 @Controller
@@ -23,6 +24,9 @@ public class MenuController {
 	// 회원사 정보 등록 수정 삭제
 	@Autowired
 	MenuService menuService;
+	
+	@Autowired
+	LicenseService licenseService;
 	// LIST
 	@RequestMapping(value = "/ma/me", method=RequestMethod.GET)
 	public ModelAndView authMenuList(HttpServletRequest request) {
@@ -45,7 +49,8 @@ public class MenuController {
 	//Insert 입력폼
 	@RequestMapping(value = "/ma/me/post", method=RequestMethod.GET)
 	public ModelAndView authMenuInsert(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
+		
+		ModelAndView mView = licenseService.licenseList(request);
 		mView.setViewName("au/ma/me/menuInsert");
 		return mView;
 	}

@@ -18,3 +18,29 @@
 		window.close();
 		
 	}
+	
+	$('.save').click(function(e){		
+		check_required(e);
+	});
+	
+    function check_required(e){
+        // 필수로 저장되어야 하는 값 체크
+        var length = $('.required').length;
+
+        for(i=0;i<length;i++){
+            var check_value = $('.required:eq('+i+')').val();
+
+            if(check_value =='' || check_value == undefined){
+                $('.required:eq('+i+')').parent().addClass('has-error');
+                var error = $('.required:eq('+i+')').parent().prev().text().trim();
+                if(error ==''){
+                	var error = $('.required:eq('+i+')').parent().parent().prev().text().trim();
+                }
+                alert(error+"를 입력해주세요");
+                e.preventDefault();
+            }else{
+                $('.required:eq('+i+')').parent().removeClass('has-error').addClass('has-success');
+            }
+        }
+        return true;
+    }

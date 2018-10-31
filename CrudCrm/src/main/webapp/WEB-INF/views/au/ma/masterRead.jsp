@@ -262,6 +262,98 @@
                         </div>
 
                     </div>
+                    <div class="ibox">
+                            <div class="ibox-title row border-0">
+                                <h4>회원사 상세</h4>
+                            </div>
+                            <div class="ibox-content row">
+                                <div class="box1 col-lg-12 p-0">
+                                    <div class="tabs-container">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li><a class="nav-link active" data-toggle="tab" href="#tab1">라이센스</a></li>
+                                            <li><a class="nav-link" data-toggle="tab" href="#tab2">서비스단가</a></li>
+                                            <li><a class="nav-link" data-toggle="tab" href="#tab3">사용자</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>라이센스명</th>
+                                                                <th>단가</th>
+                                                                <th>원가</th>
+                                                                <th>사용량</th>
+                                                                <th>수량</th>
+                                                                <th>만기일</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>제목입니다.</td>
+                                                                <td>상태입니다</td>
+                                                                <td>서비스유형임</td>
+                                                                <td>2018/10/11</td>
+                                                                <td>세글자</td>
+                                                                <td>2018/10/11</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" id="tab2" class="tab-pane overflow-x">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>년/월</th>
+                                                                <th>부가서비스</th>
+                                                                <th>건당금액</th>
+                                                                <th>발송수</th>
+                                                                <th>단가</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>203일</td>
+                                                                <td>영업건명입니다</td>
+                                                                <td>상담건입니다</td>
+                                                                <td>담당자</td>
+                                                                <td>담당자</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" id="tab3" class="tab-pane overflow-x">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>사용자명</th>
+                                                                <th>사용자ID</th>
+                                                                <th>부서</th>
+                                                                <th>라이센스</th>
+                                                                <th>사용여부</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>캠페인명입니다</td>
+                                                                <td>프로젝트입니다</td>
+                                                                <td>2018/10/12</td>
+                                                                <td>2018/11/22</td>
+                                                                <td>채널메체입니다</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

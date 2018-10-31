@@ -66,7 +66,7 @@
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/ma/${memCompany.SITEID}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary">회원사저장</button>
+                                <button class="btn btn-primary save">회원사저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -76,8 +76,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>회원사명</th>
-                                            <td><input type="text" class="form-control" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <th><label for="sitename">회원사명*</label></th>
+                                            <td><input type="text" class="form-control required" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -90,7 +90,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>사업자번호</th>
+                                            <th><label for="bsno">사업자번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" name="bsno" id="bsno" value="${memCompany.BSNO}">
@@ -108,7 +108,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>법인번호</th>
+                                            <th><label for="incno">법인번호</label></th>
                                             <td><input type="text" class="form-control" name="incno" id="incno" value="${memCompany.INCNO}"></td>
                                         </tr>
                                     </tbody>
@@ -122,7 +122,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0">직장주소</th>
+                                            <th class="border-top-0"><label for="zipcode">직장주소</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group col-lg-3 pl-0 float-left">
                                                     <input type="text" class="form-control daumzip" name="zipcode" id="zipcode" value="${memCompany.ZIPCODE}">
@@ -145,7 +145,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0">대표자</th>
+                                            <th class="border-top-0"><label for="prsdname">대표자명</label></th>
                                             <td class="border-top-0">
                                                <input type="text" class="form-control" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
                                             </td>
@@ -161,7 +161,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>휴대전화번호</th>
+                                            <th><label for="mobile">휴대전화번호</label></th>
                                             <td>
                                                 <select class="form-control col-3 float-left mr-3" name="mobile1" id="mobile1">
                                                     <option value=010 <c:if test='${memCompany.MOBILE1 eq 010}'>selected</c:if>>010</option>
@@ -174,19 +174,19 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>이메일</th>
+                                            <th><label for="email">이메일</label></th>
                                             <td>
                                                 <input type="text" class="form-control" name="email" id="email" value="${memCompany.EMAIL }">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>업태</th>
+                                            <th><label for="sitename">업태</label></th>
                                             <td>
                                                 <input type="text" class="form-control" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>최초가입일</th>
+                                            <th><label for="fregdate">최초가입일</label></th>
                                             <td>
                                                 <input type="text" class="form-control date" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             </td>
@@ -202,7 +202,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>전화번호</th>
+                                            <th><label for="telno">전화번호</label></th>
                                             <td>
                                                 <select class="form-control col-3 float-left mr-3" name="telno1" id="telno1" >
                                                     <option value=02 <c:if test='${memCompany.TELNO1 eq 02}'>selected</c:if>>02</option>
@@ -214,7 +214,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>기업규모</th>
+                                            <th><label for="sitesize">기업규모</label></th>
                                             <td>
                                                 <select class="form-control float-left" name="sitesize" id ="sitesize">
                                                     <option value="">선택</option>
@@ -226,15 +226,15 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>업종</th>
+                                            <th><label for="bscond">업종</label></th>
                                             <td>
                                                 <input type="text" class="form-control" name="bscond" id="bscond" value="${memCompany.BSCOND }">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>서비스상태</th>
+                                            <th><label for="isdelete">서비스상태</label></th>
                                             <td>
-                                               <select class="form-control float-left" name="isdelete" id="isdelete">
+                                               <select class="form-control float-left required" name="isdelete" id="isdelete">
                                                     <option value="">선택</option>
                                                     <option value=0 <c:if test='${memCompany.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${memCompany.ISDELETE eq 1}'>selected</c:if>>미사용</option>
@@ -252,7 +252,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>팩스번호</th>
+                                            <th><label for="faxtel">팩스번호</label></th>
                                             <td>
                                                 <select class="form-control col-3 float-left mr-3" name="faxtel1" id="faxtel1">
                                                     <option value=02 <c:if test='${memCompany.FAXTEL1 eq 02}'>selected</c:if>>02</option>
@@ -264,10 +264,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="border-top-0">영업담당자</th>
+                                            <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="owner_" id="owner_" value="${memCompany.OWNER_ }">
+                                                    <input type="text" class="form-control required" name="owner_" id="owner_" value="${memCompany.OWNER_ }">
                                                     <input type="hidden" name="owner" id="owner" value="${memCompany.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a onclick="javascript:ownerWindow();"><i class="fa fa-search"></i></a>
@@ -276,13 +276,13 @@
                                             </td>
                                         </tr> 
                                         <tr>
-                                            <th>종목</th>
+                                            <th><label for="bstype">종목</label></th>
                                             <td>
                                                 <input type="text" class="form-control" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>회원사로고</th>
+                                            <th><label for="sitelogo">사이트로고</label></th>
                                             <td>
                                                 <input type="text" class="form-control" name="sitelogo" id="sitelogo" value="${memCompany.SITELOGO }">
                                             </td>
@@ -298,7 +298,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>회원사 메모</th>
+                                            <th><label for="sitememo">회원사메모</label></th>
                                             <td>
                                                 <textarea type="text" class="form-control col-12 float-left mr-12 summernote" name="sitememo" id="sitememo" value="${memCompany.SITEMEMO }">${memCompany.SITEMEMO }</textarea>                            
                                             </td>

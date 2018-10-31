@@ -61,7 +61,7 @@
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/ma/me/${menu.MENUNO}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary">메뉴저장</button>
+                                <button class="btn btn-primary save">메뉴저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -71,8 +71,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>메뉴명</th>
-                                            <td><input type="text" class="form-control" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
+                                            <th><label for="menuname">메뉴명</label></th>
+                                            <td><input type="text" class="form-control required" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -85,10 +85,10 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>메뉴 값</th>
+                                            <th><label for="menuval">메뉴 값</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="menuval" id="menuval" value="${menu.MENUVAL}">
+                                                    <input type="text" class="form-control required" name="menuval" id="menuval" value="${menu.MENUVAL}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -103,16 +103,17 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>라이센스명</th>
-                                            <td><select class="form-control col-12 float-left mr-12" name="licenseno" id="licenseno">
-                                                    <option value=1 <c:if test='${menu.LICENSENO eq 1}'>selected</c:if>>고객라이센스</option>
-                                                    <option value=2 <c:if test='${menu.LICENSENO eq 2}'>selected</c:if>>영업라이센스</option>
-                                                    <option value=3 <c:if test='${menu.LICENSENO eq 3}'>selected</c:if>>서비스라이센스</option>
-                                                    <option value=4 <c:if test='${menu.LICENSENO eq 4}'>selected</c:if>>캠페인라이센스</option>
-                                                    <option value=5 <c:if test='${menu.LICENSENO eq 5}'>selected</c:if>>VOC라이센스</option>
-                                                    <option value=6 <c:if test='${menu.LICENSENO eq 6}'>selected</c:if>>리포트라이센스</option>
-                                                    <option value=7 <c:if test='${menu.LICENSENO eq 7}'>selected</c:if>>관리자라이센스</option>
-                                                </select></td>
+                                            <th><label for="licenseno">라이센스명</label></th>
+                                            <td>
+                                            <c:if test="${!empty license }">
+                                            	<select class="form-control col-12 float-left mr-12 required" name="licenseno" id="licenseno" value="${menu.LICENSENO }">
+                                            		<option value="">선택</option>
+                                            	<c:forEach var="license" items="${license }">
+                                            		<option value="${license.LICENSENO }">${license.LICENSENAME }</option>
+                                            	</c:forEach>
+                                            </select>
+                                            </c:if>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -125,8 +126,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0">사용여부</th>
-                                            <td><select class="form-control col-12 float-left mr-12" name="isdelete" id="isdelete">
+                                            <th class="border-top-0"><label for="isdelete">사용여부</label></th>
+                                            <td><select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
                                                     <option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select></td>
@@ -142,7 +143,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0">메뉴 설명</th>
+                                            <th class="border-top-0"><label for="menudesc">메뉴설명</label></th>
                                             <td><textarea name="menudesc" id="menudesc" value=""></textarea></td>
                                         </tr>
                                     </tbody>

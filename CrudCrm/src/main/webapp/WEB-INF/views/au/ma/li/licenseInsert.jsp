@@ -28,19 +28,16 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>메뉴 수정</h2>
+                    <h2>라이센스 추가</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/ma/me">메뉴목록</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="/ma/me/${menu.MENUNO }">메뉴정보</a>
+                            <a href="/ma/li">라이센스목록</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <strong>메뉴수정</strong>
+                            <strong>라이센스추가</strong>
                         </li>
                     </ol>
                 </div>
@@ -51,7 +48,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ma/me/post/{menuno}" method="PUT">
+<form:form action ="${pageContext.request.contextPath}/ma/li/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -63,7 +60,7 @@
                         
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/ma/me/${menu.MENUNO}" class="btn btn-primary">취소</a>
+                                <a href="${pageContext.request.contextPath}/ma/li/${license.LICENSENO}" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary save">메뉴저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
@@ -74,8 +71,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="menuname">메뉴명</label></th>
-                                            <td><input type="text" class="form-control required" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
+                                            <th><label for="licensename">라이센스명</label></th>
+                                            <td><input type="text" class="form-control required" name="licensename" id="licensename" value="${license.LICENSENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -88,35 +85,12 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="menuval">메뉴값</label></th>
+                                            <th><label for="licensecost">라이센스단가</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required" name="menuval" id="menuval" value="${menu.MENUVAL}">
+                                                    <input type="text" class="form-control required" name="licensecost" id="licensecost" value="${license.LICENSECOST}">
                                                 </div>
                                             </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box3 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th><label for="licenseno">라이센스명</label></th>
-                                            <td>
-                                            <c:if test="${!empty license }">
-                                            
-                                            <select class="form-control col-12 float-left mr-12 required" name="licenseno" id="licenseno" value="${menu.LICENSENO }">
-                                            	<option value="">선택</option>
-                                            <c:forEach var="license" items="${license }">
-                                            	<option value="${license.LICENSENO }">${license.LICENSENAME }</option>
-                                            </c:forEach>
-                                            </select>
-                                            </c:if>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -131,24 +105,9 @@
                                         <tr>
                                             <th class="border-top-0"><label for="isdelete">사용여부</label></th>
                                             <td><select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
-                                                    <option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>
-                                                    <option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
+                                                    <option value=0 <c:if test='${license.ISDELETE eq 0}'>selected</c:if>>사용</option>
+                                                    <option value=1 <c:if test='${license.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box4 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
-                                    <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0"><label for="menudesc">메뉴설명</label></th>
-                                            <td><textarea name="menudesc" id="menudesc" value="${menu.MENUDESC }">${menu.MENUDESC }</textarea></td>
-                                            <td><input type="hidden" name="menuno" id="menuno" value="${menu.MENUNO }"/></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -174,7 +133,7 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>			
 
 </body>
 </html>

@@ -1,4 +1,15 @@
-	// 부모 window 가 실행
+	$('.save').click(function(e){		
+		check_required(e);
+	});
+	
+    $('.resets').click(function(e){
+    	e.preventDefault();
+    	$('.reset').val('');
+    });	
+
+
+
+    // 부모 window 가 실행
 	function openNewWindow(url,target){
 		var name= "영업담당자";
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
@@ -9,8 +20,6 @@
 		setTimeout(function(){
 			$(newWindow.document.body).append('<input type="hidden" id="parentid" name="parentid" value="'+target+'">');	
 		},1000);
-		
-		
 	}
 	// 자식 window가 실행
 	// 영업 담당자 및 담당자 가지고옴
@@ -29,11 +38,7 @@
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
-	
-	$('.save').click(function(e){		
-		check_required(e);
-	});
-	
+
     function check_required(e){
         // 필수로 저장되어야 하는 값 체크
         var length = $('.required').length;
@@ -55,3 +60,17 @@
         }
         return true;
     }
+    
+    function paging(prm){
+    	//파라미터로 클릭한 페이지 번호를 받아온다
+        var htmlStr = '<input type="hidden" id="pageNum" name="pageNum" value="'+prm+'">';
+        // 첫번쨰 form:form 가져옴.
+        var form = $('form:eq(0)');
+        //form 안에 생성해둔 <span id ='selectpage'> 에 위의 값을 히든으로 넘긴다.
+        form.children().append(htmlStr);
+        // 폼 submit
+        form.submit();
+     }
+    
+    
+    

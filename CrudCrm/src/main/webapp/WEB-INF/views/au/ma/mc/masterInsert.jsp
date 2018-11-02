@@ -35,7 +35,7 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/ma">회원사목록</a>
+                            <a href="/ma/mc">회원사목록</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>회원사추가</strong>
@@ -49,7 +49,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ma/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/ma/mc/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -61,7 +61,7 @@
                         
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/ma/${memCompany.SITEID}" class="btn btn-primary">취소</a>
+                                <a href="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary save">회원사저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
@@ -264,11 +264,11 @@
                                         <tr>
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
-                                                <div class="input-group">
+                                                <div class="input-group owner">
                                                     <input type="text" class="form-control required" name="owner_" id="owner_" value="${memCompany.owner_ }">
                                                     <input type="hidden" name="owner" id="owner" value="${memCompany.ower }">
                                                     <span class="input-group-addon">
-                                                        <a onclick="javascript:ownerWindow();"><i class="fa fa-search"></i></a>
+                                                        <a><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
                                             </td>
@@ -349,10 +349,9 @@
 	         }
 	     }).open();
 	 });
-		function ownerWindow(){
-			openNewWindow('/common/user');
-		};
-		
+		$('.owner').click(function(e){
+			openNewWindow('/common/user',e.target.id);
+		});
 
 	</script>		
 

@@ -72,17 +72,18 @@ public class MenuServiceImpl implements MenuService{
 	}
 
 	@Override
-	public ModelAndView menuRead(HttpServletRequest request, int menuno) {
+	public Map<String,Object> menuRead(HttpServletRequest request, int menuno) {
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		Map<String,Object> search = new HashMap<>();
 		
 		Map<String,Object> menuInfo =  menuDao.menuRead(menuno);
 		List<Map<String,Object>> licenseInfo = liceseDao.licenseList(search);
-		mView.addObject("menu",menuInfo);
-		mView.addObject("license",licenseInfo);
+		
+		menuInfo.put("licenseInfo", licenseInfo);
+		
+		return menuInfo;
 
-		return mView;
 	}
 
 	@Override

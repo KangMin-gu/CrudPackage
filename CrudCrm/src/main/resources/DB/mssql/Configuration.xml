@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="DB/mssql/EmailMapper.xml" />
 		<mapper resource="DB/mssql/UserMapper.xml" />
 		<mapper resource="DB/mssql/MemCompanyMapper.xml" />
-		<mapper resource="DB/mssql/AdMapper.xml" />
+		<mapper resource="DB/mssql/AuMapper.xml" />
 		<mapper resource="DB/mssql/MenuMapper.xml" />
 		<mapper resource="DB/mssql/LicenseMapper.xml" />				
 	</mappers>

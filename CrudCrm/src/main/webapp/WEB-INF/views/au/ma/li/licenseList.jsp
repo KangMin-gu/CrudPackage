@@ -74,18 +74,15 @@
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/ma/li/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/ma/li/post" class="btn btn-primary">라이센스추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">회원사삭제</button>
                                 </div>
                              
                             </div>
-                            <div class="overflow-x w-100">
+                            <div class="overflow-x w-100 head">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -99,9 +96,9 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach var="license" items="${license }">
-                                    <tr>
+                                    <tr value="${license.LICENSENO}">
                                         <td><input type="checkbox" class="i-checks" name="licenseno" id="licenseno" value="${license.LICENSENO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/ma/li/${license.LICENSENO }">${license.LICENSENAME}</td>
+                                        <td><a>${license.LICENSENAME}</td>
                                         <td>${license.LICENSECOST }</td>
                                         <td>${license.TOTALCNT }</td>
                                         <td>${license.REGDATE }</td>
@@ -116,8 +113,7 @@
                                 <ul class="pagination">
                                     <c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
-												<li><a
-													href="${pageContext.request.contextPath}/ma?pageNum=${page.startPageNum-1 }&">&laquo;</a>
+												<li><a onclick="javascript:paging(${page.startPageNum-1})">&laquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -130,18 +126,16 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="active"><a
-														href="${pageContext.request.contextPath}/ma?pageNum=${i }">${i }</a></li>
+														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>
-													<li><a
-														href="${pageContext.request.contextPath}/ma?pageNum=${i }">${i }</a></li>
+													<li><a onclick="javascript:paging(${i})">${i }</a></li>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
-												<li><a
-													href="${pageContext.request.contextPath}/ma?pageNum=${page.endPageNum+1 }">&raquo;</a>
+												<li><a onclick="javascript:paging(${page.endPageNum+1 })"></a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -153,8 +147,78 @@
                             </div>
                            <h4 class="float-right">&middot; 총 자료수 : ${totalRows }</h4>
                         </div>
-                        </form:form>
-                        
+                        <div class="row justify-content-md-center">
+            
+                <div class="col-lg-12" style="background: #ffffff;">
+                    <div class="ibox">
+                        <div class="ibox-content row body">
+                            <div class="w-100 text-right mb-2">
+                            	<button class="btn btn-primary" id="reset">초기화</button>
+                            	<button class="btn btn-primary" id="create">추가</button>
+                            	<button class="btn btn-primary" id="save">저장</button>
+                            	<button class="btn btn-primary" id="update">수정</button>
+                            	<button class="btn btn-primary" id="cancel">취소</button>
+                                <button class="btn btn-primary" id="delete">삭제</button>
+                            </div>
+                            <div class="box1 col-lg-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>라이센스명</th>
+                                            <td><input type="text" class="form-control required" name="licensename" id="licensename"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>라이센스 단가</th>
+                                            <td height="40">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control required" name="licensecost" id="licensecost">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           	<div class="box4 col-lg-4 p-0">
+                                <table class="table table-bordered border-top-0  mb-0">
+                                    <colgroup>
+                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    
+                                        <tr> 
+                                        	<th class="border-top-0"><label for="isdelete">사용여부</label></th>
+                                            <td>
+                                            	<select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
+                                                	<option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>
+                                                	<option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
+                                                </select>
+                                            </td>
+                                           	<td>
+                                           		<input type="hidden" id="no" />
+                                           	</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
                     </div>
                     
                 </div>
@@ -175,7 +239,9 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script>
+			
 
 </body>
 </html>

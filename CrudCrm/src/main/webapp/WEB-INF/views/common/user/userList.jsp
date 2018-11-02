@@ -39,7 +39,7 @@
                                             <th>담당자명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="userName" id="userName" value="${search.userName }">
+                                                    <input type="text" class="form-control reset" name="username" id="username" value="${search.userName }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -89,8 +89,8 @@
                                 <c:forEach var="user" items="${user }">
                                 
                                     <tr onclick="javascript:parentUser(this,${user.USERNO })" value=${user.USERNO }>
-                                    	<td id="userName">${user.USERNAME }</td>
-                                        <td id="userId">${user.USERID }</td>
+                                    	<td id="username">${user.USERNAME }</td>
+                                        <td id="userid">${user.USERID }</td>
                                         <td id="dept">${user.DEPT }</td>
                                         <td id="mobile">${user.MOBILE }</td>
                                         <td id="email">${user.EMAIL }</td>
@@ -104,8 +104,7 @@
                                 <ul class="pagination">
                                     <c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
-												<li><a
-													href="${pageContext.request.contextPath}/ma?pageNum=${page.startPageNum-1 }&">&laquo;</a>
+												<li><a onclick="javascript:paging(${page.startPageNum-1})">&laquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -118,18 +117,16 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="active"><a
-														href="${pageContext.request.contextPath}/ma?pageNum=${i }">${i }</a></li>
+														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>
-													<li><a
-														href="${pageContext.request.contextPath}/ma?pageNum=${i }">${i }</a></li>
+													<li><a onclick="javascript:paging(${i})">${i }</a></li>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
-												<li><a
-													href="${pageContext.request.contextPath}/ma?pageNum=${page.endPageNum+1 }">&raquo;</a>
+												<li><a onclick="javascript:paging(${page.endPageNum+1 })"></a>
 												</li>
 											</c:when>
 											<c:otherwise>

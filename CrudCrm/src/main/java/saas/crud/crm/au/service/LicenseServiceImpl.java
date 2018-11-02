@@ -61,14 +61,10 @@ public class LicenseServiceImpl implements LicenseService{
 	}
 
 	@Override
-	public ModelAndView licenseDetail(HttpServletRequest request, int licenseno) {
+	public Map<String,Object> licenseDetail(HttpServletRequest request, int licenseno) {
 		// TODO Auto-generated method stub
-		
-		ModelAndView mView = new ModelAndView();
 		Map<String,Object> licenseInfo = licenseDao.licenseDetail(licenseno);
-		mView.addObject("license",licenseInfo);
-		
-		return mView;
+		return licenseInfo;
 	}
 
 	@Override
@@ -79,8 +75,8 @@ public class LicenseServiceImpl implements LicenseService{
 		licenseDto.setEdtuser(USERNO);
 		licenseDto.setReguser(USERNO);
 		int licenseNo = licenseDao.licenseInsert(licenseDto);
-		
 		return licenseNo;
+		
 	}
 
 	@Override
@@ -123,6 +119,15 @@ public class LicenseServiceImpl implements LicenseService{
 			
 		}
 		
+	}
+
+	@Override
+	public List<Map<String, Object>> licenseAjaxList(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		Map<String,Object> search = new HashMap<>();
+		List<Map<String,Object>> licenseInfo = licenseDao.licenseList(search);
+		return licenseInfo;
 	}
 
 }

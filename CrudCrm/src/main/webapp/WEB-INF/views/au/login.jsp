@@ -30,10 +30,10 @@
             
             <form:form class="m-t" role="form" action="${pageContext.request.contextPath}/login" method="post">
                 <div class="form-group">
-                    <input id="USERID" name="USERID" type="text" class="form-control" placeholder="계정" autofocus="autofocus" required>
+                    <input id="userid" name="userid" type="text" class="form-control" placeholder="계정" autofocus="autofocus" required>
                 </div>
                 <div class="form-group">
-                    <input id="USERPASSWORD" name="USERPASSWORD" type="password" class="form-control" placeholder="비밀번호" required>
+                    <input id="userpassword" name="userpassword" type="password" class="form-control" placeholder="비밀번호" required>
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>
                

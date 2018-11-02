@@ -27,52 +27,52 @@ public class MaController {
 	@Autowired
 	private MemCompanyService memCompanyService;
 	// LIST
-	@RequestMapping(value = "/ma", method=RequestMethod.GET)
+	@RequestMapping(value = "/ma/mc", method=RequestMethod.GET)
 	public ModelAndView authMemCompanyList(HttpServletRequest request) {
 		ModelAndView mView = memCompanyService.memCompanyList(request);
-		mView.setViewName("au/ma/masterList");
+		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
 	// LIST
-	@RequestMapping(value = "/ma", method=RequestMethod.POST)
+	@RequestMapping(value = "/ma/mc", method=RequestMethod.POST)
 	public ModelAndView authMemCompanySearchList(HttpServletRequest request) {
 		ModelAndView mView = memCompanyService.memCompanyList(request);
-		mView.setViewName("au/ma/masterList");
+		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
 	// READ
-	@RequestMapping(value="/ma/{siteId}",method=RequestMethod.GET)
+	@RequestMapping(value="/ma/mc/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authMemCompanyRead(@PathVariable int siteId, HttpServletRequest request) {
 		ModelAndView mView = memCompanyService.memCompanyRead(request, siteId);
-		mView.setViewName("au/ma/masterRead");
+		mView.setViewName("au/ma/mc/masterRead");
 		return mView;
 	}
 	// UPDATE 화면
-	@RequestMapping(value="/ma/post/{siteId}",method=RequestMethod.GET)
+	@RequestMapping(value="/ma/mc/post/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authMemCompanyUpdate(@PathVariable int siteId, HttpServletRequest request) {
 		ModelAndView mView = memCompanyService.memCompanyRead(request, siteId);
-		mView.setViewName("au/ma/masterUpdate"); 
+		mView.setViewName("au/ma/mc/masterUpdate"); 
 		return mView;
 	}
 	//UPDATE 실행
-	@RequestMapping(value="/ma/post/{siteId}",method=RequestMethod.PUT)
+	@RequestMapping(value="/ma/mc/post/{siteId}",method=RequestMethod.PUT)
 	public ModelAndView authMemCompanyUpdateSet(@ModelAttribute MemCompanyDto memCompanyDto,HttpServletRequest request) {
 		memCompanyService.memComapnyUpdate(request, memCompanyDto);
 		
 		ModelAndView mView = new ModelAndView();
 		int siteId = memCompanyDto.getSiteid();
-		mView.setViewName("redirect:/ma/"+siteId);
+		mView.setViewName("redirect:/ma/mc/"+siteId);
 		return mView;
 	}
 	// INSERT 화면
-	@RequestMapping(value="/ma/post", method=RequestMethod.GET)
+	@RequestMapping(value="/ma/mc/post", method=RequestMethod.GET)
 	public ModelAndView authMemCompanyInsert() {
 		ModelAndView mView = new ModelAndView();
-		mView.setViewName("au/ma/masterInsert");
+		mView.setViewName("au/ma/mc/masterInsert");
 		return mView;
 	}
 	// INSERT 실행
-	@RequestMapping(value="/ma/post", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/mc/post", method=RequestMethod.POST)
 	public ModelAndView authMemCompanyInsertSet(@ModelAttribute MemCompanyDto memCompanyDto,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		int siteid = memCompanyService.memCompanyInsert(request,memCompanyDto);
@@ -82,21 +82,21 @@ public class MaController {
 		return mView;
 	}
 	// INSERT 실행
-	@RequestMapping(value="/ma/{siteId}", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/mc/{siteId}", method=RequestMethod.POST)
 	public ModelAndView authMemCompanyDelete(@PathVariable int siteId,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		memCompanyService.memCompanyDelete(request,siteId);
 		
-		mView.setViewName("redirect:/ma");
+		mView.setViewName("redirect:/ma/mc");
 		return mView;
 	}
 	// LIST에서 멀티 삭제
-	@RequestMapping(value="/ma/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/mc/delete", method=RequestMethod.POST)
 	public ModelAndView authMemCompanyMultiDelete(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		memCompanyService.memCompanyMultiDelete(request);
 		
-		mView.setViewName("redirect:/ma");
+		mView.setViewName("redirect:/ma/mc");
 		return mView;
 	}
 	

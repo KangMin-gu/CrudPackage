@@ -1,5 +1,8 @@
 package saas.crud.crm.au.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.LicenseDto;
@@ -23,73 +27,64 @@ public class LicenseController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MaController.class);
 	//담당자 정보
+	@ResponseBody
 	@RequestMapping(value="/ma/li", method=RequestMethod.GET)
 	public ModelAndView authLicenseList(HttpServletRequest request) {
 		ModelAndView mView = licenseService.licenseList(request);
 		mView.setViewName("/au/ma/li/licenseList");
 		return mView;
 	}
+	@ResponseBody
 	@RequestMapping(value="/ma/li", method=RequestMethod.POST)
 	public ModelAndView authLicenseSearchList(HttpServletRequest request) {
 		ModelAndView mView = licenseService.licenseList(request);
 		mView.setViewName("/au/ma/li/licenseList");
 		return mView;
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="/ma/li/ajax", method=RequestMethod.POST)
+	public List<Map<String,Object>> authLicenseAjaxList(HttpServletRequest request) {
+		List<Map<String,Object>> licenseInfo = licenseService.licenseAjaxList(request);
+		return licenseInfo;
+	}
+	@ResponseBody
 	@RequestMapping(value="/ma/li/{licenseno}", method=RequestMethod.GET)
-	public ModelAndView authLicenseDetail(HttpServletRequest request,@PathVariable int licenseno) {
-		ModelAndView mView = licenseService.licenseDetail(request, licenseno);
-		mView.setViewName("/au/ma/li/licenseRead");
-		return mView;
+	public Map<String,Object> authLicenseDetail(HttpServletRequest request,@PathVariable int licenseno) {
+		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseno);
+		return licenseInfo;
 	}
-	@RequestMapping(value="/ma/li/post", method=RequestMethod.GET)
-	public ModelAndView authLicenseInsert(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
-		mView.setViewName("/au/ma/li/licenseInsert");
-		return mView;
-	}
+	@ResponseBody
 	@RequestMapping(value="/ma/li/post", method=RequestMethod.POST)
-	public ModelAndView authLicenseInsert(HttpServletRequest request, @ModelAttribute LicenseDto licenseDto) {
-		ModelAndView mView = new ModelAndView();
+	public Map<String,Object> authLicenseInsert(HttpServletRequest request, @ModelAttribute LicenseDto licenseDto) {
 		int licenseNo = licenseService.licenseInsert(request, licenseDto);
-		mView.setViewName("redirect:/ma/li/"+licenseNo);
-		return mView;
+		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseNo);
+		return licenseInfo;
 	}
-	
-	@RequestMapping(value="/ma/li/post/{licenseno}", method=RequestMethod.GET)
-	public ModelAndView authLicenseUpdate(HttpServletRequest request,@PathVariable int licenseno) {
-		ModelAndView mView = licenseService.licenseDetail(request, licenseno);
-		mView.setViewName("/au/ma/li/licenseUpdate");
-		return mView;
-	}
-	@RequestMapping(value="/ma/li/post/{licenseno}", method=RequestMethod.PUT)
-	public ModelAndView authLicenseUpdateSet(HttpServletRequest request,@ModelAttribute LicenseDto licenseDto) {
-		ModelAndView mView = new ModelAndView();
+	@ResponseBody
+	@RequestMapping(value="/ma/li/post/{licenseno}", method=RequestMethod.POST)
+	public Map<String,Object> authLicenseUpdateSet(HttpServletRequest request,@ModelAttribute LicenseDto licenseDto) {
 		licenseService.licenseUpdate(request, licenseDto);
-		mView.setViewName("/au/ma/li/licenseUpdate");
-		return mView;
+		int licenseNo = licenseDto.getLicenseno(); 
+		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseNo);
+		return licenseInfo;
 	}
-	
+	@ResponseBody
 	@RequestMapping(value="/ma/li/{licenseno}" ,method=RequestMethod.POST)
-	public ModelAndView authLicenseDelete(HttpServletRequest request, @PathVariable int licenseno) {
-		
-		ModelAndView mView = new ModelAndView();
+	public Map<String,Object> authLicenseDelete(HttpServletRequest request, @PathVariable int licenseno) {
 		
 		licenseService.licenseDelete(request,licenseno);
 		
-		mView.setViewName("redirect:/ma/li");
-		return mView;
-		
+		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseno);
+		return licenseInfo;
 	}
-	
+	@ResponseBody
 	@RequestMapping(value="/ma/li/delete" ,method=RequestMethod.POST)
 	public ModelAndView authLicenseMultiDelete(HttpServletRequest request) {
 		
-		ModelAndView mView = new ModelAndView();
-		
 		licenseService.licenseMultiDelete(request);
 		
-		mView.setViewName("redirect:/ma/li");
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("redirect:/ma/me");
 		return mView;
 		
 	}

@@ -53,11 +53,10 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		search.put("siteName", siteName);
 		search.put("siteSize", siteSize);
 		
-		
 		int totalRows = memCompanyDao.memCompanyTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
-		int PAGE_ROW_COUNT = 10;
+		int PAGE_ROW_COUNT = 5;
 		
 		PagingCommon pages =new PagingCommon();
 		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
@@ -69,7 +68,6 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 
 		List<Map<String,Object>> memCompany = memCompanyDao.memCompanyList(search);
 		
-		String url = "ma";
 		mView.addObject("memCompany",memCompany);	
 		mView.addObject("page",page);
 		mView.addObject("totalRows",totalRows);

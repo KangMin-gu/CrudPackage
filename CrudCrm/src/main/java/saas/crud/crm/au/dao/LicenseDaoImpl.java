@@ -37,8 +37,7 @@ public class LicenseDaoImpl implements LicenseDao{
 	public int licenseInsert(LicenseDto licenseDto) {
 		// TODO Auto-generated method stub
 		session.insert("li.insert",licenseDto);
-		int licenseNo = licenseDto.getLicenseno(); 
-		
+		int licenseNo = licenseDto.getLicenseno();
 		return licenseNo;
 	}
 

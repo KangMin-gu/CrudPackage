@@ -36,7 +36,7 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/ma">회원사목록</a>
+                            <a href="/ma/mc">회원사목록</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>회원사 정보</strong>
@@ -61,9 +61,9 @@
                         <div class="ibox-content row">
                         
                             <div class="w-100 text-right mb-2">
-                            <form:form action="${pageContext.request.contextPath}/ma/${memCompany.SITEID}" method="POST">
-                                <a href="${pageContext.request.contextPath}/ma" class="btn btn-primary">회원사목록</a>
-                                <a href="${pageContext.request.contextPath}/ma/post/${memCompany.SITEID}" class="btn btn-primary">회원사수정</a>
+                            <form:form action="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" method="POST">
+                                <a href="${pageContext.request.contextPath}/ma/mc" class="btn btn-primary">회원사목록</a>
+                                <a href="${pageContext.request.contextPath}/ma/mc/post/${memCompany.SITEID}" class="btn btn-primary">회원사수정</a>
 								<button class="btn btn-primary" type="submit" value="삭제">회원사삭제</button>
 							</form:form>	
                             </div>

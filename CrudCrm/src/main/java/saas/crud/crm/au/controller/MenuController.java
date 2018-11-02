@@ -1,5 +1,7 @@
 package saas.crud.crm.au.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.MemCompanyDto;
@@ -40,52 +43,39 @@ public class MenuController {
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
+	@ResponseBody
 	@RequestMapping(value="/ma/me/{menuno}",method=RequestMethod.GET)
-	public ModelAndView authMenuRead(HttpServletRequest request, @PathVariable int menuno) { 
-		ModelAndView mView = menuService.menuRead(request, menuno);
-		mView.setViewName("au/ma/me/menuRead");
-		return mView;
+	public Map<String,Object> authMenuRead(HttpServletRequest request, @PathVariable int menuno) { 
+		Map<String,Object> menuInfo = menuService.menuRead(request, menuno);
+		return menuInfo;
 	}
-	//Insert 입력폼
-	@RequestMapping(value = "/ma/me/post", method=RequestMethod.GET)
-	public ModelAndView authMenuInsert(HttpServletRequest request) {
-		
-		ModelAndView mView = licenseService.licenseList(request);
-		mView.setViewName("au/ma/me/menuInsert");
-		return mView;
-	}
+	@ResponseBody
 	@RequestMapping(value = "/ma/me/post", method=RequestMethod.POST)
-	public ModelAndView authMenuInsertSet(HttpServletRequest request, @ModelAttribute MenuDto menuDto) {
-		ModelAndView mView = new ModelAndView();
+	public Map<String,Object> authMenuInsertSet(HttpServletRequest request, @ModelAttribute MenuDto menuDto) {
+
 		
 		int menuNo = menuService.menuInsert(request,menuDto);
-		mView.setViewName("redirect:/ma/me/"+menuNo);
-		return mView;
+		Map<String,Object> menuInfo = menuService.menuRead(request, menuNo);
+		return menuInfo;
 	}
-	//Update 입력폼
-	@RequestMapping(value = "/ma/me/post/{menuno}", method=RequestMethod.GET)
-	public ModelAndView authMenuUpdate(HttpServletRequest request,@PathVariable int menuno) {
-		ModelAndView mView = menuService.menuRead(request, menuno);
-		mView.setViewName("au/ma/me/menuUpdate");
-		return mView;
-	}
-	@RequestMapping(value="/ma/me/post/{menuno}",method=RequestMethod.PUT)
-	public ModelAndView authMenuUpdateSet(@ModelAttribute MenuDto menuDto,HttpServletRequest request) {
+	@ResponseBody
+	@RequestMapping(value="/ma/me/post/{menuno}",method=RequestMethod.POST)
+	public Map<String,Object> authMenuUpdateSet(@ModelAttribute MenuDto menuDto,HttpServletRequest request) {
 		menuService.menuUpdate(request, menuDto);
 		
-		ModelAndView mView = new ModelAndView();
 		int menuNo = menuDto.getMenuno();
-		mView.setViewName("redirect:/ma/me/"+menuNo);
-		
-		return mView;
+		Map<String,Object> menuInfo = menuService.menuRead(request, menuNo);
+		return menuInfo;
 	}
+	@ResponseBody
 	@RequestMapping(value="/ma/me/{menuno}", method=RequestMethod.POST)
-	public ModelAndView authmenuDelete(HttpServletRequest request, @PathVariable int menuno) {
+	public Map<String,Object> authmenuDelete(HttpServletRequest request, @PathVariable int menuno) {
 		menuService.menuDelete(request,menuno);
 		
-		ModelAndView mView = new ModelAndView();
-		mView.setViewName("redirect:/ma/me");
-		return mView;
+		Map<String,Object> menuInfo = menuService.menuRead(request, menuno);
+		return menuInfo;
+		
+		
 	}
 	
 	@RequestMapping(value="/ma/me/delete", method=RequestMethod.POST)

@@ -17,6 +17,7 @@
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"> <!--datePicker-->
 </head>
 
 <body>
@@ -36,24 +37,47 @@
 						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
-						<div class="mail-box-header">
-							
-							<form:form method="post" action="${pageContext.request.contextPath}/note/inbox" class="float-right mail-search">							
-								<div class="input-group">
-									<select id="condition" name="condition" class="form-control mr-4">
-	                                    <option value="titleContent">제목+내용</option>	                                    
-	                                    <option value="title">제목</option>
-	                                    <option value="sender">보낸이</option>
-	                                    <option value="sendDate">수신일</option>  
-                                    </select>
-									
-									<input id="keyword" name="keyword" type="text" class="form-control form-control-sm" id="keyword" name="keyword" value="${keyword }" placeholder="검색어">
-									<div class="input-group-btn">
-										<button type="submit" class="btn btn-sm btn-primary">검색</button>
-									</div>
-								</div>
-							</form:form> 
-							<h2>${NOTENAME } (${notReadVal })</h2>
+						<div class="mail-box-header">				
+							<form:form method="post" action="${pageContext.request.contextPath}/${url }">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-lg-3 "><h2>${NOTENAME } (${notReadVal })</h2></div> 
+											<div class="col-lg-9 ">										
+												<div class="container">
+													<div class="row">
+														<div class="col-lg-6">																													
+															 <div class="input-group p-0">
+			                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+			                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                                      <input id="startdate" name="startdate" type="text" class="form-control" value="${startdate }">
+			                                                    </div>
+			                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+			                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+			                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                                      <input id="enddate" name="enddate" type="text" class="form-control" value="${enddate }">
+			                                                    </div>
+	                                                		</div>
+														</div>
+														<div class="col-lg-6">
+															<div class="container">
+																<div class="row">
+																	<div class="d-flex col-lg-12">													
+																		<select id="condition" name="condition" class="form-control">										                                                                       
+										                                    <option value="title">제목</option>
+										                                    <option value="sender">보낸이</option>
+							                                    		</select>						                                    		
+ 							                                 			<input id="keyword" name="keyword" type="text" class="form-control form-control-sm" id="keyword" name="keyword" value="${keyword }" placeholder="검색어">																	
+																		<button type="submit" class="btn btn-sm btn-primary">검색</button>						                                    		                                																																																															
+																	</div>
+																</div>
+															</div>																																													
+														</div>														
+													</div>																				
+												</div>										
+											</div>																			
+										</div>
+									</div>	
+								</form:form>					
 							<div class="mail-tools tooltip-demo m-t-md">
 								<div class="btn-group float-right">
 									<!--   <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
@@ -62,7 +86,7 @@
 										<c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
 												<li><a
-													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.startPageNum-1 }&">&laquo;</a>
+													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.startPageNum-1 }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">&laquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -75,18 +99,18 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="active"><a
-														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }">${i }</a></li>
+														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a
-														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }">${i }</a></li>
+														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
 												<li><a
-													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.endPageNum+1 }">&raquo;</a>
+													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.endPageNum+1 }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -96,29 +120,48 @@
 										</c:choose>
 									</ul>
 								</div>
-
-								<button class="btn btn-white btn-sm" data-toggle="tooltip"
-									data-placement="left" title="새로고침">
+								<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="새로고침" 
+									onclick="window.location.href='${pageContext.request.contextPath}/note/inbox?pageNum=${page.pageNum}&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}'">
 									<i class="fa fa-refresh"></i>
 								</button>
-								<button class="btn btn-white btn-sm" data-toggle="tooltip"
-									data-placement="top" title="읽은 통지">
+								
+								<c:set var="urls" value="${requestScope['javax.servlet.forward.request_uri']}" />							
+								
+								<c:if test="${urls  eq '/note/inbox' or urls eq '/note/import' or urls eq '/note/trash'}">
+								<button id="eyeChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="읽음">
 									<i class="fa fa-eye"></i>
 								</button>
-								<button class="btn btn-white btn-sm" data-toggle="tooltip"
-									data-placement="top" title="중요 통지">
+								</c:if>
+								
+								<c:if test="${urls  eq '/note/inbox' or urls eq '/note/import'}">
+								<button id="importChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="중요 통지">
 									<i class="fa fa-exclamation"></i>
 								</button>
-								<button class="btn btn-white btn-sm" data-toggle="tooltip"
-									data-placement="top" title="휴지통으로 이동">
-									<i class="fa fa-trash-o"></i>
-								</button>
-
+								</c:if>
+								
+								<c:choose>
+									<c:when test="${urls  eq '/note/inbox' or urls eq '/note/import'}">
+										<button id="trashChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="휴지통으로 이동">
+											<i class="fa fa-trash-o"></i>
+										</button>
+									</c:when>
+									<c:when test="${urls eq '/note/trash' }">
+										<button id="deleteChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="삭제">
+											<i class="fa fa-trash-o"></i>
+										</button>
+									</c:when>
+									<c:otherwise>
+										
+									</c:otherwise>
+								</c:choose>
+								
+								
+								
+								
 							</div>
 						</div>
-						<div class="mail-box">
-							<jsp:useBean id="toDay" class="java.util.Date" />
-							<fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd" var="nowDate"/>
+						
+						<div class="mail-box">							
 							<table class="table table-hover table-mail">
 								<tbody>
 									<c:forEach var="tmp" items="${noteList }">
@@ -126,10 +169,12 @@
 	                 						<c:when test="${tmp.READCHEK eq 0 }">class="unread"</c:when>
 	                 						<c:otherwise>class="read"</c:otherwise>
 	                 					</c:choose>>
-											<td class="check-mail"><input type="checkbox" class="i-checks" value="${tmp.NOTICEID }"></td>
+											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks" value="${tmp.NOTICEID }"></td>
 											<td class="mail-ontact">${tmp.SENDER }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
-											<td class="mail-subject"><a href="${pageContext.request.contextPath}/note/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
+											<td class="mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
 											<td class="text-right mail-date">
+												<jsp:useBean id="toDay" class="java.util.Date" />
+												<fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd" var="nowDate"/>
 												<c:choose>
 													<c:when test="${nowDate >  tmp.SENDDATE}">${tmp.SENDDATE }</c:when>
 			                 						<c:otherwise>${tmp.SENDDATETIME }</c:otherwise>
@@ -160,14 +205,93 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>		
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.kr.js"></script> <!-- datePicker-->		
 <script>
-        $(document).ready(function(){
+
+$(document).ready(function(){
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
-        });        
+		
+            // datePicker
+            $('.date.date01, .date.date02').datepicker({           	
+                todayBtn: "linked",
+                format: "yyyy-mm-dd",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true,
+                language: "kr"
+            });         
+});   
+
+$('#eyeChk').click(function(){
+	var checkArr=[]
+	$("input[name='noticeid']:checked").each(function(i){
+		checkArr.push($(this).val());
+	});
+	var allData = {"checkArr": checkArr };
+	
+	$.ajax({
+        url:"eyechk",
+        type:'GET',
+        data: allData,
+        success:function(data){          
+            location.reload();
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            alert("에러발생 관리자에게 문의하세요.");
+            location.reload();
+        }
+        });
+});
+
+$("#importChk").click(function(){
+	var checkArr=[]
+	$("input[name='noticeid']:checked").each(function(i){
+		checkArr.push($(this).val());
+	});
+	var allData = {"checkArr": checkArr };
+	
+	$.ajax({
+        url:"importchk",
+        type:'GET',
+        data: allData,
+        success:function(data){          
+            location.reload();
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            alert("에러발생 관리자에게 문의하세요.");
+            location.reload();
+        }
+        });
+});
+
+$("#trashChk").click(function(){
+	var checkArr=[]
+	$("input[name='noticeid']:checked").each(function(i){
+		checkArr.push($(this).val());
+	});
+	var allData = {"checkArr": checkArr };
+	
+	$.ajax({
+        url:"trashchk",
+        type:'GET',
+        data: allData,
+        success:function(data){          
+            location.reload();
+        },
+        error:function(jqXHR, textStatus, errorThrown){
+            alert("에러발생 관리자에게 문의하세요.");
+            location.reload();
+        }
+        });
+});
+
+        
 </script>
 </body>
 </html>

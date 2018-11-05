@@ -49,55 +49,23 @@
 									data-placement="top" title="Move to trash"><i
 									class="fa fa-trash-o"></i> </a>
 							</div>
-							<h2>View Message</h2>
+							<h2>${note.TITLE }</h2>
 							<div class="mail-tools tooltip-demo m-t-md">
 
 
-								<h3>
-									<span class="font-normal">Subject: </span>Aldus PageMaker
-									including versions of Lorem Ipsum.
-								</h3>
 								<h5>
-									<span class="float-right font-normal">10:15AM 02 FEB
-										2014</span> <span class="font-normal">From: </span>alex.smith@corporation.com
+									<span class="float-right font-normal">${note.REGDATE }</span> 					
+									<span class="font-normal">보낸이: </span>${note.FROMUSER } "<${note.EMAIL }>"
 								</h5>
 							</div>
 						</div>
 						<div class="mail-box">
-
-
 							<div class="mail-body">
-								<p>
-									Hello Jonathan! <br /> <br /> Lorem Ipsum is simply dummy text
-									of the printing and typesetting industry. Lorem Ipsum has been
-									the industry's standard dummy text ever since the 1500s, when
-									an unknown printer took a galley of type and scrambled it to
-									make a type <strong>specimen book.</strong>It was popularised
-									in the 1960s with the release of Letraset sheets containing
-									Lorem Ipsum passages, and more recently with desktop publishing
-									software like Aldus PageMaker including versions of Lorem
-									Ipsum. It has survived not only five centuries, but also the
-									leap into electronic typesetting, remaining essentially
-									unchanged.
-								</p>
-								<p>
-									It was popularised in the 1960s with the release <a href="#"
-										class="text-navy">Letraset sheets</a> containing Lorem Ipsum
-									passages, and more recently with desktop publishing software
-									like Aldus PageMaker including versions of Lorem Ipsum.
-								</p>
-								<p>
-									There are many variations of passages of <strong>Lorem
-										Ipsum</strong>Lorem Ipsum available, but the majority have suffered
-									alteration in some form, by injected humour, or randomised
-									words which don't look even slightly believable. If you are
-									going to use a passage of.
-								</p>
+								${note.CONTENTS }
 							</div>
 							<div class="mail-attachment">
 								<p>
-									<span><i class="fa fa-paperclip"></i> 2 attachments - </span> <a
-										href="#">Download all</a> | <a href="#">View all images</a>
+									<span><i class="fa fa-paperclip"></i> 첨부파일 - </span> <a href="#">다운로드</a> 
 								</p>
 
 								<div class="attachment">
@@ -113,26 +81,10 @@
 												</div>
 											</a>
 										</div>
-
-									</div>
+									</div>					
 									<div class="file-box">
 										<div class="file">
 											<a href="#"> <span class="corner"></span>
-
-												<div class="image">
-													<img alt="image" class="img-fluid" src="img/p1.jpg">
-												</div>
-												<div class="file-name">
-													Italy street.jpg <br /> <small>Added: Jan 6, 2014</small>
-												</div>
-											</a>
-
-										</div>
-									</div>
-									<div class="file-box">
-										<div class="file">
-											<a href="#"> <span class="corner"></span>
-
 												<div class="image">
 													<img alt="image" class="img-fluid" src="img/p2.jpg">
 												</div>
@@ -161,8 +113,6 @@
 								</button>
 							</div>
 							<div class="clearfix"></div>
-
-
 						</div>
 					</div>
 				</div>

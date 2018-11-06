@@ -143,4 +143,17 @@ public class NoteController {
 		ntService.noteTrashChk(request, noticeid);
 	}
 	
+	//삭제 
+	@RequestMapping(value="/note/delchk", method=RequestMethod.GET)
+	@ResponseBody
+	public void noteDeleteChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+		ntService.noteDeleteChk(request, noticeid);
+	}
+	
+	//보관함 되돌리기 
+	@RequestMapping(value="/note/returnchk", method=RequestMethod.GET)
+	@ResponseBody
+	public void noteReturnChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+		ntService.noteDeleteChk(request, noticeid);
+	}
 }

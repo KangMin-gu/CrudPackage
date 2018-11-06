@@ -21,4 +21,6 @@ public interface NoteDao {
 	public void noteEyeChk(NoteDto ntDto);
 	public void noteImportChk(NoteDto ntDto);
 	public void noteTrashChk(NoteDto ntDto);
+	public void noteDeleteChk(NoteDto ntDto);
+	public void noteReturnChk(NoteDto ntDto);
 }

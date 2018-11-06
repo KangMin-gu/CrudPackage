@@ -355,5 +355,28 @@ public class NoteServiceImpl implements NoteService{
 			ntDao.noteTrashChk(ntDto);
 		}		
 	}
+	//통지 삭제
+	@Override
+	public void noteDeleteChk(HttpServletRequest request, List<Integer> noticeid) {
+		NoteDto ntDto = new NoteDto();
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		ntDto.setSiteid(siteId);
+		for(int i = 0; i<noticeid.size(); i++) {
+			ntDto.setNoticeid(noticeid.get(i));
+			ntDao.noteDeleteChk(ntDto);
+		}	
+	}
+
+	@Override
+	public void noteReturnChk(HttpServletRequest request, List<Integer> noticeid) {
+		NoteDto ntDto = new NoteDto();
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		ntDto.setSiteid(siteId);
+		for(int i = 0; i<noticeid.size(); i++) {
+			ntDto.setNoticeid(noticeid.get(i));
+			ntDao.noteReturnChk(ntDto);
+		}	
+		
+	}
 
 }

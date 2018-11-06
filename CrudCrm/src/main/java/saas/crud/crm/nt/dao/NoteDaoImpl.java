@@ -126,5 +126,16 @@ public class NoteDaoImpl implements NoteDao{
 	public void noteTrashChk(NoteDto ntDto) {
 		session.update("note.noteTrashChk",ntDto);
 	}
+	//통지삭제
+	@Override
+	public void noteDeleteChk(NoteDto ntDto) {
+		session.update("note.noteDeleteChk",ntDto);
+	}
+	//보관함으로 이동
+	@Override
+	public void noteReturnChk(NoteDto ntDto) {
+		session.update("note.noteReturnChk",ntDto);
+		
+	}
 
 }

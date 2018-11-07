@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sv">
+
+    <select id="list" parameterType="hashMap" resultType="hashMap">
+    	SELECT * FROM (SELECT A.SERVICENO
+    		, A.SERVICENAME
+    		, CASE WHEN A.RCVTYPE = 1 THEN '문의'
+    			   WHEN A.RCVTYPE = 2 THEN '개선'
+    			   WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_
+    		, A.RCVTYPE
+    		, CASE WHEN A.PRCSTATE = 1 THEN '접수'
+    			   WHEN A.PRCSTATE = 2 THEN '이관'
+    			   WHEN A.PRCSTATE = 3 THEN '완료' END AS PRCSTATE_
+    		, A.PRCSTATE
+    		, B.CUSTNAME AS CUSTNO_
+    		, C.CLINAME AS CLINO_
+    		, A.RCVDATE
+    		, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RCVOWNER) AS RCVOWNER_
+    		, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RACTOWNER) AS RATOWNER_
+    		, ROW_NUMBER() OVER (ORDER BY A.SERVICENO DESC)             AS ROWNUM
+    		 FROM Crud_SaaS.dbo.TB300010 A
+    		 LEFT OUTER JOIN Crud_SaaS.dbo.CU100010 B ON B.CUSTNO = A.CUSTNO 
+    		 LEFT OUTER JOIN Monarch_SaaS.dbo.TB200010 C ON C.CLIID = A.CLINO
+    		 WHERE A.SITEID = #{siteid}
+    		 AND A.ISDELETE = 0
+    		 <if test="strDate != null">
+				AND A.RCVDATE <![CDATA[>]]>= #{strDate}
+			</if>
+			<if test="endDate != null">
+				AND A.RCVDATE <![CDATA[<]]>= #{endDate}
+			</if>
+			<if test="custno != null">
+				AND A.CUSTNO = #{custno}
+			</if>
+			<if test="servicename != null">
+				AND A.SERVICENAME = #{servicename}
+			</if>
+			<if test="rcvtype != null">
+				AND A.RCVTYPE = #{rcvtype}
+			</if>
+			<if test="clino != null">
+				AND A.CLINO = #{clino}
+			</if>
+			<if test="prcstate != null">
+				AND A.PRCSTATE = #{prcstate}
+			</if>
+			<if test="rcvowner != null">
+				AND A.RCVOWNER = #{rcvowner}
+			</if>
+			<if test="ractowner != null">
+				AND A.RACTOWNER = #{ractowner}
+			</if>		
+    		 ) X 
+    	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+
+    </select>
+	
+	<select id="totalRows" parameterType="String" resultType="int">
+		SELECT count(*) from Crud_SaaS.dbo.TB300010
+		WHERE SITEID = #{siteid}
+		AND ISDELETE = 0
+			<if test="strDate != null">
+				AND RCVDATE <![CDATA[>]]>= #{strDate}
+			</if>
+			<if test="endDate != null">
+				AND RCVDATE <![CDATA[<]]>= #{endDate}
+			</if>
+			<if test="custno != null">
+				AND CUSTNO = #{custno}
+			</if>
+			<if test="servicename != null">
+				AND SERVICENAME = #{servicename}
+			</if>
+			<if test="rcvtype != null">
+				AND RCVTYPE = #{rcvtype}
+			</if>
+			<if test="clino != null">
+				AND CLINO = #{clino}
+			</if>
+			<if test="prcstate != null">
+				AND PRCSTATE = #{prcstate}
+			</if>
+			<if test="rcvowner != null">
+				AND RCVOWNER = #{rcvowner}
+			</if>
+			<if test="ractowner != null">
+				AND RACTOWNER = #{ractowner}
+			</if>
+	</select>
+	
+	<select id ="detail" parameterType="svDto" resultType ="HashMap">
+		SELECT 
+		A.SERVICENO, A.CLINO, A.CUSTNO, A.RCVTYPE
+		, CASE WHEN A.RCVTYPE = 1 THEN '문의'
+    		  WHEN A.RCVTYPE = 2 THEN '개선'
+    		  WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_
+    	, A.RCVDATE, A.RCVTIME, A.RCVCODE, A.SERVICENAME
+    	, CASE WHEN A.RCVCODE = 1 THEN '클라1'
+    		  WHEN A.RCVCODE = 2 THEN '클라2'
+    		  WHEN A.RCVCODE = 3 THEN '클라3' END AS RCVCODE_
+    	, A.SERVICEDESC, A.RCVCHANNEL
+    	, CASE WHEN A.RCVCHANNEL = 10 THEN '전화'
+    		  WHEN A.RCVCHANNEL = 20 THEN 'SMS'
+    		  WHEN A.RCVCHANNEL = 30 THEN '메일' END AS RCVCHANNEL_
+    	, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RCVOWNER) AS RCVOWNER_
+    	, A.RCVOWNER, A.RACTOPINION
+    	, CONVERT(varchar,A.RACTDATE,23) AS RACTDATE
+    	, A.RACTTIME, A.RACTCODE
+    	, CASE WHEN A.RACTCODE = 1 THEN 'option1'
+    		  WHEN A.RACTCODE = 2 THEN 'option2'
+    		  WHEN A.RACTCODE = 3 THEN 'option3' END AS RACTCODE_
+    	, A.PRCSTATE
+    	, CASE WHEN A.PRCSTATE = 1 THEN '접수'
+    		   WHEN A.PRCSTATE = 2 THEN '이관'
+    		   WHEN A.PRCSTATE = 3 THEN '완료' END AS PRCSTATE_
+    	, A.RACTDESC, A.RACTOWNER
+    	,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RACTOWNER) AS RACTOWNER_
+    	, A.ISDELETE
+    	, CASE WHEN A.ISDELETE = 0 THEN '사용'
+    		   WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+		FROM Crud_SaaS.dbo.TB300010 A 
+		LEFT OUTER JOIN Crud_SaaS.dbo.CU100010 B ON B.CUSTNO = A.CUSTNO
+		LEFT OUTER JOIN Monarch_SaaS.dbo.TB200010 C ON C.CLIID = A.CLINO
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+	</select>
+	
+	<update id="update" parameterType="svDto">
+		UPDATE Crud_SaaS.dbo.TB300010
+		SET CLINO = #{clino}
+			, CUSTNO = #{custno}
+			, RCVTYPE = #{rcvtype}
+			, RCVDATE = #{rcvdate}
+			, RCVTIME = #{rcvtime}
+			, RCVCODE = #{rcvcode}
+			, SERVICENAME = #{servicename}
+			, SERVICEDESC = #{servicedesc}
+			, RCVCHANNEL = #{rcvchannel}
+			, RCVOWNER = #{rcvowner}
+			, RACTOPINION = #{ractopinion}
+			, RACTDATE = #{ractdate}
+			, RACTTIME = #{racttime}
+			, RACTCODE = #{ractcode}
+			, PRCSTATE = #{prcstate}
+			, RACTDESC = #{ractdesc}
+			, RACTOWNER = #{ractowner}
+			, ISDELETE = #{isdelete}
+			, EDTDATE = getDate()
+			, EDTUSER = #{edtuser}
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+	</update>
+	
+	<insert id="insert" parameterType="svDto">
+		<selectKey keyProperty="serviceno"  resultType="integer" order="AFTER">
+		INSERT INTO Crud_SaaS.dbo.TB300010
+		(
+			CUSTNO
+			, RCVTYPE
+			, RCVDATE
+			, RCVTIME
+			, RCVCODE
+			, SERVICENAME
+			, SERVICEDESC
+			, RCVCHANNEL
+			, RCVOWNER
+			, RACTOPINION
+			, RACTDATE
+			, RACTTIME
+			, RACTCODE
+			, PRCSTATE
+			, RACTDESC
+			, RACTOWNER
+			, ISDELETE
+			, SITEID
+			, REGDATE
+			, REGUSER
+			, EDTDATE
+			, EDTUSER
+		)VALUES(
+			#{custno}
+			, #{rcvtype}
+			, #{rcvdate}
+			, #{rcvtime}
+			, #{rcvcode}
+			, #{servicename}
+			, #{servicedesc}
+			, #{rcvchannel}
+			, #{rcvowner}
+			, #{ractopinion}
+			, #{ractdate}
+			, #{racttime}
+			, #{ractcode}
+			, #{prcstate}
+			, #{ractdesc}
+			, #{ractowner}
+			, #{isdelete}
+			, #{siteid}
+			, getDate()
+			, #{reguser}
+			, getDate()
+			, #{edtuser}
+		)
+		
+		SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+	
+	<update id ="delete" parameterType="int">
+		UPDATE Crud_SaaS.dbo.TB300010
+		SET ISDELETE = 1
+		WHERE SERVICENO = #{serviceno}
+	</update>
+	
+</mapper>

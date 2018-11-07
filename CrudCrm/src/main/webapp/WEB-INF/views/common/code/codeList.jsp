@@ -15,44 +15,20 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
 </head>
 
 <body>
-	<div id="wrapper">
-<!-- leftside -->	
-		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
 <!-- Top -->    
-	<div id="page-wrapper" class="gray-bg">
-		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>메뉴 목록</h2>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <strong>메뉴 목록</strong>
-                        </li>
-                    </ol>
-                </div>
-            </div>		
-		
-		
+	<div id="page-wrapper" class="gray-bg">	
 <!-- Content -->		
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/ma/me" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/code" method="POST">
                         <div class="ibox-content row">
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
@@ -60,11 +36,10 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>메뉴명</th>
+                                            <th>코드명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="menuName" id="menuName" value="${search.menuName }">
-
+                                                    <input type="text" class="form-control reset" name="codename" id="codename" value="${search.codeName }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -79,11 +54,10 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>메뉴값</th>
+                                            <th>그룹코드</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="menuVal" id="menuVal" value="${search.menuVal }">
-
+                                                    <input type="text" class="form-control reset" name="codegrp" id="codegrp" value="${search.codeGrp }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -92,43 +66,40 @@
                             </div>
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">메뉴검색</button>
+                                <button class="btn btn-primary">코드검색</button>
                                 
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/ma/me/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/ma/me/post" class="btn btn-primary">메뉴추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">메뉴삭제</button>
                                 </div>
                              
                             </div>
-                            <div class="overflow-x w-100">
+                            <div class="overflow-x w-100 head">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name=""></th>
-                                        <th>메뉴명</th>
-                                        <th>메뉴값</th>
-                                        <th>연결라이센스</th>
-                                        <th>등록일시</th>
-                                        <th>등록자</th>
+                                        <th>그룹코드</th>
+                                        <th>코드명</th>
+                                        <th>코드 값</th>
+                                        <th>상위 그룹코드</th>
+                                        <th>사용여부</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="menu" items="${menuList }">
-                                    <tr>
-                                        <td><input type="checkbox" class="i-checks" name="menuno" id="menuno" value="${menu.MENUNO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/ma/me/${menu.MENUNO }">${menu.MENUNAME}</td>
-                                        <td>${menu.MENUVAL }</td>
-                                        <td>${menu.LICENSENO_ }</td>
-                                        <td>${menu.REGDATE }</td>
-                                        <td>${menu.REGUSER_ }</td>
+                                <c:forEach var="code" items="${codeList }">
+                                    <tr onclick="javascript:parentCode(this,${code.CODENO })">
+                                        <td><input type="checkbox" class="i-checks" name="codeno" id="codeno" value="${code.CODENO }"></td>
+                                        <td>${code.CODEGRP}</td>
+                                        <td>${code.CODENAME }</td>
+                                        <td>${code.CODEVAL }</td>
+                                        <td>${code.UPCODEGRP_ }</td>
+                                        <td>${code.ISDELETE_ }</td>
                                     </tr>
                                 </c:forEach>
                                        
@@ -170,9 +141,7 @@
 												</li>
 											</c:otherwise>
 										</c:choose>
-                                	</ul>
-                                </div>
-                                </form:form>
+                                </ul>
                             </div>
                            <h4 class="float-right">&middot; 총 자료수 : ${totalRows }</h4>
                         </div>
@@ -196,28 +165,7 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/daterangepicker/daterangepicker.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
-	<script>
-    $( document ).ready(function() {
-    	
-    	$('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    	
-        $('.input-daterange').datepicker({
-            keyboardNavigation: false,
-            forceParse: false,
-            autoclose: true
-        });
-    });
-    
-
-
-	</script>			
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 
 </body>
 </html>

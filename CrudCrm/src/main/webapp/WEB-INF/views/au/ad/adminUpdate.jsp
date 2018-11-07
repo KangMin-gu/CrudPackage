@@ -77,7 +77,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control required" name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control" disabled name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -93,7 +93,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required" name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control" disabled name="userid" id="userid" value="${user.USERID}">
                                                     <input type="hidden" class="form-control" name="idcheck" id="idcheck" value="">
                                                 </div>
                                             </td>
@@ -115,7 +115,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control" name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -282,37 +282,6 @@
 		}
 	});
 	
-	$('#userid').keyup(function(){
-		var idcheck = $('#userid').val();
-		var check = $("#idcheck");
-		if(idcheck.length <=5){
-			if(check.val() != 1){
-				var msg = '5글자 이상 입력해주세요';
-				check.val(1);
-			}
-		}else{
-	        $.ajax({
-	            url:"/au/idcheck/"+idcheck ,
-	            method: "GET",
-	            dataType: "json",
-	            success:function(data){
-	                if(data == 0){
-	                	var msg = '사용 가능한 ID 입니다.';
-	                	check.val(0);
-	                }else{
-	                	var msg = '이미 존재하고 있는 ID 입니다.'
-	                		check.val(1);
-	                }
-	                $('.idcheck').text(msg);
-	            },
-	            error:function(request,status,error){
-	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            }
-	        });
-		}
-		$('.idcheck').text(msg);
-	});
-
 	</script>		
 
 </body>

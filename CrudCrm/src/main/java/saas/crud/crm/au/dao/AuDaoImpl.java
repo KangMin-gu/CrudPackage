@@ -60,4 +60,9 @@ public class AuDaoImpl implements AuDao{
 		// TODO Auto-generated method stub
 		return session.selectOne("au.idcheck",userId);
 	}
+	
+	public List<Map<String,Object>> urTopList(int siteid){
+		
+		return session.selectList("au.topList",siteid);
+	}
 }

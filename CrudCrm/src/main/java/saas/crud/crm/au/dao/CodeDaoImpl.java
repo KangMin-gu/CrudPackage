@@ -28,9 +28,9 @@ public class CodeDaoImpl implements CodeDao {
 	}
 	
 	@Override
-	public Map<String, Object> codeRead(int codeNo) {
+	public Map<String, Object> codeRead(CodeDto codeDto) {
 		// TODO Auto-generated method stub
-		return session.selectOne("code.detail",codeNo);
+		return session.selectOne("code.detail",codeDto);
 	}
 
 	@Override
@@ -51,9 +51,15 @@ public class CodeDaoImpl implements CodeDao {
 	}
 
 	@Override
-	public void codeDelete(int codeNo) {
+	public void codeDelete(CodeDto codeDto) {
 		// TODO Auto-generated method stub
-		session.update("code.delete",codeNo);
+		session.update("code.delete",codeDto);
+	}
+
+	@Override
+	public List<Map<String, Object>> upperCodeList(Map<String, Object> search) {
+		// TODO Auto-generated method stub
+		return session.selectList("code.upperlist",search);
 	}
 
 

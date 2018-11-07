@@ -1,5 +1,8 @@
 package saas.crud.crm.au.service;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -21,4 +24,6 @@ public interface AuService {
 	public void userMultiDelete(HttpServletRequest request);
 
 	public int userIdCheck(String userId);
+	
+	public List<Map<String,Object>> userTopList(int siteid);
 }

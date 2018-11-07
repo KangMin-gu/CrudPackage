@@ -88,7 +88,7 @@
                                 <tbody>
                                 <c:forEach var="user" items="${user }">
                                 
-                                    <tr onclick="javascript:parentUser(this,${user.USERNO })" value=${user.USERNO }>
+                                    <tr onclick="javascript:parentOwnerUser(this)" value=${user.USERNO }>
                                     	<td id="username">${user.USERNAME }</td>
                                         <td id="userid">${user.USERID }</td>
                                         <td id="dept">${user.DEPT }</td>

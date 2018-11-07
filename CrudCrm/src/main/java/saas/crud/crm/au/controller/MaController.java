@@ -81,7 +81,7 @@ public class MaController {
 		
 		return mView;
 	}
-	// INSERT 실행
+	
 	@RequestMapping(value="/ma/mc/{siteId}", method=RequestMethod.POST)
 	public ModelAndView authMemCompanyDelete(@PathVariable int siteId,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();

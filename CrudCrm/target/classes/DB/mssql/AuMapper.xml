@@ -3,23 +3,17 @@
 <mapper namespace="au">
 	
 	<select id="list" parameterType="hashMap" resultType="hashMap">
-		SELECT 
-		A.USERNO
-		,A.USERNAME
-		,A.USERID
-		,A.EMAIL
-		,A.USERDUTY
+		SELECT * FROM (
+			SELECT A.USERNO,A.USERNAME,A.USERID
+		,A.EMAIL,A.USERDUTY
 		,(SELECT ROLENAME FROM Crud_SaaS.dbo.T_ROLE WHERE A.CHKROLE = ROLENO) AS CHKROLE_
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
 		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
-		,A.EMAIL
-		,A.MOBILE1
-		,A.MOBILE2
-		,A.MOBILE3
+		,A.MOBILE1,A.MOBILE2,A.MOBILE3
+		,ROW_NUMBER() OVER(ORDER BY A.USERNO DESC) AS ROWNUM
 			FROM Crud_SaaS.dbo.TB980010 A
 			WHERE SITEID = #{siteid}
-			
 			<if test="username != null">
 				AND USERNAME LIKE '%'+#{username}+'%'
 			</if>
@@ -38,7 +32,8 @@
 			<if test="enddate != null">
 				AND REGDATE <![CDATA[<]]>=#{enddate}
 			</if>
-			
+			) X 
+		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
 		<select id="detail" parameterType="userDto" resultType="hashMap">
 		SELECT 
@@ -56,7 +51,6 @@
 			  WHEN A.CHKAUTH = 20 THEN '관리자사용자' END AS CHKAUTH_
 		,CHKAUTH
 		,CONVERT(nvarchar,A.ENTERDATE,23) AS ENTERDATE
-		,A.EMAIL
 		,A.MOBILE1
 		,A.MOBILE2
 		,A.MOBILE3
@@ -182,4 +176,25 @@
 				ISDELETE = '1'
 			WHERE USERNO = #{userno}
 	</update>
+	
+	<select id="topList" parameterType="int" resultType="hashMap">
+		SELECT TOP 5
+		A.USERNO
+		,A.USERNAME
+		,A.USERID
+		,A.EMAIL
+		,A.USERDUTY
+		,(SELECT ROLENAME FROM Crud_SaaS.dbo.T_ROLE WHERE A.CHKROLE = ROLENO) AS CHKROLE_
+		,CASE WHEN A.ISDELETE = 0 THEN '사용'
+			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+		,A.EMAIL
+		,A.MOBILE1
+		,A.MOBILE2
+		,A.MOBILE3
+			FROM Crud_SaaS.dbo.TB980010 A
+			WHERE A.ISDELETE = 0
+			AND A.SITEID = #{siteid}
+	</select>
+	
 </mapper>

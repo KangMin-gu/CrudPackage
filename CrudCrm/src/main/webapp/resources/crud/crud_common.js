@@ -5,10 +5,20 @@
     $('.resets').click(function(e){
     	e.preventDefault();
     	$('.reset').val('');
-    });	
-
-
-
+    });
+    //i-check 클릭 이벤트
+    $('thead .i-checks').on('ifChecked',function(event){
+    	$('tbody .i-checks').parent().addClass('checked');
+    });
+    //i-check 해제 이벤트
+    $('thead .i-checks').on('ifUnchecked',function(event){
+    	$('tbody .i-checks').parent().removeClass('checked');
+    });
+    
+	$('.owner').click(function(e){
+		openNewWindow('/common/user',e.target.id);
+	});
+    
     // 부모 window 가 실행
 	function openNewWindow(url,target){
 		var name= "영업담당자";
@@ -24,7 +34,7 @@
 	// 자식 window가 실행
 	// 영업 담당자 및 담당자 가지고옴
 	//tr -> 실제로 클릭한 tr 자체
-	function parentUser(tr){
+	function parentOwnerUser(tr){
 		// 접수자, 담당자가 겹치는 경우에 발생할 것 같아서 한번에 처리 할수 있게 수정작업함..
 		// parentid => 버튼을 눌렀을때의 id 값
 		var parentid = $('#parentid').val();
@@ -34,7 +44,21 @@
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.userName.textContent);
+		opener.$("#"+parentid).val(tr.children.username.textContent);
+		// window 창을 종료 -> 담당자 팝업을 종료함.
+		window.close();
+	}
+	function parentCode(tr){
+		// 접수자, 담당자가 겹치는 경우에 발생할 것 같아서 한번에 처리 할수 있게 수정작업함..
+		// parentid => 버튼을 눌렀을때의 id 값
+		var parentid = $('#parentid').val();
+		// opener -> 부모의 window를 의미함.
+		// tr.getAttribute("value") -> tr 값에 value를 넣어두었는데 해당 value 값을 가지고옴 => 여기서는 영업담당자의 키값(USERNO)
+		// 버튼을 눌렀을때의 id 값의 next값 즉 Owner_ 옆의 Owner 값(DB에 들어갈값)
+		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
+		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
+		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
+		opener.$("#"+parentid).val(tr.children.username.textContent);
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
@@ -71,6 +95,24 @@
         // 폼 submit
         form.submit();
      }
+    
+    function today(){
+    
+    	
+    	var today = new Date();
+    	var dd = today.getDate();
+    	var mm = today.getMonth()+1; //January is 0!
+    	var yyyy = today.getFullYear();
+    	if(dd<10) {
+    	    dd='0'+dd
+    	} 
+    	if(mm<10) {
+    	    mm='0'+mm
+    	} 
+    	today = yyyy+'-' + mm+'-'+dd;
+    	
+    	return today;
+    }
     
     
     

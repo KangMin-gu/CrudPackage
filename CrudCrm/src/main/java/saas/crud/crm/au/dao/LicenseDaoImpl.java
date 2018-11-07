@@ -53,4 +53,10 @@ public class LicenseDaoImpl implements LicenseDao{
 		session.update("li.delete",licenseDto);
 	}
 
+	@Override
+	public List<Map<String, Object>> licenseTopList(int siteid) {
+		// TODO Auto-generated method stub
+		return session.selectList("li.topList",siteid);
+	}
+
 }

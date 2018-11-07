@@ -19,5 +19,10 @@ public interface LicenseService {
 	public void licenseMultiDelete(HttpServletRequest request);
 	
 	public List<Map<String,Object>> licenseAjaxList(HttpServletRequest request);
+	public List<Map<String,Object>> licenseTopList(int siteid);
+	
+	
+	
+	
 
 }

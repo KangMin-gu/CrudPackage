@@ -1,4 +1,5 @@
 package saas.crud.crm.au.service;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,30 +29,18 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		ModelAndView mView = new ModelAndView();
 		
 		
-		String strDate = request.getParameter("strDate");
-		String endDate = request.getParameter("endDate");
- 		String siteName= request.getParameter("sitename");
-		String siteSize= request.getParameter("siteSize");
-	
 		Map<String, Object> search = new HashMap();
-		if(strDate == "") {
-			strDate = null;
-		}
 		
-		if(endDate == "") {
-			endDate = null;
-		}
+		Enumeration params = request.getParameterNames();
 		
-		if(siteName == "") {
-			siteName = null;
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value == "") {
+				value = null;
+			}
+			search.put(name, value);
 		}
-		if(siteSize == "") {
-			siteSize = null;
-		}
-		search.put("strDate", strDate);
-		search.put("endDate", endDate);
-		search.put("siteName", siteName);
-		search.put("siteSize", siteSize);
 		
 		int totalRows = memCompanyDao.memCompanyTotalRows(search);
 		
@@ -95,6 +84,7 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		memCompanyDto.setEdtuser(USERNO);
 		memCompanyDao.memCompanyUpdate(memCompanyDto);
 	}
+	
 	@Override
 	public int memCompanyInsert(HttpServletRequest request, MemCompanyDto memCompanyDto) {
 		// TODO Auto-generated method stub
@@ -112,13 +102,11 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		
-		
 		MemCompanyDto memCompanyDto = new MemCompanyDto();
 		memCompanyDto.setEdtuser(USERNO);
 		
-			memCompanyDto.setSiteid(siteid);
-			memCompanyDao.memCompanyDelete(memCompanyDto);
+		memCompanyDto.setSiteid(siteid);
+		memCompanyDao.memCompanyDelete(memCompanyDto);
 	}
 	
 	@Override
@@ -129,8 +117,9 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		MemCompanyDto memCompanyDto = new MemCompanyDto();
 		
 		memCompanyDto.setEdtuser(USERNO);
-		if(sCheck.length > 0) {
-			for(int i=0;i<sCheck.length;i++) {
+		int length = sCheck.length;
+		if(length > 0) {
+			for(int i=0;i<length;i++) {
 				int siteid = Integer.parseInt(sCheck[i]); 
 				memCompanyDto.setSiteid(siteid);
 				memCompanyDao.memCompanyDelete(memCompanyDto);

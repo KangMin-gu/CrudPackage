@@ -89,5 +89,14 @@ public class LicenseController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/tab/li/{siteid}", method=RequestMethod.GET)
+	public List<Map<String,Object>> authTabLicenseList(@PathVariable int siteid){
+		
+		List<Map<String,Object>> TabLicenseList = licenseService.licenseTopList(siteid);
+		
+		return TabLicenseList;
+	}
+	
 
 }

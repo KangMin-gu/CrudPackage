@@ -1,5 +1,6 @@
 package saas.crud.crm.au.service;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,45 +28,21 @@ public class AuServiceImpl implements AuService{
 		
 		ModelAndView mView = new ModelAndView();
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		
-		String userName = request.getParameter("username");
-		String mobile = request.getParameter("mobile");
-		String userId = request.getParameter("userid");
-		String isDelete = request.getParameter("isdelete");
-		String strDate = request.getParameter("strdate");
-		String endDate = request.getParameter("enddate");
-		
 		Map<String, Object> search = new HashMap();
 		
-		if(userName=="") {
-			userName = null;
-		}
-		if(mobile=="") {
-			mobile = null;
-		}
-		if(userId=="") {
-			userId = null;
-		}
-		if(isDelete=="") {
-			isDelete = null;
-		}
-		if(strDate=="") {
-			strDate = null;
-		}
-		if(endDate=="") {
-			endDate = null;
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value == "") {
+				value = null;
+			}
+			search.put(name, value);
 		}
 		
-		
-		search.put("siteid",SITEID);
-		search.put("username", userName);
-		search.put("mobile", mobile);
-		search.put("userid", userId);
-		search.put("isdelete",isDelete);
-		search.put("strdate", strDate);
-		search.put("enddate", endDate);
-		
+		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		search.put("siteid", SITEID);
 		int totalRows = auDao.urTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
@@ -177,6 +154,14 @@ public class AuServiceImpl implements AuService{
 		// TODO Auto-generated method stub
 		int idCheck = auDao.urIdCheck(userId);
 		return idCheck;
+	}
+
+	@Override
+	public List<Map<String, Object>> userTopList(int siteid) {
+		// TODO Auto-generated method stub
+		
+		List<Map<String,Object>> userList = auDao.urTopList(siteid);
+		return userList;
 	}
 
 }

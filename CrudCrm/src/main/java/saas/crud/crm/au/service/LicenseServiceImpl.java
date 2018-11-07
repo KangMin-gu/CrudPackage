@@ -129,5 +129,11 @@ public class LicenseServiceImpl implements LicenseService{
 		List<Map<String,Object>> licenseInfo = licenseDao.licenseList(search);
 		return licenseInfo;
 	}
+	@Override
+	public List<Map<String, Object>> licenseTopList(int siteid) {
+		// TODO Auto-generated method stub
+		List<Map<String,Object>> licenseList = licenseDao.licenseTopList(siteid);
+		return licenseList;
+	}
 
 }

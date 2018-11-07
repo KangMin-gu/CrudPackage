@@ -331,27 +331,21 @@
 	<script>
 	$(document).ready(function () {
 		$('.summernote').summernote({});
-		
-		
-		
+
 	});
 	 $('.daumzip').click(function(e){
-		 debugger;
 	     //obj => button 정보
 	     new daum.Postcode({
 	         oncomplete: function(data) {
-	        	 
-	        	 $('#'+e.currentTarget.id).parent().parent().find("#zipcode").val(data.zonecode);
-	        	 $('#'+e.currentTarget.id).parent().parent().find("#upraddress").val(data.roadAddress);
-	        	 $('#'+e.currentTarget.id).parent().parent().find("#lwraddress").val(data.buildingName);
+	        	 debugger;
+	        	 $('#'+e.currentTarget.id).val(data.zonecode);
+	        	 $('#'+e.currentTarget.id).parent().parent().find('[id*="upraddress"]').val(data.roadAddress);
+	        	 $('#'+e.currentTarget.id).parent().parent().find('[id*="lwraddress"]').val(data.buildingName);
 	             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
 	             // 예제를 참고하여 다양한 활용법을 확인해 보세요.
 	         }
 	     }).open();
 	 });
-		$('.owner').click(function(e){
-			openNewWindow('/common/user',e.target.id);
-		});
 
 	</script>		
 

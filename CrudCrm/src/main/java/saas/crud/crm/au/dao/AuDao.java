@@ -16,4 +16,6 @@ public interface AuDao {
 	public void urDelete(UserDto userDto);
 	
 	public int urIdCheck(String userId);
+	
+	public List<Map<String,Object>> urTopList(int siteid);
 }

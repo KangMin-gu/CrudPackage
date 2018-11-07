@@ -13,5 +13,7 @@ public interface LicenseDao {
 	public int licenseInsert(LicenseDto licenseDto);
 	public void licenseUpdate(LicenseDto licenseDto);
 	public void licenseDelete(LicenseDto licenseDto);
+	
+	public List<Map<String,Object>> licenseTopList(int siteid);
 
 }

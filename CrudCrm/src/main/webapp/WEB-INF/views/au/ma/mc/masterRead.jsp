@@ -255,6 +255,9 @@
                                             <td>
                                                 <textarea type="text" class="form-control col-12 float-left mr-12 summernote">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
+                                            <td>
+                                            	<input type="hidden" id="siteid" name="siteid" value="${memCompany.SITEID }" />
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -270,9 +273,9 @@
                                 <div class="box1 col-lg-12 p-0">
                                     <div class="tabs-container">
                                         <ul class="nav nav-tabs" role="tablist">
-                                            <li><a class="nav-link active" data-toggle="tab" href="#tab1">라이센스</a></li>
+                                            <li><a class="nav-link li active" data-toggle="tab" href="#tab1">라이센스</a></li>
                                             <li><a class="nav-link" data-toggle="tab" href="#tab2">서비스단가</a></li>
-                                            <li><a class="nav-link" data-toggle="tab" href="#tab3">사용자</a></li>
+                                            <li><a class="nav-link user" data-toggle="tab" href="#tab3">사용자</a></li>
                                         </ul>
                                         <div class="tab-content">
                                             <div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
@@ -282,20 +285,14 @@
                                                             <tr>
                                                                 <th>라이센스명</th>
                                                                 <th>단가</th>
-                                                                <th>원가</th>
                                                                 <th>사용량</th>
-                                                                <th>수량</th>
+                                                                <th>구매량</th>
                                                                 <th>만기일</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>제목입니다.</td>
-                                                                <td>상태입니다</td>
-                                                                <td>서비스유형임</td>
-                                                                <td>2018/10/11</td>
-                                                                <td>세글자</td>
-                                                                <td>2018/10/11</td>
+                                                                
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -332,18 +329,14 @@
                                                             <tr>
                                                                 <th>사용자명</th>
                                                                 <th>사용자ID</th>
-                                                                <th>부서</th>
-                                                                <th>라이센스</th>
+                                                                <th>직책</th>
+                                                                <th>이메일</th>
                                                                 <th>사용여부</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>캠페인명입니다</td>
-                                                                <td>프로젝트입니다</td>
-                                                                <td>2018/10/12</td>
-                                                                <td>2018/11/22</td>
-                                                                <td>채널메체입니다</td>
+                                                                
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -374,6 +367,7 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script><!-- summernote-->
 	<script>
 		$(document).ready(function () {
 			$('.summernote').summernote({},'disable');

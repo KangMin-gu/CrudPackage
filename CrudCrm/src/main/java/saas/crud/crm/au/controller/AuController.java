@@ -1,5 +1,8 @@
 package saas.crud.crm.au.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -107,6 +110,14 @@ public class AuController {
 		
 		return userId;
 		
+	}
+	@ResponseBody
+	@RequestMapping(value="/tab/user/{siteid}", method=RequestMethod.GET)
+	public List<Map<String,Object>> authTabTopList(HttpServletRequest request,@PathVariable int siteid){
+		
+		List<Map<String,Object>> userTopList = auService.userTopList(siteid);
+		
+		return userTopList;
 	}
 	
 

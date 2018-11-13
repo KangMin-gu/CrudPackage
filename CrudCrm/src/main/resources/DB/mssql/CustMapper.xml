@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer">
+
+	<!-- 페이징용 카운터 -->
+	<select id="totalcnt" parameterType="hashMap" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM CU100010 A
+		LEFT OUTER JOIN TB200010 B ON A.CLINO = B.CLINO 
+		WHERE
+			A.SITEID = #{SITEID}
+			AND A.ISDELETE = 0 
+			<if test="CUSTNAME != null">
+			AND A.CUSTNAME like '%'+#{CUSTNAME}+'%'
+			</if>
+			<if test="MOBILE != null">
+			AND A.MOBILE1+A.MOBILE2+A.MOBILE3 like '%'+#{MOBILE}+'%'
+			</if>
+			<if test="EMAIL != null">
+			AND A.EMAIL like '%'+#{EMAIL}+'%'
+			</if>
+			<if test="CUSTGUBUN != 0 ">
+			AND A.CUSTGUBUN = #{CUSTGUBUN}
+			</if>
+			<if test="CUSTGRADE != 0 ">
+			AND A.CUSTGRADE = #{CUSTGRADE}
+			</if>
+			<if test="FROMREGDT != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[>=]]> #{FROMREGDT}
+			</if>
+			<if test="TOREGDT != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[<=]]> #{TOREGDT}
+			</if>	
+			<if test="INFOAGREE == 0 or INFOAGREE == 1">
+			AND A.INFOAGREE = #{INFOAGREE}
+			</if>
+			<if test="OWNER != null and OWNER != 0 ">
+			AND A.OWNER = #{OWNER}
+			</if>
+			<if test="CLINO != null and CLINO != 0 ">
+			AND B.CLINO = #{CLINO}
+			</if>
+	</select>
+	
+	
+	<select id="custList" parameterType="hashMap" resultType="hashMap">
+		SELECT
+		*
+		FROM (
+			SELECT (ROW_NUMBER() OVER(ORDER BY CUSTNAME)) AS ROWNUM
+			,CU.CUSTNO, CU.CUSTNAME, CU.COMPANY, CU.DEPTNAME, CU.DUTY
+			, CU.MOBILE1+'-'+CU.MOBILE2+'-'+CU.MOBILE3 AS MOBILE
+			, CU.EMAIL, CU.SEX,CU.OWNER, B.USERNAME AS OWNERNAME, CU.CUSTGUBUN, CU.CUSTGRADE, CU.INFOAGREE, CONVERT(VARCHAR,CU.REGDATE,111) AS REGDATE
+			, CU.CLINO, C.CLINAME 
+			FROM CU100010 CU
+			LEFT OUTER JOIN TB980010 AS B ON CU.OWNER = B.USERNO 
+			LEFT OUTER JOIN TB200010 AS C ON CU.CLINO = C.CLINO	
+			WHERE
+				CU.SITEID = #{SITEID}
+				AND CU.ISDELETE = 0 
+				<if test="CUSTNAME != null">
+				AND CU.CUSTNAME like '%'+#{CUSTNAME}+'%'
+				</if>
+				<if test="MOBILE != null">
+				AND CU.MOBILE1+CU.MOBILE2+CU.MOBILE3 like '%'+#{MOBILE}+'%'
+				</if>
+				<if test="EMAIL != null">
+				AND CU.EMAIL like '%'+#{EMAIL}+'%'
+				</if>
+				<if test="CUSTGUBUN != 0 ">
+				AND CUSTGUBUN = #{CUSTGUBUN}
+				</if>
+				<if test="CUSTGRADE != 0 ">
+				AND CUSTGRADE = #{CUSTGRADE}
+				</if>
+				<if test="FROMREGDT != null">
+				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[>=]]> #{FROMREGDT}
+				</if>
+				<if test="TOREGDT != null">
+				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[<=]]> #{TOREGDT}
+				</if>
+				<if test="INFOAGREE == 0 or INFOAGREE == 1">
+				AND CU.INFOAGREE = #{INFOAGREE}
+				</if>
+				
+				<if test="OWNER != null and OWNER != 0 ">
+					AND CU.OWNER = #{OWNER}
+				</if>	
+				<if test="CLINO != null and CLINO != 0 ">
+				AND CU.CLINO = #{CLINO}
+				</if>	
+			) T
+		WHERE
+		ROWNUM between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<!-- 고객 삭제 -->
+	<update id="custDelete" parameterType="saas.crud.crm.cu.dto.CustDto" >
+		UPDATE CU100010 SET ISDELETE = 1 , EDITDATE = GETDATE() , EDITUSER = #{USERNO}
+		WHERE SITEID = #{SITEID} AND CUSTNO = #{CUSTNO}
+	</update>
+
+	
+	
+	<select id="custDetail" parameterType="int" resultType="hashMap">
+		SELECT
+		A.CUSTNO
+		,A.CUSTNAME,A.COMPANY, A.DEPTNAME
+		,A.DUTY
+		,(A.MOBILE1+'-'+A.MOBILE2+'-'+A.MOBILE3) AS MOBILE
+		,A.EMAIL
+		,(A.WRKTEL1+'-'+A.WRKTEL2+'-'+A.WRKTEL3) AS WRKTEL
+		,(A.WRKFAX1+'-'+A.WRKFAX2+'-'+A.WRKFAX3) AS WRKFAX
+		,A.WRKURL
+		,A.WRKADDR1, A.WRKADDR2, A.WRKADDR3
+		,A.OWNER, B.USERNAME AS OWNERNAME
+		,(A.HOMTEL1+'-'+A.HOMTEL2+'-'+A.HOMTEL3) AS HOMTEL
+		,A.SEX
+		,A.BIRTH
+		,A.MARRIED
+		,A.MAILTO
+		,A.SOLAR
+		,A.WEDDINGDAY
+		,A.CUSTGRADE
+		,A.JOB
+		,A.HOBBY
+		,A.CUSTGUBUN
+		,A.ACTGRADE
+		,A.HOMADDR1, A.HOMADDR2, A.HOMADDR3
+		,A.MEMO
+		,A.INFOAGREE
+		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR 
+		,C.DENYSMSNOMAL,C.DENYSMSSEMINAR,C.DENYSMSAD    
+		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD  
+		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
+		,C.DENYFAX ,C.DENYVISIT  
+		,A.CLINO,D.CLINAME
+		FROM CU100010 A		
+		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
+		LEFT OUTER JOIN TB200010 D ON A.CLINO = D.CLINO  
+		WHERE 
+		A.CUSTNO = #{CUSTNO}
+	</select>
+
+	<select id="custUpdateForm" parameterType="int" resultType="hashMap">
+		SELECT
+		A.CUSTNO
+		,A.CUSTNAME
+		,A.COMPANY
+		,A.DEPTNAME
+		,A.DUTY
+		,A.MOBILE1, A.MOBILE2, A.MOBILE3
+		,A.EMAIL
+		,A.WRKTEL1, A.WRKTEL2, A.WRKTEL3
+		,A.WRKFAX1, A.WRKFAX2, A.WRKFAX3
+		,A.WRKURL
+		,A.WRKADDR1, A.WRKADDR2, A.WRKADDR3
+		,A.OWNER, B.USERNAME AS OWNERNAME
+		,A.HOMTEL1, A.HOMTEL2, A.HOMTEL3
+		,A.SEX
+		,A.BIRTH
+		,A.MARRIED
+		,A.MAILTO
+		,A.SOLAR
+		,A.WEDDINGDAY
+		,A.CUSTGRADE
+		,A.JOB
+		,A.HOBBY
+		,A.CUSTGUBUN
+		,A.ACTGRADE
+		,A.HOMADDR1, A.HOMADDR2, A.HOMADDR3
+		,A.MEMO
+		,A.INFOAGREE
+		,A.CLINO, D.CLINAME
+		,C.DENYNO
+		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR 
+		,C.DENYSMSNOMAL,C.DENYSMSSEMINAR,C.DENYSMSAD    
+		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD  
+		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
+		,C.DENYFAX ,C.DENYVISIT  
+		FROM CU100010 A		
+		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
+		LEFT OUTER JOIN TB200010 D ON A.CLINO = D.CLINO 
+		WHERE 
+		A.CUSTNO = #{CUSTNO}
+	</select>
+	
+	
+	<insert id="custformInsert" parameterType="saas.crud.crm.cu.dto.CustDto">
+		<selectKey keyProperty="CUSTNO"  resultType="integer" order="AFTER">
+		INSERT INTO CU100010
+		(		
+		CUSTNAME
+		,OWNER
+		,REGDATE
+		,REGUSER
+		,EDITDATE
+		,EDITUSER
+		,SITEID
+		,ISDELETE
+		
+		,COMPANY
+		,DEPTNAME
+		,DUTY
+		,MOBILE1,MOBILE2,MOBILE3
+		,EMAIL
+		,WRKTEL1,WRKTEL2,WRKTEL3
+		,WRKFAX1,WRKFAX2,WRKFAX3
+		,WRKURL
+		,WRKADDR1,WRKADDR2,WRKADDR3
+		,HOMTEL1,HOMTEL2,HOMTEL3
+		,SEX
+		,BIRTH
+		,MARRIED
+		,MAILTO
+		,SOLAR
+		,WEDDINGDAY
+		,CUSTGRADE
+		,JOB
+		,HOBBY
+		,CUSTGUBUN
+		,ACTGRADE
+		,HOMADDR1,HOMADDR2,HOMADDR3
+		,MEMO
+		,INFOAGREE
+		,CLINO
+		)
+		VALUES
+		(	
+		#{CUSTNAME}
+		,#{OWNER}
+		,GETDATE()
+		,#{REGUSER}
+		,GETDATE()
+		,#{EDITUSER}
+		,#{SITEID}
+		,0
+		
+		
+		,#{COMPANY}
+		,#{DEPTNAME}
+		,#{DUTY}
+		,#{MOBILE1},#{MOBILE2},#{MOBILE3}
+		,#{EMAIL}
+		,#{WRKTEL1},#{WRKTEL2},#{WRKTEL3}
+		,#{WRKFAX1},#{WRKFAX2},#{WRKFAX3}
+		,#{WRKURL}
+		,#{WRKADDR1},#{WRKADDR2},#{WRKADDR3}
+		,#{HOMTEL1},#{HOMTEL2},#{HOMTEL3}
+		,#{SEX}
+		,#{BIRTH}
+		,#{MARRIED}
+		,#{MAILTO}
+		,#{SOLAR}
+		,#{WEDDINGDAY}
+		,#{CUSTGRADE}
+		,#{JOB}
+		,#{HOBBY}
+		,#{CUSTGUBUN}
+		,#{ACTGRADE}
+		,#{HOMADDR1},#{HOMADDR2},#{HOMADDR3}
+		,#{MEMO}
+		,#{INFOAGREE}	
+		,#{CLINO}
+		)
+		SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+	
+	<insert id="custformInsertDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
+		INSERT INTO CU100080
+		(
+		CUSTNO
+		,REGDATE
+		,REGUSER
+		,EDITDATE
+		,EDITUSER
+		,ISDELETE
+		
+		,DENYMAILAD
+		,DENYMAILNEWS 
+		,DENYMAILSEMINAR 
+		,DENYSMSNOMAL 
+		,DENYSMSSEMINAR  
+		,DENYSMSAD 
+		,DENYDMNEWS 
+		,DENYDMSEMINAR 
+		,DENYDMAD  
+		,DENYTELNEWS  
+		,DENYTELSEMINAR  
+		,DENYFAX  
+		,DENYVISIT 
+		
+		)
+		VALUES
+		(
+		#{CUSTNO}
+		,GETDATE()
+		,#{REGUSER}
+		,GETDATE()
+		,#{EDITUSER}
+		,0	
+		
+		,#{DENYMAILAD}
+		,#{DENYMAILNEWS} 
+		,#{DENYMAILSEMINAR} 
+		,#{DENYSMSNOMAL} 
+		,#{DENYSMSSEMINAR}  
+		,#{DENYSMSAD} 
+		,#{DENYDMNEWS} 
+		,#{DENYDMSEMINAR} 
+		,#{DENYDMAD}  
+		,#{DENYTELNEWS}  
+		,#{DENYTELSEMINAR}  
+		,#{DENYFAX}  
+		,#{DENYVISIT}		
+		)
+	</insert>
+	
+	
+	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >
+		UPDATE CU100010
+		SET
+		CUSTNAME = #{CUSTNAME}
+		,OWNER = #{OWNER}
+		,EDITDATE = GETDATE()
+		,EDITUSER = #{EDITUSER}	
+		,COMPANY = #{COMPANY}
+		,DEPTNAME = #{DEPTNAME}
+		,DUTY = #{DUTY}
+		,MOBILE1 = #{MOBILE1}
+		,MOBILE2 = #{MOBILE2}
+		,MOBILE3 = #{MOBILE3}
+		,EMAIL = #{EMAIL}
+		,WRKTEL1 = #{WRKTEL1}
+		,WRKTEL2 = #{WRKTEL2}
+		,WRKTEL3 = #{WRKTEL3}
+		,WRKFAX1 = #{WRKFAX1}
+		,WRKFAX2 = #{WRKFAX2}
+		,WRKFAX3 = #{WRKFAX3}
+		,WRKURL = #{WRKURL}
+		,WRKADDR1 = #{WRKADDR1}
+		,WRKADDR2 = #{WRKADDR2}
+		,WRKADDR3 = #{WRKADDR3}
+		,HOMTEL1 = #{HOMTEL1}
+		,HOMTEL2 = #{HOMTEL2}
+		,HOMTEL3 = #{HOMTEL3}
+		,SEX = #{SEX}
+		,BIRTH = #{BIRTH }
+		,MARRIED = #{MARRIED}
+		,MAILTO = #{MAILTO}
+		,SOLAR = #{SOLAR}
+		,WEDDINGDAY = #{WEDDINGDAY}
+		,CUSTGRADE = #{CUSTGRADE}
+		,JOB = #{JOB}
+		,HOBBY = #{HOBBY}
+		,CUSTGUBUN = #{CUSTGUBUN}
+		,ACTGRADE = #{ACTGRADE}
+		,HOMADDR1 = #{HOMADDR1}
+		,HOMADDR2 = #{HOMADDR2}
+		,HOMADDR3 = #{HOMADDR3}
+		,MEMO = #{MEMO}
+		,INFOAGREE = #{INFOAGREE}
+		<if test="CLINO != null and CLINO != 0 ">
+		,CLINO = #{CLINO}
+		</if>
+		WHERE
+		CUSTNO = #{CUSTNO}
+	</update>
+	
+	<update id="custformUpdateDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
+		UPDATE CU100080
+		SET
+		EDITDATE = GETDATE()
+		,EDITUSER = #{EDITUSER}	
+		,DENYMAILAD = #{DENYMAILAD}
+		,DENYMAILNEWS = #{DENYMAILNEWS}	
+		,DENYMAILSEMINAR = #{DENYMAILSEMINAR} 	
+		,DENYSMSNOMAL = #{DENYSMSNOMAL} 
+		,DENYSMSSEMINAR = #{DENYSMSSEMINAR}		
+		,DENYSMSAD = #{DENYSMSAD} 		
+		,DENYDMNEWS = #{DENYDMNEWS}	
+		,DENYDMSEMINAR = #{DENYDMSEMINAR}	
+		,DENYDMAD = #{DENYDMAD}
+		,DENYTELNEWS = #{DENYTELNEWS}
+		,DENYTELSEMINAR = #{DENYTELSEMINAR}
+		,DENYFAX = #{DENYFAX}
+		,DENYVISIT = #{DENYVISIT}	
+		
+		WHERE
+		DENYNO = #{DENYNO}		
+	</update>
+	
+	
+	<select id="totalcntUser" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM TB980010
+		WHERE SITEID = #{siteid}
+			<if test="username != null">
+			AND USERNAME like '%'+#{username}+'%'
+			</if>
+	</select>
+	
+	<select id="popUserList" parameterType="hashMap" resultType="hashMap">
+		SELECT * 
+		FROM  
+			(
+			SELECT 
+			ROW_NUMBER() OVER(ORDER BY USERNAME) AS ROWNUM
+			,USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
+			FROM TB980010
+			WHERE 
+				SITEID= #{siteid}
+				<if test="username != null">
+				AND USERNAME like '%'+#{username}+'%'
+				</if>
+			) T
+		WHERE 
+			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}
+		
+	</select>
+	
+	<select id="totalcntClient" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM TB200010
+		WHERE SITEID = #{siteid}
+			<if test="cliname != null">
+			AND CLINAME like '%'+#{cliname}+'%'
+			</if>
+	</select>
+	
+		<select id="popClientList" parameterType="hashMap" resultType="hashMap">
+		SELECT * 
+		FROM  
+			(
+			SELECT 
+			ROW_NUMBER() OVER(ORDER BY A.CLINAME) AS ROWNUM
+			,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
+			,B.USERNAME 
+			FROM TB200010 A
+			LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+			WHERE 
+				A.SITEID= #{siteid}
+				<if test="cliname != null">
+				AND CLINAME like '%'+#{cliname}+'%'
+				</if>
+			) T
+		WHERE 
+			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
+	</select>
+	
+</mapper>

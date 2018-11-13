@@ -1,0 +1,425 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CRUD SYSTEM</title>
+<!-- link includ -->
+<%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+
+<!-- S: 추가 CSS-->
+<!-- Toastr style -->
+<link href="/resources/css/plugins/toastr/toastr.min.css"
+	rel="stylesheet">
+<!--radioBox-->
+<link href="/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<!--datePicker-->
+<link href="/resources/css/plugins/datapicker/datepicker3.css"
+	rel="stylesheet">
+
+<!-- E: 추가 CSS-->
+<script>
+
+
+</script>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		
+		<!-- leftside -->
+		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
+		<!-- Top -->
+		<div id="page-wrapper" class="gray-bg">
+			<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
+
+
+
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h2>고객관리</h2>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">메인</a></li>
+						<li class="breadcrumb-item active" ><strong>고객 목록</strong></li>
+					</ol>
+				</div>
+				<div class="col-lg-2"></div>
+			</div>
+
+
+			<!-- Content -->
+			<!-- S: 고객 목록 ppt p01-->
+			<div class="wrapper wrapper-content  animated fadeInRight article">
+				<div class="row justify-content-md-center">
+					<div class="col-lg-12">
+						<div class="ibox">
+							<form:form id="command" class="searchForm" action="/custlist" method="POST">
+							<span id="selectpage" name="selectpage"> </span>
+							
+								<div class="ibox-content row">
+									<div class="box1 col-lg-6 p-0">
+										<table class="table table-bordered">
+											<colgroup>
+												<col style="width: 100px; background: #fafafa;">
+												<col style="width: auto;">
+												<col style="width: 100px; background: #fafafa;">
+												<col style="width: auto;">												
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>고객명</th>
+													<td><input type="text" class="form-control" id="CUSTNAME" name="CUSTNAME" value="${searchVal.CUSTNAME}"  ></td>
+													<th>휴대폰</th>
+													<td><input type="number" class="form-control" id="MOBILE" name="MOBILE" value="${searchVal.MOBILE}"></td>													
+												</tr>
+												<tr>
+													<th>담당자</th>
+													<td>
+														<div class="input-group">
+															<!--인풋창x -> static 이나 span 창으로 변경 -->
+															<input type="text" class="form-control" id="OWNERNAME" name="OWNERNAME" value="${searchVal.OWNERNAME}" readonly onClick="openPop('/popowner','owner',600,700);" > 
+															<input type="hidden" id="OWNER" name="OWNER" value="${searchVal.OWNER}">
+															<span class="input-group-addon"> 
+															<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
+															</span>
+														</div>
+													</td>
+													<th>직장명</th>
+													<td>
+														<div class="input-group">
+															<input type="text" class="form-control" id="CLINAME" name="CLINAME" value="${searchVal.CLINAME }" 
+															onClick="openPop('/popclient','popclient',600,700);" readonly> 
+															<input type="hidden" id="CLINO" name="CLINO" value="${searchVal.CLINO}">
+															<span class="input-group-addon"> 
+																<a href="#" onClick="openPop('/popclient','popclient',600,700);"><i class="fa fa-search"></i></a>
+															</span>
+														</div>
+													</td>
+													
+												</tr>
+												<tr>
+													<th>등록일</th>
+													<td colspan="3">
+														<div class="input-group p-0" style="max-height: 26px; height: 26px;">
+															<div
+																class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+																<span class="input-group-addon"><i
+																	class="fa fa-calendar"></i></span>
+																	<input type="text" class="form-control" id="FROMREGDT" name="FROMREGDT"  autocomplete="off" value="${searchVal.FROMREGDT }">
+															</div>
+															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+															<div
+																class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+																<span class="input-group-addon"><i
+																	class="fa fa-calendar"></i></span>
+																	<input type="text" class="form-control" id="TOREGDT" name="TOREGDT"  autocomplete="off" value="${searchVal.TOREGDT }">
+															</div>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="box2 col-lg-6 p-0">
+										<table class="table table-bordered">
+											<colgroup>
+												<col style="width: 100px; background: #fafafa;">
+												<col style="width: auto;">
+												<col style="width: 100px; background: #fafafa;">
+												<col style="width: auto;">												
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>이메일</th>
+													<td colspan="3"><input type="text" class="form-control" id="EMAIL" name="EMAIL" value="${searchVal.EMAIL}"></td>
+												</tr>
+												<tr>
+													<th>고객구분</th>
+													<td><select class="form-control" id="CUSTGUBUN" name="CUSTGUBUN" style="height: 1.45rem;">
+															<option value="0" ${searchVal.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
+															<option value="1" ${searchVal.CUSTGUBUN eq "1" ? "selected" :""}>회원</option>
+															<option value="2" ${searchVal.CUSTGUBUN eq "2" ? "selected" :""}>비회원</option>
+															<option value="3" ${searchVal.CUSTGUBUN eq "3" ? "selected" :""}>탈퇴회원</option>
+													</select></td>													
+													<!-- todo. form:select로 변경 -->
+													<th>고객등급</th>
+													<td><select class="form-control" id="CUSTGRADE" name="CUSTGRADE" style="height: 1.45rem;">
+															<option value="0" ${searchVal.CUSTGRADE eq "0" ? "selected" :""}>선택</option>
+															<option value="1" ${searchVal.CUSTGRADE eq "1" ? "selected" :""}>일반</option>
+															<option value="2" ${searchVal.CUSTGRADE eq "2" ? "selected" :""}>VIP</option>
+															<option value="3" ${searchVal.CUSTGRADE eq "3" ? "selected" :""}>VVIP</option>												
+													</select></td>
+													<!-- todo. form:select로 변경 -->
+												</tr>
+												<tr>
+													<th>정보활용</th>
+													<td colspan="3">
+														<div class="i-checks" style="height: 1.60rem;">
+															<label class="pr-lg-3 mb-0">
+															<input type="radio" value="0" id="INFOAGREE" name="INFOAGREE"  class="pr-lg-1" ><i></i> 동의</label> 
+																<label class="pr-lg-3 mb-0">
+																<input type="radio"
+																value="1" id="INFOAGREE" name="INFOAGREE" class="pr-lg-1"><i></i>
+																거부</label>
+																<label class="mb-0"><input type="radio"
+																value="2" id="INFOAGREE" name="INFOAGREE" class="pr-lg-1"><i></i>
+																전체</label>
+														</div>
+													</td>
+												</tr>												
+											</tbody>
+										</table>
+									</div>
+									<div class="w-100 text-right">
+										<a href="javascript:void(0);" class="btn btn-primary"
+											id="searchResetBtn">초기화</a> <button type="submit"
+											class="btn btn-primary" data-style="zoom-in">고객검색</button>
+									</div>
+								</div>
+								
+							</form:form>
+							
+							<form:form id="commandcheck" class="searchForm" action="/custlist" method="DELETE">
+							<div class="ibox-content row border-top-0 pt-lg-0">
+								<div class="w-100 text-right mb-2">
+									<h4 class="float-left">&middot; 총 자료수 : ${page.totalRows }건</h4> 
+									<span id="checkVal"></span>
+									<a href="/custform" class="btn btn-primary">고객추가</a> 										
+									<button class="btn btn-primary">고객삭제</button>																	
+									<div class="d-inline-block mt-sx-1">
+										<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
+									</div>
+									
+								</div>
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>
+													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
+												</th>
+												<th>고객명</th>
+												<th>직장</th>
+												<th>부서</th>
+												
+												<th>휴대폰</th>
+												<th>이메일</th>
+												
+												<th>담당자</th>
+												<th>고객구분</th>
+												<th>고객등급</th>
+												<th>정보활용</th>
+												<th>등록일</th>
+											</tr>
+										</thead>
+										<!--이곳에 foreach-->
+										<tbody>
+										<c:forEach var="list" items="${custList}"  > 
+											<tr>
+												<td><input type="checkbox" class="i-checks chksquare" id="CUSTNO"name="CUSTNO" value="${list.CUSTNO}"></td>
+												<td><a href="/custdetail/${list.CUSTNO}">${list.CUSTNAME }</a></td>
+												<td>${list.CLINAME }</td>
+												<td>${list.DEPTNAME }</td>
+												
+												<td>
+													<c:choose>
+														<c:when test="${list.MOBILE eq '--'}"></c:when>
+														<c:otherwise>${list.MOBILE }</c:otherwise>
+													</c:choose>
+												</td>
+												<td>${list.EMAIL }</td>
+												
+												<td>${list.USERNAME}</td>
+												<td>
+												<c:choose>
+													<c:when test="${list.CUSTGUBUN==1}">회원</c:when>
+													<c:when test="${list.CUSTGUBUN==2}">비회원</c:when>
+													<c:when test="${list.CUSTGUBUN==3}">탈퇴회원</c:when>
+												</c:choose>
+												</td>
+												<td>
+												<c:choose>
+													<c:when test="${list.CUSTGRADE==1}">일반</c:when>
+													<c:when test="${list.CUSTGRADE==2}">VIP</c:when>
+													<c:when test="${list.CUSTGRADE==3}">VVIP</c:when>
+												</c:choose>
+												</td>
+												<td>
+												<c:choose>
+													<c:when test="${list.INFOAGREE==0}">동의</c:when>
+													<c:when test="${list.INFOAGREE==1}">거부</c:when>
+												</c:choose>
+												</td>
+												<td>${list.REGDATE }</td>
+											</tr> 
+											</c:forEach>
+											<!-- foreach끝 -->
+											
+										</tbody>
+										<tfoot>
+									</table>
+								</div>
+								<div class="m-auto">
+									 
+								</form:form>
+								<ul class="pagination">
+										<c:choose>
+											<c:when test="${page.startPageNum ne 1 }">
+												<li class="footable-page-arrow disabled">	
+													<a href="#" onclick="paging(${page.startPageNum-1 });">&laquo;</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&laquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+										
+										<c:forEach var="i" begin="${page.startPageNum }"
+											end="${page.endPageNum }">
+											<c:choose>
+												<c:when test="${i eq page.pageNum }">
+													<li class="footable-page active">
+													<a href="#"onclick="paging(${i });">${i }</a>
+													</li>
+												</c:when>
+												<c:otherwise>
+													<li><a href="#"onclick="paging(${i });">${i }</a></li>
+														
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										
+										<c:choose>
+											<c:when test="${page.endPageNum lt page.totalPageCount }">
+												<li><a href="#"onclick="paging(${page.endPageNum+1 });">&raquo;</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&raquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</ul>  
+															
+								</div>
+				
+								 
+								
+	
+	
+	
+	
+	
+		
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- E: 고객 목록 ppt p01-->
+			<!-- Content End -->
+
+
+			<!-- foot -->
+			<div class="footer">
+				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
+			</div>
+		</div>
+		<!-- right side -->
+		<div id="right-sidebar">
+			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
+		</div>
+	</div>
+
+	<!-- js includ -->
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	
+	<!-- S: 추가 js-->
+	<!-- radioBox-->
+	<script src="/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<!-- datePicker-->
+	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+	
+
+
+	<script>
+	/*
+	//page 버튼 클릭 이벤트 
+	function paging(prm){//파라미터로 클릭한 페이지 번호를 받아온다
+		var htmlStr = '<input type="hidden" id="pageNum" name="pageNum" value="'+prm+'">';
+		$('#selectpage').append(htmlStr);//form 안에 생성해둔 <span id ='selectpage'> 테그에 위의 값을 히든으로 넘긴다. 		
+		var form = document.getElementById('command');
+		form.submit();// 폼 submit		
+	}*/
+	
+	
+		$(document).ready(function() {			
+			//정보활용동의 값에 따른 라디오버튼 활성화 	
+			$("input:radio[name=INFOAGREE][value=" + '<c:out value="${ searchVal.INFOAGREE }"/>' + "]").attr("checked","checked");
+			
+			// radioBox
+			$('.i-checks').iCheck({
+				checkboxClass : 'icheckbox_square-green',
+				radioClass : 'iradio_square-green'
+			});
+			
+			//checkbox 전체 선택/해제 이벤트
+ 			$('#icheckAll').on('ifChecked', function(event){
+				$('.chksquare').iCheck('check'); 
+			});
+			$('#icheckAll').on('ifUnchecked', function(event){
+				$('.chksquare').iCheck('uncheck'); 
+			});
+
+	    		   	
+			// datePicker
+			$('.date.date01, .date.date02').datepicker({
+				todayBtn : "linked",
+				keyboardNavigation : false,
+				forceParse : false,
+				calendarWeeks : true,
+				autoclose : true
+			});
+
+			// 서치박스 리셋 라디오,셀렉스박스 제어를 위해 개별 파라미터 설정
+			$("#searchResetBtn").click(function(e) {
+				$(".searchForm").each(function() {
+
+					$('#CUSTNAME').val('');
+					$('#MOBILE').val('');
+					$('#EMAIL').val('');
+					$('#CLINAME').val('');
+					$('#CLINO').val(0);
+					$('#OWNERNAME').val('');
+					$('#OWNERNO').val(0);
+					$('#CUSTGUBUN').val(0);
+					$('#CUSTGRADE').val(0);
+					$('#FROMREGDT').val('');
+					$('#TOREGDT').val('');
+					$('#INFOAGREE').iCheck('check');				
+				});
+			});
+			
+									
+		});//redyfunction끝     
+		
+		
+		
+	</script>
+	
+	<!-- E: 추가 js -->
+	
+	
+</body>
+</html>

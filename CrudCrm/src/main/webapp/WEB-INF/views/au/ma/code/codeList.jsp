@@ -15,6 +15,7 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>코드 목록</h2>
+                    <h2>코드 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -236,7 +237,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="isdelete">사용여부</label></th>
                                             <td>
-                                            	<select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
+                                            	<select class="form-control col-12 float-left mr-12 required select2" name="isdelete" id="isdelete">
                                                     <option value=0 <c:if test='${code.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${code.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select>
@@ -304,7 +305,17 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
+	
 	<script>
+    $( document ).ready(function() {
+    	
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+	
 		$('#uppercodegrp').click(function(e){
 			openNewWindow('/common/code',e.target.id)
 		});

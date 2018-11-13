@@ -33,6 +33,7 @@ public class AuController {
 		mView.setViewName("/common/user/userList");
 		return mView;
 	}
+	
 	@RequestMapping(value="/common/user", method=RequestMethod.POST)
 	public ModelAndView authcommonUserSearchList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
@@ -46,6 +47,7 @@ public class AuController {
 		mView.setViewName("/au/ad/adminList");
 		return mView;
 	}
+	
 	@RequestMapping(value="/au", method=RequestMethod.POST)
 	public ModelAndView authAdminUserSearchList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
@@ -66,6 +68,7 @@ public class AuController {
 		mView.setViewName("/au/ad/adminInsert");
 		return mView;
 	}
+	
 	@RequestMapping(value="/au/post", method=RequestMethod.POST)
 	public ModelAndView authAdminUserInsertSet(HttpServletRequest request, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = new ModelAndView();
@@ -80,6 +83,7 @@ public class AuController {
 		mView.setViewName("/au/ad/adminUpdate");
 		return mView;
 	}
+	
 	@RequestMapping(value="/au/post/{userno}", method=RequestMethod.PUT)
 	public ModelAndView authAdminUserUpdateSet(HttpServletRequest request, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = new ModelAndView();
@@ -88,6 +92,7 @@ public class AuController {
 		mView.setViewName("redirect:/au/"+userNo);
 		return mView;
 	}
+	
 	@RequestMapping(value="/au/{userno}", method=RequestMethod.POST)
 	public ModelAndView authAdminUserDelete(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = new ModelAndView();
@@ -95,6 +100,7 @@ public class AuController {
 		mView.setViewName("redirect:/au");
 		return mView;
 	}
+	
 	@RequestMapping(value="/au/delete", method=RequestMethod.POST)
 	public ModelAndView authAdminUserDeleteSet(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -102,6 +108,7 @@ public class AuController {
 		mView.setViewName("redirect:/au");
 		return mView;
 	}
+	
 	@ResponseBody
 	@RequestMapping(value="/au/idcheck/{userid}",method=RequestMethod.GET)
 	public int authAdminUserIdCheck(@PathVariable String userid) {
@@ -111,6 +118,7 @@ public class AuController {
 		return userId;
 		
 	}
+	
 	@ResponseBody
 	@RequestMapping(value="/tab/user/{siteid}", method=RequestMethod.GET)
 	public List<Map<String,Object>> authTabTopList(HttpServletRequest request,@PathVariable int siteid){
@@ -118,6 +126,16 @@ public class AuController {
 		List<Map<String,Object>> userTopList = auService.userTopList(siteid);
 		
 		return userTopList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/modal/user", method=RequestMethod.GET)
+	public List<Map<String,Object>> authModalUserList(HttpServletRequest request) {
+		
+		List<Map<String,Object>> modalUserList = auService.ModalUserList(request);
+		
+		return modalUserList;
+		
 	}
 	
 

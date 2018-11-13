@@ -26,4 +26,6 @@ public interface AuService {
 	public int userIdCheck(String userId);
 	
 	public List<Map<String,Object>> userTopList(int siteid);
+	
+	public List<Map<String,Object>> ModalUserList(HttpServletRequest request);
 }

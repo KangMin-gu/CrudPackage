@@ -31,7 +31,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>사용자 목록</h2>
+                    <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -122,11 +122,11 @@
                                             <td>
                                                 <div class="input-group p-0  input-daterange">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" name="strdate" id="strdate" value="${search.strdate }">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strdate" id="strdate" value="${search.strdate }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" name="enddate" id="enddate" value="${search.enddate }">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="enddate" id="enddate" value="${search.enddate }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -137,7 +137,7 @@
 
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">사용자검색</button>
+                                <button class="btn btn-primary">검색</button>
                                 
                             </div>
                         </div>
@@ -146,10 +146,10 @@
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/au/post" class="btn btn-primary">사용자추가</a>
+                                <a href="${pageContext.request.contextPath}/au/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">사용자삭제</button>
+                                <button class="btn btn-primary">삭제</button>
                                 </div>
                              
                             </div>

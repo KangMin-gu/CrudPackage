@@ -31,7 +31,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>서비스 목록</h2>
+                    <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -77,7 +77,7 @@
                                             <th>고객명</th>
                                             <td>
                                                 <div class="input-group cust">
-                                                    <input type="text" class="form-control reset" name="custno_" id="custno_" value="${search.custno_ }">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="custno_" id="custno_" value="${search.custno_ }">
                                                     <input type="hidden" class="form-control reset" name="custno" id="custno" value="${search.custno }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -89,7 +89,7 @@
                                             <th>서비스명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="servicename" id="servicename" value="${search.servicename }">
+                                                    <input type="text" class="form-control reset" name="rcvname" id="rcvname" value="${search.rcvname }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -106,21 +106,19 @@
                                         <tr>
                                             <th>접수유형</th>
                                             <td>
-                                                <div class="input-group">
-                                                    <select class="form-control reset" name="rcvtype" id="rcvtype" value="${search.rcvtype }">
+                                                    <select class="form-control reset select2" name="rcvtype" id="rcvtype" value="${search.rcvtype }">
                                                     	<option value="">선택</option>
                                                     	<option value="1" <c:if test='${search.rcvtype eq 1}'>selected</c:if>>문의</option>
                                                     	<option value="2" <c:if test='${search.rcvtype eq 2}'>selected</c:if>>개선</option>
                                                     	<option value="3" <c:if test='${search.rcvtype eq 3}'>selected</c:if>>오류</option>
                                                 	</select>
-                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>거래처명</th>
                                             <td>
                                                 <div class="input-group cli">
-                                                    <input type="text" class="form-control reset" name="clino_" id="clino_" value="${search.clino_ }">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="clino_" id="clino_" value="${search.clino_ }">
                                                     <input type="hidden" class="form-control reset" name="clino" id="clino" value="${search.clino }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -131,14 +129,12 @@
                                         <tr>
                                             <th>처리상태</th>
                                             <td>
-                                                <div class="input-group">
-                                                    <select class="form-control reset" name="prcstate" id="prcstate" value="${search.prcstate }">
+                                                    <select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
                                                     	<option value="">선택</option>
                                                     	<option value="1" <c:if test='${search.prcstate eq 1}'>selected</c:if>>접수</option>
                                                     	<option value="2" <c:if test='${search.prcstate eq 2}'>selected</c:if>>이관</option>
                                                     	<option value="3" <c:if test='${search.prcstate eq 3}'>selected</c:if>>완료</option>
                                                 	</select>
-                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -155,7 +151,7 @@
                                             <th>접수자</th>
                                             <td>
                                                 <div class="input-group owner">
-                                                    <input type="text" class="form-control required" name="rcvowner_" id="rcvowner_" value="${search.rcvowner_ }">
+                                                    <input type="text" class="form-control required" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${search.rcvowner_ }">
                                                     <input type="hidden" name="rcvowner" id="rcvowner" value="${search.rcvowner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -167,7 +163,7 @@
                                             <th>담당자</th>
                                             <td>
                                                 <div class="input-group owner">
-                                                    <input type="text" class="form-control required" name="ractowner_" id="ractowner_" value="${search.ractowner_ }">
+                                                    <input type="text" class="form-control required" autocomplete="off" name="ractowner_" id="ractowner_" value="${search.ractowner_ }">
                                                     <input type="hidden" name="ractowner" id="ractowner" value="${search.ractowner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -180,7 +176,7 @@
                             </div>
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">서비스검색</button>
+                                <button class="btn btn-primary">검색</button>
                                 
                             </div>
                         </div>
@@ -189,10 +185,10 @@
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/sv/post" class="btn btn-primary">서비스추가</a>
+                                <a href="${pageContext.request.contextPath}/sv/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">서비스삭제</button>
+                                <button class="btn btn-primary">삭제</button>
                                 </div>
                              
                             </div>
@@ -200,7 +196,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="i-checks" name=""></th>
+                                        <th><input type="checkbox" class="i-checks"></th>
                                         <th>서비스명</th>
                                         <th>접수유형</th>
                                         <th>처리유형</th>
@@ -215,15 +211,15 @@
                                 <tbody>
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
-                                        <td><input type="checkbox" class="i-checks" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/sv/${svList.SERVICENO }">${svList.SERVICENAME}</td>
+                                        <td><input type="checkbox" class="i-checks" name="rcvno" id="rcvno" value="${svList.RCVNO }"></td>
+                                        <td><a href="${pagecontext.request.contextpath}/sv/${svList.RCVNO }">${svList.RCVNAME}</a></td>
                                         <td>${svList.RCVTYPE_ }</td>
-                                        <td>${svList.ACTCODE_ }</td>
+                                        <td>${svList.RACTCODE_ }</td>
                                         <td>${svList.CUSTNO_ }</td>
                                         <td>${svList.CLINO_ }</td>
                                         <td>${svList.RCVDATE_ }</td>
                                         <td>${svList.RCVOWNER_ }</td>
-                                        <td>${svList.ACTOWNER_ }</td>
+                                        <td>${svList.RACTOWNER_ }</td>
                                         <td>${svList.PRCSTATE_ }</td>
                                     </tr>
                                 </c:forEach>
@@ -289,7 +285,6 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-	</div>
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	

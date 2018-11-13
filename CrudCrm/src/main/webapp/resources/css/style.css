@@ -11,6 +11,7 @@
   src: url('../fonts/glyphicons-halflings-regular.eot');
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg') format('svg');
 }
+
 .glyphicon {
   position: relative;
   top: 1px;
@@ -2756,7 +2757,7 @@ div.dt-button-info {
   font-size: 0.9rem;
 }
 select.form-control:not([size]):not([multiple]) {
-  height: 2.05rem;
+  height: 1.55rem;
 }
 .input-sm,
 .form-control-sm {
@@ -2776,7 +2777,7 @@ select.form-control:not([size]):not([multiple]) {
   border-radius: 1px;
   color: inherit;
   display: block;
-  padding: 6px 12px;
+  padding: 0 12px;
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   width: 100%;
 }
@@ -2813,9 +2814,10 @@ select.form-control:not([size]):not([multiple]) {
   font-size: 14px;
   font-weight: 400;
   line-height: 1;
-  padding: 9px 12px 4px 12px;
+  padding: 3px 12px;
   text-align: center;
 }
+.input-group{max-height: 25px;}
 .spinner-buttons.input-group-btn .btn-xs {
   line-height: 1.13;
 }
@@ -6393,9 +6395,9 @@ dd.project-people {
   text-align: center;
   margin: 40px 0 100px 0;
 }
-.article .ibox-content {
+/* .article .ibox-content {
   padding: 40px;
-}
+} */
 /* ISSUE TRACKER */
 .issue-tracker .btn-link {
   color: #1ab394;
@@ -8333,6 +8335,12 @@ body.landing-page {
   }
 }
 @media (max-width: 768px) {
+  .overflow-x{
+      overflow-x: auto;
+  }
+  .mt-sx-1{
+      margin-top: 0.25rem;
+  }
   .landing-page .carousel-caption,
   .landing-page .carousel-caption.blank {
     left: 5%;

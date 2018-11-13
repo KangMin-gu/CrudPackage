@@ -7,7 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import saas.crud.crm.sv.dto.SvDto;
+import saas.crud.crm.sv.dto.ConveyDto;
+import saas.crud.crm.sv.dto.RactDto;
+import saas.crud.crm.sv.dto.RcvDto;
 
 @Repository
 public class SvDaoImpl implements SvDao{
@@ -28,31 +30,64 @@ public class SvDaoImpl implements SvDao{
 	}
 
 	@Override
-	public Map<String, Object> svRead(SvDto svDto) {
+	public Map<String, Object> svRead(RcvDto svDto) {
 		// TODO Auto-generated method stub
 		return session.selectOne("sv.detail",svDto);
 	}
 
 	@Override
-	public int svInsert(SvDto svDto) {
+	public int svInsert(RcvDto rcvDto) {
 		// TODO Auto-generated method stub
-		session.insert("sv.insert",svDto);
-		int serviceNo = svDto.getServiceno();
 		
-		return serviceNo;
+		session.insert("sv.rcvinsert",rcvDto);
+		int rcvNo = rcvDto.getRcvno();
+		return rcvNo;
+	}
+	
+	@Override
+	public void svTotalUpdate(Map<String, Object> data) {
+		// TODO Auto-generated method stub
+		session.update("sv.totalUpdate",data);
 	}
 
 	@Override
-	public void svUpdate(SvDto svDto) {
+	public void svUpdate(Map<String,Object> data) {
 		// TODO Auto-generated method stub
-		session.update("sv.update",svDto);
-		
+		session.update("sv.update",data);
 	}
 
 	@Override
-	public void svDelete(SvDto svDto) {
+	public void svDelete(RcvDto svDto) {
 		// TODO Auto-generated method stub
 		session.update("sv.delete",svDto);
 	}
+
+	@Override
+	public void svRactInser(Map<String, Object> data) {
+		// TODO Auto-generated method stub
+		
+		session.insert("sv.ractinsert",data);
+	}
+
+	@Override
+	public List<Map<String, Object>> svTabRact(RactDto ractDto) {
+		// TODO Auto-generated method stub
+		
+		return session.selectList("sv.tabRact",ractDto);
+	}
+
+	@Override
+	public List<Map<String, Object>> conveyTabList(ConveyDto conveyDto) {
+		// TODO Auto-generated method stub
+		return session.selectList("sv.tabConvey",conveyDto);
+	}
+
+	@Override
+	public void conveyInsert(ConveyDto conveyDto) {
+		// TODO Auto-generated method stub
+		session.insert("sv.conveyInsert",conveyDto);
+	}
+
+
 
 }

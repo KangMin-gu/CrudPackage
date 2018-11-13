@@ -15,7 +15,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.au.dto.MenuDto" alias="menuDto" />
 		<typeAlias type="saas.crud.crm.au.dto.LicenseDto" alias="licenseDto" />
 		<typeAlias type="saas.crud.crm.au.dto.CodeDto" alias="codeDto"/>
-		<typeAlias type="saas.crud.crm.sv.dto.SvDto" alias="svDto"/>
+		<typeAlias type="saas.crud.crm.sv.dto.RcvDto" alias="rcvDto"/>
+		<typeAlias type="saas.crud.crm.sv.dto.RactDto" alias="ractDto"/>
+		<typeAlias type="saas.crud.crm.sv.dto.ConveyDto" alias="conveyDto"/>
 	</typeAliases>
 
 	<mappers>

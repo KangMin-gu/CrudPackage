@@ -46,25 +46,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered">
-                                    <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>전화번호</th>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="mobile" id="mobile" value="${search.mobile }">
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
 
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>

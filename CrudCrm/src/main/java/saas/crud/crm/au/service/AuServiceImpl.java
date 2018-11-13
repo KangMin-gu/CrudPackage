@@ -164,4 +164,46 @@ public class AuServiceImpl implements AuService{
 		return userList;
 	}
 
+	@Override
+	public List<Map<String, Object>> ModalUserList(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		Map<String, Object> search = new HashMap();
+		Map<String, Object> total = new HashMap();
+		
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value == "") {
+				value = null;
+			}
+			search.put(name, value);
+		}
+		
+		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		search.put("siteid", SITEID);
+		int totalRows = auDao.urTotalRows(search);
+		
+		int PAGE_DISPLAY_COUNT = 5;
+		int PAGE_ROW_COUNT = 10;
+		
+		PagingCommon pages =new PagingCommon();
+		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+		
+		search.put("startRowNum", startRowNum);
+		search.put("endRowNum", endRowNum);
+		
+		List<Map<String,Object>> userList = auDao.urList(search);
+		total.put("page", page);
+		total.put("totalRows", totalRows);
+		total.put("search", search);
+		
+		userList.add(total);
+		
+		return userList;
+	}
+
 }

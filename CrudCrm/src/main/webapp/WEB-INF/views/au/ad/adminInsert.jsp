@@ -30,7 +30,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>사용자 추가</h2>
+                    <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -63,7 +63,7 @@
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/au/${user.USERNO}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary save">사용자저장</button>
+                                <button class="btn btn-primary save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -93,11 +93,6 @@
                                                     <input type="text" class="form-control required" name="userid" id="userid" value="${user.USERID}">
                                                     <input type="hidden" class="form-control" name="idcheck" id="idcheck" value="">
                                                 </div>
-                                            </td>
-                                            <td>
-                                            	<div class="input-group idcheck">
-                                            		
-                                            	</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -140,7 +135,12 @@
                                         <tr>
                                             <th><label for="mobile">입사일자</label></th>
                                             <td>
-                                                <input type="text" class="form-control float-left date" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                            	<div class="input-group pl-0 float-left">
+                                                	<input type="text" class="form-control float-left date" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                                	<span class="input-group-addon">
+                                                		<i class="fa fa-calendar"></i>
+                                                	</span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -265,7 +265,7 @@
 		$('.date').datepicker({
 			keyboardNavigation:false,
 			forceParse:false,
-			autocolse:true
+			autoclose:true
 		});
 		
 	});

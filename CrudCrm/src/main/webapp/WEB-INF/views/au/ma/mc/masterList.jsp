@@ -31,7 +31,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>회원사 목록</h2>
+                    <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -64,11 +64,11 @@
                                             <td>
                                                 <div class="input-group p-0  input-daterange">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" name="strDate" id="strDate" value="${search.strDate }">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strDate" id="strDate" value="${search.strDate }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" name="endDate" id="endDate" value="${search.endDate }">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="endDate" id="endDate" value="${search.endDate }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -119,7 +119,7 @@
                             </div>
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">회원사검색</button>
+                                <button class="btn btn-primary">검색</button>
                                 
                             </div>
                         </div>

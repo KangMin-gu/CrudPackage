@@ -1,5 +1,8 @@
 package saas.crud.crm.sv.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.sv.dto.SvDto;
+import saas.crud.crm.sv.dto.ConveyDto;
+import saas.crud.crm.sv.dto.RcvDto;
 import saas.crud.crm.sv.service.SvService;
 
 @Controller
@@ -31,24 +36,23 @@ public class SvController {
 		mView.setViewName("sv/svList");
 		return mView;
 	}
-	@RequestMapping(value="/sv/{serviceno}",method=RequestMethod.GET)
-	public ModelAndView authSvRead(HttpServletRequest request, @PathVariable int serviceno) {
-		ModelAndView mView = svService.svRead(request, serviceno);
+	@RequestMapping(value="/sv/{rcvno}",method=RequestMethod.GET)
+	public ModelAndView authSvRead(HttpServletRequest request, @PathVariable int rcvno) {
+		ModelAndView mView = svService.svRead(request, rcvno);
 		mView.setViewName("sv/svRead");
 		return mView;
 	}
-	@RequestMapping(value="/sv/post/{serviceno}",method=RequestMethod.GET)
-	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int serviceno) {
-		ModelAndView mView = svService.svRead(request, serviceno);
+	@RequestMapping(value="/sv/post/{rcvno}",method=RequestMethod.GET)
+	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno) {
+		ModelAndView mView = svService.svRead(request, rcvno);
 		mView.setViewName("sv/svUpdate");
 		return mView;
 	}
-	@RequestMapping(value="/sv/post/{serviceno}",method=RequestMethod.PUT)
-	public ModelAndView authSvUpdateSet(HttpServletRequest request, @ModelAttribute SvDto serviceDto) {
+	@RequestMapping(value="/sv/post/{rcvno}",method=RequestMethod.PUT)
+	public ModelAndView authSvUpdateSet(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = new ModelAndView();
-		svService.svUpdate(request, serviceDto);
-		int serviceNo = serviceDto.getServiceno();
-		mView.setViewName("redirect:/sv/"+serviceNo);
+		svService.svUpdate(request);
+		mView.setViewName("redirect:/sv/"+rcvno);
 		return mView;
 	}
 	
@@ -60,12 +64,12 @@ public class SvController {
 		return mView;
 	}
 	@RequestMapping(value="/sv/post", method=RequestMethod.POST)
-	public ModelAndView authSvInsertSet(HttpServletRequest request,@ModelAttribute SvDto svDto) {
+	public ModelAndView authSvInsertSet(HttpServletRequest request, @ModelAttribute RcvDto rcvDto) {
 		ModelAndView mView = new ModelAndView();
 		
-		int serviceNo = svService.svInsert(request, svDto);
+		int rcvNo = svService.svInsert(request,rcvDto);
 		
-		mView.setViewName("redirect:/sv/"+serviceNo);
+		mView.setViewName("redirect:/sv/"+rcvNo);
 		
 		return mView;
 	}
@@ -79,15 +83,50 @@ public class SvController {
 		
 		return mView;
 	}
-	@RequestMapping(value="/sv/{serviceno}", method=RequestMethod.POST)
-	public ModelAndView authSvDelete(HttpServletRequest request,@PathVariable int serviceno) {
+	@RequestMapping(value="/sv/{rcvno}", method=RequestMethod.POST)
+	public ModelAndView authSvDelete(HttpServletRequest request,@PathVariable int rcvno) {
 		ModelAndView mView = new ModelAndView();
 		
-		svService.svDelete(request,serviceno);
+		svService.svDelete(request,rcvno);
 		
 		mView.setViewName("redirect:/sv");
 		
 		return mView;
+	}
+	
+	@RequestMapping(value="/convey/{rcvno}", method=RequestMethod.GET)
+	public ModelAndView authcommonUserList(HttpServletRequest request,@PathVariable int rcvno) {
+		ModelAndView mView = svService.svRead(request, rcvno);
+		mView.setViewName("/sv/svConveyPopup");
+		return mView;
+	}
+	
+	
+	
+	@RequestMapping(value="/convey",method=RequestMethod.POST)
+	public void authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
+		
+		svService.svConveyInsert(request, conveyDto);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/tab/ract/{rcvno}", method=RequestMethod.GET)
+	public List<Map<String, Object>> authSvTabRact(HttpServletRequest request, @PathVariable int rcvno){
+		
+		List<Map<String, Object>> tabRact = svService.svTabRact(request,rcvno);
+		
+		return tabRact;
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/tab/convey/{rcvno}", method=RequestMethod.GET)
+	public List<Map<String, Object>> authSvTabConvey(HttpServletRequest request, @PathVariable int rcvno){
+		
+		List<Map<String, Object>> tabRact = svService.svTabConvey(request,rcvno);
+		
+		return tabRact;
+		
 	}
 
 

@@ -30,7 +30,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>서비스 정보</h2>
+                    <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -66,9 +66,10 @@
                         <div class="ibox-content row">
                         
                             <div class="w-100 text-right mb-2">
-                            <form:form action="${pageContext.request.contextPath}/sv/${serviceInfo.SERVICENO}" method="POST">
+                            <form:form action="${pageContext.request.contextPath}/sv/${serviceInfo.RCVNO}" method="POST">
                                 <a href="${pageContext.request.contextPath}/sv" class="btn btn-primary">서비스목록</a>
-                                <a href="${pageContext.request.contextPath}/sv/post/${serviceInfo.SERVICENO}" class="btn btn-primary">서비스수정</a>
+                                <a href="${pageContext.request.contextPath}/sv/post/${serviceInfo.RCVNO}" class="btn btn-primary">서비스수정</a>
+                                <a href="#" class="btn btn-primary servicenext">서비스이관</a>
 								<button class="btn btn-primary" type="submit" value="삭제">서비스삭제</button>
 							</form:form>	
                             </div>
@@ -253,7 +254,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td>
-                                                ${serviceInfo.SERVICENAME }
+                                                ${serviceInfo.RCVNAME }
                                             </td>
                                         </tr>
 
@@ -286,7 +287,7 @@
                                         <tr>
                                             <th>서비스내용</th>
                                             <td>
-                                                <textarea id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
+                                                <textarea id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -302,15 +303,13 @@
                                         <tr>
                                             <th>메모</th>
                                             <td>
-                                                <textarea id="ractopinion">${serviceInfo.RACTOPINION }</textarea>
+                                                <textarea id="rcvopinion">${serviceInfo.RCVOPINION }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -396,6 +395,9 @@
                                             <td>
                                                 <textarea id="ractdesc">${serviceInfo.RACTDESC }</textarea>
                                             </td>
+                                            <td>
+                                                <input type="hidden" id="rcvno" value="${serviceInfo.RCVNO }" /> 
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -403,6 +405,70 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12" style="background: #ffffff;">
+                	<div class="ibox">
+                            <div class="ibox-title row border-0">
+                                <h4>서비스 상세</h4>
+                            </div>
+                            <div class="ibox-tools">
+                            	<a class="collapse-link">
+                                	<i class="fa fa-chevron-up"></i>
+                            	</a>
+                        	</div>
+                            <div class="ibox-content row">
+                                <div class="box1 col-lg-12 p-0">
+                                    <div class="tabs-container">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li><a class="nav-link li tabRact active" data-toggle="tab" href="#tab1">처리 이력</a></li>
+                                            <li><a class="nav-link tabConvey" data-toggle="tab" href="#tab2">이관이력</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>처리일</th>
+                                                                <th>처리시간</th>
+                                                                <th>처리유형</th>
+                                                                <th>담당자</th>
+                                                                <th>처리내용</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" id="tab2" class="tab-pane overflow-x">
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>이관일자</th>
+                                                                <th>이관사유</th>
+                                                                <th>이전 담당자</th>
+                                                                <th>이관 담당자</th>
+                                                                <th>비고</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
             </div>
         </div>
 <!-- Content End -->
@@ -421,13 +487,23 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script><!-- summernote-->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script><!-- summernote-->
 	<script>
 		$(document).ready(function () {
 			
-			$('#servicedesc').summernote('disable');
-			$('#ractopinion').summernote('disable');
+			$('#rcvdesc').summernote('disable');
+			$('#rcvopinion').summernote('disable');
 			$('#ractdesc').summernote('disable');
+		});
+		
+		$('.servicenext').click(function(e){
+			var id = $('#rcvno').val();
+			var url = '/convey/'+id;
+			var x = '1232';
+			var y = '377';
+			
+			openNewWindow(url,e,x,y);
+			
 		});
 	
 	</script>

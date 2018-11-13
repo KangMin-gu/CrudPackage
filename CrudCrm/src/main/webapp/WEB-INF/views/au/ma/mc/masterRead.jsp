@@ -30,7 +30,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>회원사 정보</h2>
+                    <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -62,9 +62,9 @@
                         
                             <div class="w-100 text-right mb-2">
                             <form:form action="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" method="POST">
-                                <a href="${pageContext.request.contextPath}/ma/mc" class="btn btn-primary">회원사목록</a>
-                                <a href="${pageContext.request.contextPath}/ma/mc/post/${memCompany.SITEID}" class="btn btn-primary">회원사수정</a>
-								<button class="btn btn-primary" type="submit" value="삭제">회원사삭제</button>
+                                <a href="${pageContext.request.contextPath}/ma/mc" class="btn btn-primary">목록</a>
+                                <a href="${pageContext.request.contextPath}/ma/mc/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
+								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 							</form:form>	
                             </div>
                             

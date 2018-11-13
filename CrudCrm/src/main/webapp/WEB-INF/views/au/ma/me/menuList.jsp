@@ -15,6 +15,8 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
+
 </head>
 
 <body>
@@ -28,7 +30,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>메뉴 목록</h2>
+                    <h2>메뉴 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -240,6 +242,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="isdelete">사용여부</label></th>
                                             <td><select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
+                                            		<option>선택</option>
                                                     <option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select></td>
@@ -250,7 +253,7 @@
                             <div class="box4 col-lg-8 p-0">
                                 <table class="table table-bordered border-top-0  mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 12.4%; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -292,8 +295,17 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
+	
 	<script>
+	
 	$(document).ready(function () {
+		
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+		
         $.ajax({
             url: "/ma/li/ajax",
             method: "POST",
@@ -314,7 +326,5 @@
 	});
 	
 	</script>
-			
-
 </body>
 </html>

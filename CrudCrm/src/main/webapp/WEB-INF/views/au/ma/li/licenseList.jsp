@@ -15,6 +15,7 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>라이센스 목록</h2>
+                    <h2>라이센스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -208,9 +209,7 @@
                                                 	<option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select>
                                             </td>
-                                           	<td>
                                            		<input type="hidden" id="no" />
-                                           	</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -241,7 +240,16 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script>
-			
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
+	<script>
+	$( document ).ready(function() {
+    	
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+	</script>
 
 </body>
 </html>

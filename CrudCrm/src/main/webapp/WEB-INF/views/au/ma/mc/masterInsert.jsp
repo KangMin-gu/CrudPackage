@@ -29,7 +29,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>회원사 추가</h2>
+                    <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -62,7 +62,7 @@
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary save">회원사저장</button>
+                                <button class="btn btn-primary save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -121,7 +121,7 @@
                                             <th class="border-top-0"><label for="zipcode">직장주소</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group col-lg-3 pl-0 float-left">
-                                                    <input type="text" class="form-control daumzip" name="zipcode" id="zipcode" value="${memCompany.ZIPCODE}">
+                                                    <input type="text" class="form-control daumzip" autocomplete="off" name="zipcode" id="zipcode" value="${memCompany.ZIPCODE}">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-search"></i>
                                                     </span>
@@ -184,7 +184,7 @@
                                         <tr>
                                             <th><label for="fregdate">최초가입일</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                                <input type="text" class="form-control date" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -265,7 +265,7 @@
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner">
-                                                    <input type="text" class="form-control required" name="owner_" id="owner_" value="${memCompany.owner_ }">
+                                                    <input type="text" class="form-control required" autocomplete="off" name="owner_" id="owner_" value="${memCompany.owner_ }">
                                                     <input type="hidden" name="owner" id="owner" value="${memCompany.ower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -327,10 +327,18 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
 	$(document).ready(function () {
 		$('.summernote').summernote({});
+		
+		$('.date').datepicker({
+			keyboardNavigation:false,
+			forceParse:false,
+			autoclose:true
+			
+		});
 
 	});
 	 $('.daumzip').click(function(e){

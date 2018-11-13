@@ -19,6 +19,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/select2/select2.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,7 +34,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>서비스 정보</h2>
+                    <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -45,9 +46,6 @@
                             <strong>서비스 추가</strong>
                         </li>
                     </ol>
-                </div>
-                <div class="col-lg-2">
-
                 </div>
             </div>		
 		
@@ -70,8 +68,8 @@
                         <div class="ibox-content row">
                         
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/sv" class="btn btn-primary">서비스목록</a>
-                                <button class="btn btn-primary">서비스저장</button>
+                                <a href="${pageContext.request.contextPath}/sv" class="btn btn-primary">목록</a>
+                                <button class="btn btn-primary save">저장</button>
                             </div>
                             
                             <div class="box1 col-lg-4 p-0">
@@ -85,8 +83,8 @@
                                             <th><label for="clino">거래처명</label></th>
                                             <td>
                                             	<div class="input-group cli">
-                                                    <input type="text" class="form-control required" name="clino_" id="clino_" value="${serviceInfo.CLINO_ }">
-                                                    <input type="hidden" class="form-control" name="clino" id="clino" value="${serviceInfo.CLINO }">
+                                                    <input type="text" class="form-control" name="clino_" id="clino_" value="${serviceInfo.CLINO_ }">
+                                                    <input type="hidden" class="form-control" name="clino" id="clino" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -102,7 +100,7 @@
                                             <td>
                                             	<div class="input-group cust">
                                                     <input type="text" class="form-control required" name="custno_" id="custno_" value="${serviceInfo.CUSTNO_ }">
-                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="${serviceInfo.CUSTNO }">
+                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -220,16 +218,17 @@
                                             <td>
                                             	<select class="form-control float-left" name="rcvtype" id="rcvtype">
                                             		<option value="0">선택</option>
-                                                    <option value=1>문의</option>
-                                                    <option value=2>개선</option>
-                                                    <option value=3>오류</option>
+                                                    <option value=1 <c:if test='${serviceInfo.RCVTYPE eq 1}'>selected</c:if>>문의</option>
+                                                    <option value=2 <c:if test='${serviceInfo.RCVTYPE eq 2}'>selected</c:if>>개선</option>
+                                                    <option value=3 <c:if test='${serviceInfo.RCVTYPE eq 3}'>selected</c:if>>오류</option>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>접수일</th>
                                             <td>
-                                            	<input type="text" class="form-control date" disabled name="rcvdate" id="rcvdate">
+                                            	<input type="text" class="form-control date" disabled id="rcvdate_">
+                                            	<input type="hidden" class="form-control date" name="rcvdate" id="rcvdate">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -245,11 +244,11 @@
                                         <tr>
                                             <th>서비스유형</th>
                                             <td>
-                                            	<select class="form-control float-left" name="rcvcode" id="rcvcode">
+                                            	<select class="form-control float-left select2" name="rcvcode" id="rcvcode">
                                             		<option value="0">선택</option>
-                                                    <option value=1>클라1</option>
-                                                    <option value=2>클라2</option>
-                                                    <option value=3>클라3</option>
+                                                    <option value=1 <c:if test='${serviceInfo.RCVCODE eq 1}'>selected</c:if>>클라1</option>
+                                                    <option value=2 <c:if test='${serviceInfo.RCVCODE eq 2}'>selected</c:if>>클라2</option>
+                                                    <option value=3 <c:if test='${serviceInfo.RCVCODE eq 3}'>selected</c:if>>클라3</option>
                                                 </select>
 											</td>
                                         </tr>
@@ -257,10 +256,10 @@
                                             <th>접수시간</th>
                                             <td>
                                             	<div class="input-group clockpicker" data-autoclose="true">
-                                					<input type="text" class="form-control" name="rcvtime" id="rcvtime" value="${serviceInfo.RCVTIME }">
-                                					<span class="input-group-addon">
+                                            		<span class="input-group-addon">
                                     					<span class="fa fa-clock-o"></span>
                                 					</span>
+                                					<input type="text" class="form-control" autocomplete="off" name="rcvtime" id="rcvtime" value="${serviceInfo.RCVTIME }">
                             					</div>	
                                             </td>
                                         </tr>
@@ -278,8 +277,8 @@
                                             <th>접수자</th>
                                             <td>
                                             	<div class="input-group owner">
-                                                    <input type="text" class="form-control required" name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
-                                                    <input type="hidden" name="rcvowner" id="rcvowner" value="${serviceInfo.RCVOWNER }">
+                                                    <input type="text" class="form-control required" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
+                                                    <input type="hidden" name="rcvowner" id="rcvowner" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -291,9 +290,9 @@
                                             <td>
                                             	<select class="form-control float-left" name="prcstate" id="prcstate">
                                             		<option value="0">선택</option>
-                                                    <option value=1>접수</option>
-                                                    <option value=2>이관</option>
-                                                    <option value=3>완료</option>
+                                                    <option value=1 <c:if test='${serviceInfo.PRCSTATE eq 1}'>selected</c:if>>접수</option>
+                                                    <option value=2 <c:if test='${serviceInfo.PRCSTATE eq 2}'>selected</c:if>>이관</option>
+                                                    <option value=3 <c:if test='${serviceInfo.PRCSTATE eq 3}'>selected</c:if>>완료</option>
                                                 </select>
 											</td>
                                         </tr>
@@ -311,7 +310,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td>
-                                            	<input type="text" class="form-control required" name="servicename" id="servicename" value="${serviceInfo.SERVICENAME }">
+                                            	<input type="text" class="form-control required" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -348,7 +347,7 @@
                                         <tr>
                                             <th>서비스내용</th>
                                             <td>
-                                                <textarea name="servicedesc" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
+                                                <textarea name="rcvdesc" id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -364,7 +363,7 @@
                                         <tr>
                                             <th>메모</th>
                                             <td>
-                                                <textarea name="ractopinion" id="ractopinion">${serviceInfo.RACTOPINION }</textarea>
+                                                <textarea name="rcvopinion" id="rcvopinion">${serviceInfo.RCVOPINION }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -398,7 +397,7 @@
                                         <tr>
                                             <th>처리유형</th>
                                             <td>
-                                            	<select class="form-control float-left" name="ractcode" id="ractcode">
+                                            	<select class="form-control float-left select2" name="ractcode" id="ractcode">
                                             		<option value=0>선택</option>
                                                     <option value=1 <c:if test='${serviceInfo.RACTCODE eq 1}'>selected</c:if>>option1</option>
                                                     <option value=2 <c:if test='${serviceInfo.RACTCODE eq 2}'>selected</c:if>>option2</option>
@@ -419,7 +418,12 @@
                                         <tr>
                                             <th>처리일</th>
                                             <td>
-                                            	<input type="text" class="form-control date" name="ractdate" id="ractdate" value="${serviceInfo.RACTDATE }">
+                                            	<div class="input-group">
+                                            		<span class="input-group-addon">
+                                    					<span class="fa fa-calendar"></span>
+                                					</span>
+                                            		<input type="text" class="form-control date" autocomplete="off" name="ractdate" id="ractdate" value="${serviceInfo.RACTDATE }">
+                                            	</div>
                                             </td>
                                         </tr>
                                         
@@ -437,10 +441,10 @@
                                             <th>처리 시간</th>
                                             <td>
                                             	<div class="input-group clockpicker" data-autoclose="true">
-                                					<input type="text" class="form-control" name="racttime" id="racttime" value="${serviceInfo.RACTTIME }">
-                                					<span class="input-group-addon">
+                                            		<span class="input-group-addon">
                                     					<span class="fa fa-clock-o"></span>
                                 					</span>
+                                					<input type="text" class="form-control" autocomplete="off" name="racttime" id="racttime" value="${serviceInfo.RACTTIME }">
                             					</div>	
                                             </td>
                                         </tr>
@@ -458,8 +462,8 @@
                                             <th>담당자</th>
                                             <td>
                                             	<div class="input-group owner">
-                                                    <input type="text" class="form-control required" name="ractowner_" id="ractowner_" value="${serviceInfo.RACTOWNER_ }">
-                                                    <input type="hidden" name="ractowner" id="ractowner" value="${serviceInfo.RACTOWNER }">
+                                                    <input type="text" class="form-control" autocomplete="off" name="ractowner_" id="ractowner_" value="${serviceInfo.RACTOWNER_ }">
+                                                    <input type="hidden" name="ractowner" id="ractowner" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -509,21 +513,19 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
 	
 	<script>
 		$(document).ready(function () {
-			
+
+			$('.select2').select2();
 			var date = today();
-			
-			$('#rcvdate').attr('value',date);
-			$('#rcvdate').val(date);
 			
 			$('.clockpicker').clockpicker();
 			
-			$('#servicedesc').summernote();
-			$('#ractopinion').summernote();
+			$('#rcvdesc').summernote();
+			$('#rcvopinion').summernote();
 			$('#ractdesc').summernote();
 			
 			$('.date').datepicker({
@@ -531,6 +533,8 @@
 				forceParse:false,
 				autoclose:true
 			});
+			$('#rcvdate').val(date);
+			$('#rcvdate_').val(date);
 		});
 	
 

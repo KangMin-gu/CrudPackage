@@ -30,7 +30,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>회원사 수정</h2>
+                    <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="/">메인</a>
@@ -66,7 +66,7 @@
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary save">회원사저장</button>
+                                <button class="btn btn-primary save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -125,7 +125,7 @@
                                             <th class="border-top-0"><label for="zipcode">직장주소</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group col-lg-3 pl-0 float-left">
-                                                    <input type="text" class="form-control daumzip" name="zipcode" id="zipcode" value="${memCompany.ZIPCODE}">
+                                                    <input type="text" class="form-control daumzip" autocomplete="off" name="zipcode" id="zipcode" value="${memCompany.ZIPCODE}">
                                                     <span class="input-group-addon">
                                                         <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
                                                     </span>
@@ -188,7 +188,7 @@
                                         <tr>
                                             <th><label for="fregdate">최초가입일</label></th>
                                             <td>
-                                                <input type="text" class="form-control date" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                                <input type="text" class="form-control date" data-autoclose="true" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -267,7 +267,7 @@
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner">
-                                                    <input type="text" class="form-control required" name="owner_" id="owner_" value="${memCompany.OWNER_ }">
+                                                    <input type="text" class="form-control required" data-autoclose="true" name="owner_" id="owner_" value="${memCompany.OWNER_ }">
                                                     <input type="hidden" name="owner" id="owner" value="${memCompany.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -302,9 +302,7 @@
                                             <td>
                                                 <textarea type="text" class="form-control col-12 float-left mr-12 summernote" name="sitememo" id="sitememo" value="${memCompany.SITEMEMO }">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
-                                            <td>
                                             <input type="hidden" name="siteid" id="siteid"  value="${memCompany.SITEID }">
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

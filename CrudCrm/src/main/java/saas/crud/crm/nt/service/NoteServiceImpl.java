@@ -1,18 +1,27 @@
 package saas.crud.crm.nt.service;
 
 import java.util.Map;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.common.AdressQuarter;
+import saas.crud.crm.common.FileUpload;
 import saas.crud.crm.common.PagingCommon;
 import saas.crud.crm.nt.dao.NoteDao;
+import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.nt.dto.NoteDto;
 
 @Service
@@ -22,11 +31,12 @@ public class NoteServiceImpl implements NoteService{
 	private NoteDao ntDao;
 	
 	//inbox
+	//@Cacheable("test")
 	@Override
 	public ModelAndView noteInbox(HttpServletRequest request) {
 		//세션에서 사용자정보를 가져온다.
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int toUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		//검색과 관련된 파라미터를 읽어와 본다.
 		String keyword=request.getParameter("keyword");
 		String condition=request.getParameter("condition");
@@ -61,7 +71,7 @@ public class NoteServiceImpl implements NoteService{
 		
 		//Mapper 검색 조건 담기
 		noteVal.put("siteid", siteId);
-		noteVal.put("touserno", toUserNo);
+		noteVal.put("userno", userNo);
 		
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.notetotalRows(noteVal);
@@ -82,6 +92,12 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteReadVal(noteVal);
 		
+		NoteCategoryDto noteCategory = new NoteCategoryDto();
+		noteCategory.setUserno(userNo);
+		noteCategory.setSiteid(siteId);
+		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		
+		mView.addObject("category", category);
 		mView.addObject("url", "note/inbox");
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -95,7 +111,7 @@ public class NoteServiceImpl implements NoteService{
 	public ModelAndView noteOutbox(HttpServletRequest request) {
 		//세션에서 사용자정보를 가져온다.
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
 		//검색과 관련된 파라미터를 읽어와 본다.
 		String keyword=request.getParameter("keyword");
 		String condition=request.getParameter("condition");
@@ -112,7 +128,7 @@ public class NoteServiceImpl implements NoteService{
 			if(condition.equals("title")){//제목 검색
 				noteOutVal.put("title", keyword);
 			}else if(condition.equals("sender")){//작성자 검색
-				noteOutVal.put("sender", keyword);
+				noteOutVal.put("recipient", keyword);
 			}
 					
 			mView.addObject("condition", condition);
@@ -131,7 +147,7 @@ public class NoteServiceImpl implements NoteService{
 				
 		//Mapper 검색 조건 담기
 		noteOutVal.put("siteid", siteId);
-		noteOutVal.put("fromuserno", fromUserNo);
+		noteOutVal.put("userno", userNo);
 				
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.noteOuttalRows(noteOutVal);
@@ -151,7 +167,13 @@ public class NoteServiceImpl implements NoteService{
 				
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteOutReadVal(noteOutVal);
-				
+		
+		NoteCategoryDto noteCategory = new NoteCategoryDto();
+		noteCategory.setUserno(userNo);
+		noteCategory.setSiteid(siteId);
+		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		
+		mView.addObject("category", category);
 		mView.addObject("url", "note/outbox");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -165,7 +187,7 @@ public class NoteServiceImpl implements NoteService{
 	public ModelAndView noteImport(HttpServletRequest request) {
 				//세션에서 사용자정보를 가져온다.
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int toUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
 		//검색과 관련된 파라미터를 읽어와 본다.
 		String keyword=request.getParameter("keyword");
 		String condition=request.getParameter("condition");
@@ -200,7 +222,7 @@ public class NoteServiceImpl implements NoteService{
 						
 		//Mapper 검색 조건 담기
 		noteImportVal.put("siteid", siteId);
-		noteImportVal.put("touserno", toUserNo);
+		noteImportVal.put("userno", userNo);
 						
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.notetotalImportRows(noteImportVal);
@@ -220,7 +242,12 @@ public class NoteServiceImpl implements NoteService{
 						
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteImportReadVal(noteImportVal);
-						
+		NoteCategoryDto noteCategory = new NoteCategoryDto();
+		noteCategory.setUserno(userNo);
+		noteCategory.setSiteid(siteId);
+		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		
+		mView.addObject("category", category);				
 		mView.addObject("url", "note/import");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -289,7 +316,12 @@ public class NoteServiceImpl implements NoteService{
 						
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteTrashReadVal(noteTrashVal);
-						
+		NoteCategoryDto noteCategory = new NoteCategoryDto();
+		noteCategory.setUserno(userNo);
+		noteCategory.setSiteid(siteId);
+		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		
+		mView.addObject("category", category);				
 		mView.addObject("url", "note/trash");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -311,26 +343,34 @@ public class NoteServiceImpl implements NoteService{
 		noteVal.put("siteid", siteId);
 		noteVal.put("userno", userNo);
 		noteVal.put("noticeid", noticeId);
-
+		
 		
 		Map<String, Object> note = ntDao.noteDetail(noteVal);
-		
+		//받는이
+		List<Map<String, Object>> toList = ntDao.toList(noteVal); 
+		//CC
+		List<Map<String, Object>> ccList = ntDao.ccList(noteVal); 
+		ntDao.noteEyeChk(noteVal);
+	
 		mView.addObject("note", note);
-		
+		mView.addObject("ccList", ccList);
+		mView.addObject("toList", toList);
 		return mView;
 	}
 	
 	//읽은으로 체크
 	@Override
 	public void noteEyeChk(HttpServletRequest request, List<Integer> noticeid) {
-		NoteDto ntDto = new NoteDto();
+		Map<String, Object> noteVal = new HashMap<>();
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		ntDto.setSiteid(siteId);
 		for(int i = 0; i<noticeid.size(); i++) {
-			ntDto.setNoticeid(noticeid.get(i));
-			ntDao.noteEyeChk(ntDto);
+			noteVal.put("siteid", siteId);
+			noteVal.put("noticeid", noticeid.get(i));
+			ntDao.noteEyeChk(noteVal);
+			noteVal.clear();
 		}
 	}
+	
 	//중요 체크
 	@Override
 	public void noteImportChk(HttpServletRequest request, List<Integer> noticeid) {
@@ -355,6 +395,7 @@ public class NoteServiceImpl implements NoteService{
 			ntDao.noteTrashChk(ntDto);
 		}		
 	}
+	
 	//통지 삭제
 	@Override
 	public void noteDeleteChk(HttpServletRequest request, List<Integer> noticeid) {
@@ -366,7 +407,8 @@ public class NoteServiceImpl implements NoteService{
 			ntDao.noteDeleteChk(ntDto);
 		}	
 	}
-
+	
+	//휴지통 되돌리기
 	@Override
 	public void noteReturnChk(HttpServletRequest request, List<Integer> noticeid) {
 		NoteDto ntDto = new NoteDto();
@@ -377,6 +419,88 @@ public class NoteServiceImpl implements NoteService{
 			ntDao.noteReturnChk(ntDto);
 		}	
 		
+	}
+	
+	//카테고리화면
+	@Override
+	public ModelAndView noteSet(HttpServletRequest request) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		NoteCategoryDto noteCategory = new NoteCategoryDto();
+		noteCategory.setUserno(userNo);
+		noteCategory.setSiteid(siteId);
+		
+		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("category", category);
+		return mView;
+	}
+	
+	//통지발송
+	@Override
+	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto) {		
+		
+		String toTarget = request.getParameter("touser");
+		String ccTarget = request.getParameter("ccuser");
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		ntDto.setSiteid(siteId);
+		ntDto.setUserno(fromUserNo);
+		MultipartFile file = ntDto.getFile();
+		FileUpload upLoad = new FileUpload();
+		Map<String, Object> fileInfo = upLoad.fileUpload(response, request, file);
+		
+		//본문입력
+		int noticeId = ntDao.noteSend(ntDto);
+		
+		ntDto.setNoticeid(noticeId);
+		
+		//To ; 기준 끈기
+		AdressQuarter quarter = new AdressQuarter();
+		List<Integer> toAdress = quarter.quarter(toTarget);
+		
+		int chkcc = 1;
+		
+		if( 1 <= toAdress.size()) {			
+			for(int i = 0; i<toAdress.size(); i++) {
+			    int target = toAdress.get(i);
+			    ntDto.setUserno(target);
+			    //dao 타겟태우기
+			    ntDao.notetoAndCc(ntDto);
+			}
+				if( ccTarget != null && !ccTarget.equals("")) {
+					//CC가 있다면 실행
+					List<Integer> ccAdress = quarter.quarter(ccTarget);	
+					for(int i = 0; i<ccAdress.size(); i++) {					
+					    int target = ccAdress.get(i);
+					    ntDto.setUserno(target);
+					    ntDto.setChkcc(chkcc);
+					    //dao 타겟태우기				   
+					    ntDao.notetoAndCc(ntDto);
+					}			
+				}
+		}else {
+			
+			StringBuffer buf = new StringBuffer();
+			buf.append("<script>alert('에러발생 관리자에게 문의해주세요.'); location.href='");		
+		 	buf.append("';</script>");
+		 	
+		 	response.setContentType("text/html; charset=UTF-8");
+			 
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println(buf);					 
+				out.flush();
+			} catch (IOException e) {					
+				e.printStackTrace();
+			}
+		}
+		
+		return noticeId;
 	}
 
 }

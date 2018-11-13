@@ -5,57 +5,42 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoteDto {
 	
 	private int noticeid; //내부통지번호
-	private int touserno; //보내는이
-	private int ccuserno; //참조
-	private String lnkurl; //링크
+	private int userno; //받는이
+	private int fromuserno; //보내는이
+	private String linkurl; //링크
 	private int ntcwayemail; //통지매체 email 
-	private int ntcwaysms; //통지매체 sms 
-	private int chkrltcode; //통지 읽음 체크 
-	private String chkrltdate; //읽은 날짜 
-	private int readchek; //통지 내용 체크 
-	private String readdate; //통지 읽음 날짜 
-	private String email; //이메일주소 
-	private String mobile1; 
-	private String mobile2;
-	private String mobile3;
+	private int ntcwaysms; //통지매체 sms 	 
 	private String title; //제목 
-	private String contents; //내용 
-	private String regdate; //등록일 
-	private int reguser; //등록자 
-	private int isdelete; //삭제여부 
-	private int siteid; //사이트 
+	private String content; //내용   
 	private int important; //중요메일여부
-	private MultipartFile filepath; //첨부파일
+	private int siteid;
+	private int chkcc;
+	private String orgfilename;
+	private String savefilename;
+	private long filesize;
+	private MultipartFile file; //Spring 에서 파일 업로드 처리하기 위해
 	
 	public NoteDto () {}
 
-	public NoteDto(int noticeid, int touserno, int ccuserno, String lnkurl, int ntcwayemail, int ntcwaysms,
-			int chkrltcode, String chkrltdate, int readchek, String readdate, String email, String mobile1,
-			String mobile2, String mobile3, String title, String contents, String regdate, int reguser, int isdelete,
-			int siteid, int important, MultipartFile filepath) {
+	public NoteDto(int noticeid, int userno, int fromuserno, String linkurl, int ntcwayemail, int ntcwaysms,
+			String title, String content, int important, int siteid, int chkcc, String orgfilename, String savefilename,
+			long filesize, MultipartFile file) {
 		super();
 		this.noticeid = noticeid;
-		this.touserno = touserno;
-		this.ccuserno = ccuserno;
-		this.lnkurl = lnkurl;
+		this.userno = userno;
+		this.fromuserno = fromuserno;
+		this.linkurl = linkurl;
 		this.ntcwayemail = ntcwayemail;
 		this.ntcwaysms = ntcwaysms;
-		this.chkrltcode = chkrltcode;
-		this.chkrltdate = chkrltdate;
-		this.readchek = readchek;
-		this.readdate = readdate;
-		this.email = email;
-		this.mobile1 = mobile1;
-		this.mobile2 = mobile2;
-		this.mobile3 = mobile3;
 		this.title = title;
-		this.contents = contents;
-		this.regdate = regdate;
-		this.reguser = reguser;
-		this.isdelete = isdelete;
-		this.siteid = siteid;
+		this.content = content;
 		this.important = important;
-		this.filepath = filepath;
+		this.siteid = siteid;
+		this.chkcc = chkcc;
+		this.orgfilename = orgfilename;
+		this.savefilename = savefilename;
+		this.filesize = filesize;
+		this.file = file;
 	}
 
 	public int getNoticeid() {
@@ -66,28 +51,28 @@ public class NoteDto {
 		this.noticeid = noticeid;
 	}
 
-	public int getTouserno() {
-		return touserno;
+	public int getUserno() {
+		return userno;
 	}
 
-	public void setTouserno(int touserno) {
-		this.touserno = touserno;
+	public void setUserno(int userno) {
+		this.userno = userno;
 	}
 
-	public int getCcuserno() {
-		return ccuserno;
+	public int getFromuserno() {
+		return fromuserno;
 	}
 
-	public void setCcuserno(int ccuserno) {
-		this.ccuserno = ccuserno;
+	public void setFromuserno(int fromuserno) {
+		this.fromuserno = fromuserno;
 	}
 
-	public String getLnkurl() {
-		return lnkurl;
+	public String getLinkurl() {
+		return linkurl;
 	}
 
-	public void setLnkurl(String lnkurl) {
-		this.lnkurl = lnkurl;
+	public void setLinkurl(String linkurl) {
+		this.linkurl = linkurl;
 	}
 
 	public int getNtcwayemail() {
@@ -106,70 +91,6 @@ public class NoteDto {
 		this.ntcwaysms = ntcwaysms;
 	}
 
-	public int getChkrltcode() {
-		return chkrltcode;
-	}
-
-	public void setChkrltcode(int chkrltcode) {
-		this.chkrltcode = chkrltcode;
-	}
-
-	public String getChkrltdate() {
-		return chkrltdate;
-	}
-
-	public void setChkrltdate(String chkrltdate) {
-		this.chkrltdate = chkrltdate;
-	}
-
-	public int getReadchek() {
-		return readchek;
-	}
-
-	public void setReadchek(int readchek) {
-		this.readchek = readchek;
-	}
-
-	public String getReaddate() {
-		return readdate;
-	}
-
-	public void setReaddate(String readdate) {
-		this.readdate = readdate;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getMobile1() {
-		return mobile1;
-	}
-
-	public void setMobile1(String mobile1) {
-		this.mobile1 = mobile1;
-	}
-
-	public String getMobile2() {
-		return mobile2;
-	}
-
-	public void setMobile2(String mobile2) {
-		this.mobile2 = mobile2;
-	}
-
-	public String getMobile3() {
-		return mobile3;
-	}
-
-	public void setMobile3(String mobile3) {
-		this.mobile3 = mobile3;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -178,44 +99,12 @@ public class NoteDto {
 		this.title = title;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
-
-	public String getRegdate() {
-		return regdate;
-	}
-
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
-	}
-
-	public int getReguser() {
-		return reguser;
-	}
-
-	public void setReguser(int reguser) {
-		this.reguser = reguser;
-	}
-
-	public int getIsdelete() {
-		return isdelete;
-	}
-
-	public void setIsdelete(int isdelete) {
-		this.isdelete = isdelete;
-	}
-
-	public int getSiteid() {
-		return siteid;
-	}
-
-	public void setSiteid(int siteid) {
-		this.siteid = siteid;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public int getImportant() {
@@ -226,13 +115,55 @@ public class NoteDto {
 		this.important = important;
 	}
 
-	public MultipartFile getFilepath() {
-		return filepath;
+	public int getSiteid() {
+		return siteid;
 	}
 
-	public void setFilepath(MultipartFile filepath) {
-		this.filepath = filepath;
+	public void setSiteid(int siteid) {
+		this.siteid = siteid;
 	}
+
+	public int getChkcc() {
+		return chkcc;
+	}
+
+	public void setChkcc(int chkcc) {
+		this.chkcc = chkcc;
+	}
+
+	public String getOrgfilename() {
+		return orgfilename;
+	}
+
+	public void setOrgfilename(String orgfilename) {
+		this.orgfilename = orgfilename;
+	}
+
+	public String getSavefilename() {
+		return savefilename;
+	}
+
+	public void setSavefilename(String savefilename) {
+		this.savefilename = savefilename;
+	}
+
+	public long getFilesize() {
+		return filesize;
+	}
+
+	public void setFilesize(long filesize) {
+		this.filesize = filesize;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	
 
 	
 }

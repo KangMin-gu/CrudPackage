@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.nt.controller.NoteController;
+import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.nt.dto.NoteDto;
 import saas.crud.crm.nt.service.NoteService;
 
@@ -111,10 +112,21 @@ public class NoteDaoImpl implements NoteDao{
 		return note;
 	}
 	
+	//상세정보 CC / To 리스트 뽑기
+	@Override
+	public List<Map<String, Object>> ccList(Map<String, Object> noteTrashVal) {
+		List<Map<String, Object>> ccList = session.selectList("note.ccList", noteTrashVal);
+		return ccList;
+	}
+	
+	public List<Map<String, Object>> toList(Map<String, Object> noteTrashVal){
+		List<Map<String, Object>> toList = session.selectList("note.toList", noteTrashVal);
+		return toList;
+	}
 	//읽음표시
 	@Override
-	public void noteEyeChk(NoteDto ntDto) {
-		session.update("note.noteEyeChk",ntDto);
+	public void noteEyeChk(Map<String, Object> noteVal) {
+		session.update("note.noteEyeChk",noteVal);
 	}
 	//중요표시
 	@Override
@@ -137,5 +149,25 @@ public class NoteDaoImpl implements NoteDao{
 		session.update("note.noteReturnChk",ntDto);
 		
 	}
-
+	//카테고리화면
+	@Override
+	public List<Map<String, Object>> noteSet(NoteCategoryDto noteCategory) {
+		List<Map<String, Object>> Category = session.selectList("note.noteCategory", noteCategory);
+		return Category;
+	}
+	
+	//발송 등록
+	@Override
+	public int noteSend(NoteDto ntDto) {
+		session.insert("note.noteSend",ntDto);
+		int noticeId = ntDto.getNoticeid();
+		return noticeId;
+	}
+	
+	//to, cc 등록
+	@Override
+	public void notetoAndCc(NoteDto ntDto) {
+		session.insert("note.toAndCc", ntDto);
+	}
+	
 }

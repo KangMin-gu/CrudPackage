@@ -2,132 +2,92 @@ package saas.crud.crm.nt.dto;
 
 public class NoteCategoryDto {
 	
-	private int USERNO; 
-	private String CATEGORY1;
-	private String CATEGORY2;
-	private String CATEGORY3;
-	private String CATEGORY4; 
-	private String CATEGORY5;
-	private int REGUSER;
-	private String REGDATE;
-	private int EDTEUSER;
-	private String EDTEDATE;
-	private int SITEID;
-	private int ISDELETE;
+	private int userno; 
+	private String category;
+	private int reguser;
+	private String regdate;
+	private int edteuser;
+	private String edtedate;
+	private int siteid;
+	private int isdelete;
 	
 	public NoteCategoryDto() {}
 
-	public NoteCategoryDto(int uSERNO, String cATEGORY1, String cATEGORY2, String cATEGORY3, String cATEGORY4,
-			String cATEGORY5, int rEGUSER, String rEGDATE, int eDTEUSER, String eDTEDATE, int sITEID, int iSDELETE) {
+	public NoteCategoryDto(int userno, String category, int reguser, String regdate, int edteuser, String edtedate,
+			int siteid, int isdelete) {
 		super();
-		USERNO = uSERNO;
-		CATEGORY1 = cATEGORY1;
-		CATEGORY2 = cATEGORY2;
-		CATEGORY3 = cATEGORY3;
-		CATEGORY4 = cATEGORY4;
-		CATEGORY5 = cATEGORY5;
-		REGUSER = rEGUSER;
-		REGDATE = rEGDATE;
-		EDTEUSER = eDTEUSER;
-		EDTEDATE = eDTEDATE;
-		SITEID = sITEID;
-		ISDELETE = iSDELETE;
+		this.userno = userno;
+		this.category = category;
+		this.reguser = reguser;
+		this.regdate = regdate;
+		this.edteuser = edteuser;
+		this.edtedate = edtedate;
+		this.siteid = siteid;
+		this.isdelete = isdelete;
 	}
 
-	public int getUSERNO() {
-		return USERNO;
+	public int getUserno() {
+		return userno;
 	}
 
-	public void setUSERNO(int uSERNO) {
-		USERNO = uSERNO;
+	public void setUserno(int userno) {
+		this.userno = userno;
 	}
 
-	public String getCATEGORY1() {
-		return CATEGORY1;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCATEGORY1(String cATEGORY1) {
-		CATEGORY1 = cATEGORY1;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getCATEGORY2() {
-		return CATEGORY2;
+	public int getReguser() {
+		return reguser;
 	}
 
-	public void setCATEGORY2(String cATEGORY2) {
-		CATEGORY2 = cATEGORY2;
+	public void setReguser(int reguser) {
+		this.reguser = reguser;
 	}
 
-	public String getCATEGORY3() {
-		return CATEGORY3;
+	public String getRegdate() {
+		return regdate;
 	}
 
-	public void setCATEGORY3(String cATEGORY3) {
-		CATEGORY3 = cATEGORY3;
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 
-	public String getCATEGORY4() {
-		return CATEGORY4;
+	public int getEdteuser() {
+		return edteuser;
 	}
 
-	public void setCATEGORY4(String cATEGORY4) {
-		CATEGORY4 = cATEGORY4;
+	public void setEdteuser(int edteuser) {
+		this.edteuser = edteuser;
 	}
 
-	public String getCATEGORY5() {
-		return CATEGORY5;
+	public String getEdtedate() {
+		return edtedate;
 	}
 
-	public void setCATEGORY5(String cATEGORY5) {
-		CATEGORY5 = cATEGORY5;
+	public void setEdtedate(String edtedate) {
+		this.edtedate = edtedate;
 	}
 
-	public int getREGUSER() {
-		return REGUSER;
+	public int getSiteid() {
+		return siteid;
 	}
 
-	public void setREGUSER(int rEGUSER) {
-		REGUSER = rEGUSER;
+	public void setSiteid(int siteid) {
+		this.siteid = siteid;
 	}
 
-	public String getREGDATE() {
-		return REGDATE;
+	public int getIsdelete() {
+		return isdelete;
 	}
 
-	public void setREGDATE(String rEGDATE) {
-		REGDATE = rEGDATE;
-	}
-
-	public int getEDTEUSER() {
-		return EDTEUSER;
-	}
-
-	public void setEDTEUSER(int eDTEUSER) {
-		EDTEUSER = eDTEUSER;
-	}
-
-	public String getEDTEDATE() {
-		return EDTEDATE;
-	}
-
-	public void setEDTEDATE(String eDTEDATE) {
-		EDTEDATE = eDTEDATE;
-	}
-
-	public int getSITEID() {
-		return SITEID;
-	}
-
-	public void setSITEID(int sITEID) {
-		SITEID = sITEID;
-	}
-
-	public int getISDELETE() {
-		return ISDELETE;
-	}
-
-	public void setISDELETE(int iSDELETE) {
-		ISDELETE = iSDELETE;
+	public void setIsdelete(int isdelete) {
+		this.isdelete = isdelete;
 	}
 	
 	

@@ -15,6 +15,7 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 </head>
 
@@ -32,53 +33,66 @@
 	                <%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
 	            </div>
             <div class="col-lg-10 animated fadeInRight">
-	            <div class="mail-box-header">
-	                <h2>
-	                    ${CALLNAME }
-	                </h2>
+            <form:form action="send" method="post" enctype="multipart/form-data">
+	            <div class="mail-box-header">	            	
+	            	<div class="row">	            	
+	            		<div class="col-md-6 text-left">            				
+		          			<h2>통지 발송</h2>  		       
+	            		</div>	            		
+	            		<div class="col-md-6 text-right">
+	            			<button class="btn btn-sm btn-primary" data-toggle="tooltip"><i class="fa fa-reply"></i> 발송</button>		          			
+		          			<a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>	
+		          		</div>		                                          
+		          	</div>	            	
 	            </div>
-	            <form:form action="" method="post">
 	                <div class="mail-box">
 		                <div class="mail-body">		                    
 		                        <div class="form-group row">
-		                        	<label class="col-sm-2 col-form-label">받는이:</label>
-		                            <div class="col-sm-10">
-		                            	<input type="text" class="form-control">
+		                        	<label class="col-md-2 col-form-label" for="touser">받는이:</label>
+		                            <div class="col-md-10">
+		                            	<input id="touser" name="touser" type="text" class="form-control">
 		                            </div>
 		                        </div>
 		                        <div class="form-group row">
-		                        	<label class="col-sm-2 col-form-label">참조:</label>
-		                            <div class="col-sm-10">
-		                            	<input type="text" class="form-control">
+		                        	<label class="col-md-2 col-form-label" for="ccuser">참조:</label>
+		                            <div class="col-md-10">
+		                            	<input id="ccuser" name="ccuser" type="text" class="form-control">
 		                            </div>
 		                        </div>
 		                        <div class="form-group row">
-		                        	<label class="col-sm-2 col-form-label">제목:</label>
-		                            <div class="col-sm-10">
-		                            	<input type="text" class="form-control" value="">
+		                        	<label class="col-md-2 col-form-label" for="title">제목:</label>
+		                            <div class="col-md-8">
+		                            	<input id="title" name="title" type="text" class="form-control" value="">
+		                            </div>	                           
+		                            <div class="col-md-2 text-left">
+		                            	<label for="col-form-label" for="important" style="margin-top: 7px;">중요 여부:</label>
+		                            	<input id="important" name="important" type="checkbox" class="i-checks" value="1">
 		                            </div>
-		                        </div>
-		                        <div class="form-group row">
-		                        	<label class="col-sm-2 col-form-label">첨부파일:</label>
-		                            <div class="col-sm-10">
-		                            	<input type="text" class="form-control" value="">
-		                            </div>
-		                        </div>	                 
+		                        </div>                
 		                </div>
 		                <div class="mail-text h-200">
-			                <div class="summernote" style="height:100px;"></div>
+		                	<textarea class="summernote" id="content" name="content" style="height:100px;"></textarea>			         
 							<div class="clearfix"></div>
-		                </div>                
+		                </div>	
+		                <div class="mail-body">
+			                <div class="form-group row">
+					          	<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
+						          	<div class="col-md-6">
+										<input id="file" name="file" class="form-control" type="file" multiple>
+										<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+									</div>		                							
+			                </div>	
+		                </div>			                                                           
 		                <div class="mail-body text-right tooltip-demo">
-		                        <a href="mailbox.html" class="btn btn-sm btn-primary" data-toggle="tooltip"><i class="fa fa-reply"></i> 발송</a>
+		                        <button class="btn btn-sm btn-primary" data-toggle="tooltip"><i class="fa fa-reply"></i> 발송</button>	
 		                        <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>	                        
-		                </div>
+		                </div>		             		                
 		                <div class="clearfix"></div>		                
-		               </div>
-	              </form:form>   
+		               </div>		               
+	              </form:form>  	           
             	</div>
         	</div>
-        </div>
+        </div>              
 <!-- Content End -->
 	
 <!-- foot -->
@@ -96,10 +110,17 @@
 <!-- js includ -->
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>				
 <script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 <script>
+	
 	$(document).ready(function() {
 		$('.summernote').summernote();	
 		$('.note-editable').css('height','300px');
+		
+		$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
 	});
 </script>
 </body>

@@ -8,7 +8,7 @@
 <div class="ibox ">
                     <div class="ibox-content mailbox-content">
                         <div class="file-manager">
-                            <a class="btn btn-block btn-primary compose-mail" href="${pageContext.request.contextPath}/note/send">통지 쓰기</a>
+                            <a class="btn btn-block btn-primary compose-mail" href="${pageContext.request.contextPath}/note/send">통지 발송</a>
                             <div class="space-25"></div>
                             <h5>Folders</h5>
                             <ul class="folder-list m-b-md" style="padding: 0">
@@ -20,11 +20,9 @@
                             </ul>
                             <h5>Categories</h5>
                             <ul class="category-list" style="padding: 0">
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Work </a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Documents</a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Social</a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Advertising</a></li>
-                                <li><a href="#"> <i class="fa fa-circle text-warning"></i> Clients</a></li>
+	                            <c:forEach var="tmp" items="${category }">
+									 <li><a href="#"><i class="fa fa-circle text-warning"></i> ${tmp.CATEGORY } </a></li>   	                            		
+								</c:forEach>                                                                 
                             </ul>	                      
                             <div class="clearfix"></div>
                         </div>

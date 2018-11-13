@@ -156,11 +156,7 @@
 									<c:otherwise>
 										
 									</c:otherwise>
-								</c:choose>
-								
-								
-								
-								
+								</c:choose>				
 							</div>
 						</div>
 						
@@ -173,7 +169,7 @@
 	                 						<c:otherwise>class="read"</c:otherwise>
 	                 					</c:choose>>
 											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks" value="${tmp.NOTICEID }"></td>
-											<td class="mail-ontact">${tmp.SENDER }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
+											<td class="mail-ontact">${tmp.FROMUSERNAME }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
 											<td class="mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
 											<td class="text-right mail-date">
 												<jsp:useBean id="toDay" class="java.util.Date" />
@@ -183,7 +179,7 @@
 			                 						<c:otherwise>${tmp.SENDDATETIME }</c:otherwise>
 												</c:choose>																	
 											</td>
-											<td class="text-right"><c:if test="${tmp.FILEPATH ne null }"><i class="fa fa-paperclip"></i></c:if></td>
+											<td class="text-right"><c:if test="${tmp.ORGFILENAME ne null }"><i class="fa fa-paperclip"></i></c:if></td>
 										</tr>
 									</c:forEach>
 								</tbody>

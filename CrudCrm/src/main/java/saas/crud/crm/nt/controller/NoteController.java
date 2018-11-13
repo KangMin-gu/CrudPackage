@@ -3,11 +3,13 @@ package saas.crud.crm.nt.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +46,7 @@ public class NoteController {
 	
 	//받은 통지 상세
 	@RequestMapping(value="/note/inbox/{noticeId}", method=RequestMethod.GET)
-	public ModelAndView noteDetail(@PathVariable int noticeId,HttpServletRequest request) {
+	public ModelAndView authnoteDetail(@PathVariable int noticeId,HttpServletRequest request) {
 		ModelAndView mView = ntService.noteDetail(noticeId, request);
 		mView.setViewName("nt/notedetail");
 		return mView;
@@ -52,7 +54,7 @@ public class NoteController {
 	
 	//보낸 통지
 	@RequestMapping(value="/note/outbox", method=RequestMethod.GET)
-	public ModelAndView noteOutbox(HttpServletRequest request) {
+	public ModelAndView authnoteOutbox(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteOutbox(request);
 		mView.setViewName("nt/notelist");
 		return mView;
@@ -122,38 +124,61 @@ public class NoteController {
 		return mView;
 	}
 	
+	//메일 발송 화면
+	@RequestMapping(value="/note/send", method=RequestMethod.GET)
+	public ModelAndView authnoteSendForm(HttpServletRequest request) {
+		ModelAndView mView = ntService.noteSet(request);
+		mView.setViewName("nt/noteform");
+		return mView;
+	}
+	
+	//메일 발송
+	@RequestMapping(value="/note/send", method=RequestMethod.POST)
+	public String authnoteSend(HttpServletResponse response, HttpServletRequest request, @ModelAttribute NoteDto ntDto) {
+		int noticeId= ntService.noteSend(response, request, ntDto);
+		return "redirect:/note/outbox/"+noticeId;
+	}
+	
 	//읽음으로 체크
 	@RequestMapping(value="/note/eyechk", method=RequestMethod.GET)
 	@ResponseBody
-	public void noteEyeChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+	public void authnoteEyeChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
 		ntService.noteEyeChk(request, noticeid);
 	}
 	
 	//중요 체크
 	@RequestMapping(value="/note/importchk", method=RequestMethod.GET)
 	@ResponseBody
-	public void noteimportChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+	public void authnoteimportChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
 		ntService.noteImportChk(request, noticeid);
 	}
 	
 	//휴지통으로 이동
 	@RequestMapping(value="/note/trashchk", method=RequestMethod.GET)
 	@ResponseBody
-	public void noteTrashChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+	public void authnoteTrashChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
 		ntService.noteTrashChk(request, noticeid);
 	}
 	
 	//삭제 
 	@RequestMapping(value="/note/delchk", method=RequestMethod.GET)
 	@ResponseBody
-	public void noteDeleteChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+	public void authnoteDeleteChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
 		ntService.noteDeleteChk(request, noticeid);
 	}
 	
 	//보관함 되돌리기 
 	@RequestMapping(value="/note/returnchk", method=RequestMethod.GET)
 	@ResponseBody
-	public void noteReturnChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
+	public void authnoteReturnChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
 		ntService.noteDeleteChk(request, noticeid);
+	}
+	
+	//카테고리설정
+	@RequestMapping(value="/note/set", method=RequestMethod.GET)
+	public ModelAndView authnoteSet(HttpServletRequest request) {
+		ModelAndView mView = ntService.noteSet(request);
+		mView.setViewName("nt/noteset");
+		return mView;
 	}
 }

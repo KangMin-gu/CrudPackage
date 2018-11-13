@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 
@@ -41,27 +42,36 @@
 							<div class="float-right tooltip-demo">
 								<a href="mail_compose.html" class="btn btn-white btn-sm"
 									data-toggle="tooltip" data-placement="top" title="Reply"><i
-									class="fa fa-reply"></i> Reply</a> <a href="#"
-									class="btn btn-white btn-sm" data-toggle="tooltip"
-									data-placement="top" title="Print email"><i
-									class="fa fa-print"></i> </a> <a href="mailbox.html"
+									class="fa fa-reply"></i> 답장</a> 
+									<a href="mailbox.html"
 									class="btn btn-white btn-sm" data-toggle="tooltip"
 									data-placement="top" title="Move to trash"><i
 									class="fa fa-trash-o"></i> </a>
 							</div>
 							<h2>${note.TITLE }</h2>
 							<div class="mail-tools tooltip-demo m-t-md">
-
-
 								<h5>
 									<span class="float-right font-normal">${note.REGDATE }</span> 					
-									<span class="font-normal">보낸이: </span>${note.FROMUSER } "<${note.EMAIL }>"
+									<span class="font-normal">보낸이:&nbsp;</span>${note.FROMUSERNAME }  &#60;${note.FROMEMAIL }&#62;<br/>									
+									<span class="font-normal">받는이:&nbsp;
+									<c:forEach var="to" items="${toList }" varStatus="comma">																						
+											 ${to.USERNAME } &#60;${to.EMAIL }&#62;			 					 					
+										<c:if test="${!comma.last }">,</c:if>																																	
+									</c:forEach>								
+									</span><br/>
+									
+									<span class="font-normal">참조:&nbsp;
+									<c:forEach var="cc" items="${ccList }" varStatus="commaTwo">									
+										${cc.USERNAME } &#60;${cc.EMAIL }&#62;										  										
+										<c:if test="${!commaTwo.last }">,</c:if>	
+									</c:forEach>
+									 </span><br/>
 								</h5>
 							</div>
 						</div>
 						<div class="mail-box">
 							<div class="mail-body">
-								${note.CONTENTS }
+								${note.CONTENT }
 							</div>
 							<div class="mail-attachment">
 								<p>
@@ -99,17 +109,13 @@
 							</div>
 							<div class="mail-body text-right tooltip-demo">
 								<a class="btn btn-sm btn-white" href="mail_compose.html"><i
-									class="fa fa-reply"></i> Reply</a> <a class="btn btn-sm btn-white"
+									class="fa fa-reply"></i> 답장</a> 
+									<a class="btn btn-sm btn-white"
 									href="mail_compose.html"><i class="fa fa-arrow-right"></i>
-									Forward</a>
-								<button title="" data-placement="top" data-toggle="tooltip"
-									type="button" data-original-title="Print"
-									class="btn btn-sm btn-white">
-									<i class="fa fa-print"></i> Print
-								</button>
+									전달</a>
 								<button title="" data-placement="top" data-toggle="tooltip"
 									data-original-title="Trash" class="btn btn-sm btn-white">
-									<i class="fa fa-trash-o"></i> Remove
+									<i class="fa fa-trash-o"></i> 삭제
 								</button>
 							</div>
 							<div class="clearfix"></div>

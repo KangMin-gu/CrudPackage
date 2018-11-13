@@ -255,9 +255,7 @@
                                             <td>
                                                 <textarea type="text" class="form-control col-12 float-left mr-12 summernote">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
-                                            <td>
                                             	<input type="hidden" id="siteid" name="siteid" value="${memCompany.SITEID }" />
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -282,6 +280,9 @@
                                                 <div class="panel-body">
                                                     <table class="table table-bordered">
                                                         <thead>
+                                                        	<div>
+                                                        		<button class="btn btn-primary create" value="추가">추가</button>
+                                                        	</div>
                                                             <tr>
                                                                 <th>라이센스명</th>
                                                                 <th>단가</th>
@@ -373,6 +374,15 @@
 			$('.summernote').summernote({},'disable');
 			
 			$('.summernote').summernote('disable');
+		});
+		
+		$('.create').click(function(e){
+			var siteid = $('#siteid').val();
+			var url = "/mc/li/"+siteid
+			var target = e.currentTarget.id;
+			var x = "1000"
+			var y = "600"
+			openNewWindow(url,e,x,y);
 		});
 	
 	</script>

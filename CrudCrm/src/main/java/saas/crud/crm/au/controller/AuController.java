@@ -127,16 +127,5 @@ public class AuController {
 		
 		return userTopList;
 	}
-	
-	@ResponseBody
-	@RequestMapping(value="/modal/user", method=RequestMethod.GET)
-	public List<Map<String,Object>> authModalUserList(HttpServletRequest request) {
-		
-		List<Map<String,Object>> modalUserList = auService.ModalUserList(request);
-		
-		return modalUserList;
-		
-	}
-	
 
 }

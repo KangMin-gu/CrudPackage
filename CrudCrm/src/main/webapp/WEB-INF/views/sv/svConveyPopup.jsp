@@ -107,7 +107,7 @@
                                         <tr>
                                             <th><label for="nextowner">이관담당자</label></th>
                                             <td>
-                                            	<div class="input-group ownerModal" >
+                                            	<div class="input-group owner" >
                                                     <input type="text" class="form-control required" data-autoclose="true"  name="nextowner_" id="nextowner_" value="${serviceInfo.NEXTOWNER_ }">
                                             		<input type="hidden" class="form-control" name="nextowner" id="nextowner" value="${serviceInfo.NEXTOWNER }">	
                                                     <span class="input-group-addon">
@@ -156,7 +156,6 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<%@ include file="/WEB-INF/views/common/user/ownermodal.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
@@ -175,9 +174,8 @@
 		});
 	});
 		$('#save').click(function(e){
-			debugger;
-			var test = check_required(e);
-			if(test == true){
+			var check = check_required(e);
+			if(check == "true"){
 				window.close();	
 			}
 		});

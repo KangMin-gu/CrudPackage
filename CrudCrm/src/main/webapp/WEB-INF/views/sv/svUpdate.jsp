@@ -285,7 +285,7 @@
                                             <th>접수자</th>
                                             <td>
                                             	<div class="input-group owner">
-                                                    <input type="text" class="form-control required" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
+                                                    <input type="text" class="form-control required" disabled name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
                                                     <input type="hidden" name="rcvowner" id="rcvowner" value="${serviceInfo.RCVOWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>

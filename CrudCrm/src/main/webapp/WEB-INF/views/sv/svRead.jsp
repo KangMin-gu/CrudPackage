@@ -395,9 +395,7 @@
                                             <td>
                                                 <textarea id="ractdesc">${serviceInfo.RACTDESC }</textarea>
                                             </td>
-                                            <td>
-                                                <input type="hidden" id="rcvno" value="${serviceInfo.RCVNO }" /> 
-                                            </td>
+                                            <input type="hidden" id="rcvno" value="${serviceInfo.RCVNO }" /> 
                                         </tr>
                                     </tbody>
                                 </table>
@@ -497,12 +495,13 @@
 		});
 		
 		$('.servicenext').click(function(e){
+			var name = '담당자이관'
 			var id = $('#rcvno').val();
 			var url = '/convey/'+id;
 			var x = '1232';
 			var y = '377';
 			
-			openNewWindow(url,e,x,y);
+			openNewWindow(name,url,e,x,y);
 			
 		});
 	

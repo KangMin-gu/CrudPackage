@@ -100,6 +100,14 @@ public class MaController {
 		return mView;
 	}
 	
+	@RequestMapping(value="/mc/li/{siteid}", method=RequestMethod.GET)
+	public ModelAndView authMemCompanyLicense(HttpServletRequest request, @PathVariable int siteid) {
+	ModelAndView mView = memCompanyService.memCompanyRead(request, siteid);
+	
+	mView.setViewName("au/ma/mc/masterLiPopUp");
+	
+	return mView;
+	}
 	
 	
 }

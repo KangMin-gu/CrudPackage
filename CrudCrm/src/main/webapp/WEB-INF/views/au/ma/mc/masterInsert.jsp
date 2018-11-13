@@ -35,7 +35,7 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/ma/mc">회원사목록</a>
+                            <a href="/company">회원사목록</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>회원사추가</strong>
@@ -49,7 +49,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ma/mc/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/company/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -61,7 +61,7 @@
                         
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" class="btn btn-primary">취소</a>
+                                <a href="${pageContext.request.contextPath}/company/${memCompany.SITEID}" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">

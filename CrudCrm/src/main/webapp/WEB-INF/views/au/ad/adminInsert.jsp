@@ -36,7 +36,7 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/au">사용자목록</a>
+                            <a href="/user">사용자목록</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>사용자추가</strong>
@@ -50,7 +50,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/au/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/user/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -62,7 +62,7 @@
                         
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/au/${user.USERNO}" class="btn btn-primary">취소</a>
+                                <a href="${pageContext.request.contextPath}/user/${user.USERNO}" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
@@ -288,7 +288,7 @@
 			}
 		}else{
 	        $.ajax({
-	            url:"/au/idcheck/"+idcheck ,
+	            url:"/user/idcheck/"+idcheck ,
 	            method: "GET",
 	            dataType: "json",
 	            success:function(data){

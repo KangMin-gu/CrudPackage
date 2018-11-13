@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.au.dto.MemCompanyDto;
+import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.service.LicenseService;
 import saas.crud.crm.au.service.MenuService;
@@ -23,7 +23,7 @@ import saas.crud.crm.au.service.MenuService;
 @Controller
 public class MenuController {
 
-	private static final Logger logger = LoggerFactory.getLogger(MaController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	// 회원사 정보 등록 수정 삭제
 	@Autowired
 	MenuService menuService;
@@ -31,26 +31,26 @@ public class MenuController {
 	@Autowired
 	LicenseService licenseService;
 	// LIST
-	@RequestMapping(value = "/ma/me", method=RequestMethod.GET)
+	@RequestMapping(value = "/menu", method=RequestMethod.GET)
 	public ModelAndView authMenuList(HttpServletRequest request) {
 		ModelAndView mView = menuService.menuList(request);
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
-	@RequestMapping(value = "/ma/me", method=RequestMethod.POST)
+	@RequestMapping(value = "/menu", method=RequestMethod.POST)
 	public ModelAndView authMenuSearchList(HttpServletRequest request) {
 		ModelAndView mView = menuService.menuList(request);
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
 	@ResponseBody
-	@RequestMapping(value="/ma/me/{menuno}",method=RequestMethod.GET)
+	@RequestMapping(value="/menu/{menuno}",method=RequestMethod.GET)
 	public Map<String,Object> authMenuRead(HttpServletRequest request, @PathVariable int menuno) { 
 		Map<String,Object> menuInfo = menuService.menuRead(request, menuno);
 		return menuInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value = "/ma/me/post", method=RequestMethod.POST)
+	@RequestMapping(value = "/menu/post", method=RequestMethod.POST)
 	public Map<String,Object> authMenuInsertSet(HttpServletRequest request, @ModelAttribute MenuDto menuDto) {
 
 		
@@ -59,7 +59,7 @@ public class MenuController {
 		return menuInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/ma/me/post/{menuno}",method=RequestMethod.POST)
+	@RequestMapping(value="/menu/post/{menuno}",method=RequestMethod.POST)
 	public Map<String,Object> authMenuUpdateSet(@ModelAttribute MenuDto menuDto,HttpServletRequest request) {
 		menuService.menuUpdate(request, menuDto);
 		
@@ -68,7 +68,7 @@ public class MenuController {
 		return menuInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/ma/me/{menuno}", method=RequestMethod.POST)
+	@RequestMapping(value="/menu/{menuno}", method=RequestMethod.POST)
 	public Map<String,Object> authmenuDelete(HttpServletRequest request, @PathVariable int menuno) {
 		menuService.menuDelete(request,menuno);
 		
@@ -78,12 +78,12 @@ public class MenuController {
 		
 	}
 	
-	@RequestMapping(value="/ma/me/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/menu/delete", method=RequestMethod.POST)
 	public ModelAndView authmenuMultiDelete(HttpServletRequest request) {
 		menuService.menuMultiDelete(request);
 		
 		ModelAndView mView = new ModelAndView();
-		mView.setViewName("redirect:/ma/me");
+		mView.setViewName("redirect:/menu");
 		return mView;
 	}
 	

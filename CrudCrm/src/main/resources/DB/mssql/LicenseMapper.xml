@@ -85,15 +85,27 @@
 	</insert>
 	
 	<select id="topList" parameterType="int" resultType="HashMap">
-	SELECT TOP 5
+	SELECT TOP 20
 		A.LICENSENAME
 		,A.LICENSECOST
-		,B.USECNT
 		,B.BUYCNT
 		,CONVERT(nvarchar,DATEADD(year,1,C.FREGDATE),23) AS LASTDATE
 			FROM Crud_SaaS.dbo.T_LICENSE A
 			INNER JOIN Crud_SaaS.dbo.T_SITE_LICENSE B ON B.LICENSENO = A.LICENSENO
 			INNER JOIN Crud_SaaS.dbo.TB980070 C ON C.SITEID = B.SITEID
 			WHERE B.SITEID = #{siteid}
+	</select>
+	
+	<select id="licenselist" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+		A.LICENSENO
+		,A.LICENSENAME
+		,A.LICENSECOST
+		,(SELECT COUNT(*) FROM Crud_SaaS.dbo.T_SITE_LICENSE WHERE LICENSENO = A.LICENSENO GROUP BY LICENSENO) AS TOTALCNT
+		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+		,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+		,ROW_NUMBER() OVER(ORDER BY A.LICENSENO DESC) AS ROWNUM
+			FROM Crud_SaaS.dbo.T_LICENSE A
+			WHERE ISDELETE = '0'
 	</select>
 </mapper>

@@ -125,8 +125,7 @@ public class LicenseServiceImpl implements LicenseService{
 	public List<Map<String, Object>> licenseAjaxList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		Map<String,Object> search = new HashMap<>();
-		List<Map<String,Object>> licenseInfo = licenseDao.licenseList(search);
+		List<Map<String,Object>> licenseInfo = licenseDao.licenseMenuList();
 		return licenseInfo;
 	}
 	@Override

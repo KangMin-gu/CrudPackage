@@ -94,6 +94,7 @@
 		SELECT count(*)
 			FROM Crud_SaaS.dbo.TB980010
 			WHERE USERID = #{userid}
+			
 	</select>
 	
 	<insert id="insert" parameterType="userDto">
@@ -152,9 +153,7 @@
 	<update id="update" parameterType="userDto">
 		UPDATE Crud_SaaS.dbo.TB980010
 			SET 
-				USERNAME = #{username}
-				,USERID = #{userid}
-				,USERPASSWORD = #{userpassword}
+				USERPASSWORD = #{userpassword}
 				,USERDESC = #{userdesc}
 				,EMAIL = #{email}
 				,ENTERDATE = #{enterdate}

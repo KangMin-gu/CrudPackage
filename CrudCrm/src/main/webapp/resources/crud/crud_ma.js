@@ -35,11 +35,7 @@ function bodyReset(){
 	$('.body input').val('');
 }
 
-
-
-
-
-if(window.location.pathname == '/ma/li') {
+if(window.location.pathname == '/license') {
     var QueryString = window.location.pathname;
     btnFirst();
     
@@ -145,7 +141,7 @@ if(window.location.pathname == '/ma/li') {
     });
 }
 
-if(window.location.pathname == '/ma/me') {
+if(window.location.pathname == '/menu') {
     var QueryString = window.location.pathname;
     btnFirst();
     
@@ -379,12 +375,12 @@ if(window.location.pathname == '/code') {
     });
 }
 // /ma/mc가 포함되어있는 경로
-if(window.location.pathname.lastIndexOf('/ma/mc') == 0) {
+if(window.location.pathname.lastIndexOf('/company') == 0) {
 	
 	var id = $('#siteid').val();
 	$('.nav-tabs .user').click(function(e){
         $.ajax({
-            url: "/tab/user/"+id,
+            url: "/user/tab/"+id,
             method: "GET",
             dataType: "json",
             success: function (data) {
@@ -404,7 +400,7 @@ if(window.location.pathname.lastIndexOf('/ma/mc') == 0) {
 	
 	$('.nav-tabs .li').click(function(e){
         $.ajax({
-            url: "/tab/li/"+id,
+            url: "/license/tab/"+id,
             method: "GET",
             dataType: "json",
             success: function (data) {

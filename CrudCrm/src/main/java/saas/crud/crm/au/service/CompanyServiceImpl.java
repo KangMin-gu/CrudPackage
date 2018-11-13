@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.au.dao.MemCompanyDao;
-import saas.crud.crm.au.dto.MemCompanyDto;
+import saas.crud.crm.au.dao.CompanyDao;
+import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.common.PagingCommon;
 
 @Service
-public class MemCompanyServiceImpl implements MemCompanyService{
+public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
-	MemCompanyDao memCompanyDao;
+	CompanyDao companyDao;
 	
 	@Override
-	public ModelAndView memCompanyList(HttpServletRequest request) {
+	public ModelAndView companyList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
 		
@@ -42,7 +42,7 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 			search.put(name, value);
 		}
 		
-		int totalRows = memCompanyDao.memCompanyTotalRows(search);
+		int totalRows = companyDao.companyTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 5;
@@ -55,7 +55,7 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		search.put("startRowNum", startRowNum);
 		search.put("endRowNum", endRowNum);
 
-		List<Map<String,Object>> memCompany = memCompanyDao.memCompanyList(search);
+		List<Map<String,Object>> memCompany = companyDao.companyList(search);
 		
 		mView.addObject("memCompany",memCompany);	
 		mView.addObject("page",page);
@@ -65,65 +65,91 @@ public class MemCompanyServiceImpl implements MemCompanyService{
 		return mView;
 	}
 	@Override
-	public ModelAndView memCompanyRead(HttpServletRequest request, int siteId) {
+	public ModelAndView companyRead(HttpServletRequest request, int siteId) {
 		// TODO Auto-generated method stub
 		
 		ModelAndView mView = new ModelAndView();
-		MemCompanyDto memCompanyDto = new MemCompanyDto();
-		memCompanyDto.setSiteid(siteId);
-		Map<String,Object> memCompanyInfo = memCompanyDao.memCompanyRead(memCompanyDto);
+		CompanyDto companyDto = new CompanyDto();
+		companyDto.setSiteid(siteId);
+		Map<String,Object> memCompanyInfo = companyDao.companyRead(companyDto);
 		
 		mView.addObject("memCompany",memCompanyInfo);
 		
 		return mView;
 	}
 	@Override
-	public void memComapnyUpdate(HttpServletRequest request, MemCompanyDto memCompanyDto) {
+	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		memCompanyDto.setEdtuser(USERNO);
-		memCompanyDao.memCompanyUpdate(memCompanyDto);
+		companyDto.setEdtuser(USERNO);
+		companyDao.companyUpdate(companyDto);
 	}
 	
 	@Override
-	public int memCompanyInsert(HttpServletRequest request, MemCompanyDto memCompanyDto) {
+	public int companyInsert(HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		memCompanyDto.setReguser(USERNO);
-		memCompanyDto.setEdtuser(USERNO);
-		int siteid = memCompanyDao.memCompanyInsert(memCompanyDto);
-		memCompanyDto.setSiteid(siteid);
+		companyDto.setReguser(USERNO);
+		companyDto.setEdtuser(USERNO);
+		int siteid = companyDao.companyInsert(companyDto);
+		companyDto.setSiteid(siteid);
 		
 		return siteid;
 	}
 	@Override
-	public void memCompanyDelete(HttpServletRequest request, int siteid) {
+	public void companyDelete(HttpServletRequest request, int siteid) {
 		// TODO Auto-generated method stub
 		
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		MemCompanyDto memCompanyDto = new MemCompanyDto();
-		memCompanyDto.setEdtuser(USERNO);
+		CompanyDto companyDto = new CompanyDto();
+		companyDto.setEdtuser(USERNO);
 		
-		memCompanyDto.setSiteid(siteid);
-		memCompanyDao.memCompanyDelete(memCompanyDto);
+		companyDto.setSiteid(siteid);
+		companyDao.companyDelete(companyDto);
 	}
 	
 	@Override
-	public void memCompanyMultiDelete(HttpServletRequest request) {
+	public void companyMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String sCheck[] = request.getParameterValues("siteid");
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		MemCompanyDto memCompanyDto = new MemCompanyDto();
+		CompanyDto companyDto = new CompanyDto();
 		
-		memCompanyDto.setEdtuser(USERNO);
+		companyDto.setEdtuser(USERNO);
 		int length = sCheck.length;
 		if(length > 0) {
 			for(int i=0;i<length;i++) {
 				int siteid = Integer.parseInt(sCheck[i]); 
-				memCompanyDto.setSiteid(siteid);
-				memCompanyDao.memCompanyDelete(memCompanyDto);
+				companyDto.setSiteid(siteid);
+				companyDao.companyDelete(companyDto);
 			}
 		}
+	}
+	@Override
+	public void companyLicenseInsert(HttpServletRequest request, int siteid) {
+		// TODO Auto-generated method stub
+		
+		
+		Map<String, Object> data = new HashMap();
+		
+		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value == "") {
+				value = null;
+			}
+			data.put(name, value);
+		}
+		data.put("reguser", USERNO);
+		data.put("edtuser", USERNO);
+		data.put("siteid", siteid);
+		
+		companyDao.companyLicenseInsert(data);
+		
 	}
 }

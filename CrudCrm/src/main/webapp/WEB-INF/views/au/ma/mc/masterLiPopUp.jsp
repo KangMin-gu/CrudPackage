@@ -35,11 +35,11 @@
                         <div class="ibox-title row">
                             <h4>기본정보</h4>
                         </div>
-                        
+                        <form:form action="${pageContext.request.contextPath}/company/license/${memCompany.SITEID }" method="POST">
                         <div class="ibox-content row">
+                        
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary save">저장</button>
+                                <button class="btn btn-primary save" id="save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -50,11 +50,15 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control required" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control required" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스제품</label></th>
-                                            <td><input type="text" class="form-control required" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td>
+                                            	<select class="form-control col-12 float-left mr-12 required" name="licenseno" id="licenseno" value="">
+                                            		<option value="">선택</option>
+                                            	</select>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -70,13 +74,13 @@
                                             <th><label for="bsno">최초가입일</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="bsno" id="bsno" value="${memCompany.BSNO}">
+                                                    <input type="text" class="form-control" disabled name="fregdate" id="fregdate" value="${memCompany.FREGDATE}">
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스수량</label></th>
-                                            <td><input type="text" class="form-control required" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control required" name="buycnt" id="buycnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -90,16 +94,17 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">총 구매량</label></th>
-                                            <td><input type="text" class="form-control" name="incno" id="incno" value="${memCompany.INCNO}"></td>
+                                            <td><input type="text" class="form-control" disabled name="totalcnt" id="totalcnt" value="${memCompany.TOTALCNT}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">현재 사용량</label></th>
-                                            <td><input type="text" class="form-control required" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control required" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        </form:form>
                     </div>
                 </div>
             </div>
@@ -123,9 +128,26 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
-
-
-
+	
+	$(document).ready(function () {
+    	$.ajax({
+        	url: "/license/menu",
+        	method: "GET",
+        	dataType: "json",
+        	success: function (data) {
+        		$.each(data, function(i){
+        			$('#licenseno').append('<option value="'+data[i].LICENSENO+'">'+data[i].LICENSENAME+'</option>');	
+        		})
+        	},
+        	error: function (request, status, error) {
+            	alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        	}
+    	});
+	});
+	
+	$('#save').click(function(e){
+		windows.close();
+	});
 	</script>		
 
 </body>

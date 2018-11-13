@@ -50,7 +50,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/au" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/user" method="POST">
                         <div class="ibox-content row">
                            <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
@@ -142,11 +142,11 @@
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/au/delete" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/user/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/au/post" class="btn btn-primary">추가</a>
+                                <a href="${pageContext.request.contextPath}/user/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
                                 <button class="btn btn-primary">삭제</button>
@@ -171,7 +171,7 @@
                                 <c:forEach var="user" items="${user }">
                                     <tr>
                                         <td><input type="checkbox" class="i-checks" name="userno" id="userno" value="${user.USERNO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/au/${user.USERNO }">${user.USERNAME}</a></td>
+                                        <td><a href="${pagecontext.request.contextpath}/user/${user.USERNO }">${user.USERNAME}</a></td>
                                         <td>${user.USERID }</td>
                                         <td>${user.DEPT_ }</td>
                                         <td>${user.USERDUTY }</td>
@@ -190,7 +190,7 @@
                                     <c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
 												<li><a
-													href="${pageContext.request.contextPath}/au?pageNum=${page.startPageNum-1 }&">&laquo;</a>
+													href="${pageContext.request.contextPath}/user?pageNum=${page.startPageNum-1 }&">&laquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -203,18 +203,18 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="active"><a
-														href="${pageContext.request.contextPath}/au?pageNum=${i }">${i }</a></li>
+														href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a
-														href="${pageContext.request.contextPath}/au?pageNum=${i }">${i }</a></li>
+														href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
 												<li><a
-													href="${pageContext.request.contextPath}/au?pageNum=${page.endPageNum+1 }">&raquo;</a>
+													href="${pageContext.request.contextPath}/user?pageNum=${page.endPageNum+1 }">&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>

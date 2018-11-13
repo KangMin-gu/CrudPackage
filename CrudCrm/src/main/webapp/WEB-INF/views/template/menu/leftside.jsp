@@ -116,7 +116,7 @@
 			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ad' }"> class="active"</c:if>>
 			       			<a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
 			       			<ul class="nav nav-second-level collapse">
-			       				<li><a href="${pageContext.request.contextPath}/au">회원 관리</a></li>
+			       				<li><a href="${pageContext.request.contextPath}/user">회원 관리</a></li>
 			       				<li><a href="${pageContext.request.contextPath}/code">회원사 코드관리</a></li>
 			       				<li><a href="form_basic.html">회원사 관리</a></li>
 			       				<li><a href="form_basic.html">서비스 관리</a></li>
@@ -125,15 +125,14 @@
 			       		</li>
 		         	</c:if>
               	
-                		
 		         	<c:if test="${CHKAUTH eq '30'}">
 			        	<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ma' }"> class="active"</c:if>>
 			          	 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
 			          	 <ul class="nav nav-second-level collapse">
-							<li><a href="${pageContext.request.contextPath}/ma/mc">회원사 관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/company">회원사 관리</a></li>
 							<li><a href="${pageContext.request.contextPath}/code">공통코드</a></li>
-							<li><a href="${pageContext.request.contextPath}/ma/li">라이센스 관리</a></li>
-							<li><a href="${pageContext.request.contextPath}/ma/me">메뉴 관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/license">라이센스 관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/menu">메뉴 관리</a></li>
 						</ul>
 			        	</li>
 		         	</c:if>

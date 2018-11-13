@@ -25,7 +25,7 @@ public class AuController {
 	@Autowired
 	AuService auService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(MaController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuController.class);
 	//담당자 정보
 	@RequestMapping(value="/common/user", method=RequestMethod.GET)
 	public ModelAndView authcommonUserList(HttpServletRequest request) {
@@ -41,76 +41,76 @@ public class AuController {
 		return mView;
 	}
 	
-	@RequestMapping(value="/au", method=RequestMethod.GET)
+	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public ModelAndView authAdminUserList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
 		mView.setViewName("/au/ad/adminList");
 		return mView;
 	}
 	
-	@RequestMapping(value="/au", method=RequestMethod.POST)
+	@RequestMapping(value="/user", method=RequestMethod.POST)
 	public ModelAndView authAdminUserSearchList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
 		mView.setViewName("/au/ad/adminList");
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/{userno}", method=RequestMethod.GET)
+	@RequestMapping(value="/user/{userno}", method=RequestMethod.GET)
 	public ModelAndView authAdminUserRead(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		mView.setViewName("/au/ad/adminRead");
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/post", method=RequestMethod.GET)
+	@RequestMapping(value="/user/post", method=RequestMethod.GET)
 	public ModelAndView authAdminUserInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("/au/ad/adminInsert");
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/post", method=RequestMethod.POST)
+	@RequestMapping(value="/user/post", method=RequestMethod.POST)
 	public ModelAndView authAdminUserInsertSet(HttpServletRequest request, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = new ModelAndView();
 		int userNo = auService.userInsert(request, userDto);
-		mView.setViewName("redirect:/au/"+userNo);
+		mView.setViewName("redirect:/user/"+userNo);
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/post/{userno}", method=RequestMethod.GET)
+	@RequestMapping(value="/user/post/{userno}", method=RequestMethod.GET)
 	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		mView.setViewName("/au/ad/adminUpdate");
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/post/{userno}", method=RequestMethod.PUT)
+	@RequestMapping(value="/user/post/{userno}", method=RequestMethod.PUT)
 	public ModelAndView authAdminUserUpdateSet(HttpServletRequest request, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = new ModelAndView();
 		auService.userUpdate(request, userDto);
 		int userNo = userDto.getUserno();
-		mView.setViewName("redirect:/au/"+userNo);
+		mView.setViewName("redirect:/user/"+userNo);
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/{userno}", method=RequestMethod.POST)
+	@RequestMapping(value="/user/{userno}", method=RequestMethod.POST)
 	public ModelAndView authAdminUserDelete(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = new ModelAndView();
 		auService.userDelete(request,userno);
-		mView.setViewName("redirect:/au");
+		mView.setViewName("redirect:/user");
 		return mView;
 	}
 	
-	@RequestMapping(value="/au/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/user/delete", method=RequestMethod.POST)
 	public ModelAndView authAdminUserDeleteSet(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		auService.userMultiDelete(request);
-		mView.setViewName("redirect:/au");
+		mView.setViewName("redirect:/user");
 		return mView;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/au/idcheck/{userid}",method=RequestMethod.GET)
+	@RequestMapping(value="/user/idcheck/{userid}",method=RequestMethod.GET)
 	public int authAdminUserIdCheck(@PathVariable String userid) {
 		
 		int userId = auService.userIdCheck(userid);
@@ -120,7 +120,7 @@ public class AuController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/tab/user/{siteid}", method=RequestMethod.GET)
+	@RequestMapping(value="/user/tab/{siteid}", method=RequestMethod.GET)
 	public List<Map<String,Object>> authTabTopList(HttpServletRequest request,@PathVariable int siteid){
 		
 		List<Map<String,Object>> userTopList = auService.userTopList(siteid);

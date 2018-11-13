@@ -50,7 +50,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/ma/mc" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/company" method="POST">
                         <div class="ibox-content row">
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
@@ -124,11 +124,11 @@
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/ma/mc/delete" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/company/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/ma/mc/post" class="btn btn-primary">회원사추가</a>
+                                <a href="${pageContext.request.contextPath}/company/post" class="btn btn-primary">회원사추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
                                 <button class="btn btn-primary">회원사삭제</button>
@@ -155,7 +155,7 @@
                                 <c:forEach var="memCompany" items="${memCompany }">
                                     <tr>
                                         <td><input type="checkbox" class="i-checks" name="siteid" id="siteid" value="${memCompany.SITEID }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/ma/mc/${memCompany.SITEID }">${memCompany.SITENAME}</td>
+                                        <td><a href="${pagecontext.request.contextpath}/company/${memCompany.SITEID }">${memCompany.SITENAME}</td>
                                         <td>${memCompany.PRSDNAME }</td>
                                         <td>${memCompany.BSNO }</td>
                                         <td>${memCompany.MOBILE }</td>

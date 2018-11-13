@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dao.MenuDao;
-import saas.crud.crm.au.dto.MemCompanyDto;
+import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.common.PagingCommon;
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.CodeDto;
-import saas.crud.crm.au.dto.MemCompanyDto;
+import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.au.service.LicenseService;
@@ -25,7 +25,7 @@ import saas.crud.crm.au.service.MenuService;
 @Controller
 public class CodeController {
 
-	private static final Logger logger = LoggerFactory.getLogger(MaController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CodeController.class);
 	// 회원사 정보 등록 수정 삭제
 	@Autowired
 	CodeService codeService;

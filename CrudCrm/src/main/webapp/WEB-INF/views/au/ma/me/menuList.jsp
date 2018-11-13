@@ -307,8 +307,8 @@
         });
 		
         $.ajax({
-            url: "/ma/li/ajax",
-            method: "POST",
+            url: "/license/menu",
+            method: "GET",
             dataType: "json",
             success: function (data) {
             	debugger;

@@ -58,5 +58,10 @@ public class LicenseDaoImpl implements LicenseDao{
 		// TODO Auto-generated method stub
 		return session.selectList("li.topList",siteid);
 	}
+	@Override
+	public List<Map<String, Object>> licenseMenuList() {
+		// TODO Auto-generated method stub
+		return session.selectList("li.licenselist");
+	}
 
 }

@@ -2,7 +2,7 @@ package saas.crud.crm.au.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class MemCompanyDto {
+public class CompanyDto {
 	
 	private int siteid; //사이트 ID PK
 	private String sitename; //회원사명
@@ -40,7 +40,7 @@ public class MemCompanyDto {
 	private int isdelete; //서비스상태 
 	private int owner; // 담당자
 	
-	public MemCompanyDto() {}
+	public CompanyDto() {}
 
 	public int getSiteid() {
 		return siteid;
@@ -314,7 +314,7 @@ public class MemCompanyDto {
 		this.owner = owner;
 	}
 
-	public MemCompanyDto(int siteid, String sitename, String bsno, String incno, String zipcode, String upraddress,
+	public CompanyDto(int siteid, String sitename, String bsno, String incno, String zipcode, String upraddress,
 			String lwraddress, String fregdate, String expirdate, String telno1, String telno2, String telno3,
 			String faxtel1, String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3,
 			String email, String sitememo, String bscond, String cotype, String bstype, String ctiaddress,

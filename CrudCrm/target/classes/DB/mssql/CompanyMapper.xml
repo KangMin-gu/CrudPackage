@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="memCompany">
+<mapper namespace="company">
 
     <select id="list" parameterType="hashMap" resultType="hashMap">
      	SELECT * FROM (
@@ -51,7 +51,7 @@
      	</if>
     </select>
     
-    <select id="detail" parameterType="memCompanyDto" resultType="hashMap">
+    <select id="detail" parameterType="companyDto" resultType="hashMap">
      	SELECT 
      	A.SITEID,A.SITENAME,A.BSNO,A.INCNO
      	,A.ZIPCODE,A.UPRADDRESS,A.LWRADDRESS
@@ -71,13 +71,14 @@
      	,CONVERT(varchar,A.FREGDATE,23) AS FREGDATE ,A.SITELOGO
      	,CASE WHEN A.ISDELETE = '0' THEN '사용'
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE_
-     	,ISDELETE
+     	,A.ISDELETE
      	,A.SITEMEMO
+     	,(SELECT COUNT(*) FROM T_SITE_LICENSE WHERE SITEID = A.SITEID) AS TOTALCNT
      	FROM Crud_SaaS.dbo.TB980070 A
      	WHERE A.SITEID = #{siteid}
     </select>
     
-    <update id="update" parameterType="memCompanyDto">
+    <update id="update" parameterType="companyDto">
     
     UPDATE Crud_SaaS.dbo.TB980070
     SET 
@@ -121,7 +122,7 @@
     WHERE SITEID = #{siteid}
     
     </update>
-    <insert id="insert" parameterType="memCompanyDto">
+    <insert id="insert" parameterType="companyDto">
     <selectKey keyProperty="siteid"  resultType="integer" order="AFTER">
     INSERT INTO Crud_SaaS.dbo.TB980070
     (
@@ -187,14 +188,34 @@
     </selectKey>
     </insert>
     
-    <update id="delete" parameterType="memCompanyDto">
+    <update id="delete" parameterType="companyDto">
     
-    UPDATE Crud_SaaS.dbo.TB980070
-    SET ISDELETE = 1
-    ,EDTDATE = getDate()
-    ,EDTUSER = #{edtuser}
-    WHERE SITEID = #{siteid}
-    
+    	UPDATE Crud_SaaS.dbo.TB980070
+    		SET ISDELETE = 1
+    		,EDTDATE = getDate()
+    		,EDTUSER = #{edtuser}
+    	WHERE SITEID = #{siteid}
     </update>
+    
+    <insert id="siteLicenseInsert" parameterType="HashMap">
+    	INSERT INTO Crud_SaaS.dbo.T_SITE_LICENSE
+    	(
+    		LICENSENO
+    		,BUYCNT
+    		,SITEID
+    		,REGDATE
+    		,REGUSER
+    		,EDTDATE
+    		,EDTUSER
+    	)VALUES(
+    	#{licenseno}
+    	,#{buycnt}
+    	,#{siteid}
+    	,getDate()
+    	,#{reguser}
+    	,getDate()
+    	,#{edtuser}
+    	)
+    </insert>
 
 </mapper>

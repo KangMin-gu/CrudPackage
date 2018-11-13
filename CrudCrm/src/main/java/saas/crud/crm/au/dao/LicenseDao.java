@@ -15,5 +15,6 @@ public interface LicenseDao {
 	public void licenseDelete(LicenseDto licenseDto);
 	
 	public List<Map<String,Object>> licenseTopList(int siteid);
+	public List<Map<String,Object>> licenseMenuList();
 
 }

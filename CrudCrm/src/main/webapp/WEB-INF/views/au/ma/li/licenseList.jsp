@@ -48,7 +48,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/ma/li" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/license" method="POST">
                         <div class="ibox-content row">
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
@@ -71,18 +71,11 @@
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>
                                 <button class="btn btn-primary">라이센스검색</button>
-                                
+                                <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
                             </div>
                         </div>
                         </form:form>
                         <div class="ibox-content row border-top-0 pt-lg-0">
-                            <div class="w-100 text-right mb-2">
-                            
-                                <div class="d-inline-block mt-sx-1">
-                                <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                </div>
-                             
-                            </div>
                             <div class="overflow-x w-100 head">
                             <table class="table table-bordered">
                                 <thead>

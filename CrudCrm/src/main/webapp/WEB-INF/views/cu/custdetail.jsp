@@ -50,8 +50,8 @@
 					<h2>고객관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/">메인</a></li>
-						<li class="breadcrumb-item"><a href="/custlist">고객 목록</a></li>
-						<li class="breadcrumb-item active"><strong>고객 상세</strong></li>
+						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
+						<li class="breadcrumb-item active"><strong>상세정보</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -70,11 +70,11 @@
 								</div>
 								<div class="ibox-content row">
 									<div class="w-100 text-right mb-2">
-									<form:form action="/custdetail/${custDetail.CUSTNO}" method="DELETE">
-										<input type="hidden" name="CUSTNO" id="CUSTNO" value="${custDetail.CUSTNO}">
-										<a href="/custform/${custDetail.CUSTNO}" class="btn btn-primary">고객수정</a>									
-										<Button type="submit" class="btn btn-primary">고객삭제</Button>					
-										<a href="/custlist" class="btn btn-primary">고객목록</a>
+									<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
+										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
+										<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
+										<Button type="submit" class="btn btn-primary">삭 제</Button>					
+										<a href="/cust/post" class="btn btn-primary">목 록</a>
 									</form:form>
 									</div>
 									<div class="box1 col-lg-4 p-0">
@@ -154,7 +154,7 @@
 												<tr>
 													<th>홈페이지</th>
 													<td> ${custDetail.WRKURL}
-														<a href="http://${custDetail.WRKURL}" target="_blank">&nbsp;&nbsp;<i class="fa fa-home"></i></a>
+														<a href="${custDetail.WRKURL}" target="_blank"> &nbsp;&nbsp; <i class="fa fa-home"></i></a>
 													</td>
 												</tr>
 											</tbody>
@@ -212,7 +212,7 @@
 														<th>자택전화</th>
 														<td> 
 															<c:choose>
-																<c:when test="${custDetail.HOMTEL eq '--'}"></c:when>
+																<c:when test=" ${custDetail.HOMTEL eq '--'}"></c:when>
 																<c:otherwise>${custDetail.HOMTEL }</c:otherwise>
 															</c:choose>
 														</td>
@@ -221,10 +221,8 @@
 														<th>결혼여부</th>
 														<td>
 														<c:choose>
-															<c:when test="${custDetail.MARRIED==1}">미혼</c:when>
-															<c:when test="${custDetail.MARRIED==2}">기혼</c:when>
-															<c:otherwise>
-															</c:otherwise>
+															<c:when test="${custDetail.MARRIED eq 1 }">미혼</c:when>
+															<c:when test="${custDetail.MARRIED eq 2 }">기혼</c:when>
 														</c:choose>
 														</td>
 													</tr>
@@ -250,8 +248,8 @@
 														<th>성별</th>
 														<td>
 															<c:choose>
-																<c:when test="${custDetail.SEX==1}">남자</c:when>
-																<c:when test="${custDetail.SEX==2}">여자</c:when>
+																<c:when test="${custDetail.SEX eq 1 }">남자</c:when>
+																<c:when test="${custDetail.SEX eq 2 }">여자</c:when>
 																<c:otherwise>
 																</c:otherwise>
 															</c:choose>
@@ -261,8 +259,8 @@
 														<th>발송처</th>
 														<td>
 															<c:choose>
-																<c:when test="${custDetail.MAILTO==1}">자택</c:when>
-																<c:when test="${custDetail.MAILTO==2}">직장</c:when>
+																<c:when test="${custDetail.MAILTO eq 1 }">자택</c:when>
+																<c:when test="${custDetail.MAILTO eq 2 }">직장</c:when>
 																<c:otherwise>
 																</c:otherwise>
 															</c:choose>
@@ -272,9 +270,9 @@
 														<th>고객등급</th>
 														<td>
 															<c:choose>
-																<c:when test="${custDetail.CUSTGRADE==1}">일반</c:when>
-																<c:when test="${custDetail.CUSTGRADE==2}">VIP</c:when>
-																<c:when test="${custDetail.CUSTGRADE==3}">VVIP</c:when>
+																<c:when test="${custDetail.CUSTGRADE eq 1 }">일반</c:when>
+																<c:when test="${custDetail.CUSTGRADE eq 2 }">VIP</c:when>
+																<c:when test="${custDetail.CUSTGRADE eq 3 }">VVIP</c:when>
  																<c:otherwise>
 																</c:otherwise>
 															</c:choose>
@@ -284,9 +282,9 @@
 														<th>회원구분</th>
 														<td>
 															 <c:choose>
-																<c:when test="${custDetail.CUSTGUBUN==1}">회원</c:when>
-																<c:when test="${custDetail.CUSTGUBUN==2}">비회원</c:when>
-																<c:when test="${custDetail.CUSTGUBUN==3}">탈퇴회원</c:when>															
+																<c:when test="${custDetail.CUSTGUBUN eq 1 }">회원</c:when>
+																<c:when test="${custDetail.CUSTGUBUN eq 2 }">비회원</c:when>
+																<c:when test="${custDetail.CUSTGUBUN eq 3 }">탈퇴회원</c:when>															
 																<c:otherwise>
 																</c:otherwise>
 															</c:choose>
@@ -304,14 +302,14 @@
 												<tbody>
 													<tr>
 														<th>생일</th>
-														<td> ${custDetail.BIRTH}</td>
+														<td> ${custDetail.BIRTH }</td>
 													</tr>
 													<tr>
 														<th>양력/음력</th>
 														<td>
 															 <c:choose>
-																<c:when test="${custDetail.SOLAR==1}">양력</c:when>
-																<c:when test="${custDetail.SOLAR==2}">음력</c:when>
+																<c:when test="${custDetail.SOLAR eq 1 }">양력</c:when>
+																<c:when test="${custDetail.SOLAR eq 2 }">음력</c:when>
 																<c:otherwise>
 																</c:otherwise>
 															</c:choose>
@@ -361,10 +359,10 @@
 													<td class="border-top-0">
 														<div class="i-checks" style="height: 1.15rem;">
 															<label class="pr-lg-3 mb-0">
-															<input type="radio" value="0" id="INFOAGREE" name="INFOAGREE"  class="pr-lg-1" ${custDetail.INFOAGREE eq "0" ? "checked" : ""} disabled="disabled"><i></i> 동의 </label> 
+															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ${custDetail.INFOAGREE eq "0" ? "checked" : ""} disabled="disabled"><i></i> 동의 </label> 
 																<label class="pr-lg-3 mb-0">
 																<input type="radio"
-																value="1" id="INFOAGREE" name="INFOAGREE" class="pr-lg-1" ${custDetail.INFOAGREE eq "1" ? "checked" : ""} disabled="disabled"><i></i>
+																value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${custDetail.INFOAGREE eq "1" ? "checked" : ""} disabled="disabled"><i></i>
 																거부</label>
 														</div>
 													</td>
@@ -469,16 +467,17 @@
 												<tbody>
 													<tr>
 														<th class="border-top-0">메모</th>
-														<td class="border-top-0"><textarea name="textNote"
-																id="textNote" class="form-control"
+														<td class="border-top-0"><textarea name="memo"
+																id="memo" class="form-control"
 																style="resize: none; height: 8em;" readonly>${custDetail.MEMO}</textarea></td>
 													</tr>
 												</tbody>
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<a href="/custdetail/form/${custDetail.CUSTNO}" class="btn btn-primary">고객수정</a>
-											<a href="/custlist" class="btn btn-primary">고객목록</a>
+											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>
+											<Button type="submit" class="btn btn-primary">삭 제</Button>	
+											<a href="/cust" class="btn btn-primary">목 록</a>
 										</div>
 									</div>
 								</div>
@@ -738,14 +737,7 @@
                 radioClass: 'iradio_square-green',
             });
 
-            // datePicker
-            $('.input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
+    
         });
     </script>
 	<!-- E: 추가 js -->

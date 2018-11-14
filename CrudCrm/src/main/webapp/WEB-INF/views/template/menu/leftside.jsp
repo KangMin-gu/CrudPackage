@@ -42,7 +42,7 @@
 	                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">고객관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                    <!-- todo. controller 파라미터 전달 -->
-	                        <li><a href="/custlist">고객 관리</a></li>                        
+	                        <li><a href="/cust">고객 관리</a></li>                        
 	                    </ul>
 	                </li>
                 </c:if> 

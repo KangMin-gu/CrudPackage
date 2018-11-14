@@ -145,8 +145,8 @@ body {
 	
 	<script>
 	function toParentOwner(prm1,prm2){
-		opener.document.getElementById('OWNER').value= prm1;
-		opener.document.getElementById('OWNERNAME').value= prm2;
+		opener.document.getElementById('owner').value= prm1;
+		opener.document.getElementById('ownername').value= prm2;
 		window.close();
 	}
 	</script>

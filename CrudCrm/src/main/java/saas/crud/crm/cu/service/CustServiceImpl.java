@@ -30,73 +30,73 @@ public class CustServiceImpl implements CustService {
 		Map<String, Object> searchVal = new HashMap<String, Object>();;
 		//**********여기부터 검색조건설정*************************************** 
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		searchVal.put("SITEID", siteid);
+		searchVal.put("siteid", siteid);
 
-		String test = request.getParameter("CUSTNAME");
+		String test = request.getParameter("custname");
 		if (test =="") {
 			test = null;
 		}
 
 		//검색조건 설정 null 또는 공백이 아니면 if실행
-		if( request.getParameter("CUSTNAME") != null && !request.getParameter("CUSTNAME").toString().trim().equals("") )  { 	
-			searchVal.put("CUSTNAME",request.getParameter("CUSTNAME"));
+		if( request.getParameter("custname") != null && !request.getParameter("custname").toString().trim().equals("") )  { 	
+			searchVal.put("custname",request.getParameter("custname"));
 		}
 		
-		if(request.getParameter("OWNER") != null ) {
-			searchVal.put("OWNER",request.getParameter("OWNER"));
+		if(request.getParameter("owner") != null ) {
+			searchVal.put("owner",request.getParameter("owner"));
 		}
-		if(request.getParameter("OWNERNAME") != null ) {
-			searchVal.put("OWNERNAME",request.getParameter("OWNERNAME"));
+		if(request.getParameter("ownername") != null ) {
+			searchVal.put("ownername",request.getParameter("ownername"));
 		}
-		if(request.getParameter("CLINO") != null ) {
-			searchVal.put("CLINO",request.getParameter("CLINO"));
+		if(request.getParameter("clino") != null ) {
+			searchVal.put("clino",request.getParameter("clino"));
 		}
-		if(request.getParameter("CLINAME") != null ) {
-			searchVal.put("CLINAME",request.getParameter("CLINAME"));
-		}
-		
-		if(request.getParameter("MOBILE") != null && !request.getParameter("MOBILE").toString().trim().equals("") ) {
-			searchVal.put("MOBILE",request.getParameter("MOBILE").toString());
+		if(request.getParameter("cliname") != null ) {
+			searchVal.put("cliname",request.getParameter("cliname"));
 		}
 		
-		if(request.getParameter("COMPANY") != null) {
-			searchVal.put("COMPANY",request.getParameter("COMPANY"));
+		if(request.getParameter("mobile") != null && !request.getParameter("mobile").toString().trim().equals("") ) {
+			searchVal.put("mobile",request.getParameter("mobile").toString());
 		}
 		
-		if(request.getParameter("EMAIL") != null && !request.getParameter("EMAIL").toString().trim().equals("") ) {
-			searchVal.put("EMAIL",request.getParameter("EMAIL") );
+		if(request.getParameter("company") != null) {
+			searchVal.put("company",request.getParameter("company"));
 		}
 		
-		if(request.getParameter("CUSTGUBUN") != null) {
-			searchVal.put("CUSTGUBUN",request.getParameter("CUSTGUBUN"));
+		if(request.getParameter("email") != null && !request.getParameter("email").toString().trim().equals("") ) {
+			searchVal.put("email",request.getParameter("email") );
+		}
+		
+		if(request.getParameter("custgubun") != null) {
+			searchVal.put("custgubun",request.getParameter("custgubun"));
 		}else {
-			searchVal.put("CUSTGUBUN",0);//선택 값이 없다면 기본값은 0
+			searchVal.put("custgubun",0);//선택 값이 없다면 기본값은 0
 		}
 		
-		if(request.getParameter("CUSTGRADE") != null) { 
-			searchVal.put("CUSTGRADE",request.getParameter("CUSTGRADE"));
+		if(request.getParameter("custgrade") != null) { 
+			searchVal.put("custgrade",request.getParameter("custgrade"));
 		}else {
-			searchVal.put("CUSTGRADE",0);//선택 값이 없다면 기본값은 0
+			searchVal.put("custgrade",0);//선택 값이 없다면 기본값은 0
 		}
 		
-		if(request.getParameter("FROMREGDT") != null && !request.getParameter("FROMREGDT").toString().trim().equals("") ) {
-			String temp = request.getParameter("FROMREGDT");//	yyyy/mm/dd
+		if(request.getParameter("fromregdt") != null && !request.getParameter("fromregdt").toString().trim().equals("") ) {
+			String temp = request.getParameter("fromregdt");//	yyyy/mm/dd
 			String fromdt = temp.replace("/",""); // yyyymmdd
-			searchVal.put("FROMREGDT", fromdt);
+			searchVal.put("fromregdt", fromdt);
 		}
-		if(request.getParameter("TOREGDT") != null && !request.getParameter("TOREGDT").toString().trim().equals("")) {
-			String temp = request.getParameter("TOREGDT");//	yyyy/mm/dd
+		if(request.getParameter("toregdt") != null && !request.getParameter("toregdt").toString().trim().equals("")) {
+			String temp = request.getParameter("toregdt");//	yyyy/mm/dd
 			String todt = temp.replace("/",""); // yyyymmdd
-			searchVal.put("TOREGDT", todt);
+			searchVal.put("toregdt", todt);
 		}
 		//정보활용동의 라디오버튼
-		if(request.getParameter("INFOAGREE") != null) {
-			searchVal.put("INFOAGREE",request.getParameter("INFOAGREE"));//선택된 값으로 저장
+		if(request.getParameter("infoagree") != null) {
+			searchVal.put("infoagree",request.getParameter("infoagree"));//선택된 값으로 저장
 		}else {
-			searchVal.put("INFOAGREE",0);//선택 값이 없다면 기본값은 0
+			searchVal.put("infoagree",0);//선택 값이 없다면 기본값은 0
 		}
-		if( request.getParameter("CLINAME") != null && !request.getParameter("CLINAME").toString().trim().equals("") )  { 	
-			searchVal.put("CLINAME",request.getParameter("CLINAME"));
+		if( request.getParameter("cliname") != null && !request.getParameter("cliname").toString().trim().equals("") )  { 	
+			searchVal.put("cliname",request.getParameter("cliname"));
 		}
 			
 		//총자료수
@@ -131,20 +131,20 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public int svcCustDelete(HttpServletRequest request) {
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		String[] CUSTNO= request.getParameterValues("CUSTNO");
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		String[] custno = request.getParameterValues("custno");
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		CustDto custDto=new CustDto();
-		custDto.setSITEID(SITEID);
-		custDto.setUSERNO(USERNO);
+		custDto.setSiteid(siteid);
+		custDto.setUserno(userno);
 		
-		int size = CUSTNO.length; 
+		int size = custno.length; 
 		int res = 0; 
 	
 		for (int i=0;i<size;i++) {
-			if(CUSTNO[i].toString()!=null) {
-				custDto.setCUSTNO(Integer.parseInt(CUSTNO[i].toString()));	
+			if(custno[i].toString()!=null) {
+				custDto.setCustno(Integer.parseInt(custno[i].toString()));	
 				res += custDao.custDelete(custDto);			
 			}			
 		}
@@ -154,13 +154,13 @@ public class CustServiceImpl implements CustService {
 	}
 	
 	//상세페이지
-	public Map<String,Object> svcCustDetail(int CUSTNO){
-		Map<String,Object> map = custDao.custDetail(CUSTNO);
+	public Map<String,Object> svcCustDetail(int custno){
+		Map<String,Object> map = custDao.custDetail(custno);
 		return  map;
 	}
 	//업데이트 - form화면 
-	public Map<String,Object> svcCustUpdateForm(int CUSTNO){
-		Map<String,Object> map = custDao.custUpdateForm(CUSTNO);
+	public Map<String,Object> svcCustUpdateForm(int custno){
+		Map<String,Object> map = custDao.custUpdateForm(custno);
 		return  map;
 	}
 
@@ -168,17 +168,17 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
 		//세션 정보 값 DTO셋팅  
-		int USERNO  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		custDto.setREGUSER(USERNO);
-		custDto.setEDITUSER(USERNO);
-		custDto.setSITEID(SITEID);
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		custDto.setReguser(userno);
+		custDto.setEdituser(userno);
+		custDto.setSiteid(siteid);
 			
 		int custno = custDao.custformInsert(custDto);//추가된 고객pk 값 리턴
 		
-		custDenyDto.setCUSTNO(custno);
-		custDenyDto.setREGUSER(USERNO);
-		custDenyDto.setEDITUSER(USERNO);
+		custDenyDto.setCustno(custno);
+		custDenyDto.setReguser(userno);
+		custDenyDto.setEdituser(userno);
 		custDao.custformInsertDeny(custDenyDto);
 		
 		return custno;
@@ -188,10 +188,10 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public ModelAndView svcCustForm(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		String USERNAME = request.getSession().getAttribute("USERNAME").toString();
-		mView.addObject("SESSIONUSERNO",USERNO);
-		mView.addObject("SESSIONUSERNAME",USERNAME);
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String username = request.getSession().getAttribute("USERNAME").toString();
+		mView.addObject("SESSIONUSERNO",userno);
+		mView.addObject("SESSIONUSERNAME",username);
 		return mView;
 	}
 
@@ -199,12 +199,12 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
 		//세션 정보 값 DTO셋팅  
-			int USERNO  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-			custDto.setEDITUSER(USERNO);
+			int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+			custDto.setEdituser(userno);
 			custDao.custformUpdate(custDto);	
-			int custno = custDto.getCUSTNO();
-			custDenyDto.setCUSTNO(custno);
-			custDenyDto.setEDITUSER(USERNO);
+			int custno = custDto.getCustno();
+			custDenyDto.setCustno(custno);
+			custDenyDto.setEdituser(userno);
 			
 			custDao.custformUpdateDeny(custDenyDto);
 				

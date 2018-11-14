@@ -13,14 +13,14 @@ public interface CustDao {
 	
 	public List<Map<String,Object>> custList(Map<String, Object> cstVal);
 	
-	public Map<String,Object> custDetail(int CUSTNO);
+	public Map<String,Object> custDetail(int custno);
 	
-	public Map<String,Object> custUpdateForm(int CSTID);
+	public Map<String,Object> custUpdateForm(int cstid);
 
 	public int custDelete(CustDto CustDto);
 	
 	public int custformInsert(CustDto CustDto);
-	public int custformInsertDeny(CustDenyDto custDenyDto);
+	public void custformInsertDeny(CustDenyDto custDenyDto);
 	
 	public int custformUpdate(CustDto CustDto);
 	public int custformUpdateDeny(CustDenyDto custDenyDto);

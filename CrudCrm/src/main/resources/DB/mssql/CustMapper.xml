@@ -9,37 +9,37 @@
 		FROM CU100010 A
 		LEFT OUTER JOIN TB200010 B ON A.CLINO = B.CLINO 
 		WHERE
-			A.SITEID = #{SITEID}
+			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0 
-			<if test="CUSTNAME != null">
-			AND A.CUSTNAME like '%'+#{CUSTNAME}+'%'
+			<if test="custname != null">
+			AND A.CUSTNAME like '%'+#{custname}+'%'
 			</if>
-			<if test="MOBILE != null">
-			AND A.MOBILE1+A.MOBILE2+A.MOBILE3 like '%'+#{MOBILE}+'%'
+			<if test="mobile != null">
+			AND A.MOBILE1+A.MOBILE2+A.MOBILE3 like '%'+#{mobile}+'%'
 			</if>
-			<if test="EMAIL != null">
-			AND A.EMAIL like '%'+#{EMAIL}+'%'
+			<if test="email != null">
+			AND A.EMAIL like '%'+#{email}+'%'
 			</if>
-			<if test="CUSTGUBUN != 0 ">
-			AND A.CUSTGUBUN = #{CUSTGUBUN}
+			<if test="custgubun != 0 ">
+			AND A.CUSTGUBUN = #{custgubun}
 			</if>
-			<if test="CUSTGRADE != 0 ">
-			AND A.CUSTGRADE = #{CUSTGRADE}
+			<if test="custgrade != 0 ">
+			AND A.CUSTGRADE = #{custgrade}
 			</if>
-			<if test="FROMREGDT != null">
-			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[>=]]> #{FROMREGDT}
+			<if test="fromregdt != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
 			</if>
-			<if test="TOREGDT != null">
-			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[<=]]> #{TOREGDT}
+			<if test="toregdt != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[<=]]> #{toregdt}
 			</if>	
-			<if test="INFOAGREE == 0 or INFOAGREE == 1">
-			AND A.INFOAGREE = #{INFOAGREE}
+			<if test="infoagree == 0 or infoagree == 1">
+			AND A.INFOAGREE = #{infoagree}
 			</if>
-			<if test="OWNER != null and OWNER != 0 ">
-			AND A.OWNER = #{OWNER}
+			<if test="owner != null and owner != 0 ">
+			AND A.OWNER = #{owner}
 			</if>
-			<if test="CLINO != null and CLINO != 0 ">
-			AND B.CLINO = #{CLINO}
+			<if test="clino != null and clino != 0 ">
+			AND B.CLINO = #{clino}
 			</if>
 	</select>
 	
@@ -57,38 +57,38 @@
 			LEFT OUTER JOIN TB980010 AS B ON CU.OWNER = B.USERNO 
 			LEFT OUTER JOIN TB200010 AS C ON CU.CLINO = C.CLINO	
 			WHERE
-				CU.SITEID = #{SITEID}
+				CU.SITEID = #{siteid}
 				AND CU.ISDELETE = 0 
-				<if test="CUSTNAME != null">
-				AND CU.CUSTNAME like '%'+#{CUSTNAME}+'%'
+				<if test="custname != null">
+				AND CU.CUSTNAME like '%'+#{custname}+'%'
 				</if>
-				<if test="MOBILE != null">
-				AND CU.MOBILE1+CU.MOBILE2+CU.MOBILE3 like '%'+#{MOBILE}+'%'
+				<if test="mobile != null">
+				AND CU.MOBILE1+CU.MOBILE2+CU.MOBILE3 like '%'+#{mobile}+'%'
 				</if>
-				<if test="EMAIL != null">
-				AND CU.EMAIL like '%'+#{EMAIL}+'%'
+				<if test="email != null">
+				AND CU.EMAIL like '%'+#{email}+'%'
 				</if>
-				<if test="CUSTGUBUN != 0 ">
-				AND CUSTGUBUN = #{CUSTGUBUN}
+				<if test="custgubun != 0 ">
+				AND CUSTGUBUN = #{custgubun}
 				</if>
-				<if test="CUSTGRADE != 0 ">
-				AND CUSTGRADE = #{CUSTGRADE}
+				<if test="custgrade != 0 ">
+				AND CUSTGRADE = #{custgrade}
 				</if>
-				<if test="FROMREGDT != null">
-				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[>=]]> #{FROMREGDT}
+				<if test="fromregdt != null">
+				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
 				</if>
-				<if test="TOREGDT != null">
-				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[<=]]> #{TOREGDT}
+				<if test="toregdt != null">
+				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[<=]]> #{toregdt}
 				</if>
-				<if test="INFOAGREE == 0 or INFOAGREE == 1">
-				AND CU.INFOAGREE = #{INFOAGREE}
+				<if test="infoagree == 0 or infoagree == 1">
+				AND CU.INFOAGREE = #{infoagree}
 				</if>
 				
-				<if test="OWNER != null and OWNER != 0 ">
-					AND CU.OWNER = #{OWNER}
+				<if test="owner != null and owner != 0 ">
+					AND CU.OWNER = #{owner}
 				</if>	
-				<if test="CLINO != null and CLINO != 0 ">
-				AND CU.CLINO = #{CLINO}
+				<if test="clino != null and clino != 0 ">
+				AND CU.CLINO = #{clino}
 				</if>	
 			) T
 		WHERE
@@ -97,8 +97,8 @@
 	
 	<!-- 고객 삭제 -->
 	<update id="custDelete" parameterType="saas.crud.crm.cu.dto.CustDto" >
-		UPDATE CU100010 SET ISDELETE = 1 , EDITDATE = GETDATE() , EDITUSER = #{USERNO}
-		WHERE SITEID = #{SITEID} AND CUSTNO = #{CUSTNO}
+		UPDATE CU100010 SET ISDELETE = 1 , EDITDATE = GETDATE() , EDITUSER = #{userno}
+		WHERE SITEID = #{siteid} AND CUSTNO = #{custno}
 	</update>
 
 	
@@ -141,7 +141,7 @@
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
 		LEFT OUTER JOIN TB200010 D ON A.CLINO = D.CLINO  
 		WHERE 
-		A.CUSTNO = #{CUSTNO}
+		A.CUSTNO = #{custno}
 	</select>
 
 	<select id="custUpdateForm" parameterType="int" resultType="hashMap">
@@ -185,12 +185,12 @@
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
 		LEFT OUTER JOIN TB200010 D ON A.CLINO = D.CLINO 
 		WHERE 
-		A.CUSTNO = #{CUSTNO}
+		A.CUSTNO = #{custno}
 	</select>
 	
 	
 	<insert id="custformInsert" parameterType="saas.crud.crm.cu.dto.CustDto">
-		<selectKey keyProperty="CUSTNO"  resultType="integer" order="AFTER">
+		<selectKey keyProperty="custno"  resultType="integer" order="AFTER">
 		INSERT INTO CU100010
 		(		
 		CUSTNAME
@@ -230,41 +230,41 @@
 		)
 		VALUES
 		(	
-		#{CUSTNAME}
-		,#{OWNER}
+		#{custname}
+		,#{owner}
 		,GETDATE()
-		,#{REGUSER}
+		,#{reguser}
 		,GETDATE()
-		,#{EDITUSER}
-		,#{SITEID}
+		,#{edituser}
+		,#{siteid}
 		,0
 		
 		
-		,#{COMPANY}
-		,#{DEPTNAME}
-		,#{DUTY}
-		,#{MOBILE1},#{MOBILE2},#{MOBILE3}
-		,#{EMAIL}
-		,#{WRKTEL1},#{WRKTEL2},#{WRKTEL3}
-		,#{WRKFAX1},#{WRKFAX2},#{WRKFAX3}
-		,#{WRKURL}
-		,#{WRKADDR1},#{WRKADDR2},#{WRKADDR3}
-		,#{HOMTEL1},#{HOMTEL2},#{HOMTEL3}
-		,#{SEX}
-		,#{BIRTH}
-		,#{MARRIED}
-		,#{MAILTO}
-		,#{SOLAR}
-		,#{WEDDINGDAY}
-		,#{CUSTGRADE}
-		,#{JOB}
-		,#{HOBBY}
-		,#{CUSTGUBUN}
-		,#{ACTGRADE}
-		,#{HOMADDR1},#{HOMADDR2},#{HOMADDR3}
-		,#{MEMO}
-		,#{INFOAGREE}	
-		,#{CLINO}
+		,#{company}
+		,#{deptname}
+		,#{duty}
+		,#{mobile1},#{mobile2},#{mobile3}
+		,#{email}
+		,#{wrktel1},#{wrktel2},#{wrktel3}
+		,#{wrkfax1},#{wrkfax2},#{wrkfax3}
+		,#{wrkurl}
+		,#{wrkaddr1},#{wrkaddr2},#{wrkaddr3}
+		,#{homtel1},#{homtel2},#{homtel3}
+		,#{sex}
+		,#{birth}
+		,#{married}
+		,#{mailto}
+		,#{solar}
+		,#{weddingday}
+		,#{custgrade}
+		,#{job}
+		,#{hobby}
+		,#{custgubun}
+		,#{actgrade}
+		,#{homaddr1},#{homaddr2},#{homaddr3}
+		,#{memo}
+		,#{infoagree}	
+		,#{clino}
 		)
 		SELECT SCOPE_IDENTITY()
 		</selectKey>
@@ -297,26 +297,26 @@
 		)
 		VALUES
 		(
-		#{CUSTNO}
+		#{custno}
 		,GETDATE()
-		,#{REGUSER}
+		,#{reguser}
 		,GETDATE()
-		,#{EDITUSER}
+		,#{edituser}
 		,0	
 		
-		,#{DENYMAILAD}
-		,#{DENYMAILNEWS} 
-		,#{DENYMAILSEMINAR} 
-		,#{DENYSMSNOMAL} 
-		,#{DENYSMSSEMINAR}  
-		,#{DENYSMSAD} 
-		,#{DENYDMNEWS} 
-		,#{DENYDMSEMINAR} 
-		,#{DENYDMAD}  
-		,#{DENYTELNEWS}  
-		,#{DENYTELSEMINAR}  
-		,#{DENYFAX}  
-		,#{DENYVISIT}		
+		,#{denymailad}
+		,#{denymailnews} 
+		,#{denymailseminar} 
+		,#{denysmsnomal} 
+		,#{denysmsseminar}  
+		,#{denysmsad} 
+		,#{denydmnews} 
+		,#{denydmseminar} 
+		,#{denydmad}  
+		,#{denytelnews}  
+		,#{denytelseminar}  
+		,#{denyfax}  
+		,#{denyvisit}		
 		)
 	</insert>
 	
@@ -324,74 +324,74 @@
 	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >
 		UPDATE CU100010
 		SET
-		CUSTNAME = #{CUSTNAME}
-		,OWNER = #{OWNER}
+		CUSTNAME = #{custname}
+		,OWNER = #{owner}
 		,EDITDATE = GETDATE()
-		,EDITUSER = #{EDITUSER}	
-		,COMPANY = #{COMPANY}
-		,DEPTNAME = #{DEPTNAME}
-		,DUTY = #{DUTY}
-		,MOBILE1 = #{MOBILE1}
-		,MOBILE2 = #{MOBILE2}
-		,MOBILE3 = #{MOBILE3}
-		,EMAIL = #{EMAIL}
-		,WRKTEL1 = #{WRKTEL1}
-		,WRKTEL2 = #{WRKTEL2}
-		,WRKTEL3 = #{WRKTEL3}
-		,WRKFAX1 = #{WRKFAX1}
-		,WRKFAX2 = #{WRKFAX2}
-		,WRKFAX3 = #{WRKFAX3}
-		,WRKURL = #{WRKURL}
-		,WRKADDR1 = #{WRKADDR1}
-		,WRKADDR2 = #{WRKADDR2}
-		,WRKADDR3 = #{WRKADDR3}
-		,HOMTEL1 = #{HOMTEL1}
-		,HOMTEL2 = #{HOMTEL2}
-		,HOMTEL3 = #{HOMTEL3}
-		,SEX = #{SEX}
-		,BIRTH = #{BIRTH }
-		,MARRIED = #{MARRIED}
-		,MAILTO = #{MAILTO}
-		,SOLAR = #{SOLAR}
-		,WEDDINGDAY = #{WEDDINGDAY}
-		,CUSTGRADE = #{CUSTGRADE}
-		,JOB = #{JOB}
-		,HOBBY = #{HOBBY}
-		,CUSTGUBUN = #{CUSTGUBUN}
-		,ACTGRADE = #{ACTGRADE}
-		,HOMADDR1 = #{HOMADDR1}
-		,HOMADDR2 = #{HOMADDR2}
-		,HOMADDR3 = #{HOMADDR3}
-		,MEMO = #{MEMO}
-		,INFOAGREE = #{INFOAGREE}
-		<if test="CLINO != null and CLINO != 0 ">
-		,CLINO = #{CLINO}
+		,EDITUSER = #{edituser}	
+		,COMPANY = #{company}
+		,DEPTNAME = #{deptname}
+		,DUTY = #{duty}
+		,MOBILE1 = #{mobile1}
+		,MOBILE2 = #{mobile2}
+		,MOBILE3 = #{mobile3}
+		,EMAIL = #{email}
+		,WRKTEL1 = #{wrktel1}
+		,WRKTEL2 = #{wrktel2}
+		,WRKTEL3 = #{wrktel3}
+		,WRKFAX1 = #{wrkfax1}
+		,WRKFAX2 = #{wrkfax2}
+		,WRKFAX3 = #{wrkfax3}
+		,WRKURL = #{wrkurl}
+		,WRKADDR1 = #{wrkaddr1}
+		,WRKADDR2 = #{wrkaddr2}
+		,WRKADDR3 = #{wrkaddr3}
+		,HOMTEL1 = #{homtel1}
+		,HOMTEL2 = #{homtel2}
+		,HOMTEL3 = #{homtel3}
+		,SEX = #{sex}
+		,BIRTH = #{birth }
+		,MARRIED = #{married}
+		,MAILTO = #{mailto}
+		,SOLAR = #{solar}
+		,WEDDINGDAY = #{weddingday}
+		,CUSTGRADE = #{custgrade}
+		,JOB = #{job}
+		,HOBBY = #{hobby}
+		,CUSTGUBUN = #{custgubun}
+		,ACTGRADE = #{actgrade}
+		,HOMADDR1 = #{homaddr1}
+		,HOMADDR2 = #{homaddr2}
+		,HOMADDR3 = #{homaddr3}
+		,MEMO = #{memo}
+		,INFOAGREE = #{infoagree}
+		<if test="clino != null and clino != 0 ">
+		,CLINO = #{clino}
 		</if>
 		WHERE
-		CUSTNO = #{CUSTNO}
+		CUSTNO = #{custno}
 	</update>
 	
 	<update id="custformUpdateDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
 		UPDATE CU100080
 		SET
 		EDITDATE = GETDATE()
-		,EDITUSER = #{EDITUSER}	
-		,DENYMAILAD = #{DENYMAILAD}
-		,DENYMAILNEWS = #{DENYMAILNEWS}	
-		,DENYMAILSEMINAR = #{DENYMAILSEMINAR} 	
-		,DENYSMSNOMAL = #{DENYSMSNOMAL} 
-		,DENYSMSSEMINAR = #{DENYSMSSEMINAR}		
-		,DENYSMSAD = #{DENYSMSAD} 		
-		,DENYDMNEWS = #{DENYDMNEWS}	
-		,DENYDMSEMINAR = #{DENYDMSEMINAR}	
-		,DENYDMAD = #{DENYDMAD}
-		,DENYTELNEWS = #{DENYTELNEWS}
-		,DENYTELSEMINAR = #{DENYTELSEMINAR}
-		,DENYFAX = #{DENYFAX}
-		,DENYVISIT = #{DENYVISIT}	
+		,EDITUSER = #{edituser}	
+		,DENYMAILAD = #{denymailad}
+		,DENYMAILNEWS = #{denymailnews}	
+		,DENYMAILSEMINAR = #{denymailseminar} 	
+		,DENYSMSNOMAL = #{denysmsnomal} 
+		,DENYSMSSEMINAR = #{denysmsseminar}		
+		,DENYSMSAD = #{denysmsad} 		
+		,DENYDMNEWS = #{denydmnews}	
+		,DENYDMSEMINAR = #{denydmseminar}	
+		,DENYDMAD = #{denydmad}
+		,DENYTELNEWS = #{denytelnews}
+		,DENYTELSEMINAR = #{denytelseminar}
+		,DENYFAX = #{denyfax}
+		,DENYVISIT = #{denyvisit}	
 		
 		WHERE
-		DENYNO = #{DENYNO}		
+		DENYNO = #{denyno}		
 	</update>
 	
 	

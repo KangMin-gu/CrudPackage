@@ -140,8 +140,8 @@ body {
 	
 		
 	function toParentClient(prm1,prm2){
-		opener.document.getElementById('CLINO').value= prm1;
-		opener.document.getElementById('CLINAME').value= prm2;
+		opener.document.getElementById('clino').value= prm1;
+		opener.document.getElementById('cliname').value= prm2;
 		window.close();
 	}
 				

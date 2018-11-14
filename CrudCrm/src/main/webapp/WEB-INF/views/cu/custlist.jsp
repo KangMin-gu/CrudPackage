@@ -50,7 +50,7 @@
 					<h2>고객관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/">메인</a></li>
-						<li class="breadcrumb-item active" ><strong>고객 목록</strong></li>
+						<li class="breadcrumb-item active" ><strong>목록</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -63,10 +63,17 @@
 				<div class="row justify-content-md-center">
 					<div class="col-lg-12">
 						<div class="ibox">
-							<form:form id="command" class="searchForm" action="/custlist" method="POST">
+							<form:form id="command" class="searchForm" action="/cust" method="POST">
 							<span id="selectpage" name="selectpage"> </span>
 							
 								<div class="ibox-content row">
+																
+									<div class="w-100 text-right">
+										<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
+										<a href="javascript:void(0);" class="btn btn-primary" id="searchResetBtn">초기화</a> 
+									</div>
+									<div class="row"><br><br></div>
+								
 									<div class="box1 col-lg-6 p-0">
 										<table class="table table-bordered">
 											<colgroup>
@@ -78,17 +85,17 @@
 											<tbody>
 												<tr>
 													<th>고객명</th>
-													<td><input type="text" class="form-control" id="CUSTNAME" name="CUSTNAME" value="${searchVal.CUSTNAME}"  ></td>
+													<td><input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname}"  ></td>
 													<th>휴대폰</th>
-													<td><input type="number" class="form-control" id="MOBILE" name="MOBILE" value="${searchVal.MOBILE}"></td>													
+													<td><input type="number" class="form-control" id="mobile" name="mobile" value="${searchVal.mobile}"></td>													
 												</tr>
 												<tr>
 													<th>담당자</th>
 													<td>
 														<div class="input-group">
 															<!--인풋창x -> static 이나 span 창으로 변경 -->
-															<input type="text" class="form-control" id="OWNERNAME" name="OWNERNAME" value="${searchVal.OWNERNAME}" readonly onClick="openPop('/popowner','owner',600,700);" > 
-															<input type="hidden" id="OWNER" name="OWNER" value="${searchVal.OWNER}">
+															<input type="text" class="form-control" id="ownername" name="ownername" value="${searchVal.ownername}" readonly onClick="openPop('/popowner','owner',600,700);" > 
+															<input type="hidden" id="owner" name="owner" value="${searchVal.owner}">
 															<span class="input-group-addon"> 
 															<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
 															</span>
@@ -97,9 +104,9 @@
 													<th>직장명</th>
 													<td>
 														<div class="input-group">
-															<input type="text" class="form-control" id="CLINAME" name="CLINAME" value="${searchVal.CLINAME }" 
+															<input type="text" class="form-control" id="cliname" name="cliname" value="${searchVal.cliname }" 
 															onClick="openPop('/popclient','popclient',600,700);" readonly> 
-															<input type="hidden" id="CLINO" name="CLINO" value="${searchVal.CLINO}">
+															<input type="hidden" id="clino" name="clino" value="${searchVal.clino}">
 															<span class="input-group-addon"> 
 																<a href="#" onClick="openPop('/popclient','popclient',600,700);"><i class="fa fa-search"></i></a>
 															</span>
@@ -115,14 +122,14 @@
 																class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
 																<span class="input-group-addon"><i
 																	class="fa fa-calendar"></i></span>
-																	<input type="text" class="form-control" id="FROMREGDT" name="FROMREGDT"  autocomplete="off" value="${searchVal.FROMREGDT }">
+																	<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
 															</div>
 															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
 															<div
 																class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
 																<span class="input-group-addon"><i
 																	class="fa fa-calendar"></i></span>
-																	<input type="text" class="form-control" id="TOREGDT" name="TOREGDT"  autocomplete="off" value="${searchVal.TOREGDT }">
+																	<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
 															</div>
 														</div>
 													</td>
@@ -141,23 +148,23 @@
 											<tbody>
 												<tr>
 													<th>이메일</th>
-													<td colspan="3"><input type="text" class="form-control" id="EMAIL" name="EMAIL" value="${searchVal.EMAIL}"></td>
+													<td colspan="3"><input type="text" class="form-control" id="email" name="email" value="${searchVal.email}"></td>
 												</tr>
 												<tr>
 													<th>고객구분</th>
-													<td><select class="form-control" id="CUSTGUBUN" name="CUSTGUBUN" style="height: 1.45rem;">
-															<option value="0" ${searchVal.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.CUSTGUBUN eq "1" ? "selected" :""}>회원</option>
-															<option value="2" ${searchVal.CUSTGUBUN eq "2" ? "selected" :""}>비회원</option>
-															<option value="3" ${searchVal.CUSTGUBUN eq "3" ? "selected" :""}>탈퇴회원</option>
+													<td><select class="form-control" id="custgubun" name="custgubun" style="height: 1.45rem;">
+															<option value="0" ${searchVal.custgubun eq "0" ? "selected" :""}>선택</option>
+															<option value="1" ${searchVal.custgubun eq "1" ? "selected" :""}>회원</option>
+															<option value="2" ${searchVal.custgubun eq "2" ? "selected" :""}>비회원</option>
+															<option value="3" ${searchVal.custgubun eq "3" ? "selected" :""}>탈퇴회원</option>
 													</select></td>													
 													<!-- todo. form:select로 변경 -->
 													<th>고객등급</th>
-													<td><select class="form-control" id="CUSTGRADE" name="CUSTGRADE" style="height: 1.45rem;">
-															<option value="0" ${searchVal.CUSTGRADE eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.CUSTGRADE eq "1" ? "selected" :""}>일반</option>
-															<option value="2" ${searchVal.CUSTGRADE eq "2" ? "selected" :""}>VIP</option>
-															<option value="3" ${searchVal.CUSTGRADE eq "3" ? "selected" :""}>VVIP</option>												
+													<td><select class="form-control" id="custgrade" name="custgrade" style="height: 1.45rem;">
+															<option value="0" ${searchVal.custgrade eq "0" ? "selected" :""}>선택</option>
+															<option value="1" ${searchVal.custgrade eq "1" ? "selected" :""}>일반</option>
+															<option value="2" ${searchVal.custgrade eq "2" ? "selected" :""}>VIP</option>
+															<option value="3" ${searchVal.custgrade eq "3" ? "selected" :""}>VVIP</option>												
 													</select></td>
 													<!-- todo. form:select로 변경 -->
 												</tr>
@@ -166,13 +173,13 @@
 													<td colspan="3">
 														<div class="i-checks" style="height: 1.60rem;">
 															<label class="pr-lg-3 mb-0">
-															<input type="radio" value="0" id="INFOAGREE" name="INFOAGREE"  class="pr-lg-1" ><i></i> 동의</label> 
+															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ><i></i> 동의</label> 
 																<label class="pr-lg-3 mb-0">
 																<input type="radio"
-																value="1" id="INFOAGREE" name="INFOAGREE" class="pr-lg-1"><i></i>
+																value="1" id="infoagree" name="infoagree" class="pr-lg-1"><i></i>
 																거부</label>
 																<label class="mb-0"><input type="radio"
-																value="2" id="INFOAGREE" name="INFOAGREE" class="pr-lg-1"><i></i>
+																value="2" id="infoagree" name="infoagree" class="pr-lg-1"><i></i>
 																전체</label>
 														</div>
 													</td>
@@ -180,22 +187,17 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="w-100 text-right">
-										<a href="javascript:void(0);" class="btn btn-primary"
-											id="searchResetBtn">초기화</a> <button type="submit"
-											class="btn btn-primary" data-style="zoom-in">고객검색</button>
-									</div>
+									
 								</div>
 								
 							</form:form>
 							
-							<form:form id="commandcheck" class="searchForm" action="/custlist" method="DELETE">
+							<form:form id="commandcheck" class="searchForm" action="/cust" method="PUT">
 							<div class="ibox-content row border-top-0 pt-lg-0">
 								<div class="w-100 text-right mb-2">
-									<h4 class="float-left">&middot; 총 자료수 : ${page.totalRows }건</h4> 
 									<span id="checkVal"></span>
-									<a href="/custform" class="btn btn-primary">고객추가</a> 										
-									<button class="btn btn-primary">고객삭제</button>																	
+									<a href="/cust/post" class="btn btn-primary">추 가</a> 										
+									<button class="btn btn-primary">삭 제</button>																	
 									<div class="d-inline-block mt-sx-1">
 										<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
 									</div>
@@ -226,8 +228,8 @@
 										<tbody>
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
-												<td><input type="checkbox" class="i-checks chksquare" id="CUSTNO"name="CUSTNO" value="${list.CUSTNO}"></td>
-												<td><a href="/custdetail/${list.CUSTNO}">${list.CUSTNAME }</a></td>
+												<td><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
+												<td><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
 												<td>${list.CLINAME }</td>
 												<td>${list.DEPTNAME }</td>
 												
@@ -239,7 +241,7 @@
 												</td>
 												<td>${list.EMAIL }</td>
 												
-												<td>${list.USERNAME}</td>
+												<td>${list.OWNERNAME}</td>
 												<td>
 												<c:choose>
 													<c:when test="${list.CUSTGUBUN==1}">회원</c:when>
@@ -313,7 +315,7 @@
 									</ul>  
 															
 								</div>
-				
+								 <h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4> 
 								 
 								
 	
@@ -366,7 +368,7 @@
 	
 		$(document).ready(function() {			
 			//정보활용동의 값에 따른 라디오버튼 활성화 	
-			$("input:radio[name=INFOAGREE][value=" + '<c:out value="${ searchVal.INFOAGREE }"/>' + "]").attr("checked","checked");
+			$("input:radio[name=infoagree][value=" + '<c:out value="${ searchVal.infoagree }"/>' + "]").attr("checked","checked");
 			
 			// radioBox
 			$('.i-checks').iCheck({
@@ -394,21 +396,21 @@
 
 			// 서치박스 리셋 라디오,셀렉스박스 제어를 위해 개별 파라미터 설정
 			$("#searchResetBtn").click(function(e) {
-				$(".searchForm").each(function() {
+				
 
-					$('#CUSTNAME').val('');
-					$('#MOBILE').val('');
-					$('#EMAIL').val('');
-					$('#CLINAME').val('');
-					$('#CLINO').val(0);
-					$('#OWNERNAME').val('');
-					$('#OWNERNO').val(0);
-					$('#CUSTGUBUN').val(0);
-					$('#CUSTGRADE').val(0);
-					$('#FROMREGDT').val('');
-					$('#TOREGDT').val('');
-					$('#INFOAGREE').iCheck('check');				
-				});
+					$('#custname').val('');
+					$('#mobile').val('');
+					$('#email').val('');
+					$('#cliname').val('');
+					$('#clino').val(0);
+					$('#ownername').val('');
+					$('#owner').val(0);
+					$('#custgubun').val(0);
+					$('#custgrade').val(0);
+					$('#fromregdt').val('');
+					$('#toregdt').val('');
+					$('#infoagree').iCheck('check');				
+				
 			});
 			
 									

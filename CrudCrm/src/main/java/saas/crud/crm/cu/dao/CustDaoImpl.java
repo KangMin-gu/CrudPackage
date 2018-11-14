@@ -37,14 +37,14 @@ public class CustDaoImpl implements CustDao {
 	
 	
 	@Override
-	public Map<String,Object> custDetail(int CUSTNO){
-		Map<String,Object> map = session.selectOne("customer.custDetail",CUSTNO);
+	public Map<String,Object> custDetail(int custno){
+		Map<String,Object> map = session.selectOne("customer.custDetail",custno);
 		return map;
 	}
 	
 	@Override
-	public Map<String,Object> custUpdateForm(int CUSTNO){
-		Map<String,Object> map = session.selectOne("customer.custUpdateForm",CUSTNO);
+	public Map<String,Object> custUpdateForm(int custno){
+		Map<String,Object> map = session.selectOne("customer.custUpdateForm",custno);
 		return map;
 	}
 
@@ -58,14 +58,14 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public int custformInsert(CustDto custDto) {
 		session.insert("customer.custformInsert", custDto);
-		int custno = custDto.getCUSTNO();
+		int custno = custDto.getCustno();
 		return custno;
 	}
 
 	@Override
-	public int custformInsertDeny(CustDenyDto custDenyDto) {
+	public void custformInsertDeny(CustDenyDto custDenyDto) {
 		session.insert("customer.custformInsertDeny", custDenyDto);
-		return 0;
+
 	}
 
 	@Override

@@ -13,7 +13,6 @@
 			( #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{userno}, GETDATE(), #{siteid}, #{filesearchkey} )			
 	</insert>
 
-
 	<select id="totalcntUser" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM TB980010

@@ -77,7 +77,7 @@
                                 </table>
                             </div>
                             <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" style="height: 42.8px;">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
                                         <col style="width: auto;">
@@ -105,7 +105,7 @@
                                         <tr>
                                             <th>기업규모</th>
                                             <td>
-                                                <select class="form-control reset" name="siteSize" id="siteSize" value="${search.siteSize }">
+                                                <select class="form-control reset" name="sitesize" id="sitesize" value="${search.siteSize }">
                                                     <option value="">선택</option>
                                                     <option value="1" <c:if test='${search.siteSize eq 1}'>selected</c:if>>대기업</option>
                                                     <option value="2" <c:if test='${search.siteSize eq 2}'>selected</c:if>>중견기업</option>

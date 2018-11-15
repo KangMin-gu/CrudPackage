@@ -17,9 +17,13 @@
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
 </head>
 
 <body>
+<style>
+	.wizard > .content > .body{width: 100%; height: auto; background: #ffffff; padding: 2.5%; float: left; position: initial;}
+</style>
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>      
@@ -55,364 +59,106 @@
 						<h4>기본정보</h4>
 					</div>
 					<div class="ibox-content row">
-                        <div id="wizard" role="application" class="wizard clearfix">
-                        	<div class="steps clearfix">
-                        		<ul role="tablist">
-                        			<li role="tab" class="first current" aria-disabled="false" aria-selected="true">
-                        				<a id="wizard-t-0" href="#wizard-h-0" aria-controls="wizard-p-0">
-                        					<span class="current-info audible">current step: </span><span class="number">1.</span> 회원 정보
-                        				</a>
-                        			</li>
-                        			<li role="tab" class="last" aria-disabled="false" aria-selected="false">
-                        				<a id="wizard-t-1" href="#wizard-h-1" aria-controls="wizard-p-1">
-                        					<span class="number">2.</span> Second Step
-                        				</a>
-                        			</li>
-                        		</ul>
-                        	</div>
-                        	<div class="content clearfix">
-                        		<h1 id="wizard-h-0" tabindex="-1" class="title current">First Step</h1>
-                        		<section>
-                        		<div class="step-content body current" id="wizard-p-0" role="tabpanel" aria-labelledby="wizard-h-0" aria-hidden="false">
-                        			<div class="text-center m-t-md">
-                        				<div class="w-100 text-right mb-2">
-                                			<form:form action="${pageContext.request.contextPath}/user/${user.USERNO}" method="POST">
-                                				<a href="${pageContext.request.contextPath}/user" class="btn btn-primary">목록</a>
-                                				<a href="${pageContext.request.contextPath}/user/post/${user.USERNO}" class="btn btn-primary">수정</a>
-												<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-											</form:form>
-                            			</div>
-                            			<div class="box1 col-lg-4 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 25%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="username">사용자명*</label></th>
-                                            			<td>${user.USERNAME}</td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                            			<div class="box2 col-lg-4 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 25%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="bsno">사용자 ID</label></th>
-                                            			<td height="40">${user.USERID}</td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                            			<div class="box3 col-lg-4 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 25%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="incno">비밀번호</label></th>
-                                            			<td></td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                            			<div class="box1 col-lg-4 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 25%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="mobile">휴대전화번호</label></th>
-                                            			<td>${user.MOBILE1 }-${user.MOBILE2 }-${user.MOBILE3 }</td>
-                                        			</tr>
-                                        			<tr>
-                                            			<th><label for="enterdate">입사일자</label></th>
-                                            			<td>${user.ENTERDATE }</td>
-                                        			</tr>
-                                        			<tr>
-                                            			<th><label for="mobile">관리자여부</label></th>
-                                            			<td>${user.CHKAUTH_}</td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                            			<div class="box2 col-lg-4 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 25%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="telno">전화번호</label></th>
-                                            			<td>${user.TELNO1 }-${user.TELNO2 }-${user.TELNO3 }</td>
-                                        			</tr>
-                                        			<tr>
-                                            			<th><label for="mobile">역할</label></th>
-                                            			<td>${user.CHKROLE_}</td>
-                                        			</tr>
-                                        			<tr>
-                                            			<th><label for="mobile">사용여부</label></th>
-                                            			<td>${user.ISDELETE_}</td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                            			<div class="box3 col-lg-4 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 25%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="email">이메일</label></th>
-                                            			<td>${user.EMAIL }</td>
-                                        			</tr>
-                                        			<tr>
-                                            			<th class="border-top-0"><label for="userduty">직책</label></th>
-                                            			<td>${user.USERDUTY }</td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                            			<div class="box3 col-lg-12 p-0">
-                                			<table class="table table-bordered mb-0">
-                                    			<colgroup>
-                                        			<col style="width: 8.3%; background: #fafafa;">
-                                        			<col style="width: auto;">
-                                    			</colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th><label for="userdesc">사용자메모</label></th>
-                                            			<td>
-                                                			<textarea type="text" class="form-control col-12 float-left mr-12 summernote" name="userdesc" id="userdesc" value="${user.USERDESC }">${user.USERDESC }</textarea>
-                                                		</td>
-                                        			</tr>
-                                    			</tbody>
-                                			</table>
-                            			</div>
-                        			</div>
-                        		</div>
-                        		</section>
-                        		<section>
-                        			<div class="step-content body current" id="wizard-p-1" role="tabpanel" aria-labelledby="wizard-h-1" aria-hidden="true" style = "display:none">
-                        				<div class="text-center m-t-md">
-                        					<div class="w-100 text-right mb-2">
-                            					<form:form action="${pageContext.request.contextPath}/ma/mc/${memCompany.SITEID}" method="POST">
-                                					<a href="${pageContext.request.contextPath}/ma/mc" class="btn btn-primary">목록</a>
-                                					<a href="${pageContext.request.contextPath}/ma/mc/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
-													<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-												</form:form>	
-                            				</div>
-                            
-                            				<div class="box1 col-lg-4 p-0">
-                                				<table class="table table-bordered mb-0">
-                                    				<colgroup>
-                                        				<col style="width: 25%; background: #fafafa;">
-                                        				<col style="width: auto;">
-				                                    </colgroup>
-                                    			<tbody>
-                                        			<tr>
-                                            			<th>회원사명</th>
-                                            			<td>${memCompany.SITENAME}</td>
-                                        			</tr>
-                                    			</tbody>
-                                				</table>
-                            				</div>
-                            				<div class="box2 col-lg-4 p-0">
-                                				<table class="table table-bordered mb-0">
-                                    				<colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>사업자번호</th>
-                                            <td>${memCompany.BSNO }</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box3 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                        <div id="wizard" style="height:500px">                        
+                            <h1>회원정보</h1> 
+                            <div class="step-content table-responsive">
+                            	<div class="w-100 text-right mb-2">
+                                	<form:form action="${pageContext.request.contextPath}/user/${user.USERNO}" method="POST">
+                                		<a href="${pageContext.request.contextPath}/user" class="btn btn-primary">목록</a>
+                                		<a href="${pageContext.request.contextPath}/user/post/${user.USERNO}" class="btn btn-primary">수정</a>
+										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+									</form:form>
+                            	</div>
+								<table class="table table-bordered">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto; background: #fafafa;">
                                         <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>법인번호</th>
-                                            <td>${memCompany.INCNO }</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        <col style="width: auto; background: #fafafa;">
+                                        <col style="width: auto;">
+                                        <col style="width: auto; background: #fafafa;">
+                                        <col style="width: auto;">                                                                                                                   
+                                    </colgroup>							
+									<tbody>
+										<tr>
+											<th>사용자명*</th>
+											<td>${user.USERNAME}</td>
+											<th>사용자 ID</th>
+											<td>${user.USERID}</td>		
+											<th>비밀번호</th>
+											<td></td>	
+										</tr>
+										<tr>
+											<th>휴대전화번호</th>
+											<td>${user.MOBILE }</td>
+											<th>입사일자</th>
+											<td>${user.ENTERDATE }3</td>
+											<th>직책</th>
+											<td>${user.USERDUTY}</td>	
+										</tr>
+										<tr>
+											<th>전화번호</th>
+											<td>${user.TELNO }</td>
+											<th>이메일</th>
+											<td>${user.EMAIL }</td>
+											<th>관리자여부</th>
+											<td>${user.CHKAUTH_ }</td>	
+										<tr>
+										<tr>
+											<th>메모</th>										
+											<td colspan="5">
+												<textarea rows="10" type="text" class="form-control" disabled name="userdesc" id="userdesc" value="">${user.USERDESC }</textarea>											
+											</td>
+										</tr>
+								</table>
                             </div>
-                            <div class="box4 col-lg-8 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
-                                    <colgroup>
-                                        <col style="width: 12.4%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">직장주소</th>
-                                            <td class="border-top-0">
-                                                ${memCompany.ZIPCODE } ${memCompany.UPRADDRESS } ${memCompany.LWRADDRESS }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0 ">
-                                    <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">대표자</th>
-                                            <td class="border-top-0">${memCompany.PRSDNAME } </td>
 
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <h1>메뉴권한부여</h1>
+                            <div class="step-content">
+                            	<div class="w-100 text-right mb-2">
+                                		<a href="${pageContext.request.contextPath}/user" class="btn btn-primary">목록</a>
+                                		<a href="${pageContext.request.contextPath}/user/menu/${user.USERNO}" class="btn btn-primary">메뉴부여</a>
+                            	</div>
+								<table class="table table-bordered">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto; background: #fafafa;">
                                         <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>휴대전화번호</th>
-                                            <td>
-                                                ${memCompany.MOBILE1 }-${memCompany.MOBILE2 }-${memCompany.MOBILE3 }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>이메일</th>
-                                            <td>
-                                                ${memCompany.EMAIL }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>업태</th>
-                                            <td>
-                                                ${memCompany.COTYPE }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>최초가입일</th>
-                                            <td>
-                                                ${memCompany.FREGDATE }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto; background: #fafafa;">
                                         <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>전화번호</th>
-                                            <td>
-                                                ${memCompany.TELNO1 }-${memCompany.TELNO2 }-${memCompany.TELNO3 }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>기업규모</th>
-                                            <td>
-                                                ${memCompany.SITESIZE_ }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>업종</th>
-                                            <td>
-                                                ${memCompany.BSCOND }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>서비스상태</th>
-                                            <td>
-                                                ${memCompany.ISDELETE_ }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box3 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: auto; background: #fafafa;">
                                         <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>팩스번호</th>
-                                            <td>
-                                                ${memCompany.FAXTEL1 }-${memCompany.FAXTEL2 }-${memCompany.FAXTEL3 }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="border-top-0">영업담당자</th>
-                                            <td class="border-top-0">
-                                                ${memCompany.OWNER_ }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>종목</th>
-                                            <td>
-                                                ${memCompany.BSTYPE }
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>회원사로고</th>
-                                            <td>
-                                                
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        <col style="width: auto; background: #fafafa;">
+                                        <col style="width: auto;">                                                                                                                        
+                                    </colgroup>							
+									<tbody>
+										<tr>
+											<th>사용자명*</th>
+											<td>${user.USERNAME}</td>
+											<th>사용자 ID</th>
+											<td>${user.USERID}</td>		
+											<th>관리자여부</th>
+											<td>${user.CHKAUTH_ }</td>
+										</tr>
+										<tr>
+											<th>휴대전화번호</th>
+											<td>${user.MOBILE }</td>
+											<th>입사일자</th>
+											<td>${user.ENTERDATE }</td>
+											<th>직책</th>
+											<td>${user.USERDUTY}</td>	
+										</tr>
+										<tr>
+											<select class="form-control dual_select" name="usermenuno" id="usermenuno" disabled multiple="" style="display: none;">
+                                                <c:forEach var="menu" items="${menu}">
+                                                	<c:forEach var="userMenu" items="${userMenu }">
+                                                		<c:if test="${menu.MENUNO == userMenu.MENUNO }"><option value="${menu.MENUNO }" selected>${menu.MENUNAME }</option></c:if>
+														</c:forEach>
+														<option value="${menu.MENUNO }">${menu.MENUNAME }</option>
+												</c:forEach>
+											</select> 
+										</tr>
+								</table>
                             </div>
-                            <div class="box3 col-lg-12 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 8.3%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>회원사 메모</th>
-                                            <td>
-                                                <textarea type="text" class="form-control col-12 float-left mr-12 summernote">${memCompany.SITEMEMO }</textarea>                            
-                                            </td>
-                                            	<input type="hidden" id="siteid" name="siteid" value="${memCompany.SITEID }" />
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        				</div>
-                        			</div>
-                        		</section>
-                        	</div>
-                        </div>
+                        </div> 	
                     </div>
                 </div>
             </div>
@@ -434,47 +180,39 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/steps/jquery.steps.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/dualListbox/jquery.bootstrap-duallistbox.js"></script>
 	<script>
 	$(document).ready(function () {
 		
 		$('#wizard').steps({
-			bodyTab : "section",
-			autoFocus : true,
-			transitionEffect : "slideLeft"
+			headerTag: "h1",
+			enableAllSteps: true,
+		    enablePagination: false
 		});
+		$('.content').css('height','500px');
 		
-		$('.summernote').summernote({});
-		$('.summernote').summernote('disable');
-	});
-	$('#userid').keyup(function(){
-		var idcheck = $('#userid').val();
-		var check = $("#idcheck");
-		if(idcheck.length <=5){
-			if(check.val() != 1){
-				var msg = '5글자 이상 입력해주세요';
-				check.val(1);
-			}
-		}else{
-	        $.ajax({
-	            url:"/user/idcheck/"+idcheck ,
-	            method: "GET",
-	            dataType: "json",
-	            success:function(data){
-	                if(data == 0){
-	                	var msg = '사용 가능한 ID 입니다.';
-	                }else{
-	                	var msg = '이미 존재하고 있는 ID 입니다.'
-	                }
-	                $('.idcheck').text(msg);
-	            },
-	            error:function(request,status,error){
-	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	            }
-	        });
-		}
-		$('.idcheck').text(msg);
+		 $('.dual_select').bootstrapDualListbox({
+             selectorMinimalHeight: 160
+         });
+		 
+		 $(".bootstrap-duallistbox-container").find("*").prop("disabled",true);
+		 
+			var unselected = $('select[name="usermenuno_helper1"] option');
+			var selected = $('select[name="usermenuno_helper2"] option');
+			var this_value="";
+			var selected_value ="";
+			$.each(selected,function(){
+				selected_value = $(this).val();
+				$.each(unselected,function(){
+					this_value= $(this).val();
+					if(this_value == selected_value){
+						$(this).remove();
+					}
+				});
+			});
+			var unselected = $('select[name="usermenuno_helper1"] option');
+			$('.box1 .info').text('Showing all ' + unselected.length)
 	});
 
 	</script>		

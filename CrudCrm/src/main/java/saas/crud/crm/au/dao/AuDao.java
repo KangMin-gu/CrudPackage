@@ -3,7 +3,9 @@ package saas.crud.crm.au.dao;
 import java.util.List;
 import java.util.Map;
 
+import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.dto.UserMenuDto;
 
 public interface AuDao {
 	
@@ -18,4 +20,12 @@ public interface AuDao {
 	public int urIdCheck(String userId);
 	
 	public List<Map<String,Object>> urTopList(int siteid);
+	
+	public List<Map<String,Object>> urMenuList(int siteid);
+	
+	public void urMenuInsert(UserMenuDto userMenuDto);
+	
+	public void urMenuDelete(UserMenuDto userMenuDto);
+	
+	public List<Map<String,Object>> urUserMenuList(UserDto userDto);
 }

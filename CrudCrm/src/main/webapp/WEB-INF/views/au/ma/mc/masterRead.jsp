@@ -68,10 +68,10 @@
 							</form:form>	
                             </div>
                             
-                            <div class="box1 col-lg-4 p-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -82,10 +82,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -96,10 +96,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -110,10 +110,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box4 col-lg-8 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
+                            <div class="box4 col-lg-12 col-xl-8 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 12.4%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -126,31 +126,30 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0 ">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0">대표자</th>
                                             <td class="border-top-0">${memCompany.PRSDNAME } </td>
-
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>휴대전화번호</th>
-                                            <td>
+                                            <th class="border-top-0">휴대전화번호</th>
+                                            <td class="border-top-0">
                                                 ${memCompany.MOBILE1 }-${memCompany.MOBILE2 }-${memCompany.MOBILE3 }
                                             </td>
                                         </tr>
@@ -175,16 +174,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>전화번호</th>
-                                            <td>
+                                            <th class="border-top-0">전화번호</th>
+                                            <td class="border-top-0">
                                                 ${memCompany.TELNO1 }-${memCompany.TELNO2 }-${memCompany.TELNO3 }
                                             </td>
                                         </tr>
@@ -209,16 +208,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>팩스번호</th>
-                                            <td>
+                                            <th class="border-top-0">팩스번호</th> 
+                                            <td class="border-top-0">
                                                 ${memCompany.FAXTEL1 }-${memCompany.FAXTEL2 }-${memCompany.FAXTEL3 }
                                             </td>
                                         </tr>
@@ -244,15 +243,15 @@
                                 </table>
                             </div>
                             <div class="box3 col-lg-12 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 8.3%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>회원사 메모</th>
-                                            <td>
+                                            <th class="border-top-0">회원사 메모</th>
+                                            <td class="border-top-0">
                                                 <textarea type="text" class="form-control col-12 float-left mr-12 summernote">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
                                             	<input type="hidden" id="siteid" name="siteid" value="${memCompany.SITEID }" />

@@ -20,6 +20,7 @@
 </head>
 
 <body>
+
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>      
@@ -68,10 +69,10 @@
                                 <a href="${pageContext.request.contextPath}/company/${memCompany.SITEID}" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary save">저장</button>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -82,10 +83,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -100,10 +101,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -114,10 +115,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box4 col-lg-8 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
+                            <div class="box4 col-lg-12 col-xl-8 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 12.4%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -137,10 +138,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0 ">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -153,16 +154,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="mobile">휴대전화번호</label></th>
-                                            <td>
+                                            <th class=" border-top-0"><label for="mobile">휴대전화번호</label></th>
+                                            <td class="border-top-0">
                                                 <select class="form-control col-3 float-left mr-3" name="mobile1" id="mobile1">
                                                     <option value=010 <c:if test='${memCompany.MOBILE1 eq 010}'>selected</c:if>>010</option>
                                                     <option value=011 <c:if test='${memCompany.MOBILE1 eq 011}'>selected</c:if>>011</option>
@@ -194,16 +195,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width:110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="telno">전화번호</label></th>
-                                            <td>
+                                            <th class="border-top-0"><label for="telno">전화번호</label></th>
+                                            <td class="border-top-0">
                                                 <select class="form-control col-3 float-left mr-3" name="telno1" id="telno1" >
                                                     <option value=02 <c:if test='${memCompany.TELNO1 eq 02}'>selected</c:if>>02</option>
                                                     <option value=031 <c:if test='${memCompany.TELNO1 eq 031}'>selected</c:if>>031</option>
@@ -244,16 +245,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0 ">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px !important; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="faxtel">팩스번호</label></th>
-                                            <td>
+                                            <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
+                                            <td class="border-top-0">
                                                 <select class="form-control col-3 float-left mr-3" name="faxtel1" id="faxtel1">
                                                     <option value=02 <c:if test='${memCompany.FAXTEL1 eq 02}'>selected</c:if>>02</option>
                                                     <option value=031 <c:if test='${memCompany.FAXTEL2 eq 031}'>selected</c:if>>031</option>
@@ -274,7 +275,7 @@
                                                     </span>
                                                 </div>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <th><label for="bstype">종목</label></th>
                                             <td>
@@ -290,16 +291,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-12 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box3 col-12 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
-                                        <col style="width: 9%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="sitememo">회원사메모</label></th>
-                                            <td>
+                                            <th class="border-top-0"><label for="sitememo">회원사메모</label></th>
+                                            <td class="border-top-0">
                                                 <textarea type="text" class="form-control col-12 float-left mr-12 summernote" name="sitememo" id="sitememo" value="${memCompany.SITEMEMO }">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
                                             <input type="hidden" name="siteid" id="siteid"  value="${memCompany.SITEID }">

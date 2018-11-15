@@ -25,7 +25,6 @@
 		
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
-                <form:form action ="${pageContext.request.contextPath}/convey" method="POST">
                     <div class="ibox">
                         <div class="ibox-content row body">
                             <div class="w-100 text-right mb-2">
@@ -138,8 +137,6 @@
                             </div>
                         </div>
                     </div>
-                    </form:form>
-                    
 <!-- Content End -->
 
 			
@@ -176,9 +173,31 @@
 		$('#save').click(function(e){
 			var check = check_required(e);
 			if(check == "true"){
-				window.close();	
-			}
-		});
+				debugger;
+			    	var	url= "/convey";	
+			    	var rcvno = $('#rcvno').val();
+			        var conveydate= $("#conveydate").val();
+			        var conveyreason = $("#conveyreason").val();
+			        var nextowner = $("#nextowner").val();
+			        var conveydesc = $('#conveydesc').val();
+			        var param = {"rcvno":rcvno,"conveydate":conveydate,"conveyreason":conveyreason,"nextowner":nextowner,"conveydesc":conveydesc};
+			        
+			        $.ajax({
+			            url: url,
+			            method: "POST",
+			            dataType: "json",
+			            data:param,
+			            success: function () {
+			                alert("저장되었습니다.");
+			                window.close();
+			            },
+			            error: function (request, status, error) {
+			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			            }
+			        });
+
+			    }	
+			});
 	</script>
 	
 </body>

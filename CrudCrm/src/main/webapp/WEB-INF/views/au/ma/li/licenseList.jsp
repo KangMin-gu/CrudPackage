@@ -63,17 +63,17 @@
                                                 <div class="input-group">
                                                     <input type="text" class="form-control reset" name="licensename" id="licensename" value="${search.licensename }">
                                                 </div>
+                                                
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="w-100 text-right">
-                                <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">라이센스검색</button>
-                                <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
+                            <div>
+                            	<button class="btn btn-primary" style="height: 38.61px;">검색</button>
                             </div>
                         </div>
+                        
                         </form:form>
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="overflow-x w-100 head">
@@ -155,7 +155,7 @@
                                 <button class="btn btn-primary" id="delete">삭제</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0" style="height: 44.07px;">
                                     <colgroup>
                                         <col style="width: 25%; background: #fafafa;">
                                         <col style="width: auto;">
@@ -169,7 +169,7 @@
                                 </table>
                             </div>
                             <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0" style="height: 44.07px;">
                                     <colgroup>
                                         <col style="width: 25%; background: #fafafa;">
                                         <col style="width: auto;">

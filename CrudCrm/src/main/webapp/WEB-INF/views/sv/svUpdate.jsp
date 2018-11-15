@@ -23,6 +23,9 @@
 </head>
 
 <body>
+<style>
+	span.select2 {width: 100% !important;}
+</style>
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
@@ -78,10 +81,10 @@
                                 <button class="btn btn-primary save">저장</button>
                             </div>
                             
-                            <div class="box1 col-lg-4 p-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -116,78 +119,78 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td><input type="text" class="form-control" disabled name="bsno" id="bsno" value="${serviceInfo.BSNO }"></td>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="bsno" id="bsno" value="${serviceInfo.BSNO }"></td>
                                         </tr>
                                         <tr>
                                             <th>대표전화번호</th>
-                                            <td>
+                                            <td style="height: 43px;">
                                             	<input type="text" class="form-control" disabled name="clitelno" id="clitelno" value="${serviceInfo.CLITELNO }">
 											</td>
                                         </tr>
                                         <tr>
                                             <th>직장명</th>
-                                            <td><input type="text" class="form-control" disabled name="company" id="company" value="${serviceInfo.COMPANY }"></td>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="company" id="company" value="${serviceInfo.COMPANY }"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>법인번호</th>
-                                            <td><input type="text" class="form-control" disabled name="incno" id="incno" value="${serviceInfo.INCNO }"></td>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="incno" id="incno" value="${serviceInfo.INCNO }"></td>
                                         </tr>
                                         <tr>
                                             <th>홈페이지</th>
-                                            <td><input type="text" class="form-control" disabled name="homepage" id="homepage" value="${serviceInfo.HOMEPAGE }"></td>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="homepage" id="homepage" value="${serviceInfo.HOMEPAGE }"></td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
-                                            <td><input type="text" class="form-control" disabled name="email" id="email" value="${serviceInfo.EMAIL }"></td>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="email" id="email" value="${serviceInfo.EMAIL }"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box4 col-lg-8 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
+                            <div class="box4 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 12.4%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0">고객주소</th>
-                                            <td>
+                                            <td class="border-top-0">
                                             	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>휴대전화번호</th>
-                                            <td>
+                                            <th class="border-top-0">휴대전화번호</th>
+                                            <td class="border-top-0">
                                                 <input type="text" class="form-control" disabled name="custmobile" id="custmobile" value="${serviceInfo.CUSTMOBILE }">
                                             </td>
                                         </tr>
@@ -212,16 +215,16 @@
                         
                         <div class="ibox-content row">
                             
-                            <div class="box1 col-lg-4 p-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
-                                        <tr>
+                                        <tr style="height: 45px;">
                                             <th>접수유형</th>
-                                            <td>
+                                            <td >
                                             	<select class="form-control float-left required" name="rcvtype" id="rcvtype">
                                             		<option value=0>선택</option>
                                                     <option value=1 <c:if test='${serviceInfo.RCVTYPE eq 1}'>selected</c:if>>문의</option>
@@ -232,7 +235,7 @@
                                         </tr>
                                         <tr>
                                             <th>접수일</th>
-                                            <td>
+                                            <td style="height: 42px;">
                                             	<div class="input-group" data-autoclose="true">
                                             		<input type="text" class="form-control" disabled name="rcvdate_" id="rcvdate_" value="${serviceInfo.RCVDATE }">
                                             		<input type="hidden" class="form-control" name="rcvdate" id="rcvdate" value="${serviceInfo.RCVDATE }">
@@ -242,17 +245,17 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>서비스유형</th>
                                             <td>
-                                            	<select class="form-control float-left select2" name="rcvcode" id="rcvcode">
+                                            	<select class="form-control col-12 select2" name="rcvcode" id="rcvcode">
                                             		<option value=0>선택</option>
                                                     <option value=1 <c:if test='${serviceInfo.RCVCODE eq 1}'>selected</c:if>>클라1</option>
                                                     <option value=2 <c:if test='${serviceInfo.RCVCODE eq 2}'>selected</c:if>>클라2</option>
@@ -262,7 +265,7 @@
                                         </tr>
                                         <tr>
                                             <th>접수시간</th>
-                                            <td>
+                                            <td style="height: 42px;">
                                             	<div class="input-group clockpicker" data-autoclose="true">
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-clock-o"></span>
@@ -274,16 +277,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>접수자</th>
-                                            <td>
+                                            <td style="height: 45px;">
                                             	<div class="input-group owner">
                                                     <input type="text" class="form-control required" disabled name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
                                                     <input type="hidden" name="rcvowner" id="rcvowner" value="${serviceInfo.RCVOWNER }">
@@ -295,7 +298,7 @@
                                         </tr>
                                         <tr>
                                             <th>처리상태</th>
-                                            <td>
+                                            <td style="height: 42px;">
                                             	<select class="form-control float-left" name="prcstate" id="prcstate">
                                             		<option value=0>선택</option>
                                                     <option value=1 <c:if test='${serviceInfo.PRCSTATE eq 1}'>selected</c:if>>접수</option>
@@ -308,32 +311,32 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box4 col-lg-8 p-0">
+                            <div class="box4 col-lg-12 col-xl-8 p-0">
                                 <table class="table table-bordered border-top-0  mb-0">
                                     <colgroup>
-                                        <col style="width: 12.4%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
-                                            <td>
+                                            <td class="border-top-0" style="height: 42px;">
                                             	<input type="text" class="form-control required" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box4 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
+                            <div class="box4 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0" style="height:42px;">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                         	<th class="border-top-0">접수매체</th>
-                                        	<td>
+                                        	<td class="border-top-0">
                                         		<select class="form-control float-left" name="rcvchannel" id="rcvchannel">
                                             		<option value=0>선택</option>
                                                     <option value=10 <c:if test='${serviceInfo.RCVCHANNEL eq 10}'>selected</c:if>>전화</option>
@@ -346,16 +349,16 @@
                                 </table>
                             </div>
                             <div class="box1 col-lg-12 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 8.3%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>서비스내용</th>
-                                            <td>
-                                                <textarea class="required" id="rcvdesc" name="rcvdesc" value="${serviceInfo.RCVDESC }">${serviceInfo.RCVDESC }</textarea>
+                                            <th class="border-top-0">서비스내용</th>
+                                            <td class="border-top-0">
+                                                <textarea class="required col-12 float-left mr-12" id="rcvdesc" name="rcvdesc" value="${serviceInfo.RCVDESC }">${serviceInfo.RCVDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -364,7 +367,7 @@
                             <div class="box1 col-lg-12 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 8.3%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -395,10 +398,10 @@
                         
                         <div class="ibox-content row">
                             
-                            <div class="box1 col-lg-4 p-0">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -407,25 +410,25 @@
                                             <td>
                                             	<select class="form-control float-left select2" name="ractcode" id="ractcode">
                                             		<option value=0 >선택</option>
-                                                    <option value=1 <c:if test='${serviceInfo.RACTCODE eq 1}'>selected</c:if>>option1</option>
-                                                    <option value=2 <c:if test='${serviceInfo.RACTCODE eq 2}'>selected</c:if>>option2</option>
-                                                    <option value=3 <c:if test='${serviceInfo.RACTCODE eq 3}'>selected</c:if>>option3</option>
+                                                    <option value=1 >option1</option>
+                                                    <option value=2 >option2</option>
+                                                    <option value=3 >option3</option>
                                                 </select>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>처리일</th>
-                                            <td>
+                                            <td style="height: 45px;">
                                             	<div class="input-group">
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
@@ -438,16 +441,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>처리 시간</th>
-                                            <td>
+                                            <td style="height: 45px;">
                                             	<div class="input-group clockpicker" data-autoclose="true">
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-clock-o"></span>
@@ -459,16 +462,16 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
-                                <table class="table table-bordered mb-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 border-bottom-0 mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>담당자</th>
-                                            <td>
+                                            <th class="border-top-0 border-bottom-0">담당자</th>
+                                            <td class="border-top-0 border-bottom-0">
                                             	<div class="input-group owner">
                                                     <input type="text" class="form-control required" autocomplete="off" name="ractowner_" id="ractowner_" value="">
                                                     <input type="hidden" name="ractowner" id="ractowner" value="">
@@ -485,7 +488,7 @@
                             <div class="box1 col-lg-12 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 8.3%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>

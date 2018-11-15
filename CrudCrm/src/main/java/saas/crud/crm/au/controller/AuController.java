@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.au.service.AuService;
 
 @Controller
@@ -112,11 +113,8 @@ public class AuController {
 	@ResponseBody
 	@RequestMapping(value="/user/idcheck/{userid}",method=RequestMethod.GET)
 	public int authAdminUserIdCheck(@PathVariable String userid) {
-		
 		int userId = auService.userIdCheck(userid);
-		
 		return userId;
-		
 	}
 	
 	@ResponseBody
@@ -126,6 +124,23 @@ public class AuController {
 		List<Map<String,Object>> userTopList = auService.userTopList(siteid);
 		
 		return userTopList;
+	}
+	
+	@RequestMapping(value="/user/menu/{userno}", method=RequestMethod.GET)
+	public ModelAndView authAdminUserMenuInsert(HttpServletRequest request, @PathVariable int userno) {
+		ModelAndView mView = auService.userRead(request, userno);
+		mView.setViewName("/au/ad/adminMenuUpdate");
+		return mView;
+	}
+	
+	@RequestMapping(value="/user/menu",method=RequestMethod.POST)
+	public ModelAndView authAdminUserMenuInsertSet(HttpServletRequest request, @ModelAttribute UserMenuDto userMenuDto) {
+		int userNo = userMenuDto.getUserno();
+		ModelAndView mView = new ModelAndView();
+		auService.userMenuInsert(request, userMenuDto);
+		mView.setViewName("redirect:/user/"+userNo);
+		return mView;
+		
 	}
 
 }

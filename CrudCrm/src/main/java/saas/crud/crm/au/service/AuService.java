@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.dto.UserMenuDto;
 
 public interface AuService {
 	
@@ -28,4 +29,6 @@ public interface AuService {
 	public List<Map<String,Object>> userTopList(int siteid);
 	
 	public List<Map<String,Object>> ModalUserList(HttpServletRequest request);
+	
+	public void userMenuInsert(HttpServletRequest request,UserMenuDto userMenuDto);
 }

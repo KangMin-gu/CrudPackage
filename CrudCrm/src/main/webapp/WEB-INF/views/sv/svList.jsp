@@ -52,10 +52,10 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/sv" method="POST">
                         <div class="ibox-content row">
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered">
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -88,7 +88,7 @@
                                         <tr>
                                             <th>서비스명</th>
                                             <td>
-                                                <div class="input-group">
+                                                <div class="input-group" style="height: 1.6rem;">
                                                     <input type="text" class="form-control reset" name="rcvname" id="rcvname" value="${search.rcvname }">
                                                 </div>
                                             </td>
@@ -96,10 +96,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -140,17 +140,17 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-4 p-0">
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
                                             <th>접수자</th>
                                             <td>
-                                                <div class="input-group owner">
+                                                <div class="input-group owner" style="height: 1.6rem;">
                                                     <input type="text" class="form-control required" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${search.rcvowner_ }">
                                                     <input type="hidden" name="rcvowner" id="rcvowner" value="${search.rcvowner }">
                                                     <span class="input-group-addon">
@@ -192,7 +192,7 @@
                                 </div>
                              
                             </div>
-                            <div class="overflow-x w-100">
+                            <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>

@@ -23,11 +23,11 @@
      	<if test ="endDate != null">
      		AND ISNULL(A.FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
      	</if>
-     	<if test ="siteName != null">
-     		AND A.SITENAME LIKE '%'+#{siteName} +'%'
+     	<if test ="sitename != null">
+     		AND A.SITENAME LIKE '%'+#{sitename} +'%'
      	</if>
-     	<if test ="siteSize != null">
-     		AND A.SITESIZE = #{siteSize}
+     	<if test ="sitesize != null">
+     		AND A.SITESIZE = #{sitesize}
      	</if>
      	) X 
      	WHERE ROWNUM Between #{startRowNum} and #{endRowNum}

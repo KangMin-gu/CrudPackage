@@ -7,12 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.dto.UserMenuDto;
 
 @Repository
 public class AuDaoImpl implements AuDao{
 
-	
 	@Autowired
 	SqlSession session;
 	
@@ -64,5 +65,29 @@ public class AuDaoImpl implements AuDao{
 	public List<Map<String,Object>> urTopList(int siteid){
 		
 		return session.selectList("au.topList",siteid);
+	}
+
+	@Override
+	public List<Map<String,Object>> urMenuList(int siteid) {
+		List<Map<String,Object>> menuList = session.selectList("au.menuList",siteid);
+		return menuList;
+	}
+
+	@Override
+	public void urMenuInsert(UserMenuDto userMenuDto) {
+		// TODO Auto-generated method stub
+		session.insert("au.menuMerge",userMenuDto);
+	}
+
+	@Override
+	public void urMenuDelete(UserMenuDto userMenuDto) {
+		// TODO Auto-generated method stub
+		session.update("au.menuDelete",userMenuDto);
+	}
+
+	@Override
+	public List<Map<String, Object>> urUserMenuList(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return session.selectList("au.userMenu",userDto);
 	}
 }

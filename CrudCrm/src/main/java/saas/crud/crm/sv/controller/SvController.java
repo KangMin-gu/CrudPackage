@@ -102,11 +102,15 @@ public class SvController {
 	}
 	
 	
-	
+	@ResponseBody
 	@RequestMapping(value="/convey",method=RequestMethod.POST)
-	public void authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
+	public List<Map<String,Object>> authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
 		
 		svService.svConveyInsert(request, conveyDto);
+		int rcvno = conveyDto.getRcvno();
+		List<Map<String, Object>> tabRact = svService.svTabConvey(request,rcvno);
+		
+		return tabRact;
 	}
 	
 	@ResponseBody

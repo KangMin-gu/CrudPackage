@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.AuDao;
+import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.common.PagingCommon;
 
 @Service
@@ -79,11 +81,15 @@ public class AuServiceImpl implements AuService{
 		userDto.setSiteid(SITEID);
 		
 		Map<String,Object> userInfo = auDao.urRead(userDto);
+		List<Map<String,Object>> menuInfo = auDao.urMenuList(SITEID);
+		List<Map<String,Object>> userMenu = auDao.urUserMenuList(userDto);
 		
 		mView.addObject("user",userInfo);
+		mView.addObject("menu",menuInfo);
+		mView.addObject("userMenu",userMenu);
 		return mView;
 	}
-
+ //
 	@Override
 	public int userInsert(HttpServletRequest request, UserDto userDto) {
 		// TODO Auto-generated method stub
@@ -204,6 +210,30 @@ public class AuServiceImpl implements AuService{
 		userList.add(total);
 		
 		return userList;
+	}
+
+	@Override
+	public void userMenuInsert(HttpServletRequest request, UserMenuDto userMenuDto) {
+		// TODO Auto-generated method stub
+		
+		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		String menu[] = request.getParameterValues("usermenuno");
+
+		userMenuDto.setSiteid(SITEID);
+		userMenuDto.setReguser(USERNO);
+		userMenuDto.setEdtuser(USERNO);
+		userMenuDto.setIsdelete(0);
+		
+		auDao.urMenuDelete(userMenuDto);
+		
+		int menulen = menu.length;
+		
+		for (int i = 0; i < menulen; i++) {
+			userMenuDto.setMenuno(Integer.parseInt(menu[i]));
+			auDao.urMenuInsert(userMenuDto);
+		}
 	}
 
 }

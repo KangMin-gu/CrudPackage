@@ -88,21 +88,12 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="w-100 text-right">
-                                <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">메뉴검색</button>
-                                
+                            <div>
+                            	<button class="btn btn-primary" style="height:38.61px">검색</button>
                             </div>
                         </div>
                         </form:form>
                         <div class="ibox-content row border-top-0 pt-lg-0">
-                            <div class="w-100 text-right mb-2">
-                            
-                                <div class="d-inline-block mt-sx-1">
-                                <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                </div>
-                             
-                            </div>
                             <div class="overflow-x w-100 head">
                             <table class="table table-bordered">
                                 <thead>

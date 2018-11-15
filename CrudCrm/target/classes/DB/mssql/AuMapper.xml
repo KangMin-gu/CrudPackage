@@ -6,7 +6,6 @@
 		SELECT * FROM (
 			SELECT A.USERNO,A.USERNAME,A.USERID
 		,A.EMAIL,A.USERDUTY
-		,(SELECT ROLENAME FROM Crud_SaaS.dbo.T_ROLE WHERE A.CHKROLE = ROLENO) AS CHKROLE_
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
 		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
@@ -44,7 +43,6 @@
 		,A.USERID
 		,A.EMAIL
 		,A.USERDUTY
-		,(SELECT ROLENAME FROM Crud_SaaS.dbo.T_ROLE WHERE A.CHKROLE = ROLENO) AS CHKROLE_
 		,CHKROLE
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
@@ -56,6 +54,7 @@
 		,A.MOBILE1
 		,A.MOBILE2
 		,A.MOBILE3
+		, A.MOBILE1 + '-' + A.MOBILE2 + '-' + A.MOBILE3 AS MOBILE
 		,A.TELNO1
 		,A.TELNO2
 		,A.TELNO3
@@ -116,7 +115,6 @@
 				,TELNO1
 				,TELNO2
 				,TELNO3
-				,CHKROLE
 				,CHKAUTH
 				,ISDELETE
 				,REGDATE
@@ -138,9 +136,8 @@
 			,#{telno1}
 			,#{telno2}
 			,#{telno3}
-			,#{chkrole}
 			,#{chkauth}
-			,#{isdelete}
+			,0
 			,getDate()
 			,#{reguser}
 			,getDate()
@@ -164,9 +161,7 @@
 				,TELNO1 = #{telno1}
 				,TELNO2 = #{telno2}
 				,TELNO3 = #{telno3}
-				,CHKROLE = #{chkrole}
 				,CHKAUTH = #{chkauth}
-				,ISDELETE = #{isdelete}
 				,EDTDATE = getDate()
 				,EDTUSER = #{edtuser}
 			WHERE USERNO = #{userno}
@@ -186,7 +181,6 @@
 		,A.USERID
 		,A.EMAIL
 		,A.USERDUTY
-		,(SELECT ROLENAME FROM Crud_SaaS.dbo.T_ROLE WHERE A.CHKROLE = ROLENO) AS CHKROLE_
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
 		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
@@ -197,6 +191,46 @@
 			FROM Crud_SaaS.dbo.TB980010 A
 			WHERE A.ISDELETE = 0
 			AND A.SITEID = #{siteid}
+	</select>
+	
+	<select id="menuList" parameterType="int" resultType="hashMap">
+		SELECT X.MENUNO,X.MENUNAME
+		,CASE WHEN X.CNT >= X.BUYCNT THEN 0 ELSE 1 END AS TOTAL
+		,X.CNT,X.BUYCNT 
+		FROM (SELECT B.MENUNO, B.MENUNAME, ISNULL(C.CNT, 0) AS CNT, A.BUYCNT
+				FROM T_SITE_LICENSE A
+				INNER JOIN T_MENU B ON B.LICENSENO = A.LICENSENO
+				LEFT OUTER JOIN (SELECT SITEID, COUNT(MENUNO) AS CNT, MENUNO
+									FROM T_USER_MENU
+								GROUP BY MENUNO, SITEID, MENUNO) C ON C.MENUNO = B.MENUNO
+				WHERE A.SITEID = #{siteid}) X
+		WHERE CASE WHEN X.CNT <![CDATA[>]]>= X.BUYCNT THEN 0
+				ELSE 1 END  != 0
+	</select>
+	
+	<update id="menuDelete" parameterType="userMenuDto">
+	
+		UPDATE Crud_SaaS.dbo.T_USER_MENU
+			SET ISDELETE = 1
+			WHERE USERNO = #{userno}
+			AND SITEID = #{siteid}
+	</update>
+	
+	<insert id="menuMerge" parameterType="userMenuDto">
+		
+		MERGE INTO Crud_SaaS.dbo.T_USER_MENU AS A
+			USING (select '1' AS DUAL ) B ON (A.USERNO = #{userno} AND A.MENUNO = #{menuno})
+		WHEN MATCHED THEN
+			UPDATE SET A.ISDELETE = 0
+		WHEN NOT MATCHED THEN
+			INSERT (SITEID,USERNO,MENUNO,REGDATE,REGUSER,EDTDATE,EDTUSER,ISDELETE)
+			VALUES(#{siteid},#{userno},#{menuno},getDate(),#{reguser},getDate(),#{edtuser},0);
+	</insert>
+	
+	<select id="userMenu" parameterType="userMenuDto" resultType="hashMap">
+		SELECT MENUNO FROM Crud_SaaS.dbo.T_USER_MENU
+		WHERE SITEID = #{siteid}
+		AND USERNO = #{userno}
 	</select>
 	
 </mapper>

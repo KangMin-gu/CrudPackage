@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="common">
+
 	
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->
+
+	 
+	<insert id="noteFile" parameterType="hashMap">
+			INSERT INTO t_noticefile 
+			( SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, EDTUSER, EDTDATE, SITEID, NOTICEID )
+			VALUES
+			( #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{userno}, GETDATE(), #{siteid}, #{filesearchkey} )			
+	</insert>
+
+
 	<select id="totalcntUser" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM TB980010
@@ -67,4 +78,5 @@
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 	
+
 </mapper>

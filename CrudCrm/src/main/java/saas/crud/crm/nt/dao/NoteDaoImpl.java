@@ -170,4 +170,9 @@ public class NoteDaoImpl implements NoteDao{
 		session.insert("note.toAndCc", ntDto);
 	}
 	
+	//첨부파일 목록
+	public List<Map<String, Object>> noteFile(Map<String, Object> noteVal){
+		List<Map<String, Object>> notefile = session.selectList("note.noteFile", noteVal);
+		return notefile;
+	}
 }

@@ -1,5 +1,7 @@
 package saas.crud.crm.nt.dto;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class NoteDto {
@@ -15,16 +17,13 @@ public class NoteDto {
 	private int important; //중요메일여부
 	private int siteid;
 	private int chkcc;
-	private String orgfilename;
-	private String savefilename;
-	private long filesize;
-	private MultipartFile file; //Spring 에서 파일 업로드 처리하기 위해
+	private int filechk;
+	private List<MultipartFile> file; //Spring 에서 파일 업로드 처리하기 위해
 	
 	public NoteDto () {}
 
 	public NoteDto(int noticeid, int userno, int fromuserno, String linkurl, int ntcwayemail, int ntcwaysms,
-			String title, String content, int important, int siteid, int chkcc, String orgfilename, String savefilename,
-			long filesize, MultipartFile file) {
+			String title, String content, int important, int siteid, int chkcc, int filechk, List<MultipartFile> file) {
 		super();
 		this.noticeid = noticeid;
 		this.userno = userno;
@@ -37,9 +36,7 @@ public class NoteDto {
 		this.important = important;
 		this.siteid = siteid;
 		this.chkcc = chkcc;
-		this.orgfilename = orgfilename;
-		this.savefilename = savefilename;
-		this.filesize = filesize;
+		this.filechk = filechk;
 		this.file = file;
 	}
 
@@ -131,39 +128,22 @@ public class NoteDto {
 		this.chkcc = chkcc;
 	}
 
-	public String getOrgfilename() {
-		return orgfilename;
+	public int getFilechk() {
+		return filechk;
 	}
 
-	public void setOrgfilename(String orgfilename) {
-		this.orgfilename = orgfilename;
+	public void setFilechk(int filechk) {
+		this.filechk = filechk;
 	}
 
-	public String getSavefilename() {
-		return savefilename;
-	}
-
-	public void setSavefilename(String savefilename) {
-		this.savefilename = savefilename;
-	}
-
-	public long getFilesize() {
-		return filesize;
-	}
-
-	public void setFilesize(long filesize) {
-		this.filesize = filesize;
-	}
-
-	public MultipartFile getFile() {
+	public List<MultipartFile> getFile() {
 		return file;
 	}
 
-	public void setFile(MultipartFile file) {
+	public void setFile(List<MultipartFile> file) {
 		this.file = file;
 	}
 
 	
-
 	
 }

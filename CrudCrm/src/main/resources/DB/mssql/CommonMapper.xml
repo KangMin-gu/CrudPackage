@@ -72,5 +72,9 @@
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 	
+	<!-- 내부통지 파일다운로드 -->
+	<select id="noteDownload" parameterType="fileDto" resultType="fileDto">
+		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_noticefile WHERE SITEID = #{siteid} AND FILEID = #{fileid}
+	</select>
 
 </mapper>

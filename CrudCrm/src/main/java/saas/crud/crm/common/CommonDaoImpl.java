@@ -63,5 +63,12 @@ public class CommonDaoImpl implements CommonDao{
 		clientList = session.selectList("common.popClientList",searchVal);
 		return clientList;
 	}
+	
+	//다운로드
+	@Override
+	public FileDto noteDownload(FileDto fileRequest) {
+		FileDto fileInfo = session.selectOne("common.noteDownload", fileRequest);
+		return fileInfo;
+	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.ce.FileDto;
 import saas.crud.crm.ce.PagingCommon;
 
 
@@ -91,6 +92,19 @@ public class CommonServiceImpl implements CommonService {
 		mView.addObject("page",page);
 		mView.addObject("searchVal",searchVal);
 		mView.addObject("clientList",clientList);
+		return mView;
+	}
+	
+	//내부통지 파일다운로드
+	@Override
+	public ModelAndView noteDownload(HttpServletRequest request, int fileId) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		FileDto fileRequest = new FileDto(); 
+		fileRequest.setSiteid(siteId);
+		fileRequest.setFileid(fileId);
+		FileDto fileInfo = commonDao.noteDownload(fileRequest);
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("fileInfo", fileInfo);
 		return mView;
 	}
 

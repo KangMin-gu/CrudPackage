@@ -288,7 +288,7 @@
 	
 	<!-- 첨부파일리스트 -->
 	<select id="noteFile" parameterType="hashMap" resultType="hashMap">
-		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME FROM Crud_SaaS.dbo.t_noticefile
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME FROM Crud_SaaS.dbo.t_noticefile WHERE NOTICEID = #{noticeid}
 	</select>
 	
 	<!-- 참조 리스트 -->

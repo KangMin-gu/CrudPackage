@@ -74,8 +74,9 @@
 								${note.CONTENT }
 							</div>
 							<div class="mail-attachment">
-							<c:forEach var="file" items="${noteFile }">							
-								 <img src="${pageContext.request.contextPath}/file/note/${file.SAVEFILENAME }" alt="" />
+							<c:forEach var="file" items="${noteFile }">			
+							<a href="${pageContext.request.contextPath}/note/download/${file.FILEID}">다운로드</a>				
+								 <!-- <img src="${pageContext.request.contextPath}/file/note/${file.SAVEFILENAME }" alt="" />-->
 							</c:forEach>				
 													
 								<p>

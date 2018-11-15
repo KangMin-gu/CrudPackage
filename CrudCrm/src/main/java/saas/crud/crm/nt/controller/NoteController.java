@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.common.CommonService;
 import saas.crud.crm.nt.dto.NoteDto;
 import saas.crud.crm.nt.service.NoteService;
 
@@ -29,6 +30,8 @@ public class NoteController {
 	@Autowired
 	private NoteService ntService;
 	
+	@Autowired
+	private CommonService commonService;
 	
 	//받은 통지
 	@RequestMapping(value="/note/inbox", method=RequestMethod.GET)
@@ -174,6 +177,14 @@ public class NoteController {
 	@ResponseBody
 	public void authnoteReturnChk(HttpServletRequest request, @RequestParam(value="checkArr[]") List<Integer> noticeid) {
 		ntService.noteDeleteChk(request, noticeid);
+	}
+	
+	//첨부파일 다운로드
+	@RequestMapping(value="/note/download/{fileId}", method=RequestMethod.GET)
+	public ModelAndView notedownload(HttpServletRequest request, @PathVariable int fileId) {
+		ModelAndView mView = commonService.noteDownload(request, fileId);
+		mView.setViewName("fileDownView");
+		return mView;
 	}
 	
 	//카테고리설정

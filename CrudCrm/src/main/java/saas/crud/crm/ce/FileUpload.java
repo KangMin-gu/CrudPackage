@@ -30,7 +30,7 @@ public class FileUpload{
 				int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 				int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 				FileDto fileInfo = new FileDto();
-				StringBuffer path = new StringBuffer();
+				//StringBuffer path = new StringBuffer();
 				fileInfo.setFilesearchkey(fileSearchKey);
 				String realPath = null;								
 				long limitSize = 500000;					
@@ -40,7 +40,7 @@ public class FileUpload{
 				
 				for(int i=0; i < mFile.size(); i++) {
 					
-					path.setLength(0);
+					//path.setLength(0);
 					
 					String orgFileName = mFile.get(i).getOriginalFilename();
 					long fileSize = mFile.get(i).getSize();			
@@ -49,16 +49,16 @@ public class FileUpload{
 					
 					//url에 따른 파일 경로설정
 					if(url.equals("/logo")) {
-						realPath = request.getSession().getServletContext().getRealPath("/file/logo");
-						path.append("/file/logo/");
+						realPath = request.getSession().getServletContext().getRealPath("/file/logo");						
+						//path.append("/file/logo/");
 						fileInfo.setSub("logo");						
 					}else if(url.equals("/note/send")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/note");
-						path.append("/file/note/");
+						//path.append("/file/note/");
 						fileInfo.setSub("note");
 					}else if(url.equals("/campaign/send")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/note");
-						path.append("/file/campaing/");
+						//path.append("/file/campaing/");
 						fileInfo.setSub("campaing");
 					}
 						
@@ -87,7 +87,7 @@ public class FileUpload{
 							}
 							//파일 시스템에 저장할 파일명을 만든다. (겹치치 않게)
 							String saveFileName=System.currentTimeMillis()+orgFileName;
-							path.append(saveFileName);
+							//path.append(saveFileName);
 							
 							try{
 								// 폴더에 파일을 저장한다.
@@ -96,11 +96,13 @@ public class FileUpload{
 								e.printStackTrace();
 							}
 							
+							String path = filePath + saveFileName;
+							
 							//fileMap 객체에 추가 정보를 담는다.							
 							fileInfo.setFilesize(fileSize);
 							fileInfo.setSavefilename(saveFileName);
-							fileInfo.setOrgfilename(orgFileName);
-							fileInfo.setPath(path.toString());
+							fileInfo.setOrgfilename(orgFileName);						
+							fileInfo.setPath(path);
 							fileInfo.setUserno(userNo);
 							fileInfo.setSiteid(siteId);							
 							

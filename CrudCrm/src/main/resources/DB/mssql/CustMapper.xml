@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="customer">
 
-	<!-- 페이징용 카운터 -->
+	<!--고객 리스트 페이지- 페이징용 카운터 -->
 	<select id="totalcnt" parameterType="hashMap" resultType="int">
 		SELECT
 		COUNT(*)
@@ -43,7 +43,7 @@
 			</if>
 	</select>
 	
-	
+	<!-- 고객 리스트 출력 -->
 	<select id="custList" parameterType="hashMap" resultType="hashMap">
 		SELECT
 		*
@@ -102,7 +102,7 @@
 	</update>
 
 	
-	
+	<!-- 고객 상세정보 출력 -->
 	<select id="custDetail" parameterType="hashMap" resultType="hashMap">
 		SELECT
 		A.CUSTNO
@@ -145,7 +145,8 @@
 		AND A.ISDELETE = 0
 		AND A.CUSTNO = #{custno}
 	</select>
-
+	
+	<!-- 고객 수정 페이지에 바인딩 할 정보 출력 -->
 	<select id="custUpdateForm" parameterType="int" resultType="hashMap">
 		SELECT
 		A.CUSTNO
@@ -190,7 +191,7 @@
 		A.CUSTNO = #{custno}
 	</select>
 	
-	
+	<!-- 고객 추가  -->
 	<insert id="custformInsert" parameterType="saas.crud.crm.cu.dto.CustDto">
 		<selectKey keyProperty="custno"  resultType="integer" order="AFTER">
 		INSERT INTO CU100010
@@ -271,7 +272,7 @@
 		SELECT SCOPE_IDENTITY()
 		</selectKey>
 	</insert>
-	
+	<!-- 고객, 수신거부 정보 추가 -->
 	<insert id="custformInsertDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
 		INSERT INTO CU100080
 		(
@@ -322,7 +323,7 @@
 		)
 	</insert>
 	
-	
+	<!-- 고객 정보 수정 -->
 	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >
 		UPDATE CU100010
 		SET
@@ -373,6 +374,7 @@
 		CUSTNO = #{custno}
 	</update>
 	
+	<!-- 고객 수신거부 정보 수정 -->
 	<update id="custformUpdateDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
 		UPDATE CU100080
 		SET

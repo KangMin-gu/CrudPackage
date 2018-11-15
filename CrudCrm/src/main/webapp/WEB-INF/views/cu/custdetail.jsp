@@ -75,6 +75,7 @@
 									<div class="w-100 text-right mb-2">
 									<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
+										<a href="#" class="btn btn-primary">내부통지</a>										
 										<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
 										<Button type="submit" class="btn btn-primary">삭 제</Button>					
 										<a href="/cust/post" class="btn btn-primary">목 록</a>

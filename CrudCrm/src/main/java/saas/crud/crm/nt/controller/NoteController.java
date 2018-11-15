@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.nt.dto.NoteDto;
@@ -27,6 +28,7 @@ public class NoteController {
 	
 	@Autowired
 	private NoteService ntService;
+	
 	
 	//받은 통지
 	@RequestMapping(value="/note/inbox", method=RequestMethod.GET)
@@ -134,8 +136,8 @@ public class NoteController {
 	
 	//메일 발송
 	@RequestMapping(value="/note/send", method=RequestMethod.POST)
-	public String authnoteSend(HttpServletResponse response, HttpServletRequest request, @ModelAttribute NoteDto ntDto) {
-		int noticeId= ntService.noteSend(response, request, ntDto);
+	public String authnoteSend(HttpServletResponse response, HttpServletRequest request, @ModelAttribute NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {
+		int noticeId= ntService.noteSend(response, request, ntDto, multipartHttpServletRequest);
 		return "redirect:/note/outbox/"+noticeId;
 	}
 	

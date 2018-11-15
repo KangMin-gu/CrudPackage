@@ -15,11 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.common.AdressQuarter;
-import saas.crud.crm.common.FileUpload;
 import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.common.FileUpload;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.nt.dto.NoteDto;
@@ -29,6 +30,9 @@ public class NoteServiceImpl implements NoteService{
 	
 	@Autowired
 	private NoteDao ntDao;
+	
+	@Autowired
+	private FileUpload upload;
 	
 	//inbox
 	//@Cacheable("test")
@@ -440,7 +444,7 @@ public class NoteServiceImpl implements NoteService{
 	
 	//통지발송
 	@Override
-	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto) {		
+	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
 		
 		String toTarget = request.getParameter("touser");
 		String ccTarget = request.getParameter("ccuser");
@@ -449,9 +453,13 @@ public class NoteServiceImpl implements NoteService{
 		
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
-		MultipartFile file = ntDto.getFile();
-		FileUpload upLoad = new FileUpload();
-		Map<String, Object> fileInfo = upLoad.fileUpload(response, request, file);
+		
+		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		String tableName = "t_notice";
+		if(fileUpload != null) {
+			int fileSearchKey = upload.fileUpload(response, request, fileUpload, tableName);
+			ntDto.setFilesearchkey(fileSearchKey);
+		}
 		
 		//본문입력
 		int noticeId = ntDao.noteSend(ntDto);

@@ -1,4 +1,4 @@
-package saas.crud.crm.cm.service;
+package saas.crud.crm.common;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
-
-import saas.crud.crm.cm.dao.CommonDao;
-import saas.crud.crm.common.PagingCommon;
 
 @Service
 public class CommonServiceImpl implements CommonService {
@@ -57,6 +54,7 @@ public class CommonServiceImpl implements CommonService {
 		return mView;
 	}
 
+	//거래처팝업
 	@Override
 	public ModelAndView svcPopGetClientName(HttpServletRequest request) {
 		Map<String,Object> searchVal = new HashMap<String,Object>();

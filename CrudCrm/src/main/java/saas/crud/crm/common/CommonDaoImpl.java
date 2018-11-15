@@ -1,4 +1,4 @@
-package saas.crud.crm.cm.dao;
+package saas.crud.crm.common;
 
 import java.util.ArrayList;
 import java.util.List;

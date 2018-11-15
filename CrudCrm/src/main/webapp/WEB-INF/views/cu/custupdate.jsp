@@ -68,6 +68,7 @@
 								<div class="ibox-content row">								
 									<div class="w-100 text-right mb-2">
 										<Button type="submit" class="btn btn-primary">저 장</Button>
+										<a class="btn btn-primary" href="/cust/view/${custUpdate.CUSTNO}">상 세</a>
 										<a href="/cust" class="btn btn-primary">목 록</a>
 									</div>
 									<div class="box1 col-lg-12 col-xl-4 p-0">
@@ -785,7 +786,7 @@
 	
 	
 	<!-- Jquery Validate -->
-    <script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/resources/js/plugins/validate/jquery.customvalidate.min.js"></script>
     <script>
     //유효성 체크용 변수
     var namePattern = /^[가-힣a-zA-Z]{2,30}$/; //한글 영문 2~30글자

@@ -1,4 +1,4 @@
-package saas.crud.crm.cm.service;
+package saas.crud.crm.common;
 
 import javax.servlet.http.HttpServletRequest;
 

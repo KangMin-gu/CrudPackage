@@ -57,15 +57,30 @@
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12" style="background: #ffffff;">
 							
-							<form:form action="/cust/post" method="POST">
+							<form:form action="/cust/post" method="POST" id="command">
 							<div class="ibox">
 								<div class="ibox-title row">
 									<h4>기본정보</h4>
 								</div>
-								<div class="ibox-content row">								
+								<div class="ibox-content row">	
+													
 									<div class="w-100 text-right mb-2">
-										<Button type="submit" class="btn btn-primary" >저 장</Button>
+										
+										
+										<div class="alert alert-danger" id="test" style="text-align:left;display:none;">
+                                		 	<a class="alert-link" href="#">
+												<span id="showMsg"></span>
+											</a>
+                            			</div>
+                            			
+                            			
+                            			
+										<Button type="submit" class="btn btn-primary" id="submit"  disabled >저 장</Button>
 										<a href="/cust" class="btn btn-primary">목 록</a>
+										
+										
+										
+										
 									</div>
 									<div class="box1 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
@@ -76,7 +91,9 @@
 											<tbody>
 												<tr>
 													<th>고객명</th>
-													<td><input type="text" class="form-control error" name="custname" id="custname" placeholder="필수 입력" ></td>
+													<td>
+														<input type="text" class="form-control error" name="custname" id="custname" placeholder="필수 입력" >
+													</td>
 												</tr>
 												<tr>
 													<th>직책</th>
@@ -121,15 +138,16 @@
 												</tr>
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
-													<td>
+													<td>													
 														<select class="form-control col-4 float-left mr-3 error" style="height: 1.45rem" name="mobile1" id="mobile1" required>
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 inputs error" name="mobile2" id="mobile2" > 
-														<input type="text" class="form-control col-3 float-left inputs error" name="mobile3" id="mobile3"  >
+														<input type="text" class="form-control col-3 float-left mr-2 inputs error" name="mobile2" id="mobile2" required > 
+														<input type="text" class="form-control col-3 float-left inputs error" name="mobile3" id="mobile3" required >														
+														<span id="msgRegular"></span>
 													</td>
 												</tr>
 												<tr>
@@ -516,7 +534,7 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="submit" class="btn btn-primary">저 장</Button>
+											<Button type="Button" class="btn btn-primary" id="submit" >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>
@@ -773,32 +791,123 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	
-	
-	<!-- Jquery Validate -->
-    <script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
+
 	
 	<script>
 	//유효성 검사
 	var namePattern = /^[가-힣a-zA-Z]{2,30}$/; //한글 영문 2~30글자
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-	var addrPattern = /^[가-힣a-zA-Z0-9]{2,30}$/; //한글 영문 숫자 2~30 
-	var numPattern = /\d/; //숫자
-	var domain = /^[^((http(s?))\:\/\/)]{0,30}$/; //http 포함하면 안됨 
-	
-	/*
-	function daumZip(prm){
-		new daum.Postcode({
-		         oncomplete: function(data) {
-		        	$("#"+prm+"addr1").val(data.zonecode);
-		        	$("#"+prm+"addr2").val(data.roadAddress);
-		        	$("#"+prm+"addr3").val(data.zonecode);
-		         }
-		     }).open();
+	var addrPattern = /^[가-힣a-zA-Z0-9!@()-_=+,.]{2,30}$/; //한글 영문 숫자 2~30 
+	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
+	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
+	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
+		
+	//필수값 유효성 검사 boolean 리턴  
+	function checkVal(id){
+		
+		var value = document.getElementById(id).value;//id명
+		var res; 
+		if (id == 'custname'){
+			res = namePattern.test(value);//유효성 패턴 매칭
+		}else if(id.indexOf('mobile') != -1){//id에 mobile이라는 문자가 포함되면 
+			res = numPattern.test(value);
+		}else if(id.indexOf('wrktel') != -1){
+			res = numPattern.test(value);
+		}else if(id.indexOf('wrkfax') != -1){
+			res = numPattern.test(value);
+		}else if(id.indexOf('homtel') != -1){
+			res = numPattern.test(value);
+		}else if(id == 'email'){
+			res = emailPattern.test(value);
+		}else if(id.indexOf('addr') != -1 ){
+			res = addrPattern.test(value);
+		}else if(id == 'wrkurl'){
+			res = domainPattern.test(value);
+		}else
+			res = simplePattern.test(value);
+		return res;
 	}
-	*/
+	
+	
+	
+	function changeRed(id,res){		
+		if(res == true){
+			$('#'+id).removeClass('error');//해당 인풋 디자인변경
+		}else if(res == false){
+			$('#'+id).addClass('error');//해당 인풋 디자인변경 
+			if(id == 'custname'){
+				$('#submit').prop("disabled",true);//submit 버튼 비활성화 	
+			}else if (id.indexOf('mobile') != -1){
+				$('#submit').prop("disabled",true);//submit 버튼 비활성화
+			}	
+		}				
+	}
+	
+	function enableSubmit(){
+		
+		if( checkVal('custname') && checkVal('mobile2') && checkVal('mobile3') ){ //필수 값이 모두 정상 입력되었다면 
+			console.log('good');		
+			$('#submit').prop("disabled",false); // submit버튼 활성화  
+		}
+	}
 	
 	 
         $(document).ready(function () {
+        	
+        	//********고객명 , 핸드폰 필수 값 체크********
+        	//todo 핸드폰1번 추가 
+        	$('#custname').keyup(function(e){
+        		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
+        		changeRed(e.target.id , res );
+        		enableSubmit();//고객명,핸드폰 모든값이 유효성검사 true 일시 수정버튼 활성화.
+        	});       	
+        	$('#mobile2').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		changeRed(e.target.id , res );
+        		enableSubmit();
+        	});
+        	$('#mobile3').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		changeRed(e.target.id , res );
+        		enableSubmit();
+        	});
+        	//****************************************
+        	
+        	//**********form 전송 전 유효성 검사 ********************
+        	$('#submit').click(function(){
+        		debugger;
+        		if( checkVal('custname') == false ){
+        			$('#custname').focus();
+        			return false;
+        		}else if( checkVal('mobile1') == false ){
+        			$('#mobile1').focus();
+        			return false;
+        		}else if( checkVal('mobile2') == false ){
+        			$('#mobile2').focus();
+        			return false;
+        		}else if( checkVal('mobile3') == false ){
+        			$('#mobile3').focus();
+        			return false;
+        		}else if(checkVal('job') == false ){
+        			$('#job').focus();
+        			$('#showMsg').append('직업에는 한글,영어,숫자만 입력 가능합니다.');
+        			$('#test').show();
+        	
+        			return false;
+        		}
+        		
+        		alert(' all ok  ');
+        		$('#test').hide();
+        		debugger;
+        		$('#command').submit();
+        		
+        	});
+        	
+        	
+        	
+        	
+        	
+        	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -814,6 +923,7 @@
                 autoclose: true
             });
             
+           /* 
           	//validation.js 유효성 검사 플러그인 커스텀 메서드
        	 	$.validator.addMethod("regx",function(value,element,regexpr){
             	return regexpr.test(value);
@@ -823,29 +933,34 @@
       		
                 rules: {
                     custname : { required : true, minlength : 2, maxlength: 30, regx : namePattern } 
-                    ,mobile2 : { required : true, minlength : 3, maxlength: 4, number : true }
-                    ,mobile3 : { required : true, minlength : 3, maxlength: 4, number : true }
-                    ,wrktel2 : { minlength : 3, maxlength: 4, number : true }
+            		,mobile2 : { required : true, minlength : 3, maxlength: 4, number : true }
+                   	,mobile3 : { required : true, minlength : 3, maxlength: 4, number : true }
+                   	,wrktel2 : { minlength : 3, maxlength: 4, number : true }
                     ,wrktel3 : { minlength : 3, maxlength: 4, number : true }      
                     ,wrkfax2 : { minlength : 3, maxlength: 4, number : true }
                     ,wrkfax3 : { minlength : 3, maxlength: 4, number : true }
                     ,homtel2 : { minlength : 3, maxlength: 4, number : true }
                     ,homtel3 : { minlength : 3, maxlength: 4, number : true }
+                    
                     ,wrkurl : { url : true }
                     ,duty : { regx : simplePattern }
                     ,deptname : { regx : simplePattern }
-                    ,job : { regx : simplePattern }
-                    ,hobby : { regx : simplePattern }
-                   
+                    //,job : { regx : simplePattern }
+                    ,hobby : { regx : simplePattern }           
                 },           
             	messages:{
             		custname: {regx:"한글-영문으로 입력 해주세요"}
                 	,duty : { regx : "한글-영문으로 입력 해주세요" }
                 	,deptname : { regx : "한글-영문으로 입력 해주세요" }
-                	,job : { regx : "한글-영문으로 입력 해주세요" }
+                	//,job : { regx : "한글-영문으로 입력 해주세요" }
                 	,hobby : { regx : "한글-영문으로 입력 해주세요" }
             	}
             });
+          	
+          	*/
+          	
+          	
+          	
             
           	//주소 받아오기
             $('.daumzip').click(function(e){
@@ -855,8 +970,7 @@
       		      		debugger;
       		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
       		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
-
-      		        	
+    		        	
       		        	$("#"+head+"addr1").val(data.zonecode);
     		        	$("#"+head+"addr2").val(data.roadAddress);
     		        	$("#"+head+"addr3").val(data.buildingName);

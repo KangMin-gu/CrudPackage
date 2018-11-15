@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="common">
 	
+	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->
 	<select id="totalcntUser" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM TB980010
@@ -12,7 +13,7 @@
 			AND USERNAME like '%'+#{username}+'%'
 			</if>
 	</select>
-	
+	<!-- 담당자로 설정 할 수 있는 회원 목록 출력  -->
 	<select id="popUserList" parameterType="hashMap" resultType="hashMap">
 		SELECT * 
 		FROM  
@@ -33,6 +34,7 @@
 		
 	</select>
 	
+	<!-- 회원사의 거래처 수 카운터  -->
 	<select id="totalcntClient" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM TB200010
@@ -43,7 +45,7 @@
 			AND CLINAME like '%'+#{cliname}+'%'
 			</if>
 	</select>
-	
+	<!-- 선택할 수 있는 거래처 목록 출력  -->
 	<select id="popClientList" parameterType="hashMap" resultType="hashMap">
 	SELECT * 
 	FROM  

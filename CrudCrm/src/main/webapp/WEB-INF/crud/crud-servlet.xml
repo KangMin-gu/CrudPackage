@@ -143,6 +143,7 @@
 	<context:component-scan base-package="saas.crud.crm.vc.*" />
 	<context:component-scan base-package="saas.crud.crm.nt.*" />
 	<context:component-scan base-package="saas.crud.crm.cu.*" />
-	<context:component-scan base-package="saas.crud.crm.cm.*" />
+	<context:component-scan base-package="saas.crud.crm.common" />
+
 	
 </beans:beans>

@@ -1,4 +1,4 @@
-package saas.crud.crm.cm.dao;
+package saas.crud.crm.common;
 
 import java.util.List;
 import java.util.Map;

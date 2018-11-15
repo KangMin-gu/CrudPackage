@@ -41,7 +41,8 @@
 	                <li <c:if test="${fn:substring(urls, 0, 3)  eq '/cm' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">고객관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
-	                        <li><a href="form_basic.html">고객 관리</a></li>                        
+	                    <!-- todo. controller 파라미터 전달 -->
+	                        <li><a href="/cust">고객 관리</a></li>                        
 	                    </ul>
 	                </li>
                 </c:if> 

@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="common">
-	
-
-	<insert id="fileUpload" parameterType="hashMap">
-		<selectKey keyProperty="filesearchkey" resultType="int" order="AFTER">
-			INSERT INTO t_file 
-			( SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, EDTUSER, EDTDATE, SITEID )
+	 
+	<insert id="noteFile" parameterType="hashMap">
+			INSERT INTO t_noticefile 
+			( SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, EDTUSER, EDTDATE, SITEID, NOTICEID )
 			VALUES
-			( #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{userno}, GETDATE(), #{siteid} )
-			
-			SELECT SCOPE_IDENTITY()
-		</selectKey>
+			( #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{userno}, GETDATE(), #{siteid}, #{filesearchkey} )			
 	</insert>
 
 	<select id="totalcntUser" parameterType="hashMap" resultType="int">

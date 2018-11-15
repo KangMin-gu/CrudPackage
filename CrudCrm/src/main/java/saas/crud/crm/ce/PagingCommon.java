@@ -1,4 +1,4 @@
-package saas.crud.crm.common;
+package saas.crud.crm.ce;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,20 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PagingCommon {
 	
-	//private int PAGE_ROW_COUNT=10;
-	//private int PAGE_DISPLAY_COUNT=10;
-	
 	//리스트 형식 페이징처리 공통모듈 
 	public Map<String, Integer> paging(HttpServletRequest request, int totalRows, int PAGE_ROW_COUNT, int PAGE_DISPLAY_COUNT) {
 		
-		/*
-		 * 
-		 * 		해당 service 에서 넘겨줄 값
-		 * 		PagingCommon page = new PagingCommon(); //페이지 생성자 호출 
-		 *		int totalRows = cmdao.getDate(cmdto); // 해당 게시글의 토탈 로우 
-		 *		page.paging(request, totalRows); //해당 값 넘겨주기
-		 * 
-		 * */			
 		//보여줄 페이지의 번호
 		int pageNum=1;
 		//보여줄 페이지의 번호가 파라미터로 전달되는지 읽어온다.

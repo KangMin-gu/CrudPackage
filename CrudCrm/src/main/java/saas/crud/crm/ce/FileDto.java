@@ -1,35 +1,41 @@
-package saas.crud.crm.common;
+package saas.crud.crm.ce;
 
 public class FileDto {
 	
-	private int filesearchkey;
+	private int fileid;
 	private String savefilename;
 	private String orgfilename;
+	private String realpath;
 	private long filesize;
 	private String path;
+	private int filesearchkey;
 	private int userno;
 	private int siteid;
+	private String sub;
 	
 	public FileDto() {}
 
-	public FileDto(int filesearchkey, String savefilename, String orgfilename, long filesize, String path, int userno,
-			int siteid) {
+	public FileDto(int fileid, String savefilename, String orgfilename, String realpath, long filesize, String path,
+			int filesearchkey, int userno, int siteid, String sub) {
 		super();
-		this.filesearchkey = filesearchkey;
+		this.fileid = fileid;
 		this.savefilename = savefilename;
 		this.orgfilename = orgfilename;
+		this.realpath = realpath;
 		this.filesize = filesize;
 		this.path = path;
+		this.filesearchkey = filesearchkey;
 		this.userno = userno;
 		this.siteid = siteid;
+		this.sub = sub;
 	}
 
-	public int getFilesearchkey() {
-		return filesearchkey;
+	public int getFileid() {
+		return fileid;
 	}
 
-	public void setFilesearchkey(int filesearchkey) {
-		this.filesearchkey = filesearchkey;
+	public void setFileid(int fileid) {
+		this.fileid = fileid;
 	}
 
 	public String getSavefilename() {
@@ -48,6 +54,14 @@ public class FileDto {
 		this.orgfilename = orgfilename;
 	}
 
+	public String getRealpath() {
+		return realpath;
+	}
+
+	public void setRealpath(String realpath) {
+		this.realpath = realpath;
+	}
+
 	public long getFilesize() {
 		return filesize;
 	}
@@ -62,6 +76,14 @@ public class FileDto {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public int getFilesearchkey() {
+		return filesearchkey;
+	}
+
+	public void setFilesearchkey(int filesearchkey) {
+		this.filesearchkey = filesearchkey;
 	}
 
 	public int getUserno() {
@@ -79,6 +101,14 @@ public class FileDto {
 	public void setSiteid(int siteid) {
 		this.siteid = siteid;
 	}
-	
+
+	public String getSub() {
+		return sub;
+	}
+
+	public void setSub(String sub) {
+		this.sub = sub;
+	}
+
 	
 }

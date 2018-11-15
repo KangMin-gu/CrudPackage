@@ -179,7 +179,7 @@
 			                 						<c:otherwise>${tmp.SENDDATETIME }</c:otherwise>
 												</c:choose>																	
 											</td>
-											<td class="text-right"><c:if test="${tmp.ORGFILENAME ne null }"><i class="fa fa-paperclip"></i></c:if></td>
+											<td class="text-right"><c:if test="${tmp.FILECHK ne 0 }"><i class="fa fa-paperclip"></i></c:if></td>
 										</tr>
 									</c:forEach>
 								</tbody>

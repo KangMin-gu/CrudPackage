@@ -18,9 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.common.AdressQuarter;
-import saas.crud.crm.common.PagingCommon;
-import saas.crud.crm.common.FileUpload;
+import saas.crud.crm.ce.AdressQuarter;
+import saas.crud.crm.ce.FileUpload;
+import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.nt.dto.NoteDto;
@@ -348,15 +348,19 @@ public class NoteServiceImpl implements NoteService{
 		noteVal.put("userno", userNo);
 		noteVal.put("noticeid", noticeId);
 		
-		
+		//통지정보
 		Map<String, Object> note = ntDao.noteDetail(noteVal);
+		//첨부파일정보
+		List<Map<String, Object>> notefile = ntDao.noteFile(noteVal);
 		//받는이
 		List<Map<String, Object>> toList = ntDao.toList(noteVal); 
 		//CC
 		List<Map<String, Object>> ccList = ntDao.ccList(noteVal); 
+		
 		ntDao.noteEyeChk(noteVal);
 	
 		mView.addObject("note", note);
+		mView.addObject("noteFile", notefile);
 		mView.addObject("ccList", ccList);
 		mView.addObject("toList", toList);
 		return mView;
@@ -449,23 +453,21 @@ public class NoteServiceImpl implements NoteService{
 		String toTarget = request.getParameter("touser");
 		String ccTarget = request.getParameter("ccuser");
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
+		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
-		
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
-		String tableName = "t_notice";
-		if(fileUpload != null) {
-			int fileSearchKey = upload.fileUpload(response, request, fileUpload, tableName);
-			ntDto.setFilesearchkey(fileSearchKey);
+		
+		if(0 < fileUpload.size()) {
+			int fileChk = 1;
+			ntDto.setFilechk(fileChk);
 		}
 		
 		//본문입력
 		int noticeId = ntDao.noteSend(ntDto);
 		
 		ntDto.setNoticeid(noticeId);
-		
+				
 		//To ; 기준 끈기
 		AdressQuarter quarter = new AdressQuarter();
 		List<Integer> toAdress = quarter.quarter(toTarget);
@@ -490,22 +492,11 @@ public class NoteServiceImpl implements NoteService{
 					    ntDao.notetoAndCc(ntDto);
 					}			
 				}
-		}else {
-			
-			StringBuffer buf = new StringBuffer();
-			buf.append("<script>alert('에러발생 관리자에게 문의해주세요.'); location.href='");		
-		 	buf.append("';</script>");
-		 	
-		 	response.setContentType("text/html; charset=UTF-8");
-			 
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println(buf);					 
-				out.flush();
-			} catch (IOException e) {					
-				e.printStackTrace();
-			}
+		}
+		
+		//파일테이블 업로드 실행
+		if(fileUpload != null) {
+			upload.fileUpload(response, request, fileUpload, noticeId);			
 		}
 		
 		return noticeId;

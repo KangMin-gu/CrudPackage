@@ -74,8 +74,10 @@
 								${note.CONTENT }
 							</div>
 							<div class="mail-attachment">
-							 a:${note.SAVEFILENAME}
-							 <img src="${pageContext.request.contextPath}/file/note/${note.SAVEFILENAME}" alt="" />							
+							<c:forEach var="file" items="${noteFile }">							
+								 <img src="${pageContext.request.contextPath}/file/note/${file.SAVEFILENAME }" alt="" />
+							</c:forEach>				
+													
 								<p>
 									<span><i class="fa fa-paperclip"></i> 첨부파일 - </span> <a href="#">다운로드</a> 
 								</p>

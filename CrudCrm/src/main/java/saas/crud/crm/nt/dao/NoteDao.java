@@ -34,4 +34,5 @@ public interface NoteDao {
 	public List<Map<String, Object>> noteSet(NoteCategoryDto noteCategory);
 	public int noteSend(NoteDto ntDto);
 	public void notetoAndCc(NoteDto ntDto);
+	public List<Map<String, Object>> noteFile(Map<String, Object> noteVal);
 }

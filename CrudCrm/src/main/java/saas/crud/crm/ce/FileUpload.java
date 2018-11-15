@@ -1,4 +1,4 @@
-package saas.crud.crm.common;
+package saas.crud.crm.ce;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,44 +16,55 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import saas.crud.crm.common.CommonDao;
 import saas.crud.crm.nt.service.NoteService;
 
 @Service
 public class FileUpload{
 	
 	@Autowired
-	private CommonDao comDao; 
+	private CommonDao commonDao; 
 	 
-	public int fileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> fileUpload, String tableName) {
+	public void fileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> mFile, int fileSearchKey) {
 
 				int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 				int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-				
+				FileDto fileInfo = new FileDto();
+				StringBuffer path = new StringBuffer();
+				fileInfo.setFilesearchkey(fileSearchKey);
+				String realPath = null;								
 				long limitSize = 500000;					
 		
 				//FileDto 에 담긴 MultipartFile 객체의 참조값을 얻어온다.
-				List<MultipartFile> mFile = fileUpload;
+					
 				
 				for(int i=0; i < mFile.size(); i++) {
 					
+					path.setLength(0);
+					
 					String orgFileName = mFile.get(i).getOriginalFilename();
-					long fileSize = mFile.get(i).getSize();
+					long fileSize = mFile.get(i).getSize();			
+					String url = request.getRequestURI();												
+						
 					
-					String url = request.getRequestURI();							
-					String realPath = null;
-					StringBuffer path = new StringBuffer();	
-					
+					//url에 따른 파일 경로설정
 					if(url.equals("/logo")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/logo");
 						path.append("/file/logo/");
+						fileInfo.setSub("logo");						
 					}else if(url.equals("/note/send")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/note");
 						path.append("/file/note/");
+						fileInfo.setSub("note");
+					}else if(url.equals("/campaign/send")) {
+						realPath = request.getSession().getServletContext().getRealPath("/file/note");
+						path.append("/file/campaing/");
+						fileInfo.setSub("campaing");
 					}
 						
 					
 					String filePath = realPath+File.separator;
-					int fileSearchKey = 0;
+					
 					
 					if(fileSize > limitSize ) {
 						//해당 경고문 폼작업시 서비스단으로 맵에 트루 펄스를 담아서 뺄것.
@@ -79,28 +90,23 @@ public class FileUpload{
 							path.append(saveFileName);
 							
 							try{
-								//upload 폴더에 파일을 저장한다.
+								// 폴더에 파일을 저장한다.
 								mFile.get(i).transferTo(new File(filePath+saveFileName));
 							}catch(Exception e){
 								e.printStackTrace();
 							}
 							
-							//fileMap 객체에 추가 정보를 담는다.
-							FileDto fileInfo = new FileDto();
+							//fileMap 객체에 추가 정보를 담는다.							
 							fileInfo.setFilesize(fileSize);
-							fileInfo.setOrgfilename(orgFileName);
 							fileInfo.setSavefilename(saveFileName);
+							fileInfo.setOrgfilename(orgFileName);
 							fileInfo.setPath(path.toString());
 							fileInfo.setUserno(userNo);
-							fileInfo.setSiteid(siteId);
+							fileInfo.setSiteid(siteId);							
 							
-							fileSearchKey = comDao.fileUpload(fileInfo);
-							
-							return fileSearchKey;
+							commonDao.fileUpload(fileInfo);										
 					}			
 				}
-				
-				return userNo;
 	}
 }
 

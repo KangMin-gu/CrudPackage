@@ -1,4 +1,4 @@
-package saas.crud.crm.cm.service;
+package saas.crud.crm.common;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.cm.dao.CommonDao;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+
 
 @Service
 public class CommonServiceImpl implements CommonService {

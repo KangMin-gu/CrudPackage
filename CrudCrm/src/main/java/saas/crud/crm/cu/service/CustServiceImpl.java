@@ -25,17 +25,11 @@ public class CustServiceImpl implements CustService {
 
 	@Override
 	public ModelAndView svcCustList(HttpServletRequest request) {
-		//todo. 페이지 설정 동적 변경. 
 		
 		Map<String, Object> searchVal = new HashMap<String, Object>();;
 		//**********여기부터 검색조건설정*************************************** 
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		searchVal.put("siteid", siteid);
-
-		String test = request.getParameter("custname");
-		if (test =="") {
-			test = null;
-		}
 
 		//검색조건 설정 null 또는 공백이 아니면 if실행
 		if( request.getParameter("custname") != null && !request.getParameter("custname").toString().trim().equals("") )  { 	
@@ -51,16 +45,12 @@ public class CustServiceImpl implements CustService {
 		if(request.getParameter("clino") != null ) {
 			searchVal.put("clino",request.getParameter("clino"));
 		}
-		if(request.getParameter("cliname") != null ) {
+		if( request.getParameter("cliname") != null && !request.getParameter("cliname").toString().trim().equals("") )  { 	
 			searchVal.put("cliname",request.getParameter("cliname"));
 		}
 		
 		if(request.getParameter("mobile") != null && !request.getParameter("mobile").toString().trim().equals("") ) {
 			searchVal.put("mobile",request.getParameter("mobile").toString());
-		}
-		
-		if(request.getParameter("company") != null) {
-			searchVal.put("company",request.getParameter("company"));
 		}
 		
 		if(request.getParameter("email") != null && !request.getParameter("email").toString().trim().equals("") ) {
@@ -78,7 +68,7 @@ public class CustServiceImpl implements CustService {
 		}else {
 			searchVal.put("custgrade",0);//선택 값이 없다면 기본값은 0
 		}
-		
+		//데이트 yyyy/mm/dd-> yyyymmdd 
 		if(request.getParameter("fromregdt") != null && !request.getParameter("fromregdt").toString().trim().equals("") ) {
 			String temp = request.getParameter("fromregdt");//	yyyy/mm/dd
 			String fromdt = temp.replace("/",""); // yyyymmdd
@@ -95,20 +85,23 @@ public class CustServiceImpl implements CustService {
 		}else {
 			searchVal.put("infoagree",0);//선택 값이 없다면 기본값은 0
 		}
-		if( request.getParameter("cliname") != null && !request.getParameter("cliname").toString().trim().equals("") )  { 	
-			searchVal.put("cliname",request.getParameter("cliname"));
-		}
+		//*********************총 자료수 검색조건끝****************************************
 			
 		//총자료수
 		int totalRows = custDao.totalCnt(searchVal);
-		//*********************검색조건끝****************************************
-		
+				
 		//paging
+		
+		int pageRowCount = 20; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+		
 		PagingCommon  pages = new PagingCommon();			
 		 
-		Map<String, Integer> page =  pages.paging(request, totalRows,20,5); 
+		Map<String, Integer> page =  pages.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 		
 		page.put("totalRows", totalRows);
+		
+		//출력할 row 범위설정 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -127,7 +120,7 @@ public class CustServiceImpl implements CustService {
 				
 	}
 	
-	//유저 삭제 
+	//유저 멀티 삭제 
 	@Override
 	public int svcCustDelete(HttpServletRequest request) {
 		
@@ -140,148 +133,86 @@ public class CustServiceImpl implements CustService {
 		custDto.setUserno(userno);
 		
 		int size = custno.length; 
-		int res = 0; 
-	
+		int res = 0; //실행 된 건수 체크용 카운터 현재 미사용
+		//custno 배열 수 만큼 dao호출  
 		for (int i=0;i<size;i++) {
 			if(custno[i].toString()!=null) {
 				custDto.setCustno(Integer.parseInt(custno[i].toString()));	
 				res += custDao.custDelete(custDto);			
 			}			
-		}
-		
-		
+		}	
 		return res;
 	}
 	
 	//상세페이지
-	public Map<String,Object> svcCustDetail(int custno){
-		Map<String,Object> map = custDao.custDetail(custno);
-		return  map;
+	public Map<String,Object> svcCustDetail(int custno, int siteid){
+		Map<String,Object> custVal = new HashMap<String,Object>();
+		custVal.put("custno",custno);
+		custVal.put("siteid", siteid);
+		Map<String,Object> detailMap = custDao.custDetail(custVal);
+		return  detailMap;
 	}
-	//업데이트 - form화면 
-	public Map<String,Object> svcCustUpdateForm(int custno){
-		Map<String,Object> map = custDao.custUpdateForm(custno);
-		return  map;
-	}
-
-
-	@Override
-	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
-		//세션 정보 값 DTO셋팅  
-		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		custDto.setReguser(userno);
-		custDto.setEdituser(userno);
-		custDto.setSiteid(siteid);
-			
-		int custno = custDao.custformInsert(custDto);//추가된 고객pk 값 리턴
-		
-		custDenyDto.setCustno(custno);
-		custDenyDto.setReguser(userno);
-		custDenyDto.setEdituser(userno);
-		custDao.custformInsertDeny(custDenyDto);
-		
-		return custno;
-	}
-
-	//고객 추가 페이지에 필요한 정보 셋팅 
+	
+	//고객 추가 페이지. 기본 정보 셋팅 
 	@Override
 	public ModelAndView svcCustForm(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		String username = request.getSession().getAttribute("USERNAME").toString();
+		String username = request.getSession().getAttribute("USERNAME").toString();//담당자는 로그인한 유저명으로 기본설정
 		mView.addObject("SESSIONUSERNO",userno);
 		mView.addObject("SESSIONUSERNAME",username);
 		return mView;
 	}
 
+
+	//고객 추가 dao실행
+	@Override
+	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
+		//세션 정보 값 DTO셋팅  
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		//필수 값 설정. 등록/수정자는 로그인한 유저로 설정
+		custDto.setReguser(userno);
+		custDto.setEdituser(userno);
+		custDto.setSiteid(siteid);
+		
+		//고객 추가 dao호출 추가된 고객pk 값 리턴
+		int custno = custDao.custformInsert(custDto);
+		
+		//수신거부 테이블 default 값 + 파라미터 dto 값 전달  
+		custDenyDto.setCustno(custno);
+		custDenyDto.setReguser(userno);
+		custDenyDto.setEdituser(userno);
+		//수신거부 테이블에 해당 고객 데이터 생성
+		custDao.custformInsertDeny(custDenyDto);
+		
+		return custno;//상세 페이지 이동을 위해 생성된 pk값 리턴 
+	}
+
+	//고객 수정 - form 화면에 바인딩 할 데이터 전달 
+	public Map<String,Object> svcCustUpdateForm(int custno){
+		Map<String,Object> map = custDao.custUpdateForm(custno);
+		return  map;
+	}
+	
 	//고객 수정 실행 
 	@Override
 	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
-		//세션 정보 값 DTO셋팅  
+			//세션 정보 값 DTO셋팅  
 			int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-			custDto.setEdituser(userno);
-			custDao.custformUpdate(custDto);	
+			
+			custDto.setEdituser(userno); //수정자는 로그인한 본인
+			custDao.custformUpdate(custDto);//업데이트 dao호출
+			
+			//업데이트한 pk값 수신거부 dto에 설정
 			int custno = custDto.getCustno();
 			custDenyDto.setCustno(custno);
 			custDenyDto.setEdituser(userno);
 			
-			custDao.custformUpdateDeny(custDenyDto);
-				
+			//수신거부 dao 호출  
+			custDao.custformUpdateDeny(custDenyDto);				
 			return custno;
 	}
-
-	@Override
-	public ModelAndView svcPopGetUserName(HttpServletRequest request) {
-		Map<String,Object> searchVal = new HashMap<String,Object>();
-		
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		searchVal.put("siteid", siteid);
-		//username 이 null 또는 공백이 아니면 대입. 
-		if(request.getParameter("username") != null && !request.getParameter("username").toString().trim().equals("") ) { 
-			String username = request.getParameter("username").toString();
-			searchVal.put("username", username);
-		}		
-		
-		int totalRows = custDao.totalcntUser(searchVal);
-		
-		PagingCommon pages = new PagingCommon();
-		Map<String,Integer> page = pages.paging(request, totalRows,10,5);
-		
-		page.put("totalRows", totalRows);
-		int startRowNum = page.get("startRowNum");
-		int endRowNum = page.get("endRowNum");	
-		searchVal.put("startRowNum", startRowNum);
-		searchVal.put("endRowNum",endRowNum);
-		
-		List<Map<String,Object>> userList = custDao.popUserList(searchVal);
-		
-		ModelAndView mView = new ModelAndView();
-		mView.addObject("page",page);
-		mView.addObject("searchVal",searchVal);
-		mView.addObject("userList",userList);
-		return mView;
-	}
-
-	@Override
-	public ModelAndView svcPopGetClientName(HttpServletRequest request) {
-		Map<String,Object> searchVal = new HashMap<String,Object>();
-		int PAGE_ROW_COUNT=10;
-		int PAGE_DISPLAY_COUNT=10;
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		searchVal.put("siteid", siteid);
-		//username 이 null 또는 공백이 아니면 대입. 
-		if(request.getParameter("cliname") != null && !request.getParameter("cliname").toString().trim().equals("") ) { 
-			String cliname = request.getParameter("cliname").toString();
-			searchVal.put("cliname", cliname);
-		}		
-		
-		int totalRows = custDao.totalcntClient(searchVal);
-		
-		PagingCommon pages = new PagingCommon();
-		Map<String,Integer> page = pages.paging(request, totalRows,PAGE_ROW_COUNT,PAGE_DISPLAY_COUNT);
-		
-		page.put("totalRows", totalRows);
-		int startRowNum = page.get("startRowNum");
-		int endRowNum = page.get("endRowNum");	
-		searchVal.put("startRowNum", startRowNum);
-		searchVal.put("endRowNum",endRowNum);
-		
-		List<Map<String,Object>> clientList = custDao.popClientList(searchVal);
-		
-		ModelAndView mView = new ModelAndView();
-		mView.addObject("page",page);
-		mView.addObject("searchVal",searchVal);
-		mView.addObject("clientList",clientList);
-		return mView;
-	}
-
-
-
-
-
-
-	
 
 
 

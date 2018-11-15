@@ -99,8 +99,9 @@ body {
 						<ul class="pagination">
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
-									<li class="footable-page-arrow disabled"><a href="#"
-										onclick="paging(${page.startPageNum-1 });">&laquo;</a></li>
+									<li class="footable-page-arrow disabled">
+										<a href="/popowner/?username=${searchVal.username}&pageNum=${page.startPageNum-1 }">&laquo;</a>
+									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="disabled"><a href="javascript:">&laquo;</a></li>
@@ -111,11 +112,14 @@ body {
 								end="${page.endPageNum }">
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
-										<li class="footable-page active"><a href="#"
-											onclick="paging(${i });">${i }</a></li>
+										<li class="footable-page active">										
+											<a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a>
+										</li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="#" onclick="paging(${i });">${i }</a></li>
+										<li>
+											<a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a>
+										</li>
 
 									</c:otherwise>
 								</c:choose>
@@ -123,7 +127,8 @@ body {
 
 							<c:choose>
 								<c:when test="${page.endPageNum lt page.totalPageCount }">
-									<li><a href="#" onclick="paging(${page.endPageNum+1 });">&raquo;</a>
+									<li>
+										<a href="/popowner/?username=${searchVal.username}&pageNum=${page.endPageNum+1 }">&raquo;</a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -144,6 +149,7 @@ body {
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
 	<script>
+	//호출한 부모창에 값 전달
 	function toParentOwner(prm1,prm2){
 		opener.document.getElementById('owner').value= prm1;
 		opener.document.getElementById('ownername').value= prm2;

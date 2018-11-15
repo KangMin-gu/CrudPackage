@@ -57,8 +57,10 @@
 				<div class="wrapper wrapper-content  animated fadeInRight article">
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12" style="background: #ffffff;">
+							
 							<form:form action="/cust/post/${custUpdate.CUSTNO}" method="POST">
 							<input type="hidden" name="denyno" id="denyno" value="${custUpdate.DENYNO}">
+							
 							<div class="ibox">
 								<div class="ibox-title row">
 									<h4>기본정보</h4>
@@ -68,7 +70,7 @@
 										<Button type="submit" class="btn btn-primary">저 장</Button>
 										<a href="/cust" class="btn btn-primary">목 록</a>
 									</div>
-									<div class="box1 col-lg-4 p-0">
+									<div class="box1 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
@@ -102,7 +104,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="box2 col-lg-4 p-0">
+									<div class="box2 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
@@ -152,7 +154,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="box3 col-lg-4 p-0">
+									<div class="box3 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
@@ -174,7 +176,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="box4 col-lg-8 p-0">
+									<div class="box4 col-lg-12 col-xl-8 p-0">
 										<table class="table table-bordered border-top-0  mb-0">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
@@ -196,7 +198,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="box5 col-lg-4 p-0">
+									<div class="box5 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered border-top-0 ">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
@@ -228,7 +230,7 @@
 										</div>
 									</div>
 									<div class="ibox-content row">
-										<div class="box1 col-lg-4 p-0">
+										<div class="box1 col-lg-12 col-xl-4 p-0">
 											<table class="table table-bordered mb-0">
 												<colgroup>
 													<col style="width: 100px; background: #fafafa;">
@@ -274,7 +276,7 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="box2 col-lg-4 p-0">
+										<div class="box2 col-lg-12 col-xl-4 p-0">
 											<table class="table table-bordered mb-0">
 												<colgroup>
 													<col style="width: 100px; background: #fafafa;">
@@ -326,7 +328,7 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="box3 col-lg-4 p-0">
+										<div class="box3 col-lg-12 col-xl-4 p-0">
 											<table class="table table-bordered mb-0">
 												<colgroup>
 													<col style="width: 100px; background: #fafafa;">
@@ -372,7 +374,7 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="box4 col-lg-8 p-0">
+										<div class="box4 col-lg-12 col-xl-8 p-0">
 											<table class="table table-bordered m-0 border-top-0">
 												<colgroup>
 													<col style="width: 100px; background: #fafafa;">
@@ -395,7 +397,7 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="box4-2 col-lg-4 p-0">
+										<div class="box4-2 col-lg-12 col-xl-4 p-0">
 											<table class="table table-bordered m-0 border-top-0">
 												<colgroup>
 													<col style="width: 100px; background: #fafafa;">
@@ -406,11 +408,11 @@
 													<td class="border-top-0">
 														<div class="i-checks" style="height: 1.45rem;">
 															<label class="pr-lg-3 mb-0">
-															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1"  ${custUpdate.INFOAGREE eq "0" ? "checked" : ""}><i></i> 동의</label> 
-																<label class="pr-lg-3 mb-0">
-																<input type="radio"
-																value="1" id="infoagree" name="infoagree" class="pr-lg-1"  ${custUpdate.INFOAGREE eq "1" ? "checked" : ""}><i></i>
-																거부</label>
+																<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1"  ${custUpdate.INFOAGREE eq "0" ? "checked" : ""}><i></i> 동의
+															</label> 
+															<label class="pr-lg-3 mb-0">
+																<input type="radio" value="1" id="infoagree" name="infoagree" class="pr-lg-1"  ${custUpdate.INFOAGREE eq "1" ? "checked" : ""}><i></i>거부
+															</label>
 														</div>
 													</td>
 												</tbody>
@@ -514,9 +516,9 @@
 												<tbody>
 													<tr>
 														<th class="border-top-0">메모</th>
-														<td class="border-top-0"><textarea name="memo"
-																id="memo" class="form-control"
-																style="resize: none; height: 8em;">${custUpdate.MEMO }</textarea></td>
+														<td class="border-top-0">
+															<textarea name="memo" id="memo" class="form-control" style="resize: none; height: 8em;">${custUpdate.MEMO }</textarea>
+														</td>
 													</tr>
 												</tbody>
 											</table>
@@ -528,6 +530,7 @@
 									</div>
 								</div>
 								</form:form>
+								
 								<div class="ibox">
 									<div class="ibox-title row border-0">
 										<h4>고객 상세</h4>
@@ -784,25 +787,15 @@
 	<!-- Jquery Validate -->
     <script src="/resources/js/plugins/validate/jquery.validate.min.js"></script>
     <script>
+    //유효성 체크용 변수
     var namePattern = /^[가-힣a-zA-Z]{2,30}$/; //한글 영문 2~30글자
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
 	var addrPattern = /^[가-힣a-zA-Z0-9]{2,30}$/; //한글 영문 숫자 2~30 
 	var numPattern = /\d/; //숫자
 	var domain = /^[^((http(s?))\:\/\/)]{0,30}$/; //http 포함하면 안됨 
     
-    
-    //공백입력금지
-	 function noSpaceForm(obj) { // 공백사용못하게
-        var str_space = /\s/;  // 공백체크
-        if(str_space.exec(obj.value)) { //공백 체크            
-            obj.focus();
-            obj.value = obj.value.replace(' ',''); // 공백제거
-            return false;
-        }
-    }
-    
         $(document).ready(function () {
-            // radioBox
+            // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
@@ -816,28 +809,26 @@
                 calendarWeeks: true,
                 autoclose: true
             });
-
+            
+        	//주소 받아오기
             $('.daumzip').click(function(e){
-   			 
-   		     //obj => button 정보
-   		     new daum.Postcode({
-   		         oncomplete: function(data) {
-   		        	
-   		        	if (e.currentTarget.id == 'wrkaddr1'){
-   		        		$('#WRKADDR1').val(data.zonecode);
-   		        		$('#WRKADDR2').val(data.roadAddress);
-   		        		$('#WRKADDR3').val(data.buildingName);
-   		        	}else if(e.currentTarget.id == 'homaddr1'){
-   		        		$('#HOMADDR1').val(data.zonecode);
-   		        		$('#HOMADDR2').val(data.roadAddress);
-   		        		$('#HOMADDR3').val(data.buildingName);
-   		        	}
-               
-   		         	}
-   		     	}).open();
-   		 	});
+      			 
+      		     new daum.Postcode({
+      		         oncomplete: function(data) {
+      		      
+      		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
+      		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
+      		        	
+      		        	$("#"+head+"addr1").val(data.zonecode);
+    		        	$("#"+head+"addr2").val(data.roadAddress);
+    		        	$("#"+head+"addr3").val(data.buildingName);
+                  
+      		         }
+      		     }).open();
+      		 });
         
-          	//유효성 검사용 커스텀 메서드
+          	//validation.js 플러그인용 커스텀 메서드
+          	//rules 요소값에 정규표현식을 선언하면 해당 규칙으로 검사한다. 사용예시 하단참고 
        	 	$.validator.addMethod("regx",function(value,element,regexpr){
             	return regexpr.test(value);
             })   
@@ -871,9 +862,7 @@
             	}
             });
             
-        
-            
-                         
+                        
         });
     </script>
 	<!-- E: 추가 js -->

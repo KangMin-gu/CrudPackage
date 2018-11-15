@@ -64,11 +64,14 @@
 				<div class="wrapper wrapper-content  animated fadeInRight article">
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12" style="background: #ffffff;">
+							
 							<div class="ibox">
 								<div class="ibox-title row">
 									<h4>기본정보</h4>
 								</div>
+								
 								<div class="ibox-content row">
+									
 									<div class="w-100 text-right mb-2">
 									<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
@@ -77,6 +80,7 @@
 										<a href="/cust/post" class="btn btn-primary">목 록</a>
 									</form:form>
 									</div>
+									
 									<div class="box1 col-lg-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
@@ -195,11 +199,10 @@
 									<div class="ibox-title row border-0">
 										<h4>부가정보</h4>
 	                                <div class="ibox-tools">
-	                                    <a class="collapse-link">
-	                                        <i class="fa fa-chevron-up"></i>
-	                                    </a>
+	                                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>  </a>
 	                                </div>
 									</div>
+									
 									<div class="ibox-content row">
 										<div class="box1 col-lg-4 p-0">
 											<table class="table table-bordered mb-0">
@@ -323,7 +326,7 @@
 														<th>활동등급</th>
 														<td>
 															<c:choose>
-																<c:when test="${custDetail.ACTGRADE==1}">우수</c:when>
+																<c:when test="${custDetail.ACTGRADE eq 1 }">우수</c:when>
 																<c:otherwise>
 																</c:otherwise>
 															</c:choose>
@@ -361,9 +364,7 @@
 															<label class="pr-lg-3 mb-0">
 															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ${custDetail.INFOAGREE eq "0" ? "checked" : ""} disabled="disabled"><i></i> 동의 </label> 
 																<label class="pr-lg-3 mb-0">
-																<input type="radio"
-																value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${custDetail.INFOAGREE eq "1" ? "checked" : ""} disabled="disabled"><i></i>
-																거부</label>
+																<input type="radio" value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${custDetail.INFOAGREE eq "1" ? "checked" : ""} disabled="disabled"><i></i>거부</label>
 														</div>
 													</td>
 												</tbody>
@@ -390,7 +391,7 @@
 																<label for="emailChec2"> 세미나</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="emailChec3" type="checkbox" class="i-checks" ${custDetail.DENYMAILAD eq "1" ? "checked='checked'" : ""} disabled="disabled">
+																<input id="emailChec3" type="checkbox" class="i-checks"  disabled="disabled" ${custDetail.DENYMAILAD eq "1" ? "checked='checked'" : ""}>
 																<label for="emailChec3"> 광고 </label>
 															</div>
 														</td>
@@ -467,9 +468,9 @@
 												<tbody>
 													<tr>
 														<th class="border-top-0">메모</th>
-														<td class="border-top-0"><textarea name="memo"
-																id="memo" class="form-control"
-																style="resize: none; height: 8em;" readonly>${custDetail.MEMO}</textarea></td>
+														<td class="border-top-0">
+															<textarea name="memo" id="memo" class="form-control" style="resize: none; height: 8em;" readonly>${custDetail.MEMO}</textarea>
+														</td>
 													</tr>
 												</tbody>
 											</table>
@@ -481,6 +482,7 @@
 										</div>
 									</div>
 								</div>
+								
 								<div class="ibox">
 									<div class="ibox-title row border-0">
 										<h4>고객 상세</h4>
@@ -489,16 +491,14 @@
 										<div class="box1 col-lg-12 p-0">
 											<div class="tabs-container">
 												<ul class="nav nav-tabs" role="tablist">
-													<li><a class="nav-link active" data-toggle="tab"
-														href="#tab1">서비스</a></li>
+													<li><a class="nav-link active" data-toggle="tab" href="#tab1">서비스</a></li>
 													<li><a class="nav-link" data-toggle="tab" href="#tab2">영업</a></li>
 													<li><a class="nav-link" data-toggle="tab" href="#tab3">캠페인</a></li>
 													<li><a class="nav-link" data-toggle="tab" href="#tab4">접촉</a></li>
 													<li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li>
 												</ul>
 												<div class="tab-content">
-													<div role="tabpanel" id="tab1"
-														class="tab-pane active overflow-x">
+													<div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
 														<div class="panel-body">
 															<table class="table table-bordered">
 																<thead>
@@ -731,7 +731,7 @@
 
 	<script>
         $(document).ready(function () {
-            // radioBox
+            // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common">
+	
+	<select id="totalcntUser" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM TB980010
+		WHERE 
+			SITEID = #{siteid}
+			AND ISDELETE = 0
+			<if test="username != null">
+			AND USERNAME like '%'+#{username}+'%'
+			</if>
+	</select>
+	
+	<select id="popUserList" parameterType="hashMap" resultType="hashMap">
+		SELECT * 
+		FROM  
+			(
+			SELECT 
+			ROW_NUMBER() OVER(ORDER BY USERNAME) AS ROWNUM
+			,USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
+			FROM TB980010
+			WHERE 
+				SITEID= #{siteid}
+				AND ISDELETE = 0
+				<if test="username != null">
+				AND USERNAME like '%'+#{username}+'%'
+				</if>
+			) T
+		WHERE 
+			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}
+		
+	</select>
+	
+	<select id="totalcntClient" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM TB200010
+		WHERE 
+			SITEID = #{siteid}
+			AND ISDELETE = 0
+			<if test="cliname != null">
+			AND CLINAME like '%'+#{cliname}+'%'
+			</if>
+	</select>
+	
+	<select id="popClientList" parameterType="hashMap" resultType="hashMap">
+	SELECT * 
+	FROM  
+		(
+		SELECT 
+		ROW_NUMBER() OVER(ORDER BY A.CLINAME) AS ROWNUM
+		,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
+		,B.USERNAME 
+		FROM TB200010 A
+		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+		WHERE 
+			A.SITEID= #{siteid}
+			AND A.ISDELETE = 0
+			<if test="cliname != null">
+			AND CLINAME like '%'+#{cliname}+'%'
+			</if>
+		) T
+	WHERE 
+		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
+	</select>
+	
+</mapper>

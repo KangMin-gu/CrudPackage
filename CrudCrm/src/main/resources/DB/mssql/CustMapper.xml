@@ -103,7 +103,7 @@
 
 	
 	
-	<select id="custDetail" parameterType="int" resultType="hashMap">
+	<select id="custDetail" parameterType="hashMap" resultType="hashMap">
 		SELECT
 		A.CUSTNO
 		,A.CUSTNAME,A.COMPANY, A.DEPTNAME
@@ -141,7 +141,9 @@
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
 		LEFT OUTER JOIN TB200010 D ON A.CLINO = D.CLINO  
 		WHERE 
-		A.CUSTNO = #{custno}
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0
+		AND A.CUSTNO = #{custno}
 	</select>
 
 	<select id="custUpdateForm" parameterType="int" resultType="hashMap">
@@ -394,62 +396,5 @@
 		DENYNO = #{denyno}		
 	</update>
 	
-	
-	<select id="totalcntUser" parameterType="hashMap" resultType="int">
-		SELECT COUNT(*)
-		FROM TB980010
-		WHERE SITEID = #{siteid}
-			<if test="username != null">
-			AND USERNAME like '%'+#{username}+'%'
-			</if>
-	</select>
-	
-	<select id="popUserList" parameterType="hashMap" resultType="hashMap">
-		SELECT * 
-		FROM  
-			(
-			SELECT 
-			ROW_NUMBER() OVER(ORDER BY USERNAME) AS ROWNUM
-			,USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
-			FROM TB980010
-			WHERE 
-				SITEID= #{siteid}
-				<if test="username != null">
-				AND USERNAME like '%'+#{username}+'%'
-				</if>
-			) T
-		WHERE 
-			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}
-		
-	</select>
-	
-	<select id="totalcntClient" parameterType="hashMap" resultType="int">
-		SELECT COUNT(*)
-		FROM TB200010
-		WHERE SITEID = #{siteid}
-			<if test="cliname != null">
-			AND CLINAME like '%'+#{cliname}+'%'
-			</if>
-	</select>
-	
-		<select id="popClientList" parameterType="hashMap" resultType="hashMap">
-		SELECT * 
-		FROM  
-			(
-			SELECT 
-			ROW_NUMBER() OVER(ORDER BY A.CLINAME) AS ROWNUM
-			,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
-			,B.USERNAME 
-			FROM TB200010 A
-			LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
-			WHERE 
-				A.SITEID= #{siteid}
-				<if test="cliname != null">
-				AND CLINAME like '%'+#{cliname}+'%'
-				</if>
-			) T
-		WHERE 
-			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
-	</select>
 	
 </mapper>

@@ -59,8 +59,9 @@ public class CustController {
 	@RequestMapping(value="/cust/view/{custno}", method=RequestMethod.GET)
 	public ModelAndView authcustDetail(HttpServletRequest request 
 								 ,@PathVariable int custno) {
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		ModelAndView mView = new ModelAndView();
-		mView.addObject("custDetail",custService.svcCustDetail(custno));
+		mView.addObject("custDetail",custService.svcCustDetail(custno,siteid));
 		mView.setViewName("cu/custdetail");
 		return mView;
 	}
@@ -93,8 +94,7 @@ public class CustController {
 		return "redirect:/cust/view/"+res;
 	}
 	
-	
-	
+
 	//고객 insert 폼 	
 	@RequestMapping(value="/cust/post", method=RequestMethod.GET)
 	public ModelAndView authcustForm(HttpServletRequest request) {
@@ -112,23 +112,7 @@ public class CustController {
 		return "redirect:/cust/view/"+res;
 	}
 
-		
-	//담당자팝업
-	@RequestMapping(value="/popowner", method=RequestMethod.GET)
-	public ModelAndView authpopUser(HttpServletRequest request) {			
-		ModelAndView mav = custService.svcPopGetUserName(request);
-		mav.setViewName("cm/popowner");
-		return mav;
-	}
-		
-	//거래처팝업
-	@RequestMapping(value="/popclient", method=RequestMethod.GET)
-	public ModelAndView authpopClient(HttpServletRequest request) {			
-		ModelAndView mav = custService.svcPopGetClientName(request);
-		mav.setViewName("cm/popclient");
-		return mav;
-	}
-		
+
 		
 
 

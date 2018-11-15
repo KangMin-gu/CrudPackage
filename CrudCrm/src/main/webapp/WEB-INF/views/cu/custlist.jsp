@@ -74,8 +74,8 @@
 									</div>
 									<div class="row"><br><br></div>
 								
-									<div class="box1 col-lg-6 p-0">
-										<table class="table table-bordered">
+									<div class="box1 col-lg-12 col-xl-6 p-0">
+										<table class="table table-bordered mb-0">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
 												<col style="width: auto;">
@@ -93,7 +93,6 @@
 													<th>담당자</th>
 													<td>
 														<div class="input-group">
-															<!--인풋창x -> static 이나 span 창으로 변경 -->
 															<input type="text" class="form-control" id="ownername" name="ownername" value="${searchVal.ownername}" readonly onClick="openPop('/popowner','owner',600,700);" > 
 															<input type="hidden" id="owner" name="owner" value="${searchVal.owner}">
 															<span class="input-group-addon"> 
@@ -137,7 +136,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="box2 col-lg-6 p-0">
+									<div class="box2 col-lg-12 col-xl-6 p-0">
 										<table class="table table-bordered">
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
@@ -158,7 +157,7 @@
 															<option value="2" ${searchVal.custgubun eq "2" ? "selected" :""}>비회원</option>
 															<option value="3" ${searchVal.custgubun eq "3" ? "selected" :""}>탈퇴회원</option>
 													</select></td>													
-													<!-- todo. form:select로 변경 -->
+													
 													<th>고객등급</th>
 													<td><select class="form-control" id="custgrade" name="custgrade" style="height: 1.45rem;">
 															<option value="0" ${searchVal.custgrade eq "0" ? "selected" :""}>선택</option>
@@ -166,20 +165,20 @@
 															<option value="2" ${searchVal.custgrade eq "2" ? "selected" :""}>VIP</option>
 															<option value="3" ${searchVal.custgrade eq "3" ? "selected" :""}>VVIP</option>												
 													</select></td>
-													<!-- todo. form:select로 변경 -->
+													
 												</tr>
 												<tr>
 													<th>정보활용</th>
 													<td colspan="3">
 														<div class="i-checks" style="height: 1.60rem;">
 															<label class="pr-lg-3 mb-0">
-															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ><i></i> 동의</label> 
+															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ${searchVal.infoagree eq "0" ? "checked='checked'" :""} ><i></i> 동의</label> 
 																<label class="pr-lg-3 mb-0">
 																<input type="radio"
-																value="1" id="infoagree" name="infoagree" class="pr-lg-1"><i></i>
+																value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree eq "1" ? "checked='checked'" :""}><i></i>
 																거부</label>
 																<label class="mb-0"><input type="radio"
-																value="2" id="infoagree" name="infoagree" class="pr-lg-1"><i></i>
+																value="2" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree gt "1" ? "checked='checked'" :""}><i></i>
 																전체</label>
 														</div>
 													</td>
@@ -205,6 +204,9 @@
 								</div>
 								<div class="table-responsive">
 									<table class="table table-bordered table-hover">
+										<colgroup>
+											<col style="width: 50px; background: #fafafa;">
+										</colgroup>		
 										<thead>
 											<tr>
 												<th>
@@ -224,7 +226,7 @@
 												<th>등록일</th>
 											</tr>
 										</thead>
-										<!--이곳에 foreach-->
+										
 										<tbody>
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
@@ -244,22 +246,22 @@
 												<td>${list.OWNERNAME}</td>
 												<td>
 												<c:choose>
-													<c:when test="${list.CUSTGUBUN==1}">회원</c:when>
-													<c:when test="${list.CUSTGUBUN==2}">비회원</c:when>
-													<c:when test="${list.CUSTGUBUN==3}">탈퇴회원</c:when>
+													<c:when test="${list.CUSTGUBUN eq 1 }">회원</c:when>
+													<c:when test="${list.CUSTGUBUN eq 2 }">비회원</c:when>
+													<c:when test="${list.CUSTGUBUN eq 3 }">탈퇴회원</c:when>
 												</c:choose>
 												</td>
 												<td>
 												<c:choose>
-													<c:when test="${list.CUSTGRADE==1}">일반</c:when>
-													<c:when test="${list.CUSTGRADE==2}">VIP</c:when>
-													<c:when test="${list.CUSTGRADE==3}">VVIP</c:when>
+													<c:when test="${list.CUSTGRADE eq 1 }">일반</c:when>
+													<c:when test="${list.CUSTGRADE eq 2 }">VIP</c:when>
+													<c:when test="${list.CUSTGRADE eq 3 }">VVIP</c:when>
 												</c:choose>
 												</td>
 												<td>
 												<c:choose>
-													<c:when test="${list.INFOAGREE==0}">동의</c:when>
-													<c:when test="${list.INFOAGREE==1}">거부</c:when>
+													<c:when test="${list.INFOAGREE eq 0 }">동의</c:when>
+													<c:when test="${list.INFOAGREE eq 1 }">거부</c:when>
 												</c:choose>
 												</td>
 												<td>${list.REGDATE }</td>
@@ -278,7 +280,7 @@
 										<c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
 												<li class="footable-page-arrow disabled">	
-													<a href="#" onclick="paging(${page.startPageNum-1 });">&laquo;</a>
+													<a href='/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -286,17 +288,19 @@
 												</li>
 											</c:otherwise>
 										</c:choose>
-										
+								
 										<c:forEach var="i" begin="${page.startPageNum }"
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="footable-page active">
-													<a href="#"onclick="paging(${i });">${i }</a>
+													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
 													</li>
 												</c:when>
 												<c:otherwise>
-													<li><a href="#"onclick="paging(${i });">${i }</a></li>
+													<li>
+													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													</li>
 														
 												</c:otherwise>
 											</c:choose>
@@ -304,7 +308,8 @@
 										
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
-												<li><a href="#"onclick="paging(${page.endPageNum+1 });">&raquo;</a>
+												<li>
+												<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.endPageNum+1 }'>&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -356,35 +361,15 @@
 
 
 	<script>
-	/*
-	//page 버튼 클릭 이벤트 
-	function paging(prm){//파라미터로 클릭한 페이지 번호를 받아온다
-		var htmlStr = '<input type="hidden" id="pageNum" name="pageNum" value="'+prm+'">';
-		$('#selectpage').append(htmlStr);//form 안에 생성해둔 <span id ='selectpage'> 테그에 위의 값을 히든으로 넘긴다. 		
-		var form = document.getElementById('command');
-		form.submit();// 폼 submit		
-	}*/
-	
-	
-		$(document).ready(function() {			
-			//정보활용동의 값에 따른 라디오버튼 활성화 	
-			$("input:radio[name=infoagree][value=" + '<c:out value="${ searchVal.infoagree }"/>' + "]").attr("checked","checked");
+
+		$(document).ready(function() {	
 			
-			// radioBox
+			// icecks
 			$('.i-checks').iCheck({
 				checkboxClass : 'icheckbox_square-green',
 				radioClass : 'iradio_square-green'
 			});
 			
-			//checkbox 전체 선택/해제 이벤트
- 			$('#icheckAll').on('ifChecked', function(event){
-				$('.chksquare').iCheck('check'); 
-			});
-			$('#icheckAll').on('ifUnchecked', function(event){
-				$('.chksquare').iCheck('uncheck'); 
-			});
-
-	    		   	
 			// datePicker
 			$('.date.date01, .date.date02').datepicker({
 				todayBtn : "linked",
@@ -393,11 +378,20 @@
 				calendarWeeks : true,
 				autoclose : true
 			});
+			
+
+			//checkbox 전체 선택/해제 이벤트
+ 			$('#icheckAll').on('ifChecked', function(event){
+				$('.chksquare').iCheck('check'); 
+			});
+			$('#icheckAll').on('ifUnchecked', function(event){
+				$('.chksquare').iCheck('uncheck'); 
+			});
+
 
 			// 서치박스 리셋 라디오,셀렉스박스 제어를 위해 개별 파라미터 설정
 			$("#searchResetBtn").click(function(e) {
 				
-
 					$('#custname').val('');
 					$('#mobile').val('');
 					$('#email').val('');
@@ -409,14 +403,23 @@
 					$('#custgrade').val(0);
 					$('#fromregdt').val('');
 					$('#toregdt').val('');
-					$('#infoagree').iCheck('check');				
-				
+					$('#infoagree').iCheck('check');								
 			});
 			
 									
-		});//redyfunction끝     
+		});//redy function 끝      
 		
-		
+	/*	
+	//공백입력금지
+	function noSpaceForm(obj) { 
+	    var str_space = /\s/;  // 공백체크
+	    if(str_space.exec(obj.value)) { //공백 체크            
+	        obj.focus();
+	        obj.value = obj.value.replace(' ',''); // 공백제거
+	        return false;
+	    }
+	}
+	*/				
 		
 	</script>
 	

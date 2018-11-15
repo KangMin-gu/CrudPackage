@@ -18,7 +18,7 @@ public interface CustService {
 	
 	public int svcCustDelete(HttpServletRequest request);
 		
-	public Map<String,Object> svcCustDetail(int CUSTNO);
+	public Map<String,Object> svcCustDetail(int custno, int siteid);
 	
 	public Map<String,Object> svcCustUpdateForm(int CUSTNO);
 	
@@ -27,9 +27,5 @@ public interface CustService {
 	public ModelAndView svcCustForm(HttpServletRequest request);
 	
 	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto);
-	
-	public ModelAndView svcPopGetUserName(HttpServletRequest request);
-	
-	public ModelAndView svcPopGetClientName(HttpServletRequest request);
 	
 }

@@ -87,13 +87,14 @@ body {
 						</table>
 					</div>
 					</form:form>
-					
+		
 					<div class="m-auto">
 						<ul class="pagination">
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
-									<li class="footable-page-arrow disabled"><a href="#"
-										onclick="paging(${page.startPageNum-1 });">&laquo;</a></li>
+									<li class="footable-page-arrow disabled">
+										<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${page.startPageNum-1 }">&laquo;</a>
+									</li>
 								</c:when>
 								<c:otherwise>
 									<li class="disabled"><a href="javascript:">&laquo;</a></li>
@@ -104,11 +105,14 @@ body {
 								end="${page.endPageNum }">
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
-										<li class="footable-page active"><a href="#"
-											onclick="paging(${i });">${i }</a></li>
+										<li class="footable-page active">
+											<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${i }">${i }</a>
+										</li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="#" onclick="paging(${i });">${i }</a></li>
+										<li>									
+											<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${i }">${i }</a>
+										</li>
 
 									</c:otherwise>
 								</c:choose>
@@ -116,7 +120,8 @@ body {
 
 							<c:choose>
 								<c:when test="${page.endPageNum lt page.totalPageCount }">
-									<li><a href="#" onclick="paging(${page.endPageNum+1 });">&raquo;</a>
+									<li>
+										<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${page.endPageNum+1 }">&raquo; </a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -138,7 +143,7 @@ body {
 	
 	<script>
 	
-		
+	//호출한 부모창에 값 전달	
 	function toParentClient(prm1,prm2){
 		opener.document.getElementById('clino').value= prm1;
 		opener.document.getElementById('cliname').value= prm2;

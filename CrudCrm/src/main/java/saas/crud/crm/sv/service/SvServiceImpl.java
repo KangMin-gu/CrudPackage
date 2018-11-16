@@ -1,7 +1,5 @@
 package saas.crud.crm.sv.service;
 
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
@@ -27,22 +26,9 @@ public class SvServiceImpl implements SvService{
 	public ModelAndView svList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		Map<String,Object> search = new HashMap<>();
+		SearchRequest searchRequest = new SearchRequest();
 		
-		Enumeration params = request.getParameterNames();
-		
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			search.put(name, value);
-		}
-		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		
-		search.put("siteid",SITEID);
+		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = svDao.svTotalRows(search);
 		int PAGE_ROW_COUNT = 20;
@@ -92,24 +78,12 @@ public class SvServiceImpl implements SvService{
 		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int CHKAUTH = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
-		
-		Enumeration params = request.getParameterNames();
-		
-		Map<String,Object> data = new HashMap<>();
 		String ractdate = request.getParameter("ractdate");
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			data.put(name, value);
-		}
+
+		SearchRequest searchRequest = new SearchRequest();
 		
-		data.put("siteid", SITEID);
+		Map<String, Object> data = searchRequest.Search(request);
 		data.put("edtuser", USERNO);
-		data.put("reguser", USERNO);
-		
 		//권한이 10, 즉 사용자 권한이면 처리정보만 update 처리
 		if(CHKAUTH == 10) {
 			svDao.svUpdate(data);
@@ -119,7 +93,8 @@ public class SvServiceImpl implements SvService{
 		}
 		
 		if(ractdate !="") {
-			svDao.svRactInser(data);
+			data.put("reguser", USERNO);
+			svDao.svRactInsert(data);
 		}
 	}
 
@@ -129,22 +104,12 @@ public class SvServiceImpl implements SvService{
 		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		Enumeration params = request.getParameterNames();
-		
-		Map<String,Object> data = new HashMap<>();
 		String ractdate = request.getParameter("ractdate");
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			data.put(name, value);
-		}
-		data.put("siteid", SITEID);
-		data.put("reguser", USERNO);
-		data.put("edtuser", USERNO);
 		
+
+		SearchRequest searchRequest = new SearchRequest();
+		
+		Map<String, Object> data = searchRequest.Search(request);
 		
 		rcvDto.setSiteid(SITEID);
 		rcvDto.setReguser(USERNO);
@@ -152,12 +117,13 @@ public class SvServiceImpl implements SvService{
 		
 		int rcvNo = svDao.svInsert(rcvDto);
 		
+		data.put("reguser", USERNO);
+		data.put("edtuser", USERNO);
+		
 		if(ractdate != "") {
 			data.put("rcvno", rcvNo);
-			svDao.svRactInser(data);
+			svDao.svRactInsert(data);
 		}
-
-		//int serviceNo = svDao.svInsert(svDto);
 		
 		return rcvNo;
 	}
@@ -190,7 +156,6 @@ public class SvServiceImpl implements SvService{
 		svDto.setSiteid(SITEID);
 		svDto.setEdtuser(USERNO);
 		
-		
 		int length = sCheck.length;
 		
 		for(int i = 0; i < length; i++) {
@@ -204,7 +169,6 @@ public class SvServiceImpl implements SvService{
 	@Override
 	public List<Map<String, Object>> svTabRact(HttpServletRequest request, int rcvno) {
 		// TODO Auto-generated method stub
-		
 		
 		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -240,8 +204,6 @@ public class SvServiceImpl implements SvService{
 		conveyDto.setSiteid(SITEID);
 		conveyDto.setReguser(USERNO);
 		conveyDto.setEdtuser(USERNO);
-		
-		
 		
 		svDao.conveyInsert(conveyDto);
 		

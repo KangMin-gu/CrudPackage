@@ -102,9 +102,8 @@
 													</td>
 													<th>직장명</th>
 													<td>
-														<div class="input-group">
-															<input type="text" class="form-control" id="cliname" name="cliname" value="${searchVal.cliname }" 
-															onClick="openPop('/popclient','popclient',600,700);" readonly> 
+														<div class="input-group cli">
+															<input type="text" class="form-control" id="cliname" name="cliname" value="${searchVal.cliname }" readonly> 
 															<input type="hidden" id="clino" name="clino" value="${searchVal.clino}">
 															<span class="input-group-addon"> 
 																<a href="#" onClick="openPop('/popclient','popclient',600,700);"><i class="fa fa-search"></i></a>

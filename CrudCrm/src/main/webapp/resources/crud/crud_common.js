@@ -12,10 +12,7 @@
     	e.preventDefault();
     	$('.reset').val('');
     });
-
-
     
-
     $('thead .i-checks').on('ifChecked',function(event){
     	$('tbody .i-checks').parent().addClass('checked');
     });
@@ -27,6 +24,11 @@
 	$('.owner').click(function(e){
 		openNewWindow('담당자','/common/user',e.target.id,650,700);
 	});
+	$('.cli').click(function(e){
+		openNewWindow('거래처','/popclient',e.target.id,600,700);
+	});
+	
+	
 	var newWindow = null;
     // 부모 window 가 실행
 	function openNewWindow(name,url,target,x,y){
@@ -107,13 +109,7 @@
         // 폼 submit
         form.submit();
      }
-
-    //팝업창열기 메서드
-    function openPop(url,target,width,height){
-    	var property = "width="+width+", height="+height+",top=300,menubar=no,location=no, status=no,toolbar=no,scrollbars=yes";
-    	window.open(url,target,property);
-    }
-
+    
     function today(){
     	
     	var today = new Date();

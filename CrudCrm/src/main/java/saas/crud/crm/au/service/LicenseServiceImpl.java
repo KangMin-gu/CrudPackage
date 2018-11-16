@@ -12,7 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dto.LicenseDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
 
 @Service
 public class LicenseServiceImpl implements LicenseService{
@@ -26,15 +27,9 @@ public class LicenseServiceImpl implements LicenseService{
 		
 		ModelAndView mView = new ModelAndView();
 		
-		String licenseName = request.getParameter("licensename");
+		SearchRequest searchRequest = new SearchRequest();
 		
-		Map<String,Object> search = new HashMap<>();
-		
-		if(licenseName =="") {
-			licenseName = null;
-		}
-
-		search.put("licensename", licenseName);
+		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = licenseDao.licenseTotalRow(search);
 		

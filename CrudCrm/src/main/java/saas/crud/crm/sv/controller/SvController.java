@@ -24,72 +24,72 @@ public class SvController {
 	@Autowired
 	SvService svService;
 	
-	@RequestMapping(value="/sv",method=RequestMethod.GET)
+	@RequestMapping(value="/service",method=RequestMethod.GET)
 	public ModelAndView authSvList(HttpServletRequest request) {
 		ModelAndView mView = svService.svList(request);
 		mView.setViewName("sv/svList");
 		return mView;
 	}
-	@RequestMapping(value="/sv",method=RequestMethod.POST)
+	@RequestMapping(value="/service",method=RequestMethod.POST)
 	public ModelAndView authSvSearchList(HttpServletRequest request) {
 		ModelAndView mView = svService.svList(request);
 		mView.setViewName("sv/svList");
 		return mView;
 	}
-	@RequestMapping(value="/sv/{rcvno}",method=RequestMethod.GET)
+	@RequestMapping(value="/service/{rcvno}",method=RequestMethod.GET)
 	public ModelAndView authSvRead(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
 		mView.setViewName("sv/svRead");
 		return mView;
 	}
-	@RequestMapping(value="/sv/post/{rcvno}",method=RequestMethod.GET)
+	@RequestMapping(value="/service/post/{rcvno}",method=RequestMethod.GET)
 	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
 		mView.setViewName("sv/svUpdate");
 		return mView;
 	}
-	@RequestMapping(value="/sv/post/{rcvno}",method=RequestMethod.PUT)
+	@RequestMapping(value="/service/post/{rcvno}",method=RequestMethod.PUT)
 	public ModelAndView authSvUpdateSet(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = new ModelAndView();
 		svService.svUpdate(request);
-		mView.setViewName("redirect:/sv/"+rcvno);
+		mView.setViewName("redirect:/service/"+rcvno);
 		return mView;
 	}
 	
-	@RequestMapping(value="/sv/post", method=RequestMethod.GET)
+	@RequestMapping(value="/service/post", method=RequestMethod.GET)
 	public ModelAndView authSvInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("sv/svInsert");
 		
 		return mView;
 	}
-	@RequestMapping(value="/sv/post", method=RequestMethod.POST)
+	@RequestMapping(value="/service/post", method=RequestMethod.POST)
 	public ModelAndView authSvInsertSet(HttpServletRequest request, @ModelAttribute RcvDto rcvDto) {
 		ModelAndView mView = new ModelAndView();
 		
 		int rcvNo = svService.svInsert(request,rcvDto);
 		
-		mView.setViewName("redirect:/sv/"+rcvNo);
+		mView.setViewName("redirect:/service/"+rcvNo);
 		
 		return mView;
 	}
-	@RequestMapping(value="/sv/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/service/delete", method=RequestMethod.POST)
 	public ModelAndView authSvMultiDelete(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		
 		svService.svMultiDelete(request);
 		
-		mView.setViewName("redirect:/sv");
+		mView.setViewName("redirect:/service");
 		
 		return mView;
 	}
-	@RequestMapping(value="/sv/{rcvno}", method=RequestMethod.POST)
+	@RequestMapping(value="/service/{rcvno}", method=RequestMethod.POST)
 	public ModelAndView authSvDelete(HttpServletRequest request,@PathVariable int rcvno) {
 		ModelAndView mView = new ModelAndView();
 		
 		svService.svDelete(request,rcvno);
 		
-		mView.setViewName("redirect:/sv");
+		mView.setViewName("redirect:/service");
 		
 		return mView;
 	}

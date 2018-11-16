@@ -31,26 +31,26 @@ public class MenuController {
 	@Autowired
 	LicenseService licenseService;
 	// LIST
-	@RequestMapping(value = "/menu", method=RequestMethod.GET)
+	@RequestMapping(value = "/ma/menu", method=RequestMethod.GET)
 	public ModelAndView authMenuList(HttpServletRequest request) {
 		ModelAndView mView = menuService.menuList(request);
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
-	@RequestMapping(value = "/menu", method=RequestMethod.POST)
+	@RequestMapping(value = "/ma/menu", method=RequestMethod.POST)
 	public ModelAndView authMenuSearchList(HttpServletRequest request) {
 		ModelAndView mView = menuService.menuList(request);
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
 	@ResponseBody
-	@RequestMapping(value="/menu/{menuno}",method=RequestMethod.GET)
+	@RequestMapping(value="/ma/menu/{menuno}",method=RequestMethod.GET)
 	public Map<String,Object> authMenuRead(HttpServletRequest request, @PathVariable int menuno) { 
 		Map<String,Object> menuInfo = menuService.menuRead(request, menuno);
 		return menuInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value = "/menu/post", method=RequestMethod.POST)
+	@RequestMapping(value = "/ma/menu/post", method=RequestMethod.POST)
 	public Map<String,Object> authMenuInsertSet(HttpServletRequest request, @ModelAttribute MenuDto menuDto) {
 
 		
@@ -59,7 +59,7 @@ public class MenuController {
 		return menuInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/menu/post/{menuno}",method=RequestMethod.POST)
+	@RequestMapping(value="/ma/menu/post/{menuno}",method=RequestMethod.POST)
 	public Map<String,Object> authMenuUpdateSet(@ModelAttribute MenuDto menuDto,HttpServletRequest request) {
 		menuService.menuUpdate(request, menuDto);
 		
@@ -68,7 +68,7 @@ public class MenuController {
 		return menuInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/menu/{menuno}", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/menu/{menuno}", method=RequestMethod.POST)
 	public Map<String,Object> authmenuDelete(HttpServletRequest request, @PathVariable int menuno) {
 		menuService.menuDelete(request,menuno);
 		
@@ -78,12 +78,12 @@ public class MenuController {
 		
 	}
 	
-	@RequestMapping(value="/menu/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/menu/delete", method=RequestMethod.POST)
 	public ModelAndView authmenuMultiDelete(HttpServletRequest request) {
 		menuService.menuMultiDelete(request);
 		
 		ModelAndView mView = new ModelAndView();
-		mView.setViewName("redirect:/menu");
+		mView.setViewName("redirect:/ma/menu");
 		return mView;
 	}
 	

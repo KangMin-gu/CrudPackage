@@ -17,7 +17,7 @@ public interface SvDao {
 	
 	public int svInsert(RcvDto rcvDto);
 	
-	public void svRactInser(Map<String,Object> data);
+	public void svRactInsert(Map<String,Object> data);
 	
 	public void svUpdate(Map<String,Object> data);
 	

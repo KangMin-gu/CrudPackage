@@ -50,7 +50,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/user" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/ad/user" method="POST">
                         <div class="ibox-content row">
                            <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
@@ -142,11 +142,11 @@
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/user/delete" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/ad/user/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/user/post" class="btn btn-primary">추가</a>
+                                <a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
                                 <button class="btn btn-primary">삭제</button>
@@ -171,7 +171,7 @@
                                 <c:forEach var="user" items="${user }">
                                     <tr>
                                         <td><input type="checkbox" class="i-checks" name="userno" id="userno" value="${user.USERNO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/user/${user.USERNO }">${user.USERNAME}</a></td>
+                                        <td><a href="${pagecontext.request.contextpath}/ad/user/${user.USERNO }">${user.USERNAME}</a></td>
                                         <td>${user.USERID }</td>
                                         <td>${user.DEPT_ }</td>
                                         <td>${user.USERDUTY }</td>

@@ -50,7 +50,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/sv" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/service" method="POST">
                         <div class="ibox-content row">
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -181,11 +181,11 @@
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/sv/delete" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/service/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/sv/post" class="btn btn-primary">추가</a>
+                                <a href="${pageContext.request.contextPath}/service/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
                                 <button class="btn btn-primary">삭제</button>
@@ -212,7 +212,7 @@
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
                                         <td><input type="checkbox" class="i-checks" name="rcvno" id="rcvno" value="${svList.RCVNO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/sv/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+                                        <td><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
                                         <td>${svList.RCVTYPE_ }</td>
                                         <td>${svList.RACTCODE_ }</td>
                                         <td>${svList.CUSTNO_ }</td>

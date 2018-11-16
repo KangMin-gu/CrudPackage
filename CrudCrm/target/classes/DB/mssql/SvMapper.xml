@@ -62,7 +62,7 @@
 	
 	<select id="totalRows" parameterType="String" resultType="int">
 		SELECT count(*) from Crud_SaaS.dbo.T_RCV A 
-		LEFT OUTER JOIN Crud_SaaS.dbo.T_RACT B ON B.RCVNO = A.RCVNO
+		LEFT OUTER JOIN (SELECT TOP 1 * FROM Crud_SaaS.dbo.T_RACT ORDER BY RACTNO DESC) B ON B.RCVNO = A.RCVNO
 		WHERE A.SITEID = #{siteid}
 		AND A.ISDELETE = 0
 			<if test="strDate != null">

@@ -63,7 +63,7 @@ public class SvDaoImpl implements SvDao{
 	}
 
 	@Override
-	public void svRactInser(Map<String, Object> data) {
+	public void svRactInsert(Map<String, Object> data) {
 		// TODO Auto-generated method stub
 		
 		session.insert("sv.ractinsert",data);

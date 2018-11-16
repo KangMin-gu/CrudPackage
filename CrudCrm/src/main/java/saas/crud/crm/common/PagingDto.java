@@ -1,4 +1,4 @@
-package saas.crud.crm.common.dto;
+package saas.crud.crm.common;
 
 public class PagingDto {
 	

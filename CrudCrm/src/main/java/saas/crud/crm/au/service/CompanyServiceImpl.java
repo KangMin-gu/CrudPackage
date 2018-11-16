@@ -12,7 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.CompanyDao;
 import saas.crud.crm.au.dto.CompanyDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{
@@ -28,19 +29,9 @@ public class CompanyServiceImpl implements CompanyService{
 		//int SITEID = Integer.parseInt((String)request.getSession().getAttribute("SITEID"));
 		ModelAndView mView = new ModelAndView();
 		
+		SearchRequest searchRequest = new SearchRequest();
 		
-		Map<String, Object> search = new HashMap();
-		
-		Enumeration params = request.getParameterNames();
-		
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			search.put(name, value);
-		}
+		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = companyDao.companyTotalRows(search);
 		
@@ -129,22 +120,13 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public void companyLicenseInsert(HttpServletRequest request, int siteid) {
 		// TODO Auto-generated method stub
-		
-		
-		Map<String, Object> data = new HashMap();
-		
+
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		Enumeration params = request.getParameterNames();
+		SearchRequest searchRequest = new SearchRequest();
 		
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			data.put(name, value);
-		}
+		Map<String, Object> data = searchRequest.Search(request);
+		
 		data.put("reguser", USERNO);
 		data.put("edtuser", USERNO);
 		data.put("siteid", siteid);

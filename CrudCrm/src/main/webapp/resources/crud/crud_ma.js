@@ -35,7 +35,7 @@ function bodyReset(){
 	$('.body input').val('');
 }
 
-if(window.location.pathname == '/license') {
+if(window.location.pathname == '/ma/license') {
     var QueryString = window.location.pathname;
     btnFirst();
     
@@ -141,7 +141,7 @@ if(window.location.pathname == '/license') {
     });
 }
 
-if(window.location.pathname == '/menu') {
+if(window.location.pathname == '/ma/menu') {
     var QueryString = window.location.pathname;
     btnFirst();
     
@@ -258,7 +258,7 @@ if(window.location.pathname == '/menu') {
     });
 }
 
-if(window.location.pathname == '/code') {
+if(window.location.pathname == '/ad/code') {
     var QueryString = window.location.pathname;
     btnFirst();
     
@@ -375,7 +375,7 @@ if(window.location.pathname == '/code') {
     });
 }
 // /ma/mc가 포함되어있는 경로
-if(window.location.pathname.lastIndexOf('/company') == 0) {
+if(window.location.pathname.lastIndexOf('/ma/company') == 0) {
 	
 	var id = $('#siteid').val();
 	$('.nav-tabs .user').click(function(e){

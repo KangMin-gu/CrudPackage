@@ -37,10 +37,10 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/user">사용자목록</a>
+                            <a href="/ad/user">사용자목록</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/user/${user.USERNO }">사용자정보</a>
+                            <a href="/ad/user/${user.USERNO }">사용자정보</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>사용자수정</strong>
@@ -54,7 +54,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/user/menu" method="POST">
+<form:form action ="${pageContext.request.contextPath}/ad/user/menu" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -66,7 +66,7 @@
                         
                         <div class="ibox-content row">
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/user/${user.USERNO}" class="btn btn-primary">취소</a>
+                                <a href="${pageContext.request.contextPath}/ad/user/${user.USERNO}" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">

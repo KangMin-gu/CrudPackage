@@ -40,7 +40,7 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/user">사용자목록</a>
+                            <a href="/ad/user">사용자목록</a>
                         </li>
                     </ol>
                 </div>
@@ -63,9 +63,9 @@
                             <h1>회원정보</h1> 
                             <div class="step-content table-responsive">
                             	<div class="w-100 text-right mb-2">
-                                	<form:form action="${pageContext.request.contextPath}/user/${user.USERNO}" method="POST">
-                                		<a href="${pageContext.request.contextPath}/user" class="btn btn-primary">목록</a>
-                                		<a href="${pageContext.request.contextPath}/user/post/${user.USERNO}" class="btn btn-primary">수정</a>
+                                	<form:form action="${pageContext.request.contextPath}/ad/user/${user.USERNO}" method="POST">
+                                		<a href="${pageContext.request.contextPath}/ad/user" class="btn btn-primary">목록</a>
+                                		<a href="${pageContext.request.contextPath}/ad/user/post/${user.USERNO}" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 									</form:form>
                             	</div>
@@ -115,8 +115,8 @@
                             <h1>메뉴권한부여</h1>
                             <div class="step-content">
                             	<div class="w-100 text-right mb-2">
-                                		<a href="${pageContext.request.contextPath}/user" class="btn btn-primary">목록</a>
-                                		<a href="${pageContext.request.contextPath}/user/menu/${user.USERNO}" class="btn btn-primary">메뉴부여</a>
+                                		<a href="${pageContext.request.contextPath}/ad/user" class="btn btn-primary">목록</a>
+                                		<a href="${pageContext.request.contextPath}/ad/user/menu/${user.USERNO}" class="btn btn-primary">메뉴부여</a>
                             	</div>
 								<table class="table table-bordered">
                                     <colgroup>

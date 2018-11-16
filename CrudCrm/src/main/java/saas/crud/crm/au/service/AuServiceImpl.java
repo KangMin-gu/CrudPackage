@@ -15,7 +15,9 @@ import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
+
 
 @Service
 public class AuServiceImpl implements AuService{
@@ -26,25 +28,12 @@ public class AuServiceImpl implements AuService{
 	@Override
 	public ModelAndView userList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		
-		
 		ModelAndView mView = new ModelAndView();
 		
-		Map<String, Object> search = new HashMap();
+		SearchRequest searchRequest = new SearchRequest();
 		
-		Enumeration params = request.getParameterNames();
-		
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			search.put(name, value);
-		}
-		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		search.put("siteid", SITEID);
+		Map<String, Object> search = searchRequest.Search(request);
+
 		int totalRows = auDao.urTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
@@ -173,22 +162,11 @@ public class AuServiceImpl implements AuService{
 	@Override
 	public List<Map<String, Object>> ModalUserList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		Map<String, Object> search = new HashMap();
 		Map<String, Object> total = new HashMap();
 		
-		Enumeration params = request.getParameterNames();
+		SearchRequest searchRequest = new SearchRequest();
+		Map<String, Object> search = searchRequest.Search(request);
 		
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			search.put(name, value);
-		}
-		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		search.put("siteid", SITEID);
 		int totalRows = auDao.urTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;

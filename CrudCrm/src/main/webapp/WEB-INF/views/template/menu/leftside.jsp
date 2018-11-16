@@ -38,7 +38,7 @@
     			
     			
 	            <c:if test="${cm eq '10000'}">
-	                <li <c:if test="${fn:substring(urls, 0, 3)  eq '/cm' }"> class="active"</c:if>>
+	                <li <c:if test="${fn:substring(urls, 0, 5)  eq '/cust' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">고객관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                    <!-- todo. controller 파라미터 전달 -->
@@ -61,10 +61,10 @@
       			
       			
                 <c:if test="${sv  eq '30000' }">
-	                <li <c:if test="${fn:substring(urls, 0, 3)  eq '/sv' }"> class="active"</c:if>>
+	                <li <c:if test="${fn:substring(urls, 0, 8)  eq '/servive' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">서비스관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
-	                        <li><a href="${pageContext.request.contextPath}/sv">서비스 접수</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/service">서비스 접수</a></li>
 	                        <li><a href="form_basic.html">서비스 처리</a></li>
 	                        <li><a href="form_basic.html">서비스 이관</a></li>
 	                        <li><a href="form_basic.html">서비스 일정</a></li>   
@@ -114,11 +114,11 @@
        
 	            <c:if test="${au  eq '90000' }">
 		           <c:if test="${CHKAUTH eq '20' || CHKAUTH eq '30'}">
-			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ad' }"> class="active"</c:if>>
+			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/ad' }"> class="active"</c:if>>
 			       			<a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
 			       			<ul class="nav nav-second-level collapse">
-			       				<li><a href="${pageContext.request.contextPath}/user">회원 관리</a></li>
-			       				<li><a href="${pageContext.request.contextPath}/code">회원사 코드관리</a></li>
+			       				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>
+			       				<li><a href="${pageContext.request.contextPath}/ad/code">회원사 코드관리</a></li>
 			       				<li><a href="form_basic.html">회원사 관리</a></li>
 			       				<li><a href="form_basic.html">서비스 관리</a></li>
 			       				<li><a href="form_basic.html">VOC 관리</a></li>
@@ -127,13 +127,13 @@
 		         	</c:if>
               	
 		         	<c:if test="${CHKAUTH eq '30'}">
-			        	<li <c:if test="${fn:substring(urls, 0, 3) eq '/au/ma' }"> class="active"</c:if>>
+			        	<li <c:if test="${fn:substring(urls, 0, 3) eq '/ma' }"> class="active"</c:if>>
 			          	 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
 			          	 <ul class="nav nav-second-level collapse">
-							<li><a href="${pageContext.request.contextPath}/company">회원사 관리</a></li>
-							<li><a href="${pageContext.request.contextPath}/code">공통코드</a></li>
-							<li><a href="${pageContext.request.contextPath}/license">라이센스 관리</a></li>
-							<li><a href="${pageContext.request.contextPath}/menu">메뉴 관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/ma/company">회원사 관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/ad/code">공통코드</a></li>
+							<li><a href="${pageContext.request.contextPath}/ma/license">라이센스 관리</a></li>
+							<li><a href="${pageContext.request.contextPath}/ma/menu">메뉴 관리</a></li>
 						</ul>
 			        	</li>
 		         	</c:if>

@@ -28,14 +28,14 @@ public class LicenseController {
 	private static final Logger logger = LoggerFactory.getLogger(LicenseController.class);
 	//담당자 정보
 	@ResponseBody
-	@RequestMapping(value="/license", method=RequestMethod.GET)
+	@RequestMapping(value="/ma/license", method=RequestMethod.GET)
 	public ModelAndView authLicenseList(HttpServletRequest request) {
 		ModelAndView mView = licenseService.licenseList(request);
 		mView.setViewName("/au/ma/li/licenseList");
 		return mView;
 	}
 	@ResponseBody
-	@RequestMapping(value="/license", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/license", method=RequestMethod.POST)
 	public ModelAndView authLicenseSearchList(HttpServletRequest request) {
 		ModelAndView mView = licenseService.licenseList(request);
 		mView.setViewName("/au/ma/li/licenseList");
@@ -48,20 +48,20 @@ public class LicenseController {
 		return licenseInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/license/{licenseno}", method=RequestMethod.GET)
+	@RequestMapping(value="/ma/license/{licenseno}", method=RequestMethod.GET)
 	public Map<String,Object> authLicenseDetail(HttpServletRequest request,@PathVariable int licenseno) {
 		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseno);
 		return licenseInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/license/post", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/license/post", method=RequestMethod.POST)
 	public Map<String,Object> authLicenseInsert(HttpServletRequest request, @ModelAttribute LicenseDto licenseDto) {
 		int licenseNo = licenseService.licenseInsert(request, licenseDto);
 		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseNo);
 		return licenseInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/license/post/{licenseno}", method=RequestMethod.POST)
+	@RequestMapping(value="/ma/license/post/{licenseno}", method=RequestMethod.POST)
 	public Map<String,Object> authLicenseUpdateSet(HttpServletRequest request,@ModelAttribute LicenseDto licenseDto) {
 		licenseService.licenseUpdate(request, licenseDto);
 		int licenseNo = licenseDto.getLicenseno(); 
@@ -69,7 +69,7 @@ public class LicenseController {
 		return licenseInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/license/{licenseno}" ,method=RequestMethod.POST)
+	@RequestMapping(value="/ma/license/{licenseno}" ,method=RequestMethod.POST)
 	public Map<String,Object> authLicenseDelete(HttpServletRequest request, @PathVariable int licenseno) {
 		
 		licenseService.licenseDelete(request,licenseno);
@@ -78,19 +78,19 @@ public class LicenseController {
 		return licenseInfo;
 	}
 	@ResponseBody
-	@RequestMapping(value="/license/delete" ,method=RequestMethod.POST)
+	@RequestMapping(value="/ma/license/delete" ,method=RequestMethod.POST)
 	public ModelAndView authLicenseMultiDelete(HttpServletRequest request) {
 		
 		licenseService.licenseMultiDelete(request);
 		
 		ModelAndView mView = new ModelAndView();
-		mView.setViewName("redirect:/license");
+		mView.setViewName("redirect:/ma/license");
 		return mView;
 		
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/license/tab/{siteid}", method=RequestMethod.GET)
+	@RequestMapping(value="/ma/license/tab/{siteid}", method=RequestMethod.GET)
 	public List<Map<String,Object>> authTabLicenseList(@PathVariable int siteid){
 		
 		List<Map<String,Object>> TabLicenseList = licenseService.licenseTopList(siteid);

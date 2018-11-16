@@ -30,14 +30,14 @@ public class CodeController {
 	@Autowired
 	CodeService codeService;
 	
-	@RequestMapping(value="/code", method=RequestMethod.GET)
+	@RequestMapping(value="/ad/code", method=RequestMethod.GET)
 	public ModelAndView authCodeList(HttpServletRequest request) {
 	
 		ModelAndView mView = codeService.codeList(request);	
 		mView.setViewName("au/ma/code/codeList");
 		return mView;
 	}
-	@RequestMapping(value="/code", method=RequestMethod.POST)
+	@RequestMapping(value="/ad/code", method=RequestMethod.POST)
 	public ModelAndView authCodeSearchList(HttpServletRequest request) {
 	
 		ModelAndView mView = codeService.codeList(request);	
@@ -45,7 +45,7 @@ public class CodeController {
 		return mView;
 	}
 	@ResponseBody
-	@RequestMapping(value="/code/{codeno}", method=RequestMethod.GET)
+	@RequestMapping(value="/ad/code/{codeno}", method=RequestMethod.GET)
 	public Map<String,Object> authCodeRead(HttpServletRequest request, @PathVariable int codeno){
 		
 		Map<String,Object> codeInfo = codeService.codeRead(request, codeno);
@@ -55,7 +55,7 @@ public class CodeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/code/post", method=RequestMethod.POST)
+	@RequestMapping(value="/ad/code/post", method=RequestMethod.POST)
 	public Map<String,Object> authCodeInsert(HttpServletRequest request,@ModelAttribute CodeDto codeDto){
 		int codeNo = codeService.codeInsert(request, codeDto);
 		
@@ -65,7 +65,7 @@ public class CodeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/code/post/{codeno}", method=RequestMethod.POST)
+	@RequestMapping(value="/ad/code/post/{codeno}", method=RequestMethod.POST)
 	public Map<String,Object> authCodeUpdate(HttpServletRequest request,@ModelAttribute CodeDto codeDto){
 		
 		codeService.codeUpdate(request, codeDto);
@@ -75,7 +75,7 @@ public class CodeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/code/{codeno}", method=RequestMethod.POST)
+	@RequestMapping(value="/ad/code/{codeno}", method=RequestMethod.POST)
 	public Map<String,Object> authCodeDelete(HttpServletRequest request,@PathVariable int codeno){
 		
 		codeService.codeDelete(request, codeno);

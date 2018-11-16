@@ -35,7 +35,7 @@
                         <div class="ibox-title row">
                             <h4>기본정보</h4>
                         </div>
-                        <form:form action="${pageContext.request.contextPath}/company/license/${memCompany.SITEID }" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/ma/company/license/${memCompany.SITEID }" method="POST">
                         <div class="ibox-content row">
                         
                             <div class="w-100 text-right mb-2">

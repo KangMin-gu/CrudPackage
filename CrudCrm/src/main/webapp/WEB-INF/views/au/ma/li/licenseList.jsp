@@ -48,7 +48,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/license" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/ma/license" method="POST">
                         <div class="ibox-content row">
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">

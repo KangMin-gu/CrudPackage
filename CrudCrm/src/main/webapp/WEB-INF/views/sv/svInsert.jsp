@@ -40,7 +40,7 @@
                             <a href="/">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/sv">서비스 목록</a>
+                            <a href="/service">서비스 목록</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>서비스 추가</strong>
@@ -51,7 +51,7 @@
 		
 		
 <!-- Content -->		
-		<form:form action ="${pageContext.request.contextPath}/sv/post" method="POST">
+		<form:form action ="${pageContext.request.contextPath}/service/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -68,7 +68,7 @@
                         <div class="ibox-content row">
                         
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/sv" class="btn btn-primary">목록</a>
+                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
                                 <button class="btn btn-primary save">저장</button>
                             </div>
                             

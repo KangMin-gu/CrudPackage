@@ -14,7 +14,8 @@ import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dao.MenuDao;
 import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
 
 @Service
 public class MenuServiceImpl implements MenuService{
@@ -33,19 +34,9 @@ public class MenuServiceImpl implements MenuService{
 		
 		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		String menuName = request.getParameter("menuName");
-		String menuVal = request.getParameter("menuVal");
+		SearchRequest searchRequest = new SearchRequest();
 		
-		Map<String,Object> search = new HashMap<>();
-		
-		if(menuName =="") {
-			menuName = null;
-		}
-		if(menuVal =="") {
-			menuVal = null;
-		}
-		search.put("menuName", menuName);
-		search.put("menuVal", menuVal);
+		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = menuDao.menuTotalRows(search);
 		

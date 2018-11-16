@@ -12,7 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.CodeDao;
 import saas.crud.crm.au.dto.CodeDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
+
 
 @Service
 public class CodeServiceImpl implements CodeService{
@@ -23,22 +25,9 @@ public class CodeServiceImpl implements CodeService{
 	@Override
 	public ModelAndView codeList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		SearchRequest searchRequest = new SearchRequest();
 		
-		String codeName = request.getParameter("codename");
-		String codeGrp = request.getParameter("codegrp");
-		
-		Map<String,Object> search = new HashMap<>();
-		
-		if(codeName =="") {
-			codeName = null;
-		}
-		if(codeGrp =="") {
-			codeGrp = null;
-		}
-		search.put("codename", codeName);
-		search.put("codegrp", codeGrp);
-		search.put("siteid", SITEID);
+		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = codeDao.codeTotalRow(search);
 		
@@ -52,7 +41,6 @@ public class CodeServiceImpl implements CodeService{
 		
 		search.put("startRowNum", startRowNum);
 		search.put("endRowNum", endRowNum);
-		search.put("SITEID", SITEID);
 		
 		ModelAndView mView = new ModelAndView();
 		List<Map<String,Object>> CodeList = codeDao.codeList(search);
@@ -123,22 +111,9 @@ public class CodeServiceImpl implements CodeService{
 	@Override
 	public ModelAndView codeUpperList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		SearchRequest searchRequest = new SearchRequest();
 		
-		String codeName = request.getParameter("codename");
-		String codeGrp = request.getParameter("codegrp");
-		
-		Map<String,Object> search = new HashMap<>();
-		
-		if(codeName =="") {
-			codeName = null;
-		}
-		if(codeGrp =="") {
-			codeGrp = null;
-		}
-		search.put("codename", codeName);
-		search.put("codegrp", codeGrp);
-		search.put("siteid", SITEID);
+		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = codeDao.codeTotalRow(search);
 		
@@ -151,9 +126,7 @@ public class CodeServiceImpl implements CodeService{
 		int endRowNum = page.get("endRowNum");
 		
 		search.put("startRowNum", startRowNum);
-		search.put("endRowNum", endRowNum);
-		search.put("SITEID", SITEID);
-		
+		search.put("endRowNum", endRowNum);		
 		ModelAndView mView = new ModelAndView();
 		List<Map<String,Object>> CodeList = codeDao.upperCodeList(search);
 		mView.addObject("codeList",CodeList);

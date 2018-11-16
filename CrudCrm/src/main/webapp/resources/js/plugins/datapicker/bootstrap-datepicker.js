@@ -1396,9 +1396,9 @@
 		daysOfWeekDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
-		format: 'yyyy/mm/dd',
+		format: 'yyyy-mm-dd',
 		keyboardNavigation: true,
-		language: 'en',
+		language: 'ko',
 		minViewMode: 0,
 		multidate: false,
 		multidateSeparator: ',',
@@ -1425,7 +1425,7 @@
 			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			today: "Today",
 			clear: "Clear"
-		}
+		},
 	};
 
 	var DPGlobal = {

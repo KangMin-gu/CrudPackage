@@ -66,16 +66,17 @@
 													
 									<div class="w-100 text-right mb-2">
 										
-										
-										<div class="alert alert-danger" id="test" style="text-align:left;display:none;">
+										<!-- alert 메시지 div. 비활성화 상태. 
+										유효성 검사를 통과 하지 못한다면 활성화 시킨다.  -->
+										<div class="alert alert-danger" id="msgDiv" style="text-align:left;display:none;">
                                 		 	<a class="alert-link" href="#">
-												<span id="showMsg"></span>
+												<span id="showMsg"><!--에러 메시지  --></span>
 											</a>
                             			</div>
                             			
                             			
                             			
-										<Button type="submit" class="btn btn-primary" id="submit"  disabled >저 장</Button>
+										<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
 										<a href="/cust" class="btn btn-primary">목 록</a>
 										
 										
@@ -534,7 +535,7 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="Button" class="btn btn-primary" id="submit" >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>
@@ -795,14 +796,14 @@
 	
 	<script>
 	//유효성 검사
-	var namePattern = /^[가-힣a-zA-Z]{2,30}$/; //한글 영문 2~30글자
+	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,3}$/; //한글 영문 2~30글자 + 숫자0~3자리까지허용
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
 	var addrPattern = /^[가-힣a-zA-Z0-9!@()-_=+,.]{2,30}$/; //한글 영문 숫자 2~30 
 	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
 	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
 	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
 		
-	//필수값 유효성 검사 boolean 리턴  
+	//필수값 유효성 검사 테그 이름을 넣어주면 true false 반환
 	function checkVal(id){
 		
 		var value = document.getElementById(id).value;//id명
@@ -829,25 +830,24 @@
 	}
 	
 	
-	
+	//id와 true false 를 넣어주면 해당 인풋창의 색상을 변화시켜준다.
 	function changeRed(id,res){		
 		if(res == true){
 			$('#'+id).removeClass('error');//해당 인풋 디자인변경
 		}else if(res == false){
 			$('#'+id).addClass('error');//해당 인풋 디자인변경 
 			if(id == 'custname'){
-				$('#submit').prop("disabled",true);//submit 버튼 비활성화 	
+				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
 			}else if (id.indexOf('mobile') != -1){
-				$('#submit').prop("disabled",true);//submit 버튼 비활성화
+				$('.submit').prop("disabled",true);//submit 버튼 비활성화
 			}	
 		}				
 	}
 	
-	function enableSubmit(){
-		
-		if( checkVal('custname') && checkVal('mobile2') && checkVal('mobile3') ){ //필수 값이 모두 정상 입력되었다면 
-			console.log('good');		
-			$('#submit').prop("disabled",false); // submit버튼 활성화  
+	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
+		var mobile1Val = $('#mobile1').val();
+		if( checkVal('custname') && checkVal('mobile2') && checkVal('mobile3') && checkVal('mobile1') ){ //필수 값이 모두 정상 입력되었다면 		
+			$('.submit').prop("disabled",false); // submit버튼 활성화  
 		}
 	}
 	
@@ -855,7 +855,7 @@
         $(document).ready(function () {
         	
         	//********고객명 , 핸드폰 필수 값 체크********
-        	//todo 핸드폰1번 추가 
+        	 
         	$('#custname').keyup(function(e){
         		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
         		changeRed(e.target.id , res );
@@ -871,35 +871,116 @@
         		changeRed(e.target.id , res );
         		enableSubmit();
         	});
+        	$('#mobile1').change(function() {
+        		var state = $('#mobile1 option:selected').val();
+        		if(state == '') {
+        			$('#mobile1').addClass('error');
+        			$('.submit').prop("disabled",true);
+        		} else {
+        			$('#mobile1').removeClass('error');
+        			enableSubmit();
+        		}
+        	});
         	//****************************************
+        	
         	
         	//**********form 전송 전 유효성 검사 ********************
         	$('#submit').click(function(){
         		debugger;
         		if( checkVal('custname') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('한글,영어 2 글자 이상을 입력해 주세요.');
+        			$('#msgDiv').show();
         			$('#custname').focus();
         			return false;
         		}else if( checkVal('mobile1') == false ){
         			$('#mobile1').focus();
         			return false;
         		}else if( checkVal('mobile2') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
         			$('#mobile2').focus();
         			return false;
         		}else if( checkVal('mobile3') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
         			$('#mobile3').focus();
         			return false;
         		}else if(checkVal('job') == false ){
+        			changeRed('job',false);
         			$('#job').focus();
-        			$('#showMsg').append('직업에는 한글,영어,숫자만 입력 가능합니다.');
-        			$('#test').show();
+        			$('#showMsg').empty();
+        			$('#showMsg').append('한글,영어,숫자만 입력 가능합니다.');
+        			$('#msgDiv').show();
         	
+        			return false;
+        		}else if( !$('#email').val() == '' && checkVal('email') == false ){//email이 공백이 아니면 유효성검사 시작 
+        			changeRed('email',false);
+        			$('#email').focus();
+        			$('#showMsg').empty();
+        			$('#showMsg').append('email 형식에 맞게 입력해 주세요');
+        			$('#msgDiv').show();
+        	
+        			return false;
+        		}else if( !$('#wrkurl').val() == '' && checkVal('wrkurl') == false ){
+        			changeRed('wrkurl',false);
+        			$('#wrkurl').focus();
+        			$('#showMsg').empty();
+        			$('#showMsg').append('http:// https:// 를 제외하고 입력해 주세요');
+        			$('#msgDiv').show();
+        	
+        			return false;
+        		}else if( !$('#wrktel2').val() == '' && checkVal('wrktel2') == false ){
+        			changeRed('wrktel2',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrktel2').focus();
+        			return false;
+        		}else if( !$('#wrktel3').val() == '' &&  checkVal('wrktel3') == false ){
+        			changeRed('wrktel3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrktel3').focus();
+        			return false;
+        		}else if( !$('#wrkfax2').val() == '' &&  checkVal('wrkfax2') == false ){
+        			changeRed('wrkfax2',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrkfax2').focus();
+        			return false;
+        		}else if( !$('#wrkfax3').val() == '' &&  checkVal('wrkfax3') == false ){
+        			changeRed('wrkfax3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrkfax3').focus();
+        			return false;
+        		}else if( !$('#homtel2').val() == '' &&  checkVal('homtel2') == false ){
+        			changeRed('homtel2',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#homtel2').focus();
+        			return false;
+        		}else if( !$('#homtel3').val() == '' &&  checkVal('homtel3') == false ){
+        			changeRed('homtel3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#homtel3').focus();
         			return false;
         		}
         		
-        		alert(' all ok  ');
-        		$('#test').hide();
-        		debugger;
-        		$('#command').submit();
+        		 		
+        		$('#msgDiv').hide();//div창숨기기
+        		$('#showMsg').empty();//메시지 삭제
+        	
+        		$('#command').submit();//전송
         		
         	});
         	
@@ -971,7 +1052,7 @@
       		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
       		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
     		        	
-      		        	$("#"+head+"addr1").val(data.zonecode);
+      		        	$("#"+head+"addr1").val(data.zonecode);	
     		        	$("#"+head+"addr2").val(data.roadAddress);
     		        	$("#"+head+"addr3").val(data.buildingName);
                   

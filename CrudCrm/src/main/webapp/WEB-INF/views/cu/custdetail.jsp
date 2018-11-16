@@ -78,7 +78,7 @@
 										<a href="#" class="btn btn-primary">내부통지</a>										
 										<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
 										<Button type="submit" class="btn btn-primary">삭 제</Button>					
-										<a href="/cust/post" class="btn btn-primary">목 록</a>
+										<a href="/cust" class="btn btn-primary">목 록</a>
 									</form:form>
 									</div>
 									

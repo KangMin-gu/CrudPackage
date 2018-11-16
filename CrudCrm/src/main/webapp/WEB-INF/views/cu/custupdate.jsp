@@ -67,7 +67,14 @@
 								</div>
 								<div class="ibox-content row">								
 									<div class="w-100 text-right mb-2">
-										<Button type="submit" class="btn btn-primary">저 장</Button>
+									
+										<div class="alert alert-danger" id="msgDiv" style="text-align:left;display:none;">
+                                		 	<a class="alert-link" href="#">
+												<span id="showMsg"></span>
+											</a>
+                            			</div>
+									
+										<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
 										<a class="btn btn-primary" href="/cust/view/${custUpdate.CUSTNO}">상 세</a>
 										<a href="/cust" class="btn btn-primary">목 록</a>
 									</div>
@@ -525,7 +532,7 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="submit" class="btn btn-primary">저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>
@@ -785,17 +792,202 @@
 	
 	
 	
-	<!-- Jquery Validate -->
-    <script src="/resources/js/plugins/validate/jquery.customvalidate.min.js"></script>
+
     <script>
-    //유효성 체크용 변수
-    var namePattern = /^[가-힣a-zA-Z]{2,30}$/; //한글 영문 2~30글자
+  //유효성 검사
+	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,3}$/; //한글 영문 2~30글자 + 숫자0~3자리까지허용
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-	var addrPattern = /^[가-힣a-zA-Z0-9]{2,30}$/; //한글 영문 숫자 2~30 
-	var numPattern = /\d/; //숫자
-	var domain = /^[^((http(s?))\:\/\/)]{0,30}$/; //http 포함하면 안됨 
+	var addrPattern = /^[가-힣a-zA-Z0-9!@()-_=+,.]{2,30}$/; //한글 영문 숫자 2~30 
+	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
+	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
+	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
     
+	//필수값 유효성 검사 테그 이름을 넣어주면 true false 반환
+	function checkVal(id){
+		
+		var value = document.getElementById(id).value;//id명
+		var res; 
+		if (id == 'custname'){
+			res = namePattern.test(value);//유효성 패턴 매칭
+		}else if(id.indexOf('mobile') != -1){//id에 mobile이라는 문자가 포함되면 
+			res = numPattern.test(value);
+		}else if(id.indexOf('wrktel') != -1){
+			res = numPattern.test(value);
+		}else if(id.indexOf('wrkfax') != -1){
+			res = numPattern.test(value);
+		}else if(id.indexOf('homtel') != -1){
+			res = numPattern.test(value);
+		}else if(id == 'email'){
+			res = emailPattern.test(value);
+		}else if(id.indexOf('addr') != -1 ){
+			res = addrPattern.test(value);
+		}else if(id == 'wrkurl'){
+			res = domainPattern.test(value);
+		}else
+			res = simplePattern.test(value);
+		return res;
+	}
+	
+	
+	//id와 true false 를 넣어주면 해당 인풋창의 색상을 변화시켜준다.
+	function changeRed(id,res){		
+		if(res == true){
+			$('#'+id).removeClass('error');//해당 인풋 디자인변경
+		}else if(res == false){
+			$('#'+id).addClass('error');//해당 인풋 디자인변경 
+			if(id == 'custname'){
+				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
+			}else if (id.indexOf('mobile') != -1){
+				$('.submit').prop("disabled",true);//submit 버튼 비활성화
+			}	
+		}				
+	}
+	
+	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
+		
+		if( checkVal('custname') && checkVal('mobile2') && checkVal('mobile3')  && checkVal('mobile1') ){ //필수 값이 모두 정상 입력되었다면 
+			console.log('good');		
+			$('.submit').prop("disabled",false); // submit버튼 활성화  
+		}
+	}
+	
+	
+	
         $(document).ready(function () {
+        	
+        	//********고객명 , 핸드폰 필수 값 체크********
+        	//todo 핸드폰1번 추가 
+        	$('#custname').keyup(function(e){
+        		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
+        		changeRed(e.target.id , res );
+        		enableSubmit();//고객명,핸드폰 모든값이 유효성검사 true 일시 수정버튼 활성화.
+        	});       	
+        	$('#mobile2').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		changeRed(e.target.id , res );
+        		enableSubmit();
+        	});
+        	$('#mobile3').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		changeRed(e.target.id , res );
+        		enableSubmit();
+        	});
+        	$('#mobile1').change(function() {
+        		var state = $('#mobile1 option:selected').val();
+        		if(state == '') {
+        			$('#mobile1').addClass('error');
+        			$('.submit').prop("disabled",true);
+        		} else {
+        			$('#mobile1').removeClass('error');
+        			enableSubmit();
+        		}
+        	});
+        	//****************************************
+        	
+        	//**********form 전송 전 유효성 검사 ********************
+        	$('#submit').click(function(){
+        		debugger;
+        		if( checkVal('custname') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('한글,영어 2 글자 이상을 입력해 주세요.');
+        			$('#msgDiv').show();
+        			$('#custname').focus();
+        			return false;
+        		}else if( checkVal('mobile1') == false ){
+        			$('#mobile1').focus();
+        			return false;
+        		}else if( checkVal('mobile2') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#mobile2').focus();
+        			return false;
+        		}else if( checkVal('mobile3') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#mobile3').focus();
+        			return false;
+        		}else if(checkVal('job') == false ){
+        			changeRed('job',false);
+        			$('#job').focus();
+        			$('#showMsg').empty();
+        			$('#showMsg').append('한글,영어,숫자만 입력 가능합니다.');
+        			$('#msgDiv').show();
+        	
+        			return false;
+        		}else if( !$('#email').val() == '' && checkVal('email') == false ){//email이 공백이 아니면 유효성검사 시작 
+        			changeRed('email',false);
+        			$('#email').focus();
+        			$('#showMsg').empty();
+        			$('#showMsg').append('email 형식에 맞게 입력해 주세요');
+        			$('#msgDiv').show();
+        	
+        			return false;
+        		}else if( !$('#wrkurl').val() == '' && checkVal('wrkurl') == false ){
+        			changeRed('wrkurl',false);
+        			$('#wrkurl').focus();
+        			$('#showMsg').empty();
+        			$('#showMsg').append('http:// https:// 를 제외하고 입력해 주세요');
+        			$('#msgDiv').show();
+        	
+        			return false;
+        		}else if( !$('#wrktel2').val() == '' && checkVal('wrktel2') == false ){
+        			changeRed('wrktel2',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrktel2').focus();
+        			return false;
+        		}else if( !$('#wrktel3').val() == '' &&  checkVal('wrktel3') == false ){
+        			changeRed('wrktel3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrktel3').focus();
+        			return false;
+        		}else if( !$('#wrkfax2').val() == '' &&  checkVal('wrkfax2') == false ){
+        			changeRed('wrkfax2',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrkfax2').focus();
+        			return false;
+        		}else if( !$('#wrkfax3').val() == '' &&  checkVal('wrkfax3') == false ){
+        			changeRed('wrkfax3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#wrkfax3').focus();
+        			return false;
+        		}else if( !$('#homtel2').val() == '' &&  checkVal('homtel2') == false ){
+        			changeRed('homtel2',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#homtel2').focus();
+        			return false;
+        		}else if( !$('#homtel3').val() == '' &&  checkVal('homtel3') == false ){
+        			changeRed('homtel3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#msgDiv').show();
+        			$('#homtel3').focus();
+        			return false;
+        		}
+        		
+        		 		
+        		$('#msgDiv').hide();//div창숨기기
+        		$('#showMsg').empty();//메시지 삭제
+        	
+        		$('#command').submit();//전송
+        		
+        	});
+        	
+        	
+        	
+        	
+        	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -828,40 +1020,7 @@
       		     }).open();
       		 });
         
-          	//validation.js 플러그인용 커스텀 메서드
-          	//rules 요소값에 정규표현식을 선언하면 해당 규칙으로 검사한다. 사용예시 하단참고 
-       	 	$.validator.addMethod("regx",function(value,element,regexpr){
-            	return regexpr.test(value);
-            })   
-            // template validation 
-            $("#command").validate({
-      		
-                rules: {
-                    custname : { required : true, minlength : 2, maxlength: 30, regx : namePattern } 
-                    ,mobile2 : { required : true, minlength : 3, maxlength: 4, number : true }
-                    ,mobile3 : { required : true, minlength : 3, maxlength: 4, number : true }
-                    ,wrktel2 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrktel3 : { minlength : 3, maxlength: 4, number : true }      
-                    ,wrkfax2 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrkfax3 : { minlength : 3, maxlength: 4, number : true }
-                    ,homtel2 : { minlength : 3, maxlength: 4, number : true }
-                    ,homtel3 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrkurl : { url : true }
-                    ,duty : { regx : simplePattern }
-                    ,deptname : { regx : simplePattern }
-                    ,job : { regx : simplePattern }
-                    ,hobby : { regx : simplePattern }
-                   
-                },           
-            	messages:{
-            		custname: {regx:"한글-영문으로 입력 해주세요"}
-                	,duty : { regx : "한글-영문으로 입력 해주세요" }
-                	,deptname : { regx : "한글-영문으로 입력 해주세요" }
-                	,job : { regx : "한글-영문으로 입력 해주세요" }
-                	,hobby : { regx : "한글-영문으로 입력 해주세요" }
-                	,wrkurl : { url : "URL 형식에 맞게 입력 해주세요 "}
-            	}
-            });
+         
             
                         
         });

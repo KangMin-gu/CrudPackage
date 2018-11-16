@@ -93,11 +93,20 @@
 													<th>담당자</th>
 													<td>
 														<div class="input-group">
-															<input type="text" class="form-control" id="ownername" name="ownername" value="${searchVal.ownername}" readonly onClick="openPop('/popowner','owner',600,700);" > 
+															
+															<%-- <input type="text" class="form-control" id="ownername" name="ownername" value="${searchVal.ownername}" readonly onClick="openPop('/popowner','owner',600,700);" > 															
 															<input type="hidden" id="owner" name="owner" value="${searchVal.owner}">
 															<span class="input-group-addon"> 
-															<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+																<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
+															</span> --%>
+															
+															<input type="text" class="form-control owner" id="ownername" name="ownername" value="${searchVal.ownername}" readonly > 															
+															<input type="hidden" id="owner" name="owner" value="${searchVal.owner}">
+															<span class="input-group-addon"> 
+																<a href="#" onClick="openNewWindow('담당자','/popowner',this,650,700);"><i class="fa fa-search"></i></a>
+															</span> 
+													
+															
 														</div>
 													</td>
 													<th>직장명</th>
@@ -232,7 +241,7 @@
 											<tr>
 												<td><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
 												<td><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
-												<td>${list.CLINAME }</td>
+												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
 												<td>${list.DEPTNAME }</td>
 												
 												<td>

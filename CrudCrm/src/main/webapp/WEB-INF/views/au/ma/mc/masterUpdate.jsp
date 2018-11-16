@@ -15,7 +15,6 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 </head>
 
@@ -285,7 +284,10 @@
                                         <tr>
                                             <th><label for="sitelogo">사이트로고</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="sitelogo" id="sitelogo" value="${memCompany.SITELOGO }">
+                                                <div class="custom-file" style="height:22.8px">
+    												<input id="sitelogo" name="sitelogo" type="file" class="custom-file-input" >
+    												<label for="sitelogo" class="custom-file-label" style="height: 33px">Choose file...</label>
+												</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -301,7 +303,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="sitememo">회원사메모</label></th>
                                             <td class="border-top-0">
-                                                <textarea type="text" class="form-control col-12 float-left mr-12 summernote" name="sitememo" id="sitememo" value="${memCompany.SITEMEMO }">${memCompany.SITEMEMO }</textarea>                            
+                                                <textarea type="text" class="form-control col-12 float-left mr-12" name="sitememo" id="sitememo" value="${memCompany.SITEMEMO }">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
                                             <input type="hidden" name="siteid" id="siteid"  value="${memCompany.SITEID }">
                                         </tr>
@@ -330,12 +332,10 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
 	$(document).ready(function () {
-		$('.summernote').summernote({});
 		$('.date').datepicker({
 			keyboardNavigation:false,
 			forceParse:false,
@@ -357,7 +357,8 @@
 		 });
 	});
 	
-		
+	
+	 
 	</script>		
 
 </body>

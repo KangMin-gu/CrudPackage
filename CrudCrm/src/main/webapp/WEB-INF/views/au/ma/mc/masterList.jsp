@@ -128,10 +128,10 @@
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="w-100 text-right mb-2">
                             
-                                <a href="${pageContext.request.contextPath}/company/post" class="btn btn-primary">회원사추가</a>
+                                <a href="${pageContext.request.contextPath}/company/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">회원사삭제</button>
+                                <button class="btn btn-primary">삭제</button>
                                 </div>
                              
                             </div>

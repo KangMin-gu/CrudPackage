@@ -1,7 +1,11 @@
-	$('.save').click(function(e){		
+	 $('.custom-file-input').on('change', function() {
+		   let fileName = $(this).val().split('\\').pop();
+		   $(this).next('.custom-file-label').addClass("selected").html(fileName);
+		}); 
+
+	 $('.save').click(function(e){		
 		check_required(e);
 	});
-	
 	
     $('.resets').click(function(e){
     	e.preventDefault();

@@ -73,42 +73,23 @@
 							<div class="mail-body">
 								${note.CONTENT }
 							</div>
-							<div class="mail-attachment">
-							<c:forEach var="file" items="${noteFile }">			
-							<a href="${pageContext.request.contextPath}/note/download/${file.FILEID}">다운로드</a>				
-								 <!-- <img src="${pageContext.request.contextPath}/file/note/${file.SAVEFILENAME }" alt="" />-->
-							</c:forEach>				
-													
-								<p>
-									<span><i class="fa fa-paperclip"></i> 첨부파일 - </span> <a href="#">다운로드</a> 
-								</p>
-
+							<div class="mail-attachment">																	
+								<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
 								<div class="attachment">
+								<c:forEach var="file" items="${noteFile }">
 									<div class="file-box">
 										<div class="file">
-											<a href="#"> <span class="corner"></span>
-
+											<a href="${pageContext.request.contextPath}/note/download/${file.FILEID}"> <span class="corner"></span>
 												<div class="icon">
 													<i class="fa fa-file"></i>
 												</div>
 												<div class="file-name">
-													Document_2014.doc <br /> <small>Added: Jan 11, 2014</small>
+													${file.ORGFILENAME } <br /> <small>${file.REGDATE }</small>
 												</div>
 											</a>
 										</div>
-									</div>					
-									<div class="file-box">
-										<div class="file">
-											<a href="#"> <span class="corner"></span>
-												<div class="image">
-													<img alt="image" class="img-fluid" src="img/p2.jpg">
-												</div>
-												<div class="file-name">
-													My feel.png <br /> <small>Added: Jan 7, 2014</small>
-												</div>
-											</a>
-										</div>
-									</div>
+									</div>	
+								</c:forEach>										
 									<div class="clearfix"></div>
 								</div>
 							</div>

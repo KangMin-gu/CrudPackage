@@ -1,6 +1,6 @@
 package saas.crud.crm.ce;
 
-public class FileDto {
+public class EUploadDto {
 	
 	private int fileid;
 	private String savefilename;
@@ -8,15 +8,16 @@ public class FileDto {
 	private String realpath;
 	private long filesize;
 	private String path;
-	private int filesearchkey;
+	private String filesearchkey;
+	private String tablename;
 	private int userno;
 	private int siteid;
 	private String sub;
 	
-	public FileDto() {}
+	public EUploadDto() {}
 
-	public FileDto(int fileid, String savefilename, String orgfilename, String realpath, long filesize, String path,
-			int filesearchkey, int userno, int siteid, String sub) {
+	public EUploadDto(int fileid, String savefilename, String orgfilename, String realpath, long filesize, String path,
+			String filesearchkey, String tablename, int userno, int siteid, String sub) {
 		super();
 		this.fileid = fileid;
 		this.savefilename = savefilename;
@@ -25,6 +26,7 @@ public class FileDto {
 		this.filesize = filesize;
 		this.path = path;
 		this.filesearchkey = filesearchkey;
+		this.tablename = tablename;
 		this.userno = userno;
 		this.siteid = siteid;
 		this.sub = sub;
@@ -78,12 +80,20 @@ public class FileDto {
 		this.path = path;
 	}
 
-	public int getFilesearchkey() {
+	public String getFilesearchkey() {
 		return filesearchkey;
 	}
 
-	public void setFilesearchkey(int filesearchkey) {
+	public void setFilesearchkey(String filesearchkey) {
 		this.filesearchkey = filesearchkey;
+	}
+
+	public String getTablename() {
+		return tablename;
+	}
+
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
 	}
 
 	public int getUserno() {

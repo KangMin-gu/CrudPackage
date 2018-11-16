@@ -17,13 +17,14 @@ public class NoteDto {
 	private int important; //중요메일여부
 	private int siteid;
 	private int chkcc;
-	private int filechk;
+	private String filesearchkey;
 	private List<MultipartFile> file; //Spring 에서 파일 업로드 처리하기 위해
 	
 	public NoteDto () {}
 
 	public NoteDto(int noticeid, int userno, int fromuserno, String linkurl, int ntcwayemail, int ntcwaysms,
-			String title, String content, int important, int siteid, int chkcc, int filechk, List<MultipartFile> file) {
+			String title, String content, int important, int siteid, int chkcc, String filesearchkey,
+			List<MultipartFile> file) {
 		super();
 		this.noticeid = noticeid;
 		this.userno = userno;
@@ -36,7 +37,7 @@ public class NoteDto {
 		this.important = important;
 		this.siteid = siteid;
 		this.chkcc = chkcc;
-		this.filechk = filechk;
+		this.filesearchkey = filesearchkey;
 		this.file = file;
 	}
 
@@ -128,12 +129,12 @@ public class NoteDto {
 		this.chkcc = chkcc;
 	}
 
-	public int getFilechk() {
-		return filechk;
+	public String getFilesearchkey() {
+		return filesearchkey;
 	}
 
-	public void setFilechk(int filechk) {
-		this.filechk = filechk;
+	public void setFilesearchkey(String filesearchkey) {
+		this.filesearchkey = filesearchkey;
 	}
 
 	public List<MultipartFile> getFile() {
@@ -144,6 +145,7 @@ public class NoteDto {
 		this.file = file;
 	}
 
+	
 	
 	
 }

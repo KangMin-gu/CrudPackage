@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.AdressQuarter;
-import saas.crud.crm.ce.FileUpload;
+import saas.crud.crm.ce.EUploadLogical;
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.nt.dto.NoteCategoryDto;
@@ -32,7 +32,7 @@ public class NoteServiceImpl implements NoteService{
 	private NoteDao ntDao;
 	
 	@Autowired
-	private FileUpload upload;
+	private EUploadLogical upload;
 	
 	//inbox
 	//@Cacheable("test")
@@ -350,6 +350,10 @@ public class NoteServiceImpl implements NoteService{
 		
 		//통지정보
 		Map<String, Object> note = ntDao.noteDetail(noteVal);
+		
+		String fileSearchKey = note.get("FILESEARCHKEY").toString();		
+		noteVal.put("filesearchkey", fileSearchKey);
+		
 		//첨부파일정보
 		List<Map<String, Object>> notefile = ntDao.noteFile(noteVal);
 		//받는이
@@ -458,9 +462,11 @@ public class NoteServiceImpl implements NoteService{
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
 		
-		if(0 < fileUpload.size()) {
-			int fileChk = 1;
-			ntDto.setFilechk(fileChk);
+		//파일테이블 업로드 실행
+		if(fileUpload != null) {			
+			String fileSearchKey = upload.fileSearchKey(multipartHttpServletRequest);
+			upload.fileUpload(response, request, fileUpload, fileSearchKey);
+			ntDto.setFilesearchkey(fileSearchKey);
 		}
 		
 		//본문입력
@@ -492,11 +498,6 @@ public class NoteServiceImpl implements NoteService{
 					    ntDao.notetoAndCc(ntDto);
 					}			
 				}
-		}
-		
-		//파일테이블 업로드 실행
-		if(fileUpload != null) {
-			upload.fileUpload(response, request, fileUpload, noticeId);			
 		}
 		
 		return noticeId;

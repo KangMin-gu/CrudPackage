@@ -2,17 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="common">
 
+	<insert id="noteFile" parameterType="hashMap">
+			INSERT INTO t_file
+			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID )
+			VALUES
+			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{siteid})			
+	</insert>
 	
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->
-
-	 
-	<insert id="noteFile" parameterType="hashMap">
-			INSERT INTO t_noticefile 
-			( SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, EDTUSER, EDTDATE, SITEID, NOTICEID )
-			VALUES
-			( #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{userno}, GETDATE(), #{siteid}, #{filesearchkey} )			
-	</insert>
-
 	<select id="totalcntUser" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM TB980010
@@ -79,7 +76,7 @@
 	
 	<!-- 내부통지 파일다운로드 -->
 	<select id="noteDownload" parameterType="fileDto" resultType="fileDto">
-		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_noticefile WHERE SITEID = #{siteid} AND FILEID = #{fileid}
+		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_file WHERE SITEID = #{siteid} AND FILEID = #{fileid}
 	</select>
 
 </mapper>

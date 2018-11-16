@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import saas.crud.crm.ce.FileDto;
+import saas.crud.crm.ce.EUploadDto;
 import saas.crud.crm.vc.dao.VocDaoImpl;
 
 @Repository
@@ -23,7 +23,7 @@ public class CommonDaoImpl implements CommonDao{
 	
 	//파일등록
 	@Override
-	public void fileUpload(FileDto fileInfo) {
+	public void fileUpload(EUploadDto fileInfo) {
 		String sub = fileInfo.getSub();
 		int fileSearchKey = 0;
 		
@@ -66,8 +66,8 @@ public class CommonDaoImpl implements CommonDao{
 	
 	//다운로드
 	@Override
-	public FileDto noteDownload(FileDto fileRequest) {
-		FileDto fileInfo = session.selectOne("common.noteDownload", fileRequest);
+	public EUploadDto noteDownload(EUploadDto fileRequest) {
+		EUploadDto fileInfo = session.selectOne("common.noteDownload", fileRequest);
 		return fileInfo;
 	}
 

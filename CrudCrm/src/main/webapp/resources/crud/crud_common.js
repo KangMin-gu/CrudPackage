@@ -1,3 +1,8 @@
+	 $('.custom-file-input').on('change', function() {
+		   let fileName = $(this).val().split('\\').pop();
+		   $(this).next('.custom-file-label').addClass("selected").html(fileName);
+		}); 
+
 
 	$('.save').click(function(e){		
 		check_required(e);
@@ -8,12 +13,25 @@
     	$('.reset').val('');
     });
 
+
     
+
+    $('thead .i-checks').on('ifChecked',function(event){
+    	$('tbody .i-checks').parent().addClass('checked');
+    });
+    //i-check 해제 이벤트
+    $('thead .i-checks').on('ifUnchecked',function(event){
+    	$('tbody .i-checks').parent().removeClass('checked');
+    });
+    
+	$('.owner').click(function(e){
+		openNewWindow('담당자','/common/user',e.target.id,650,700);
+	});
+	var newWindow = null;
     // 부모 window 가 실행
-	function openNewWindow(url,target){
-		var name= "영업담당자";
+	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
-		var specs= "menubar=no,status=no,toolbar=no,innerWidth=600,innerHeight=900";
+		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
@@ -56,7 +74,7 @@
     function check_required(e){
         // 필수로 저장되어야 하는 값 체크
         var length = $('.required').length;
-
+        var check = "true";
         for(i=0;i<length;i++){
             var check_value = $('.required:eq('+i+')').val();
 
@@ -68,11 +86,13 @@
                 }
                 alert(error+"를 입력해주세요");
                 e.preventDefault();
+                check = false;
             }else{
                 $('.required:eq('+i+')').parent().removeClass('has-error').addClass('has-success');
             }
         }
-        return true;
+        return check;
+
     }
     
     function paging(prm){
@@ -80,20 +100,36 @@
         var htmlStr = '<input type="hidden" id="pageNum" name="pageNum" value="'+prm+'">';
         // 첫번쨰 form:form 가져옴.
         var form = $('form:eq(0)');
-        
+
+        //form 안에 생성해둔 <span id ='selectpage'> 에 위의 값을 히든으로 넘긴다.
+
         form.children().append(htmlStr);
         // 폼 submit
         form.submit();
      }
-    
+
     //팝업창열기 메서드
     function openPop(url,target,width,height){
     	var property = "width="+width+", height="+height+",top=300,menubar=no,location=no, status=no,toolbar=no,scrollbars=yes";
     	window.open(url,target,property);
     }
-    
-    
-  
-    
+
+    function today(){
+    	
+    	var today = new Date();
+    	var dd = today.getDate();
+    	var mm = today.getMonth()+1; //January is 0!
+    	var yyyy = today.getFullYear();
+    	if(dd<10) {
+    	    dd='0'+dd
+    	} 
+    	if(mm<10) {
+    	    mm='0'+mm
+    	} 
+    	today = yyyy+'-' + mm+'-'+dd;
+    	
+    	return today;
+    }
+
     
     

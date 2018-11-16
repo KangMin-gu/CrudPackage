@@ -15,7 +15,8 @@ public class Encryptor {
 			        String username = pbeEnc.encrypt("sa");
 			        String password = pbeEnc.encrypt("crudsystem1008!");
 			        
-			        System.out.println("URL= "+url);
+			        String url2 = pbeEnc.decrypt("a8IzRdzVpQ+iPwrR4N4jpBEORCa0UyP9ENsh1fnNgAYLZs4gT3V5ZDpA3eflSKgXo1RSPG4R/YEOix10xDBCE32rmsoU5UoR");
+			        System.out.println("URL= "+url2);
 			        System.out.println("USERNAME= "+username);
 			        System.out.println("PASSWORD= "+password);
     }

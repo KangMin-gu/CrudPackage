@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="menu">
+
+    <select id="list" parameterType="hashMap" resultType="hashMap">
+     	SELECT * FROM (
+     	SELECT 
+     		A.MENUNO,A.MENUNAME
+     		,(SELECT LICENSENAME FROM T_LICENSE WHERE LICENSENO = A.LICENSENO) AS LICENSENO_
+     		
+     		,A.MENUDESC,A.MENUVAL
+     		,CONVERT(varchar,A.REGDATE,23) AS REGDATE
+     		,A.ISDELETE
+     		,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+     	,ROW_NUMBER() OVER(ORDER BY A.MENUNO DESC) AS ROWNUM
+     	FROM Crud_SaaS.dbo.T_MENU A
+     	WHERE A.ISDELETE = 0
+     	<if test ="menuName != null">
+     		AND A.MENUNAME LIKE '%'+#{menuName} +'%'
+     	</if>
+     	<if test ="menuVal != null">
+     		AND A.MENUVAL LIKE '%'+#{menuVal} +'%'
+     	</if>
+     	) X 
+     	WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
+    </select>
+    <select id="totalRow" parameterType="hashMap" resultType="int">
+     	SELECT 
+     	count(*)
+     	FROM Crud_SaaS.dbo.T_MENU
+     	WHERE ISDELETE = 0
+     	<if test ="menuName != null">
+     		AND MENUNAME LIKE '%'+#{menuName} +'%'
+     	</if>
+     	<if test ="menuVal != null">
+     		AND MENUVAL LIKE '%'+#{menuVal} +'%'
+     	</if>
+    </select>
+    
+    <select id="detail" parameterType="menuDto" resultType="hashMap">
+     	SELECT 
+     	A.MENUNO
+     	,A.MENUNAME
+     	,A.LICENSENO
+     	,A.MENUDESC
+     	,A.MENUVAL
+     	,A.REGDATE
+     	,A.ISDELETE
+     	,CASE WHEN ISDELETE = 0 THEN '사용'
+     		  WHEN ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+     	,(SELECT LICENSENAME FROM T_LICENSE WHERE A.LICENSENO = LICENSENO) AS LICENSENO_
+     	FROM Crud_SaaS.dbo.T_MENU A
+     	WHERE A.MENUNO = #{menuno}
+    </select>
+    
+    <update id="update" parameterType="menuDto">
+    
+    UPDATE Crud_SaaS.dbo.T_MENU
+    SET 
+    MENUNAME = #{menuname}
+    ,LICENSENO = #{licenseno}
+    ,MENUDESC = #{menudesc}
+    ,MENUVAL = #{menuval}
+    ,ISDELETE = #{isdelete}
+    ,EDTDATE = getDate()
+    ,EDTUSER = #{edtuser}
+    WHERE MENUNO = #{menuno}
+    
+    </update>
+    <insert id="insert" parameterType="menuDto">
+    <selectKey keyProperty="menuno"  resultType="integer" order="AFTER">
+    INSERT INTO Crud_SaaS.dbo.T_MENU
+    (
+     MENUNAME
+    ,LICENSENO
+    ,MENUDESC
+    ,MENUVAL
+    ,ISDELETE
+    ,REGDATE
+    ,REGUSER
+    ,EDTDATE
+    ,EDTUSER
+    )VALUES(
+    #{menuname}
+    ,#{licenseno}
+    ,#{menudesc}
+    ,#{menuval}
+    ,#{isdelete}
+    ,getdate()
+    ,#{reguser}
+    ,getdate()
+    ,#{edtuser}
+    )
+    SELECT SCOPE_IDENTITY()
+    </selectKey>
+    </insert>
+    
+    <update id="delete" parameterType="menuDto">
+    
+    UPDATE Crud_SaaS.dbo.T_MENU
+    SET ISDELETE = 1
+    ,EDTDATE = getDate()
+    ,EDTUSER = #{edtuser}
+    WHERE MENUNO = #{menuno}
+    
+    </update>
+
+</mapper>

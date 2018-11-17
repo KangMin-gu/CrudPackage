@@ -3,7 +3,6 @@
 		   $(this).next('.custom-file-label').addClass("selected").html(fileName);
 		}); 
 
-
 	$('.save').click(function(e){		
 		check_required(e);
 	});

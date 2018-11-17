@@ -24,51 +24,52 @@ import saas.crud.crm.au.service.AuService;
 public class AuController {
 	
 	@Autowired
-	AuService auService;
+	private AuService auService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuController.class);
-	//담당자 정보
+	// 담당자 팝업 검색
 	@RequestMapping(value="/common/user", method=RequestMethod.GET)
 	public ModelAndView authcommonUserList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
 		mView.setViewName("/common/user/userList");
 		return mView;
 	}
-	
+	// 담당자 팝업 검색
 	@RequestMapping(value="/common/user", method=RequestMethod.POST)
 	public ModelAndView authcommonUserSearchList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
 		mView.setViewName("/common/user/userList");
 		return mView;
 	}
-	
+	//회원 정보 List
 	@RequestMapping(value="/ad/user", method=RequestMethod.GET)
 	public ModelAndView authAdminUserList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
 		mView.setViewName("/au/ad/adminList");
 		return mView;
 	}
-	
+	//회원 정보 List 검색
 	@RequestMapping(value="/ad/user", method=RequestMethod.POST)
 	public ModelAndView authAdminUserSearchList(HttpServletRequest request) {
 		ModelAndView mView = auService.userList(request);
 		mView.setViewName("/au/ad/adminList");
 		return mView;
 	}
-	
+	//회원 정보 상세 
 	@RequestMapping(value="/ad/user/{userno}", method=RequestMethod.GET)
 	public ModelAndView authAdminUserRead(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		mView.setViewName("/au/ad/adminRead");
 		return mView;
 	}
+	// 회원 정보 추가 화면
 	@RequestMapping(value="/ad/user/post", method=RequestMethod.GET)
 	public ModelAndView authAdminUserInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("/au/ad/adminInsert");
 		return mView;
 	}
-	
+	// 회원 정보 추가
 	@RequestMapping(value="/ad/user/post", method=RequestMethod.POST)
 	public ModelAndView authAdminUserInsertSet(HttpServletRequest request, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = new ModelAndView();
@@ -76,14 +77,14 @@ public class AuController {
 		mView.setViewName("redirect:/ad/user/"+userNo);
 		return mView;
 	}
-	
+	// 회원 정보 수정 화면
 	@RequestMapping(value="/ad/user/post/{userno}", method=RequestMethod.GET)
 	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		mView.setViewName("/au/ad/adminUpdate");
 		return mView;
 	}
-	
+	// 회원 정보 수정
 	@RequestMapping(value="/ad/user/post/{userno}", method=RequestMethod.PUT)
 	public ModelAndView authAdminUserUpdateSet(HttpServletRequest request, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = new ModelAndView();
@@ -92,7 +93,7 @@ public class AuController {
 		mView.setViewName("redirect:/ad/user/"+userNo);
 		return mView;
 	}
-	
+	// 회원 단일 삭제
 	@RequestMapping(value="/ad/user/{userno}", method=RequestMethod.POST)
 	public ModelAndView authAdminUserDelete(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = new ModelAndView();
@@ -100,7 +101,7 @@ public class AuController {
 		mView.setViewName("redirect:/ad/user");
 		return mView;
 	}
-	
+	// 회원 멀티 삭제
 	@RequestMapping(value="/ad/user/delete", method=RequestMethod.POST)
 	public ModelAndView authAdminUserDeleteSet(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -108,14 +109,14 @@ public class AuController {
 		mView.setViewName("redirect:/ad/user");
 		return mView;
 	}
-	
+	// 회원 중복ID 체크
 	@ResponseBody
 	@RequestMapping(value="/user/idcheck/{userid}",method=RequestMethod.GET)
 	public int authAdminUserIdCheck(@PathVariable String userid) {
 		int userId = auService.userIdCheck(userid);
 		return userId;
 	}
-	
+	// 사용자 탭
 	@ResponseBody
 	@RequestMapping(value="/user/tab/{siteid}", method=RequestMethod.GET)
 	public List<Map<String,Object>> authTabTopList(HttpServletRequest request,@PathVariable int siteid){
@@ -124,14 +125,14 @@ public class AuController {
 		
 		return userTopList;
 	}
-	
+	// 회원에게 메뉴 부여 화면
 	@RequestMapping(value="/ad/user/menu/{userno}", method=RequestMethod.GET)
 	public ModelAndView authAdminUserMenuInsert(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		mView.setViewName("/au/ad/adminMenuUpdate");
 		return mView;
 	}
-	
+	// 회원에게 메뉴 부여
 	@RequestMapping(value="/ad/user/menu",method=RequestMethod.POST)
 	public ModelAndView authAdminUserMenuInsertSet(HttpServletRequest request, @ModelAttribute UserMenuDto userMenuDto) {
 		int userNo = userMenuDto.getUserno();

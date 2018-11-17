@@ -26,10 +26,9 @@ import saas.crud.crm.au.service.MenuService;
 public class CodeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CodeController.class);
-	// 회원사 정보 등록 수정 삭제
 	@Autowired
-	CodeService codeService;
-	
+	private CodeService codeService;
+	// 코드 List 화면
 	@RequestMapping(value="/ad/code", method=RequestMethod.GET)
 	public ModelAndView authCodeList(HttpServletRequest request) {
 	
@@ -37,6 +36,7 @@ public class CodeController {
 		mView.setViewName("au/ma/code/codeList");
 		return mView;
 	}
+	// 코드 List 검색
 	@RequestMapping(value="/ad/code", method=RequestMethod.POST)
 	public ModelAndView authCodeSearchList(HttpServletRequest request) {
 	
@@ -44,6 +44,7 @@ public class CodeController {
 		mView.setViewName("au/ma/code/codeList");
 		return mView;
 	}
+	// 코드 상세
 	@ResponseBody
 	@RequestMapping(value="/ad/code/{codeno}", method=RequestMethod.GET)
 	public Map<String,Object> authCodeRead(HttpServletRequest request, @PathVariable int codeno){
@@ -53,7 +54,7 @@ public class CodeController {
 		return codeInfo;
 		
 	}
-	
+	// 코드 추가
 	@ResponseBody
 	@RequestMapping(value="/ad/code/post", method=RequestMethod.POST)
 	public Map<String,Object> authCodeInsert(HttpServletRequest request,@ModelAttribute CodeDto codeDto){
@@ -63,7 +64,7 @@ public class CodeController {
 		
 		return codeInfo;
 	}
-	
+	// 코드 수정
 	@ResponseBody
 	@RequestMapping(value="/ad/code/post/{codeno}", method=RequestMethod.POST)
 	public Map<String,Object> authCodeUpdate(HttpServletRequest request,@ModelAttribute CodeDto codeDto){
@@ -73,7 +74,7 @@ public class CodeController {
 		Map<String,Object> codeInfo = codeService.codeRead(request, codeNo);
 		return codeInfo;
 	}
-	
+	// 코드 단일삭제
 	@ResponseBody
 	@RequestMapping(value="/ad/code/{codeno}", method=RequestMethod.POST)
 	public Map<String,Object> authCodeDelete(HttpServletRequest request,@PathVariable int codeno){
@@ -84,6 +85,7 @@ public class CodeController {
 		
 		return codeInfo;
 	}
+	// 코드 팝업 공용(상위코드 검색할때 필요)
 	@RequestMapping(value="/common/code", method=RequestMethod.POST)
 	public ModelAndView authUpperCodeList(HttpServletRequest request) {
 		ModelAndView mView = codeService.codeUpperList(request);
@@ -91,6 +93,7 @@ public class CodeController {
 		
 		return mView;
 	}
+	// 코드 팝업 검색
 	@RequestMapping(value="/common/code", method=RequestMethod.GET)
 	public ModelAndView authUpperCodeGetList(HttpServletRequest request) {
 		ModelAndView mView = codeService.codeUpperList(request);

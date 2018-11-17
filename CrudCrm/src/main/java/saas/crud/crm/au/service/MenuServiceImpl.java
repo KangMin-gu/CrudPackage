@@ -21,18 +21,20 @@ import saas.crud.crm.ce.SearchRequest;
 public class MenuServiceImpl implements MenuService{
 
 	@Autowired
-	MenuDao menuDao;
+	private MenuDao menuDao;
 	
 	@Autowired
-	LicenseDao liceseDao;
+	private LicenseDao liceseDao;
 	
+	
+	// 메뉴 List 검색
 	@Override
 	public ModelAndView menuList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
 		ModelAndView mView = new ModelAndView();
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
 		SearchRequest searchRequest = new SearchRequest();
 		
@@ -50,7 +52,7 @@ public class MenuServiceImpl implements MenuService{
 		
 		search.put("startRowNum", startRowNum);
 		search.put("endRowNum", endRowNum);
-		search.put("USERNO", USERNO);
+		search.put("userNo", userNo);
 		
 		List<Map<String,Object>> menuList = menuDao.menuList(search);
 		
@@ -62,6 +64,7 @@ public class MenuServiceImpl implements MenuService{
 		return mView;
 	}
 
+	// 메뉴 상세 정보
 	@Override
 	public Map<String,Object> menuRead(HttpServletRequest request, int menuno) {
 		// TODO Auto-generated method stub
@@ -77,14 +80,15 @@ public class MenuServiceImpl implements MenuService{
 
 	}
 
+	// 메뉴 추가
 	@Override
 	public int menuInsert(HttpServletRequest request, MenuDto menuDto) {
 		// TODO Auto-generated method stub
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
-		menuDto.setReguser(USERNO);
-		menuDto.setEdtuser(USERNO);
+		menuDto.setReguser(userNo);
+		menuDto.setEdtuser(userNo);
 		
 		int menuNo = menuDao.menuInsert(menuDto);
 		
@@ -92,38 +96,41 @@ public class MenuServiceImpl implements MenuService{
 		return menuNo;
 	}
 
+	// 메뉴 수정
 	@Override
 	public void menuUpdate(HttpServletRequest request, MenuDto menuDto) {
 		// TODO Auto-generated method stub
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		
-		menuDto.setEdtuser(USERNO);
+		menuDto.setEdtuser(userNo);
 		
 		menuDao.menuUpdate(menuDto);
 	}
 
+	// 메뉴 단일 삭제
 	@Override
 	public void menuDelete(HttpServletRequest request, int menuno) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		MenuDto menuDto = new MenuDto();
 		
-		menuDto.setEdtuser(USERNO);
+		menuDto.setEdtuser(userNo);
 		menuDto.setMenuno(menuno);
 		
 		menuDao.menuDelete(menuDto);
 		
 	}
 
+	// 메뉴 멀티 삭제
 	@Override
 	public void menuMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String sCheck[] = request.getParameterValues("menuno");
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		MenuDto menuDto = new MenuDto();
 		
-		menuDto.setEdtuser(USERNO);
+		menuDto.setEdtuser(userNo);
 		if(sCheck.length > 0) {
 			for(int i=0;i<sCheck.length;i++) {
 				int menuno = Integer.parseInt(sCheck[i]); 

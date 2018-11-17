@@ -26,29 +26,32 @@ public class MenuController {
 	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	// 회원사 정보 등록 수정 삭제
 	@Autowired
-	MenuService menuService;
+	private MenuService menuService;
 	
 	@Autowired
-	LicenseService licenseService;
-	// LIST
+	private LicenseService licenseService;
+	// 메뉴 List
 	@RequestMapping(value = "/ma/menu", method=RequestMethod.GET)
 	public ModelAndView authMenuList(HttpServletRequest request) {
 		ModelAndView mView = menuService.menuList(request);
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
+	// 메뉴 List 검색
 	@RequestMapping(value = "/ma/menu", method=RequestMethod.POST)
 	public ModelAndView authMenuSearchList(HttpServletRequest request) {
 		ModelAndView mView = menuService.menuList(request);
 		mView.setViewName("au/ma/me/menuList");
 		return mView;
 	}
+	// 메뉴 상세 정보
 	@ResponseBody
 	@RequestMapping(value="/ma/menu/{menuno}",method=RequestMethod.GET)
 	public Map<String,Object> authMenuRead(HttpServletRequest request, @PathVariable int menuno) { 
 		Map<String,Object> menuInfo = menuService.menuRead(request, menuno);
 		return menuInfo;
 	}
+	// 메뉴 추가
 	@ResponseBody
 	@RequestMapping(value = "/ma/menu/post", method=RequestMethod.POST)
 	public Map<String,Object> authMenuInsertSet(HttpServletRequest request, @ModelAttribute MenuDto menuDto) {
@@ -58,6 +61,7 @@ public class MenuController {
 		Map<String,Object> menuInfo = menuService.menuRead(request, menuNo);
 		return menuInfo;
 	}
+	// 메뉴 수정
 	@ResponseBody
 	@RequestMapping(value="/ma/menu/post/{menuno}",method=RequestMethod.POST)
 	public Map<String,Object> authMenuUpdateSet(@ModelAttribute MenuDto menuDto,HttpServletRequest request) {
@@ -67,6 +71,7 @@ public class MenuController {
 		Map<String,Object> menuInfo = menuService.menuRead(request, menuNo);
 		return menuInfo;
 	}
+	// 메뉴 삭제
 	@ResponseBody
 	@RequestMapping(value="/ma/menu/{menuno}", method=RequestMethod.POST)
 	public Map<String,Object> authmenuDelete(HttpServletRequest request, @PathVariable int menuno) {
@@ -77,7 +82,7 @@ public class MenuController {
 		
 		
 	}
-	
+	// 메뉴 멀티 삭제
 	@RequestMapping(value="/ma/menu/delete", method=RequestMethod.POST)
 	public ModelAndView authmenuMultiDelete(HttpServletRequest request) {
 		menuService.menuMultiDelete(request);

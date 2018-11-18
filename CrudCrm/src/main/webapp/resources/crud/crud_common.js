@@ -27,7 +27,9 @@
 	$('.cli').click(function(e){
 		openNewWindow('거래처','/popclient',e.target.id,600,700);
 	});
-	
+	$('.poplogo').click(function(e){
+		openNewWindow('로고','/poplogo',e.target.id,600,700);
+	});
 	
 	var newWindow = null;
     // 부모 window 가 실행
@@ -126,6 +128,25 @@
     	
     	return today;
     }
-
+	
+    //로고 insertajax
+    $('#logosubmit').click(function(){
+    	var form = new FormData(document.getElementById('logoForm'));
+    	$.ajax({
+            url: '/poplogo',
+            data: form,
+            dataType: 'json', 
+            processData: false, 
+            contentType: false, 
+            type: 'POST', 
+            success: function(response){ 
+            	opener.$('#filename').val(response.orgfilename);
+            	opener.$('#sitelogo').val(response.img);
+            	alert("로그 등록 완료");
+            	window.close();
+            }
+        });
+    });
     
+
     

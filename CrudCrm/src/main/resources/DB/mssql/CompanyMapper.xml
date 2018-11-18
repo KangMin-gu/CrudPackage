@@ -118,7 +118,7 @@
     ,SITEMEMO = #{sitememo}
     ,EDTDATE = getDate()
     ,EDTUSER = #{edtuser}
-    
+    ,SITELOGO = #{sitelogo}
     WHERE SITEID = #{siteid}
     
     </update>
@@ -154,6 +154,7 @@
     ,REGUSER
     ,EDTDATE
     ,EDTUSER
+    ,SITELOGO
     )VALUES(
     #{sitename}
     ,#{bsno}
@@ -183,6 +184,7 @@
     ,#{reguser}
     ,getdate()
     ,#{edtuser}
+    ,#{sitelogo}
     )
     SELECT SCOPE_IDENTITY()
     </selectKey>

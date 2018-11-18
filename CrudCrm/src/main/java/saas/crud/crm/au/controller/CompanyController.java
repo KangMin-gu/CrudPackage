@@ -52,9 +52,9 @@ public class CompanyController {
 		return mView;
 	}
 	//UPDATE 실행
-	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.PUT)
-	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
-		companyService.comapnyUpdate(request, CompanyDto);
+	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.POST)
+	public ModelAndView authCompanyUpdateSet(HttpServletResponse response, @ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
+		companyService.comapnyUpdate(response, request, CompanyDto);
 		
 		ModelAndView mView = new ModelAndView();
 		int siteId = CompanyDto.getSiteid();
@@ -70,9 +70,9 @@ public class CompanyController {
 	}
 	// INSERT 실행
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.POST)
-	public ModelAndView authCompanyInsertSet(@ModelAttribute CompanyDto memCompanyDto,HttpServletRequest request) {
+	public ModelAndView authCompanyInsertSet(HttpServletResponse response, @ModelAttribute CompanyDto memCompanyDto,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
-		int siteid = companyService.companyInsert(request,memCompanyDto);
+		int siteid = companyService.companyInsert(response,request,memCompanyDto);
 		
 		mView.setViewName("redirect:/ma/company/"+siteid);
 		

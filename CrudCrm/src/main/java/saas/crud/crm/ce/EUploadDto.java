@@ -8,6 +8,7 @@ public class EUploadDto {
 	private String realpath;
 	private long filesize;
 	private String path;
+	private String img;
 	private String filesearchkey;
 	private String tablename;
 	private int userno;
@@ -17,7 +18,7 @@ public class EUploadDto {
 	public EUploadDto() {}
 
 	public EUploadDto(int fileid, String savefilename, String orgfilename, String realpath, long filesize, String path,
-			String filesearchkey, String tablename, int userno, int siteid, String sub) {
+			String img, String filesearchkey, String tablename, int userno, int siteid, String sub) {
 		super();
 		this.fileid = fileid;
 		this.savefilename = savefilename;
@@ -25,6 +26,7 @@ public class EUploadDto {
 		this.realpath = realpath;
 		this.filesize = filesize;
 		this.path = path;
+		this.img = img;
 		this.filesearchkey = filesearchkey;
 		this.tablename = tablename;
 		this.userno = userno;
@@ -78,6 +80,14 @@ public class EUploadDto {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public String getFilesearchkey() {

@@ -82,7 +82,8 @@
 	        </beans:bean>
 	    </interceptors>
 	       
-	    <util:properties id="props" location="/WEB-INF/crud/properties/crud.properties" />     
+	    <util:properties id="props" location="/WEB-INF/crud/properties/crud.properties" />   
+	      
 	<!--cache설정 -->
 	<cache:annotation-driven cache-manager="cacheManager" />
 	<beans:bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">

@@ -53,7 +53,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID }" method="PUT">
+	<form:form action="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID }" method="POST" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -283,11 +283,12 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitelogo">사이트로고</label></th>
-                                            <td>
-                                                <div class="custom-file" style="height:22.8px">
-    												<input id="sitelogo" name="sitelogo" type="file" class="custom-file-input" >
-    												<label for="sitelogo" class="custom-file-label" style="height: 33px">Choose file...</label>
-												</div>
+                                            <td>  
+                                            	<div class="input-group poplogo">
+                                            		<input class="form-control" type="text" id="filename" name="filename" disabled />
+                                            		<button type="button" class="btn btn-light btn-xs">로고 등록</button>
+                                            		<input type="hidden" id="sitelogo" name="sitelogo" />
+                                            	</div>                                                 											
                                             </td>
                                         </tr>
                                     </tbody>
@@ -357,8 +358,6 @@
 		 });
 	});
 	
-	
-	 
 	</script>		
 
 </body>

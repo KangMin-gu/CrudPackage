@@ -7,6 +7,8 @@
             <div class="float-right">
                  <strong>Copyright</strong> CRUD SaaS SYSTEM &copy; 2018
             </div>
+            <input type="hidden" id="hiddenSiteId" value="${SITEID }"/>
+            <input type="hidden" id="hiddenUserNo" value="${USERNO }"/>
        <!--     <div>
                
             </div> -->

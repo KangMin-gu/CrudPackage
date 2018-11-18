@@ -464,8 +464,8 @@ public class NoteServiceImpl implements NoteService{
 		
 		//파일테이블 업로드 실행
 		if(fileUpload != null) {			
-			String fileSearchKey = upload.fileSearchKey(multipartHttpServletRequest);
-			upload.fileUpload(response, request, fileUpload, fileSearchKey);
+			String fileSearchKey = upload.fileSearchKey(request);
+			upload.MultiFileUpload(response, request, fileUpload, fileSearchKey);
 			ntDto.setFilesearchkey(fileSearchKey);
 		}
 		

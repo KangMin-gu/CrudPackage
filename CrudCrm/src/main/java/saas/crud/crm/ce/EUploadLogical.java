@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,12 +30,112 @@ public class EUploadLogical {
 	@Autowired
 	private CommonDao commonDao;
 	
-	public void fileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> mFile, String fileSearchKey) {
+	public EUploadDto singleFileUpload(HttpServletResponse response, HttpServletRequest request, MultipartFile mFile) {
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		String url = request.getRequestURI();
-		//캘린더
+		Calendar calendar = Calendar.getInstance();
+		String years = String.valueOf(calendar.get(Calendar.YEAR));
+		String months = String.valueOf(calendar.get(Calendar.MONTH) + 1);	
+		SimpleDateFormat time = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String date = time.format(calendar.getTime());
+		String fileSearchKey = date;
+		String permitList = "png";
+		String[] arrPermitList = permitList.split(",");	
+		boolean permitListFlag = false;
+		String realPath = null;
+		String filePath = null;			
+		String saveFileName = null;
+		String path = null;
+		String imgPath = null;
+		EUploadDto fileInfo = new EUploadDto();		
+		long limitSize = 500000;
+		
+		String orgFileName = mFile.getOriginalFilename();
+		String extention = orgFileName.substring(orgFileName.lastIndexOf(".")+1,orgFileName.length());
+		for(String chker : arrPermitList) {
+			if(chker.equals(extention)) {
+				permitListFlag = true;
+		}
+		
+	
+			
+		if(!permitListFlag) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = null;
+			try {
+				out = response.getWriter();
+				out.write("<script language='javascript'>alert('허가되지 않은 확장자입니다.');;</script>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally{
+				out.close();
+			}
+			
+		}else {
+			
+			long fileSize = mFile.getSize();				
+			if(fileSize > limitSize) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = null;
+				try {
+					out = response.getWriter();
+					out.write("<script language='javascript'>alert('파일용량이 제한용량보다 큽니다.');;</script>");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}finally{
+					out.close();
+				}
+				
+			}else {
+				
+				if(url.equals("/poplogo")) {
+					realPath = request.getSession().getServletContext().getRealPath("/file/logo/"+years+"/"+months);
+					fileInfo.setSub("logo");
+					fileInfo.setPath(realPath);
+					filePath = realPath+File.separator;					
+					saveFileName = fileSearchKey+"_"+siteId+"_"+userNo+"_"+orgFileName;
+					imgPath = years+"/"+months+"/"+saveFileName;
+					path = filePath + saveFileName;
+					
+				}
+				
+					File file=new File(filePath);
+					if(!file.exists()){
+						file.mkdirs();
+					}
+					try{			
+						mFile.transferTo(new File(filePath+saveFileName));
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					
+					fileInfo.setFilesize(fileSize);
+					fileInfo.setSavefilename(saveFileName);
+					fileInfo.setOrgfilename(orgFileName);
+					fileInfo.setPath(path);
+					fileInfo.setUserno(userNo);
+					fileInfo.setSiteid(siteId);
+					fileInfo.setImg(imgPath);
+					
+					
+					return fileInfo;
+				}
+			}
+
+		}
+		return fileInfo;
+	}
+		
+
+	
+	
+	public void MultiFileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> mFile, String fileSearchKey) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String url = request.getRequestURI();
 		Calendar calendar = Calendar.getInstance();
 		String years = String.valueOf(calendar.get(Calendar.YEAR));
 		String months = String.valueOf(calendar.get(Calendar.MONTH) + 1);			
@@ -46,7 +148,6 @@ public class EUploadLogical {
 		
 		for(int i=0; i<mFile.size(); i++) {
 			String orgFileName = mFile.get(i).getOriginalFilename();
-			//확장자 검사
 			String extention = orgFileName.substring(orgFileName.lastIndexOf(".")+1,orgFileName.length());
 			for(String chker : arrWhiteList) {
 				if(chker.equals(extention)) {
@@ -83,12 +184,7 @@ public class EUploadLogical {
 					}
 				}else {
 					
-					//url에 따른 파일 경로설정
-					if(url.equals("/logo")) {
-						realPath = request.getSession().getServletContext().getRealPath("/file/logo/"+years+"/"+months);
-						fileInfo.setTablename("TB980070");
-						fileInfo.setSub("logo");						
-					}else if(url.equals("/note/send")) {
+					if(url.equals("/note/send")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/note/"+years+"/"+months);
 						fileInfo.setTablename("t_note");
 						fileInfo.setSub("note");
@@ -101,13 +197,12 @@ public class EUploadLogical {
 					String filePath = realPath+File.separator;					
 					String saveFileName = fileSearchKey+"_"+userNo+"_"+orgFileName;
 					String path = filePath + saveFileName;
-					//디렉토리를 만들 파일 객체 생성
+					
 					File file=new File(filePath);
-					if(!file.exists()){//디렉토리가 존재하지 않는다면
-						file.mkdirs();//디렉토리를 만든다.
+					if(!file.exists()){
+						file.mkdirs();
 					}
-					try{
-						// 폴더에 파일을 저장한다.
+					try{			
 						mFile.get(i).transferTo(new File(filePath+saveFileName));
 					}catch(Exception e){
 						e.printStackTrace();

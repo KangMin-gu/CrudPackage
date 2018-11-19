@@ -193,7 +193,7 @@
                              
                             </div>
                             <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-hover">
                             	<colgroup>
                             		<col style="width: 40px;">
                             		<col style="width: 150px;">

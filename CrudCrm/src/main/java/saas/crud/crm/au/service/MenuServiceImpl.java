@@ -34,7 +34,7 @@ public class MenuServiceImpl implements MenuService{
 		
 		ModelAndView mView = new ModelAndView();
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		SearchRequest searchRequest = new SearchRequest();
 		
@@ -85,7 +85,7 @@ public class MenuServiceImpl implements MenuService{
 	public int menuInsert(HttpServletRequest request, MenuDto menuDto) {
 		// TODO Auto-generated method stub
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		menuDto.setReguser(userNo);
 		menuDto.setEdtuser(userNo);
@@ -101,7 +101,7 @@ public class MenuServiceImpl implements MenuService{
 	public void menuUpdate(HttpServletRequest request, MenuDto menuDto) {
 		// TODO Auto-generated method stub
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		menuDto.setEdtuser(userNo);
 		
@@ -112,7 +112,7 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public void menuDelete(HttpServletRequest request, int menuno) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		MenuDto menuDto = new MenuDto();
 		
 		menuDto.setEdtuser(userNo);
@@ -127,7 +127,7 @@ public class MenuServiceImpl implements MenuService{
 	public void menuMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String sCheck[] = request.getParameterValues("menuno");
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		MenuDto menuDto = new MenuDto();
 		
 		menuDto.setEdtuser(userNo);

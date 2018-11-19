@@ -52,6 +52,30 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/ad/user" method="POST">
                         <div class="ibox-content row">
+                        	<div class="box1 col-lg-4 p-0">
+                                <table class="table table-bordered">
+                                    <colgroup>
+                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>가입일</th>
+                                            <td>
+                                                <div class="input-group p-0  input-daterange">
+                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strdate" id="strdate" value="${search.strdate }">
+                                                    </div>
+                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="enddate" id="enddate" value="${search.enddate }">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                           </div>
                            <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
@@ -90,50 +114,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
-                                <table class="table table-bordered">
-                                    <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>사용자상태</th>
-                                            <td>
-                                                <select class="form-control reset" name="isdelete" id="isdelete" value="${search.isdelete }">
-                                                    <option value="">선택</option>
-                                                    <option value="0" <c:if test='${search.isDelete eq 0}'>selected</c:if>>사용</option>
-                                                    <option value="1" <c:if test='${search.isDelete eq 1}'>selected</c:if>>미사용</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered">
-                                    <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>가입일</th>
-                                            <td>
-                                                <div class="input-group p-0  input-daterange">
-                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strdate" id="strdate" value="${search.strdate }">
-                                                    </div>
-                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="enddate" id="enddate" value="${search.enddate }">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+
 
                             <div class="w-100 text-right">
                                 <button class="btn btn-primary resets">초기화</button>
@@ -154,7 +135,16 @@
                              
                             </div>
                             <div class="overflow-x w-100">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-hover">
+                                <colgroup>
+                            		<col style="width: 20px;">
+                            		<col style="width: 150px;">
+                            		<col style="width: 70px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">                           		                            		                            		                            		                            		                            		                            		
+                            	</colgroup>  
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name="userno"></th>
@@ -162,7 +152,6 @@
                                         <th>사용자ID</th>
                                         <th>부서</th>
                                         <th>직책</th>
-                                        <th>역할</th>
                                         <th>사용자상태</th>
                                         <th>등록일시</th>
                                     </tr>
@@ -175,7 +164,6 @@
                                         <td>${user.USERID }</td>
                                         <td>${user.DEPT_ }</td>
                                         <td>${user.USERDUTY }</td>
-                                        <td>${user.CHKROLE_ }</td>
                                         <td>${user.ISDELETE_ }</td>
                                         <td>${user.REGDATE }</td>
                                     </tr>

@@ -93,7 +93,15 @@
                         </form:form>
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="overflow-x w-100 head">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-hover">
+                                <colgroup>
+                            		<col style="width: 15px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">                         		                            		                            		                            		                            		                            		                            		
+                            	</colgroup>  
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name=""></th>

@@ -136,7 +136,19 @@
                              
                             </div>
                             <div class="overflow-x w-100">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-hover">
+                                <colgroup>
+                            		<col style="width: 30px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">                           		                            		                            		                            		                            		                            		                            		
+                            	</colgroup>  
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name=""></th>

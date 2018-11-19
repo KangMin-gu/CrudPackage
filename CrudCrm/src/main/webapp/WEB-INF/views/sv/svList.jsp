@@ -194,6 +194,18 @@
                             </div>
                             <div class="table-responsive">
                             <table class="table table-bordered">
+                            	<colgroup>
+                            		<col style="width: 40px;">
+                            		<col style="width: 150px;">
+                            		<col style="width: 70px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 200px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 70px;">                            		                            		                            		                            		                            		                            		                            		
+                            	</colgroup>                            
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks"></th>
@@ -212,7 +224,7 @@
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
                                         <td><input type="checkbox" class="i-checks" name="rcvno" id="rcvno" value="${svList.RCVNO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
                                         <td>${svList.RCVTYPE_ }</td>
                                         <td>${svList.RACTCODE_ }</td>
                                         <td>${svList.CUSTNO_ }</td>

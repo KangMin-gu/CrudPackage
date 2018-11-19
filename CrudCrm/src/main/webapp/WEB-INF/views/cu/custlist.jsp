@@ -103,12 +103,6 @@
 													<th>직장명</th>
 													<td>
 														<div class="input-group cli">
-															<%-- <input type="text" class="form-control" id="cliname" name="cliname" value="${searchVal.cliname }" 
-															onClick="openPop('/popclient','popclient',600,700);" readonly> 
-															<input type="hidden" id="clino" name="clino" value="${searchVal.clino}">
-															<span class="input-group-addon"> 
-																<a href="#" onClick="openPop('/popclient','popclient',600,700);"><i class="fa fa-search"></i></a>
-															</span> --%>
 															<input type="text" class="form-control" autocomplete="off" name="cliname" id="cliname" value="${searchVal.cliname}" readonly>
                                                     		<input type="hidden" name="clino" id="clino" value="${searchVal.clino}">
                                                     		<span class="input-group-addon">
@@ -121,21 +115,17 @@
 												<tr>
 													<th>등록일</th>
 													<td colspan="3">
-														<div class="input-group p-0" style="max-height: 26px; height: 26px;">
-															<div
-																class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-																<span class="input-group-addon"><i
-																	class="fa fa-calendar"></i></span>
-																	<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
-															</div>
-															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-															<div
-																class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-																<span class="input-group-addon"><i
-																	class="fa fa-calendar"></i></span>
-																	<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
-															</div>
-														</div>
+														<div class="input-group p-0  " style="max-height: 26px; height: 26px;">
+                                                    		<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+                                                      			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                      			<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
+                                                    		</div>
+                                                    		<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                                    		<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+                                                        		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        		<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
+                                                    		</div>
+                                                		</div>	
 													</td>
 												</tr>
 											</tbody>
@@ -247,35 +237,35 @@
 										<tbody>
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
-												<td><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
-												<td><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
 												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
-												<td>${list.DEPTNAME }</td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.DEPTNAME }</td>
 												
-												<td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
 													<c:choose>
-														<c:when test="${list.MOBILE eq '--'}"></c:when>
+														<c:when test="${fn:trim(list.MOBILE) eq '--'}"></c:when>
 														<c:otherwise>${list.MOBILE }</c:otherwise>
 													</c:choose>
 												</td>
-												<td>${list.EMAIL }</td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.EMAIL }</td>
 												
-												<td>${list.OWNERNAME}</td>
-												<td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.OWNERNAME}</td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
 												<c:choose>
 													<c:when test="${list.CUSTGUBUN eq 1 }">회원</c:when>
 													<c:when test="${list.CUSTGUBUN eq 2 }">비회원</c:when>
 													<c:when test="${list.CUSTGUBUN eq 3 }">탈퇴회원</c:when>
 												</c:choose>
 												</td>
-												<td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
 												<c:choose>
 													<c:when test="${list.CUSTGRADE eq 1 }">일반</c:when>
 													<c:when test="${list.CUSTGRADE eq 2 }">VIP</c:when>
 													<c:when test="${list.CUSTGRADE eq 3 }">VVIP</c:when>
 												</c:choose>
 												</td>
-												<td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
 												<c:choose>
 													<c:when test="${list.INFOAGREE eq 0 }">동의</c:when>
 													<c:when test="${list.INFOAGREE eq 1 }">거부</c:when>
@@ -380,7 +370,6 @@
 				radioClass : 'iradio_square-green'
 			});
 			
-
 			//checkbox 전체 선택/해제 이벤트
  			$('#icheckAll').on('ifChecked', function(event){
 				$('.chksquare').iCheck('check'); 
@@ -388,7 +377,6 @@
 			$('#icheckAll').on('ifUnchecked', function(event){
 				$('.chksquare').iCheck('uncheck'); 
 			});
-
 
 			// 서치박스 리셋 라디오,셀렉스박스 제어를 위해 개별 파라미터 설정
 			$("#searchResetBtn").click(function(){	
@@ -417,18 +405,7 @@
 			
 		 
 		});
-	/*	
-	//공백입력금지
-	function noSpaceForm(obj) { 
-	    var str_space = /\s/;  // 공백체크
-	    if(str_space.exec(obj.value)) { //공백 체크            
-	        obj.focus();
-	        obj.value = obj.value.replace(' ',''); // 공백제거
-	        return false;
-	    }
-	}
-	*/				
-		
+
 	</script>
 	
 	<!-- E: 추가 js -->

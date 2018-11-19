@@ -77,6 +77,8 @@
 										<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
 										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+	                              			 <a href="#" class="btn btn-primary">내부통지</a>
+	                              			 <a href="#" class="btn btn-primary">이메일</a>
 	                              			 <a href="#" class="btn btn-primary">내부통지</a>												
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
@@ -87,18 +89,6 @@
 										</form:form>
 									</div>
 								
-								
-									
-									<%-- <div class="w-100 text-right mb-2">
-									<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
-										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
-										<a href="#" class="btn btn-primary">내부통지</a>										
-										<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
-										<Button type="submit" class="btn btn-primary">삭 제</Button>					
-										<a href="/cust" class="btn btn-primary">목 록</a>
-									</form:form>
-									</div> --%>
-									
 									<div class="box1 col-lg-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
@@ -118,7 +108,7 @@
 													<th>직장전화</th>
 													<td>
 													<c:choose>
-														<c:when test="${custDetail.WRKTEL eq '--'}"></c:when>
+														<c:when test="${fn:trim(custDetail.WRKTEL) eq '--'}"></c:when>
 														<c:otherwise>${custDetail.WRKTEL }</c:otherwise>
 													</c:choose>
 													</td>
@@ -141,7 +131,7 @@
 													<th>휴대전화</th>
 													<td>
 														<c:choose>
-															<c:when test="${custDetail.MOBILE eq '--'}"></c:when>
+															<c:when test="${fn:trim(custDetail.MOBILE) eq '--'}"></c:when>
 															<c:otherwise>${custDetail.MOBILE }</c:otherwise>
 														</c:choose>
 													</td>	
@@ -150,7 +140,7 @@
 													<th>직장팩스</th>
 													<td>  
 														<c:choose>
-															<c:when test="${custDetail.WRKFAX eq '--'}"></c:when>
+															<c:when test="${fn:trim(custDetail.WRKFAX) eq '--'}"></c:when>
 															<c:otherwise>${custDetail.WRKFAX }</c:otherwise>
 														</c:choose>
 													</td>
@@ -171,12 +161,24 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td> ${custDetail.EMAIL}&nbsp;&nbsp;<i class="fa fa-envelope-o"></i></td>
+													<td style="padding-top: 4px;padding-bottom: 2px;height: 34px;"> ${custDetail.EMAIL}												
+														<c:choose>
+															<c:when test="${fn:trim(custDetail.EMAIL) eq ''}"></c:when>
+															<c:otherwise>
+																<a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; float:right;"><i class="fa fa-envelope-o"></a></i>
+															</c:otherwise>
+														</c:choose>											
+													</td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td> ${custDetail.WRKURL}
-														<a href="${custDetail.WRKURL}" target="_blank"> &nbsp;&nbsp; <i class="fa fa-external-link" ></i></a>
+													<td style="padding-top: 4px;padding-bottom: 2px;height: 34px;"> ${custDetail.WRKURL}
+														<c:choose>
+															<c:when test="${fn:trim(custDetail.WRKURL) eq ''}"></c:when>
+															<c:otherwise>
+																<a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; float:right;" href="${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a>
+															</c:otherwise>
+														</c:choose>	
 													</td>
 												</tr>
 											</tbody>
@@ -233,7 +235,7 @@
 														<th>자택전화</th>
 														<td> 
 															<c:choose>
-																<c:when test=" ${custDetail.HOMTEL eq '--'}"></c:when>
+																<c:when test=" ${fn:trim(custDetail.HOMTEL) eq '--'}"></c:when>
 																<c:otherwise>${custDetail.HOMTEL }</c:otherwise>
 															</c:choose>
 														</td>

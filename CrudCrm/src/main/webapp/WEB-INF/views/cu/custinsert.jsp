@@ -99,14 +99,14 @@
 													<th>직장전화</th>
 													<td>
 														<!-- form select 공통으로 변경 -->
-														<select class="form-control col-4 float-left mr-3 " style="height: 1.45rem" name="wrktel1" id="wrktel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 " style="height: 1.45rem" name="wrktel1" id="wrktel1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select>
-														<input type="text" class="form-control col-3 float-left mr-2 validate number" name="wrktel2" id="wrktel2" > 
-														<input type="text" class="form-control col-3 float-left validate number" name="wrktel3" id="wrktel3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="wrktel2" id="wrktel2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3" name="wrktel3" id="wrktel3" >
 													</td>
 												</tr>
 											</tbody>
@@ -140,28 +140,28 @@
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
 													<td>													
-														<select class="form-control col-4 float-left mr-3 error validate required number" style="height: 1.40rem" name="mobile1" id="mobile1" required>
+														<select class="form-control col-4 float-left mr-3 error validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" required>
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 error validate required number" name="mobile2" id="mobile2" required > 
-														<input type="text" class="form-control col-3 float-left error validate required number" name="mobile3" id="mobile3" required >														
+														<input type="text" class="form-control col-3 float-left mr-2 error validate required phone2" name="mobile2" id="mobile2" required > 
+														<input type="text" class="form-control col-3 float-left error validate required phone3" name="mobile3" id="mobile3" required >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 " style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 validate phone1" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate number" name="wrkfax2" id="wrkfax2" > 
-														<input type="text" class="form-control col-3 float-left validate number" name="wrkfax3" id="wrkfax3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="wrkfax2" id="wrkfax2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3" name="wrkfax3" id="wrkfax3" >
 													</td>
 												</tr>
 											</tbody>
@@ -184,7 +184,7 @@
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control validate url"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) http://www.crudsystem.co.kr"></td>
+													<td><input type="text" class="form-control validate url"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) www.crudsystem.co.kr "></td>
 												</tr>
 											</tbody>
 										</table>
@@ -253,13 +253,13 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<select class="form-control col-4 float-left mr-3" style="height: 1.45rem" name="homtel1" id="homtel1">
+															<select class="form-control col-4 float-left mr-3 validate phone1" style="height: 1.45rem" name="homtel1" id="homtel1">
 																<option value="">선택</option>
 																<option value="02">02</option>
 																<option value="031">031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 validate number" name="homtel2" id="homtel2" > 
-															<input type="text" class="form-control col-3 float-left validate number" name="homtel3" id="homtel3">
+															<input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="homtel2" id="homtel2" > 
+															<input type="text" class="form-control col-3 float-left validate phone3" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
@@ -794,100 +794,12 @@
 	
 
 	
-	<script>
-	
-	
-		
-
-	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
-	function checkVal(id){  
-		//유효성 검사
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
-		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
-		var numPattern = /^[\d]{3,4}$/; //0~4자리숫자 일반 전화번호
-		var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
-		var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
-		
-		var res;//true or false
-		var value = $('#'+id).val();
-		var msg;
-		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
-			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
-			msg = '한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('number') ){
-			res = numPattern.test(value);
-			msg = '한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('addr') ){
-			res = addrPattern.test(value);
-			msg = '한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('url') ){
-			res = domainPattern.test(value);
-			msg = 'http:// https:// 를 제외하고 입력해 주세요';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('email') ){
-			res = emailPattern.test(value);
-			msg = 'email 형식에 맞게 입력해 주세요';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('simple') ){
-			res = simplePattern.test(value);
-			msg = '한글,영어,숫자만 입력 가능합니다.';//이 문구 출력	
-		}
-		if(res){
-			$('#'+id).removeClass('error');//빨간 테두리 삭제
-		}else{
-			$('#showMsg').empty();
-			$('#showMsg').appeng(msg);
-			$('#'+id).addClass('error');//빨간 테두리 생성 
-			
-			if( $('#'+id).hasClass('required') ){ //required 클래스가 있다면 (필수 값이라면) 유효성 실패시
-				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
-			}
-		}
-		return res;
-	}
-	
-	
-
-	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
-		debugger;
-		var reqArray = $('.required'); //필수값 배열
-		var length = reqArray.length; // 배열의 크기
-		var reqId;
-		var res=0;
-		for(var i=0;i<length;i++){// 배열만큼 반복문
-			reqId = $('.required:eq('+i+')' ).attr('id');//배열의 id값
-			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
-		}
-		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)
-			$('.submit').prop("disabled",false);//submit 활성화 
-		}
-	}
-	
+	<script>	
  
         $(document).ready(function () {
+      	
+        	//********필수 값 실시간 체크*********************************        	      
         	
-        	$('.required').keyup(function(e){
-        		var res = checkVal(e.target.id);
-        		enableSubmit();
-        	});
-        	
-        	//********필수 값 실시간 체크*********************************        	 
-        	$('#custname').keyup(function(e){
-        		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
-        		enableSubmit();//고객명,핸드폰 모든값이 유효성검사 true 일시 수정버튼 활성화.
-        	});       	
-        	$('#mobile2').keyup(function(e){
-        		var res = checkVal(e.target.id);
-        		enableSubmit();
-        	});
-        	$('#mobile3').keyup(function(e){
-        		var res = checkVal(e.target.id);
-        		enableSubmit();
-        	});
         	$('#mobile1').change(function() {//셀렉트박스 change 메서드
         		var state = $('#mobile1 option:selected').val();
         		if(state == '') {//값이없다면
@@ -900,37 +812,7 @@
         	});
         	//****************************************필수값 체크 끝 ********
         	
-        	//유효성검사
-        	$('#submit').click(function(){
-        	
-        		var validate = $('.validate'); //validate 선언한 클래스 배열
-        		var length = validate.length; //배열 사이즈 
-        		var id; //배열의 id값
-        		var value; // 배열의 value 값 
-        		
-        		for(var i=0; i<length ; i++){//validate 클래스의 배열만큼 반복문
-        			id = $('.validate:eq('+i+')' ).attr('id'); 
-        			value = $('#'+id).val(); 
-        			
-        			if( value ==''){//값이 없다면
-  						$('#'+id).removeClass('error');//에러 태두리 삭제      				
-        			}else{
-        				if(!checkVal(id)){
-        					$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-                			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
-                			return false;//메서드 종료
-        				}
-        			}
-
-        		}
-        		     		
-        		$('#msgDiv').hide();//div창숨기기
-        		$('#showMsg').empty();//메시지 삭제
-        	
-        		$('#command').submit();//전송
-        		
-        	});
-        	
+        
        	
             // icheck css
             $('.i-checks').iCheck({

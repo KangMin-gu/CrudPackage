@@ -55,7 +55,43 @@
 	$('.cli').click(function(e){
 		openNewWindow('거래처','/popclient',e.target.id,650,700);
 	});
+	
+	//********필수 값 실시간 체크*********************************        	      
+	$('.required').keyup(function(e){
+		var res = checkVal(e.target.id);
+		enableSubmit();
+	});
+	
+	//유효성검사
+	$('#submit').click(function(){
+	
+		var validate = $('.validate'); //validate 선언한 클래스 배열
+		var length = validate.length; //배열 사이즈 
+		var id; //배열의 id값
+		var value; // 배열의 value 값 
+		
+		for(var i=0; i<length ; i++){//validate 클래스의 배열만큼 반복문
+			id = $('.validate:eq('+i+')' ).attr('id'); 
+			value = $('#'+id).val(); 
+			
+			if( value ==''){//값이 없다면
+					$('#'+id).removeClass('error');//에러 태두리 삭제      				
+			}else{
+				if(!checkVal(id)){
+					$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+        			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
+        			return false;//메서드 종료
+				}
+			}
 
+		}
+		     		
+		$('#msgDiv').hide();//div창숨기기
+		$('#showMsg').empty();//메시지 삭제
+	
+		$('#command').submit();//전송
+		
+	});
 	
 	
 	var newWindow = null;
@@ -176,6 +212,86 @@
     	
     	return today;
     }
+    
+    //id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
+	function checkVal(id){  
+		//유효성 검사
+		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
+		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
+		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
+		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
+		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
+		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호
+		var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
+		var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
+		
+		var res;//true or false
+		var value = $('#'+id).val();
+		var msg;
+		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
+			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
+			msg = '한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
+		
+		}else if( $('#'+id).hasClass('phone1') ){
+			res = phone1Pattern.test(value);
+			msg = '숫자 2~3 자리를 입력해 주세요.';//이 문구 출력	
+			
+		}else if( $('#'+id).hasClass('phone2') ){
+			res = phone2Pattern.test(value);
+			msg = '숫자 3~4 자리를 입력해 주세요.';//이 문구 출력
+			
+		}else if( $('#'+id).hasClass('phone3') ){
+			res = phone3Pattern.test(value);
+			msg = '숫자 4 자리를 입력해 주세요.';//이 문구 출력	
+			
+		}else if( $('#'+id).hasClass('addr') ){
+			res = addrPattern.test(value);
+			msg = '한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)';//이 문구 출력
+			
+		}else if( $('#'+id).hasClass('url') ){
+			res = domainPattern.test(value);
+			msg = 'http(s):// 를 제외한 url 형식으로 입력해 주세요 ex) www.crudsystem.co.kr ';//이 문구 출력
+			
+		}else if( $('#'+id).hasClass('email') ){
+			res = emailPattern.test(value);
+			msg = 'email 형식에 맞게 입력해 주세요 ex) sdw@crudsystem.co.kr ';//이 문구 출력
+			
+		}else if( $('#'+id).hasClass('simple') ){
+			res = simplePattern.test(value);
+			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
+		}
+		
+		msg = $('#'+id).parent().prev().text()+ " : " + msg;
+		if(res){
+			$('#'+id).removeClass('error');//빨간 테두리 삭제
+		}else{
+			$('#showMsg').empty();
+			$('#showMsg').append(msg);
+			$('#'+id).addClass('error');//빨간 테두리 생성 
+			
+			if( $('#'+id).hasClass('required') ){ //required 클래스가 있다면 (필수 값이라면) 유효성 실패시
+				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
+			}
+		}
+		return res;
+	}
+	
+	
+
+	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
+		debugger;
+		var reqArray = $('.required'); //필수값 배열
+		var length = reqArray.length; // 배열의 크기
+		var reqId;
+		var res=0;
+		for(var i=0;i<length;i++){// 배열만큼 반복문
+			reqId = $('.required:eq('+i+')' ).attr('id');//배열의 id값
+			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
+		}
+		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)
+			$('.submit').prop("disabled",false);//submit 활성화 
+		}
+	}
 
     
     

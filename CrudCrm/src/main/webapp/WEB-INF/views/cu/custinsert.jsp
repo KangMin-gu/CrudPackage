@@ -88,12 +88,12 @@
 												<tr>
 													<th>고객명</th>
 													<td>
-														<input type="text" class="form-control error" name="custname" id="custname" placeholder="필수 입력" >
+														<input type="text" class="form-control error required validate name" name="custname" id="custname" placeholder="필수 입력" >
 													</td>
 												</tr>
 												<tr>
 													<th>직책</th>
-													<td><input type="text" class="form-control" style="height: 1.45rem" name="duty" id="duty"></td>
+													<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="duty" id="duty"></td>
 												</tr>
 												<tr>
 													<th>직장전화</th>
@@ -105,8 +105,8 @@
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select>
-														<input type="text" class="form-control col-3 float-left mr-2 inputs" name="wrktel2" id="wrktel2" > 
-														<input type="text" class="form-control col-3 float-left inputs" name="wrktel3" id="wrktel3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate number" name="wrktel2" id="wrktel2" > 
+														<input type="text" class="form-control col-3 float-left validate number" name="wrktel3" id="wrktel3" >
 													</td>
 												</tr>
 											</tbody>
@@ -140,28 +140,28 @@
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
 													<td>													
-														<select class="form-control col-4 float-left mr-3 error" style="height: 1.40rem" name="mobile1" id="mobile1" required>
+														<select class="form-control col-4 float-left mr-3 error validate required number" style="height: 1.40rem" name="mobile1" id="mobile1" required>
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 inputs error" name="mobile2" id="mobile2" required > 
-														<input type="text" class="form-control col-3 float-left inputs error" name="mobile3" id="mobile3" required >														
+														<input type="text" class="form-control col-3 float-left mr-2 error validate required number" name="mobile2" id="mobile2" required > 
+														<input type="text" class="form-control col-3 float-left error validate required number" name="mobile3" id="mobile3" required >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 " style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 inputs" name="wrkfax2" id="wrkfax2" > 
-														<input type="text" class="form-control col-3 float-left inputs" name="wrkfax3" id="wrkfax3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate number" name="wrkfax2" id="wrkfax2" > 
+														<input type="text" class="form-control col-3 float-left validate number" name="wrkfax3" id="wrkfax3" >
 													</td>
 												</tr>
 											</tbody>
@@ -176,15 +176,15 @@
 											<tbody>
 												<tr>
 													<th>부서</th>
-													<td><input type="text" class="form-control" name="deptname" id="deptname" ></td>
+													<td><input type="text" class="form-control validate simple" name="deptname" id="deptname" ></td>
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control" style="height: 1.45rem" name="email" id="email" ></td>
+													<td><input type="email" class="form-control validate email" style="height: 1.45rem" name="email" id="email" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) http://www.crudsystem.co.kr"></td>
+													<td><input type="text" class="form-control validate url"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) http://www.crudsystem.co.kr"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -205,7 +205,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" readonly>
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="wrkaddr3" id="wrkaddr3">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="wrkaddr3" id="wrkaddr3">
 													</td>
 												</tr>
 											</tbody>
@@ -258,8 +258,8 @@
 																<option value="02">02</option>
 																<option value="031">031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 inputs" name="homtel2" id="homtel2" > 
-															<input type="text" class="form-control col-3 float-left inputs" name="homtel3" id="homtel3">
+															<input type="text" class="form-control col-3 float-left mr-2 validate number" name="homtel2" id="homtel2" > 
+															<input type="text" class="form-control col-3 float-left validate number" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
@@ -284,7 +284,7 @@
 													</tr>
 													<tr>
 														<th>취미</th>
-														<td><input type="text" class="form-control" style="height: 1.45rem" name="hobby" id="hobby"> </td>
+														<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="hobby" id="hobby"> </td>
 													</tr>
 												</tbody>
 											</table>
@@ -370,7 +370,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control" style="height: 1.52rem;" name="job" id="job">
+															<input type="text" class="form-control validate simple" style="height: 1.52rem;" name="job" id="job">
 														</td>
 													</tr>
 													<tr>
@@ -402,7 +402,7 @@
 																</span>
 															</div> 
 															<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" readonly>
-															<input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="homaddr3" id="homaddr3">
+															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="homaddr3" id="homaddr3">
 														</td>
 													</tr>
 												</tbody>
@@ -799,212 +799,145 @@
 	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
 	var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
-	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
+	var numPattern = /^[\d]{3,4}$/; //0~4자리숫자 일반 전화번호
 	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
 	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
 		
-	//필수값 유효성 검사 테그 이름을 넣어주면 true false 반환
-	function checkVal(id){
-		debugger;
-		var value = document.getElementById(id).value;//id명
-		var res; 
-		if (id == 'custname'){
-			res = namePattern.test(value);//유효성 패턴 매칭
-		}else if(id.indexOf('mobile') != -1){//id에 mobile이라는 문자가 포함되면 
+
+	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
+	function checkVal(id){  
+		
+		var res;//true or false
+		var value = $('#'+id).val();
+		
+		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
+			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
+			if(res ==false){
+				$('#showMsg').empty();//기존메시지초기화
+				$('#showMsg').append('한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)');//이 문구 출력	
+			}
+			 
+		}else if( $('#'+id).hasClass('number') ){
 			res = numPattern.test(value);
-		}else if(id.indexOf('wrktel') != -1){
-			res = numPattern.test(value);
-		}else if(id.indexOf('wrkfax') != -1){
-			res = numPattern.test(value);
-		}else if(id.indexOf('homtel') != -1){
-			res = numPattern.test(value);
-		}else if(id == 'email'){
-			res = emailPattern.test(value);
-		}else if(id.indexOf('addr') != -1 ){
+			if(res ==false){
+				$('#showMsg').empty();
+				$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');//이 문구 출력	
+			}
+		}else if( $('#'+id).hasClass('addr') ){
 			res = addrPattern.test(value);
-		}else if(id == 'wrkurl'){
+			if(res ==false){
+				$('#showMsg').empty();
+				$('#showMsg').append('한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');//이 문구 출력	
+			}
+		}else if( $('#'+id).hasClass('url') ){
 			res = domainPattern.test(value);
-		}else
+			if(res ==false){
+				$('#showMsg').empty();
+				$('#showMsg').append('http:// https:// 를 제외하고 입력해 주세요');//이 문구 출력	
+			}
+		}else if( $('#'+id).hasClass('email') ){
+			res = emailPattern.test(value);
+			if(res ==false){
+				$('#showMsg').empty();
+				$('#showMsg').append('email 형식에 맞게 입력해 주세요');//이 문구 출력	
+			}
+		}else if( $('#'+id).hasClass('simple') ){
 			res = simplePattern.test(value);
+			if(res ==false){
+				$('#showMsg').empty();
+				$('#showMsg').append('한글,영어,숫자만 입력 가능합니다.');//이 문구 출력	
+			}
+		}
+		
+		if(res == true){//유효성 통과하면 
+			$('#'+id).removeClass('error');//빨간 테두리 삭제
+		}else if(res == false){//유효성 실패시
+			$('#'+id).addClass('error');//빨간 테두리 생성 
+			
+			
+			if( $('#'+id).hasClass('required') ){ //required 클래스가 있다면 (필수 값이라면) 유효성 실패시
+				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
+			}
+		}			
+		
 		return res;
 	}
 	
 	
-	//id와 true false 를 넣어주면 해당 인풋창의 색상을 변화시켜준다.
-	function changeRed(id,res){		
-		if(res == true){
-			$('#'+id).removeClass('error');//해당 인풋 디자인변경
-		}else if(res == false){
-			$('#'+id).addClass('error');//해당 인풋 디자인변경 
-			if(id == 'custname'){
-				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
-			}else if (id.indexOf('mobile') != -1){
-				$('.submit').prop("disabled",true);//submit 버튼 비활성화
-			}	
-		}				
-	}
-	
+
 	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
-		var mobile1Val = $('#mobile1').val();
-		if( checkVal('custname') && checkVal('mobile2') && checkVal('mobile3') && checkVal('mobile1') ){ //필수 값이 모두 정상 입력되었다면 		
-			$('.submit').prop("disabled",false); // submit버튼 활성화  
+		debugger;
+		var reqArray = $('.required'); //필수값 배열
+		var length = reqArray.length; // 배열의 크기
+		var reqId;
+		var res=0;
+		for(var i=0;i<length;i++){// 배열만큼 반복문
+			reqId = $('.required:eq('+i+')' ).attr('id');//배열의 id값
+			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
+		}
+		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)
+			$('.submit').prop("disabled",false);//submit 활성화 
 		}
 	}
 	
-	 
+ 
         $(document).ready(function () {
         	
-        	//********고객명 , 핸드폰 필수 값 체크********
-        	 
+        	//********필수 값 실시간 체크*********************************        	 
         	$('#custname').keyup(function(e){
         		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
-        		changeRed(e.target.id , res );
         		enableSubmit();//고객명,핸드폰 모든값이 유효성검사 true 일시 수정버튼 활성화.
         	});       	
         	$('#mobile2').keyup(function(e){
         		var res = checkVal(e.target.id);
-        		changeRed(e.target.id , res );
         		enableSubmit();
         	});
         	$('#mobile3').keyup(function(e){
         		var res = checkVal(e.target.id);
-        		changeRed(e.target.id , res );
         		enableSubmit();
         	});
-        	$('#mobile1').change(function() {
+        	$('#mobile1').change(function() {//셀렉트박스 change 메서드
         		var state = $('#mobile1 option:selected').val();
-        		if(state == '') {
-        			$('#mobile1').addClass('error');
-        			$('.submit').prop("disabled",true);
+        		if(state == '') {//값이없다면
+        			$('#mobile1').addClass('error');//에러 태두리
+        			$('.submit').prop("disabled",true);//submit 비활성화
         		} else {
         			$('#mobile1').removeClass('error');
         			enableSubmit();
         		}
         	});
-        	//****************************************
+        	//****************************************필수값 체크 끝 ********
         	
-        	
-        	//**********form 전송 전 유효성 검사 ********************
+        	//유효성검사
         	$('#submit').click(function(){
-        		debugger;
-        		if( checkVal('custname') == false ){
-        			$('#showMsg').empty();
-        			$('#showMsg').append('고객명 - 한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)');
-        			$('#msgDiv').show();
-        			$('#custname').focus();
-        			return false;
-        		}else if( checkVal('mobile1') == false ){
-        			$('#showMsg').empty();
-        			$('#showMsg').append('핸드폰1 - 필수 입력값입니다.');
-        			$('#msgDiv').show();
-        			$('#mobile1').focus();
-        			return false;
-        		}else if( checkVal('mobile2') == false ){
-        			$('#showMsg').empty();
-        			$('#showMsg').append('핸드폰2 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#mobile2').focus();
-        			return false;
-        		}else if( checkVal('mobile3') == false ){
-        			$('#showMsg').empty();
-        			$('#showMsg').append('핸드폰3 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#mobile3').focus();
-        			return false;
-        		}else if(checkVal('job') == false ){
-        			changeRed('job',false);
-        			$('#job').focus();
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직업 - 한글,영어,숫자만 입력 가능합니다.');
-        			$('#msgDiv').show();
         	
-        			return false;
-        		}else if( !$('#email').val() == '' && checkVal('email') == false ){//email이 공백이 아니면 유효성검사 시작 
-        			changeRed('email',false);
-        			$('#email').focus();
-        			$('#showMsg').empty();
-        			$('#showMsg').append('이메일 - email 형식에 맞게 입력해 주세요');
-        			$('#msgDiv').show();
-        	
-        			return false;
-        		}else if( !$('#wrkurl').val() == '' && checkVal('wrkurl') == false ){
-        			changeRed('wrkurl',false);
-        			$('#wrkurl').focus();
-        			$('#showMsg').empty();
-        			$('#showMsg').append('홈페이지 - http:// https:// 를 제외하고 입력해 주세요');
-        			$('#msgDiv').show();
-        	
-        			return false;
-        		}else if( !$('#wrktel2').val() == '' && checkVal('wrktel2') == false ){
-        			changeRed('wrktel2',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직장전화2 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#wrktel2').focus();
-        			return false;
-        		}else if( !$('#wrktel3').val() == '' &&  checkVal('wrktel3') == false ){
-        			changeRed('wrktel3',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직장전화3 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#wrktel3').focus();
-        			return false;
-        		}else if( !$('#wrkfax2').val() == '' &&  checkVal('wrkfax2') == false ){
-        			changeRed('wrkfax2',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직장팩스2 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#wrkfax2').focus();
-        			return false;
-        		}else if( !$('#wrkfax3').val() == '' &&  checkVal('wrkfax3') == false ){
-        			changeRed('wrkfax3',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직장팩스3 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#wrkfax3').focus();
-        			return false;
-        		}else if( !$('#homtel2').val() == '' &&  checkVal('homtel2') == false ){
-        			changeRed('homtel2',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('자택전화2 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#homtel2').focus();
-        			return false;
-        		}else if( !$('#homtel3').val() == '' &&  checkVal('homtel3') == false ){
-        			changeRed('homtel3',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('자택전화3 - 숫자 3~4 자리를 입력해 주세요');
-        			$('#msgDiv').show();
-        			$('#homtel3').focus();
-        			return false;
-        		}else if( !$('#wrkaddr3').val() == '' &&  checkVal('wrkaddr3') == false ){
-        			changeRed('wrkaddr3',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직장주소3 - 한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');
-        			$('#msgDiv').show();
-        			$('#wrkaddr3').focus();
-        			return false;
-        		}else if( !$('#homaddr3').val() == '' &&  checkVal('homaddr3') == false ){
-        			changeRed('homaddr3',false);
-        			$('#showMsg').empty();
-        			$('#showMsg').append('직장주소3 - 한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');
-        			$('#msgDiv').show();
-        			$('#homaddr3').focus();
-        			return false;
+        		var validate = $('.validate'); //validate 선언한 클래스 배열
+        		var length = validate.length; //배열 사이즈 
+        		var id; //배열의 id값
+        		var value; // 배열의 value 값 
+        		
+        		for(var i=0; i<length ; i++){//validate 클래스의 배열만큼 반복문
+        			id = $('.validate:eq('+i+')' ).attr('id'); 
+        			value = $('#'+id).val(); 
+        			
+        			if( value ==''){//값이 없다면
+  						$('#'+id).removeClass('error');//에러 태두리 삭제      				
+        			}
+        			
+        			if( value != '' && checkVal(id) == false ){ //값이 공백이 아니면서 유효성 검사결과가 false라면 해당 id의 클래스 값에 따라 메시지 출력 
+       				       				
+            			$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+            			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
+            			return false;//메서드 종료
+        			}
         		}
-        		
-        		
-        		
-        		
-        		
-        		 		
+        		     		
         		$('#msgDiv').hide();//div창숨기기
         		$('#showMsg').empty();//메시지 삭제
         	
         		$('#command').submit();//전송
         		
         	});
-        	
         	
        	
             // icheck css
@@ -1022,43 +955,7 @@
                 autoclose: true
             });
             
-           /* 
-          	//validation.js 유효성 검사 플러그인 커스텀 메서드
-       	 	$.validator.addMethod("regx",function(value,element,regexpr){
-            	return regexpr.test(value);
-            })   
-            // template validation 
-            $("#command").validate({
-      		
-                rules: {
-                    custname : { required : true, minlength : 2, maxlength: 30, regx : namePattern } 
-            		,mobile2 : { required : true, minlength : 3, maxlength: 4, number : true }
-                   	,mobile3 : { required : true, minlength : 3, maxlength: 4, number : true }
-                   	,wrktel2 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrktel3 : { minlength : 3, maxlength: 4, number : true }      
-                    ,wrkfax2 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrkfax3 : { minlength : 3, maxlength: 4, number : true }
-                    ,homtel2 : { minlength : 3, maxlength: 4, number : true }
-                    ,homtel3 : { minlength : 3, maxlength: 4, number : true }
-                    
-                    ,wrkurl : { url : true }
-                    ,duty : { regx : simplePattern }
-                    ,deptname : { regx : simplePattern }
-                    //,job : { regx : simplePattern }
-                    ,hobby : { regx : simplePattern }           
-                },           
-            	messages:{
-            		custname: {regx:"한글-영문으로 입력 해주세요"}
-                	,duty : { regx : "한글-영문으로 입력 해주세요" }
-                	,deptname : { regx : "한글-영문으로 입력 해주세요" }
-                	//,job : { regx : "한글-영문으로 입력 해주세요" }
-                	,hobby : { regx : "한글-영문으로 입력 해주세요" }
-            	}
-            });
-          	
-          	*/
-          	            
-            
+         
                          
         });
     </script>

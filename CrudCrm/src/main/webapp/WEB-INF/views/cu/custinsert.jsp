@@ -795,71 +795,58 @@
 
 	
 	<script>
-	//유효성 검사
-	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
-	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-	var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
-	var numPattern = /^[\d]{3,4}$/; //0~4자리숫자 일반 전화번호
-	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
-	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
+	
+	
 		
 
 	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
+		//유효성 검사
+		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
+		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
+		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
+		var numPattern = /^[\d]{3,4}$/; //0~4자리숫자 일반 전화번호
+		var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
+		var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
 		
 		var res;//true or false
 		var value = $('#'+id).val();
-		
+		var msg;
 		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
 			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
-			if(res ==false){
-				$('#showMsg').empty();//기존메시지초기화
-				$('#showMsg').append('한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)');//이 문구 출력	
-			}
-			 
+			msg = '한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)';//이 문구 출력
+			
 		}else if( $('#'+id).hasClass('number') ){
 			res = numPattern.test(value);
-			if(res ==false){
-				$('#showMsg').empty();
-				$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');//이 문구 출력	
-			}
+			msg = '한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)';//이 문구 출력
+			
 		}else if( $('#'+id).hasClass('addr') ){
 			res = addrPattern.test(value);
-			if(res ==false){
-				$('#showMsg').empty();
-				$('#showMsg').append('한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');//이 문구 출력	
-			}
+			msg = '한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)';//이 문구 출력
+			
 		}else if( $('#'+id).hasClass('url') ){
 			res = domainPattern.test(value);
-			if(res ==false){
-				$('#showMsg').empty();
-				$('#showMsg').append('http:// https:// 를 제외하고 입력해 주세요');//이 문구 출력	
-			}
+			msg = 'http:// https:// 를 제외하고 입력해 주세요';//이 문구 출력
+			
 		}else if( $('#'+id).hasClass('email') ){
 			res = emailPattern.test(value);
-			if(res ==false){
-				$('#showMsg').empty();
-				$('#showMsg').append('email 형식에 맞게 입력해 주세요');//이 문구 출력	
-			}
+			msg = 'email 형식에 맞게 입력해 주세요';//이 문구 출력
+			
 		}else if( $('#'+id).hasClass('simple') ){
 			res = simplePattern.test(value);
-			if(res ==false){
-				$('#showMsg').empty();
-				$('#showMsg').append('한글,영어,숫자만 입력 가능합니다.');//이 문구 출력	
-			}
+			msg = '한글,영어,숫자만 입력 가능합니다.';//이 문구 출력	
 		}
-		
-		if(res == true){//유효성 통과하면 
+		if(res){
 			$('#'+id).removeClass('error');//빨간 테두리 삭제
-		}else if(res == false){//유효성 실패시
+		}else{
+			$('#showMsg').empty();
+			$('#showMsg').appeng(msg);
 			$('#'+id).addClass('error');//빨간 테두리 생성 
-			
 			
 			if( $('#'+id).hasClass('required') ){ //required 클래스가 있다면 (필수 값이라면) 유효성 실패시
 				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
 			}
-		}			
-		
+		}
 		return res;
 	}
 	
@@ -882,6 +869,11 @@
 	
  
         $(document).ready(function () {
+        	
+        	$('.required').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		enableSubmit();
+        	});
         	
         	//********필수 값 실시간 체크*********************************        	 
         	$('#custname').keyup(function(e){
@@ -922,14 +914,14 @@
         			
         			if( value ==''){//값이 없다면
   						$('#'+id).removeClass('error');//에러 태두리 삭제      				
+        			}else{
+        				if(!checkVal(id)){
+        					$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+                			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
+                			return false;//메서드 종료
+        				}
         			}
-        			
-        			if( value != '' && checkVal(id) == false ){ //값이 공백이 아니면서 유효성 검사결과가 false라면 해당 id의 클래스 값에 따라 메시지 출력 
-       				       				
-            			$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-            			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
-            			return false;//메서드 종료
-        			}
+
         		}
         		     		
         		$('#msgDiv').hide();//div창숨기기

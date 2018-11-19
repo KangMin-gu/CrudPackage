@@ -18,7 +18,7 @@ import saas.crud.crm.ce.PagingCommon;
 public class CommonServiceImpl implements CommonService {
 
 	@Autowired 
-	CommonDao commonDao;
+	private CommonDao commonDao;
 	
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -70,6 +70,11 @@ public class CommonServiceImpl implements CommonService {
 			String cliname = request.getParameter("cliname").toString();
 			searchVal.put("cliname", cliname);
 		}		
+		if(request.getParameter("parentid") != null) { 
+			String target = request.getParameter("parentid").toString();
+			searchVal.put("target", target);
+		}
+		
 		
 		int totalRows = commonDao.totalcntClient(searchVal);
 		

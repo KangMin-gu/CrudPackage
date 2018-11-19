@@ -64,25 +64,20 @@
 								</div>
 								<div class="ibox-content row">	
 													
-									<div class="w-100 text-right mb-2">
-										
-										<!-- alert 메시지 div. 비활성화 상태. 
-										유효성 검사를 통과 하지 못한다면 활성화 시킨다.  -->
-										<div class="alert alert-danger" id="msgDiv" style="text-align:left;display:none;">
-                                		 	<a class="alert-link" href="#">
-												<span id="showMsg"><!--에러 메시지  --></span>
-											</a>
-                            			</div>
-                            			
-                            			
-                            			
-										<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
-										<a href="/cust" class="btn btn-primary">목 록</a>
-										
-										
-										
-										
+									
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+	                              		 	<a class="alert-link" href="#">
+												<span id="showMsg"></span>
+											</a>										
+	                          			</div>													
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+											<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
+											<a href="/cust" class="btn btn-primary">목 록</a>
+										</div>
 									</div>
+									
+									
 									<div class="box1 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
@@ -98,7 +93,7 @@
 												</tr>
 												<tr>
 													<th>직책</th>
-													<td><input type="text" class="form-control" name="duty" id="duty"></td>
+													<td><input type="text" class="form-control" style="height: 1.45rem" name="duty" id="duty"></td>
 												</tr>
 												<tr>
 													<th>직장전화</th>
@@ -128,19 +123,24 @@
 													<th>직장명</th>
 													<!-- cli로 변경  -->
 													<td >
-														<div class="input-group">
-															<input type="text" class="form-control" name="cliname" id="cliname" onClick="openPop('/popclient','client',600,700);"readonly> 
+														<div class="input-group cli">
+															<!-- <input type="text" class="form-control" name="cliname" id="cliname" onClick="openPop('/popclient','client',600,700);"readonly> 
 															<input type="hidden" name="clino" id="clino" value="0">
 															<span class="input-group-addon"> 
 																<a href="javascript:void(0);" onClick="openPop('/popclient','client',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+															</span> -->		
+															<input type="text" class="form-control" autocomplete="off" name="cliname" id="cliname" readonly>
+                                                    		<input type="hidden" name="clino" id="clino" value="0">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
 														</div>
 													</td>
 												</tr>
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
 													<td>													
-														<select class="form-control col-4 float-left mr-3 error" style="height: 1.45rem" name="mobile1" id="mobile1" required>
+														<select class="form-control col-4 float-left mr-3 error" style="height: 1.40rem" name="mobile1" id="mobile1" required>
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
@@ -180,11 +180,11 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control" name="email" id="email" ></td>
+													<td><input type="email" class="form-control" style="height: 1.45rem" name="email" id="email" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control" name="wrkurl" id="wrkurl" placeholder="ex) http://www.crudsystem.co.kr"></td>
+													<td><input type="text" class="form-control"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) http://www.crudsystem.co.kr"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -201,7 +201,7 @@
 													<td class="border-top-0">
 														<div class="input-group col-lg-3 pl-0 float-left">
 															<input type="text" class="form-control daumzip" name="wrkaddr1" id="wrkaddr1" readonly > 
-															<span class="input-group-addon"> <a href="#" ><i class="fa fa-search daumzip" id="wrkaddr1"></i></a>
+															<span class="input-group-addon"> <a href="#" ><i class="fa fa-search daumzip" id="wrkaddr1" ></i></a>
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" readonly>
@@ -221,12 +221,12 @@
 												<tr>
 													<th class="border-top-0">담당자</th>
 													<td class="border-top-0">
-														<div class="input-group">
-															<input type="hidden" name="owner" id="owner" value="${SESSIONUSERNO}" > 
-															<input type="text" class="form-control"  name="ownername" id="ownername" value="${SESSIONUSERNAME}" onClick="openPop('/popowner','owner',600,700);" readonly > 
-															<span class="input-group-addon"> 
-															<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+														<div class="input-group owner">
+															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${SESSIONUSERNAME}" readonly>
+                                                    		<input type="hidden" name="owner" id="owner" value="${SESSIONUSERNO}">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
 														</div>
 													</td>
 												</tr>
@@ -258,14 +258,14 @@
 																<option value="02">02</option>
 																<option value="031">031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 inputs" name="homtel2" > 
-															<input type="text" class="form-control col-3 float-left inputs" name="homtel3" >
+															<input type="text" class="form-control col-3 float-left mr-2 inputs" name="homtel2" id="homtel2" > 
+															<input type="text" class="form-control col-3 float-left inputs" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
 														<th>결혼여부</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="married">
+															<select class="form-control" style="height: 1.45rem" name="married" id="married">
 																<option value="0">선택</option>
 																<option value="1">미혼</option>
 																<option value="2">기혼</option>
@@ -278,13 +278,13 @@
 															<div class="input-group date">
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
-																</span><input type="text" class="form-control" name="weddingday" id="weddingday" autocomplete="off">
+																</span><input type="text" class="form-control"  name="weddingday" id="weddingday" autocomplete="off">
 															</div>
 														</td>
 													</tr>
 													<tr>
 														<th>취미</th>
-														<td><input type="text" class="form-control" name="hobby" id="hobby"> </td>
+														<td><input type="text" class="form-control" style="height: 1.45rem" name="hobby" id="hobby"> </td>
 													</tr>
 												</tbody>
 											</table>
@@ -319,7 +319,7 @@
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<select class="form-control" style="height: 1.5rem" name="custgrade" id="custgrade">
+															<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
 																<option value="0" >선택</option>
 																<option value="1">일반</option>
 																<option value="2">VIP</option>
@@ -370,7 +370,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control" style="height: 1.5rem;" name="job" id="job">
+															<input type="text" class="form-control" style="height: 1.52rem;" name="job" id="job">
 														</td>
 													</tr>
 													<tr>
@@ -417,7 +417,7 @@
 												<tbody>
 													<th class="border-top-0">정보활용</th>
 													<td class="border-top-0">
-														<div class="i-checks" style="height: 1.45rem;">
+														<div class="i-checks" style="height: 1.40rem;">
 															<label class="pr-lg-3 mb-0">
 																<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" checked ><i></i> 동의
 															</label> 
@@ -796,16 +796,16 @@
 	
 	<script>
 	//유효성 검사
-	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,3}$/; //한글 영문 2~30글자 + 숫자0~3자리까지허용
+	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-	var addrPattern = /^[가-힣a-zA-Z0-9!@()-_=+,.]{2,30}$/; //한글 영문 숫자 2~30 
+	var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
 	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
 	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
 	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
 		
 	//필수값 유효성 검사 테그 이름을 넣어주면 true false 반환
 	function checkVal(id){
-		
+		debugger;
 		var value = document.getElementById(id).value;//id명
 		var res; 
 		if (id == 'custname'){
@@ -889,22 +889,25 @@
         		debugger;
         		if( checkVal('custname') == false ){
         			$('#showMsg').empty();
-        			$('#showMsg').append('한글,영어 2 글자 이상을 입력해 주세요.');
+        			$('#showMsg').append('고객명 - 한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)');
         			$('#msgDiv').show();
         			$('#custname').focus();
         			return false;
         		}else if( checkVal('mobile1') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('핸드폰1 - 필수 입력값입니다.');
+        			$('#msgDiv').show();
         			$('#mobile1').focus();
         			return false;
         		}else if( checkVal('mobile2') == false ){
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('핸드폰2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#mobile2').focus();
         			return false;
         		}else if( checkVal('mobile3') == false ){
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('핸드폰3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#mobile3').focus();
         			return false;
@@ -912,7 +915,7 @@
         			changeRed('job',false);
         			$('#job').focus();
         			$('#showMsg').empty();
-        			$('#showMsg').append('한글,영어,숫자만 입력 가능합니다.');
+        			$('#showMsg').append('직업 - 한글,영어,숫자만 입력 가능합니다.');
         			$('#msgDiv').show();
         	
         			return false;
@@ -920,7 +923,7 @@
         			changeRed('email',false);
         			$('#email').focus();
         			$('#showMsg').empty();
-        			$('#showMsg').append('email 형식에 맞게 입력해 주세요');
+        			$('#showMsg').append('이메일 - email 형식에 맞게 입력해 주세요');
         			$('#msgDiv').show();
         	
         			return false;
@@ -928,53 +931,71 @@
         			changeRed('wrkurl',false);
         			$('#wrkurl').focus();
         			$('#showMsg').empty();
-        			$('#showMsg').append('http:// https:// 를 제외하고 입력해 주세요');
+        			$('#showMsg').append('홈페이지 - http:// https:// 를 제외하고 입력해 주세요');
         			$('#msgDiv').show();
         	
         			return false;
         		}else if( !$('#wrktel2').val() == '' && checkVal('wrktel2') == false ){
         			changeRed('wrktel2',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장전화2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrktel2').focus();
         			return false;
         		}else if( !$('#wrktel3').val() == '' &&  checkVal('wrktel3') == false ){
         			changeRed('wrktel3',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장전화3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrktel3').focus();
         			return false;
         		}else if( !$('#wrkfax2').val() == '' &&  checkVal('wrkfax2') == false ){
         			changeRed('wrkfax2',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장팩스2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrkfax2').focus();
         			return false;
         		}else if( !$('#wrkfax3').val() == '' &&  checkVal('wrkfax3') == false ){
         			changeRed('wrkfax3',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장팩스3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrkfax3').focus();
         			return false;
         		}else if( !$('#homtel2').val() == '' &&  checkVal('homtel2') == false ){
         			changeRed('homtel2',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('자택전화2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#homtel2').focus();
         			return false;
         		}else if( !$('#homtel3').val() == '' &&  checkVal('homtel3') == false ){
         			changeRed('homtel3',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('자택전화3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#homtel3').focus();
         			return false;
+        		}else if( !$('#wrkaddr3').val() == '' &&  checkVal('wrkaddr3') == false ){
+        			changeRed('wrkaddr3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('직장주소3 - 한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');
+        			$('#msgDiv').show();
+        			$('#wrkaddr3').focus();
+        			return false;
+        		}else if( !$('#homaddr3').val() == '' &&  checkVal('homaddr3') == false ){
+        			changeRed('homaddr3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('직장주소3 - 한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');
+        			$('#msgDiv').show();
+        			$('#homaddr3').focus();
+        			return false;
         		}
+        		
+        		
+        		
+        		
         		
         		 		
         		$('#msgDiv').hide();//div창숨기기
@@ -985,10 +1006,7 @@
         	});
         	
         	
-        	
-        	
-        	
-        	
+       	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -1039,28 +1057,7 @@
             });
           	
           	*/
-          	
-          	
-          	
-            
-          	//주소 받아오기
-            $('.daumzip').click(function(e){
-      			 
-      		     new daum.Postcode({
-      		         oncomplete: function(data) {
-      		      		debugger;
-      		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
-      		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
-    		        	
-      		        	$("#"+head+"addr1").val(data.zonecode);	
-    		        	$("#"+head+"addr2").val(data.roadAddress);
-    		        	$("#"+head+"addr3").val(data.buildingName);
-                  
-      		         }
-      		     }).open();
-      		 });
-           
-            
+          	            
             
                          
         });

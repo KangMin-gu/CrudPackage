@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;

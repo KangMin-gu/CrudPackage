@@ -31,13 +31,16 @@ body {
 	background-color: #f3f3f4;
 }
 </style>
+
+
+
 </head>
 <body>
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
 				<h2>직장 검색</h2>
-
+				
 			</div>
 
 		</div>
@@ -74,26 +77,26 @@ body {
 								</tr>
 							</thead>
 							<tbody>
+								<input type="hidden" id="parentid" name="parentid" value="${searchVal.target}">
 								<c:forEach var="list" items="${clientList}">
-
-									<tr style="cursor: pointer;" onClick="toParentClient('${list.CLINO }','${list.CLINAME}');">
-										<td>${list.CLINAME}</td>
+									<tr style="cursor: pointer;" onclick="javascript:parentCliname(this);" value="${list.CLINO }">
+										<td id="cliname">${list.CLINAME}</td>
 										<td>${list.CALLNAME}</td>
-										<td>${list.USERNAME}</td>
-										
+										<td>${list.USERNAME}</td>										
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
 					</form:form>
+					
 		
 					<div class="m-auto">
-						<ul class="pagination">
+						<ul class="pagination popPaging">
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
 									<li class="footable-page-arrow disabled">
-										<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${page.startPageNum-1 }">&laquo;</a>
+										<a onclick="javascript:paging(${page.endPageNum+-1 })">&laquo;</a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -101,17 +104,16 @@ body {
 								</c:otherwise>
 							</c:choose>
 
-							<c:forEach var="i" begin="${page.startPageNum }"
-								end="${page.endPageNum }">
+							<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
 										<li class="footable-page active">
-											<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${i }">${i }</a>
+											<a onclick="javascript:paging(${i})">${i }</a>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li>									
-											<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${i }">${i }</a>
+											<a onclick="javascript:paging(${i})">${i }</a>
 										</li>
 
 									</c:otherwise>
@@ -121,7 +123,7 @@ body {
 							<c:choose>
 								<c:when test="${page.endPageNum lt page.totalPageCount }">
 									<li>
-										<a href = "/popclient/?cliname=${searchVal.cliname}&pageNum=${page.endPageNum+1 }">&raquo; </a>
+										<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -141,16 +143,7 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-	<script>
-	
-	//호출한 부모창에 값 전달	
-	function toParentClient(prm1,prm2){
-		opener.document.getElementById('clino').value= prm1;
-		opener.document.getElementById('cliname').value= prm2;
-		window.close();
-	}
-				
-			
-	</script>
+
+
 </body>
 </html>

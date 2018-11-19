@@ -71,8 +71,25 @@
 								</div>
 								
 								<div class="ibox-content row">
+								
+								
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
+										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
+										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+	                              			 <a href="#" class="btn btn-primary">내부통지</a>												
+	                          			</div>													
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
+											<Button type="submit" class="btn btn-primary">삭 제</Button>					
+											<a href="/cust" class="btn btn-primary">목 록</a>
+										</div>
+										</form:form>
+									</div>
+								
+								
 									
-									<div class="w-100 text-right mb-2">
+									<%-- <div class="w-100 text-right mb-2">
 									<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
 										<a href="#" class="btn btn-primary">내부통지</a>										
@@ -80,7 +97,7 @@
 										<Button type="submit" class="btn btn-primary">삭 제</Button>					
 										<a href="/cust" class="btn btn-primary">목 록</a>
 									</form:form>
-									</div>
+									</div> --%>
 									
 									<div class="box1 col-lg-4 p-0">
 										<table class="table table-bordered mb-0">
@@ -154,12 +171,12 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td> ${custDetail.EMAIL}</td>
+													<td> ${custDetail.EMAIL}&nbsp;&nbsp;<i class="fa fa-envelope-o"></i></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
 													<td> ${custDetail.WRKURL}
-														<a href="${custDetail.WRKURL}" target="_blank"> &nbsp;&nbsp; <i class="fa fa-home"></i></a>
+														<a href="${custDetail.WRKURL}" target="_blank"> &nbsp;&nbsp; <i class="fa fa-external-link" ></i></a>
 													</td>
 												</tr>
 											</tbody>

@@ -1,5 +1,6 @@
 package saas.crud.crm.cu.service;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,9 @@ import saas.crud.crm.cu.dto.CustDto;
 public class CustServiceImpl implements CustService {
 
 	@Autowired
-	CustDao custDao;
+	private CustDao custDao;
 
+	//고객리스트 출력 (검색 조건) 
 	@Override
 	public ModelAndView svcCustList(HttpServletRequest request) {
 		
@@ -32,6 +34,7 @@ public class CustServiceImpl implements CustService {
 		searchVal.put("siteid", siteid);
 
 		//검색조건 설정 null 또는 공백이 아니면 if실행
+		
 		if( request.getParameter("custname") != null && !request.getParameter("custname").toString().trim().equals("") )  { 	
 			searchVal.put("custname",request.getParameter("custname"));
 		}
@@ -39,8 +42,8 @@ public class CustServiceImpl implements CustService {
 		if(request.getParameter("owner") != null ) {
 			searchVal.put("owner",request.getParameter("owner"));
 		}
-		if(request.getParameter("ownername") != null ) {
-			searchVal.put("ownername",request.getParameter("ownername"));
+		if(request.getParameter("owner_") != null ) {
+			searchVal.put("owner_",request.getParameter("owner_"));
 		}
 		if(request.getParameter("clino") != null ) {
 			searchVal.put("clino",request.getParameter("clino"));
@@ -85,6 +88,19 @@ public class CustServiceImpl implements CustService {
 		}else {
 			searchVal.put("infoagree",0);//선택 값이 없다면 기본값은 0
 		}
+		
+		/*
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value == "") {
+				value = null;
+			}
+			searchVal.put(name, value);
+		}
+		*/
 		//*********************총 자료수 검색조건끝****************************************
 			
 		//총자료수

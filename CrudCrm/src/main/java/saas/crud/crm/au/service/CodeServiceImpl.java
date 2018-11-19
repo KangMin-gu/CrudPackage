@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.CodeDao;
 import saas.crud.crm.au.dto.CodeDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
 
 @Service
 public class CodeServiceImpl implements CodeService{

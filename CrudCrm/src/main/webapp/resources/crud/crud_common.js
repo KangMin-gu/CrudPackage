@@ -24,11 +24,39 @@
     	$('tbody .i-checks').parent().removeClass('checked');
     });
     
+  	//주소 받아오기
+    $('.daumzip').click(function(e){ //이벤트를 걸 인풋,버튼에 daumzip 클래스 추가 
+			 
+		     new daum.Postcode({
+		         oncomplete: function(data) {
+		      		
+		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
+		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
+	        	//addr1 : 우편번호 , addr2 : 도로명 , addr3 : 건물명 +사용자입력  
+		        	$("#"+head+"addr1").val(data.zonecode);	
+	        	$("#"+head+"addr2").val(data.roadAddress);
+	        	$("#"+head+"addr3").val(data.buildingName);
+          
+		         }
+		     }).open();
+		 });
+    
+        
 	$('.owner').click(function(e){
 		openNewWindow('담당자','/common/user',e.target.id,650,700);
 	});
+	
+	//거래처팝업
+	$('.cli').click(function(e){
+		openNewWindow('거래처','/popclient',e.target.id,650,700);
+	});
+
+	
+	
 	var newWindow = null;
     // 부모 window 가 실행
+
+	
 	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
 		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
@@ -36,9 +64,12 @@
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
 		setTimeout(function(){
-			$(newWindow.document.body).append('<input type="hidden" id="parentid" name="parentid" value="'+target+'">');	
+			newWindow.document.getElementById("parentid").value = target;
 		},1000);
 	}
+	
+	
+	
 	// 자식 window가 실행
 	// 영업 담당자 및 담당자 가지고옴
 	//tr -> 실제로 클릭한 tr 자체
@@ -70,6 +101,16 @@
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
+	
+	//팝업 거래처 이름 선택.
+	function parentCliname(tr){	
+		debugger;
+		var parentid = $('#parentid').val();	
+		opener.$("#"+parentid).next().val(tr.getAttribute("value"));		
+		opener.$("#"+parentid).val(tr.children.cliname.textContent);		
+		window.close();
+	}
+
 
     function check_required(e){
         // 필수로 저장되어야 하는 값 체크

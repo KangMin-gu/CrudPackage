@@ -15,7 +15,7 @@ import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
 
 @Service
 public class AuServiceImpl implements AuService{

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dto.LicenseDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
 
 @Service
 public class LicenseServiceImpl implements LicenseService{

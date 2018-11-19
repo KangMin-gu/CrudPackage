@@ -69,8 +69,8 @@
 								<div class="ibox-content row">
 																
 									<div class="w-100 text-right">
-										<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
-										<a href="javascript:void(0);" class="btn btn-primary" id="searchResetBtn">초기화</a> 
+										<button type="submit" class="btn btn-primary" data-style="zoom-in" id="submit" name="submit">검 색</button>
+										<button type="button" class="btn btn-primary" id="searchResetBtn" name="searchResetBtn">초기화</button> 
 									</div>
 									<div class="row"><br><br></div>
 								
@@ -92,32 +92,28 @@
 												<tr>
 													<th>담당자</th>
 													<td>
-														<div class="input-group">
-															
-															<%-- <input type="text" class="form-control" id="ownername" name="ownername" value="${searchVal.ownername}" readonly onClick="openPop('/popowner','owner',600,700);" > 															
-															<input type="hidden" id="owner" name="owner" value="${searchVal.owner}">
-															<span class="input-group-addon"> 
-																<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
-															</span> --%>
-															
-															<input type="text" class="form-control owner" id="ownername" name="ownername" value="${searchVal.ownername}" readonly > 															
-															<input type="hidden" id="owner" name="owner" value="${searchVal.owner}">
-															<span class="input-group-addon"> 
-																<a href="#" onClick="openNewWindow('담당자','/popowner',this,650,700);"><i class="fa fa-search"></i></a>
-															</span> 
-													
-															
+														<div class="input-group owner">
+															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${searchVal.owner_}" readonly>
+                                                    		<input type="hidden" name="owner" id="owner" value="${searchVal.owner}">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
 														</div>
 													</td>
 													<th>직장명</th>
 													<td>
-														<div class="input-group">
-															<input type="text" class="form-control" id="cliname" name="cliname" value="${searchVal.cliname }" 
+														<div class="input-group cli">
+															<%-- <input type="text" class="form-control" id="cliname" name="cliname" value="${searchVal.cliname }" 
 															onClick="openPop('/popclient','popclient',600,700);" readonly> 
 															<input type="hidden" id="clino" name="clino" value="${searchVal.clino}">
 															<span class="input-group-addon"> 
 																<a href="#" onClick="openPop('/popclient','popclient',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+															</span> --%>
+															<input type="text" class="form-control" autocomplete="off" name="cliname" id="cliname" value="${searchVal.cliname}" readonly>
+                                                    		<input type="hidden" name="clino" id="clino" value="${searchVal.clino}">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
 														</div>
 													</td>
 													
@@ -213,9 +209,21 @@
 								</div>
 								<div class="table-responsive">
 									<table class="table table-bordered table-hover">
+															
 										<colgroup>
-											<col style="width: 50px; background: #fafafa;">
-										</colgroup>		
+											<col width="40px;">
+											<col width="100px;">
+											<col width="180px;">
+											<col width="100px;">
+											<col width="120px;">
+											<col width="180px;">
+											<col width="80px;">
+											<col width="80px;">
+											<col width="80px;">
+											<col width="80px;">
+											<col width="100px;">
+										</colgroup>
+																				
 										<thead>
 											<tr>
 												<th>
@@ -289,7 +297,7 @@
 										<c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
 												<li class="footable-page-arrow disabled">	
-													<a href='/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
+													<a href='/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -303,12 +311,12 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="footable-page active">
-													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
 													</li>
 												</c:when>
 												<c:otherwise>
 													<li>
-													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
 													</li>
 														
 												</c:otherwise>
@@ -318,7 +326,7 @@
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
 												<li>
-												<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.endPageNum+1 }'>&raquo;</a>
+												<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.endPageNum+1 }'>&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -329,14 +337,7 @@
 									</ul>  
 															
 								</div>
-								 <h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4> 
-								 
-								
-	
-	
-	
-	
-	
+								 <h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
 		
 							</div>
 						</div>
@@ -379,15 +380,6 @@
 				radioClass : 'iradio_square-green'
 			});
 			
-			// datePicker
-			$('.date.date01, .date.date02').datepicker({
-				todayBtn : "linked",
-				keyboardNavigation : false,
-				forceParse : false,
-				calendarWeeks : true,
-				autoclose : true
-			});
-			
 
 			//checkbox 전체 선택/해제 이벤트
  			$('#icheckAll').on('ifChecked', function(event){
@@ -399,25 +391,32 @@
 
 
 			// 서치박스 리셋 라디오,셀렉스박스 제어를 위해 개별 파라미터 설정
-			$("#searchResetBtn").click(function(e) {
-				
-					$('#custname').val('');
-					$('#mobile').val('');
-					$('#email').val('');
-					$('#cliname').val('');
-					$('#clino').val(0);
-					$('#ownername').val('');
-					$('#owner').val(0);
-					$('#custgubun').val(0);
-					$('#custgrade').val(0);
-					$('#fromregdt').val('');
-					$('#toregdt').val('');
-					$('#infoagree').iCheck('check');								
+			$("#searchResetBtn").click(function(){	
+				$('#custname').val('');
+				$('#mobile').val('');
+				$('#email').val('');
+				$('#cliname').val('');
+				$('#clino').val(0);
+				$('#owner_').val('');
+				$('#owner').val(0);
+				$('#custgubun').val(0);
+				$('#custgrade').val(0);
+				$('#fromregdt').val('');
+				$('#toregdt').val('');
+				$('#infoagree').iCheck('check');								
 			});
 			
-									
-		});//redy function 끝      
-		
+			// datePicker
+			$('.date.date01, .date.date02').datepicker({
+				todayBtn : "linked",
+				keyboardNavigation : false,
+				forceParse : false,
+				calendarWeeks : true,
+				autoclose : true
+			});
+			
+		 
+		});
 	/*	
 	//공백입력금지
 	function noSpaceForm(obj) { 

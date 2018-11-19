@@ -14,7 +14,7 @@ import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dao.MenuDao;
 import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.au.dto.MenuDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
 
 @Service
 public class MenuServiceImpl implements MenuService{

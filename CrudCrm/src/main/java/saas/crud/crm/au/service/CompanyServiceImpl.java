@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.CompanyDao;
 import saas.crud.crm.au.dto.CompanyDto;
-import saas.crud.crm.common.PagingCommon;
+import saas.crud.crm.ce.PagingCommon;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{

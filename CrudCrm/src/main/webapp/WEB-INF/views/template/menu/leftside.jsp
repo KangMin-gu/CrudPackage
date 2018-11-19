@@ -38,7 +38,7 @@
     			
     			
 	            <c:if test="${cm eq '10000'}">
-	                <li <c:if test="${fn:substring(urls, 0, 3)  eq '/cm' }"> class="active"</c:if>>
+	                <li <c:if test="${fn:substring(urls, 0, 5)  eq '/cust' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">고객관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                    <!-- todo. controller 파라미터 전달 -->

@@ -66,7 +66,7 @@
 									<h4>기본정보</h4>
 								</div>
 								<div class="ibox-content row">								
-									<div class="w-100 text-right mb-2">
+								<%-- 	<div class="w-100 text-right mb-2">
 									
 										<div class="alert alert-danger" id="msgDiv" style="text-align:left;display:none;">
                                 		 	<a class="alert-link" href="#">
@@ -77,7 +77,24 @@
 										<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
 										<a class="btn btn-primary" href="/cust/view/${custUpdate.CUSTNO}">상 세</a>
 										<a href="/cust" class="btn btn-primary">목 록</a>
+									</div> --%>
+									
+									
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+	                              		 	<a class="alert-link" href="#">
+												<span id="showMsg"></span>
+											</a>										
+	                          			</div>													
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+											<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
+										<a class="btn btn-primary" href="/cust/view/${custUpdate.CUSTNO}">상 세</a>
+										<a href="/cust" class="btn btn-primary">목 록</a>
+										</div>
 									</div>
+									
+									
+									
 									<div class="box1 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
@@ -93,7 +110,7 @@
 												</tr>
 												<tr>
 													<th>직책</th>
-													<td><input type="text" class="form-control" name="duty" id="duty" value="${custUpdate.DUTY}"></td>
+													<td><input type="text" class="form-control" style="height: 1.45rem" name="duty" id="duty" value="${custUpdate.DUTY}"></td>
 												</tr>
 												<tr>
 													<th>직장전화</th>
@@ -123,20 +140,27 @@
 													<th>직장명</th>
 													<!-- cli로 변경  -->
 													<td >
-														<div class="input-group">
-															<input type="text" class="form-control" name="cliname" id="cliname" readonly value="${custUpdate.CLINAME }" 
+														<div class="input-group cli">
+															<%-- <input type="text" class="form-control" name="cliname" id="cliname" readonly value="${custUpdate.CLINAME }" 
 															onClick="openPop('/popclient','client',600,700);" > 
 															<input type="hidden" name="clino" id="clino" value="${searchVal.CLINO eq null ? 0 :searchVal.CLINO}">
 															<span class="input-group-addon"> 
 																<a href="#" onClick="openPop('/popclient','client',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+															</span> --%>
+															
+															<input type="text" class="form-control"  name="cliname" id="cliname"  value="${custUpdate.CLINAME }" readonly>
+                                                    		<input type="hidden" name="clino" id="clino" value="${searchVal.CLINO eq null ? 0 :searchVal.CLINO}">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
+															
 														</div>
 													</td>
 												</tr>
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
 													<td>
-														<select class="form-control col-4 float-left mr-3 " style="height: 1.45rem" name="mobile1" id="mobile1" >
+														<select class="form-control col-4 float-left mr-3 " style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="" ${custUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
 															<option value="010" ${custUpdate.MOBILE1 eq "010" ? "selected" :""}>010</option>
 															<option value="011" ${custUpdate.MOBILE1 eq "011" ? "selected" :""}>011</option>
@@ -155,7 +179,7 @@
 															<option value="011" ${custUpdate.WRKFAX1 eq "011" ? "selected" :""}>011</option>
 															<option value="017" ${custUpdate.WRKFAX1 eq "017" ? "selected" :""}>017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 inputs" name="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
+														<input type="text" class="form-control col-3 float-left mr-2 inputs" name="wrkfax2" id="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
 														<input type="text" class="form-control col-3 float-left inputs" name="wrkfax3" id="wrkfax3"  value="${custUpdate.WRKFAX3 }">
 													</td>
 												</tr>
@@ -175,11 +199,11 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control" name="email" id="email" value="${custUpdate.EMAIL }" ></td>
+													<td><input type="email" class="form-control" style="height: 1.45rem" name="email" id="email" value="${custUpdate.EMAIL }" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) http://www.crudsystem.co.kr" ></td>
+													<td><input type="text" class="form-control" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) http://www.crudsystem.co.kr" ></td>
 												</tr>
 											</tbody>
 										</table>
@@ -216,12 +240,19 @@
 												<tr>
 													<th class="border-top-0">담당자</th>
 													<td class="border-top-0">
-														<div class="input-group">
-															<input type="hidden" name="owner" id="owner" value="${custUpdate.OWNER}"> 
+														<div class="input-group owner">
+															<%-- <input type="hidden" name="owner" id="owner" value="${custUpdate.OWNER}"> 
 															<input type="text" class="form-control"  name="ownername" id="ownername" value="${custUpdate.OWNERNAME}" onClick="openPop('/popowner','owner',600,700);" readonly> 
 															<span class="input-group-addon"> 
 															<a href="#" onClick="openPop('/popowner','owner',600,700);" ><i class="fa fa-search"></i></a>
-															</span>
+															</span> --%>
+															
+															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${custUpdate.OWNER_}" readonly>
+                                                    		<input type="hidden" name="owner" id="owner" value="${custUpdate.OWNER}">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
+															
 														</div>
 													</td>
 												</tr>
@@ -279,7 +310,7 @@
 													</tr>
 													<tr>
 														<th>취미</th>
-														<td><input type="text" class="form-control" name="hobby" id="hobby" value="${custUpdate.HOBBY }"> </td>
+														<td><input type="text" class="form-control" style="height: 1.42rem" name="hobby" id="hobby" value="${custUpdate.HOBBY }"> </td>
 													</tr>
 												</tbody>
 											</table>
@@ -314,7 +345,7 @@
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<select class="form-control" style="height: 1.5rem" name="custgrade" id="custgrade">
+															<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
 																<option value="0" ${custUpdate.CUSTGRADE eq "0" ? "selected" :""}>선택</option>
 																<option value="1" ${custUpdate.CUSTGRADE eq "1" ? "selected" :""}>일반</option>
 																<option value="2" ${custUpdate.CUSTGRADE eq "2" ? "selected" :""}>VIP</option>
@@ -367,7 +398,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control" style="height: 1.5rem;" name="job" id="job" id="JOB" value="${custUpdate.JOB}">
+															<input type="text" class="form-control" style="height: 1.52rem;" name="job" id="job"  value="${custUpdate.JOB}">
 														</td>
 													</tr>
 													<tr>
@@ -794,13 +825,14 @@
 	
 
     <script>
-  //유효성 검사
-	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,3}$/; //한글 영문 2~30글자 + 숫자0~3자리까지허용
+  	//유효성 검사
+	var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-	var addrPattern = /^[가-힣a-zA-Z0-9!@()-_=+,.]{2,30}$/; //한글 영문 숫자 2~30 
+	var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
 	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
 	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
 	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
+	
     
 	//필수값 유효성 검사 테그 이름을 넣어주면 true false 반환
 	function checkVal(id){
@@ -884,27 +916,60 @@
         	});
         	//****************************************
         	
-        	//**********form 전송 전 유효성 검사 ********************
+        	//********고객명 , 핸드폰 필수 값 체크********
+        	 
+        	$('#custname').keyup(function(e){
+        		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
+        		changeRed(e.target.id , res );
+        		enableSubmit();//고객명,핸드폰 모든값이 유효성검사 true 일시 수정버튼 활성화.
+        	});       	
+        	$('#mobile2').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		changeRed(e.target.id , res );
+        		enableSubmit();
+        	});
+        	$('#mobile3').keyup(function(e){
+        		var res = checkVal(e.target.id);
+        		changeRed(e.target.id , res );
+        		enableSubmit();
+        	});
+        	$('#mobile1').change(function() {
+        		var state = $('#mobile1 option:selected').val();
+        		if(state == '') {
+        			$('#mobile1').addClass('error');
+        			$('.submit').prop("disabled",true);
+        		} else {
+        			$('#mobile1').removeClass('error');
+        			enableSubmit();
+        		}
+        	});
+        	//****************************************
+        	
+        	
+        	        	//**********form 전송 전 유효성 검사 ********************
         	$('#submit').click(function(){
         		debugger;
         		if( checkVal('custname') == false ){
         			$('#showMsg').empty();
-        			$('#showMsg').append('한글,영어 2 글자 이상을 입력해 주세요.');
+        			$('#showMsg').append('고객명 - 한글,영어 2 글자 이상을 입력해 주세요.(숫자0~5자리)');
         			$('#msgDiv').show();
         			$('#custname').focus();
         			return false;
         		}else if( checkVal('mobile1') == false ){
+        			$('#showMsg').empty();
+        			$('#showMsg').append('핸드폰1 - 필수 입력값입니다.');
+        			$('#msgDiv').show();
         			$('#mobile1').focus();
         			return false;
         		}else if( checkVal('mobile2') == false ){
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('핸드폰2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#mobile2').focus();
         			return false;
         		}else if( checkVal('mobile3') == false ){
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('핸드폰3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#mobile3').focus();
         			return false;
@@ -912,7 +977,7 @@
         			changeRed('job',false);
         			$('#job').focus();
         			$('#showMsg').empty();
-        			$('#showMsg').append('한글,영어,숫자만 입력 가능합니다.');
+        			$('#showMsg').append('직업 - 한글,영어,숫자만 입력 가능합니다.');
         			$('#msgDiv').show();
         	
         			return false;
@@ -920,7 +985,7 @@
         			changeRed('email',false);
         			$('#email').focus();
         			$('#showMsg').empty();
-        			$('#showMsg').append('email 형식에 맞게 입력해 주세요');
+        			$('#showMsg').append('이메일 - email 형식에 맞게 입력해 주세요');
         			$('#msgDiv').show();
         	
         			return false;
@@ -928,53 +993,71 @@
         			changeRed('wrkurl',false);
         			$('#wrkurl').focus();
         			$('#showMsg').empty();
-        			$('#showMsg').append('http:// https:// 를 제외하고 입력해 주세요');
+        			$('#showMsg').append('홈페이지 - http:// https:// 를 제외하고 입력해 주세요');
         			$('#msgDiv').show();
         	
         			return false;
         		}else if( !$('#wrktel2').val() == '' && checkVal('wrktel2') == false ){
         			changeRed('wrktel2',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장전화2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrktel2').focus();
         			return false;
         		}else if( !$('#wrktel3').val() == '' &&  checkVal('wrktel3') == false ){
         			changeRed('wrktel3',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장전화3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrktel3').focus();
         			return false;
         		}else if( !$('#wrkfax2').val() == '' &&  checkVal('wrkfax2') == false ){
         			changeRed('wrkfax2',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장팩스2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrkfax2').focus();
         			return false;
         		}else if( !$('#wrkfax3').val() == '' &&  checkVal('wrkfax3') == false ){
         			changeRed('wrkfax3',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('직장팩스3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#wrkfax3').focus();
         			return false;
         		}else if( !$('#homtel2').val() == '' &&  checkVal('homtel2') == false ){
         			changeRed('homtel2',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('자택전화2 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#homtel2').focus();
         			return false;
         		}else if( !$('#homtel3').val() == '' &&  checkVal('homtel3') == false ){
         			changeRed('homtel3',false);
         			$('#showMsg').empty();
-        			$('#showMsg').append('숫자 3~4 자리를 입력해 주세요');
+        			$('#showMsg').append('자택전화3 - 숫자 3~4 자리를 입력해 주세요');
         			$('#msgDiv').show();
         			$('#homtel3').focus();
         			return false;
+        		}else if( !$('#wrkaddr3').val() == '' &&  checkVal('wrkaddr3') == false ){
+        			changeRed('wrkaddr3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('직장주소3 - 한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');
+        			$('#msgDiv').show();
+        			$('#wrkaddr3').focus();
+        			return false;
+        		}else if( !$('#homaddr3').val() == '' &&  checkVal('homaddr3') == false ){
+        			changeRed('homaddr3',false);
+        			$('#showMsg').empty();
+        			$('#showMsg').append('직장주소3 - 한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)');
+        			$('#msgDiv').show();
+        			$('#homaddr3').focus();
+        			return false;
         		}
+        		
+        		
+        		
+        		
         		
         		 		
         		$('#msgDiv').hide();//div창숨기기
@@ -1002,25 +1085,7 @@
                 calendarWeeks: true,
                 autoclose: true
             });
-            
-        	//주소 받아오기
-            $('.daumzip').click(function(e){
-      			 
-      		     new daum.Postcode({
-      		         oncomplete: function(data) {
-      		      
-      		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
-      		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
-      		        	
-      		        	$("#"+head+"addr1").val(data.zonecode);
-    		        	$("#"+head+"addr2").val(data.roadAddress);
-    		        	$("#"+head+"addr3").val(data.buildingName);
-                  
-      		         }
-      		     }).open();
-      		 });
-        
-         
+               
             
                         
         });

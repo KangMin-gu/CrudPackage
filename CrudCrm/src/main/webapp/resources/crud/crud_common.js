@@ -47,6 +47,7 @@
 
 	$('.cli').click(function(e){
 		openNewWindow('거래처','/popclient',e.target.id,600,700);
+		});
 	
 	//********필수 값 실시간 체크*********************************        	      
 	$('.required').keyup(function(e){
@@ -264,6 +265,7 @@
 			$('.submit').prop("disabled",false);//submit 활성화 
 		}
 	}
-
+	
+	
     
     

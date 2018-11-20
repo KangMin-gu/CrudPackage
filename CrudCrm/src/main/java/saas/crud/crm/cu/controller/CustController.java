@@ -25,7 +25,7 @@ import saas.crud.crm.cu.service.CustService;
 public class CustController {
 	
 	@Autowired
-	CustService custService;
+	private CustService custService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -61,7 +61,8 @@ public class CustController {
 								 ,@PathVariable int custno) {
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		ModelAndView mView = new ModelAndView();
-		mView.addObject("custDetail",custService.svcCustDetail(custno,siteid));
+		//mView.addObject("custDetail",custService.svcCustDetail(custno,siteid));
+		mView = custService.svcCustDetail(custno,siteid);		
 		mView.setViewName("cu/custdetail");
 		return mView;
 	}

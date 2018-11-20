@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CommonController {
 
 	@Autowired
-	CommonService commonService;
+	private CommonService commonService;
 	
 	//담당자팝업
 	@RequestMapping(value="/popowner", method=RequestMethod.GET)

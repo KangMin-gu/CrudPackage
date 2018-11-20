@@ -50,6 +50,7 @@ body {
 					<div class="ibox-content row">
 						<div class="box1 col-sm-6 col-xs-6 p-0">
 							<form:form action="/popowner" method="GET">
+								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
 								<div class="input-group">
 									<input type="text" name="username" id="username"
 										class="form-control" value="${searchVal.username}"> <span
@@ -57,7 +58,7 @@ body {
 										<Button type="submit" class="btn btn-primary">검색</Button>
 									</span>
 								</div>
-							
+							</form:form>
 						</div>
 					</div>
 				</div>
@@ -76,31 +77,32 @@ body {
 							<tbody>
 								<c:forEach var="list" items="${userList}">
 
-									<tr style="cursor: pointer;" onClick="toParentOwner('${list.USERNO }','${list.USERNAME}');">
-										<td >${list.USERNAME}</td>
+									<%-- <tr style="cursor: pointer;" onClick="toParentOwner('${list.USERNO }','${list.USERNAME}');"> --%>
+									<tr style="cursor: pointer;" onClick="javascript:parentOwnerUser(this);" value="${list.USERNO }"> 
+										<td id="username">${list.USERNAME}</td>
 										<td>${list.USERID}</td>
 										<td>${list.USERDUTY}</td>
 										<td>
-											<c:choose>
+											 <c:choose>
 												<c:when test="${list.CHKAUTH==10}">사용자</c:when>
 												<c:when test="${list.CHKAUTH==20}">회원사관리자</c:when>
 												<c:when test="${list.CHKAUTH==30}">총관리자</c:when>
-											</c:choose>
-										
+											</c:choose>							
 										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
-					</form:form>
+					
 					
 					<div class="m-auto">
 						<ul class="pagination">
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
 									<li class="footable-page-arrow disabled">
-										<a href="/popowner/?username=${searchVal.username}&pageNum=${page.startPageNum-1 }">&laquo;</a>
+										<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${page.startPageNum-1 }">&laquo;</a> --%>
+										<a onclick="javascript:paging(${page.startPageNum-1 })">&laquo;</a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -113,12 +115,14 @@ body {
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
 										<li class="footable-page active">										
-											<a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a>
+											<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a> --%>
+											<a onclick="javascript:paging(${i })">${i }</a>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li>
-											<a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a>
+											<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a> --%>
+											<a onclick="javascript:paging(${i })">${i }</a>
 										</li>
 
 									</c:otherwise>
@@ -128,7 +132,8 @@ body {
 							<c:choose>
 								<c:when test="${page.endPageNum lt page.totalPageCount }">
 									<li>
-										<a href="/popowner/?username=${searchVal.username}&pageNum=${page.endPageNum+1 }">&raquo;</a>
+										<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${page.endPageNum+1 }">&raquo;</a> --%>
+										<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -148,13 +153,6 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-	<script>
-	//호출한 부모창에 값 전달
-	function toParentOwner(prm1,prm2){
-		opener.document.getElementById('owner').value= prm1;
-		opener.document.getElementById('ownername').value= prm2;
-		window.close();
-	}
-	</script>
+
 </body>
 </html>

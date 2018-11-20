@@ -18,7 +18,7 @@ public interface CustService {
 	
 	public int svcCustDelete(HttpServletRequest request);
 		
-	public Map<String,Object> svcCustDetail(int custno, int siteid);
+	public ModelAndView svcCustDetail(int custno, int siteid);
 	
 	public Map<String,Object> svcCustUpdateForm(int CUSTNO);
 	

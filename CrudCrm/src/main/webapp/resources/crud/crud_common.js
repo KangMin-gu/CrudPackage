@@ -48,7 +48,8 @@
     
         
 	$('.owner').click(function(e){
-		openNewWindow('담당자','/common/user',e.target.id,650,700);
+		//openNewWindow('담당자','/common/user',e.target.id,650,700);
+		openNewWindow('담당자','/popowner',e.target.id,650,700);
 	});
 	
 	//거래처팝업
@@ -59,12 +60,12 @@
 	//********필수 값 실시간 체크*********************************        	      
 	$('.required').keyup(function(e){
 		var res = checkVal(e.target.id);
-		enableSubmit();
+		//enableSubmit();
 	});
 	
 	//유효성검사
-	$('#submit').click(function(){
-	
+	$('.submit').click(function(){
+		debugger;
 		var validate = $('.validate'); //validate 선언한 클래스 배열
 		var length = validate.length; //배열 사이즈 
 		var id; //배열의 id값
@@ -74,13 +75,21 @@
 			id = $('.validate:eq('+i+')' ).attr('id'); 
 			value = $('#'+id).val(); 
 			
-			if( value ==''){//값이 없다면
-					$('#'+id).removeClass('error');//에러 태두리 삭제      				
-			}else{
-				if(!checkVal(id)){
+			if( $('#'+id).hasClass('required') ){//필수값이면 무조건 유효성검사 
+				if(!checkVal(id)){// 유효성 통과 실패시 아래 행 실행
 					$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
         			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
         			return false;//메서드 종료
+				}
+			}else{//필수값이 아니라면 
+				if( value ==''){//값이 없을때 유효성 검사 하지 않음. 
+					$('#'+id).removeClass('error');//에러 태두리 삭제      				
+				}else{//값이 있다면 유효성체크 
+					if(!checkVal(id)){
+						$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+						$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
+						return false;//메서드 종료
+					}
 				}
 			}
 
@@ -261,7 +270,8 @@
 			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
 		}
 		
-		msg = $('#'+id).parent().prev().text()+ " : " + msg;
+		msg = $('#'+id).parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
+		
 		if(res){
 			$('#'+id).removeClass('error');//빨간 테두리 삭제
 		}else{
@@ -279,7 +289,7 @@
 	
 
 	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
-		debugger;
+		
 		var reqArray = $('.required'); //필수값 배열
 		var length = reqArray.length; // 배열의 크기
 		var reqId;

@@ -77,7 +77,7 @@ body {
 								</tr>
 							</thead>
 							<tbody>
-								<input type="hidden" id="parentid" name="parentid" value="${searchVal.target}">
+								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
 								<c:forEach var="list" items="${clientList}">
 									<tr style="cursor: pointer;" onclick="javascript:parentCliname(this);" value="${list.CLINO }">
 										<td id="cliname">${list.CLINAME}</td>

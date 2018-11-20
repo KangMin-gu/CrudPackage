@@ -33,7 +33,11 @@ public class CommonServiceImpl implements CommonService {
 		if(request.getParameter("username") != null && !request.getParameter("username").toString().trim().equals("") ) { 
 			String username = request.getParameter("username").toString();
 			searchVal.put("username", username);
-		}		
+		}
+		if(request.getParameter("parentid") != null) { //호출한 필드명. 페이징시 값 유지를 위한 설정
+			String parentid = request.getParameter("parentid").toString();
+			searchVal.put("parentid", parentid);
+		}
 		//***** 페이징설정 *******
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
@@ -70,9 +74,9 @@ public class CommonServiceImpl implements CommonService {
 			String cliname = request.getParameter("cliname").toString();
 			searchVal.put("cliname", cliname);
 		}		
-		if(request.getParameter("parentid") != null) { 
-			String target = request.getParameter("parentid").toString();
-			searchVal.put("target", target);
+		if(request.getParameter("parentid") != null) { //호출한 필드명. 페이징시 값 유지를 위한 설정
+			String parentid = request.getParameter("parentid").toString();
+			searchVal.put("parentid", parentid);
 		}
 		
 		

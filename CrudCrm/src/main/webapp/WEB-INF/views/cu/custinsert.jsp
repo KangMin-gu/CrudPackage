@@ -140,14 +140,14 @@
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
 													<td>													
-														<select class="form-control col-4 float-left mr-3 error validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" required>
+														<select class="form-control col-4 float-left mr-3 error validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 error validate required phone2" name="mobile2" id="mobile2" required > 
-														<input type="text" class="form-control col-3 float-left error validate required phone3" name="mobile3" id="mobile3" required >														
+														<input type="text" class="form-control col-3 float-left mr-2 error validate required phone2" name="mobile2" id="mobile2"  > 
+														<input type="text" class="form-control col-3 float-left error validate required phone3" name="mobile3" id="mobile3"  >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
@@ -535,7 +535,7 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>

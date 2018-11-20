@@ -15,6 +15,7 @@ import saas.crud.crm.au.dto.LicenseDto;
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.ce.SearchRequest;
 
+
 @Service
 public class LicenseServiceImpl implements LicenseService{
 

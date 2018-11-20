@@ -47,9 +47,8 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객관리</h2>
+					<h2>고객관리</h2> 
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/">메인</a></li>
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
 						<li class="breadcrumb-item active"><strong>상세정보</strong></li>
 					</ol>
@@ -71,17 +70,24 @@
 								</div>
 								
 								<div class="ibox-content row">
-									
-									<div class="w-100 text-right mb-2">
-									<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
+								
+								
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
-										<a href="#" class="btn btn-primary">내부통지</a>										
-										<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
-										<Button type="submit" class="btn btn-primary">삭 제</Button>					
-										<a href="/cust/post" class="btn btn-primary">목 록</a>
-									</form:form>
+										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+	                              			 <a href="#" class="btn btn-primary">내부통지</a>
+	                              			 <a href="#" class="btn btn-primary">이메일</a>
+	                              			 <a href="#" class="btn btn-primary">SMS</a>												
+	                          			</div>													
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
+											<Button type="submit" class="btn btn-primary">삭 제</Button>					
+											<a href="/cust" class="btn btn-primary">목 록</a>
+										</div>
+										</form:form>
 									</div>
-									
+								
 									<div class="box1 col-lg-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
@@ -101,7 +107,7 @@
 													<th>직장전화</th>
 													<td>
 													<c:choose>
-														<c:when test="${custDetail.WRKTEL eq '--'}"></c:when>
+														<c:when test="${fn:trim(custDetail.WRKTEL) eq '--'}"></c:when>
 														<c:otherwise>${custDetail.WRKTEL }</c:otherwise>
 													</c:choose>
 													</td>
@@ -124,7 +130,7 @@
 													<th>휴대전화</th>
 													<td>
 														<c:choose>
-															<c:when test="${custDetail.MOBILE eq '--'}"></c:when>
+															<c:when test="${fn:trim(custDetail.MOBILE) eq '--'}"></c:when>
 															<c:otherwise>${custDetail.MOBILE }</c:otherwise>
 														</c:choose>
 													</td>	
@@ -133,7 +139,7 @@
 													<th>직장팩스</th>
 													<td>  
 														<c:choose>
-															<c:when test="${custDetail.WRKFAX eq '--'}"></c:when>
+															<c:when test="${fn:trim(custDetail.WRKFAX) eq '--'}"></c:when>
 															<c:otherwise>${custDetail.WRKFAX }</c:otherwise>
 														</c:choose>
 													</td>
@@ -154,12 +160,24 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td> ${custDetail.EMAIL}</td>
+													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;"> ${custDetail.EMAIL}												
+														<c:choose>
+															<c:when test="${fn:trim(custDetail.EMAIL) eq ''}"></c:when>
+															<c:otherwise>
+																<a class="btn btn-primary dim" style="padding-top: 2px;padding-bottom: 2px;padding-left: 6px;padding-right: 6px;float:right;border-bottom-width: 0px;border-top-width: 0px;"><i class="fa fa-envelope-o"></a></i>
+															</c:otherwise>
+														</c:choose>											
+													</td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td> ${custDetail.WRKURL}
-														<a href="${custDetail.WRKURL}" target="_blank"> &nbsp;&nbsp; <i class="fa fa-home"></i></a>
+													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;"> ${custDetail.WRKURL}
+														<c:choose>
+															<c:when test="${fn:trim(custDetail.WRKURL) eq ''}"></c:when>
+															<c:otherwise>
+																<a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; float:right;border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a>
+															</c:otherwise>
+														</c:choose>	
 													</td>
 												</tr>
 											</tbody>
@@ -216,7 +234,7 @@
 														<th>자택전화</th>
 														<td> 
 															<c:choose>
-																<c:when test=" ${custDetail.HOMTEL eq '--'}"></c:when>
+																<c:when test="${fn:trim(custDetail.HOMTEL) eq '--'}"></c:when>
 																<c:otherwise>${custDetail.HOMTEL }</c:otherwise>
 															</c:choose>
 														</td>
@@ -502,47 +520,52 @@
 													<div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
 														<div class="panel-body">
 															<table class="table table-bordered">
+																
+																<colgroup>
+																	<col width="180px;">
+																	<col width="80px;">
+																	<col width="80px;">
+																	<col width="100px;">
+																	<col width="120px;">
+																	<col width="100px;">
+																	<col width="100px;">
+																	<col width="100px;">
+																	<col width="80px;">
+																</colgroup>
+																
+																
 																<thead>
 																	<tr>
-																		<th>제목</th>
-																		<th>상태</th>
-																		<th>서비스유형</th>
-																		<th>접수일</th>
-																		<th>접수자</th>
-																		<th>처리일</th>
-																		<th>담당자</th>
+																		 <th>서비스명</th>
+                                        								 <th>접수유형</th>
+                                         								 <th>처리유형</th>
+                                        							  	 <th>고객명</th>
+                                        								 <th>거래처명</th>
+                                        								 <th>접수일</th>
+                                      								     <th>접수자</th>
+                                        								 <th>담당자</th>
+                                        								 <th>처리상태</th>
 																	</tr>
 																</thead>
-																<tbody>
+																<tbody>			
+																<c:forEach var="svList" items="${custService}"  >
 																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
+												 						<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/sv/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+                                        								<td>${svList.RCVTYPE_ }</td>
+                                        								<td>${svList.RACTCODE_ }</td>
+                                        								<td>${svList.CUSTNO_ }</td>
+                                        								<td>${svList.CLINO_ }</td>
+                                        								<td>${svList.RCVDATE_ }</td>
+                                        								<td>${svList.RCVOWNER_ }</td>
+                                        								<td>${svList.RACTOWNER_ }</td>
+                                        								<td>${svList.PRCSTATE_ }</td>
+                                        							</tr>		
+																</c:forEach>																								
 																</tbody>
 															</table>
+															<div class="text-right" >
+																<a href="${pagecontext.request.contextpath}/sv" class="btn btn-primary" >서비스이동</a>
+															</div>
 														</div>
 													</div>
 													<div role="tabpanel" id="tab2" class="tab-pane overflow-x">

@@ -1,4 +1,5 @@
 
+
 	$('.custom-file-input').on('change', function() {
 		   let fileName = $(this).val().split('\\').pop();
 		   $(this).next('.custom-file-label').addClass("selected").html(fileName);
@@ -47,13 +48,13 @@
 	$('.cli').click(function(e){
 		openNewWindow('거래처','/popclient',e.target.id,650,700);
 	});
-	
+
 	//********필수 값 실시간 체크*********************************        	      
 	$('.required').keyup(function(e){
 		var res = checkVal(e.target.id);
 		enableSubmit();
 	});
-	
+
 	$('.required').change(function(e){
 		var res = checkVal(e.target.id);
 		enableSubmit();
@@ -265,6 +266,7 @@
 			$('.submit').prop("disabled",false);//submit 활성화 
 		}
 	}
+
 	// datepicker 앞의 값이 변했을때
 	$('.date01').change(function(e){
 		check_date();

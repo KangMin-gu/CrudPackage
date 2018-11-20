@@ -30,7 +30,6 @@ public class UserDto {
 	private String edtdate; //수정일시
 	private int edtuser; //수정자
 
-	
 	public UserDto () {}
 
 
@@ -69,276 +68,221 @@ public class UserDto {
 		this.edtuser = edtuser;
 	}
 
-
 	public int getUserno() {
 		return userno;
 	}
-
 
 	public void setUserno(int userno) {
 		this.userno = userno;
 	}
 
-
 	public int getSiteid() {
 		return siteid;
 	}
-
 
 	public void setSiteid(int siteid) {
 		this.siteid = siteid;
 	}
 
-
 	public String getUserid() {
 		return userid;
 	}
-
 
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
-
 	public String getUsername() {
 		return username;
 	}
-
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-
 	public String getUserpassword() {
 		return userpassword;
 	}
-
 
 	public void setUserpassword(String userpassword) {
 		this.userpassword = userpassword;
 	}
 
-
 	public String getUserdesc() {
 		return userdesc;
 	}
-
 
 	public void setUserdesc(String userdesc) {
 		this.userdesc = userdesc;
 	}
 
-
 	public String getEmail() {
 		return email;
 	}
-
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
 	public int getDeptid() {
 		return deptid;
 	}
-
 
 	public void setDeptid(int deptid) {
 		this.deptid = deptid;
 	}
 
-
 	public int getChkauth() {
 		return chkauth;
 	}
-
 
 	public void setChkauth(int chkauth) {
 		this.chkauth = chkauth;
 	}
 
-
 	public String getEnterdate() {
 		return enterdate;
 	}
-
 
 	public void setEnterdate(String enterdate) {
 		this.enterdate = enterdate;
 	}
 
-
 	public String getUserlang() {
 		return userlang;
 	}
-
 
 	public void setUserlang(String userlang) {
 		this.userlang = userlang;
 	}
 
-
 	public String getMobile1() {
 		return mobile1;
 	}
-
 
 	public void setMobile1(String mobile1) {
 		this.mobile1 = mobile1;
 	}
 
-
 	public String getMobile2() {
 		return mobile2;
 	}
-
 
 	public void setMobile2(String mobile2) {
 		this.mobile2 = mobile2;
 	}
 
-
 	public String getMobile3() {
 		return mobile3;
 	}
-
 
 	public void setMobile3(String mobile3) {
 		this.mobile3 = mobile3;
 	}
 
-
 	public String getTelno1() {
 		return telno1;
 	}
-
 
 	public void setTelno1(String telno1) {
 		this.telno1 = telno1;
 	}
 
-
 	public String getTelno2() {
 		return telno2;
 	}
-
 
 	public void setTelno2(String telno2) {
 		this.telno2 = telno2;
 	}
 
-
 	public String getTelno3() {
 		return telno3;
 	}
-
 
 	public void setTelno3(String telno3) {
 		this.telno3 = telno3;
 	}
 
-
 	public String getUserduty() {
 		return userduty;
 	}
-
 
 	public void setUserduty(String userduty) {
 		this.userduty = userduty;
 	}
 
-
 	public int getChkrole() {
 		return chkrole;
 	}
-
 
 	public void setChkrole(int chkrole) {
 		this.chkrole = chkrole;
 	}
 
-
 	public int getCtiid() {
 		return ctiid;
 	}
-
 
 	public void setCtiid(int ctiid) {
 		this.ctiid = ctiid;
 	}
 
-
 	public String getCtipass() {
 		return ctipass;
 	}
-
 
 	public void setCtipass(String ctipass) {
 		this.ctipass = ctipass;
 	}
 
-
 	public String getPwdchangedate() {
 		return pwdchangedate;
 	}
-
 
 	public void setPwdchangedate(String pwdchangedate) {
 		this.pwdchangedate = pwdchangedate;
 	}
 
-
 	public int getIsdelete() {
 		return isdelete;
 	}
-
 
 	public void setIsdelete(int isdelete) {
 		this.isdelete = isdelete;
 	}
 
-
 	public String getRegdate() {
 		return regdate;
 	}
-
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 
-
 	public int getReguser() {
 		return reguser;
 	}
-
 
 	public void setReguser(int reguser) {
 		this.reguser = reguser;
 	}
 
-
 	public String getEdtdate() {
 		return edtdate;
 	}
-
 
 	public void setEdtdate(String edtdate) {
 		this.edtdate = edtdate;
 	}
 
-
 	public int getEdtuser() {
 		return edtuser;
 	}
-
 
 	public void setEdtuser(int edtuser) {
 		this.edtuser = edtuser;
 	}
 
-	
 	
 }

@@ -47,9 +47,8 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객관리</h2>
+					<h2>고객관리</h2> 
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/">메인</a></li>
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
 						<li class="breadcrumb-item active"><strong>상세정보</strong></li>
 					</ol>
@@ -79,7 +78,7 @@
 										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
 	                              			 <a href="#" class="btn btn-primary">내부통지</a>
 	                              			 <a href="#" class="btn btn-primary">이메일</a>
-	                              			 <a href="#" class="btn btn-primary">내부통지</a>												
+	                              			 <a href="#" class="btn btn-primary">SMS</a>												
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
@@ -235,7 +234,7 @@
 														<th>자택전화</th>
 														<td> 
 															<c:choose>
-																<c:when test=" ${fn:trim(custDetail.HOMTEL) eq '--'}"></c:when>
+																<c:when test="${fn:trim(custDetail.HOMTEL) eq '--'}"></c:when>
 																<c:otherwise>${custDetail.HOMTEL }</c:otherwise>
 															</c:choose>
 														</td>
@@ -521,47 +520,52 @@
 													<div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
 														<div class="panel-body">
 															<table class="table table-bordered">
+																
+																<colgroup>
+																	<col width="180px;">
+																	<col width="80px;">
+																	<col width="80px;">
+																	<col width="100px;">
+																	<col width="120px;">
+																	<col width="100px;">
+																	<col width="100px;">
+																	<col width="100px;">
+																	<col width="80px;">
+																</colgroup>
+																
+																
 																<thead>
 																	<tr>
-																		<th>제목</th>
-																		<th>상태</th>
-																		<th>서비스유형</th>
-																		<th>접수일</th>
-																		<th>접수자</th>
-																		<th>처리일</th>
-																		<th>담당자</th>
+																		 <th>서비스명</th>
+                                        								 <th>접수유형</th>
+                                         								 <th>처리유형</th>
+                                        							  	 <th>고객명</th>
+                                        								 <th>거래처명</th>
+                                        								 <th>접수일</th>
+                                      								     <th>접수자</th>
+                                        								 <th>담당자</th>
+                                        								 <th>처리상태</th>
 																	</tr>
 																</thead>
-																<tbody>
+																<tbody>			
+																<c:forEach var="svList" items="${custService}"  >
 																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
+												 						<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/sv/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+                                        								<td>${svList.RCVTYPE_ }</td>
+                                        								<td>${svList.RACTCODE_ }</td>
+                                        								<td>${svList.CUSTNO_ }</td>
+                                        								<td>${svList.CLINO_ }</td>
+                                        								<td>${svList.RCVDATE_ }</td>
+                                        								<td>${svList.RCVOWNER_ }</td>
+                                        								<td>${svList.RACTOWNER_ }</td>
+                                        								<td>${svList.PRCSTATE_ }</td>
+                                        							</tr>		
+																</c:forEach>																								
 																</tbody>
 															</table>
+															<div class="text-right" >
+																<a href="${pagecontext.request.contextpath}/sv" class="btn btn-primary" >서비스이동</a>
+															</div>
 														</div>
 													</div>
 													<div role="tabpanel" id="tab2" class="tab-pane overflow-x">

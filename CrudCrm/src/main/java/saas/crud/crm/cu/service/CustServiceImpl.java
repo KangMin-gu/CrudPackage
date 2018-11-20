@@ -15,6 +15,7 @@ import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
+import saas.crud.crm.sv.dao.SvDao;
 
 
 
@@ -23,6 +24,8 @@ public class CustServiceImpl implements CustService {
 
 	@Autowired
 	private CustDao custDao;
+	@Autowired
+	private SvDao svDao; 
 
 	//고객리스트 출력 (검색 조건) 
 	@Override
@@ -74,7 +77,7 @@ public class CustServiceImpl implements CustService {
 		//데이트 yyyy/mm/dd-> yyyymmdd 
 		if(request.getParameter("fromregdt") != null && !request.getParameter("fromregdt").toString().trim().equals("") ) {
 			String temp = request.getParameter("fromregdt");//	yyyy/mm/dd
-			String fromdt = temp.replace("/",""); // yyyymmdd
+			String fromdt = temp.replace("-",""); // yyyymmdd
 			searchVal.put("fromregdt", fromdt);
 		}
 		if(request.getParameter("toregdt") != null && !request.getParameter("toregdt").toString().trim().equals("")) {
@@ -98,6 +101,12 @@ public class CustServiceImpl implements CustService {
 			if(value == "") {
 				value = null;
 			}
+			if(name == "infoagree") {
+				if(value == null) {
+					value = "0";
+				}
+			}
+			
 			searchVal.put(name, value);
 		}
 		*/
@@ -161,12 +170,22 @@ public class CustServiceImpl implements CustService {
 	}
 	
 	//상세페이지
-	public Map<String,Object> svcCustDetail(int custno, int siteid){
+	public ModelAndView svcCustDetail(int custno, int siteid){
 		Map<String,Object> custVal = new HashMap<String,Object>();
 		custVal.put("custno",custno);
 		custVal.put("siteid", siteid);
-		Map<String,Object> detailMap = custDao.custDetail(custVal);
-		return  detailMap;
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("custDetail",custDao.custDetail(custVal));
+		
+		//****서비스 정보 바인딩**********************************		
+		int startRowNum = 1;
+		int endRowNum = 10;
+		custVal.put("startRowNum",startRowNum);
+		custVal.put("endRowNum",endRowNum);
+		mView.addObject("custService",svDao.svList(custVal));
+		//*****************************************************
+		return  mView;
 	}
 	
 	//고객 추가 페이지. 기본 정보 셋팅 

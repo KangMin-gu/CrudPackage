@@ -9,10 +9,6 @@
 		}); 
 
 
-	$('.save').click(function(e){		
-		check_required(e);
-	});
-	
     $('.resets').click(function(e){
     	e.preventDefault();
     	$('.reset').val('');
@@ -60,7 +56,7 @@
 	//********필수 값 실시간 체크*********************************        	      
 	$('.required').keyup(function(e){
 		var res = checkVal(e.target.id);
-		//enableSubmit();
+		enableSubmit();
 	});
 	
 	//유효성검사
@@ -162,29 +158,6 @@
 	}
 
 
-    function check_required(e){
-        // 필수로 저장되어야 하는 값 체크
-        var length = $('.required').length;
-        var check = "true";
-        for(i=0;i<length;i++){
-            var check_value = $('.required:eq('+i+')').val();
-
-            if(check_value =='' || check_value == undefined){
-                $('.required:eq('+i+')').parent().addClass('has-error');
-                var error = $('.required:eq('+i+')').parent().prev().text().trim();
-                if(error ==''){
-                	var error = $('.required:eq('+i+')').parent().parent().prev().text().trim();
-                }
-                alert(error+"를 입력해주세요");
-                e.preventDefault();
-                check = false;
-            }else{
-                $('.required:eq('+i+')').parent().removeClass('has-error').addClass('has-success');
-            }
-        }
-        return check;
-
-    }
     
     function paging(prm){
     	//파라미터로 클릭한 페이지 번호를 받아온다
@@ -199,11 +172,6 @@
         form.submit();
      }
 
-    //팝업창열기 메서드
-    function openPop(url,target,width,height){
-    	var property = "width="+width+", height="+height+",top=300,menubar=no,location=no, status=no,toolbar=no,scrollbars=yes";
-    	window.open(url,target,property);
-    }
 
     function today(){
     	

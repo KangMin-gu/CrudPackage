@@ -41,7 +41,6 @@
 				<div class="col-lg-10">
 					<h2>고객관리</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/">메인</a></li>
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
 						<li class="breadcrumb-item"><a href="/cust/view/${custUpdate.CUSTNO}">상세정보</a></li>
 						<li class="breadcrumb-item active"><strong>수정</strong></li>
@@ -551,7 +550,7 @@
 								</div>
 								</form:form>
 								
-								<div class="ibox">
+<!-- 								<div class="ibox">
 									<div class="ibox-title row border-0">
 										<h4>고객 상세</h4>
 									</div>
@@ -770,7 +769,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>

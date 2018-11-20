@@ -153,13 +153,6 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-	<script>
-	//호출한 부모창에 값 전달
-	function toParentOwner(prm1,prm2){
-		opener.document.getElementById('owner').value= prm1;
-		opener.document.getElementById('ownername').value= prm2;
-		window.close();
-	}
-	</script>
+
 </body>
 </html>

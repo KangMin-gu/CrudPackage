@@ -49,7 +49,6 @@
 				<div class="col-lg-10">
 					<h2>고객관리</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/">메인</a></li>
 						<li class="breadcrumb-item active" ><strong>목록</strong></li>
 					</ol>
 				</div>
@@ -85,7 +84,7 @@
 											<tbody>
 												<tr>
 													<th>고객명</th>
-													<td><input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname}"  ></td>
+													<td><input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname}"></td>
 													<th>휴대폰</th>
 													<td><input type="number" class="form-control" id="mobile" name="mobile" value="${searchVal.mobile}"></td>													
 												</tr>
@@ -146,21 +145,24 @@
 												</tr>
 												<tr>
 													<th>고객구분</th>
-													<td><select class="form-control" id="custgubun" name="custgubun" style="height: 1.45rem;">
+													<td>
+														<select class="form-control" id="custgubun" name="custgubun" style="height: 1.45rem;">
 															<option value="0" ${searchVal.custgubun eq "0" ? "selected" :""}>선택</option>
 															<option value="1" ${searchVal.custgubun eq "1" ? "selected" :""}>회원</option>
 															<option value="2" ${searchVal.custgubun eq "2" ? "selected" :""}>비회원</option>
 															<option value="3" ${searchVal.custgubun eq "3" ? "selected" :""}>탈퇴회원</option>
-													</select></td>													
+														</select>
+													</td>													
 													
 													<th>고객등급</th>
-													<td><select class="form-control" id="custgrade" name="custgrade" style="height: 1.45rem;">
+													<td>
+														<select class="form-control" id="custgrade" name="custgrade" style="height: 1.45rem;">
 															<option value="0" ${searchVal.custgrade eq "0" ? "selected" :""}>선택</option>
 															<option value="1" ${searchVal.custgrade eq "1" ? "selected" :""}>일반</option>
 															<option value="2" ${searchVal.custgrade eq "2" ? "selected" :""}>VIP</option>
 															<option value="3" ${searchVal.custgrade eq "3" ? "selected" :""}>VVIP</option>												
-													</select></td>
-													
+														</select>
+													</td>	
 												</tr>
 												<tr>
 													<th>정보활용</th>
@@ -169,12 +171,8 @@
 															<label class="pr-lg-3 mb-0">
 															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ${searchVal.infoagree eq "0" ? "checked='checked'" :""} ><i></i> 동의</label> 
 																<label class="pr-lg-3 mb-0">
-																<input type="radio"
-																value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree eq "1" ? "checked='checked'" :""}><i></i>
-																거부</label>
-																<label class="mb-0"><input type="radio"
-																value="2" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree gt "1" ? "checked='checked'" :""}><i></i>
-																전체</label>
+																<input type="radio"value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree eq "1" ? "checked='checked'" :""}><i></i> 거부</label>
+																<label class="mb-0"><input type="radio" value="2" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree gt "1" ? "checked='checked'" :""}><i></i> 전체</label>
 														</div>
 													</td>
 												</tr>												
@@ -287,7 +285,7 @@
 										<c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
 												<li class="footable-page-arrow disabled">	
-													<a href='/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
+													<a href='/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -301,12 +299,12 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="footable-page active">
-													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													<a href = '/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
 													</li>
 												</c:when>
 												<c:otherwise>
 													<li>
-													<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													<a href = '/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
 													</li>
 														
 												</c:otherwise>
@@ -316,7 +314,7 @@
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
 												<li>
-												<a href = '/cust/?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.endPageNum+1 }'>&raquo;</a>
+												<a href = '/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.endPageNum+1 }'>&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>

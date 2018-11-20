@@ -41,7 +41,6 @@
 				<div class="col-lg-10">
 					<h2>고객관리</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/">메인</a></li>
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
 						<li class="breadcrumb-item active"><strong>추가</strong></li>
 					</ol>
@@ -535,13 +534,13 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>
 								</div>
 								</form:form>
-								<div class="ibox">
+<!-- 								<div class="ibox">
 									<div class="ibox-title row border-0">
 										<h4>고객 상세</h4>
 									</div>
@@ -759,7 +758,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>

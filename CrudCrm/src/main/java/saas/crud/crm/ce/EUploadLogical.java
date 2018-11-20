@@ -41,7 +41,7 @@ public class EUploadLogical {
 		SimpleDateFormat time = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String date = time.format(calendar.getTime());
 		String fileSearchKey = date;
-		String permitList = "png";
+		String permitList = "png,jpg";
 		String[] arrPermitList = permitList.split(",");	
 		boolean permitListFlag = false;
 		String realPath = null;

@@ -40,7 +40,6 @@ public class AuthAspect {
 							}
 							
 							mView.setViewName("redirect:/login?url="+url);
-							
 							return mView;
 						}
 					}

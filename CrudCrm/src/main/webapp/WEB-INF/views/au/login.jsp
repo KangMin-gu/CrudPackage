@@ -29,6 +29,7 @@
             
             
             <form:form class="m-t" role="form" action="${pageContext.request.contextPath}/login" method="post">
+            	<input type="hidden" name="url" value="${url }"/>
                 <div class="form-group">
                     <input id="userid" name="userid" type="text" class="form-control" placeholder="계정" autofocus="autofocus" required>
                 </div>

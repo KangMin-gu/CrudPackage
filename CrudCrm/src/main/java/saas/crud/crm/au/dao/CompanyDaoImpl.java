@@ -20,6 +20,7 @@ public class CompanyDaoImpl implements CompanyDao{
 		// TODO Auto-generated method stub
 		return session.selectList("company.list", search);
 	}
+	
 	@Override
 	public Map<String, Object> companyRead(CompanyDto CompanyDto) {
 		// TODO Auto-generated method stub

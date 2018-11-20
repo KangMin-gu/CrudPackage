@@ -20,7 +20,7 @@
 
 <body>
 <!-- Top -->    
-	<div id="page-wrapper" class="gray-bg">
+	<div id="page-wrapper" class="gray-bg" style="margin-left: 0px;">
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>회원사 라이센스 관리</h2>
@@ -80,7 +80,7 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스수량</label></th>
-                                            <td><input type="text" class="form-control required" name="buycnt" id="buycnt" value=""></td>
+                                            <td><input type="text" class="form-control required validation phone1" name="buycnt" id="buycnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -16,7 +16,6 @@
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
 </head>
 
@@ -33,9 +32,6 @@
                 <div class="col-lg-10">
                     <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
                         <li class="breadcrumb-item active">
                             <strong>사용자 목록</strong>
                         </li>
@@ -52,6 +48,11 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/ad/user" method="POST">
                         <div class="ibox-content row">
+                        	<div class="w-100 text-right">
+								<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
+								<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+							</div>
+							<br><br>
                         	<div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
@@ -62,7 +63,7 @@
                                         <tr>
                                             <th>가입일</th>
                                             <td>
-                                                <div class="input-group p-0  input-daterange">
+                                                <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strdate" id="strdate" value="${search.strdate }">
                                                     </div>
@@ -113,13 +114,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-
-
-                            <div class="w-100 text-right">
-                                <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">검색</button>
-                                
                             </div>
                         </div>
                         </form:form>
@@ -238,7 +232,6 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
 	<script>
     $( document ).ready(function() {
@@ -248,7 +241,7 @@
             radioClass: 'iradio_square-green',
         });
     	
-        $('.input-daterange').datepicker({
+        $('.date').datepicker({
             keyboardNavigation: false,
             forceParse: false,
             autoclose: true

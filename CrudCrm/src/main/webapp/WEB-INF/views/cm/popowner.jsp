@@ -76,7 +76,7 @@ body {
 							<tbody>
 								<c:forEach var="list" items="${userList}">
 
-									<tr style="cursor: pointer;" onClick="toParentOwner('${list.USERNO }','${list.USERNAME}');">
+									<tr style="cursor: pointer;" onclick="javascript:parentOwnerUser(this);">
 										<td >${list.USERNAME}</td>
 										<td>${list.USERID}</td>
 										<td>${list.USERDUTY}</td>
@@ -148,13 +148,5 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-	<script>
-	//호출한 부모창에 값 전달
-	function toParentOwner(prm1,prm2){
-		opener.document.getElementById('owner').value= prm1;
-		opener.document.getElementById('ownername').value= prm2;
-		window.close();
-	}
-	</script>
 </body>
 </html>

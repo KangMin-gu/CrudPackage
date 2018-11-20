@@ -15,7 +15,6 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 </head>
 
 <body>
@@ -252,7 +251,7 @@
                                         <tr>
                                             <th class="border-top-0">회원사 메모</th>
                                             <td class="border-top-0">
-                                                <textarea type="text" class="form-control col-12 float-left mr-12 summernote">${memCompany.SITEMEMO }</textarea>                            
+                                                <textarea type="text" disabled class="form-control col-12 float-left mr-12">${memCompany.SITEMEMO }</textarea>                            
                                             </td>
                                             	<input type="hidden" id="siteid" name="siteid" value="${memCompany.SITEID }" />
                                         </tr>
@@ -285,7 +284,6 @@
                                                             <tr>
                                                                 <th>라이센스명</th>
                                                                 <th>단가</th>
-                                                                <th>사용량</th>
                                                                 <th>구매량</th>
                                                                 <th>만기일</th>
                                                             </tr>
@@ -366,22 +364,16 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script><!-- summernote-->
 	<script>
-		$(document).ready(function () {
-			$('.summernote').summernote({},'disable');
-			
-			$('.summernote').summernote('disable');
-		});
 		
 		$('.create').click(function(e){
 			var siteid = $('#siteid').val();
 			var name ="회원사라이센스"
-			var url = "/company/license/"+siteid
+			var url = "/ma/company/license/"+siteid
 			var target = e.currentTarget.id;
-			var x = "1200"
-			var y = "600"
+			var x = "1300"
+			var y = "500"
 			openNewWindow(name,url,e,x,y);
 		});
 	

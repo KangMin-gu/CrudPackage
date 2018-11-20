@@ -33,9 +33,6 @@
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/service">서비스 목록</a>
                         </li>
                         <li class="breadcrumb-item active">
@@ -67,10 +64,10 @@
                         
                             <div class="w-100 text-right mb-2">
                             <form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">서비스목록</a>
-                                <a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">서비스수정</a>
-                                <a href="#" class="btn btn-primary servicenext">서비스이관</a>
-								<button class="btn btn-primary" type="submit" value="삭제">서비스삭제</button>
+                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
+                                <a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                                <a href="#" class="btn btn-primary servicenext">이관</a>
+								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 							</form:form>	
                             </div>
                             

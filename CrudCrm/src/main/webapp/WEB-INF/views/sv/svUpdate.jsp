@@ -40,9 +40,6 @@
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/service">서비스 목록</a>
                         </li>
                         <li class="breadcrumb-item active">
@@ -77,8 +74,8 @@
                         <div class="ibox-content row">
                         
                             <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
-                                <button class="btn btn-primary save">저장</button>
+                                <a href="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO }" class="btn btn-primary">취소</a>
+                                <button class="btn btn-primary" id="submit">저장</button>
                             </div>
                             
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -321,7 +318,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td class="border-top-0" style="height: 42px;">
-                                            	<input type="text" class="form-control required" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
+                                            	<input type="text" class="form-control required validate name" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
                                             </td>
                                         </tr>
                                     </tbody>

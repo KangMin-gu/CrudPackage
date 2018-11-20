@@ -54,7 +54,7 @@
     <select id="detail" parameterType="companyDto" resultType="hashMap">
      	SELECT 
      	A.SITEID,A.SITENAME,A.BSNO,A.INCNO
-     	,A.ZIPCODE,A.UPRADDRESS,A.LWRADDRESS
+     	,A.ADDR1,A.ADDR2,A.ADDR3
      	,A.PRSDNAME
      	,A.MOBILE1,A.MOBILE2,A.MOBILE3
      	,A.FAXTEL1,A.FAXTEL2,A.FAXTEL3
@@ -86,9 +86,9 @@
     ,BSNO = #{bsno}
     ,INCNO = #{incno}
     
-    ,ZIPCODE = #{zipcode}
-    ,UPRADDRESS = #{upraddress}
-    ,LWRADDRESS = #{lwraddress}
+    ,ADDR1 = #{addr1}
+    ,ADDR2 = #{addr2}
+    ,ADDR3 = #{addr3}
     
     ,PRSDNAME = #{prsdname}
     
@@ -129,9 +129,9 @@
      SITENAME 
     ,BSNO
     ,INCNO
-    ,ZIPCODE
-    ,UPRADDRESS
-    ,LWRADDRESS
+    ,ADDR1
+    ,ADDR2
+    ,ADDR3
     ,PRSDNAME
     ,MOBILE1
     ,MOBILE2
@@ -158,9 +158,9 @@
     #{sitename}
     ,#{bsno}
     ,#{incno}
-    ,#{zipcode}
-    ,#{upraddress}
-    ,#{lwraddress}
+    ,#{addr1}
+    ,#{addr2}
+    ,#{addr3}
     ,#{prsdname}
     ,#{mobile1}
     ,#{mobile2}

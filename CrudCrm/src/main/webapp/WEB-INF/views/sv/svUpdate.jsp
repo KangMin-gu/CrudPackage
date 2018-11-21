@@ -75,7 +75,7 @@
                         
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO }" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary submit">저장</button>
+                                <button class="btn btn-primary submit" id="submit">저장</button>
                             </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -338,7 +338,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea class="required col-12 float-left mr-12" id="rcvdesc" name="rcvdesc" value="${serviceInfo.RCVDESC }">${serviceInfo.RCVDESC }</textarea>
+                                                <textarea class="col-12 float-left mr-12" id="rcvdesc" name="rcvdesc" value="${serviceInfo.RCVDESC }">${serviceInfo.RCVDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -413,7 +413,7 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control date required" autocomplete="off" name="ractdate" id="ractdate" value="">
+                                            		<input type="text" class="form-control date" autocomplete="off" name="ractdate" id="ractdate" value="">
                                             	</div>
                                             </td>
                                         </tr>
@@ -453,7 +453,7 @@
                                             <th class="border-top-0 border-bottom-0">담당자</th>
                                             <td class="border-top-0 border-bottom-0">
                                             	<div class="input-group owner">
-                                                    <input type="text" class="form-control required" autocomplete="off" name="ractowner_" id="ractowner_" value="">
+                                                    <input type="text" class="form-control" autocomplete="off" name="ractowner_" id="ractowner_" value="">
                                                     <input type="hidden" name="ractowner" id="ractowner" value="">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>

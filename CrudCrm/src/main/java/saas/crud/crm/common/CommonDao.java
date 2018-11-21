@@ -17,4 +17,8 @@ public interface CommonDao {
 	public int totalcntClient(Map<String,Object> searchVal);
 	public List<Map<String,Object>> popClientList(Map<String,Object> searchVal);
 	public EUploadDto noteDownload(EUploadDto fileRequest);
+	public FileDto noteDownload(FileDto fileRequest);
+	public int totalCntCust(Map<String,Object> searchVal);
+	public List<Map<String,Object>> popCustList(Map<String,Object> searchVal);
+
 }

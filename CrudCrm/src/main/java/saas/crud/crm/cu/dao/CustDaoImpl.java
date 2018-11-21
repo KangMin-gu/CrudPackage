@@ -21,33 +21,26 @@ public class CustDaoImpl implements CustDao {
 	@Autowired
 	private SqlSession session;
 
+	//고객리스트 총자료수 
 	@Override
 	public int totalCnt(Map<String, Object> map) {
 		int totalcnt = session.selectOne("customer.totalcnt",map);
 		return totalcnt;
 	}
-
+	//고객리스트 
 	@Override
 	public List<Map<String,Object>> custList(Map<String, Object> searchVal) {
 		List<Map<String,Object>> custList = session.selectList("customer.custList",searchVal);
 		return custList;
 	}
 	
-
-	
-	
+	//고객상세정보
 	@Override
 	public Map<String,Object> custDetail(Map<String,Object> custVal){
 		Map<String,Object> map = session.selectOne("customer.custDetail",custVal);
 		return map;
 	}
-	
-	@Override
-	public Map<String,Object> custUpdateForm(int custno){
-		Map<String,Object> map = session.selectOne("customer.custUpdateForm",custno);
-		return map;
-	}
-
+	//고객 삭제
 	@Override
 	public int custDelete(CustDto custDto) {
 		int res = session.update("customer.custDelete",custDto);
@@ -61,19 +54,25 @@ public class CustDaoImpl implements CustDao {
 		int custno = custDto.getCustno();
 		return custno;
 	}
-
+	//고객추가 - 수신거부테이블 
 	@Override
 	public void custformInsertDeny(CustDenyDto custDenyDto) {
 		session.insert("customer.custformInsertDeny", custDenyDto);
 
 	}
-
+	//고객 수정 폼(바인딩 정보)
+	@Override
+	public Map<String,Object> custUpdateForm(int custno){
+		Map<String,Object> map = session.selectOne("customer.custUpdateForm",custno);
+		return map;
+	}
+	//고객 수정 
 	@Override
 	public int custformUpdate(CustDto custDto) {
 		int res = session.insert("customer.custformUpdate", custDto);
 		return res;
 	}
-
+	//고객 수정 - 수신거부테이블
 	@Override
 	public int custformUpdateDeny(CustDenyDto custDenyDto) {
 		int res = session.insert("customer.custformUpdateDeny", custDenyDto);

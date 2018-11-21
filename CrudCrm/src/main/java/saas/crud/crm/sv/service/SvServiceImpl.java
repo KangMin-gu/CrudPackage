@@ -20,8 +20,9 @@ import saas.crud.crm.sv.dto.RcvDto;
 public class SvServiceImpl implements SvService{
 	
 	@Autowired
-	SvDao svDao;
+	private SvDao svDao;
 
+	// 서비스 List 검색
 	@Override
 	public ModelAndView svList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -31,7 +32,7 @@ public class SvServiceImpl implements SvService{
 		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = svDao.svTotalRows(search);
-		int PAGE_ROW_COUNT = 20;
+		int PAGE_ROW_COUNT = 5;
 		int PAGE_DISPLAY_COUNT = 10;
 		
 		PagingCommon pages = new PagingCommon();
@@ -54,15 +55,16 @@ public class SvServiceImpl implements SvService{
 		return mView;
 	}
 
+	// 서비스 상세정보
 	@Override
 	public ModelAndView svRead(HttpServletRequest request, int rcvno) {
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		RcvDto svDto = new RcvDto();
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
-		svDto.setSiteid(SITEID);
+		svDto.setSiteid(siteId);
 		svDto.setRcvno(rcvno);
 		Map<String,Object> serviceInfo = svDao.svRead(svDto);
 		
@@ -71,21 +73,22 @@ public class SvServiceImpl implements SvService{
 		return mView;
 	}
 
+	// 서비스 수정
 	@Override
 	public void svUpdate(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int CHKAUTH = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int chkAuth = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
 		String ractdate = request.getParameter("ractdate");
 
 		SearchRequest searchRequest = new SearchRequest();
 		
 		Map<String, Object> data = searchRequest.Search(request);
-		data.put("edtuser", USERNO);
+		data.put("edtuser", userNo);
 		//권한이 10, 즉 사용자 권한이면 처리정보만 update 처리
-		if(CHKAUTH == 10) {
+		if(chkAuth == 10) {
 			svDao.svUpdate(data);
 		}else {
 			// 10이 아닌 경우에는 admin 혹은 MasterAdmin 이므로 모든 부분 수정 가능하게
@@ -93,16 +96,17 @@ public class SvServiceImpl implements SvService{
 		}
 		
 		if(ractdate !="") {
-			data.put("reguser", USERNO);
+			data.put("reguser", userNo);
 			svDao.svRactInsert(data);
 		}
 	}
 
+	// 서비스 추가
 	@Override
 	public int svInsert(HttpServletRequest request, RcvDto rcvDto) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		String ractdate = request.getParameter("ractdate");
 		
@@ -111,14 +115,14 @@ public class SvServiceImpl implements SvService{
 		
 		Map<String, Object> data = searchRequest.Search(request);
 		
-		rcvDto.setSiteid(SITEID);
-		rcvDto.setReguser(USERNO);
-		rcvDto.setEdtuser(USERNO);
+		rcvDto.setSiteid(siteId);
+		rcvDto.setReguser(userNo);
+		rcvDto.setEdtuser(userNo);
 		
 		int rcvNo = svDao.svInsert(rcvDto);
 		
-		data.put("reguser", USERNO);
-		data.put("edtuser", USERNO);
+		data.put("reguser", userNo);
+		data.put("edtuser", userNo);
 		
 		if(ractdate != "") {
 			data.put("rcvno", rcvNo);
@@ -128,33 +132,35 @@ public class SvServiceImpl implements SvService{
 		return rcvNo;
 	}
 
+	// 서비스 단일 삭제
 	@Override
 	public void svDelete(HttpServletRequest request, int rcvno) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		RcvDto svDto = new RcvDto();
 		
-		svDto.setSiteid(SITEID);
-		svDto.setEdtuser(USERNO);
+		svDto.setSiteid(siteId);
+		svDto.setEdtuser(userNo);
 		svDto.setRcvno(rcvno);
 		
 		svDao.svDelete(svDto);
 	}
 
+	// 서비스 멀티 삭제
 	@Override
 	public void svMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		String sCheck[] = request.getParameterValues("rcvno");
 		
 		RcvDto svDto = new RcvDto();
 		
-		svDto.setSiteid(SITEID);
-		svDto.setEdtuser(USERNO);
+		svDto.setSiteid(siteId);
+		svDto.setEdtuser(userNo);
 		
 		int length = sCheck.length;
 		
@@ -166,14 +172,15 @@ public class SvServiceImpl implements SvService{
 		
 	}
 
+	// 서비스 처리이력 탭
 	@Override
 	public List<Map<String, Object>> svTabRact(HttpServletRequest request, int rcvno) {
 		// TODO Auto-generated method stub
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		RactDto ractDto = new RactDto();
-		ractDto.setSiteid(SITEID);
+		ractDto.setSiteid(siteId);
 		ractDto.setRcvno(rcvno);
 		
 		List<Map<String, Object>> tabRact = svDao.svTabRact(ractDto);
@@ -181,29 +188,31 @@ public class SvServiceImpl implements SvService{
 		return tabRact;
 	}
 
+	// 서비스 이관 이력 탭
 	@Override
 	public List<Map<String, Object>> svTabConvey(HttpServletRequest request, int rcvno) {
 		// TODO Auto-generated method stub
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		ConveyDto conveyDto = new ConveyDto();
 		conveyDto.setRcvno(rcvno);
-		conveyDto.setSiteid(SITEID);
+		conveyDto.setSiteid(siteId);
 		List<Map<String,Object>> tabConvey = svDao.conveyTabList(conveyDto);
 		
 		return tabConvey;
 	}
 
+	// 서비스 이관 추가
 	@Override
 	public void svConveyInsert(HttpServletRequest request, ConveyDto conveyDto) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		conveyDto.setSiteid(SITEID);
-		conveyDto.setReguser(USERNO);
-		conveyDto.setEdtuser(USERNO);
+		conveyDto.setSiteid(siteId);
+		conveyDto.setReguser(userNo);
+		conveyDto.setEdtuser(userNo);
 		
 		svDao.conveyInsert(conveyDto);
 		

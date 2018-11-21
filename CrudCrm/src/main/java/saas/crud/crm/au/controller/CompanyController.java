@@ -23,52 +23,52 @@ public class CompanyController {
 	// 회원사 정보 등록 수정 삭제
 	@Autowired
 	private CompanyService companyService;
-	// LIST
+	// 회원사 List
 	@RequestMapping(value = "/ma/company", method=RequestMethod.GET)
 	public ModelAndView authCompanyList(HttpServletRequest request) {
 		ModelAndView mView = companyService.companyList(request);
 		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
-	// LIST
+	// 회원사 List 검색
 	@RequestMapping(value = "/ma/company", method=RequestMethod.POST)
 	public ModelAndView authCompanySearchList(HttpServletRequest request) {
 		ModelAndView mView = companyService.companyList(request);
 		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
-	// READ
+	// 회원사 상세 정보
 	@RequestMapping(value="/ma/company/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authCompanyRead(@PathVariable int siteId, HttpServletRequest request) {
 		ModelAndView mView = companyService.companyRead(request, siteId);
 		mView.setViewName("au/ma/mc/masterRead");
 		return mView;
 	}
-	// UPDATE 화면
+	// 회원사 UPDATE 화면
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authCompanyUpdate(@PathVariable int siteId, HttpServletRequest request) {
 		ModelAndView mView = companyService.companyRead(request, siteId);
 		mView.setViewName("au/ma/mc/masterUpdate"); 
 		return mView;
 	}
-	//UPDATE 실행
-	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.POST)
-	public ModelAndView authCompanyUpdateSet(HttpServletResponse response, @ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
-		companyService.comapnyUpdate(response, request, CompanyDto);
-		
+
+	// 회원사 UPDATE 실행
+	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.PUT)
+	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
+		companyService.comapnyUpdate(request, CompanyDto);	
 		ModelAndView mView = new ModelAndView();
 		int siteId = CompanyDto.getSiteid();
 		mView.setViewName("redirect:/ma/company/"+siteId);
 		return mView;
 	}
-	// INSERT 화면
+	// 회원사 INSERT 화면
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.GET)
 	public ModelAndView authCompanyInsert() {
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("au/ma/mc/masterInsert");
 		return mView;
 	}
-	// INSERT 실행
+	// 회원사 INSERT 실행
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.POST)
 	public ModelAndView authCompanyInsertSet(HttpServletResponse response, @ModelAttribute CompanyDto memCompanyDto,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -78,7 +78,7 @@ public class CompanyController {
 		
 		return mView;
 	}
-	
+	// 회원사 단일 삭제
 	@RequestMapping(value="/ma/company/{siteId}", method=RequestMethod.POST)
 	public ModelAndView authCompanyDelete(@PathVariable int siteId,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -87,7 +87,7 @@ public class CompanyController {
 		mView.setViewName("redirect:/ma/company");
 		return mView;
 	}
-	// LIST에서 멀티 삭제
+	// 회원사 멀티 삭제
 	@RequestMapping(value="/ma/company/delete", method=RequestMethod.POST)
 	public ModelAndView authCompanyMultiDelete(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -97,6 +97,7 @@ public class CompanyController {
 		return mView;
 	}
 	
+	// 회원사 라이센스 부여 팝업
 	@RequestMapping(value="/ma/company/license/{siteid}", method=RequestMethod.GET)
 	public ModelAndView authCompanyLicense(HttpServletRequest request, @PathVariable int siteid) {
 	ModelAndView mView = companyService.companyRead(request, siteid);
@@ -105,10 +106,10 @@ public class CompanyController {
 	
 	return mView;
 	}
+	// 회원사 라이센스 부여
 	@RequestMapping(value="/ma/company/license/{siteid}", method=RequestMethod.POST)
 	public void authComapnyLicense(HttpServletRequest request,@PathVariable int siteid) {
 		companyService.companyLicenseInsert(request,siteid);
 	}
-	
 	
 }

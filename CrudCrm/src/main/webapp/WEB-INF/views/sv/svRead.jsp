@@ -33,9 +33,6 @@
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/service">서비스 목록</a>
                         </li>
                         <li class="breadcrumb-item active">
@@ -67,10 +64,10 @@
                         
                             <div class="w-100 text-right mb-2">
                             <form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">서비스목록</a>
-                                <a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">서비스수정</a>
-                                <a href="#" class="btn btn-primary servicenext">서비스이관</a>
-								<button class="btn btn-primary" type="submit" value="삭제">서비스삭제</button>
+                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
+                                <a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                                <a href="#" class="btn btn-primary servicenext">이관</a>
+								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 							</form:form>	
                             </div>
                             
@@ -92,6 +89,10 @@
                                         <tr>
                                             <th>고객명</th>
                                             <td>${serviceInfo.CUSTNAME }</td>
+                                        </tr>
+                                        <tr>
+                                            <th>고객주소</th>
+                                            <td>${serviceInfo.CUSTADDRESS }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -115,6 +116,10 @@
                                             <th>직장명</th>
                                             <td>${serviceInfo.COMPANY }</td>
                                         </tr>
+                                        <tr>
+                                            <th>휴대번호</th>
+                                            <td>${serviceInfo.MOBILE }</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -134,40 +139,12 @@
                                             <td>${serviceInfo.HOMEPAGE }</td>
                                         </tr>
                                         <tr>
+                                            <th>직책</th>
+                                            <td>${serviceInfo.DUTY }</td>
+                                        </tr>
+                                        <tr>
                                             <th>이메일</th>
                                             <td>${serviceInfo.EMAIL }</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box4 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">고객주소</th>
-                                            <td class="border-top-0">
-                                                ${serviceInfo.ZIPCODE } ${serviceInfo.UPRADDRESS } ${serviceInfo.LWRADDRESS }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">휴대전화번호</th>
-                                            <td class="border-top-0">
-                                                ${serviceInfo.MOBILE1 }-${serviceInfo.MOBILE2 }-${serviceInfo.MOBILE3 }
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

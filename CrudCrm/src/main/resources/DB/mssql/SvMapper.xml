@@ -15,7 +15,9 @@
     		, CASE WHEN B.RACTCODE = 1 THEN '처리유형1'
     			   WHEN B.RACTCODE = 2 THEN '처리유형2'
     			   WHEN B.RACTCODE = 3 THEN '처리유형3' END AS RACTCODE_
-    		, A.PRCSTATE
+    		, CASE WHEN A.RCVCHANNEL = 10 THEN '전화' 
+    			   WHEN A.RCVCHANNEL = 20 THEN 'SMS'
+    			   WHEN A.RCVCHANNEL = 30 THEN '메일' END AS RCVCHANNEL_
     		, C.CUSTNAME AS CUSTNO_
     		, D.CLINAME AS CLINO_
     		, CONVERT(nvarchar,A.RCVDATE,23) AS RCVDATE_
@@ -28,7 +30,7 @@
     		 LEFT OUTER JOIN Monarch_SaaS.dbo.TB200010 D ON D.CLIID = A.CLINO
     		 WHERE A.SITEID = #{siteid}
     		 AND A.ISDELETE = 0
-    		 <if test="strDate != null">
+ 			<if test="strDate != null">
 				AND A.RCVDATE <![CDATA[>]]>= #{strDate}
 			</if>
 			<if test="endDate != null">
@@ -46,15 +48,15 @@
 			<if test="clino != null">
 				AND A.CLINO = #{clino}
 			</if>
-			<if test="prcstate != null">
-				AND A.PRCSTATE = #{prcstate}
+			<if test="rcvchannel != null">
+				AND A.RCVCHANNEL = #{rcvchannel}
 			</if>
 			<if test="rcvowner != null">
 				AND A.RCVOWNER = #{rcvowner}
 			</if>
 			<if test="ractowner != null">
 				AND B.RACTOWNER = #{ractowner}
-			</if>		
+			</if>	
     		 ) X 
     	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 
@@ -83,8 +85,8 @@
 			<if test="clino != null">
 				AND A.CLINO = #{clino}
 			</if>
-			<if test="prcstate != null">
-				AND A.PRCSTATE = #{prcstate}
+			<if test="rcvchannel != null">
+				AND A.RCVCHANNEL = #{rcvchannel}
 			</if>
 			<if test="rcvowner != null">
 				AND A.RCVOWNER = #{rcvowner}
@@ -95,8 +97,12 @@
 	</select>
 	
 	<select id ="detail" parameterType="rcvDto" resultType ="hashMap">
-		SELECT 
-		A.RCVNO, A.CLINO, A.CUSTNO, A.RCVTYPE
+		SELECT
+		
+		C.CUSTNAME, C.COMPANY, C.EMAIL, C.DUTY
+		, C.HOMADDR1 + C.HOMADDR2 + C.HOMADDR3 AS CUSTADDRESS
+		, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS MOBILE
+		,A.RCVNO, A.CLINO, A.CUSTNO, A.RCVTYPE
 		, CASE WHEN A.RCVTYPE = 1 THEN '문의'
     		  WHEN A.RCVTYPE = 2 THEN '개선'
     		  WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_

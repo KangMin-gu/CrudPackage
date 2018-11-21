@@ -13,6 +13,9 @@ import saas.crud.crm.ce.EUploadDto;
 public interface CommonService {
 	public ModelAndView svcPopGetUserName(HttpServletRequest request);
 	public ModelAndView svcPopGetClientName(HttpServletRequest request);
+	public ModelAndView svcPopGetCustName(HttpServletRequest request);
 	public ModelAndView noteDownload(HttpServletRequest request, int fileId);
 	public EUploadDto logoUplaod(HttpServletResponse response, HttpServletRequest request, MultipartRequest multipartRequest);
+	public Map<String,Object> svcPopGetCustDetail(HttpServletRequest request, int custNo);
+
 }

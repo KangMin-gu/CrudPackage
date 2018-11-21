@@ -25,14 +25,16 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
 	private CompanyDao companyDao;
+
 	
 	@Autowired
 	private EUploadLogical upload;
+
 	
+	// 회원사 List 검색
 	@Override
 	public ModelAndView companyList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		
 		
 		//int SITEID = Integer.parseInt((String)request.getSession().getAttribute("SITEID"));
 		ModelAndView mView = new ModelAndView();
@@ -63,6 +65,8 @@ public class CompanyServiceImpl implements CompanyService{
 		
 		return mView;
 	}
+	
+	//회원사 상세 정보
 	@Override
 	public ModelAndView companyRead(HttpServletRequest request, int siteId) {
 		// TODO Auto-generated method stub
@@ -76,45 +80,51 @@ public class CompanyServiceImpl implements CompanyService{
 		
 		return mView;
 	}
+	
+	//회원사 수정
 	@Override
 	public void comapnyUpdate(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		companyDto.setEdtuser(USERNO);
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		companyDto.setEdtuser(userNo);
 		companyDao.companyUpdate(companyDto);
 	}
 	
+	// 회원사 추가
 	@Override
 	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		companyDto.setReguser(USERNO);
-		companyDto.setEdtuser(USERNO);
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		companyDto.setReguser(userNo);
+		companyDto.setEdtuser(userNo);
 		int siteid = companyDao.companyInsert(companyDto);
 		companyDto.setSiteid(siteid);
 		return siteid;
 	}
+	
+	// 회원사 단일 삭제
 	@Override
 	public void companyDelete(HttpServletRequest request, int siteid) {
 		// TODO Auto-generated method stub
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		CompanyDto companyDto = new CompanyDto();
-		companyDto.setEdtuser(USERNO);
+		companyDto.setEdtuser(userNo);
 		
 		companyDto.setSiteid(siteid);
 		companyDao.companyDelete(companyDto);
 	}
 	
+	// 회원사 멀티 삭제
 	@Override
 	public void companyMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String sCheck[] = request.getParameterValues("siteid");
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		CompanyDto companyDto = new CompanyDto();
 		
-		companyDto.setEdtuser(USERNO);
+		companyDto.setEdtuser(userNo);
 		int length = sCheck.length;
 		if(length > 0) {
 			for(int i=0;i<length;i++) {
@@ -124,18 +134,20 @@ public class CompanyServiceImpl implements CompanyService{
 			}
 		}
 	}
+	
+	// 회원사 라이센스 추가
 	@Override
 	public void companyLicenseInsert(HttpServletRequest request, int siteid) {
 		// TODO Auto-generated method stub
 
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		SearchRequest searchRequest = new SearchRequest();
 		
 		Map<String, Object> data = searchRequest.Search(request);
 		
-		data.put("reguser", USERNO);
-		data.put("edtuser", USERNO);
+		data.put("reguser", userNo);
+		data.put("edtuser", userNo);
 		data.put("siteid", siteid);
 		
 		companyDao.companyLicenseInsert(data);

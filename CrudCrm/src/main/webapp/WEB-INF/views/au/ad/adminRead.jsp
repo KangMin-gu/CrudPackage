@@ -125,9 +125,7 @@
                                         <col style="width: auto; background: #fafafa;">
                                         <col style="width: auto;">
                                         <col style="width: auto; background: #fafafa;">
-                                        <col style="width: auto;">
-                                        <col style="width: auto; background: #fafafa;">
-                                        <col style="width: auto;">                                                                                                                        
+                                        <col style="width: auto;">                                                                                                                  
                                     </colgroup>							
 									<tbody>
 										<tr>
@@ -146,17 +144,17 @@
 											<th>직책</th>
 											<td>${user.USERDUTY}</td>	
 										</tr>
-										<tr>
-											<select class="form-control dual_select" name="usermenuno" id="usermenuno" disabled multiple="" style="display: none;">
-                                                <c:forEach var="menu" items="${menu}">
-                                                	<c:forEach var="userMenu" items="${userMenu }">
-                                                		<c:if test="${menu.MENUNO == userMenu.MENUNO }"><option value="${menu.MENUNO }" selected>${menu.MENUNAME }</option></c:if>
-														</c:forEach>
-														<option value="${menu.MENUNO }">${menu.MENUNAME }</option>
-												</c:forEach>
-											</select> 
-										</tr>
 								</table>
+								<div>
+									<select class="form-control dual_select" name="usermenuno" id="usermenuno" disabled multiple="" style="display: none;">
+	                                             <c:forEach var="menu" items="${menu}">
+	                                             	<c:forEach var="userMenu" items="${userMenu }">
+	                                             		<c:if test="${menu.MENUNO == userMenu.MENUNO }"><option value="${menu.MENUNO }" selected>${menu.MENUNAME }</option></c:if>
+												</c:forEach>
+												<option value="${menu.MENUNO }">${menu.MENUNAME }</option>
+										</c:forEach>
+									</select> 
+								</div>
                             </div>
                         </div> 	
                     </div>

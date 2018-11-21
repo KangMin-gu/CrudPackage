@@ -31,16 +31,13 @@ body {
 	background-color: #f3f3f4;
 }
 </style>
-
-
-
 </head>
 <body>
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
-				<h2>직장 검색</h2>
-				
+				<h2>고객검색</h2>
+
 			</div>
 
 		</div>
@@ -52,15 +49,16 @@ body {
 				<div class="ibox">
 					<div class="ibox-content row">
 						<div class="box1 col-sm-6 col-xs-6 p-0">
-							<form:form action="/popclient" method="GET">
+							<form:form action="/popowner" method="GET">
+								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
 								<div class="input-group">
-									<input type="text" name="cliname" id="cliname"
-										class="form-control" value="${searchVal.cliname}"> <span
+									<input type="text" name="cstname" id="cstname"
+										class="form-control" value="${searchVal.cstname}"> <span
 										class="input-group-append">
 										<Button type="submit" class="btn btn-primary">검색</Button>
 									</span>
 								</div>
-							
+							</form:form>
 						</div>
 					</div>
 				</div>
@@ -70,33 +68,32 @@ body {
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>거래처명</th>
-									<th>호칭명</th>
-									<th>담당자</th>
-									
+									<th>고객명</th>
+									<th>회사명</th>
+									<th>휴대전화</th>
+									<th>이메일</th>
 								</tr>
 							</thead>
 							<tbody>
-								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								<c:forEach var="list" items="${clientList}">
-									<tr style="cursor: pointer;" onclick="javascript:parentCliname(this);" value="${list.CLINO }">
-										<td id="cliname">${list.CLINAME}</td>
-										<td>${list.CALLNAME}</td>
-										<td>${list.USERNAME}</td>										
+								<c:forEach var="list" items="${custList }">
+									<tr style="cursor: pointer;" onClick="javascript:parentCustname(this);" value="${list.CUSTNO }"> 
+										<td id="cstname">${list.CUSTNAME}</td>
+										<td>${list.COMPANY}</td>
+										<td>${list.MOBILE}</td>
+										<td>${list.EMAIL}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
-					</form:form>
 					
-		
+					
 					<div class="m-auto">
-						<ul class="pagination popPaging">
+						<ul class="pagination">
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
 									<li class="footable-page-arrow disabled">
-										<a onclick="javascript:paging(${page.endPageNum+-1 })">&laquo;</a>
+										<a onclick="javascript:paging(${page.startPageNum-1 })">&laquo;</a>
 									</li>
 								</c:when>
 								<c:otherwise>
@@ -104,16 +101,17 @@ body {
 								</c:otherwise>
 							</c:choose>
 
-							<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
+							<c:forEach var="i" begin="${page.startPageNum }"
+								end="${page.endPageNum }">
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
-										<li class="footable-page active">
-											<a onclick="javascript:paging(${i})">${i }</a>
+										<li class="footable-page active">										
+											<a onclick="javascript:paging(${i })">${i }</a>
 										</li>
 									</c:when>
 									<c:otherwise>
-										<li>									
-											<a onclick="javascript:paging(${i})">${i }</a>
+										<li>
+											<a onclick="javascript:paging(${i })">${i }</a>
 										</li>
 
 									</c:otherwise>
@@ -135,7 +133,7 @@ body {
 					<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
 				</div>
 			</div>
-	
+		
 		</div>
 
 	</div>
@@ -143,7 +141,5 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-
-
 </body>
 </html>

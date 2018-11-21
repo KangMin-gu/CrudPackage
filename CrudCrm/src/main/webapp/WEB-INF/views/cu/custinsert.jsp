@@ -41,7 +41,6 @@
 				<div class="col-lg-10">
 					<h2>고객관리</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/">메인</a></li>
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
 						<li class="breadcrumb-item active"><strong>추가</strong></li>
 					</ol>
@@ -64,24 +63,24 @@
 								</div>
 								<div class="ibox-content row">	
 													
-									<div class="w-100 text-right mb-2">
-										
-										
-										<div class="alert alert-danger" id="test" style="text-align:left;display:none;">
-                                		 	<a class="alert-link" href="#">
-												<span id="showMsg"></span>
-											</a>
-                            			</div>
-                            			
-                            			
-                            			
-										<Button type="submit" class="btn btn-primary" id="submit"  disabled >저 장</Button>
-										<a href="/cust" class="btn btn-primary">목 록</a>
-										
-										
-										
-										
+							
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) ">
+												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) </strong>
+											</span>
+											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                          			</div>
+										<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+											<Strong><span id="showMsg"></span></Strong>				
+	                          			</div>													
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+											<Button type="submit" class="btn btn-primary submit" "  disabled >저 장</Button>
+											<a href="/cust" class="btn btn-primary">목 록</a>
+										</div>
 									</div>
+									
+									
 									<div class="box1 col-lg-12 col-xl-4 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
@@ -92,25 +91,25 @@
 												<tr>
 													<th>고객명</th>
 													<td>
-														<input type="text" class="form-control error" name="custname" id="custname" placeholder="필수 입력" >
+														<input type="text" class="form-control error required validate name" name="custname" id="custname" placeholder="필수 입력" >
 													</td>
 												</tr>
 												<tr>
 													<th>직책</th>
-													<td><input type="text" class="form-control" name="duty" id="duty"></td>
+													<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="duty" id="duty"></td>
 												</tr>
 												<tr>
 													<th>직장전화</th>
 													<td>
 														<!-- form select 공통으로 변경 -->
-														<select class="form-control col-4 float-left mr-3 " style="height: 1.45rem" name="wrktel1" id="wrktel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select>
-														<input type="text" class="form-control col-3 float-left mr-2 inputs" name="wrktel2" id="wrktel2" > 
-														<input type="text" class="form-control col-3 float-left inputs" name="wrktel3" id="wrktel3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrktel2" id="wrktel2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrktel3" id="wrktel3" >
 													</td>
 												</tr>
 											</tbody>
@@ -127,40 +126,45 @@
 													<th>직장명</th>
 													<!-- cli로 변경  -->
 													<td >
-														<div class="input-group">
-															<input type="text" class="form-control" name="cliname" id="cliname" onClick="openPop('/popclient','client',600,700);"readonly> 
+														<div class="input-group cli">
+															<!-- <input type="text" class="form-control" name="cliname" id="cliname" onClick="openPop('/popclient','client',600,700);"readonly> 
 															<input type="hidden" name="clino" id="clino" value="0">
 															<span class="input-group-addon"> 
 																<a href="javascript:void(0);" onClick="openPop('/popclient','client',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+															</span> -->		
+															<input type="text" class="form-control" autocomplete="off" name="cliname" id="cliname" readonly>
+                                                    		<input type="hidden" name="clino" id="clino" value="0">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
 														</div>
 													</td>
 												</tr>
 												<tr>
 													<th>휴대전화</th><!-- form:select변경 -->
 													<td>													
-														<select class="form-control col-4 float-left mr-3 error" style="height: 1.45rem" name="mobile1" id="mobile1" required>
+														<select class="form-control col-4 float-left mr-3 error validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 inputs error" name="mobile2" id="mobile2" required > 
-														<input type="text" class="form-control col-3 float-left inputs error" name="mobile3" id="mobile3" required >														
+														<input type="text" class="form-control col-3 float-left mr-2 error validate required phone2" name="mobile2" id="mobile2"  > 
+														<input type="text" class="form-control col-3 float-left error validate required phone3" name="mobile3" id="mobile3"  >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 inputs" name="wrkfax2" id="wrkfax2" > 
-														<input type="text" class="form-control col-3 float-left inputs" name="wrkfax3" id="wrkfax3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3" >
 													</td>
 												</tr>
 											</tbody>
@@ -175,15 +179,15 @@
 											<tbody>
 												<tr>
 													<th>부서</th>
-													<td><input type="text" class="form-control" name="deptname" id="deptname" ></td>
+													<td><input type="text" class="form-control validate simple" name="deptname" id="deptname" ></td>
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control" name="email" id="email" ></td>
+													<td><input type="email" class="form-control validate email" style="height: 1.45rem" name="email" id="email" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control" name="wrkurl" id="wrkurl" placeholder="ex) http://www.crudsystem.co.kr"></td>
+													<td><input type="text" class="form-control validate url"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) www.crudsystem.co.kr "></td>
 												</tr>
 											</tbody>
 										</table>
@@ -200,11 +204,11 @@
 													<td class="border-top-0">
 														<div class="input-group col-lg-3 pl-0 float-left">
 															<input type="text" class="form-control daumzip" name="wrkaddr1" id="wrkaddr1" readonly > 
-															<span class="input-group-addon"> <a href="#" ><i class="fa fa-search daumzip" id="wrkaddr1"></i></a>
+															<span class="input-group-addon"> <a href="#" ><i class="fa fa-search daumzip" id="wrkaddr1" ></i></a>
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" readonly>
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="wrkaddr3" id="wrkaddr3">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="wrkaddr3" id="wrkaddr3">
 													</td>
 												</tr>
 											</tbody>
@@ -220,12 +224,12 @@
 												<tr>
 													<th class="border-top-0">담당자</th>
 													<td class="border-top-0">
-														<div class="input-group">
-															<input type="hidden" name="owner" id="owner" value="${SESSIONUSERNO}" > 
-															<input type="text" class="form-control"  name="ownername" id="ownername" value="${SESSIONUSERNAME}" onClick="openPop('/popowner','owner',600,700);" readonly > 
-															<span class="input-group-addon"> 
-															<a href="#" onClick="openPop('/popowner','owner',600,700);"><i class="fa fa-search"></i></a>
-															</span>
+														<div class="input-group owner">
+															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${SESSIONUSERNAME}" readonly>
+                                                    		<input type="hidden" name="owner" id="owner" value="${SESSIONUSERNO}">
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search"></i></a>
+                                                    		</span>
 														</div>
 													</td>
 												</tr>
@@ -252,19 +256,19 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<select class="form-control col-4 float-left mr-3" style="height: 1.45rem" name="homtel1" id="homtel1">
+															<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
 																<option value="">선택</option>
 																<option value="02">02</option>
 																<option value="031">031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 inputs" name="homtel2" > 
-															<input type="text" class="form-control col-3 float-left inputs" name="homtel3" >
+															<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="homtel2" id="homtel2" > 
+															<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
 														<th>결혼여부</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="married">
+															<select class="form-control" style="height: 1.45rem" name="married" id="married">
 																<option value="0">선택</option>
 																<option value="1">미혼</option>
 																<option value="2">기혼</option>
@@ -277,13 +281,13 @@
 															<div class="input-group date">
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
-																</span><input type="text" class="form-control" name="weddingday" id="weddingday" autocomplete="off">
+																</span><input type="text" class="form-control"  name="weddingday" id="weddingday" autocomplete="off">
 															</div>
 														</td>
 													</tr>
 													<tr>
 														<th>취미</th>
-														<td><input type="text" class="form-control" name="hobby" id="hobby"> </td>
+														<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="hobby" id="hobby"> </td>
 													</tr>
 												</tbody>
 											</table>
@@ -318,7 +322,7 @@
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<select class="form-control" style="height: 1.5rem" name="custgrade" id="custgrade">
+															<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
 																<option value="0" >선택</option>
 																<option value="1">일반</option>
 																<option value="2">VIP</option>
@@ -369,7 +373,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control" style="height: 1.5rem;" name="job" id="job">
+															<input type="text" class="form-control validate simple" style="height: 1.52rem;" name="job" id="job">
 														</td>
 													</tr>
 													<tr>
@@ -401,7 +405,7 @@
 																</span>
 															</div> 
 															<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" readonly>
-															<input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="homaddr3" id="homaddr3">
+															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="homaddr3" id="homaddr3">
 														</td>
 													</tr>
 												</tbody>
@@ -416,7 +420,7 @@
 												<tbody>
 													<th class="border-top-0">정보활용</th>
 													<td class="border-top-0">
-														<div class="i-checks" style="height: 1.45rem;">
+														<div class="i-checks" style="height: 1.40rem;">
 															<label class="pr-lg-3 mb-0">
 																<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" checked ><i></i> 동의
 															</label> 
@@ -534,231 +538,13 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="Button" class="btn btn-primary" id="submit" >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit"  disabled >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>
 								</div>
 								</form:form>
-								<div class="ibox">
-									<div class="ibox-title row border-0">
-										<h4>고객 상세</h4>
-									</div>
-									<div class="ibox-content row">
-										<div class="box1 col-lg-12 p-0">
-											<div class="tabs-container">
-												<ul class="nav nav-tabs" role="tablist">
-													<li><a class="nav-link active" data-toggle="tab" href="#tab1">서비스</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab2">영업</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab3">캠페인</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab4">접촉</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li>
-												</ul>
-												<div class="tab-content">
-													<div role="tabpanel" id="tab1"
-														class="tab-pane active table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>제목</th>
-																		<th>상태</th>
-																		<th>서비스유형</th>
-																		<th>접수일</th>
-																		<th>접수자</th>
-																		<th>처리일</th>
-																		<th>담당자</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab2" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>예상수주일</th>
-																		<th>영업건명</th>
-																		<th>상담건</th>
-																		<th>영업담당자</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab3" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>캠페인명</th>
-																		<th>프로젝트</th>
-																		<th>시작일</th>
-																		<th>종료일</th>
-																		<th>채널매체</th>
-																		<th>결과</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab4" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>접촉일</th>
-																		<th>접촉자</th>
-																		<th>접촉유형</th>
-																		<th>접촉매체</th>
-																		<th>접촉결과</th>
-																		<th>접촉내용</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab5" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>등록일</th>
-																		<th>출처명</th>
-																		<th>출처메모</th>
-																		<th>출처회원번호</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+
 							</div>
 						</div>
 					</div>
@@ -793,121 +579,27 @@
 	
 
 	
-	<script>
-	//유효성 검사
-	var namePattern = /^[가-힣a-zA-Z]{2,30}$/; //한글 영문 2~30글자
-	var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-	var addrPattern = /^[가-힣a-zA-Z0-9!@()-_=+,.]{2,30}$/; //한글 영문 숫자 2~30 
-	var numPattern = /^[\d]{3,4}$/; //3~4자리숫자
-	var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
-	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
-		
-	//필수값 유효성 검사 boolean 리턴  
-	function checkVal(id){
-		
-		var value = document.getElementById(id).value;//id명
-		var res; 
-		if (id == 'custname'){
-			res = namePattern.test(value);//유효성 패턴 매칭
-		}else if(id.indexOf('mobile') != -1){//id에 mobile이라는 문자가 포함되면 
-			res = numPattern.test(value);
-		}else if(id.indexOf('wrktel') != -1){
-			res = numPattern.test(value);
-		}else if(id.indexOf('wrkfax') != -1){
-			res = numPattern.test(value);
-		}else if(id.indexOf('homtel') != -1){
-			res = numPattern.test(value);
-		}else if(id == 'email'){
-			res = emailPattern.test(value);
-		}else if(id.indexOf('addr') != -1 ){
-			res = addrPattern.test(value);
-		}else if(id == 'wrkurl'){
-			res = domainPattern.test(value);
-		}else
-			res = simplePattern.test(value);
-		return res;
-	}
-	
-	
-	
-	function changeRed(id,res){		
-		if(res == true){
-			$('#'+id).removeClass('error');//해당 인풋 디자인변경
-		}else if(res == false){
-			$('#'+id).addClass('error');//해당 인풋 디자인변경 
-			if(id == 'custname'){
-				$('#submit').prop("disabled",true);//submit 버튼 비활성화 	
-			}else if (id.indexOf('mobile') != -1){
-				$('#submit').prop("disabled",true);//submit 버튼 비활성화
-			}	
-		}				
-	}
-	
-	function enableSubmit(){
-		
-		if( checkVal('custname') && checkVal('mobile2') && checkVal('mobile3') ){ //필수 값이 모두 정상 입력되었다면 
-			console.log('good');		
-			$('#submit').prop("disabled",false); // submit버튼 활성화  
-		}
-	}
-	
-	 
+	<script>	
+ 
         $(document).ready(function () {
-        	
-        	//********고객명 , 핸드폰 필수 값 체크********
-        	//todo 핸드폰1번 추가 
-        	$('#custname').keyup(function(e){
-        		var res = checkVal(e.target.id); //고객명 입력 칸 디자인 제어
-        		changeRed(e.target.id , res );
-        		enableSubmit();//고객명,핸드폰 모든값이 유효성검사 true 일시 수정버튼 활성화.
-        	});       	
-        	$('#mobile2').keyup(function(e){
-        		var res = checkVal(e.target.id);
-        		changeRed(e.target.id , res );
-        		enableSubmit();
-        	});
-        	$('#mobile3').keyup(function(e){
-        		var res = checkVal(e.target.id);
-        		changeRed(e.target.id , res );
-        		enableSubmit();
-        	});
-        	//****************************************
-        	
-        	//**********form 전송 전 유효성 검사 ********************
-        	$('#submit').click(function(){
-        		debugger;
-        		if( checkVal('custname') == false ){
-        			$('#custname').focus();
-        			return false;
-        		}else if( checkVal('mobile1') == false ){
-        			$('#mobile1').focus();
-        			return false;
-        		}else if( checkVal('mobile2') == false ){
-        			$('#mobile2').focus();
-        			return false;
-        		}else if( checkVal('mobile3') == false ){
-        			$('#mobile3').focus();
-        			return false;
-        		}else if(checkVal('job') == false ){
-        			$('#job').focus();
-        			$('#showMsg').append('직업에는 한글,영어,숫자만 입력 가능합니다.');
-        			$('#test').show();
-        	
-        			return false;
+      	
+        	//********필수 값 실시간 체크*********************************        	      
+        	/*
+        	$('#mobile1').change(function() {//셀렉트박스 change 메서드
+        		var state = $('#mobile1 option:selected').val();
+        		if(state == '') {//값이없다면
+        			$('#mobile1').addClass('error');//에러 태두리
+        			$('.submit').prop("disabled",true);//submit 비활성화
+        		} else {
+        			$('#mobile1').removeClass('error');
+        			enableSubmit();
         		}
-        		
-        		alert(' all ok  ');
-        		$('#test').hide();
-        		debugger;
-        		$('#command').submit();
-        		
         	});
+        	*/
+        	//****************************************필수값 체크 끝 ********
         	
-        	
-        	
-        	
-        	
-        	
+        
+       	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -923,51 +615,11 @@
                 autoclose: true
             });
             
-           /* 
-          	//validation.js 유효성 검사 플러그인 커스텀 메서드
-       	 	$.validator.addMethod("regx",function(value,element,regexpr){
-            	return regexpr.test(value);
-            })   
-            // template validation 
-            $("#command").validate({
-      		
-                rules: {
-                    custname : { required : true, minlength : 2, maxlength: 30, regx : namePattern } 
-            		,mobile2 : { required : true, minlength : 3, maxlength: 4, number : true }
-                   	,mobile3 : { required : true, minlength : 3, maxlength: 4, number : true }
-                   	,wrktel2 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrktel3 : { minlength : 3, maxlength: 4, number : true }      
-                    ,wrkfax2 : { minlength : 3, maxlength: 4, number : true }
-                    ,wrkfax3 : { minlength : 3, maxlength: 4, number : true }
-                    ,homtel2 : { minlength : 3, maxlength: 4, number : true }
-                    ,homtel3 : { minlength : 3, maxlength: 4, number : true }
-                    
-                    ,wrkurl : { url : true }
-                    ,duty : { regx : simplePattern }
-                    ,deptname : { regx : simplePattern }
-                    //,job : { regx : simplePattern }
-                    ,hobby : { regx : simplePattern }           
-                },           
-            	messages:{
-            		custname: {regx:"한글-영문으로 입력 해주세요"}
-                	,duty : { regx : "한글-영문으로 입력 해주세요" }
-                	,deptname : { regx : "한글-영문으로 입력 해주세요" }
-                	//,job : { regx : "한글-영문으로 입력 해주세요" }
-                	,hobby : { regx : "한글-영문으로 입력 해주세요" }
-            	}
-            });
-          	
-          	*/
-          	
-          	
-          	
-            
           	//주소 받아오기
             $('.daumzip').click(function(e){
       			 
       		     new daum.Postcode({
       		         oncomplete: function(data) {
-      		      		debugger;
       		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
       		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
     		        	
@@ -978,10 +630,7 @@
       		         }
       		     }).open();
       		 });
-           
-            
-            
-                         
+
         });
     </script>
 	<!-- E: 추가 js -->

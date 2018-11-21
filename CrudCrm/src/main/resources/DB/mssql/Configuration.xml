@@ -23,7 +23,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.sv.dto.RcvDto" alias="rcvDto"/>
 		<typeAlias type="saas.crud.crm.sv.dto.RactDto" alias="ractDto"/>
 		<typeAlias type="saas.crud.crm.sv.dto.ConveyDto" alias="conveyDto"/>
-		
 	</typeAliases>
 
 	<mappers>

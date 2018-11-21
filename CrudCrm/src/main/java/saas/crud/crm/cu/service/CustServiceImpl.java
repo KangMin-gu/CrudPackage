@@ -1,5 +1,6 @@
 package saas.crud.crm.cu.service;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
+import saas.crud.crm.sv.dao.SvDao;
 
 
 
@@ -21,8 +23,11 @@ import saas.crud.crm.cu.dto.CustDto;
 public class CustServiceImpl implements CustService {
 
 	@Autowired
-	CustDao custDao;
+	private CustDao custDao;
+	@Autowired
+	private SvDao svDao; 
 
+	//고객리스트 출력 (검색 조건) 
 	@Override
 	public ModelAndView svcCustList(HttpServletRequest request) {
 		
@@ -32,6 +37,7 @@ public class CustServiceImpl implements CustService {
 		searchVal.put("siteid", siteid);
 
 		//검색조건 설정 null 또는 공백이 아니면 if실행
+		
 		if( request.getParameter("custname") != null && !request.getParameter("custname").toString().trim().equals("") )  { 	
 			searchVal.put("custname",request.getParameter("custname"));
 		}
@@ -39,8 +45,8 @@ public class CustServiceImpl implements CustService {
 		if(request.getParameter("owner") != null ) {
 			searchVal.put("owner",request.getParameter("owner"));
 		}
-		if(request.getParameter("ownername") != null ) {
-			searchVal.put("ownername",request.getParameter("ownername"));
+		if(request.getParameter("owner_") != null ) {
+			searchVal.put("owner_",request.getParameter("owner_"));
 		}
 		if(request.getParameter("clino") != null ) {
 			searchVal.put("clino",request.getParameter("clino"));
@@ -71,7 +77,7 @@ public class CustServiceImpl implements CustService {
 		//데이트 yyyy/mm/dd-> yyyymmdd 
 		if(request.getParameter("fromregdt") != null && !request.getParameter("fromregdt").toString().trim().equals("") ) {
 			String temp = request.getParameter("fromregdt");//	yyyy/mm/dd
-			String fromdt = temp.replace("/",""); // yyyymmdd
+			String fromdt = temp.replace("-",""); // yyyymmdd
 			searchVal.put("fromregdt", fromdt);
 		}
 		if(request.getParameter("toregdt") != null && !request.getParameter("toregdt").toString().trim().equals("")) {
@@ -85,6 +91,25 @@ public class CustServiceImpl implements CustService {
 		}else {
 			searchVal.put("infoagree",0);//선택 값이 없다면 기본값은 0
 		}
+		
+		/*
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value == "") {
+				value = null;
+			}
+			if(name == "infoagree") {
+				if(value == null) {
+					value = "0";
+				}
+			}
+			
+			searchVal.put(name, value);
+		}
+		*/
 		//*********************총 자료수 검색조건끝****************************************
 			
 		//총자료수
@@ -145,12 +170,22 @@ public class CustServiceImpl implements CustService {
 	}
 	
 	//상세페이지
-	public Map<String,Object> svcCustDetail(int custno, int siteid){
+	public ModelAndView svcCustDetail(int custno, int siteid){
 		Map<String,Object> custVal = new HashMap<String,Object>();
 		custVal.put("custno",custno);
 		custVal.put("siteid", siteid);
-		Map<String,Object> detailMap = custDao.custDetail(custVal);
-		return  detailMap;
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("custDetail",custDao.custDetail(custVal));
+		
+		//****서비스 정보 바인딩**********************************		
+		int startRowNum = 1;
+		int endRowNum = 10;
+		custVal.put("startRowNum",startRowNum);
+		custVal.put("endRowNum",endRowNum);
+		mView.addObject("custService",svDao.svList(custVal));
+		//*****************************************************
+		return  mView;
 	}
 	
 	//고객 추가 페이지. 기본 정보 셋팅 

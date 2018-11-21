@@ -95,7 +95,15 @@
                         </form:form>
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="overflow-x w-100 head">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-hover">
+                                <colgroup>
+                            		<col style="width: 15px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">                         		                            		                            		                            		                            		                            		                            		
+                            	</colgroup>  
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name=""></th>
@@ -138,7 +146,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="footable-page active"><a
 														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>

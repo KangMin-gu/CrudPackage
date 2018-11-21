@@ -23,8 +23,9 @@ import saas.crud.crm.ce.SearchRequest;
 public class AuServiceImpl implements AuService{
 	
 	@Autowired
-	AuDao auDao;
+	private AuDao auDao;
 	
+	// 사용자 List 검색 
 	@Override
 	public ModelAndView userList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -57,20 +58,21 @@ public class AuServiceImpl implements AuService{
 		return mView;
 	}
 
+	//사용자 상세 정보
 	@Override
 	public ModelAndView userRead(HttpServletRequest request, int userNo) {
 		// TODO Auto-generated method stub
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		UserDto userDto = new UserDto();
 		
 		ModelAndView mView = new ModelAndView();
 		userDto.setUserno(userNo);
-		userDto.setSiteid(SITEID);
+		userDto.setSiteid(siteId);
 		
 		Map<String,Object> userInfo = auDao.urRead(userDto);
-		List<Map<String,Object>> menuInfo = auDao.urMenuList(SITEID);
+		List<Map<String,Object>> menuInfo = auDao.urMenuList(siteId);
 		List<Map<String,Object>> userMenu = auDao.urUserMenuList(userDto);
 		
 		mView.addObject("user",userInfo);
@@ -78,61 +80,65 @@ public class AuServiceImpl implements AuService{
 		mView.addObject("userMenu",userMenu);
 		return mView;
 	}
- //
+ 
+	// 사용자 추가
 	@Override
 	public int userInsert(HttpServletRequest request, UserDto userDto) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		userDto.setSiteid(SITEID);
-		userDto.setReguser(USERNO);
-		userDto.setEdtuser(USERNO);
+		userDto.setSiteid(siteId);
+		userDto.setReguser(userNo);
+		userDto.setEdtuser(userNo);
 		
-		int userNo = auDao.urInsert(userDto);
+		int insertUserNo = auDao.urInsert(userDto);
 		
-		return userNo;
+		return insertUserNo;
 	}
-
+	
+	// 사용자 수정
 	@Override
 	public void userUpdate(HttpServletRequest request, UserDto userDto) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		userDto.setSiteid(SITEID);
-		userDto.setEdtuser(USERNO);
+		userDto.setSiteid(siteId);
+		userDto.setEdtuser(userNo);
 		
 		auDao.urUpdate(userDto);
 	}
 
+	// 사용자 삭제
 	@Override
 	public void userDelete(HttpServletRequest request, int userNo) {
 		// TODO Auto-generated method stub
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int loginUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		UserDto userDto = new UserDto();
 		
-		userDto.setSiteid(SITEID);
-		userDto.setEdtuser(USERNO);
+		userDto.setSiteid(siteId);
+		userDto.setEdtuser(loginUserNo);
 		userDto.setUserno(userNo);
 		
 		auDao.urDelete(userDto);
 	}
 
+	// 사용자 멀티 삭제
 	@Override
 	public void userMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int loginUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		String sCheck[] = request.getParameterValues("userno");
 		
 		UserDto userDto = new UserDto();
-		userDto.setSiteid(SITEID);
-		userDto.setEdtuser(USERNO);
+		userDto.setSiteid(siteId);
+		userDto.setEdtuser(loginUserNo);
 		
 		if(sCheck.length > 0) {
 			for(int i=0; i<sCheck.length; i++) {
@@ -144,6 +150,7 @@ public class AuServiceImpl implements AuService{
 		
 	}
 
+	// 사용자 Id 중복 체크
 	@Override
 	public int userIdCheck(String userId) {
 		// TODO Auto-generated method stub
@@ -151,6 +158,7 @@ public class AuServiceImpl implements AuService{
 		return idCheck;
 	}
 
+	// 사용자 탭
 	@Override
 	public List<Map<String, Object>> userTopList(int siteid) {
 		// TODO Auto-generated method stub
@@ -159,49 +167,19 @@ public class AuServiceImpl implements AuService{
 		return userList;
 	}
 
-	@Override
-	public List<Map<String, Object>> ModalUserList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		Map<String, Object> total = new HashMap();
-		
-		SearchRequest searchRequest = new SearchRequest();
-		Map<String, Object> search = searchRequest.Search(request);
-		
-		int totalRows = auDao.urTotalRows(search);
-		
-		int PAGE_DISPLAY_COUNT = 5;
-		int PAGE_ROW_COUNT = 10;
-		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
-		int startRowNum = page.get("startRowNum");
-		int endRowNum = page.get("endRowNum");
-		
-		search.put("startRowNum", startRowNum);
-		search.put("endRowNum", endRowNum);
-		
-		List<Map<String,Object>> userList = auDao.urList(search);
-		total.put("page", page);
-		total.put("totalRows", totalRows);
-		total.put("search", search);
-		
-		userList.add(total);
-		
-		return userList;
-	}
-
+	// 사용자에게 메뉴 추가
 	@Override
 	public void userMenuInsert(HttpServletRequest request, UserMenuDto userMenuDto) {
 		// TODO Auto-generated method stub
 		
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int loginUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		String menu[] = request.getParameterValues("usermenuno");
 
-		userMenuDto.setSiteid(SITEID);
-		userMenuDto.setReguser(USERNO);
-		userMenuDto.setEdtuser(USERNO);
+		userMenuDto.setSiteid(siteId);
+		userMenuDto.setReguser(loginUserNo);
+		userMenuDto.setEdtuser(loginUserNo);
 		userMenuDto.setIsdelete(0);
 		
 		auDao.urMenuDelete(userMenuDto);

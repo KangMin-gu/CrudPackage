@@ -42,7 +42,7 @@
         
 	$('.owner').click(function(e){
 		//openNewWindow('담당자','/common/user',e.target.id,650,700);
-		openNewWindow('담당자','/popowner',e.target.id,650,700);
+		openNewWindow('담당자','/popowner',e.target.id,600,600);
 	});
 
 	$('.cli').click(function(e){
@@ -55,9 +55,14 @@
 		enableSubmit();
 	});
 	
+	$('.required').change(function(e){
+		var res = checkVal(e.target.id);
+		enableSubmit();
+	});
+	
 	//유효성검사
 	$('.submit').click(function(){
-		debugger;
+		
 		var validate = $('.validate'); //validate 선언한 클래스 배열
 		var length = validate.length; //배열 사이즈 
 		var id; //배열의 id값
@@ -69,10 +74,25 @@
 			
 			if( $('#'+id).hasClass('required') ){//필수값이면 무조건 유효성검사 
 				if(!checkVal(id)){// 유효성 통과 실패시 아래 행 실행
-					$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+					//$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
         			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
         			return false;//메서드 종료
 				}
+			}else if( $('#'+id).hasClass('phone-group') ){//폰그룹-전화번호 유효성 			
+				
+				if( value == ''){
+					$('#'+id).removeClass('error');
+				}else{//값이 존재하면 아래 행 실행
+					var temp = id.substr(0,id.length-1);// ex) mobile1 -> mobile 
+					
+					for(var j=1;j<=3;j++){// phone-group 으로 묶인 필드 모두검사
+						if(!checkVal(temp+j)){
+							$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+							$('#'+temp+j).focus();//에러난 위치로 마우스 포인터 이동
+							return false;//메서드 종료
+						}
+					}
+				}	
 			}else{//필수값이 아니라면 
 				if( value ==''){//값이 없을때 유효성 검사 하지 않음. 
 					$('#'+id).removeClass('error');//에러 태두리 삭제      				
@@ -190,8 +210,8 @@
 		//유효성 검사
 		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
-		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
+		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?`'"~\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
+		var phone1Pattern = /^[\d]{2,4}$/; //2~3자리 숫자
 		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
 		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호
 		var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
@@ -202,7 +222,7 @@
 		var msg;
 		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
 			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
-			msg = '한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
+			msg = '<한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
 		
 		}else if( $('#'+id).hasClass('phone1') ){
 			res = phone1Pattern.test(value);
@@ -235,16 +255,19 @@
 		
 		msg = $('#'+id).parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
 		
-		if(res){
+		if(res){//유효성 통과시
 			$('#'+id).removeClass('error');//빨간 테두리 삭제
-		}else{
-			$('#showMsg').empty();
-			$('#showMsg').append(msg);
-			$('#'+id).addClass('error');//빨간 테두리 생성 
+		}else{//유효성 실패시
 			
 			if( $('#'+id).hasClass('required') ){ //required 클래스가 있다면 (필수 값이라면) 유효성 실패시
+				$('#'+id).addClass('error');
 				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
-			}
+			}else{
+				$('#showMsg').empty();
+				$('#showMsg').append(msg);
+				$('#'+id).addClass('error');//빨간 테두리 생성 
+			}				
+			
 		}
 		return res;
 	}
@@ -262,7 +285,16 @@
 			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
 		}
 		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)
-			$('.submit').prop("disabled",false);//submit 활성화 
+			$('.submit').prop("disabled",false);//submit 활성화
+			$('#reqDefaultMsg').hide();
+			$('#reqSuccessMsg').show();
+			$('#reqMsgDiv').removeClass("alert-info");
+			$('#reqMsgDiv').addClass("alert-success");
+		}else{
+			$('#reqSuccessMsg').hide();
+			$('#reqDefaultMsg').show();
+			$('#reqMsgDiv').removeClass("alert-success");
+			$('#reqMsgDiv').addClass("alert-info");
 		}
 	}
 	

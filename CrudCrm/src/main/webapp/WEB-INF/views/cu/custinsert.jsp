@@ -65,10 +65,14 @@
 													
 									
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;" >
+											<span id="reqDefaultMsg">
+												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;( 고객명 : 한글, 영문 2자리~30자리+숫자0~5자리 , 휴대폰 : 000-000-0000 , 000-0000-0000 ) </strong>
+											</span>
+											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                          			</div>
 										<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-	                              		 	<a class="alert-link" href="#">
-												<span id="showMsg"></span>
-											</a>										
+											<Strong><span id="showMsg"></span></Strong>				
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 											<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
@@ -98,14 +102,14 @@
 													<th>직장전화</th>
 													<td>
 														<!-- form select 공통으로 변경 -->
-														<select class="form-control col-4 float-left mr-3 validate phone1 " style="height: 1.45rem" name="wrktel1" id="wrktel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select>
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="wrktel2" id="wrktel2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3" name="wrktel3" id="wrktel3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrktel2" id="wrktel2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrktel3" id="wrktel3" >
 													</td>
 												</tr>
 											</tbody>
@@ -153,14 +157,14 @@
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="wrkfax2" id="wrkfax2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3" name="wrkfax3" id="wrkfax3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3" >
 													</td>
 												</tr>
 											</tbody>
@@ -252,13 +256,13 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<select class="form-control col-4 float-left mr-3 validate phone1" style="height: 1.45rem" name="homtel1" id="homtel1">
+															<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
 																<option value="">선택</option>
 																<option value="02">02</option>
 																<option value="031">031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="homtel2" id="homtel2" > 
-															<input type="text" class="form-control col-3 float-left validate phone3" name="homtel3" id="homtel3">
+															<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="homtel2" id="homtel2" > 
+															<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
@@ -798,7 +802,7 @@
         $(document).ready(function () {
       	
         	//********필수 값 실시간 체크*********************************        	      
-        	
+        	/*
         	$('#mobile1').change(function() {//셀렉트박스 change 메서드
         		var state = $('#mobile1 option:selected').val();
         		if(state == '') {//값이없다면
@@ -809,6 +813,7 @@
         			enableSubmit();
         		}
         	});
+        	*/
         	//****************************************필수값 체크 끝 ********
         	
         

@@ -37,9 +37,7 @@ body {
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
 				<h2>사용자검색</h2>
-
 			</div>
-
 		</div>
 
 		<!-- S: 고객 목록 ppt p01-->
@@ -48,23 +46,23 @@ body {
 			<div class="col-lg-12">
 				<div class="ibox">
 					<div class="ibox-content row">
-						<div class="box1 col-sm-6 col-xs-6 p-0">
+						
+						
+						<div class="col-sm-12 col-xs-12 p-0 float-left">
 							<form:form action="/popowner" method="GET">
 								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								<div class="input-group">
-									<input type="text" name="username" id="username"
-										class="form-control" value="${searchVal.username}"> <span
-										class="input-group-append">
-										<Button type="submit" class="btn btn-primary">검색</Button>
-									</span>
-								</div>
+								 <div class="form-group  row"><label class="col-sm-12 col-form-label">담당자명</label>
+                                    <div class="col-sm-12">
+                                    	<input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
+                                    </div>
+                                </div>
 							</form:form>
 						</div>
-					</div>
-				</div>
-				<div class="ibox-content row border-top-0 ">
-
-					<div class="overflow-x w-100">
+						<div class="w-100 text-right">
+							<button type="submit" class="btn btn-primary" data-style="zoom-in" >검 색</button><br><br>
+						</div>							
+																	
+						<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
@@ -101,7 +99,6 @@ body {
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
 									<li class="footable-page-arrow disabled">
-										<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${page.startPageNum-1 }">&laquo;</a> --%>
 										<a onclick="javascript:paging(${page.startPageNum-1 })">&laquo;</a>
 									</li>
 								</c:when>
@@ -115,13 +112,11 @@ body {
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
 										<li class="footable-page active">										
-											<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a> --%>
 											<a onclick="javascript:paging(${i })">${i }</a>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li>
-											<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${i }">${i }</a> --%>
 											<a onclick="javascript:paging(${i })">${i }</a>
 										</li>
 
@@ -132,7 +127,6 @@ body {
 							<c:choose>
 								<c:when test="${page.endPageNum lt page.totalPageCount }">
 									<li>
-										<%-- <a href="/popowner/?username=${searchVal.username}&pageNum=${page.endPageNum+1 }">&raquo;</a> --%>
 										<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
 									</li>
 								</c:when>
@@ -143,9 +137,12 @@ body {
 						</ul>
 					</div>
 					<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
+					
+					</div>
 				</div>
+				
 			</div>
-		
+			</div>
 		</div>
 
 	</div>

@@ -39,7 +39,7 @@ public class CommonServiceImpl implements CommonService {
 			searchVal.put("parentid", parentid);
 		}
 		//***** 페이징설정 *******
-		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageRowCount = 5; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 		
 		int totalRows = commonDao.totalcntUser(searchVal);//총 자료수 

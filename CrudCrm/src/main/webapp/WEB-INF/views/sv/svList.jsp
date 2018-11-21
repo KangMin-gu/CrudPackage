@@ -33,9 +33,6 @@
                 <div class="col-lg-10">
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
                         <li class="breadcrumb-item active">
                             <strong>서비스 목록</strong>
                         </li>
@@ -52,6 +49,18 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/service" method="POST">
                         <div class="ibox-content row">
+							<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+                        			<a class="alert-link" href="#">
+                        				<span id="showMsg"></span>
+                        			</a>
+                        		</div>
+                        		<div class="w-100 text-right">
+									<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
+									<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+								</div>
+							</div>
+							<br><br>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -62,7 +71,7 @@
                                         <tr>
                                             <th>접수일자</th>
                                             <td>
-                                                <div class="input-group p-0  input-daterange">
+                                                <div class="input-group p-0 ">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete=off name="strDate" id="strDate" value="${search.strDate }">
                                                     </div>
@@ -127,14 +136,14 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>처리상태</th>
+                                            <th>접수매체</th>
                                             <td>
-                                                    <select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
-                                                    	<option value="">선택</option>
-                                                    	<option value="1" <c:if test='${search.prcstate eq 1}'>selected</c:if>>접수</option>
-                                                    	<option value="2" <c:if test='${search.prcstate eq 2}'>selected</c:if>>이관</option>
-                                                    	<option value="3" <c:if test='${search.prcstate eq 3}'>selected</c:if>>완료</option>
-                                                	</select>
+                                            	<select class="form-control reset select2" name="rcvchannel" id="rcvchannel" value="${search.rcvchannel }">
+                                            		<option value="">선택</option>
+                                                    <option value="10" <c:if test='${search.rcvchannel eq 10}'>selected</c:if>>전화</option>
+                                                    <option value="20" <c:if test='${search.rcvchannel eq 20}'>selected</c:if>>SMS</option>
+                                                    <option value="30" <c:if test='${search.rcvchannel eq 30}'>selected</c:if>>메일</option>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -171,13 +180,19 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th>처리상태</th>
+                                            <td>
+                                            	<select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
+                                            		<option value="">선택</option>
+                                                    <option value="1" <c:if test='${search.prcstate eq 1}'>selected</c:if>>접수</option>
+                                                    <option value="2" <c:if test='${search.prcstate eq 2}'>selected</c:if>>이관</option>
+                                                    <option value="3" <c:if test='${search.prcstate eq 3}'>selected</c:if>>완료</option>
+                                                </select>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="w-100 text-right">
-                                <button class="btn btn-primary resets">초기화</button>
-                                <button class="btn btn-primary">검색</button>
-                                
                             </div>
                         </div>
                         </form:form>
@@ -193,13 +208,25 @@
                              
                             </div>
                             <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-hover">
+                            	<colgroup>
+                            		<col style="width: 30px;">
+                            		<col style="width: 150px;">
+                            		<col style="width: 70px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 200px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 100px;">
+                            		<col style="width: 70px;">                            		                            		                            		                            		                            		                            		                            		
+                            	</colgroup>                            
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks"></th>
                                         <th>서비스명</th>
                                         <th>접수유형</th>
-                                        <th>처리유형</th>
+                                        <th>접수매체</th>
                                         <th>고객명</th>
                                         <th>거래처명</th>
                                         <th>접수일</th>
@@ -212,9 +239,9 @@
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
                                         <td><input type="checkbox" class="i-checks" name="rcvno" id="rcvno" value="${svList.RCVNO }"></td>
-                                        <td><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
                                         <td>${svList.RCVTYPE_ }</td>
-                                        <td>${svList.RACTCODE_ }</td>
+                                        <td>${svList.RCVCHANNEL_ }</td>
                                         <td>${svList.CUSTNO_ }</td>
                                         <td>${svList.CLINO_ }</td>
                                         <td>${svList.RCVDATE_ }</td>
@@ -244,7 +271,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="footable-page active"><a
 														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>
@@ -299,7 +326,7 @@
             radioClass: 'iradio_square-green',
         });
     	
-        $('.input-daterange').datepicker({
+        $('.date').datepicker({
             keyboardNavigation: false,
             forceParse: false,
             autoclose: true

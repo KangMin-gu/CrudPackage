@@ -33,9 +33,6 @@
                     <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/ad/user">사용자목록</a>
                         </li>
                         <li class="breadcrumb-item">
@@ -64,9 +61,17 @@
                         </div>
                         
                         <div class="ibox-content row">
-                            <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/ad/user/${user.USERNO}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary save">저장</button>
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+                        			<a class="alert-link" href="#">
+                        				<span id="showMsg"></span>
+                        			</a>
+                        		</div>
+                        			
+                            	<div class="w-100 text-right mb-2">
+                                	<a href="${pageContext.request.contextPath}/ad/user/${user.USERNO}" class="btn btn-primary">취소</a>
+                                	<button class="btn btn-primary submit">저장</button>
+                            	</div>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -77,31 +82,31 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control" disabled name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control error required validation name" disabled name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대전화번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3" name="mobile1" id="mobile1">
+                                                <select class="form-control col-3 float-left mr-3 validation phone1" name="mobile1" id="mobile1">
                                                     <option value=010 <c:if test='${user.MOBILE1 eq 010}'>selected</c:if>>010</option>
                                                     <option value=011 <c:if test='${user.MOBILE1 eq 011}'>selected</c:if>>011</option>
                                                     <option value=016 <c:if test='${user.MOBILE1 eq 016}'>selected</c:if>>016</option>
                                                     <option value=017 <c:if test='${user.MOBILE1 eq 017}'>selected</c:if>>017</option>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validation phone2" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left validation phone3" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3" name="telno1" id="telno1" >
+                                                <select class="form-control col-3 float-left mr-3 validation phone1" name="telno1" id="telno1" >
                                                     <option value=02 <c:if test='${user.TELNO1 eq 02}'>selected</c:if>>02</option>
                                                     <option value=031 <c:if test='${user.TELNO1 eq 031}'>selected</c:if>>031</option>
                                                     <option value=032 <c:if test='${user.TELNO1 eq 032}'>selected</c:if>>032</option>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2" name="telno2" id="telno2" value="${user.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left" name="telno3" id="telno3" value="${user.TELNO3 } ">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validation phone2" name="telno2" id="telno2" value="${user.TELNO2 }">
+                                                <input type="text" class="form-control col-3 float-left validation phone3" name="telno3" id="telno3" value="${user.TELNO3 } ">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -118,7 +123,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" disabled name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control error required validation name" disabled name="userid" id="userid" value="${user.USERID}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -131,7 +136,7 @@
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="email" id="email" value="${user.EMAIL }">
+                                                <input type="text" class="form-control validation email" name="email" id="email" value="${user.EMAIL }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -146,16 +151,16 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control error required validation name"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
-                                            <td><input type="text" class="form-control" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
+                                            <td><input type="text" class="form-control validation name" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">관리자여부</label></th>
                                             <td>
-                                                <select class="form-control float-left required" name="chkauth" id="chkauth">
+                                                <select class="form-control float-left required phone1" name="chkauth" id="chkauth">
                                                 	<option>선택</option>
                                                     <option value=10 <c:if test='${user.CHKAUTH eq 10}'>selected</c:if>>일반사용자</option>
                                                     <option value=20 <c:if test='${user.CHKAUTH eq 20}'>selected</c:if>>관리자사용자</option>
@@ -210,7 +215,7 @@
 		$('.date').datepicker({
 			keyboardNavigation:false,
 			forceParse:false,
-			autocolse:true
+			autoclose:true
 		});	
 	});
 	

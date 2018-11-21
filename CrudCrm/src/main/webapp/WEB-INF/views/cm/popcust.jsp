@@ -36,8 +36,10 @@ body {
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
-				<h2>사용자검색</h2>
+				<h2>고객검색</h2>
+
 			</div>
+
 		</div>
 
 		<!-- S: 고객 목록 ppt p01-->
@@ -46,46 +48,39 @@ body {
 			<div class="col-lg-12">
 				<div class="ibox">
 					<div class="ibox-content row">
-						
-						
-						<div class="col-sm-12 col-xs-12 p-0 float-left">
+						<div class="box1 col-sm-6 col-xs-6 p-0">
 							<form:form action="/popowner" method="GET">
 								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								 <div class="form-group  row"><label class="col-sm-12 col-form-label">담당자명</label>
-                                    <div class="col-sm-12">
-                                    	<input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
-                                    </div>
-                                </div>
+								<div class="input-group">
+									<input type="text" name="cstname" id="cstname"
+										class="form-control" value="${searchVal.cstname}"> <span
+										class="input-group-append">
+										<Button type="submit" class="btn btn-primary">검색</Button>
+									</span>
+								</div>
 							</form:form>
 						</div>
-						<div class="w-100 text-right">
-							<button type="submit" class="btn btn-primary" data-style="zoom-in" >검 색</button><br><br>
-						</div>							
-																	
-						<div class="overflow-x w-100">
+					</div>
+				</div>
+				<div class="ibox-content row border-top-0 ">
+
+					<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>사용자명</th>
-									<th>아이디</th>
-									<th>직급</th>
-									<th>권한</th>
+									<th>고객명</th>
+									<th>회사명</th>
+									<th>휴대전화</th>
+									<th>이메일</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="list" items="${userList}">
-									<%-- <tr style="cursor: pointer;" onClick="toParentOwner('${list.USERNO }','${list.USERNAME}');"> --%>
-									<tr style="cursor: pointer;" onClick="javascript:parentOwnerUser(this);" value="${list.USERNO }"> 
-										<td id="username">${list.USERNAME}</td>
-										<td>${list.USERID}</td>
-										<td>${list.USERDUTY}</td>
-										<td>
-											 <c:choose>
-												<c:when test="${list.CHKAUTH==10}">사용자</c:when>
-												<c:when test="${list.CHKAUTH==20}">회원사관리자</c:when>
-												<c:when test="${list.CHKAUTH==30}">총관리자</c:when>
-											</c:choose>							
-										</td>
+								<c:forEach var="list" items="${custList }">
+									<tr style="cursor: pointer;" onClick="javascript:parentCustname(this);" value="${list.CUSTNO }"> 
+										<td id="cstname">${list.CUSTNAME}</td>
+										<td>${list.COMPANY}</td>
+										<td>${list.MOBILE}</td>
+										<td>${list.EMAIL}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -136,12 +131,9 @@ body {
 						</ul>
 					</div>
 					<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
-					
-					</div>
 				</div>
-				
 			</div>
-			</div>
+		
 		</div>
 
 	</div>

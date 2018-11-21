@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 import saas.crud.crm.ce.FileDto;
 import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.SearchRequest;
+import saas.crud.crm.cu.dao.CustDao;
 
 
 
@@ -19,6 +21,9 @@ public class CommonServiceImpl implements CommonService {
 
 	@Autowired 
 	private CommonDao commonDao;
+	
+	@Autowired
+	private CustDao custDao;
 	
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -116,6 +121,54 @@ public class CommonServiceImpl implements CommonService {
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("fileInfo", fileInfo);
 		return mView;
+	}
+
+	// 고객 팝업 
+	@Override
+	public ModelAndView svcPopGetCustName(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		SearchRequest searchRequest = new SearchRequest();
+		
+		Map<String, Object> searchVal = searchRequest.Search(request);
+		
+		int totalRows = commonDao.totalCntCust(searchVal);
+		
+		//페이징
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+		
+		PagingCommon pages = new PagingCommon();
+		
+		Map<String,Integer> page = pages.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		
+		page.put("totalRows", totalRows);
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");	
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+		
+		List<Map<String,Object>> custList = commonDao.popCustList(searchVal);
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("page",page);
+		mView.addObject("searchVal",searchVal);
+		mView.addObject("custList",custList);
+		return mView;
+	}
+
+	// custpopup에서 클릭했을때 ajax 처리해서 sv 화면에 데이터를 넣어줌
+	@Override
+	public Map<String, Object> svcPopGetCustDetail(HttpServletRequest request, int custNo) {
+		// TODO Auto-generated method stub
+		Map<String,Object> cstVal = new HashMap<>();
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		cstVal.put("siteid", siteId);
+		cstVal.put("custno", custNo);
+		
+		Map<String,Object> custDetail = custDao.custDetail(cstVal);
+		return custDetail;
 	}
 
 }

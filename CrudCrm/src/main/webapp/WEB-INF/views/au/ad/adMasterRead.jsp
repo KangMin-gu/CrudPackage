@@ -31,12 +31,6 @@
                 <div class="col-lg-10">
                     <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="/ma/company">회원사목록</a>
-                        </li>
                         <li class="breadcrumb-item active">
                             <strong>회원사 정보</strong>
                         </li>
@@ -61,7 +55,6 @@
                         
                             <div class="w-100 text-right mb-2">
                             <form:form action="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" method="POST">
-                                <a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">목록</a>
                                 <a href="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
 								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 							</form:form>	
@@ -261,90 +254,6 @@
                         </div>
 
                     </div>
-                    <div class="ibox">
-                            <div class="ibox-title row border-0">
-                                <h4>회원사 상세</h4>
-                            </div>
-                            <div class="ibox-content row">
-                                <div class="box1 col-lg-12 p-0">
-                                    <div class="tabs-container">
-                                        <ul class="nav nav-tabs" role="tablist">
-                                            <li><a class="nav-link li active" data-toggle="tab" href="#tab1">라이센스</a></li>
-                                            <li><a class="nav-link" data-toggle="tab" href="#tab2">서비스단가</a></li>
-                                            <li><a class="nav-link user" data-toggle="tab" href="#tab3">사용자</a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
-                                                <div class="panel-body">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                        	<div>
-                                                        		<button class="btn btn-primary create" value="추가">추가</button>
-                                                        	</div>
-                                                            <tr>
-                                                                <th>라이센스명</th>
-                                                                <th>단가</th>
-                                                                <th>구매량</th>
-                                                                <th>만기일</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div role="tabpanel" id="tab2" class="tab-pane overflow-x">
-                                                <div class="panel-body">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>년/월</th>
-                                                                <th>부가서비스</th>
-                                                                <th>건당금액</th>
-                                                                <th>발송수</th>
-                                                                <th>단가</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>203일</td>
-                                                                <td>영업건명입니다</td>
-                                                                <td>상담건입니다</td>
-                                                                <td>담당자</td>
-                                                                <td>담당자</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div role="tabpanel" id="tab3" class="tab-pane overflow-x">
-                                                <div class="panel-body">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>사용자명</th>
-                                                                <th>사용자ID</th>
-                                                                <th>직책</th>
-                                                                <th>이메일</th>
-                                                                <th>사용여부</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>
@@ -365,18 +274,5 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_ma.js"></script><!-- summernote-->
-	<script>
-		
-		$('.create').click(function(e){
-			var siteid = $('#siteid').val();
-			var name ="회원사라이센스"
-			var url = "/ma/company/license/"+siteid
-			var target = e.currentTarget.id;
-			var x = "1300"
-			var y = "500"
-			openNewWindow(name,url,e,x,y);
-		});
-	
-	</script>
 </body>
 </html>

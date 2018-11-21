@@ -20,8 +20,9 @@ import saas.crud.crm.ce.SearchRequest;
 public class CodeServiceImpl implements CodeService{
 
 	@Autowired
-	CodeDao codeDao;
+	private CodeDao codeDao;
 	
+	// 코드 List 검색
 	@Override
 	public ModelAndView codeList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -52,13 +53,14 @@ public class CodeServiceImpl implements CodeService{
 		return mView;
 	}
 
+	// 코드 상제 정보
 	@Override
 	public Map<String, Object> codeRead(HttpServletRequest request, int codeNo) {
 		// TODO Auto-generated method stub
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		CodeDto codeDto = new CodeDto();
-		codeDto.setSiteid(SITEID);
+		codeDto.setSiteid(siteId);
 		codeDto.setCodeno(codeNo);
 		
 		Map<String,Object> codeInfo = codeDao.codeRead(codeDto);
@@ -67,47 +69,51 @@ public class CodeServiceImpl implements CodeService{
 		return codeInfo;
 	}
 
+	// 코드 수정
 	@Override
 	public void codeUpdate(HttpServletRequest request, CodeDto codeDto) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
-		codeDto.setEdtuser(USERNO);
-		codeDto.setSiteid(SITEID);
+		codeDto.setEdtuser(userNo);
+		codeDto.setSiteid(siteId);
 		
 		codeDao.codeUpdate(codeDto);
 	}
 
+	// 코드 단일 삭제
 	@Override
 	public void codeDelete(HttpServletRequest request, int codeNo) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		CodeDto codeDto = new CodeDto();
-		codeDto.setEdtuser(USERNO);
-		codeDto.setSiteid(SITEID);
+		codeDto.setEdtuser(userNo);
+		codeDto.setSiteid(siteId);
 		codeDto.setCodeno(codeNo);
 		
 		codeDao.codeDelete(codeDto);
 	}
 
+	// 코드 추가
 	@Override
 	public int codeInsert(HttpServletRequest request, CodeDto codeDto) {
 		// TODO Auto-generated method stub
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
-		codeDto.setReguser(USERNO);
-		codeDto.setEdtuser(USERNO);
-		codeDto.setSiteid(SITEID);
+		codeDto.setReguser(userNo);
+		codeDto.setEdtuser(userNo);
+		codeDto.setSiteid(siteId);
 		
 		int codeNo = codeDao.codeInsert(codeDto);
 		return codeNo;
 	}
 
+	// 상위 코드 검색
 	@Override
 	public ModelAndView codeUpperList(HttpServletRequest request) {
 		// TODO Auto-generated method stub

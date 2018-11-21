@@ -119,7 +119,7 @@
 			       			<ul class="nav nav-second-level collapse">
 			       				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>
 			       				<li><a href="${pageContext.request.contextPath}/ad/code">회원사 코드관리</a></li>
-			       				<li><a href="form_basic.html">회원사 관리</a></li>
+			       				<li><a href="${pageContext.request.contextPath}/ad/company/${sessionScope.SITEID}">회원사 관리</a></li>
 			       				<li><a href="form_basic.html">서비스 관리</a></li>
 			       				<li><a href="form_basic.html">VOC 관리</a></li>
 			       			</ul>

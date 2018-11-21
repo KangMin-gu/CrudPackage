@@ -23,10 +23,10 @@ import saas.crud.crm.au.service.LicenseService;
 public class LicenseController {
 	
 	@Autowired
-	LicenseService licenseService;
+	private LicenseService licenseService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(LicenseController.class);
-	//담당자 정보
+	//라이센스 List
 	@ResponseBody
 	@RequestMapping(value="/ma/license", method=RequestMethod.GET)
 	public ModelAndView authLicenseList(HttpServletRequest request) {
@@ -34,6 +34,7 @@ public class LicenseController {
 		mView.setViewName("/au/ma/li/licenseList");
 		return mView;
 	}
+	//라이센스 List 검색
 	@ResponseBody
 	@RequestMapping(value="/ma/license", method=RequestMethod.POST)
 	public ModelAndView authLicenseSearchList(HttpServletRequest request) {
@@ -41,18 +42,15 @@ public class LicenseController {
 		mView.setViewName("/au/ma/li/licenseList");
 		return mView;
 	}
-	@ResponseBody
-	@RequestMapping(value="/license/menu", method=RequestMethod.GET)
-	public List<Map<String,Object>> authLicenseAjaxList(HttpServletRequest request) {
-		List<Map<String,Object>> licenseInfo = licenseService.licenseAjaxList(request);
-		return licenseInfo;
-	}
+	
+	//라이센스 상세
 	@ResponseBody
 	@RequestMapping(value="/ma/license/{licenseno}", method=RequestMethod.GET)
 	public Map<String,Object> authLicenseDetail(HttpServletRequest request,@PathVariable int licenseno) {
 		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseno);
 		return licenseInfo;
 	}
+	// 라이센스 추가
 	@ResponseBody
 	@RequestMapping(value="/ma/license/post", method=RequestMethod.POST)
 	public Map<String,Object> authLicenseInsert(HttpServletRequest request, @ModelAttribute LicenseDto licenseDto) {
@@ -60,6 +58,7 @@ public class LicenseController {
 		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseNo);
 		return licenseInfo;
 	}
+	// 라이센스 수정
 	@ResponseBody
 	@RequestMapping(value="/ma/license/post/{licenseno}", method=RequestMethod.POST)
 	public Map<String,Object> authLicenseUpdateSet(HttpServletRequest request,@ModelAttribute LicenseDto licenseDto) {
@@ -68,6 +67,7 @@ public class LicenseController {
 		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseNo);
 		return licenseInfo;
 	}
+	// 라이센스 삭제
 	@ResponseBody
 	@RequestMapping(value="/ma/license/{licenseno}" ,method=RequestMethod.POST)
 	public Map<String,Object> authLicenseDelete(HttpServletRequest request, @PathVariable int licenseno) {
@@ -77,6 +77,7 @@ public class LicenseController {
 		Map<String,Object> licenseInfo = licenseService.licenseDetail(request, licenseno);
 		return licenseInfo;
 	}
+	// 라이센스 멀티 삭제
 	@ResponseBody
 	@RequestMapping(value="/ma/license/delete" ,method=RequestMethod.POST)
 	public ModelAndView authLicenseMultiDelete(HttpServletRequest request) {
@@ -88,7 +89,7 @@ public class LicenseController {
 		return mView;
 		
 	}
-	
+	// 회원사에서 라이센스 탭
 	@ResponseBody
 	@RequestMapping(value="/ma/license/tab/{siteid}", method=RequestMethod.GET)
 	public List<Map<String,Object>> authTabLicenseList(@PathVariable int siteid){
@@ -97,6 +98,13 @@ public class LicenseController {
 		
 		return TabLicenseList;
 	}
+	//메뉴 생성에서 라이센스 selectbox에 나올 데이터들
+		@ResponseBody
+		@RequestMapping(value="/license/menu", method=RequestMethod.GET)
+		public List<Map<String,Object>> authLicenseAjaxList(HttpServletRequest request) {
+			List<Map<String,Object>> licenseInfo = licenseService.licenseAjaxList(request);
+			return licenseInfo;
+		}
 	
 
 }

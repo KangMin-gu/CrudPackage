@@ -8,9 +8,9 @@ public class CompanyDto {
 	private String sitename; //회원사명
 	private String bsno; //사업자번호
 	private String incno; //법인번호
-	private String zipcode; //우편번호
-	private String upraddress; //주소1
-	private String lwraddress; //주소2
+	private String addr1; //우편번호
+	private String addr2; //주소1
+	private String addr3; //주소2
 	private String fregdate; //최초 가입일
 	private String expirdate; //만료일
 	private String telno1; //전화1
@@ -41,6 +41,49 @@ public class CompanyDto {
 	private int owner; // 담당자
 	
 	public CompanyDto() {}
+
+	public CompanyDto(int siteid, String sitename, String bsno, String incno, String addr1, String addr2, String addr3,
+			String fregdate, String expirdate, String telno1, String telno2, String telno3, String faxtel1,
+			String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3, String email,
+			String sitememo, String bscond, String cotype, String bstype, String ctiaddress, String switchtel,
+			String regdate, int reguser, String edtdate, int edtuser, String callname, String sitesize, String prsdname,
+			int isdelete, int owner) {
+		super();
+		this.siteid = siteid;
+		this.sitename = sitename;
+		this.bsno = bsno;
+		this.incno = incno;
+		this.addr1 = addr1;
+		this.addr2 = addr2;
+		this.addr3 = addr3;
+		this.fregdate = fregdate;
+		this.expirdate = expirdate;
+		this.telno1 = telno1;
+		this.telno2 = telno2;
+		this.telno3 = telno3;
+		this.faxtel1 = faxtel1;
+		this.faxtel2 = faxtel2;
+		this.faxtel3 = faxtel3;
+		this.mobile1 = mobile1;
+		this.mobile2 = mobile2;
+		this.mobile3 = mobile3;
+		this.email = email;
+		this.sitememo = sitememo;
+		this.bscond = bscond;
+		this.cotype = cotype;
+		this.bstype = bstype;
+		this.ctiaddress = ctiaddress;
+		this.switchtel = switchtel;
+		this.regdate = regdate;
+		this.reguser = reguser;
+		this.edtdate = edtdate;
+		this.edtuser = edtuser;
+		this.callname = callname;
+		this.sitesize = sitesize;
+		this.prsdname = prsdname;
+		this.isdelete = isdelete;
+		this.owner = owner;
+	}
 
 	public int getSiteid() {
 		return siteid;
@@ -74,28 +117,28 @@ public class CompanyDto {
 		this.incno = incno;
 	}
 
-	public String getZipcode() {
-		return zipcode;
+	public String getAddr1() {
+		return addr1;
 	}
 
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
 	}
 
-	public String getUpraddress() {
-		return upraddress;
+	public String getAddr2() {
+		return addr2;
 	}
 
-	public void setUpraddress(String upraddress) {
-		this.upraddress = upraddress;
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
 	}
 
-	public String getLwraddress() {
-		return lwraddress;
+	public String getAddr3() {
+		return addr3;
 	}
 
-	public void setLwraddress(String lwraddress) {
-		this.lwraddress = lwraddress;
+	public void setAddr3(String addr3) {
+		this.addr3 = addr3;
 	}
 
 	public String getFregdate() {
@@ -314,47 +357,6 @@ public class CompanyDto {
 		this.owner = owner;
 	}
 
-	public CompanyDto(int siteid, String sitename, String bsno, String incno, String zipcode, String upraddress,
-			String lwraddress, String fregdate, String expirdate, String telno1, String telno2, String telno3,
-			String faxtel1, String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3,
-			String email, String sitememo, String bscond, String cotype, String bstype, String ctiaddress,
-			String switchtel, String regdate, int reguser, String edtdate, int edtuser, String callname,
-			String sitesize, String prsdname, int isdelete, int owner) {
-		super();
-		this.siteid = siteid;
-		this.sitename = sitename;
-		this.bsno = bsno;
-		this.incno = incno;
-		this.zipcode = zipcode;
-		this.upraddress = upraddress;
-		this.lwraddress = lwraddress;
-		this.fregdate = fregdate;
-		this.expirdate = expirdate;
-		this.telno1 = telno1;
-		this.telno2 = telno2;
-		this.telno3 = telno3;
-		this.faxtel1 = faxtel1;
-		this.faxtel2 = faxtel2;
-		this.faxtel3 = faxtel3;
-		this.mobile1 = mobile1;
-		this.mobile2 = mobile2;
-		this.mobile3 = mobile3;
-		this.email = email;
-		this.sitememo = sitememo;
-		this.bscond = bscond;
-		this.cotype = cotype;
-		this.bstype = bstype;
-		this.ctiaddress = ctiaddress;
-		this.switchtel = switchtel;
-		this.regdate = regdate;
-		this.reguser = reguser;
-		this.edtdate = edtdate;
-		this.edtuser = edtuser;
-		this.callname = callname;
-		this.sitesize = sitesize;
-		this.prsdname = prsdname;
-		this.isdelete = isdelete;
-		this.owner = owner;
-	};
+	
 	
 }

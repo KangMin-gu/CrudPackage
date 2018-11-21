@@ -615,8 +615,22 @@
                 autoclose: true
             });
             
-         
-                         
+          	//주소 받아오기
+            $('.daumzip').click(function(e){
+      			 
+      		     new daum.Postcode({
+      		         oncomplete: function(data) {
+      		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
+      		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
+    		        	
+      		        	$("#"+head+"addr1").val(data.zonecode);
+    		        	$("#"+head+"addr2").val(data.roadAddress);
+    		        	$("#"+head+"addr3").val(data.buildingName);
+                  
+      		         }
+      		     }).open();
+      		 });
+
         });
     </script>
 	<!-- E: 추가 js -->

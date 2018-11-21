@@ -20,8 +20,9 @@ import saas.crud.crm.ce.SearchRequest;
 public class LicenseServiceImpl implements LicenseService{
 
 	@Autowired
-	LicenseDao licenseDao;
+	private LicenseDao licenseDao;
 	
+	//라이센스 List 검색
 	@Override
 	public ModelAndView licenseList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -56,6 +57,7 @@ public class LicenseServiceImpl implements LicenseService{
 		return mView;
 	}
 
+	// 라이센스 상세 정보
 	@Override
 	public Map<String,Object> licenseDetail(HttpServletRequest request, int licenseno) {
 		// TODO Auto-generated method stub
@@ -67,40 +69,43 @@ public class LicenseServiceImpl implements LicenseService{
 	public int licenseInsert(HttpServletRequest request, LicenseDto licenseDto) {
 		// TODO Auto-generated method stub
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		licenseDto.setEdtuser(USERNO);
-		licenseDto.setReguser(USERNO);
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		licenseDto.setEdtuser(userNo);
+		licenseDto.setReguser(userNo);
 		int licenseNo = licenseDao.licenseInsert(licenseDto);
 		return licenseNo;
 		
 	}
 
+	// 라이센스 수정
 	@Override
 	public void licenseUpdate(HttpServletRequest request, LicenseDto licenseDto) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		licenseDto.setEdtuser(USERNO);
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		licenseDto.setEdtuser(userNo);
 		licenseDao.licenseUpdate(licenseDto);
 	}
 
+	// 라이센스 단일 삭제
 	@Override
 	public void licenseDelete(HttpServletRequest request, int licenseno) {
 		// TODO Auto-generated method stub
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		LicenseDto licenseDto = new LicenseDto();
-		licenseDto.setEdtuser(USERNO);
+		licenseDto.setEdtuser(userNo);
 		licenseDto.setLicenseno(licenseno);
 		
 		licenseDao.licenseDelete(licenseDto);
 	}
 
+	// 라이센스 멀티 삭제
 	@Override
 	public void licenseMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		int USERNO = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
 		LicenseDto licenseDto = new LicenseDto();
-		licenseDto.setEdtuser(USERNO);
+		licenseDto.setEdtuser(userNo);
 		
 		String sCheck[] = request.getParameterValues("licenseno");
 		
@@ -117,6 +122,7 @@ public class LicenseServiceImpl implements LicenseService{
 		
 	}
 
+	// 메뉴 입력할 때 라이센스 Selectbox 부분
 	@Override
 	public List<Map<String, Object>> licenseAjaxList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -124,6 +130,8 @@ public class LicenseServiceImpl implements LicenseService{
 		List<Map<String,Object>> licenseInfo = licenseDao.licenseMenuList();
 		return licenseInfo;
 	}
+	
+	// 회원사 라이센스 탭
 	@Override
 	public List<Map<String, Object>> licenseTopList(int siteid) {
 		// TODO Auto-generated method stub

@@ -400,14 +400,14 @@ if(window.location.pathname.lastIndexOf('/ma/company') == 0) {
 	
 	$('.nav-tabs .li').click(function(e){
         $.ajax({
-            url: "/license/tab/"+id,
+            url: "/ma/license/tab/"+id,
             method: "GET",
             dataType: "json",
             success: function (data) {
             	$('#tab1 tbody tr').remove();
             	var length = data.length;
             	for (var i = 0; i < length; i++) {
-            		var html = '<tr><td>' + data[i].LICENSENAME + '</td><td>' + data[i].LICENSECOST + '</td><td>' + data[i].USECNT + '</td><td>' + data[i].BUYCNT + '</td><td>' + data[i].LASTDATE + '</td></tr>';
+            		var html = '<tr><td>' + data[i].LICENSENAME + '</td><td>' + data[i].LICENSECOST + '</td><td>' + data[i].BUYCNT + '</td><td>' + data[i].LASTDATE + '</td></tr>';
             		$('#tab1 tbody').append(html);
             	}
             },

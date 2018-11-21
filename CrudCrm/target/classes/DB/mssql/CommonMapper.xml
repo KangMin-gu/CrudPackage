@@ -77,6 +77,37 @@
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 	
+		<!-- 회원사의 거래처 수 카운터  -->
+	<select id="totalCntCust" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM CU100010
+		WHERE 
+			SITEID = #{siteid}
+			AND ISDELETE = 0
+			<if test="cstname != null">
+			AND CSTNAME like '%'+#{cstname}+'%'
+			</if>
+	</select>
+	<!-- 선택할 수 있는 거래처 목록 출력  -->
+	<select id="popCustList" parameterType="hashMap" resultType="hashMap">
+	SELECT * 
+	FROM  
+		(
+		SELECT 
+		ROW_NUMBER() OVER(ORDER BY A.CUSTNO) AS ROWNUM
+		,A.CUSTNO,A.CUSTNAME,A.COMPANY,A.MOBILE1+A.MOBILE2+A.MOBILE3 AS MOBILE, EMAIL
+		FROM CU100010 A
+		WHERE 
+			A.SITEID= #{siteid}
+			AND A.ISDELETE = 0
+			<if test="cstname != null">
+			AND A.CSTNAME like '%'+#{cstname}+'%'
+			</if>
+		) T
+	WHERE 
+		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
+	</select>
+	
 	<!-- 내부통지 파일다운로드 -->
 	<select id="noteDownload" parameterType="fileDto" resultType="fileDto">
 		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_noticefile WHERE SITEID = #{siteid} AND FILEID = #{fileid}

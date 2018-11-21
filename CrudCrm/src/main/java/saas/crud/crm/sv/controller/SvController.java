@@ -22,32 +22,36 @@ import saas.crud.crm.sv.service.SvService;
 public class SvController {
 	
 	@Autowired
-	SvService svService;
-	
+	private SvService svService;
+	// 서비스 list 
 	@RequestMapping(value="/service",method=RequestMethod.GET)
 	public ModelAndView authSvList(HttpServletRequest request) {
 		ModelAndView mView = svService.svList(request);
 		mView.setViewName("sv/svList");
 		return mView;
 	}
+	//서비스 List 검색
 	@RequestMapping(value="/service",method=RequestMethod.POST)
 	public ModelAndView authSvSearchList(HttpServletRequest request) {
 		ModelAndView mView = svService.svList(request);
 		mView.setViewName("sv/svList");
 		return mView;
 	}
+	// 서비스 상세 정보
 	@RequestMapping(value="/service/{rcvno}",method=RequestMethod.GET)
 	public ModelAndView authSvRead(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
 		mView.setViewName("sv/svRead");
 		return mView;
 	}
+	// 서비스 수정화면
 	@RequestMapping(value="/service/post/{rcvno}",method=RequestMethod.GET)
 	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
 		mView.setViewName("sv/svUpdate");
 		return mView;
 	}
+	// 서비스 수정
 	@RequestMapping(value="/service/post/{rcvno}",method=RequestMethod.PUT)
 	public ModelAndView authSvUpdateSet(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = new ModelAndView();
@@ -55,7 +59,7 @@ public class SvController {
 		mView.setViewName("redirect:/service/"+rcvno);
 		return mView;
 	}
-	
+	// 서비스 추가 화면
 	@RequestMapping(value="/service/post", method=RequestMethod.GET)
 	public ModelAndView authSvInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -63,6 +67,7 @@ public class SvController {
 		
 		return mView;
 	}
+	// 서비스 추가
 	@RequestMapping(value="/service/post", method=RequestMethod.POST)
 	public ModelAndView authSvInsertSet(HttpServletRequest request, @ModelAttribute RcvDto rcvDto) {
 		ModelAndView mView = new ModelAndView();
@@ -73,6 +78,7 @@ public class SvController {
 		
 		return mView;
 	}
+	// 서비스 멀티 삭제
 	@RequestMapping(value="/service/delete", method=RequestMethod.POST)
 	public ModelAndView authSvMultiDelete(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -83,6 +89,7 @@ public class SvController {
 		
 		return mView;
 	}
+	// 서비스 단일 삭제
 	@RequestMapping(value="/service/{rcvno}", method=RequestMethod.POST)
 	public ModelAndView authSvDelete(HttpServletRequest request,@PathVariable int rcvno) {
 		ModelAndView mView = new ModelAndView();
@@ -94,6 +101,7 @@ public class SvController {
 		return mView;
 	}
 	
+	// 서비스 이관 팝업
 	@RequestMapping(value="/convey/{rcvno}", method=RequestMethod.GET)
 	public ModelAndView authcommonUserList(HttpServletRequest request,@PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
@@ -101,7 +109,7 @@ public class SvController {
 		return mView;
 	}
 	
-	
+	// 서비스 이관 추가
 	@ResponseBody
 	@RequestMapping(value="/convey",method=RequestMethod.POST)
 	public List<Map<String,Object>> authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
@@ -113,6 +121,7 @@ public class SvController {
 		return tabRact;
 	}
 	
+	// 서비스 처리 이력 탭
 	@ResponseBody
 	@RequestMapping(value="/tab/ract/{rcvno}", method=RequestMethod.GET)
 	public List<Map<String, Object>> authSvTabRact(HttpServletRequest request, @PathVariable int rcvno){
@@ -123,6 +132,7 @@ public class SvController {
 		
 	}
 	
+	// 서비스 이관 이력 탭
 	@ResponseBody
 	@RequestMapping(value="/tab/convey/{rcvno}", method=RequestMethod.GET)
 	public List<Map<String, Object>> authSvTabConvey(HttpServletRequest request, @PathVariable int rcvno){
@@ -132,6 +142,9 @@ public class SvController {
 		return tabRact;
 		
 	}
+	
+
+	
 
 
 }

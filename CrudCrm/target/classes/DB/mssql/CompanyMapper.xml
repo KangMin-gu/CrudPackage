@@ -200,24 +200,15 @@
     </update>
     
     <insert id="siteLicenseInsert" parameterType="HashMap">
-    	INSERT INTO Crud_SaaS.dbo.T_SITE_LICENSE
-    	(
-    		LICENSENO
-    		,BUYCNT
-    		,SITEID
-    		,REGDATE
-    		,REGUSER
-    		,EDTDATE
-    		,EDTUSER
-    	)VALUES(
-    	#{licenseno}
-    	,#{buycnt}
-    	,#{siteid}
-    	,getDate()
-    	,#{reguser}
-    	,getDate()
-    	,#{edtuser}
-    	)
+		MERGE INTO Crud_SaaS.dbo.T_SITE_LICENSE AS A
+			USING (select '1' AS DUAL ) B ON (A.SITEID = #{siteid} AND A.LICENSENO = #{licenseno})
+		WHEN MATCHED THEN
+			UPDATE SET A.BUYCNT = #{buycnt}
+					, A.EDTDATE = getDate()
+					, A.EDTUSER = #{edtuser}
+		WHEN NOT MATCHED THEN
+			INSERT (SITEID,LICENSENO,BUYCNT,REGDATE,REGUSER,EDTDATE,EDTUSER)
+			VALUES(#{siteid},#{licenseno},#{buycnt},getDate(),#{reguser},getDate(),#{edtuser});
     </insert>
 
 </mapper>

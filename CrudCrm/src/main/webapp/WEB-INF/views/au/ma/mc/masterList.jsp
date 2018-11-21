@@ -56,7 +56,7 @@
                         		</div>
                         		<div class="w-100 text-right">
 									<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
-									<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+									<a href="javascript:void(0);" class="btn btn-primary resets">초기화</a> 
 								</div>
 							</div>
 							<br><br>
@@ -95,7 +95,7 @@
                                             <th>회원사명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="sitename" id="sitename" value="${search.siteName }">
+                                                    <input type="text" class="form-control reset" name="sitename" id="sitename" value="${search.sitename }">
 
                                                 </div>
                                             </td>
@@ -113,12 +113,12 @@
                                         <tr>
                                             <th>기업규모</th>
                                             <td>
-                                                <select class="form-control reset" name="sitesize" id="sitesize" value="${search.siteSize }">
+                                                <select class="form-control reset" name="sitesize" id="sitesize" value="${search.sitesize }">
                                                     <option value="">선택</option>
-                                                    <option value="1" <c:if test='${search.siteSize eq 1}'>selected</c:if>>대기업</option>
-                                                    <option value="2" <c:if test='${search.siteSize eq 2}'>selected</c:if>>중견기업</option>
-                                                    <option value="3" <c:if test='${search.siteSize eq 3}'>selected</c:if>>중소기업</option>
-                                                    <option value="4" <c:if test='${search.siteSize eq 4}'>selected</c:if>>소기업</option>
+                                                    <option value="1" <c:if test='${search.sitesize eq 1}'>selected</c:if>>대기업</option>
+                                                    <option value="2" <c:if test='${search.sitesize eq 2}'>selected</c:if>>중견기업</option>
+                                                    <option value="3" <c:if test='${search.sitesize eq 3}'>selected</c:if>>중소기업</option>
+                                                    <option value="4" <c:if test='${search.sitesize eq 4}'>selected</c:if>>소기업</option>
                                                 </select>
                                             </td>
                                         </tr>

@@ -133,18 +133,14 @@ public class SvController {
 	}
 	
 	// 서비스 이관 이력 탭
-	@ResponseBody
+	
 	@RequestMapping(value="/tab/convey/{rcvno}", method=RequestMethod.GET)
+	@ResponseBody
 	public List<Map<String, Object>> authSvTabConvey(HttpServletRequest request, @PathVariable int rcvno){
+		List<Map<String, Object>> tabConvey = svService.svTabConvey(request,rcvno);
 		
-		List<Map<String, Object>> tabRact = svService.svTabConvey(request,rcvno);
-		
-		return tabRact;
+		return tabConvey;
 		
 	}
 	
-
-	
-
-
 }

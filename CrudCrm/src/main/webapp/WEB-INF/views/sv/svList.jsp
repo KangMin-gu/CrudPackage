@@ -57,7 +57,7 @@
                         		</div>
                         		<div class="w-100 text-right">
 									<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
-									<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+									<a href="javascript:void(0);" class="btn btn-primary resets" >초기화</a> 
 								</div>
 							</div>
 							<br><br>
@@ -160,8 +160,8 @@
                                             <th>접수자</th>
                                             <td>
                                                 <div class="input-group owner" style="height: 1.6rem;">
-                                                    <input type="text" class="form-control required" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${search.rcvowner_ }">
-                                                    <input type="hidden" name="rcvowner" id="rcvowner" value="${search.rcvowner }">
+                                                    <input type="text" class="form-control required reset" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${search.rcvowner_ }">
+                                                    <input type="hidden" class="reset" name="rcvowner" id="rcvowner" value="${search.rcvowner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -172,8 +172,8 @@
                                             <th>담당자</th>
                                             <td>
                                                 <div class="input-group owner">
-                                                    <input type="text" class="form-control required" autocomplete="off" name="ractowner_" id="ractowner_" value="${search.ractowner_ }">
-                                                    <input type="hidden" name="ractowner" id="ractowner" value="${search.ractowner }">
+                                                    <input type="text" class="form-control required reset" autocomplete="off" name="ractowner_" id="ractowner_" value="${search.ractowner_ }">
+                                                    <input type="hidden" class="reset" name="ractowner" id="ractowner" value="${search.ractowner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

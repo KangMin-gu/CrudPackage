@@ -56,7 +56,10 @@
 			</if>
 			<if test="ractowner != null">
 				AND B.RACTOWNER = #{ractowner}
-			</if>	
+			</if>
+			<if test="prcstate!= null">
+				AND A.PRCSTATE = #{prcstate}
+			</if>		
     		 ) X 
     	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 
@@ -94,6 +97,9 @@
 			<if test="ractowner != null">
 				AND B.RACTOWNER = #{ractowner}
 			</if>
+			<if test="prcstate!= null">
+				AND A.PRCSTATE = #{prcstate}
+			</if>	
 	</select>
 	
 	<select id ="detail" parameterType="rcvDto" resultType ="hashMap">

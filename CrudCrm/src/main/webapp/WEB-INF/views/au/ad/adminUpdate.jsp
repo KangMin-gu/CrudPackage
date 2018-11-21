@@ -62,17 +62,20 @@
                         
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-                        			<a class="alert-link" href="#">
-                        				<span id="showMsg"></span>
-                        			</a>
-                        		</div>
-                        			
-                            	<div class="w-100 text-right mb-2">
-                                	<a href="${pageContext.request.contextPath}/ad/user/${user.USERNO}" class="btn btn-primary">취소</a>
-                                	<button class="btn btn-primary submit">저장</button>
-                            	</div>
-                            </div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) </strong>
+									</span>
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                        	</div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+									<Strong><span id="showMsg"></span></Strong>				
+	                        	</div>													
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<a href="/ad/user/${user.USERNO }" class="btn btn-primary">취소</a>
+									<Button type="submit" class="btn btn-primary submit" disabled >저 장</Button>
+								</div>
+							</div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -151,7 +154,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control error required validation name"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control error required validation string"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
@@ -210,6 +213,9 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
+	window.onload = function () {
+		enableSubmit();
+	}
 	$(document).ready(function () {
 		
 		$('.date').datepicker({

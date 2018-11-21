@@ -73,10 +73,22 @@
                         
                         <div class="ibox-content row">
                         
-                            <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO }" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary submit" id="submit">저장</button>
-                            </div>
+                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 )  ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 )  </strong>
+									</span>
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                          	</div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+									<Strong><span id="showMsg"></span></Strong>				
+	                          	</div>																		
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
+									<a class="btn btn-primary" href="/service/${serviceInfo.RCVNO}">상 세</a>
+									<a href="/service" class="btn btn-primary">목 록</a>
+								</div>
+							</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -509,6 +521,10 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 	<script>
+	
+    	window.onload = function () {
+    		enableSubmit();
+    	}
 		$(document).ready(function () {
 			
 			$('.select2').select2();

@@ -66,12 +66,17 @@
                         </div>
                         
                         <div class="ibox-content row">
-                        
-                            <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
-                                <button class="btn btn-primary" id="submit">저장</button>
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+                        			<a class="alert-link" href="#">
+                        				<span id="showMsg"></span>
+                        			</a>
+                        		</div>
+                            	<div class="w-100 text-right mb-2">
+                                	<a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
+                                	<button class="btn btn-primary submit">저장</button>
+                            	</div>
                             </div>
-                            
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -107,6 +112,12 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th class="border-top-0">고객주소</th>
+                                            <td class="border-top-0">
+                                            	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -131,6 +142,12 @@
                                             <th>직장명</th>
                                             <td style="height: 43px;"><input type="text" class="form-control" disabled name="company" id="company" value="${serviceInfo.COMPANY }"></td>
                                         </tr>
+                                        <tr>
+                                            <th class="border-top-0">휴대전화번호</th>
+                                            <td class="border-top-0">
+                                                <input type="text" class="form-control" disabled name="custmobile" id="custmobile" value="${serviceInfo.CUSTMOBILE }">
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -150,44 +167,17 @@
                                             <td style="height: 43px;"><input type="text" class="form-control" disabled name="homepage" id="homepage" value="${serviceInfo.HOMEPAGE }"></td>
                                         </tr>
                                         <tr>
+                                            <th>직책</th>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="duty" id="duty" value="${serviceInfo.DUTY }"></td>
+                                        </tr>
+                                        <tr>
                                             <th>이메일</th>
                                             <td style="height: 43px;"><input type="text" class="form-control" disabled name="email" id="email" value="${serviceInfo.EMAIL }"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box4 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">고객주소</th>
-                                            <td class="border-top-0">
-                                            	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">휴대전화번호</th>
-                                            <td class="border-top-0">
-                                                <input type="text" class="form-control" disabled name="custmobile" id="custmobile" value="${serviceInfo.CUSTMOBILE }">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+
 
                         </div>
 
@@ -216,7 +206,7 @@
                                         <tr>
                                             <th style="height: 45px;">접수유형</th>
                                             <td>
-                                            	<select class="form-control float-left" name="rcvtype" id="rcvtype">
+                                            	<select class="form-control float-left error required validate number" name="rcvtype" id="rcvtype">
                                             		<option value="0">선택</option>
                                                     <option value=1 <c:if test='${serviceInfo.RCVTYPE eq 1}'>selected</c:if>>문의</option>
                                                     <option value=2 <c:if test='${serviceInfo.RCVTYPE eq 2}'>selected</c:if>>개선</option>
@@ -277,7 +267,7 @@
                                             <th style="height: 45px;">접수자</th>
                                             <td>
                                             	<div class="input-group">
-                                                    <input type="text" class="form-control required" disabled name="rcvowner_" id="rcvowner_" value="${sessionScope.USERNAME }">
+                                                    <input type="text" class="form-control error required validate name" disabled name="rcvowner_" id="rcvowner_" value="${sessionScope.USERNAME }">
                                                     <input type="hidden" name="rcvowner" id="rcvowner" value="${sessionScope.USERNO }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -310,7 +300,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td class="border-top-0" style="height: 42px;">
-                                            	<input type="text" class="form-control error required validate name" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
+                                            	<input type="text" class="form-control error required validate string" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -347,7 +337,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea name="rcvdesc" id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
+                                                <textarea name="rcvdesc" class="form-control error required validate test" id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>

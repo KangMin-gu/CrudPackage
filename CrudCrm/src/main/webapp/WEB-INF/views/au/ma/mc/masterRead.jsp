@@ -119,7 +119,7 @@
                                         <tr>
                                             <th class="border-top-0">직장주소</th>
                                             <td class="border-top-0">
-                                                ${memCompany.ZIPCODE } ${memCompany.UPRADDRESS } ${memCompany.LWRADDRESS }
+                                                ${memCompany.ADDR1 } ${memCompany.ADDR2 } ${memCompany.ADDR3 }
                                             </td>
                                         </tr>
                                     </tbody>

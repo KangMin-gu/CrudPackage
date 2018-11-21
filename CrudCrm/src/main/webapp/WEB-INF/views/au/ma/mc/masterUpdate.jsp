@@ -33,9 +33,6 @@
                     <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/ma/company">회원사목록</a>
                         </li>
                         <li class="breadcrumb-item">
@@ -125,13 +122,13 @@
                                             <th class="border-top-0"><label for="zipcode">직장주소</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group col-lg-3 pl-0 float-left">
-                                                    <input type="text" class="form-control daumzip" autocomplete="off" name="zipcode" id="zipcode" value="${memCompany.ZIPCODE}">
+                                                    <input type="text" class="form-control daumzip" autocomplete="off" name="addr1" id="addr1" value="${memCompany.ADDR1}">
                                                     <span class="input-group-addon">
                                                         <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control col-lg-3 float-left mr-3 mt-sx-1" name="upraddress" id="upraddress" value="${memCompany.UPRADDRESS}">
-                                                <input type="text" class="form-control float-left col-lg-5 mt-sx-1" name="lwraddress" id="lwraddress" value="${memCompany.LWRADDRESS}">
+                                                <input type="text" class="form-control col-lg-3 float-left mr-3 mt-sx-1" name="addr2" id="addr2" value="${memCompany.ADDR2}">
+                                                <input type="text" class="form-control float-left col-lg-5 mt-sx-1" name="addr3" id="addr3" value="${memCompany.ADDR3}">
                                             </td>
                                         </tr>
                                     </tbody>

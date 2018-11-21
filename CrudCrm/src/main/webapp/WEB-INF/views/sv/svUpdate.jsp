@@ -75,7 +75,7 @@
                         
                             <div class="w-100 text-right mb-2">
                                 <a href="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO }" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary" id="submit">저장</button>
+                                <button class="btn btn-primary submit">저장</button>
                             </div>
                             
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -222,7 +222,7 @@
                                         <tr style="height: 45px;">
                                             <th>접수유형</th>
                                             <td >
-                                            	<select class="form-control float-left required" name="rcvtype" id="rcvtype">
+                                            	<select class="form-control float-left error required validate number" name="rcvtype" id="rcvtype">
                                             		<option value=0>선택</option>
                                                     <option value=1 <c:if test='${serviceInfo.RCVTYPE eq 1}'>selected</c:if>>문의</option>
                                                     <option value=2 <c:if test='${serviceInfo.RCVTYPE eq 2}'>selected</c:if>>개선</option>
@@ -285,7 +285,7 @@
                                             <th>접수자</th>
                                             <td style="height: 45px;">
                                             	<div class="input-group owner">
-                                                    <input type="text" class="form-control required" disabled name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
+                                                    <input type="text" class="form-control error required validate name" disabled name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
                                                     <input type="hidden" name="rcvowner" id="rcvowner" value="${serviceInfo.RCVOWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>

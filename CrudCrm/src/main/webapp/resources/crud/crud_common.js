@@ -61,7 +61,8 @@
 	});
 	
 	//유효성검사
-	$('.submit').click(function(e){
+	$('.submit').click(function(){
+		debugger;
 		var validate = $('.validate'); //validate 선언한 클래스 배열
 		var length = validate.length; //배열 사이즈 
 		var id; //배열의 id값
@@ -97,6 +98,7 @@
 		$('#command').submit();//전송
 		
 	});
+	
 	
 	
 	var newWindow = null;
@@ -191,7 +193,9 @@
 		//유효성 검사
 		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리 
+		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]$/; //공백 미허용 문자열
+		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리
+		var numberPattern = /^[1-9]{1,2}$/; // 0을 제외한 1~2자리숫자
 		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
 		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
 		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호
@@ -232,6 +236,12 @@
 		}else if( $('#'+id).hasClass('simple') ){
 			res = simplePattern.test(value);
 			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
+		}else if( $('#'+id).hasClass('number') ){
+			res = numberPattern.test(value);
+			msg = '숫자로 입력해 주세요.';//이 문구 출력	
+		}else if( $('#'+id).hasClass('string') ){
+			res = stringPattern.test(value);
+			msg = '잘못된 문자열이 입력되었습니다. 학인해주세요';//이 문구 출력	
 		}
 		
 		msg = $('#'+id).parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
@@ -266,6 +276,7 @@
 			$('.submit').prop("disabled",false);//submit 활성화 
 		}
 	}
+	
 
 	// datepicker 앞의 값이 변했을때
 	$('.date01').change(function(e){

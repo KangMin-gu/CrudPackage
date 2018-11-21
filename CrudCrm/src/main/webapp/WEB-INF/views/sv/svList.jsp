@@ -203,7 +203,7 @@
                             <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                             	<colgroup>
-                            		<col style="width: 40px;">
+                            		<col style="width: 20px;">
                             		<col style="width: 150px;">
                             		<col style="width: 70px;">
                             		<col style="width: 100px;">

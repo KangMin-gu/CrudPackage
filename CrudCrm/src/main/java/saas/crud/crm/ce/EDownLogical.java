@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.AbstractView;
 
 @Component("fileDownView")
-public class FileDownView extends AbstractView{
+public class EDownLogical extends AbstractView{
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
-		FileDto fileInfo = (FileDto)model.get("fileInfo");
+		EUploadDto fileInfo = (EUploadDto)model.get("fileInfo");
 		String orgFileName = fileInfo.getOrgfilename();
 		String saveFileName = fileInfo.getSavefilename();
 		long fileSize=fileInfo.getFilesize();

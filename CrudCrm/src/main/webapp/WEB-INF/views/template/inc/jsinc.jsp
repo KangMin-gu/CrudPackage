@@ -11,7 +11,8 @@
 	src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <!-- Flot -->
 <script
 	src="${pageContext.request.contextPath}/resources/js/plugins/flot/jquery.flot.js"></script>

@@ -24,6 +24,7 @@ public class CompanyDaoImpl implements CompanyDao{
 	}
 	
 	// 회원사 상세 정보
+
 	@Override
 	public Map<String, Object> companyRead(CompanyDto CompanyDto) {
 		// TODO Auto-generated method stub

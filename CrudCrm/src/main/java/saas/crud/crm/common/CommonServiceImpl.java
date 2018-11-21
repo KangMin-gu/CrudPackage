@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
-import saas.crud.crm.ce.FileDto;
+import saas.crud.crm.ce.EUploadDto;
+import saas.crud.crm.ce.EUploadLogical;
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.ce.SearchRequest;
 import saas.crud.crm.cu.dao.CustDao;
@@ -23,7 +27,11 @@ public class CommonServiceImpl implements CommonService {
 	private CommonDao commonDao;
 	
 	@Autowired
+	private EUploadLogical upload;
+	
+	@Autowired
 	private CustDao custDao;
+
 	
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -114,13 +122,21 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public ModelAndView noteDownload(HttpServletRequest request, int fileId) {
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		FileDto fileRequest = new FileDto(); 
+		EUploadDto fileRequest = new EUploadDto(); 
 		fileRequest.setSiteid(siteId);
 		fileRequest.setFileid(fileId);
-		FileDto fileInfo = commonDao.noteDownload(fileRequest);
+		EUploadDto fileInfo = commonDao.noteDownload(fileRequest);
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("fileInfo", fileInfo);
 		return mView;
+	}
+	
+	//사이트로고 업로드
+	@Override
+	public EUploadDto logoUplaod(HttpServletResponse response, HttpServletRequest request, MultipartRequest multipartRequest) {
+		MultipartFile mFile=multipartRequest.getFile("logo");
+		EUploadDto uploadInfo = upload.singleFileUpload(response, request, mFile);
+		return uploadInfo;
 	}
 
 	// 고객 팝업 

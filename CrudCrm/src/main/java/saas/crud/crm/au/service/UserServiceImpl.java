@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		ModelAndView mView = new ModelAndView();
-		String url=request.getParameter("url");  
+		String url = request.getParameter("url"); 
 		StringBuffer buf = new StringBuffer();
-		
+		System.out.println("url : "+url);
 		if(isValid){
 			
 			List<Map<String,String>> urMenu = urDao.getMenu(urDto.getUserid());
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("CALLNAME", urInfo.get("CALLNAME")); //사이트 약어
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
-			
+			request.getSession().setAttribute("SITELOGO", urInfo.get("SITELOGO")); //회사 로고
 			
 			
 			if(url != null) {
@@ -105,15 +105,20 @@ public class UserServiceImpl implements UserService{
 				e.printStackTrace();
 			}
 				
-		}else{//아이디 혹은 비밀번호가 틀린 경우 
-			//추후 contextPath 를 쓸지 requestURI 를쓸지 세션로그아웃시 있던페이지로가는 URL 체크해야함.
-			//String location=request.getContextPath();
-			String location=request.getRequestURI();
+		}else{
 			
-			buf.append("<script>alert('아이디 혹은 비밀번호가 틀립니다.'); location.href='");
-		 	buf.append(location);
-		 	buf.append("';</script>");
-		 	
+			if(url != null) {
+				buf.append("<script>alert('아이디 혹은 비밀번호가 틀립니다.');");
+				buf.append("location.href='/login?url=");
+				buf.append(url);
+				buf.append("';</script>");
+			}else {
+				String location=request.getRequestURI();
+				buf.append("<script>alert('아이디 혹은 비밀번호가 틀립니다.'); location.href='");
+			 	buf.append(location);
+			 	buf.append("';</script>");
+			}
+			
 		 	response.setContentType("text/html; charset=UTF-8");
 			 
 			PrintWriter out;

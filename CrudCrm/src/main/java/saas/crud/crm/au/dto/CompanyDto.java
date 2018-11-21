@@ -24,7 +24,7 @@ public class CompanyDto {
 	private String mobile3; //휴대폰3
 	private String email; //이메일
 	private String sitememo; //사이트메모
-	//private MultipartFile sitelogo; //사이트로고
+	private String sitelogo; //사이트로고
 	private String bscond; //업종
 	private String cotype; //업태
 	private String bstype; //종목
@@ -45,9 +45,9 @@ public class CompanyDto {
 	public CompanyDto(int siteid, String sitename, String bsno, String incno, String addr1, String addr2, String addr3,
 			String fregdate, String expirdate, String telno1, String telno2, String telno3, String faxtel1,
 			String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3, String email,
-			String sitememo, String bscond, String cotype, String bstype, String ctiaddress, String switchtel,
-			String regdate, int reguser, String edtdate, int edtuser, String callname, String sitesize, String prsdname,
-			int isdelete, int owner) {
+			String sitememo, String sitelogo, String bscond, String cotype, String bstype, String ctiaddress,
+			String switchtel, String regdate, int reguser, String edtdate, int edtuser, String callname,
+			String sitesize, String prsdname, int isdelete, int owner) {
 		super();
 		this.siteid = siteid;
 		this.sitename = sitename;
@@ -69,6 +69,7 @@ public class CompanyDto {
 		this.mobile3 = mobile3;
 		this.email = email;
 		this.sitememo = sitememo;
+		this.sitelogo = sitelogo;
 		this.bscond = bscond;
 		this.cotype = cotype;
 		this.bstype = bstype;
@@ -245,6 +246,14 @@ public class CompanyDto {
 		this.sitememo = sitememo;
 	}
 
+	public String getSitelogo() {
+		return sitelogo;
+	}
+
+	public void setSitelogo(String sitelogo) {
+		this.sitelogo = sitelogo;
+	}
+
 	public String getBscond() {
 		return bscond;
 	}
@@ -357,6 +366,8 @@ public class CompanyDto {
 		this.owner = owner;
 	}
 
+
+	
 	
 	
 }

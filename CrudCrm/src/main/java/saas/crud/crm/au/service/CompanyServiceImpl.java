@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.CompanyDao;
 import saas.crud.crm.au.dto.CompanyDto;
+import saas.crud.crm.ce.EUploadDto;
+import saas.crud.crm.ce.EUploadLogical;
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.ce.SearchRequest;
 
@@ -20,6 +25,11 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
 	private CompanyDao companyDao;
+
+	
+	@Autowired
+	private EUploadLogical upload;
+
 	
 	// 회원사 List 검색
 	@Override
@@ -73,7 +83,7 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	//회원사 수정
 	@Override
-	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
+	public void comapnyUpdate(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setEdtuser(userNo);
@@ -82,14 +92,13 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	// 회원사 추가
 	@Override
-	public int companyInsert(HttpServletRequest request, CompanyDto companyDto) {
+	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);
 		int siteid = companyDao.companyInsert(companyDto);
 		companyDto.setSiteid(siteid);
-		
 		return siteid;
 	}
 	

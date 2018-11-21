@@ -28,8 +28,9 @@ public class UserController {
 	public ModelAndView loginForm(HttpServletRequest request, @ModelAttribute ModelAndView mView) {
 		
 		String url=request.getParameter("url");
-		if(url==null){
-			url=request.getContextPath()+"/";
+		
+		if(url==null){        
+			url=request.getContextPath()+"/"; 
 		}
 		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고 
 		mView.addObject("url", url);
@@ -41,6 +42,7 @@ public class UserController {
 	//로그인 요청
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {
+		System.out.println("controll : "+request.getParameter("url"));
 		 urService.login(response, request, urDto);
 	}
 	

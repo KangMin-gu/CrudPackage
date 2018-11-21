@@ -120,7 +120,9 @@
 		//$('#command').submit();//전송
 		
 	});
-	
+	$('.poplogo').click(function(e){
+		openNewWindow('로고','/poplogo',e.target.id,600,700);
+	});
 	
 	
 	var newWindow = null;
@@ -220,6 +222,27 @@
     	
     	return today;
     }
+
+	
+    //로고 insertajax
+    $('#logosubmit').click(function(){
+    	var form = new FormData(document.getElementById('logoForm'));
+    	$.ajax({
+            url: '/poplogo',
+            data: form,
+            dataType: 'json', 
+            processData: false, 
+            contentType: false, 
+            type: 'POST', 
+            success: function(response){ 
+            	opener.$('#filename').val(response.orgfilename);
+            	opener.$('#sitelogo').val(response.img);
+            	alert("로그 등록 완료");
+            	window.close();
+            }
+        });
+    });
+   
     
     //id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
@@ -378,4 +401,5 @@
 
 		
 	}
+
 

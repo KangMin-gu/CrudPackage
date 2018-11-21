@@ -54,8 +54,8 @@ public class CompanyController {
 
 	// 회원사 UPDATE 실행
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.PUT)
-	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
-		companyService.comapnyUpdate(request, CompanyDto);	
+	public ModelAndView authCompanyUpdateSet(HttpServletResponse response,@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
+		companyService.comapnyUpdate(response, request, CompanyDto);	
 		ModelAndView mView = new ModelAndView();
 		int siteId = CompanyDto.getSiteid();
 		mView.setViewName("redirect:/ma/company/"+siteId);

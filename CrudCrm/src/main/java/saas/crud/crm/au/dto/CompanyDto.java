@@ -42,23 +42,17 @@ public class CompanyDto {
 	
 	public CompanyDto() {}
 
-
-	public CompanyDto(int siteid, String sitename, String bsno, String incno, String zipcode, String upraddress,
-			String lwraddress, String fregdate, String expirdate, String telno1, String telno2, String telno3,
-			String faxtel1, String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3,
-			String email, String sitememo, String sitelogo, String bscond, String cotype, String bstype,
-			String ctiaddress, String switchtel, String regdate, int reguser, String edtdate, int edtuser,
-			String callname, String sitesize, String prsdname, int isdelete, int owner) {
-	
+	public CompanyDto(int siteid, String sitename, String bsno, String incno, String addr1, String addr2, String addr3,
+			String fregdate, String expirdate, String telno1, String telno2, String telno3, String faxtel1,
+			String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3, String email,
+			String sitememo, String sitelogo, String bscond, String cotype, String bstype, String ctiaddress,
+			String switchtel, String regdate, int reguser, String edtdate, int edtuser, String callname,
+			String sitesize, String prsdname, int isdelete, int owner) {
 		super();
 		this.siteid = siteid;
 		this.sitename = sitename;
 		this.bsno = bsno;
 		this.incno = incno;
-
-		this.zipcode = zipcode;
-		this.upraddress = upraddress;
-		this.lwraddress = lwraddress;
 		this.addr1 = addr1;
 		this.addr2 = addr2;
 		this.addr3 = addr3;
@@ -372,6 +366,8 @@ public class CompanyDto {
 		this.owner = owner;
 	}
 
+
+	
 	
 	
 }

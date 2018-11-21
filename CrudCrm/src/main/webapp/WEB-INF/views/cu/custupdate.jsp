@@ -67,8 +67,8 @@
 								<div class="ibox-content row">								
 									
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;" >
-											<span id="reqDefaultMsg">
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) ">
 												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;( 고객명 : 한글, 영문 2자리~30자리+숫자0~5자리 , 휴대폰 : 000-000-0000 , 000-0000-0000 ) </strong>
 											</span>
 											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				

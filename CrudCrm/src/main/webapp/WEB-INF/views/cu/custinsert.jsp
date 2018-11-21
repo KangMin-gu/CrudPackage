@@ -63,11 +63,11 @@
 								</div>
 								<div class="ibox-content row">	
 													
-									
+							
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;" >
-											<span id="reqDefaultMsg">
-												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;( 고객명 : 한글, 영문 2자리~30자리+숫자0~5자리 , 휴대폰 : 000-000-0000 , 000-0000-0000 ) </strong>
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) ">
+												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) </strong>
 											</span>
 											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
 	                          			</div>
@@ -75,7 +75,7 @@
 											<Strong><span id="showMsg"></span></Strong>				
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<Button type="submit" class="btn btn-primary submit" id="submit"  disabled >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" "  disabled >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a>
 										</div>
 									</div>
@@ -538,231 +538,13 @@
 											</table>
 										</div>
 										<div class="w-100 text-right">
-											<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit"  disabled >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a> 
 										</div>
 									</div>
 								</div>
 								</form:form>
-<!-- 								<div class="ibox">
-									<div class="ibox-title row border-0">
-										<h4>고객 상세</h4>
-									</div>
-									<div class="ibox-content row">
-										<div class="box1 col-lg-12 p-0">
-											<div class="tabs-container">
-												<ul class="nav nav-tabs" role="tablist">
-													<li><a class="nav-link active" data-toggle="tab" href="#tab1">서비스</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab2">영업</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab3">캠페인</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab4">접촉</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li>
-												</ul>
-												<div class="tab-content">
-													<div role="tabpanel" id="tab1"
-														class="tab-pane active table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>제목</th>
-																		<th>상태</th>
-																		<th>서비스유형</th>
-																		<th>접수일</th>
-																		<th>접수자</th>
-																		<th>처리일</th>
-																		<th>담당자</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																	<tr>
-																		<td>제목입니다.</td>
-																		<td>상태입니다</td>
-																		<td>서비스유형임</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																		<td>2018/10/11</td>
-																		<td>세글자</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab2" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>예상수주일</th>
-																		<th>영업건명</th>
-																		<th>상담건</th>
-																		<th>영업담당자</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab3" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>캠페인명</th>
-																		<th>프로젝트</th>
-																		<th>시작일</th>
-																		<th>종료일</th>
-																		<th>채널매체</th>
-																		<th>결과</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab4" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>접촉일</th>
-																		<th>접촉자</th>
-																		<th>접촉유형</th>
-																		<th>접촉매체</th>
-																		<th>접촉결과</th>
-																		<th>접촉내용</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div role="tabpanel" id="tab5" class="tab-pane table-responsive">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>등록일</th>
-																		<th>출처명</th>
-																		<th>출처메모</th>
-																		<th>출처회원번호</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> -->
+
 							</div>
 						</div>
 					</div>

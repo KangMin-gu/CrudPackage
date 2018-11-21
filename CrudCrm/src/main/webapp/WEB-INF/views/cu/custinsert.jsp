@@ -75,7 +75,7 @@
 											<Strong><span id="showMsg"></span></Strong>				
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<Button type="submit" class="btn btn-primary submit" "  disabled >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" disabled >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a>
 										</div>
 									</div>
@@ -615,21 +615,6 @@
                 autoclose: true
             });
             
-          	//주소 받아오기
-            $('.daumzip').click(function(e){
-      			 
-      		     new daum.Postcode({
-      		         oncomplete: function(data) {
-      		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
-      		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
-    		        	
-      		        	$("#"+head+"addr1").val(data.zonecode);
-    		        	$("#"+head+"addr2").val(data.roadAddress);
-    		        	$("#"+head+"addr3").val(data.buildingName);
-                  
-      		         }
-      		     }).open();
-      		 });
 
         });
     </script>

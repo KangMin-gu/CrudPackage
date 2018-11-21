@@ -37,9 +37,6 @@
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/service">서비스 목록</a>
                         </li>
                         <li class="breadcrumb-item active">
@@ -67,16 +64,20 @@
                         
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-                        			<a class="alert-link" href="#">
-                        				<span id="showMsg"></span>
-                        			</a>
-                        		</div>
-                            	<div class="w-100 text-right mb-2">
-                                	<a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
-                                	<button class="btn btn-primary submit" id="submit">저장</button>
-                            	</div>
-                            </div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 ) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 ) </strong>
+									</span>
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                        	</div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+									<Strong><span id="showMsg"></span></Strong>				
+	                        	</div>													
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<Button type="submit" class="btn btn-primary submit" disabled >저 장</Button>
+									<a href="/service" class="btn btn-primary">목 록</a>
+								</div>
+							</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -105,7 +106,7 @@
                                             <td>
                                             	<div class="input-group cust">
                                                     <input type="text" class="form-control" name="custno_" id="custno_" value="${serviceInfo.CUSTNAME }">
-                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="${serviceInfo.CUSTNO }">
+                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

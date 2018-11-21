@@ -66,11 +66,19 @@
 							<span id="selectpage" name="selectpage"> </span>
 							
 								<div class="ibox-content row">
-																
-									<div class="w-100 text-right">
-										<button type="submit" class="btn btn-primary" data-style="zoom-in" id="submit" name="submit">검 색</button>
-										<button type="button" class="btn btn-primary" id="searchResetBtn" name="searchResetBtn">초기화</button> 
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        				<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+		                        			<a class="alert-link" href="#">
+                        						<span id="showMsg"></span>
+                        					</a>
+                        				</div>
+                        				<div class="w-100 text-right">
+											<button type="submit" class="btn btn-primary" data-style="zoom-in" id="submit" name="submit">검 색</button>
+											<button type="button" class="btn btn-primary" id="searchResetBtn" name="searchResetBtn">초기화</button> 
+										</div>
 									</div>
+																
+									
 									<div class="row"><br><br></div>
 								
 									<div class="box1 col-lg-12 col-xl-6 p-0">
@@ -248,7 +256,7 @@
 												</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.EMAIL }</td>
 												
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.OWNERNAME}</td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.OWNER_}</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
 												<c:choose>
 													<c:when test="${list.CUSTGUBUN eq 1 }">회원</c:when>

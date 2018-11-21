@@ -26,10 +26,14 @@ $(".tabConvey").click(function(e){
         success: function (data) {
         	$('#tab2 tbody tr').remove();
         	var length = data.length;
+        	var html = '';
+        	var html2 = '<tr><td>하하하하</td></tr>';
         	for (var i = 0; i < length; i++) {
-        		var html = '<tr><td>' + data[i].CONVEYDATE + '</td><td>' + data[i].CONVEYREASON + '</td><td>' + data[i].PREVOWNER_ + '</td><td>' + data[i].NEXTOWNER_ + '</td><td>' + data[i].CONVEYDESC + '</td></tr>';
+        		 html = '<tr><td>' + data[i].CONVEYDATE + '</td><td>' + data[i].CONVEYREASON + '</td><td>' + data[i].PREVOWNER_ + '</td><td>' + data[i].NEXTOWNER_ + '</td><td>' + data[i].CONVEYDESC + '</td></tr>';
         		$('#tab2 tbody').append(html);
+        		
         	}
+        	$('#tab2 tbody').append(html2);
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

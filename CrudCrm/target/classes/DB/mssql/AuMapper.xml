@@ -58,6 +58,7 @@
 		,A.TELNO1
 		,A.TELNO2
 		,A.TELNO3
+		, A.TELNO1 + '-' + A.TELNO2 + '-' + A.TELNO3 AS TELNO
 		,A.USERDESC
 			FROM Crud_SaaS.dbo.TB980010 A
 			WHERE SITEID = #{siteid}

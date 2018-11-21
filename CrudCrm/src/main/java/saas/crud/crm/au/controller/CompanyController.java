@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.CompanyDto;
@@ -108,8 +109,11 @@ public class CompanyController {
 	}
 	// 회원사 라이센스 부여
 	@RequestMapping(value="/ma/company/license/{siteid}", method=RequestMethod.POST)
-	public void authComapnyLicense(HttpServletRequest request,@PathVariable int siteid) {
+	@ResponseBody
+	public int authComapnyLicense(HttpServletRequest request,@PathVariable int siteid) {
 		companyService.companyLicenseInsert(request,siteid);
+		
+		return 0;
 	}
 	
 }

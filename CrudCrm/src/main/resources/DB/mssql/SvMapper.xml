@@ -97,8 +97,12 @@
 	</select>
 	
 	<select id ="detail" parameterType="rcvDto" resultType ="hashMap">
-		SELECT 
-		A.RCVNO, A.CLINO, A.CUSTNO, A.RCVTYPE
+		SELECT
+		
+		C.CUSTNAME, C.COMPANY, C.EMAIL, C.DUTY
+		, C.HOMADDR1 + C.HOMADDR2 + C.HOMADDR3 AS CUSTADDRESS
+		, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS MOBILE
+		,A.RCVNO, A.CLINO, A.CUSTNO, A.RCVTYPE
 		, CASE WHEN A.RCVTYPE = 1 THEN '문의'
     		  WHEN A.RCVTYPE = 2 THEN '개선'
     		  WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_

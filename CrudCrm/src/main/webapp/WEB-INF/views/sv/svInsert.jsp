@@ -74,7 +74,7 @@
                         		</div>
                             	<div class="w-100 text-right mb-2">
                                 	<a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
-                                	<button class="btn btn-primary submit">저장</button>
+                                	<button class="btn btn-primary submit" id="submit">저장</button>
                             	</div>
                             </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -104,8 +104,8 @@
                                             <th><label for="custname">고객명</label></th>
                                             <td>
                                             	<div class="input-group cust">
-                                                    <input type="text" class="form-control" name="custno_" id="custno_" value="${serviceInfo.CUSTNO_ }">
-                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="0">
+                                                    <input type="text" class="form-control" name="custno_" id="custno_" value="${serviceInfo.CUSTNAME }">
+                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="${serviceInfo.CUSTNO }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -145,7 +145,7 @@
                                         <tr>
                                             <th class="border-top-0">휴대전화번호</th>
                                             <td class="border-top-0">
-                                                <input type="text" class="form-control" disabled name="custmobile" id="custmobile" value="${serviceInfo.CUSTMOBILE }">
+                                                <input type="text" class="form-control" disabled name="mobile" id="mobile" value="${serviceInfo.MOBILE }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -337,7 +337,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea name="rcvdesc" class="form-control error required validate test" id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
+                                                <textarea name="rcvdesc" class="form-control" id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -505,7 +505,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
-	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 	<script>
 		$(document).ready(function () {
 

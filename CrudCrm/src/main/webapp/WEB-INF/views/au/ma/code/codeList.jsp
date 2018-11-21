@@ -144,7 +144,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="footable-page active"><a
 														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>

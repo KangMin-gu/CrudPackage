@@ -48,6 +48,10 @@
 	$('.cli').click(function(e){
 		openNewWindow('거래처','/popclient',e.target.id,650,700);
 	});
+	// 고객 팝업
+	$('.cust').click(function(e){
+		openNewWindow('고객','/popcust',e.target.id,650,700);
+	});
 
 	//********필수 값 실시간 체크*********************************        	      
 	$('.required').keyup(function(e){
@@ -152,11 +156,22 @@
 	
 	//팝업 거래처 이름 선택.
 	function parentCliname(tr){	
-		debugger;
 		var parentid = $('#parentid').val();	
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));		
 		opener.$("#"+parentid).val(tr.children.cliname.textContent);		
 		window.close();
+	}
+	
+	function parentCustname(tr){	
+		var parentid = $('#parentid').val();	
+		var id = tr.getAttribute("value");
+		opener.$("#"+parentid).next().val(id);		
+		opener.$("#"+parentid).val(tr.children.cstname.textContent);
+		popCustClick(id);
+		
+		setTimeout(function(){
+			window.close();
+		},300);
 	}
     
     function paging(prm){
@@ -193,9 +208,10 @@
 		//유효성 검사
 		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]$/; //공백 미허용 문자열
+		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
 		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리
 		var numberPattern = /^[1-9]{1,2}$/; // 0을 제외한 1~2자리숫자
+		var checkPattern = /^[0-9]{1}$/; // 0을 포함한 1자리 숫자
 		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
 		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
 		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호
@@ -242,6 +258,9 @@
 		}else if( $('#'+id).hasClass('string') ){
 			res = stringPattern.test(value);
 			msg = '잘못된 문자열이 입력되었습니다. 학인해주세요';//이 문구 출력	
+		}else if( $('#'+id).hasClass('check') ){
+			res = checkPattern.test(value);
+			msg = '사용여부 확인 부탁드립니다.';//이 문구 출력	
 		}
 		
 		msg = $('#'+id).parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
@@ -288,14 +307,44 @@
 	});
 	// datepicker 앞, 뒤의 값을 확인해서 앞의 값이 뒤의 값보다 크면 alert 처리하고 초기화
 	function check_date(){
+		
 		var date1val = $('.date01 input').val();
 		var date2val = $('.date02 input').val();
-		
+		var msg = "정상적인 날자 범위가 아닙니다. 다시 선택해 주세요";
 		if(date1val !='' && date2val !=''){
 			if(date1val > date2val){
-				alert("정상적인 날자 범위가 아닙니다.");
+				$('#showMsg').empty();
+				$('#showMsg').append(msg);
+				$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+				alert(msg);
 				$('.date01 input').val('');
 				$('.date01 input').focus();
 			}
 		}
+	}
+	function popCustClick(id){
+		$.ajax({
+	        url: "/popcust/"+id,
+	        method: "GET",
+	        dataType: "json",
+	        success: function (data) {
+	        	var addr = data.HOMADDR1 + data.HOMADDR2 + data.HOMADDR3;
+	        	opener.$('#company').val('');
+	        	opener.$('#duty').val('');
+	        	opener.$('#custaddress').val('');
+	        	opener.$('#mobile').val('');
+	        	opener.$('#email').val('');
+	        	
+	        	opener.$('#company').val(data.COMPANY);
+	        	opener.$('#duty').val(data.DUTY);
+	        	opener.$('#custaddress').val(addr);
+	        	opener.$('#mobile').val(data.MOBILE);
+	        	opener.$('#email').val(data.EMAIL);
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+
+		
 	}

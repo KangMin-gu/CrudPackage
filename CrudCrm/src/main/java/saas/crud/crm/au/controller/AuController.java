@@ -19,12 +19,16 @@ import org.springframework.web.servlet.ModelAndView;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.au.service.AuService;
+import saas.crud.crm.au.service.CompanyService;
 
 @Controller
 public class AuController {
 	
 	@Autowired
 	private AuService auService;
+	
+	@Autowired
+	private CompanyService companyService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuController.class);
 	// 담당자 팝업 검색
@@ -140,7 +144,14 @@ public class AuController {
 		auService.userMenuInsert(request, userMenuDto);
 		mView.setViewName("redirect:/ad/user/"+userNo);
 		return mView;
-		
 	}
+	// 회원이 보는 회원사 상세
+	@RequestMapping(value="/ad/company/{siteId}",method=RequestMethod.GET)
+	public ModelAndView authCompanyRead(@PathVariable int siteId, HttpServletRequest request) {
+		ModelAndView mView = companyService.companyRead(request, siteId);
+		mView.setViewName("au/ad/adMasterRead");
+		return mView;
+	}
+	
 
 }

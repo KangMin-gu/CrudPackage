@@ -77,7 +77,6 @@
                                 <a href="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO }" class="btn btn-primary">취소</a>
                                 <button class="btn btn-primary submit">저장</button>
                             </div>
-                            
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -89,8 +88,8 @@
                                             <th><label for="clino">거래처명</label></th>
                                             <td>
                                             	<div class="input-group cli">
-                                                    <input type="text" class="form-control" autocomplete="off" name="clino_" id="clino_" value="${serviceInfo.CLINO_ }">
-                                                    <input type="hidden" class="form-control" name="clino" id="clino" value="${serviceInfo.CLINO }">
+                                                    <input type="text" class="form-control" name="clino_" id="clino_" value="${serviceInfo.CLINO_ }">
+                                                    <input type="hidden" class="form-control" name="clino" id="clino" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -105,12 +104,18 @@
                                             <th><label for="custname">고객명</label></th>
                                             <td>
                                             	<div class="input-group cust">
-                                                    <input type="text" class="form-control" autocomplete="off" name="custno_" id="custno_" value="${serviceInfo.CUSTNO_ }">
+                                                    <input type="text" class="form-control" name="custno_" id="custno_" value="${serviceInfo.CUSTNAME }">
                                                     <input type="hidden" class="form-control" name="custno" id="custno" value="${serviceInfo.CUSTNO }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="border-top-0">고객주소</th>
+                                            <td class="border-top-0">
+                                            	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -137,6 +142,12 @@
                                             <th>직장명</th>
                                             <td style="height: 43px;"><input type="text" class="form-control" disabled name="company" id="company" value="${serviceInfo.COMPANY }"></td>
                                         </tr>
+                                        <tr>
+                                            <th class="border-top-0">휴대전화번호</th>
+                                            <td class="border-top-0">
+                                                <input type="text" class="form-control" disabled name="mobile" id="mobile" value="${serviceInfo.MOBILE }">
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -156,40 +167,12 @@
                                             <td style="height: 43px;"><input type="text" class="form-control" disabled name="homepage" id="homepage" value="${serviceInfo.HOMEPAGE }"></td>
                                         </tr>
                                         <tr>
+                                            <th>직책</th>
+                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="duty" id="duty" value="${serviceInfo.DUTY }"></td>
+                                        </tr>
+                                        <tr>
                                             <th>이메일</th>
                                             <td style="height: 43px;"><input type="text" class="form-control" disabled name="email" id="email" value="${serviceInfo.EMAIL }"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box4 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">고객주소</th>
-                                            <td class="border-top-0">
-                                            	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">휴대전화번호</th>
-                                            <td class="border-top-0">
-                                                <input type="text" class="form-control" disabled name="custmobile" id="custmobile" value="${serviceInfo.CUSTMOBILE }">
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -318,7 +301,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td class="border-top-0" style="height: 42px;">
-                                            	<input type="text" class="form-control required validate name" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
+                                            	<input type="text" class="form-control error required validate string" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -524,6 +507,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 	<script>
 		$(document).ready(function () {
 			

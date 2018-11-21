@@ -48,15 +48,22 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/ad/user" method="POST">
                         <div class="ibox-content row">
-                        	<div class="w-100 text-right">
-								<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
-								<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+                        			<a class="alert-link" href="#">
+                        				<span id="showMsg"></span>
+                        			</a>
+                        		</div>
+                        		<div class="w-100 text-right">
+									<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
+									<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+								</div>
 							</div>
 							<br><br>
-                        	<div class="box1 col-lg-4 p-0">
+                        	<div class="box1 col-lg-6 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
-                                        <col style="width: 30%; background: #fafafa;">
+                                        <col style="width: 20%; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -77,7 +84,7 @@
                                     </tbody>
                                 </table>
                            </div>
-                           <div class="box1 col-lg-4 p-0">
+                           <div class="box1 col-lg-3 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
@@ -96,7 +103,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-4 p-0">
+                            <div class="box1 col-lg-3 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
@@ -184,7 +191,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="footable-page active"><a
 														href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
 												</c:when>
 												<c:otherwise>

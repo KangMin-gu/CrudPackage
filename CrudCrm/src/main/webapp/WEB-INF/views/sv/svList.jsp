@@ -49,11 +49,18 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/service" method="POST">
                         <div class="ibox-content row">
-									<div class="w-100 text-right">
-										<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
-										<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
-									</div>
-									<br><br>
+							<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+                        			<a class="alert-link" href="#">
+                        				<span id="showMsg"></span>
+                        			</a>
+                        		</div>
+                        		<div class="w-100 text-right">
+									<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
+									<a href="javascript:void(0);" class="btn btn-primary" id="resets">초기화</a> 
+								</div>
+							</div>
+							<br><br>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -203,7 +210,7 @@
                             <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                             	<colgroup>
-                            		<col style="width: 20px;">
+                            		<col style="width: 30px;">
                             		<col style="width: 150px;">
                             		<col style="width: 70px;">
                             		<col style="width: 100px;">
@@ -264,7 +271,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="footable-page active"><a
 														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>

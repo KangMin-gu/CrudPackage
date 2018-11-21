@@ -236,7 +236,7 @@
                                             	<label for="isdelete">서비스상태</label>
                                             </th>
                                             <td>
-                                               <select class="form-control float-left error required phone1" name="isdelete" id="isdelete">
+                                               <select class="form-control float-left error required validate check" name="isdelete" id="isdelete">
                                                     <option value="">선택</option>
                                                     <option value=0 <c:if test='${memCompany.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${memCompany.ISDELETE eq 1}'>selected</c:if>>미사용</option>

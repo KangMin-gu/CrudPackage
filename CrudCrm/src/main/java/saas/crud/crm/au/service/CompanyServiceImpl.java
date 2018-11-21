@@ -75,7 +75,7 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setEdtuser(userNo);
 		companyDao.companyUpdate(companyDto);
 	}
@@ -84,7 +84,7 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public int companyInsert(HttpServletRequest request, CompanyDto companyDto) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);
 		int siteid = companyDao.companyInsert(companyDto);
@@ -98,7 +98,7 @@ public class CompanyServiceImpl implements CompanyService{
 	public void companyDelete(HttpServletRequest request, int siteid) {
 		// TODO Auto-generated method stub
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		CompanyDto companyDto = new CompanyDto();
 		companyDto.setEdtuser(userNo);
@@ -112,7 +112,7 @@ public class CompanyServiceImpl implements CompanyService{
 	public void companyMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String sCheck[] = request.getParameterValues("siteid");
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		CompanyDto companyDto = new CompanyDto();
 		
 		companyDto.setEdtuser(userNo);
@@ -131,7 +131,7 @@ public class CompanyServiceImpl implements CompanyService{
 	public void companyLicenseInsert(HttpServletRequest request, int siteid) {
 		// TODO Auto-generated method stub
 
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		SearchRequest searchRequest = new SearchRequest();
 		

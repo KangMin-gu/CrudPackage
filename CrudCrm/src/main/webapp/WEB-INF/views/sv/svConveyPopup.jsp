@@ -28,7 +28,7 @@
                     <div class="ibox">
                         <div class="ibox-content row body">
                             <div class="w-100 text-right mb-2">
-                            	<button class="btn btn-primary" id="save">저장</button>
+                            	<button class="btn btn-primary submit" disabled id="save">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -51,7 +51,7 @@
                                             		<span class="input-group-addon">
                                                 		<i class="fa fa-calendar"></i>
                                                 	</span>
-                                                	<input type="text" class="form-control float-left required" autocomplete="off" name="conveydate" id="conveydate" value="${serviceInfo.CONVEYDATE }">
+                                                	<input type="text" class="form-control float-left error required validate string" autocomplete="off" name="conveydate" id="conveydate" value="${serviceInfo.CONVEYDATE }">
                                                 </div>
 											</td>
                                         </tr>
@@ -77,7 +77,7 @@
                                             <th><label for="conveyreason">이관사유</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <select class="form-control col-12 float-left mr-12" name="conveyreason" id="conveyreason">
+                                                    <select class="form-control col-12 float-left mr-12 error required validate number" name="conveyreason" id="conveyreason">
                                                     	<option value=0>선택</option>
                                                     	<option value=1 >업무변경</option>
                                                     	<option value=2 >휴가</option>
@@ -99,7 +99,7 @@
                                         <tr>
                                             <th><label for="prevowner">현담당자</label></th>
                                             <td>
-                                            	<input type="text" class="form-control required" disabled name="prevowner_" id="prevowner_" value="${serviceInfo.RACTOWNER_ }">
+                                            	<input type="text" class="form-control error validate required string" disabled name="prevowner_" id="prevowner_" value="${serviceInfo.RACTOWNER_ }">
                                             	<input type="hidden" class="form-control" name="prevowner" id="prevowner" value="${serviceInfo.RACTOWNER }">
                                             </td>
                                         </tr>
@@ -107,7 +107,7 @@
                                             <th><label for="nextowner">이관담당자</label></th>
                                             <td>
                                             	<div class="input-group owner" >
-                                                    <input type="text" class="form-control required" data-autoclose="true"  name="nextowner_" id="nextowner_" value="${serviceInfo.NEXTOWNER_ }">
+                                                    <input type="text" class="form-control required error validate string" data-autoclose="true"  name="nextowner_" id="nextowner_" value="${serviceInfo.NEXTOWNER_ }">
                                             		<input type="hidden" class="form-control" name="nextowner" id="nextowner" value="${serviceInfo.NEXTOWNER }">	
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -171,9 +171,6 @@
 		});
 	});
 		$('#save').click(function(e){
-			var check = check_required(e);
-			if(check == "true"){
-				debugger;
 			    	var	url= "/convey";	
 			    	var rcvno = $('#rcvno').val();
 			        var conveydate= $("#conveydate").val();
@@ -196,7 +193,6 @@
 			            }
 			        });
 
-			    }	
 			});
 	</script>
 	

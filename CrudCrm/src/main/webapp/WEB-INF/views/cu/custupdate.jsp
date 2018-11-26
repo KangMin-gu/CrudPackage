@@ -155,13 +155,13 @@
 													</td>
 												</tr>
 												<tr>
-													<th>직장팩스</th>
+													<th>직장팩스${custUpdate.WRKFAX1}</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1" >
 															<option value="" ${custUpdate.WRKFAX1 eq "" ? "selected" :""}>선택</option>
-															<option value="010" ${custUpdate.WRKFAX1 eq "010" ? "selected" :""}>010</option>
-															<option value="011" ${custUpdate.WRKFAX1 eq "011" ? "selected" :""}>011</option>
-															<option value="017" ${custUpdate.WRKFAX1 eq "017" ? "selected" :""}>017</option>
+															<option value="02" ${custUpdate.WRKFAX1 eq "02" ? "selected" :""}>02</option>
+															<option value="031" ${custUpdate.WRKFAX1 eq "031" ? "selected" :""}>031</option>
+															<option value="070" ${custUpdate.WRKFAX1 eq "070" ? "selected" :""}>070</option>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
 														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3"  value="${custUpdate.WRKFAX3 }">
@@ -187,7 +187,7 @@
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control validate url" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) http://www.crudsystem.co.kr" ></td>
+													<td><input type="text" class="form-control validate url" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) www.crudsystem.co.kr" ></td>
 												</tr>
 											</tbody>
 										</table>

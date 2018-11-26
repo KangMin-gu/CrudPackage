@@ -159,9 +159,9 @@
 													<td>
 														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
-															<option value="010">010</option>
-															<option value="011">011</option>
-															<option value="017">017</option>
+															<option value="02">02</option>
+															<option value="031">031</option>
+															<option value="070">070</option>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3" >

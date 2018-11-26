@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.au.dto.MemCompanyDto" alias="memCompanyDto" />
 		<typeAlias type="saas.crud.crm.nt.dto.NoteDto" alias="noteDto" />
 		<typeAlias type="saas.crud.crm.nt.dto.NoteCategoryDto" alias="noteCategoryDto" />
-		<typeAlias type="saas.crud.crm.ce.FileDto" alias="fileDto" />
+		<typeAlias type="saas.crud.crm.ce.EUploadDto" alias="fileDto" />
 		<typeAlias type="saas.crud.crm.au.dto.CompanyDto" alias="companyDto" />
 		<typeAlias type="saas.crud.crm.au.dto.MenuDto" alias="menuDto" />
 		<typeAlias type="saas.crud.crm.au.dto.LicenseDto" alias="licenseDto" />
@@ -23,6 +23,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.sv.dto.RcvDto" alias="rcvDto"/>
 		<typeAlias type="saas.crud.crm.sv.dto.RactDto" alias="ractDto"/>
 		<typeAlias type="saas.crud.crm.sv.dto.ConveyDto" alias="conveyDto"/>
+		
+		<typeAlias type="saas.crud.crm.cp.dto.CampaignDto" alias="campaignDto"/>
 	</typeAliases>
 
 	<mappers>
@@ -37,7 +39,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="DB/mssql/MenuMapper.xml" />
 		<mapper resource="DB/mssql/LicenseMapper.xml" />	
 		<mapper resource="DB/mssql/CodeMapper.xml"/>
-		<mapper resource="DB/mssql/SvMapper.xml"/>			
+		<mapper resource="DB/mssql/SvMapper.xml"/>
+		
+		<mapper resource="DB/mssql/CampaignMapper.xml"/>				
 
 	</mappers>
 	

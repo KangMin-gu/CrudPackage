@@ -247,7 +247,7 @@
     //id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
 		//유효성 검사
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
+		var namePattern = /^[가-힣a-zA-Z0-9]{0,100}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
 		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
 		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리

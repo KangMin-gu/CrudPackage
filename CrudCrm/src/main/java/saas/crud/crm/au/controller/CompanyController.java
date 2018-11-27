@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.CompanyDto;
@@ -54,8 +55,9 @@ public class CompanyController {
 
 	// 회원사 UPDATE 실행
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.PUT)
-	public ModelAndView authCompanyUpdateSet(HttpServletResponse response, HttpServletRequest request, @ModelAttribute  CompanyDto companyDto) {
-		companyService.comapnyUpdate(response, request, companyDto);	
+
+	public ModelAndView authCompanyUpdateSet(HttpServletResponse response,@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
+		companyService.comapnyUpdate(response, request, CompanyDto);	
 		ModelAndView mView = new ModelAndView();
 		int siteId = companyDto.getSiteid();
 		mView.setViewName("redirect:/ma/company/"+siteId);
@@ -108,8 +110,11 @@ public class CompanyController {
 	}
 	// 회원사 라이센스 부여
 	@RequestMapping(value="/ma/company/license/{siteid}", method=RequestMethod.POST)
-	public void authComapnyLicense(HttpServletRequest request,@PathVariable int siteid) {
+	@ResponseBody
+	public int authComapnyLicense(HttpServletRequest request,@PathVariable int siteid) {
 		companyService.companyLicenseInsert(request,siteid);
+		
+		return 0;
 	}
 	
 }

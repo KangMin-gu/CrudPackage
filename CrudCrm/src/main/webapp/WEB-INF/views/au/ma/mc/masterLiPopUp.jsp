@@ -35,12 +35,21 @@
                         <div class="ibox-title row">
                             <h4>기본정보</h4>
                         </div>
-                        <form:form action="${pageContext.request.contextPath}/ma/company/license/${memCompany.SITEID }" method="POST">
                         <div class="ibox-content row">
-                        
-                            <div class="w-100 text-right mb-2">
-                                <button class="btn btn-primary save" id="save">저장</button>
-                            </div>
+                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(라이센스제품 : 선택해주세요. 라이센스수량 : 숫자만 입력해야 합니다.) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(라이센스제품 : 선택해주세요. 라이센스수량 : 숫자만 입력해야 합니다.) </strong>
+									</span>
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                        	</div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+									<Strong><span id="showMsg"></span></Strong>				
+	                        	</div>													
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<Button type="submit" class="btn btn-primary submit" id="save" disabled >저 장</Button>
+								</div>
+							</div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -50,12 +59,12 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control required" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스제품</label></th>
                                             <td>
-                                            	<select class="form-control col-12 float-left mr-12 required" name="licenseno" id="licenseno" value="">
+                                            	<select class="form-control col-12 float-left mr-12 required validate error check" name="licenseno" id="licenseno" value="">
                                             		<option value="">선택</option>
                                             	</select>
                                             </td>
@@ -80,7 +89,7 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스수량</label></th>
-                                            <td><input type="text" class="form-control required validation phone1" name="buycnt" id="buycnt" value=""></td>
+                                            <td><input type="text" class="form-control required validation error check" name="buycnt" id="buycnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -98,13 +107,13 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">현재 사용량</label></th>
-                                            <td><input type="text" class="form-control required" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <input type="hidden" name="siteid" id ="siteid" value="${memCompany.SITEID }">
                             </div>
                         </div>
-                        </form:form>
                     </div>
                 </div>
             </div>
@@ -129,7 +138,10 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
 	
+
+	
 	$(document).ready(function () {
+		
     	$.ajax({
         	url: "/license/menu",
         	method: "GET",
@@ -145,9 +157,28 @@
     	});
 	});
 	
-	$('#save').click(function(e){
-		windows.close();
+	$('.submit').click(function(e){
+		var id = $('#siteid').val();
+		var licenseno = $('#licenseno').val();
+		var buycnt = $('#buycnt').val();
+		var param = {"siteid":id,"licenseno":licenseno,"buycnt":buycnt};
+		$.ajax({
+        	url: "/ma/company/license/" + id,
+        	method: "POST",
+        	data : param,
+        	dataType: "json",
+        	success: function (data) {
+        		window.close();
+        	},
+        	error: function (request, status, error) {
+            	alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        	}
+    	});
+		
+		
 	});
+	
+	
 	</script>		
 
 </body>

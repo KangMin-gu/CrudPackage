@@ -366,6 +366,8 @@ public class CompanyDto {
 		this.owner = owner;
 	}
 
+
+	
 	
 	
 	

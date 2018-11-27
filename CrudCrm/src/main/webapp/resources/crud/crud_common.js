@@ -62,12 +62,11 @@
 		var res = checkVal(e.target.id);
 		enableSubmit();
 	});
-	
-	$('.required').change(function(e){
-		var res = checkVal(e.target.id);
+	/*
+	$('.required').blur(function(e){
 		enableSubmit();
 	});
-	
+	*/
 	//유효성검사
 	$('.submit').click(function(){
 		
@@ -118,7 +117,7 @@
 		$('#msgDiv').hide();//div창숨기기
 		$('#showMsg').empty();//메시지 삭제
 	
-		$('#command').submit();//전송
+		//$('#command').submit();//전송
 		
 	});
 	
@@ -157,7 +156,7 @@
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.username.textContent);
+		opener.$("#"+parentid).val(tr.children.username.textContent).trigger('keyup');
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
@@ -171,7 +170,7 @@
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.username.textContent);
+		opener.$("#"+parentid).val(tr.children.username.textContent).trigger('keyup');
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
@@ -254,7 +253,7 @@
 		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
 		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리
 		var numberPattern = /^[1-9]{1,2}$/; // 0을 제외한 1~2자리숫자
-		var checkPattern = /^[0-9]{1}$/; // 0을 포함한 1자리 숫자
+		var checkPattern = /^[0-9]{1,2}$/; // 0을 포함한 1자리 숫자
 		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
 		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
 		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호

@@ -37,9 +37,6 @@
                     <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/ad/user">사용자목록</a>
                         </li>
                     </ol>
@@ -91,7 +88,7 @@
 											<th>휴대전화번호</th>
 											<td>${user.MOBILE }</td>
 											<th>입사일자</th>
-											<td>${user.ENTERDATE }3</td>
+											<td>${user.ENTERDATE }</td>
 											<th>직책</th>
 											<td>${user.USERDUTY}</td>	
 										</tr>
@@ -196,21 +193,25 @@
 		 
 		 $(".bootstrap-duallistbox-container").find("*").prop("disabled",true);
 		 
-			var unselected = $('select[name="usermenuno_helper1"] option');
-			var selected = $('select[name="usermenuno_helper2"] option');
+			var unselected = $('#usermenuno option:not(:selected)')
+			var selected = $('#usermenuno option:selected');
 			var this_value="";
-			var selected_value ="";
-			$.each(selected,function(){
+			var selected_value="";
+			
+			//위에 jstl로 2중 foreach를 사용해서 이중포문 안쓰려고 헀는데 selected된 값과 selected되지 않은 값이 동시에 만들어져서
+			// selected가 아닌 값을 지우면 동시에 사라지는 현상이 생겨서 어쩔수없이 다시 2중 each문을 사용해서 selected 값과 selected가 아닌 값을 비교해서 selected가 아닌 값을 remove
+			$.each(selected,function(index){
 				selected_value = $(this).val();
-				$.each(unselected,function(){
-					this_value= $(this).val();
-					if(this_value == selected_value){
+				$.each(unselected,function(index){
+					this_value = $(this).val();
+					if(selected_value == this_value){
 						$(this).remove();
 					}
 				});
 			});
-			var unselected = $('select[name="usermenuno_helper1"] option');
-			$('.box1 .info').text('Showing all ' + unselected.length)
+			// bootstrapDaulListbox의 제공기능중 하나로 option 값을 지웠을때 새로고침을 해주는 역할
+			$('.dual_select').bootstrapDualListbox('refresh',true);
+
 	});
 
 	</script>		

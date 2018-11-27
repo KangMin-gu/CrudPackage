@@ -596,20 +596,6 @@
 	
         $(document).ready(function () {
         	
-			//********필수 값 실시간 체크*********************************        	      
-        	/*
-        	$('#mobile1').change(function() {//셀렉트박스 change 메서드
-        		var state = $('#mobile1 option:selected').val();
-        		if(state == '') {//값이없다면
-        			$('#mobile1').addClass('error');//에러 태두리
-        			$('.submit').prop("disabled",true);//submit 비활성화
-        		} else {
-        			$('#mobile1').removeClass('error');
-        			enableSubmit();
-        		}
-        	});
-  			*/
-    	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',

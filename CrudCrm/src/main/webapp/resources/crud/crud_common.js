@@ -121,8 +121,9 @@
 		$('#command').submit();//전송
 		
 	});
+	
 	$('.poplogo').click(function(e){
-		openNewWindow('로고','/poplogo',e.target.id,600,700);
+		openNewWindow('로고','/poplogo',e.target.id,400,180);
 	});
 	
 	

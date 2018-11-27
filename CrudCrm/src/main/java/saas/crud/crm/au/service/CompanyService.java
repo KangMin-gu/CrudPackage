@@ -15,7 +15,5 @@ public interface CompanyService {
 	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto);
 	public void companyDelete(HttpServletRequest request, int siteid);
 	public void companyMultiDelete(HttpServletRequest request);
-	
 	public void companyLicenseInsert(HttpServletRequest request, int siteid);
-
 }

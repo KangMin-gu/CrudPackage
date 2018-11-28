@@ -57,12 +57,6 @@
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
 	</select>
-	<select id="idcheck" parameterType="String" resultType="int">
-		SELECT count(*)
-			FROM Crud_SaaS.dbo.TB980010
-			WHERE USERID = #{userid}
-			
-	</select>
 	
 	<insert id="insert" parameterType="campaignDto">
 		<selectKey keyProperty="campno"  resultType="integer" order="AFTER">
@@ -123,63 +117,118 @@
 			WHERE CAMPNO = #{campno}
 	</update>
 	
-	<select id="topList" parameterType="int" resultType="hashMap">
-		SELECT TOP 5
-		A.USERNO
-		,A.USERNAME
-		,A.USERID
-		,A.EMAIL
-		,A.USERDUTY
-		,CASE WHEN A.ISDELETE = 0 THEN '사용'
-			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
-		,A.EMAIL
-		,A.MOBILE1
-		,A.MOBILE2
-		,A.MOBILE3
-			FROM Crud_SaaS.dbo.TB980010 A
-			WHERE A.ISDELETE = 0
-			AND A.SITEID = #{siteid}
-	</select>
-	
-	<select id="menuList" parameterType="int" resultType="hashMap">
-		SELECT X.MENUNO,X.MENUNAME
-		,CASE WHEN X.CNT >= X.BUYCNT THEN 0 ELSE 1 END AS TOTAL
-		,X.CNT,X.BUYCNT 
-		FROM (SELECT B.MENUNO, B.MENUNAME, ISNULL(C.CNT, 0) AS CNT, A.BUYCNT
-				FROM T_SITE_LICENSE A
-				INNER JOIN T_MENU B ON B.LICENSENO = A.LICENSENO
-				LEFT OUTER JOIN (SELECT SITEID, COUNT(MENUNO) AS CNT, MENUNO
-									FROM T_USER_MENU
-								GROUP BY MENUNO, SITEID, MENUNO) C ON C.MENUNO = B.MENUNO
-				WHERE A.SITEID = #{siteid}) X
-		WHERE CASE WHEN X.CNT <![CDATA[>]]>= X.BUYCNT THEN 0
-				ELSE 1 END  != 0
-	</select>
-	
-	<update id="menuDelete" parameterType="userMenuDto">
-	
-		UPDATE Crud_SaaS.dbo.T_USER_MENU
-			SET ISDELETE = 1
-			WHERE USERNO = #{userno}
-			AND SITEID = #{siteid}
-	</update>
-	
-	<insert id="menuMerge" parameterType="userMenuDto">
-		
-		MERGE INTO Crud_SaaS.dbo.T_USER_MENU AS A
-			USING (select '1' AS DUAL ) B ON (A.USERNO = #{userno} AND A.MENUNO = #{menuno})
-		WHEN MATCHED THEN
-			UPDATE SET A.ISDELETE = 0
-		WHEN NOT MATCHED THEN
-			INSERT (SITEID,USERNO,MENUNO,REGDATE,REGUSER,EDTDATE,EDTUSER,ISDELETE)
-			VALUES(#{siteid},#{userno},#{menuno},getDate(),#{reguser},getDate(),#{edtuser},0);
+	<insert id="targetCustInsert" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		(
+			SITEID
+			,CUSTNO
+			,CUSTNAME
+			,MOBILENO
+			,EMAIL
+			,CAMPNO
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)
+		SELECT
+			SITEID
+			,CUSTNO
+			,CUSTNAME 
+			,MOBILE1 + MOBILE2 + MOBILE3 AS MOBILE
+			,EMAIL
+			,#{campno}
+			,getDate()
+			,#{userno}
+			,getDate()
+			,#{userno}
+		FROM Crud_SaaS.dbo.CU100010
+		WHERE SITEID = #{siteid}
+		AND INFOAGREE = '0'
+	<if test="sex != null">
+		AND  SEX = #{sex}
+	</if>
+	<if test="custgubun != null">
+		AND CUSTGUBUN = #{custgubun}
+	</if>
+	<if test="custgrade != null">
+		AND CUSTGRADE = #{custgrade}
+	</if>
+	<if test="birth != null">
+		AND BIRTH = #{birth}
+	</if>
+	<if test="actgrade != null">	
+		AND ACTGRADE = #{actgrade}
+	</if>
+	<if test="regdate1 != null">
+		AND REGDATE <![CDATA[>]]>= #{regdate1}
+	</if>
+	<if test="regdate2 != null">
+		AND REGDATE <![CDATA[<]]>= #{regdate2}
+	</if>
 	</insert>
 	
-	<select id="userMenu" parameterType="userMenuDto" resultType="hashMap">
-		SELECT MENUNO FROM Crud_SaaS.dbo.T_USER_MENU
-		WHERE SITEID = #{siteid}
-		AND USERNO = #{userno}
+	<insert id="targetInsert" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET
+		(
+			NAME
+			,VALUE
+			,CAMPNO
+			,SITEID
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)VALUES(
+		#{name}
+		,#{value}
+		,#{campno}
+		,#{siteid}
+		,getDate()
+		,#{userno}
+		,getDate()
+		,#{userno}
+		)
+	</insert>
+	
+	<select id="targetHistCount" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) 
+			FROM (
+					SELECT CAMPNO  
+						FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST 
+						WHERE SITEID = #{siteid}
+                        AND CAMPNO = #{campno} GROUP BY CAMPNO) X
 	</select>
+	
+	<delete id="targetDelete" parameterType="hashMap">
+		DELETE FROM Crud_SaaS.dbo.T_CAMP_TARGET
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+	</delete>
+	
+	<insert id="targetHistInsert" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_HIST
+		(
+			NAME
+			,VALUE
+			,CAMPNO
+			,SITEID
+			,CAMPORDER
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)VALUES(
+		#{name}
+		,#{value}
+		,#{campno}
+		,#{siteid}
+		,#{order}
+		,getDate()
+		,#{userno}
+		,getDate()
+		,#{userno}
+		)
+	</insert>
 	
 </mapper>

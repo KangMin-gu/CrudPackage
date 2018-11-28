@@ -54,4 +54,37 @@ public class CampaignDaoImpl implements CampaignDao{
 		session.update("cp.delete",campaignDto);
 	}
 
+	@Override
+	public void campTargetHistInsert(Map<String,Object> param) {
+		// TODO Auto-generated method stub
+		session.insert("cp.targetHistInsert",param);
+	}
+
+	@Override
+	public void campTargetInsert(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		session.insert("cp.targetInsert",param);
+	}
+	@Override
+	public int campTargetHistCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		int order = session.selectOne("cp.targetHistCount",param);
+		
+		return order;
+	}
+
+	@Override
+	public void campTargetDelete(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		session.delete("cp.targetDelete",param);
+	}
+
+	@Override
+	public void campTargetCustInsert(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		session.insert("cp.targetCustInsert",param);
+	}
+	
+	
+
 }

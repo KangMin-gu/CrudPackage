@@ -109,6 +109,22 @@ public class CampaignController {
 		mView.setViewName("redirect:/campaign");
 		return mView;
 	}
+	//캠페인 다중삭제
+	
+	@RequestMapping(value="/campaign/target/{campNo}", method=RequestMethod.GET)
+	public ModelAndView authCampaignTargetInsert(HttpServletRequest request,@PathVariable int campNo) {
+		ModelAndView mView = campaignService.campRead(request,campNo);
+		mView.setViewName("cp/campTargetInsert");
+		return mView;
+	}
+	@RequestMapping(value="/campaign/target/{campNo}", method=RequestMethod.POST)
+	public ModelAndView authCampaignTargetInsertSet(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		campaignService.campTargetInsert(request);
+		mView.setViewName("cp/campTargetInsert");
+		return mView;
+	}
+	
 	
 	
 }

@@ -18,5 +18,14 @@ public interface CampaignDao {
 	public void campUpdate(CampaignDto campaignDto);
 	
 	public void campDelete(CampaignDto campaignDto);
+	
+	public void campTargetInsert(Map<String,Object> param);
+	
+	public void campTargetHistInsert(Map<String,Object> param);
+	
+	public int campTargetHistCount(Map<String,Object> param);
+	
+	public void campTargetDelete(Map<String,Object> param);
 
+	public void campTargetCustInsert(Map<String,Object> param);
 }

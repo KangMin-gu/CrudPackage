@@ -19,5 +19,7 @@ public interface CampaignService {
 	public void campDelete(HttpServletRequest request, int campNo);
 	
 	public void campMultiDelete(HttpServletRequest reuqest);
+	
+	public void campTargetInsert(HttpServletRequest request);
 
 }

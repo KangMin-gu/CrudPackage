@@ -157,11 +157,12 @@
                                     <tbody>
                                     	<tr>
                                         	<th class="border-top-0">담당자</th>
-                                           	<td class="border-top-0">
-                                               	<div class="input-group">
-                                               		<input type="text" class="form-control">
+                                           	<td class="border-top-0 border-bottom-0">
+                                            	<div class="input-group owner">
+                                                    <input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="">
+                                                    <input type="hidden" name="owner" id="owner" value="">
                                                     <span class="input-group-addon">
-                                                    	<a href="javascript:void(0);"><i class="fa fa-search"></i></a>
+                                                        <a><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
                                             </td>
@@ -179,7 +180,7 @@
                                     	<tr>
                                         	<th class="border-top-0">비고</th>
                                             <td class="border-top-0">
-                                            	<textarea name="textNote" name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;"></textarea>
+                                            	<textarea name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;"></textarea>
                                             </td>
                                         </tr>
                                     </tbody>

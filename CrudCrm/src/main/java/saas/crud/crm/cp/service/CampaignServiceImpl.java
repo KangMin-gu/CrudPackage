@@ -1,5 +1,8 @@
 package saas.crud.crm.cp.service;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -113,7 +116,7 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignDao.campDelete(campaignDto);
 		
 	}
-	
+	// 캠페인 멀티삭제
 	@Override
 	public void campMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -135,5 +138,42 @@ public class CampaignServiceImpl implements CampaignService{
 			campaignDto.setCampno(campNo);
 			campaignDao.campDelete(campaignDto);
 		}
+	}
+
+	//캠페인 타겟 추출
+	@Override
+	public void campTargetInsert(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		int campNo = Integer.parseInt(request.getParameter("campno").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		Map<String,Object> param = new HashMap();
+		
+		Enumeration params = request.getParameterNames();
+		param.put("campno", campNo);
+		param.put("userno", userNo);
+		param.put("siteid", siteId);
+		int order = campaignDao.campTargetHistCount(param);
+		
+		param.put("order", order+1);
+		
+		if(order > 0) {
+			campaignDao.campTargetDelete(param);
+		}
+		
+		while (params.hasMoreElements()) {
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			if(value != "") {
+				if(!name.equals("campno"))
+					param.put("name", name);
+					param.put("value", value);
+					param.put(name, value);
+					campaignDao.campTargetInsert(param);
+					campaignDao.campTargetHistInsert(param);
+			}
+		}
+		campaignDao.campTargetCustInsert(param);
 	}
 }

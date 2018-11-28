@@ -161,6 +161,10 @@
 
                                 <h1>대상추출</h1>
                                 <div class="step-content">
+                                	<div class="w-100 text-right mb-2">
+                                			<a href="${pageContext.request.contextPath}/campaign" class="btn btn-primary">목록</a>
+                                			<a href="${pageContext.request.contextPath}/campaign/target/${campInfo.CAMPNO }" class="btn btn-primary">타켓추출</a>
+                            		</div>
                                     <div class="ibox">
                                         <div class="ibox-title row border-0">
                                             <h4>캠페인 정보</h4>
@@ -174,12 +178,12 @@
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
-                                                            <th>캠페인정보</th>
-                                                            <td><input type="text" class="form-control"></td>
+                                                            <th>캠페인명</th>
+                                                            <td>${campInfo.CAMPNAME }</td>
                                                         </tr>
                                                         <tr>
                                                             <th>캠페인 기간</th>
-                                                            <td><input type="text" class="form-control"></td>
+                                                            <td>${campInfo.CAMPDATE_ }</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -193,11 +197,11 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>캠페인 유형</th>
-                                                            <td><input type="text" class="form-control"></td>
+                                                            <td>${campInfo.CAMPTYPE_ }</td>
                                                         </tr>
                                                         <tr>
                                                             <th>담당자</th>
-                                                            <td><input type="text" class="form-control"></td>
+                                                            <td>${campInfo.OWNER_ }</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -211,7 +215,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>진행단계</th>
-                                                            <td><input type="text" class="form-control"></td>
+                                                            <td>추출</td>
                                                         </tr>
                                                         <tr>
                                                             <th>대상 고객수</th>
@@ -238,8 +242,9 @@
                                                             <th>성별</th>
                                                             <td>
                                                                 <select class="form-control" style="height: 23px;">
-                                                                    <option>남자</option>
-                                                                    <option>여자</option>
+                                                                	<option value="">선택</option>
+                                                                    <option value="M">남자</option>
+                                                                    <option value="F">여자</option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -247,8 +252,9 @@
                                                             <th>고객구분</th>
                                                             <td>
                                                                 <select class="form-control" style="height: 23px;">
-                                                                    <option>회원</option>
-                                                                    <option>비회원</option>
+                                                                	<option value="">선택</option>
+                                                                    <option value="">회원</option>
+                                                                    <option value="">비회원</option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -1490,6 +1496,7 @@
 			enableAllSteps: true,
 		    enablePagination: false
 		});
+		$('.content').css('height','800px');
 		
 	});
 

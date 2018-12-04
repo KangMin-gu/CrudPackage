@@ -79,7 +79,7 @@ public class CustController {
 	
 	//고객 상세페이지(수정폼)
 	@RequestMapping(value="/cust/post/{custno}", method=RequestMethod.GET)
-	public ModelAndView authcustUpdateForm(HttpServletRequest request, @PathVariable int custno) {
+	public ModelAndView authcustDetailForm(HttpServletRequest request, @PathVariable int custno) {
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("custUpdate",custService.svcCustUpdateForm(custno));
 		mView.setViewName("cu/custupdate");
@@ -88,7 +88,7 @@ public class CustController {
 	
 	//고객 상세페이지 (수정 실행)	
 	@RequestMapping(value="/cust/post/{custno}", method=RequestMethod.POST)
-	public String authcustFormUpdate(HttpServletRequest request, @PathVariable int custno 
+	public String authcustDetailUpdate(HttpServletRequest request, @PathVariable int custno 
 									,@ModelAttribute CustDto custDto, @ModelAttribute CustDenyDto custDenyDto) {
 		int res = custService.svcCustformUpdate(request, custDto,custDenyDto);
 		ModelAndView mview = new ModelAndView();		
@@ -106,7 +106,7 @@ public class CustController {
 	
 	//고객 insert (실행)	
 	@RequestMapping(value="/cust/post", method=RequestMethod.POST)
-	public String authcustFormInsert(HttpServletRequest request, @ModelAttribute CustDto custDto, @ModelAttribute CustDenyDto custDenyDto) {
+	public String authcustInsert(HttpServletRequest request, @ModelAttribute CustDto custDto, @ModelAttribute CustDenyDto custDenyDto) {
 		int res = custService.svcCustformInsert(request, custDto,custDenyDto);
 		ModelAndView mview = new ModelAndView();		
 		mview.setViewName("cu/custinsert");

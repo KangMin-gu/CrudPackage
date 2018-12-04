@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sales">
+
+	<!-- 영업 목록 카운팅 -->
+	<select id="salesListCount" parameterType="hashMap" resultType="int">
+
+	SELECT 
+		COUNT(*)
+	FROM TB210010 
+	WHERE 
+		SITEID = #{siteid}
+		AND ISDELETE = 0
+		<if test="salename != null">
+		AND SALENAME LIKE '%'+#{salename}+'%'
+		</if>
+		<if test="owner != null and owner != 0">
+		AND OWNER = #{owner}
+		</if>
+		<if test="clino != null and clino != 0">
+		AND CLINO = #{clino}
+		</if>	
+		<if test="fromregdt != null">
+		AND CONVERT(VARCHAR, REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
+		</if>
+		<if test="toregdt != null">
+		AND CONVERT(VARCHAR, REGDATE, 112) <![CDATA[<=]]> #{toregdt}
+		</if>	
+		<if test="salestate != null and salestate != 0">
+		AND SALESTATE = #{salestate}
+		</if>	
+	</select>	
+	<!-- 영업 리스트 -->
+	<select id="salesList" parameterType="hashMap" resultType="hashMap">
+	SELECT 
+		ROWNUM, SALESNO, SALENAME
+		,CLINO, CLINAME, SALESTATE
+		,CONVERT(VARCHAR, FORDDATE, 23) AS FORDDATE
+		,CONVERT(VARCHAR, STATEDATE, 23) AS STATEDATE
+		,OWNER, USERNAME		
+	FROM (
+		SELECT
+			(ROW_NUMBER() OVER(ORDER BY SALESNO DESC)) AS ROWNUM
+			,A.SALESNO, A.SALENAME
+			,A.CLINO, B.CLINAME
+			,A.FORDDATE, A.SALESTATE, A.STATEDATE
+			,A.OWNER, C.USERNAME
+		FROM TB210010 A
+		LEFT OUTER JOIN TB200010 B ON A.CLINO = B.CLINO
+		LEFT OUTER JOIN TB980010 C ON A.OWNER = C.USERNO   
+		
+		WHERE 
+			A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="salename != null">
+			AND A.SALENAME LIKE '%'+#{salename}+'%'
+			</if>
+			<if test="owner != null and owner != 0">
+			AND A.OWNER = #{owner}
+			</if>
+			<if test="clino != null and clino != 0">
+			AND A.CLINO = #{clino}
+			</if>	
+			<if test="fromregdt != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 23) <![CDATA[>=]]> #{fromregdt}
+			</if>
+			<if test="toregdt != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 23) <![CDATA[<=]]> #{toregdt}
+			</if>	
+			<if test="salestate != null and salestate != 0">
+			AND A.SALESTATE = #{salestate}
+			</if>	
+		) T 
+	WHERE 
+		ROWNUM between #{startRowNum} and #{endRowNum}	
+	</select>
+
+	<select id="salesDetail" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
+	SELECT
+	A.SALESNO, A.SALENAME
+	,A.OWNER, B.USERNAME
+	,A.CLINO, C.CLINAME
+	,A.SALESTATE
+	,( CASE WHEN   CONVERT(DATE, A.STATEDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.STATEDATE,23) END)   AS STATEDATE
+	, A.PROB
+	,( CASE WHEN   CONVERT(DATE, A.FORDDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.FORDDATE,23) END)   AS FORDDATE
+	, A.FORDAMOUNT, A.CATEGORY
+	,A.PRDNAME
+	,( CASE WHEN   CONVERT(DATE, A.RORDDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.RORDDATE,23) END)   AS RORDDATE
+	, A.RORDAMOUNT
+
+	,A.NEED, A.SOLUTION
+	,A.CUSTMEMO, A.SALESMEMO
+	,A.REFUSAL
+	,A.SURMOUNT 
+	
+	FROM TB210010 A
+	LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+	LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+	
+	WHERE
+		A.SITEID = #{siteid}
+		AND A.SALESNO = #{salesno}
+		AND A.ISDELETE = 0 	
+	</select>
+
+
+	<!-- 거래처 추가 -->	
+	<insert id="salesInsert" parameterType="saas.crud.crm.sa.dto.SalesDto">
+		<selectKey keyProperty="salesno"  resultType="integer" order="AFTER">
+	
+	INSERT INTO TB210010	
+	(
+	SITEID
+	,REGUSER
+	,EDITUSER
+	,ISDELETE
+	,REGDATE
+	,EDITDATE
+	
+	,SALENAME
+	,OWNER
+	,CLINO
+	,SALESTATE
+	,STATEDATE
+	,PROB
+	,FORDDATE
+	,FORDAMOUNT
+	,CATEGORY
+	,PRDNAME
+	,RORDDATE
+	,RORDAMOUNT
+	
+	,NEED
+	,SOLUTION
+	,CUSTMEMO
+	,SALESMEMO
+	,REFUSAL
+	,SURMOUNT
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{reguser}
+	,#{edituser}
+	,0
+	,getdate()
+	,getdate()
+	
+	,#{salename}
+	,#{owner}
+	,#{clino}
+	,#{salestate}
+	,#{statedate}
+	,#{prob}
+	,#{forddate}
+	,#{fordamount}
+	,#{category}
+	,#{prdname}
+	,#{rorddate}
+	,#{rordamount}
+	
+	,#{need}
+	,#{solution}
+	,#{custmemo}
+	,#{salesmemo}
+	,#{refusal}
+	,#{surmount}
+	)	
+		
+	SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+
+	<!-- 영업수정 -->
+	<update id="salesUpdate" parameterType="saas.crud.crm.sa.dto.SalesDto">
+	UPDATE TB210010
+	SET
+	EDITUSER = #{edituser}
+	,EDITDATE = GETDATE()
+	
+	,SALENAME = #{salename}
+	,OWNER = #{owner}
+	,CLINO = #{clino}
+	,SALESTATE = #{salestate}
+	,STATEDATE = #{statedate}
+	,PROB = #{prob}
+	,FORDDATE = #{forddate}
+	,FORDAMOUNT = #{fordamount}
+	,CATEGORY = #{category}
+	,PRDNAME = #{prdname}
+	,RORDDATE = #{rorddate}
+	,RORDAMOUNT = #{rordamount}
+	
+	,NEED = #{need}
+	,SOLUTION = #{solution}
+	,CUSTMEMO = #{custmemo}
+	,SALESMEMO = #{salesmemo}
+	,REFUSAL = #{refusal}
+	,SURMOUNT = #{surmount}
+	
+	
+	WHERE
+		SALESNO = #{salesno}
+		AND SITEID = #{siteid} 
+	</update>
+	
+	<!-- 영업삭제 -->
+	<update id="salesDelete" parameterType="saas.crud.crm.sa.dto.SalesDto">
+	
+	UPDATE TB210010
+	SET 
+	ISDELETE = 1
+	
+	WHERE 
+		SALESNO = #{salesno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+	
+	<!-- 거래처-영업 리스트 최근 20건 조회-->
+	<select id="cliSalesList" parameterType="hashMap" resultType="hashMap">
+	SELECT
+	TOP 20 
+	A.SALESNO, A.SALENAME
+	,A.OWNER, B.CUSTNAME
+	,A.FORDDATE, A.SALESTATE, A.STATEDATE
+	
+	FROM TB210010 A
+	LEFT OUTER JOIN CU100010 B ON A.OWNER = B.CUSTNO
+	
+	WHERE
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0 
+		AND A.CLINO = #{clino}
+	
+	ORDER BY A.SALESNO DESC 
+	</select>
+	
+	<!-- 영업-관련고객  리스트 -->
+	<select id="salesCustList" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
+	
+	SELECT
+	A.SALESCUSTNO
+	,A.CUSTNO, B.CUSTNAME, B.DEPTNAME , B.DUTY
+	,B.CLINO, C.CLINAME
+	,A.KEYMAN
+	,A.MEMO
+	
+	FROM TB250010 A
+	LEFT OUTER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
+	LEFT OUTER JOIN TB200010 C ON B.CLINO = C.CLINO
+	
+	WHERE
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0
+		AND A.SALESNO = #{salesno}
+	
+	</select>
+	
+</mapper>

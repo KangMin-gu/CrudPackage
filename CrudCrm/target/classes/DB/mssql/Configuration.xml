@@ -37,8 +37,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="DB/mssql/MenuMapper.xml" />
 		<mapper resource="DB/mssql/LicenseMapper.xml" />	
 		<mapper resource="DB/mssql/CodeMapper.xml"/>
-		<mapper resource="DB/mssql/SvMapper.xml"/>			
-
+		<mapper resource="DB/mssql/SvMapper.xml"/>
+		<mapper resource="DB/mssql/SalesMapper.xml"/>
+		<mapper resource="DB/mssql/ClientMapper.xml"/>
+		
+					
 	</mappers>
 	
 </configuration>

@@ -19,13 +19,14 @@
 <!-- S: 추가 CSS-->
 <!-- Toastr style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"> <!--datePicker-->
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<!--datePicker-->
 </head>
 
 <body>
 
-<div id="wrapper">
-		
+	<div id="wrapper">
+
 		<!-- leftside -->
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 		<!-- Top -->
@@ -36,236 +37,248 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객관리</h2>
+					<h2>영업관리</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item active" ><strong>목록</strong></li>
+						<li class="breadcrumb-item active"><a href="/sales">목록</a></li>
+						<li class="breadcrumb-item active"><strong>영업추가</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
 
 
-  <!-- S: 영업관리 추가/수정 -->
-        <div class="wrapper wrapper-content  animated fadeInRight article">
-            <div class="row justify-content-md-center">
-                <div class="col-lg-12">
-                    <div class="ibox">
-                        <div class="ibox-title row border-0">
-                            <h4>기본정보</h4>
-                        </div>
-                        <div class="ibox-content row">
-                            <div class="w-100 text-right mb-3">
-                                <a href="javascript:void(0);" class="btn btn-primary">저장</a>
-                                <a href="javascript:void(0);" class="btn btn-primary">목록</a>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>영업건명<sup>*</sup></th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>현단계<sup>*</sup></th>
-                                            <td>
-                                                <select class="form-control" style="height: 23px;">
-                                                    <option value="">계약성공종료</option>
-                                                    <option value="">계약중</option>
-                                                    <option value="">제안서제출</option>
-                                                    <option value="">접촉중</option>
-                                                    <option value="">문의</option>
-                                                    <option value="">중도포기</option>
-                                                    <option value="">경쟁실패</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>예상수주일</th>
-                                            <td>
-                                                <div class="input-group p-0">
-                                                    <div class="d-flex date date01">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>제품명</th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>카테고리</th>
-                                            <td>
-                                                <select class="form-control" style="height: 23px;">
-                                                    <option value="">카테고리</option>
-                                                    <option value="">카테고리</option>
-                                                    <option value="">카테고리</option>
-                                                    <option value="">카테고리</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>영업담당자<sup>*</sup></th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>현단계진입일</th>
-                                            <td>
-                                                <div class="input-group p-0">
-                                                    <div class="d-flex date date01">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>예상수주액</th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>실수주일</th>
-                                            <td>
-                                                <div class="input-group p-0">
-                                                    <div class="d-flex date date01">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>시작일정</th>
-                                            <td>
-                                                <select class="form-control" style="height: 23px;">
-                                                    <option value="">카테고리</option>
-                                                    <option value="">카테고리</option>
-                                                    <option value="">카테고리</option>
-                                                    <option value="">카테고리</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>거래처명<sup>*</sup></th>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control">
-                                                    <span class="input-group-addon">
-                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>확률</th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>영업건구분</th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>실수주액</th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>종료일정</th>
-                                            <td><input type="text" class="form-control"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="ibox-title row">
-                            <h4>부가사항</h4>
-                        </div>
-                        <div class="ibox-content row">
-                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>NEEDS</th>
-                                            <td><textarea name="textNote" id="textNote"  class="form-control" style="resize:none;" rows="4"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <th>고객사메모</th>
-                                            <td><textarea name="textNote" id="textNote"  class="form-control" style="resize:none;" rows="4"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <th>거절사유</th>
-                                            <td>
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>SOULTION</th>
-                                            <td><textarea name="textNote" id="textNote"  class="form-control" style="resize:none;" rows="4"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <th>영업메모</th>
-                                            <td><textarea name="textNote" id="textNote"  class="form-control" style="resize:none;" rows="4"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <th>극복방안</th>
-                                            <td>
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control mb-1">
-                                                <input type="text" class="form-control">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- E: 영업관리 추가/수정 -->
+			<!-- S: 영업관리 추가/수정 -->
+			<div class="wrapper wrapper-content  animated fadeInRight article">
+				<form:form id="command" action="/sales/post" method="POST">
+					<div class="row justify-content-md-center">
+						<div class="col-lg-12">
+							<div class="ibox">
+								<div class="ibox-title row border-0">
+									<h4>기본정보</h4>
+								</div>
+								<div class="ibox-content row">
+															
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+											<span id="reqDefaultMsg" >
+												<strong class='text-danger'>필수 입력값을 확인해 주세요. </strong>
+											</span>
+											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                          			</div>
+										<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+											<Strong><span id="showMsg"></span></Strong>				
+	                          			</div>													
+										<div class="w-100 text-right mb-3">
+											<Button type="submit" class="btn btn-primary submit" id="submit">저장</Button>
+											<a href="/sales" class="btn btn-primary">목록</a>
+										</div>
+									</div>
+						
+									<div class="box1 col-lg-12 col-xl-4 p-0">
+										<table class="table table-bordered mb-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>영업건명<sup>*</sup></th>
+													<td>
+														<input type="text" class="form-control error validate required simple" id="salename" name="salename"></td>
+												</tr>
+												<tr>
+													<th>현단계<sup>*</sup></th>
+													<td>
+														<select class="form-control" style="height: 23px;" id="salestate" name="salestate">
+															<option value="1">계약성공종료</option>
+															<option value="2">계약중</option>
+															<option value="3">제안서제출</option>
+															<option value="4" selected>접촉중</option>
+															<option value="5">문의</option>
+															<option value="6">중도포기</option>
+															<option value="7">경쟁실패</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th>예상수주일</th>
+													<td>
+														<div class="input-group p-0">
+															<div class="d-flex date date01">
+																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control" id="forddate" name="forddate" data-mask="9999-99-99">
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th>제품명</th>
+													<td>
+														<input type="text" class="form-control validate simple" id="prdname" name="prdname">
+													</td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
+									<div class="box1 col-lg-12 col-xl-4 p-0">
+										<table class="table table-bordered mb-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>영업담당자<sup>*</sup></th>
+													<td>
+														<div class="input-group owner">
+															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${salesInsert.USERNAME }">
+															<input type="hidden" name="owner" id="owner" value="${salesInsert.USERNO }">
+															<span class="input-group-addon"> <a><i class="fa fa-search"></i></a> </span>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th>현단계진입일</th>
+													<td>
+														<div class="input-group p-0">
+															<div class="d-flex date date01">
+																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control" id="statedate" name="statedate" data-mask="9999-99-99">
+															</div>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th>예상수주액</th>
+													<td>
+													<input type="text" class="form-control validate cost" id="fordamount" name="fordamount">
+													</td>
+												</tr>
+												<tr>
+													<th>실수주일</th>
+													<td>
+														<div class="input-group p-0">
+															<div class="d-flex date date01">
+																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control" id="rorddate" name="rorddate" data-mask="9999-99-99">
+															</div>
+														</div>
+													</td>
+												</tr>
+											
+											</tbody>
+										</table>
+									</div>
+									<div class="box1 col-lg-12 col-xl-4 p-0">
+										<table class="table table-bordered mb-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>거래처명<sup>*</sup></th>
+													<td>
+														<div class="input-group">
+															<input type="text" class="form-control cli error validate required simple" id="cliname" name="cliname"> 
+															<input type="hidden" id="clino" name="clino"> 
+															<span class="input-group-addon">
+																<a href="javascript:void(0);"><i class="fa fa-search cli"></i></a>
+															</span>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<th>확률</th>
+													<td>
+														<input type="text" class="form-control validate percent" id="prob" name="prob">
+													</td>
+												</tr>
+												<tr>
+													<th>영업건구분</th>
+													<td>
+														<input type="text" class="form-control validate simple" id="category" name="category">
+													</td>
+												</tr>
+												<tr>
+													<th>실수주액</th>
+													<td>
+														<input type="text" class="form-control validate cost" id="rordamount" name="rordamount">
+													</td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="ibox-title row">
+									<h4>부가사항</h4>
+								</div>
+								<div class="ibox-content row">
+									<div class="box1 col-lg-12 col-xl-6 p-0">
+										<table class="table table-bordered mb-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>NEEDS</th>
+													<td>
+														<textarea name="need" id="need" class="form-control" style="resize: none;" rows="4"></textarea>
+													</td>
+												</tr>
+												<tr>
+													<th>고객사메모</th>
+													<td>
+														<textarea name="custmemo" id="custmemo" class="form-control" style="resize: none;" rows="4"></textarea>
+														</td>
+												</tr>
+												<tr>
+													<th>거절사유</th>
+													<td>
+														<textarea name="refusal" id="refusal" class="form-control" style="resize: none;" rows="4"></textarea>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="box1 col-lg-12 col-xl-6 p-0">
+										<table class="table table-bordered mb-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th>SOULTION</th>
+													<td>
+														<textarea class="form-control" style="resize: none;" rows="4" id="solution" name="solution"></textarea>
+													</td>
+												</tr>
+												<tr>
+													<th>영업메모</th>
+													<td>
+														<textarea  class="form-control" style="resize: none;" rows="4" id="salesmemo" name="salesmemo"></textarea>
+													</td>
+												</tr>
+												<tr>
+													<th>극복방안</th>
+													<td>
+														<textarea name="surmount" id="surmount" class="form-control" style="resize: none;" rows="4"></textarea>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form:form>
+			</div>
+			<!-- E: 영업관리 추가/수정 -->
 
 			<!-- foot -->
 			<div class="footer">
@@ -280,8 +293,17 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	 <script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script> <!-- datePicker-->
-	 <script>
+	<!-- datePicker-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+	<!-- 유효성 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+	<!-- Input Mask-->
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+    <!-- sales JS -->
+    <script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script>
+    
+    
+	<script>
 	 $(document).ready(function(){
 		 // datePicker
          $('.date.date01, .date.date02').datepicker({
@@ -291,6 +313,7 @@
              calendarWeeks: true,
              autoclose: true
          });
+		 
 	 });
 	 </script>
 </body>

@@ -54,7 +54,7 @@
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="/sales">영업 관리</a></li>
 	                        <li><a href="/sales/client">거래처 관리</a></li>
-	                        <li><a href="sales/cal">영업 일정</a></li>                        
+	                        <li><a href="/sales/cal">영업 일정</a></li>                        
 	                    </ul>
 	                </li>
       			</c:if>

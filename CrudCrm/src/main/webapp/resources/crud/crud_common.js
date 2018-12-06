@@ -10,9 +10,6 @@
     	$('.reset').val('');
     });
 
-
-    
-
     $('thead .i-checks').on('ifChecked',function(event){
     	$('tbody .i-checks').parent().addClass('checked');
     });

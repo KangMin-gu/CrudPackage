@@ -30,10 +30,10 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>캠페인 관리</h2>
+                    <h2>캠페인 서식관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
-                            <strong>캠페인 목록</strong>
+                            <strong>서식 목록</strong>
                         </li>
                     </ol>
                 </div>
@@ -45,7 +45,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-lg-12">
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/campaign" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/campaign/contents" method="POST">
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
@@ -67,79 +67,30 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>캠페인명</th>
-                                            <td><input type="text" class="form-control reset"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box2 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>발송매체</th>
+                                            <th>사용매체</th>
                                             <td>
-                                                <input type="text" class="form-control reset">
+                                            	<select class="form-control reset select" name="formtype" id="formtype">
+                                                   	<option value="">선택</option>
+                                                   	<option value="1" <c:if test='${search.formtype eq 1}'>selected</c:if>>EMAIL</option>
+                                                   	<option value="2" <c:if test='${search.formtype eq 2}'>selected</c:if>>SMS/LMS</option>
+                                                   	<option value="3" <c:if test='${search.formtype eq 3}'>selected</c:if>>MMS</option>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="box2 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>유형</th>
+                                            <th>제목</th>
                                             <td>
-                                                <input type="text" class="form-control reset">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-8 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">캠페인 기간</th>
-                                            <td class="border-top-0" style="padding: 7px 8px 6px 8px;">
-                                                <div class="input-group p-0">
-                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
-                                                    </div>
-                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box2 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0" class="border-top-0">담당자</th>
-                                            <td class="border-top-0" class="border-top-0">
-                                                <input type="text" class="form-control reset">
+                                                <input type="text" name="title" id="title" class="form-control reset" value="${search.title }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -147,13 +98,13 @@
                             </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/campaign/delete" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/campaign/contents/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
-                        	<div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/campaign/post" class="btn btn-primary">추가</a>
+                        	<div class="w-100 mb-2">
+                        		<a href="javascript:void(0);" class="btn btn-primary text-left">엑셀다운로드</a>
+                        		<a href="${pageContext.request.contextPath}/campaign/contents/post" class="btn btn-primary text-right">추가</a>
                                 <div class="d-inline-block mt-sx-1">
-                                	<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                	<button class="btn btn-primary">삭제</button>
+                                	<button class="btn btn-primary text-right">삭제</button>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -165,32 +116,29 @@
                                     <col style="width: 100px"/>
                                     <col style="width: 150px"/>
                                     <col style="width: 150px"/>
-                                    <col style="width: 100px"/>
-                                    <col style="width: 100px"/>                                    
+                                    <col style="width: 100px"/>                     
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name=""></th>
-                                        <th>캠페인명</th>
-                                        <th>캠페인 기간</th>
-                                        <th>유형</th>
-                                        <th>발송매체</th>
-                                        <th>담당자</th>
-                                        <th>발송인원</th>
-                                        <th>추출인원</th>
+                                        <th>제목</th>
+                                        <th>본문</th>
+                                        <th>사용매체</th>
+                                        <th>용도</th>
+                                        <th>등록자</th>
+                                        <th>등록일시</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="cpList" items="${camp }">
+                                    <c:forEach var="contentsList" items="${contents }">
                                     	<tr>
-                                        	<td><input type="checkbox" class="i-checks" name="campno" id="campno" value="${cpList.CAMPNO }"></td>
-                                        	<td><a href="${pagecontext.request.contextpath}/campaign/${cpList.CAMPNO }">${cpList.CAMPNAME}</a></td>
-                                        	<td>${cpList.CAMPDATE_ }</td>
-                                        	<td>${cpList.CAMPTYPE_ }</td>
-                                        	<td>${cpList.CUSTNO_ }</td>
-                                        	<td>${cpList.OWNER_ }</td>
-                                        	<td>${cpList.SENDUSER_ }</td>
-                                        	<td>${cpList.SENDUSER_ }</td>
+                                        	<td><input type="checkbox" class="i-checks" name="no" id="no" value="${contentsList.NO }"></td>
+                                        	<td><a href="${pagecontext.request.contextpath}/campaign/contents/${contentsList.NO }">${contentsList.TITLE}</a></td>
+                                        	<td>${contentsList.CONTENT }</td>
+                                        	<td>${contentsList.FORMTYPE_ }</td>
+                                        	<td>${contentsList.PURP }</td>
+                                        	<td>${contentsList.REGUSER_ }</td>
+                                        	<td>${contentsList.REGDATE_ }</td>
                                     	</tr>
                                 	</c:forEach>
                                 </tbody>
@@ -254,7 +202,6 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-	</div>
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	

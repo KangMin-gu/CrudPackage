@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchRequest {
 	
 	public Map<String, Object> Search(HttpServletRequest request) {
-		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());		
 		
 		Map<String,Object> search = new HashMap();
 		Enumeration params = request.getParameterNames();

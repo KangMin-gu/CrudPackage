@@ -1,6 +1,5 @@
 package saas.crud.crm.cp.service;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.ce.SearchRequest;
 import saas.crud.crm.cp.dao.CampaignDao;
+import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
+import saas.crud.crm.cp.dto.CampaignFormDto;
 
 @Service
 public class CampaignServiceImpl implements CampaignService{
@@ -85,11 +86,27 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignDto.setSiteid(siteId);
 		
 		Map<String,Object> campInfo = campaignDao.campRead(campaignDto);
-		mView.addObject("campInfo",campInfo);
+		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
+		Map<String,Object> campForm = campaignDao.campFormRead(campaignDto);
+		String name;
+		String value;
+		int targetListSize = targetList.size();
+		for(int i = 0; i<targetListSize;i++) {
+			
+			name = targetList.get(i).get("NAME").toString().toUpperCase();
+			value = targetList.get(i).get("VALUE").toString();
+			campInfo.put(name, value);
+			
+		}
 		
+		int targetCustCnt = campaignDao.campTargetCustCnt(campaignDto);
+		
+		mView.addObject("campInfo",campInfo);
+		mView.addObject("targetCustCnt",targetCustCnt);
+		mView.addObject("campForm",campForm);
 		return mView;
 	}
-
+	//캠페인 수정
 	@Override
 	public void campUpdate(HttpServletRequest request, CampaignDto campaignDto) {
 		// TODO Auto-generated method stub
@@ -100,7 +117,7 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignDao.campUpdate(campaignDto);
 		
 	}
-
+	// 캠페인 단일 삭제
 	@Override
 	public void campDelete(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
@@ -142,10 +159,9 @@ public class CampaignServiceImpl implements CampaignService{
 
 	//캠페인 타겟 추출
 	@Override
-	public void campTargetInsert(HttpServletRequest request) {
+	public void campTargetInsert(HttpServletRequest request,int campNo) {
 		// TODO Auto-generated method stub
 		
-		int campNo = Integer.parseInt(request.getParameter("campno").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		Map<String,Object> param = new HashMap();
@@ -175,5 +191,185 @@ public class CampaignServiceImpl implements CampaignService{
 			}
 		}
 		campaignDao.campTargetCustInsert(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> campTargetCustList(HttpServletRequest request, int campNo) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		CampaignDto campaignDto = new CampaignDto();
+		
+		campaignDto.setSiteid(siteId);
+		campaignDto.setCampno(campNo);
+		
+		List<Map<String,Object>> campaignTargetCustList = campaignDao.campTargetCustList(campaignDto);
+		
+		return campaignTargetCustList;
+	}
+
+	@Override
+	public int campFormInsertUpdate(HttpServletRequest request, CampaignFormDto campaignFormDto) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		campaignFormDto.setSiteid(siteId);
+		campaignFormDto.setReguser(userNo);
+		campaignFormDto.setEdtuser(userNo);
+		
+		int campNo = campaignFormDto.getCampno();
+		int no = campaignFormDto.getNo();
+		
+		if(no != 0) {
+			campaignDao.campFormUpdate(campaignFormDto);
+		}else {
+			campaignDao.campFormInsert(campaignFormDto);
+		}
+		return campNo;
+	}
+
+	@Override
+	public void campTestSend(HttpServletRequest request, int campNo) {
+		// TODO Auto-generated method stub
+		
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		SearchRequest searchRequest = new SearchRequest();
+		
+		Map<String, Object> search = searchRequest.Search(request);
+		search.put("userno",userNo);
+		
+		campaignDao.campTestSend(search);
+
+	}
+
+	@Override
+	public ModelAndView campContentsList(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		ModelAndView mView = new ModelAndView();
+		
+		SearchRequest searchRequest = new SearchRequest();
+		
+		Map<String, Object> search = searchRequest.Search(request);
+
+		int totalRows = campaignDao.campContentsTotalRows(search);
+		
+		int PAGE_DISPLAY_COUNT = 5;
+		int PAGE_ROW_COUNT = 10;
+		
+		PagingCommon pages =new PagingCommon();
+		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+		
+		search.put("startRowNum", startRowNum);
+		search.put("endRowNum", endRowNum);
+		
+		List<Map<String,Object>> campContentsList = campaignDao.campContentsList(search);
+		
+		mView.addObject("contents",campContentsList);
+		mView.addObject("search",search);
+		mView.addObject("page",page);
+		mView.addObject("totalRows",totalRows);
+		
+		return mView;
+	}
+
+	@Override
+	public int campContentsInsert(HttpServletRequest request,CampaignContentsDto campaignContentsDto) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		
+		campaignContentsDto.setSiteid(siteId);
+		campaignContentsDto.setReguser(userNo);
+		campaignContentsDto.setEdtuser(userNo);
+		
+		int no = campaignDao.campContentsInsert(campaignContentsDto);
+		return no;
+	}
+
+	@Override
+	public ModelAndView campContentsRead(HttpServletRequest request, int no) {
+		// TODO Auto-generated method stub
+		
+		ModelAndView mView = new ModelAndView();
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		CampaignContentsDto campaignContentsDto = new CampaignContentsDto();
+		
+		campaignContentsDto.setNo(no);
+		campaignContentsDto.setSiteid(siteId);
+		
+		Map<String,Object> contentsInfo = campaignDao.campContentsRead(campaignContentsDto);
+		mView.addObject("contentsInfo",contentsInfo);
+		
+		return mView;
+	}
+
+	@Override
+	public void campContentsUpdate(HttpServletRequest request, CampaignContentsDto campaignContentsDto) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		campaignContentsDto.setSiteid(siteId);
+		campaignContentsDto.setEdtuser(userNo);
+		
+		campaignDao.campContentsUpdate(campaignContentsDto);
+		
+	}
+
+	@Override
+	public void campContentsDelete(HttpServletRequest request, int no) {
+		// TODO Auto-generated method stub
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		CampaignContentsDto campaignContentsDto = new CampaignContentsDto();
+		campaignContentsDto.setSiteid(siteId);
+		campaignContentsDto.setEdtuser(userNo);
+		campaignContentsDto.setNo(no);
+		
+		campaignDao.campContentsDelete(campaignContentsDto);
+		
+	}
+
+	@Override
+	public void campContentesMultiDelete(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String sCheck[] = request.getParameterValues("no");
+		
+		CampaignContentsDto campaignContentsDto = new CampaignContentsDto();
+		campaignContentsDto.setSiteid(siteId);
+		campaignContentsDto.setEdtuser(userNo);
+		
+		int length = sCheck.length;
+		
+		for(int i = 0; i < length; i++) {
+			int no = Integer.parseInt(sCheck[i]);
+			campaignContentsDto.setNo(no);
+			campaignDao.campContentsDelete(campaignContentsDto);
+		}
+	}
+
+	@Override
+	public void campSend(HttpServletRequest request, int campNo) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		Map<String,Object> param = new HashMap<String,Object>();
+		
+		param.put("userno", userNo);
+		param.put("siteid", siteId);
+		param.put("campno", campNo);
+		
+		campaignDao.campSend(param);
+		
 	}
 }

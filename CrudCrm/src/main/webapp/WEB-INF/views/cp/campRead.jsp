@@ -23,12 +23,15 @@
 <body>
 <style>
 	.wizard > .content > .body{width: 100%; height: auto; background: #ffffff; padding: 2.5%; float: left; position: initial;}
+    .wizard > .content > .body ul > li{list-style: none;}
+    .wizard > .content > .body input{border: 1px solid #e5e6e7;}
+    .wizard > .content > .body{position: relative;}
 </style>
 	<div id="wrapper">
-<!-- leftside -->	
-		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>      
+<!-- leftside -->
+		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
     </div>
-<!-- Top -->    
+<!-- Top -->
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
 
@@ -44,10 +47,10 @@
                 <div class="col-lg-2">
 
                 </div>
-            </div>		
-		
-		
-<!-- Content -->		
+            </div>
+
+
+<!-- Content -->
 	<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12">
@@ -68,7 +71,7 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
@@ -76,65 +79,45 @@
                                                             <th>캠페인명</th>
                                                             <td>${campInfo.CAMPNAME }</td>
                                                         </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box2 col-lg-12 col-xl-4 p-0">
-                                                <table class="table table-bordered mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
                                                         <tr>
-                                                            <th>캠페인유형</th>
-                                                            <td>${campInfo.CAMPTYPE_ }</td>
+                                                            <th>캠페인 기간</th>
+                                                            <td>${campInfo.CAMPDATE_ }</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>캠페인 유형</th>
+                                                            <td>${campInfo.CAMPTYPE_ }</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>담당자</th>
+                                                            <td>${campInfo.OWNER_ }</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                                <table class="table table-bordered mb-0">
+                                                    <colgroup>
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>진행단계</th>
-                                                            <td>
-                                                                ${campInfo.CAMPSTEP_ }
-                                                            </td>
+                                                            <td>추출</td>
                                                         </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box2 col-lg-12 col-xl-8 p-0">
-                                                <table class="table table-bordered border-top-0 mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
                                                         <tr>
-                                                            <th class="border-top-0">발송기간</th>
-                                                            <td>${campInfo.CAMPDATE_ }
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box2 col-lg-12 col-xl-4 p-0">
-                                                <table class="table table-bordered border-top-0 mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="border-top-0">담당자</th>
-                                                            <td>${campInfo.OWNER_ }
-                                                            </td>
+                                                            <th>대상 고객수</th>
+                                                            <td>${targetCustCnt } 명</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -142,7 +125,7 @@
                                             <div class="box2 col-lg-12 p-0">
                                                 <table class="table table-bordered border-top-0 mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
@@ -154,6 +137,7 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <input type="hidden" id="campno" name="campno" value="${campInfo.CAMPNO }">
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +157,7 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
@@ -191,7 +175,7 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
@@ -209,7 +193,7 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
@@ -219,7 +203,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>대상 고객수</th>
-                                                            <td><input type="text" class="form-control"></td>
+                                                            <td>${targetCustCnt } 명</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -234,28 +218,20 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>성별</th>
                                                             <td>
-                                                                <select class="form-control" style="height: 23px;">
-                                                                	<option value="">선택</option>
-                                                                    <option value="M">남자</option>
-                                                                    <option value="F">여자</option>
-                                                                </select>
+                                                                ${campInfo.SEX }
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th>고객구분</th>
                                                             <td>
-                                                                <select class="form-control" style="height: 23px;">
-                                                                	<option value="">선택</option>
-                                                                    <option value="">회원</option>
-                                                                    <option value="">비회원</option>
-                                                                </select>
+                                                                ${campInfo.CUSTGUBUN }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -264,26 +240,20 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>나이</th>
                                                             <td>
-                                                                <input type="text" class="form-control float-left col-5">
-                                                                <h3 class="text-center col-lg-1 col-1 p-0 m-0 float-left">~</h3>
-                                                                <input type="text" class="form-control float-left col-5">
+                                                                ${campInfo.AGE1 } ~ ${campInfo.AGE2 }
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <th>고개등급</th>
+                                                            <th>고객등급</th>
                                                             <td>
-                                                                <select class="form-control" style="height: 23px;">
-                                                                    <option>일반</option>
-                                                                    <option>VIP</option>
-                                                                    <option>VVIP</option>
-                                                                </select>
+                                                                ${campInfo.CUSTGRADE }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -292,38 +262,20 @@
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>생일(월)</th>
                                                             <td>
-                                                                <select class="form-control" style="height: 23px;">
-                                                                    <option>1월</option>
-                                                                    <option>2월</option>
-                                                                    <option>3월</option>
-                                                                    <option>4월</option>
-                                                                    <option>5월</option>
-                                                                    <option>6월</option>
-                                                                    <option>7월</option>
-                                                                    <option>8월</option>
-                                                                    <option>9월</option>
-                                                                    <option>10월</option>
-                                                                    <option>11월</option>
-                                                                    <option>12월</option>
-                                                                </select>
+                                                                ${campInfo.BIRTH }
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th>활동등급</th>
                                                             <td>
-                                                                <select class="form-control" style="height: 23px;">
-                                                                    <option>option 1</option>
-                                                                    <option>option 2</option>
-                                                                    <option>option 3</option>
-                                                                    <option>option 4</option>
-                                                                </select>
+                                                                ${campInfo.ACTGRADE }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -332,32 +284,14 @@
                                             <div class="box1 col-lg-12 col-xl-6 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>주소지 1</th>
                                                             <td>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                </select>
-                                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                                ${campInfo.ADDR11 } ${campInfo.ADDR12 } ${campInfo.ADDR13 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -366,32 +300,14 @@
                                             <div class="box1 col-lg-12 col-xl-6 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>주소지 2</th>
                                                             <td>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                </select>
-                                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                                ${campInfo.ADDR21 } ${campInfo.ADDR22 } ${campInfo.ADDR23 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -400,32 +316,14 @@
                                             <div class="box1 col-lg-12 col-xl-6 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>주소지 3</th>
                                                             <td>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                </select>
-                                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                                ${campInfo.ADDR31 } ${campInfo.ADDR32 } ${campInfo.ADDR33 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -434,32 +332,14 @@
                                             <div class="box1 col-lg-12 col-xl-6 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>주소지 4</th>
                                                             <td>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                    <option>경기도 부천시</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                    <option>소사구</option>
-                                                                </select>
-                                                                <select class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                    <option>괴안동</option>
-                                                                </select>
-                                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                                ${campInfo.ADDR41 } ${campInfo.ADDR42 } ${campInfo.ADDR43 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -468,22 +348,14 @@
                                             <div class="box1 col-lg-12 col-xl-6 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>고객등록일</th>
                                                             <td style="padding: 7px 8px;">
-                                                                <div class="input-group p-0">
-                                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                    </div>
-                                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                    </div>
-                                                                </div>
+                                                                ${campInfo.REGDATE1 } ~ ${campInfo.REGDATE2 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -492,19 +364,14 @@
                                             <div class="box1 col-lg-12 col-xl-6 p-0">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
-                                                        <col style="width: 110px; background: #fafafa;">
+                                                        <col style="width: 120px; background: #fafafa;">
                                                         <col style="width: auto;">
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
                                                             <th>추출내용</th>
                                                             <td>
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control">
-                                                                    <span class="input-group-addon">
-                                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                                    </span>
-                                                                </div>
+                                                                ${campInfo.REGDATE1 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -513,8 +380,8 @@
                                             <div class="box1 col-lg-12 p-0 mt-5">
                                                 <div class="tabs-container">
                                                     <ul class="nav nav-tabs" role="tablist">
-                                                        <li><a class="nav-link active" data-toggle="tab" href="#tab1">추출 대상자</a></li>
-                                                        <li><a class="nav-link" data-toggle="tab" href="#tab2">추출 이력</a></li>
+                                                    	<li><a class="nav-link active" data-toggle="tab" href="#tab1">추출 대상자</a></li>
+                                            			<li><a class="nav-link" data-toggle="tab" href="#tab2">추출이력</a></li>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div role="tabpanel" id="tab1" class="tab-pane active">
@@ -543,36 +410,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td>박진열</td>
-                                                                            <td>jypark</td>
-                                                                            <td>010-7777-777</td>
-                                                                            <td>asda@adasd.com</td>
-                                                                            <td>동의</td>
-                                                                            <td>회원</td>
-                                                                            <td>VIP</td>
-                                                                            <td>경기도 부천시 소사구 괴안동</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>박진열</td>
-                                                                            <td>jypark</td>
-                                                                            <td>010-7777-777</td>
-                                                                            <td>asda@adasd.com</td>
-                                                                            <td>동의</td>
-                                                                            <td>회원</td>
-                                                                            <td>VIP</td>
-                                                                            <td>경기도 부천시 소사구 괴안동</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>박진열</td>
-                                                                            <td>jypark</td>
-                                                                            <td>010-7777-777</td>
-                                                                            <td>asda@adasd.com</td>
-                                                                            <td>동의</td>
-                                                                            <td>회원</td>
-                                                                            <td>VIP</td>
-                                                                            <td>경기도 부천시 소사구 괴안동</td>
-                                                                        </tr>
+
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -633,11 +471,6 @@
                                     <div class="ibox">
                                         <div class="ibox-content row">
                                             <div class="tabs-container col-12">
-                                                <div class="w-100 text-right mb-2">
-                                                    <a href="javascript:void(0);" class="btn btn-primary">테스트 발송</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary">발송</a>
-                                                    <a href="javascript:void(0);" class="btn btn-primary">저장</a>
-                                                </div>
                                                 <ul class="nav nav-tabs" role=0"tablist">
                                                     <li><a class="nav-link active" data-toggle="tab" href="#sumbitTab1">EMAIL</a></li>
                                                     <li><a class="nav-link" data-toggle="tab" href="#sumbitTab2">SMS/LMS</a></li>
@@ -648,10 +481,10 @@
                                                     <div role="tabpanel" id="sumbitTab1" class="tab-pane active">
                                                         <div class="panel-body">
                                                             <div class="w-100 text-right mb-2">
-                                                                <a href="javascript:void(0);" class="btn btn-primary">캠페인 목록</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">고객 추출 화면</a>
+                                                                <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
+                                                                <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
                                                                 <div class="d-inline-block mt-sx-1">
-                                                                <a href="javascript:void(0);" class="btn btn-primary">미리보기</a>
+                                                                <a href="/campaign/email/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
                                                                 <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
                                                                 <a href="javascript:void(0);" class="btn btn-primary">발송</a>
                                                                 </div>
@@ -660,17 +493,17 @@
                                                                 <div class="box1 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>캠페인명</th>
-                                                                                <td>테스트 캠페인</td>
+                                                                                <td>${campInfo.CAMPNAME }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>캠페인기간</th>
-                                                                                <td>2018/01/01 ~ 2018/01/14</td>
+                                                                                <td>${campInfo.CAMPDATE_ }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -678,17 +511,17 @@
                                                                 <div class="box2 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>캠페인 유형</th>
-                                                                                <td>신규고객확보</td>
+                                                                                <td>${campInfo.CAMPTYPE_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>담당자</th>
-                                                                                <td>실행</td>
+                                                                                <td>${campInfo.OWNER_ }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -696,17 +529,17 @@
                                                                 <div class="box3 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td></td>
+                                                                                <td>발송</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
-                                                                                <td>0</td>
+                                                                                <td>${targetCustCnt} 명</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -714,13 +547,13 @@
                                                                 <div class="box4 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th class="border-top-0">회신메일주소</th>
-                                                                                <td class="border-top-0"><input type="text" class="form-control"></td>
+                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -728,19 +561,14 @@
                                                                 <div class="box5 col-lg-12 col-xl-8 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th class="border-top-0">서식형태</th>
                                                                                 <td class="border-top-0">
-                                                                                    <div class="input-group">
-                                                                                        <input type="text" class="form-control">
-                                                                                        <span class="input-group-addon">
-                                                                                            <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                                                        </span>
-                                                                                    </div>
+
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -749,43 +577,14 @@
                                                                 <div class="box6 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th class="border-top-0">발송형태</th>
-                                                                                <td class="border-top-0" style="height: 40px;">
-                                                                                    <select name="" id="" class="form-control" style="height: 23px;">
-                                                                                        <option value="">즉시발송</option>
-                                                                                        <option value="">예약발송</option>
-                                                                                        <option value="">요일반복발송</option>
-                                                                                        <option value="">기간반복발송</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>1회예약 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>요일반복 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>기간반복 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
+                                                                                <td class="border-top-0">
+                                                                                    ${campForm.SENDTYPE_ }
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -794,56 +593,13 @@
                                                                 <div class="box7 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0" style="height: 40px;">테스트 발송자</th>
-                                                                                <td class="border-top-0">홍길동</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>발송일자</th>
-                                                                                <td>
-                                                                                    <div class="input-group p-0">
-                                                                                        <div class="d-flex date date01">
-                                                                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>요일설정</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">월</option>
-                                                                                        <option value="">화</option>
-                                                                                        <option value="">수</option>
-                                                                                        <option value="">목</option>
-                                                                                        <option value="">금</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">월</option>
-                                                                                        <option value="">화</option>
-                                                                                        <option value="">수</option>
-                                                                                        <option value="">목</option>
-                                                                                        <option value="">금</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>기간설정</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <div class="input-group p-0">
-                                                                                        <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                        <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                                                        <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
+                                                                                <th class="border-top-0">테스트 발송자</th>
+                                                                                <td class="border-top-0">${sessionScope.USERNAME }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -851,53 +607,73 @@
                                                                 <div class="box8 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th class="border-top-0">테스트 메일</th>
                                                                                 <td class="border-top-0">
-                                                                                    <input type="email" class="form-control">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="box7 col-lg-12 col-xl-6 p-0">
+                                                                    <table class="table table-bordered mb-0 border-top-0">
+                                                                        <colgroup>
+                                                                            <col style="width: 120px; background: #fafafa;">
+                                                                            <col style="width: auto;">
+                                                                        </colgroup>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th class="border-top-0">발송일자</th>
+                                                                                <td class="border-top-0">
+                                                                                    <div class="input-group p-0">
+                                                                                        <div class="d-flex date date01">
+                                                                                          ${campForm.SENDDATE }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>요일설정</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    ${campForm.WEEK_ } ${campForm.DAY_ }
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>기간설정</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    ${campForm.STARTDATE } ~ ${campForm.ENDDATE }
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="box7 col-lg-12 col-xl-6 p-0">
+                                                                    <table class="table table-bordered mb-0 border-top-0">
+                                                                        <colgroup>
+                                                                            <col style="width: 120px; background: #fafafa;">
+                                                                            <col style="width: auto;">
+                                                                        </colgroup>
+                                                                        <tbody>
+                                                                           <tr>
+                                                                                <th class="border-top-0">발송일시</th>
+                                                                                <td class="border-top-0" style="padding: 7px 8px;">
+                                                                                    ${campForm.SENDHOUR } 시 ${campForm.SENDMINUTE } 분
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
+                                                                                    ${campForm.SENDHOUR } 시 ${campForm.SENDMINUTE } 분
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>발송일시</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
+                                                                                    ${campForm.SENDHOUR } 시 ${campForm.SENDMINUTE } 분
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -907,7 +683,7 @@
                                                                     <table class="table table-bordered">
                                                                         <tr>
                                                                             <td>
-                                                                                이부분에는 summernote가 들어갈 자리입니다.
+                                                                                <textarea name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;">${campForm.SENDDESC }</textarea>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -918,10 +694,10 @@
                                                     <div role="tabpanel" id="sumbitTab2" class="tab-pane">
                                                         <div class="panel-body">
                                                             <div class="w-100 text-right mb-2">
-                                                                <a href="javascript:void(0);" class="btn btn-primary">캠페인 목록</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">고객 추출 화면</a>
+                                                                <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
+                                                                <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
                                                                 <div class="d-inline-block mt-sx-1">
-                                                                <a href="javascript:void(0);" class="btn btn-primary">미리보기</a>
+                                                                <a href="/campaign/sms/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
                                                                 <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
                                                                 <a href="javascript:void(0);" class="btn btn-primary">발송</a>
                                                                 </div>
@@ -930,17 +706,17 @@
                                                                 <div class="box1 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>캠페인명</th>
-                                                                                <td>테스트 캠페인</td>
+                                                                                <td>${campInfo.CAMPNAME }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>캠페인기간</th>
-                                                                                <td>2018/01/01 ~ 2018/01/14</td>
+                                                                                <td>${campInfo.CAMPDATE_ }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -948,17 +724,17 @@
                                                                 <div class="box2 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>캠페인 유형</th>
-                                                                                <td>신규고객확보</td>
+                                                                                <td>${campInfo.CAMPTYPE_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>담당자</th>
-                                                                                <td>실행</td>
+                                                                                <td>${campInfo.OWNER_ }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -966,111 +742,56 @@
                                                                 <div class="box3 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td></td>
+                                                                                <td>발송</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
-                                                                                <td>0</td>
+                                                                                <td>${targetCustCnt} 명</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="box4 col-lg-12 col-xl-4 p-0">
+                                                                <div class="box4 col-lg-12 col-xl-6 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">회신번호</th>
-                                                                                <td class="border-top-0"><input type="text" class="form-control"></td>
+                                                                                <th class="border-top-0">회신전화번호</th>
+                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box5 col-lg-12 col-xl-8 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">서식형태</th>
-                                                                                <td class="border-top-0">
-                                                                                    <div class="input-group">
-                                                                                        <input type="text" class="form-control">
-                                                                                        <span class="input-group-addon">
-                                                                                            <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                                                        </span>
-                                                                                    </div>
+                                                                                <th>서식형태</th>
+                                                                                <td>
+                                                                                    <span class="input-group-addon">
+                                                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
+                                                                                    </span>
                                                                                 </td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box6 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">발송형태</th>
-                                                                                <td class="border-top-0" style="height: 40px;">
-                                                                                    <select name="" id="" class="form-control" style="height: 23px;">
-                                                                                        <option value="">즉시발송</option>
-                                                                                        <option value="">예약발송</option>
-                                                                                        <option value="">요일반복발송</option>
-                                                                                        <option value="">기간반복발송</option>
+                                                                                <th>테스트발송자</th>
+                                                                                <td>010-7777-7777</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>테스트 전화번호</th>
+                                                                                <td>010-7777-7777</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>발송형태</th>
+                                                                                <td>
+                                                                                    <select class="form-control" style="height: 23px;">
+                                                                                        <option>회원</option>
+                                                                                        <option>비회원</option>
                                                                                     </select>
                                                                                 </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>1회예약 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>요일반복 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>기간반복 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box7 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th class="border-top-0" style="height: 40px;">테스트 발송자</th>
-                                                                                <td class="border-top-0">홍길동</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일자</th>
@@ -1083,21 +804,47 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
+                                                                                <th>발송일시</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                    </select>
+                                                                                    <select name="" id="" class="form-control float-left col-5">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
                                                                                 <th>요일설정</th>
                                                                                 <td style="padding: 7px 8px;">
                                                                                     <select name="" id="" class="form-control float-left col-5 mr-1">
                                                                                         <option value="">월</option>
                                                                                         <option value="">화</option>
                                                                                         <option value="">수</option>
-                                                                                        <option value="">목</option>
-                                                                                        <option value="">금</option>
                                                                                     </select>
                                                                                     <select name="" id="" class="form-control float-left col-5">
                                                                                         <option value="">월</option>
                                                                                         <option value="">화</option>
                                                                                         <option value="">수</option>
-                                                                                        <option value="">목</option>
-                                                                                        <option value="">금</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>발송일시</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                    </select>
+                                                                                    <select name="" id="" class="form-control float-left col-5">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
                                                                                     </select>
                                                                                 </td>
                                                                             </tr>
@@ -1115,65 +862,25 @@
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box8 col-lg-12 col-xl-4 p-0 ">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th class="border-top-0">테스트 번호</th>
-                                                                                <td class="border-top-0">
-                                                                                    <input type="text" class="form-control">
-                                                                                </td>
-                                                                            </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
                                                                                     <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
                                                                                     </select>
                                                                                     <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>발송일시</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>발송일시</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
                                                                                     </select>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="box9 col-12 p-0 mt-3">
+                                                                <div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
                                                                     <div class="sms-form">
                                                                         <div class="num-text">
                                                                             <input type="text" placeholder="번호를 입력하세요.">
@@ -1189,10 +896,10 @@
                                                     <div role="tabpanel" id="sumbitTab3" class="tab-pane">
                                                         <div class="panel-body">
                                                             <div class="w-100 text-right mb-2">
-                                                                <a href="javascript:void(0);" class="btn btn-primary">캠페인 목록</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">고객 추출 화면</a>
+                                                                <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
+                                                                <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
                                                                 <div class="d-inline-block mt-sx-1">
-                                                                <a href="javascript:void(0);" class="btn btn-primary">미리보기</a>
+                                                                <a href="/campaign/sms/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
                                                                 <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
                                                                 <a href="javascript:void(0);" class="btn btn-primary">발송</a>
                                                                 </div>
@@ -1201,17 +908,17 @@
                                                                 <div class="box1 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>캠페인명</th>
-                                                                                <td>테스트 캠페인</td>
+                                                                                <td>${campInfo.CAMPNAME }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>캠페인기간</th>
-                                                                                <td>2018/01/01 ~ 2018/01/14</td>
+                                                                                <td>${campInfo.CAMPDATE_ }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1219,17 +926,17 @@
                                                                 <div class="box2 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>캠페인 유형</th>
-                                                                                <td>신규고객확보</td>
+                                                                                <td>${campInfo.CAMPTYPE_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>담당자</th>
-                                                                                <td>실행</td>
+                                                                                <td>${campInfo.OWNER_ }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1237,111 +944,56 @@
                                                                 <div class="box3 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td></td>
+                                                                                <td>발송</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
-                                                                                <td>0</td>
+                                                                                <td>${targetCustCnt} 명</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="box4 col-lg-12 col-xl-4 p-0">
+                                                                <div class="box4 col-lg-12 col-xl-6 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
+                                                                            <col style="width: 120px; background: #fafafa;">
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">회신번호</th>
-                                                                                <td class="border-top-0"><input type="text" class="form-control"></td>
+                                                                                <th class="border-top-0">회신전화번호</th>
+                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box5 col-lg-12 col-xl-8 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">서식형태</th>
-                                                                                <td class="border-top-0">
-                                                                                    <div class="input-group">
-                                                                                        <input type="text" class="form-control">
-                                                                                        <span class="input-group-addon">
-                                                                                            <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                                                        </span>
-                                                                                    </div>
+                                                                                <th>서식형태</th>
+                                                                                <td>
+                                                                                    <span class="input-group-addon">
+                                                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
+                                                                                    </span>
                                                                                 </td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box6 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">발송형태</th>
-                                                                                <td class="border-top-0" style="height: 40px;">
-                                                                                    <select name="" id="" class="form-control" style="height: 23px;">
-                                                                                        <option value="">즉시발송</option>
-                                                                                        <option value="">예약발송</option>
-                                                                                        <option value="">요일반복발송</option>
-                                                                                        <option value="">기간반복발송</option>
+                                                                                <th>테스트발송자</th>
+                                                                                <td>010-7777-7777</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>테스트 전화번호</th>
+                                                                                <td>010-7777-7777</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>발송형태</th>
+                                                                                <td>
+                                                                                    <select class="form-control" style="height: 23px;">
+                                                                                        <option>회원</option>
+                                                                                        <option>비회원</option>
                                                                                     </select>
                                                                                 </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>1회예약 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>요일반복 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>기간반복 발송</th>
-                                                                                <td style="padding: 5.5px 8px">
-                                                                                    <div class="i-checks">
-                                                                                        <label><input type="radio" value="예약발송" name="" ><i></i> 예약발송</label>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box7 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th class="border-top-0" style="height: 40px;">테스트 발송자</th>
-                                                                                <td class="border-top-0">홍길동</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일자</th>
@@ -1354,21 +1006,47 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
+                                                                                <th>발송일시</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                    </select>
+                                                                                    <select name="" id="" class="form-control float-left col-5">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
                                                                                 <th>요일설정</th>
                                                                                 <td style="padding: 7px 8px;">
                                                                                     <select name="" id="" class="form-control float-left col-5 mr-1">
                                                                                         <option value="">월</option>
                                                                                         <option value="">화</option>
                                                                                         <option value="">수</option>
-                                                                                        <option value="">목</option>
-                                                                                        <option value="">금</option>
                                                                                     </select>
                                                                                     <select name="" id="" class="form-control float-left col-5">
                                                                                         <option value="">월</option>
                                                                                         <option value="">화</option>
                                                                                         <option value="">수</option>
-                                                                                        <option value="">목</option>
-                                                                                        <option value="">금</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>발송일시</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                    </select>
+                                                                                    <select name="" id="" class="form-control float-left col-5">
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
                                                                                     </select>
                                                                                 </td>
                                                                             </tr>
@@ -1386,65 +1064,25 @@
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box8 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 110px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th class="border-top-0">테스트 번호</th>
-                                                                                <td class="border-top-0">
-                                                                                    <input type="text" class="form-control">
-                                                                                </td>
-                                                                            </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
                                                                                     <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
                                                                                     </select>
                                                                                     <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>발송일시</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>발송일시</th>
-                                                                                <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">1시</option>
-                                                                                        <option value="">24시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00분</option>
-                                                                                        <option value="">59분</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
+                                                                                        <option value="">00시</option>
                                                                                     </select>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="box9 col-12 p-0 mt-3">
+                                                                <div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
                                                                     <div class="sms-form">
                                                                         <div class="num-text">
                                                                             <input type="text" placeholder="번호를 입력하세요.">
@@ -1473,7 +1111,7 @@
         </div>
 
 <!-- Content End -->
-			
+
 <!-- foot -->
 			<div class="footer">
 				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
@@ -1486,21 +1124,26 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/steps/jquery.steps.min.js"></script>
+
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script>
 	$(document).ready(function () {
-		
+
+		$('.summernote').summernote('disable');
+
 		$('#wizard').steps({
 			headerTag: "h1",
 			enableAllSteps: true,
 		    enablePagination: false
 		});
-		$('.content').css('height','800px');
-		
+//		$('.content').css('height','700px');
+
 	});
 
-	</script>		
+	</script>
 
 </body>
 </html>

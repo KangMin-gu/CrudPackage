@@ -30,13 +30,13 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>캠페인 관리</h2>
+                    <h2>서식 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/campaign">캠페인목록</a>
+                            <a href="/campaign/contents">서식목록</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <strong>캠페인추가</strong>
+                            <strong>서식 추가</strong>
                         </li>
                     </ol>
                 </div>
@@ -47,7 +47,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/campaign/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/campaign/contents/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -70,10 +70,10 @@
 	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
-									<a href="/campaign" class="btn btn-primary">목 록</a>
+									<a href="/campaign/contents" class="btn btn-primary">목 록</a>
 								</div>
 							</div>
-							<div class="box1 col-lg-12 col-xl-4 p-0">
+							<div class="box1 col-lg-12 col-xl-8 p-0">
 								<table class="table table-bordered mb-0">
 									<colgroup>
                                     	<col style="width: 110px; background: #fafafa;">
@@ -81,8 +81,8 @@
                                     </colgroup>
                                     <tbody>
                                     	<tr>
-                                        	<th>캠페인명</th>
-                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error name"></td>
+                                        	<th>서식명</th>
+                                            <td><input type="text" name="title" id="title" class="form-control validate required error name"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -95,81 +95,34 @@
                                     </colgroup>
                                     <tbody>
                                     	<tr>
-                                        	<th>캠페인유형</th>
-                                            <td><select class="form-control" name="camptype" id="camptype" style="height: 23px;">
-                                            		<option value=0>검색</option>
-                                                	<option value=10>세미나</option>
-                                                    <option value=20>뉴스레터</option>
-                                                    <option value=30>테스트</option>
+                                        	<th>매체유형</th>
+                                            <td><select class="form-control" name="formtype" id="formtype" style="height: 23px;">
+                                            		<option value=0>선택</option>
+                                            		<option value=1>EMAIL</option>
+                                                	<option value=2>SMS/LMS</option>
+                                                    <option value=3>MMS</option>
                                                 </select>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-12 col-xl-4 p-0">
-                            	<table class="table table-bordered mb-0">
-                                	<colgroup>
-                                    	<col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                	<tbody>
-                                		<tr>
-                                			<th>진행단계</th>
-                                        	<td><input type="text" name="campstep_" id="campstep_" disabled class="form-control" value="접수">
-                                        		<input type="hidden" name="campstep" id="campstep" class="form-control" value="0"/>
-                                        	</td>
-                                        	
-                                    	</tr>
-                                	</tbody>
-                            	</table>
-                            </div>
-                            <div class="box2 col-lg-12 col-xl-8 p-0">
-                            	<table class="table table-bordered border-top-0 mb-0">
-                                	<colgroup>
-                                    	<col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                   	<tbody>
-                                    	<tr>
-                                        	<th class="border-top-0">발송기간</th>
-                                            <td class="border-top-0" style="padding: 7px 8px">
-                                            	<div class="input-group p-0">
-                                                	<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control" value="">
-                                                    </div>
-                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="form-control" value="">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box2 col-lg-12 col-xl-4 p-0">
-                            	<table class="table table-bordered border-top-0 mb-0">
-                                	<colgroup>
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
                                     	<col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                     	<tr>
-                                        	<th class="border-top-0">담당자</th>
-                                           	<td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner">
-                                                    <input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="">
-                                                    <input type="hidden" name="owner" id="owner" value="">
-                                                    <span class="input-group-addon">
-                                                        <a><i class="fa fa-search"></i></a>
-                                                    </span>
-                                                </div>
+                                        	<th class="border-top-0">용도</th>
+                                            <td class="border-top-0">
+                                            	<input type="text" name="purp" id="purp"  class="form-control"/>
                                             </td>
-                                         </tr>
-                                     </tbody>
-                                 </table>
-                             </div>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                              <div class="box2 col-lg-12 p-0">
                              	<table class="table table-bordered border-top-0 mb-0">
                              		<colgroup>
@@ -180,7 +133,7 @@
                                     	<tr>
                                         	<th class="border-top-0">비고</th>
                                             <td class="border-top-0">
-                                            	<textarea name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;"></textarea>
+                                            	<textarea name="content" id="content"  class="form-control summernote" style="resize:none; height: 8em;"></textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -210,12 +163,8 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
 	$(document).ready(function () {
-		//$('.summernote').summernote({});
-		
-		$('.date').datepicker({
-			keyboardNavigation:false,
-			forceParse:false,
-			autoclose:true
+		$('.summernote').summernote({
+			height:400
 		});
 		
 	});

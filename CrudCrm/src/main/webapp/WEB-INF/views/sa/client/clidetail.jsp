@@ -263,6 +263,10 @@
 										<div role="tabpanel" id="tab1" class="tab-pane active">
 											<div class="panel-body table-responsive">
 																	
+												<div class="w-100 text-right mb-2">
+                                               	   <Button class="btn btn-primary relcustBtn" id="clino" value= "${cliDetail.CLINO }">추가</Button>
+                                            	</div>								
+																	
 												<div class="box1 col-xl-3 p-0">	
 													<div class="form-group row">
 														<label class="col-sm-3 col-form-label" style="padding-top: 3px;"><strong>고객명</strong></label>
@@ -270,7 +274,7 @@
                                         					<div class="input-group">                                        						
                                         						<input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname }"> 
                                         						<span class="input-group-append"> 
-                                        							<a href="#" onClick="relCustSearch();" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+                                        							<a href="#" onClick="cliCustSearch();" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
                                         						</span>
                                         					</div>
                                     					</div>
@@ -298,9 +302,9 @@
 													</thead>
 													<tbody>
 													
-													<c:forEach var ="custList" items="${relCustList }">
+													<c:forEach var ="custList" items="${cliCustList }">
 													<tr>
-														<td><a href="#" onclick="window.open('/cust/view/${custList.CUSTNO}', '', 'width=750, height=700, scrollbars=yes, resizable'); return false;">${custList.CUSTNAME }</a></td>
+														<td><a href="#" onclick="window.open('/popclicust/view/${custList.CLICUSTNO}', '', 'width=600, height=500, scrollbars=yes, resizable'); return false;">${custList.CUSTNAME }</a></td>
 														<td>${custList.EMAIL }</td>
 														<td>${custList.DUTY }</td>
 														<td>${custList.KEYMAN }</td>
@@ -311,9 +315,10 @@
 													</tbody>
 												</table>
 											
-											
+																					
 												<div class="m-auto" style="float:center;">
 													<ul class="pagination">
+														
 														<c:choose>
 															<c:when test="${page.startPageNum ne 1 }">
 																<li class="footable-page-arrow disabled">	
@@ -461,11 +466,18 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
 	<script>
-	function relCustSearch(){
+	function cliCustSearch(){
 		var custname = $('#custname').val();		
 		var urlStr = '/sales/client/view/${cliDetail.CLINO}?custname='+custname
 		location.replace(urlStr);
 	}
+	
+	$('.relcustBtn').click(function(e){
+		var value = e.target.value;
+		var urlStr = '/popclicust/'+value;
+		openNewWindow('관련고객',urlStr,e.target.id,600,500);
+	});
+	
 	
 	</script>
 	

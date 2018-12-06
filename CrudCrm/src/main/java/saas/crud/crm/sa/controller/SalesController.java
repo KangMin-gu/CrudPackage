@@ -1,5 +1,6 @@
 package saas.crud.crm.sa.controller;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +12,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.sa.dto.ClientDto;
+import saas.crud.crm.sa.dto.SaleStateDto;
+import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.dto.SalesDto;
+import saas.crud.crm.sa.service.ClientService;
 import saas.crud.crm.sa.service.SalesService;
 
 @Controller
@@ -22,6 +28,8 @@ public class SalesController {
 	
 	@Autowired 
 	private SalesService salesService;
+	@Autowired
+	private ClientService clientService;
 		
 	//영업리스트
 	@RequestMapping(value="/sales",method=RequestMethod.GET)
@@ -36,8 +44,16 @@ public class SalesController {
 			 							,@PathVariable int salesno, @ModelAttribute SalesDto salesDto) {
 		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		salesDto.setSiteid(siteid);
+		request.setAttribute("salesno", salesno);//서비스 전달용
 		
 		ModelAndView mView = salesService.svcSalesDetail(salesDto);
+		
+		//관련고객 리스트 추출
+		Map<String,Object> salesCustList = salesService.svcSalesCustList(request);
+		mView.addObject("page",salesCustList.get("page")); //페이징
+		mView.addObject("searchVal",salesCustList.get("searchVal"));//검색조건
+		mView.addObject("salesCustList",salesCustList.get("salesCustList"));//리스트 데이터
+		
 		mView.setViewName("sa/sales/salesdetail");
 		return mView;
 	}	
@@ -114,8 +130,140 @@ public class SalesController {
 		return "redirect:/sales";
 	}
 	
+	//영업관련고객상세-팝업창
+	@RequestMapping(value="/popsalescust/view/{salescustno}", method=RequestMethod.GET)
+	public ModelAndView authpopSalesCustDetail(HttpServletRequest request, @PathVariable int salescustno) {			
+		SalesCustDto salesCustDto = new SalesCustDto();
+		salesCustDto.setSalescustno(salescustno);
+		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		salesCustDto.setSiteid(siteid);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("salesCustDetail",salesService.svcSalesCustDetail(salesCustDto));	
+		mav.setViewName("sa/sales/pop/sacustdetail");
+		return mav;
+	}
+	
+	//영업관련고객추가-팝업창
+	@RequestMapping(value="/popsalescust/{salesno}", method=RequestMethod.GET)
+	public ModelAndView authpopSalesCust(HttpServletRequest request, @PathVariable int salesno) {			
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("salesno",salesno);	
+		mav.setViewName("sa/sales/pop/sacustinsert");
+		return mav;
+	}
+	
+	//영업관련고객추가-실행
+	@RequestMapping(value="/popsalescust/post",method=RequestMethod.POST)
+	@ResponseBody
+	public int authpopRelatedCustInsert(HttpServletRequest request,@ModelAttribute SalesCustDto salesCustDto) {
+		//세션 정보 값 DTO셋팅  
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		//필수 값 설정. 수정자는 로그인한 유저로 설정
+		salesCustDto.setEdtuser(userno);
+		salesCustDto.setSiteid(siteid);
+			
+		int salesNo = salesService.svcSalesCustInsert(salesCustDto);//관련고객추가 서비스 실행
+		return 0;			
+	}
+	
+	//팝업영업관련고객-삭제
+	@RequestMapping(value="/popsalescust/del/{salescustno}",method=RequestMethod.GET)
+	@ResponseBody
+	public int authsalesCustDelete(HttpServletRequest request 
+									,@PathVariable int salescustno) {
+		SalesCustDto salesCustDto = new SalesCustDto();	
+		//세션 정보 값 DTO셋팅  
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		//필수 값 설정. 수정자는 로그인한 유저로 설정
+		salesCustDto.setEdtuser(userno);
+		salesCustDto.setSiteid(siteid);	
+		salesCustDto.setSalescustno(salescustno);
+	
+		int res = salesService.svcSalesCustDelete(salesCustDto);
+			
+		return res;
+	}
 	
 	
+	//영업관련고객수정-팝업창
+	@RequestMapping(value="/popsalescust/post/{salescustno}", method=RequestMethod.GET)
+	public ModelAndView authpopSalesCustDetailForm(HttpServletRequest request, @PathVariable int salescustno) {			
+		SalesCustDto salesCustDto = new SalesCustDto();
+		salesCustDto.setSalescustno(salescustno);
+		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		salesCustDto.setSiteid(siteid);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("salesCustUpdate",salesService.svcSalesCustDetail(salesCustDto));	
+		mav.setViewName("sa/sales/pop/sacustupdate");
+		return mav;
+	}	
+	
+	
+	//팝업영업관련고객-수정 실행
+	@RequestMapping(value="/popsalescust/post/{salescustno}",method=RequestMethod.POST)
+	@ResponseBody
+	public int authsalesCustDelete(HttpServletRequest request 
+										,@PathVariable int salescustno,@ModelAttribute SalesCustDto salesCustDto) {
+			
+		//세션 정보 값 DTO셋팅  
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		//필수 값 설정. 수정자는 로그인한 유저로 설정
+		salesCustDto.setEdtuser(userno);
+		salesCustDto.setSiteid(siteid);	
+		salesCustDto.setSalescustno(salescustno);
+		
+		int res = salesService.svcSalesCustUpdate(salesCustDto);
+				
+		return res;
+	}
+	
+	//팝업영업단계-추가
+	@RequestMapping(value="/popsalesstate/{salesno}", method=RequestMethod.GET)
+	public ModelAndView authpopSalesState(HttpServletRequest request, @PathVariable int salesno, @RequestParam int salestate) {			
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("salesno",salesno);
+		mav.addObject("salestate",salestate);
+		mav.setViewName("sa/sales/pop/sastate");
+		return mav;
+	}
+	
+	
+	//영업관련고객추가-실행
+	@RequestMapping(value="/popsalestate/post",method=RequestMethod.POST)
+	@ResponseBody
+	public int authpopSaleStateInsert(HttpServletRequest request) {
+		
+		Map<String,Object> insVal = new HashMap<String,Object>();
+		//세션 정보 값 DTO셋팅  
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		//필수 값 설정. 수정자는 로그인한 유저로 설정
+				
+		insVal.put("userno", userno);
+		insVal.put("siteid", siteid);
+		
+		Enumeration params = request.getParameterNames();
+		
+		while (params.hasMoreElements()) {//requeset 값이 있으면 while문 가동 
+			String name = (String)params.nextElement();
+			String value = request.getParameter(name);
+			
+			if(value == "") {
+					value = null;
+				
+			}
+			insVal.put(name, value);
+		}
+				
+		int res = salesService.svcSalesStateInsert(insVal);//관련고객추가 서비스 실행
+		return res;			
+	}
 	
 	//캘린더
 	@RequestMapping(value="/sales/cal",method=RequestMethod.GET)

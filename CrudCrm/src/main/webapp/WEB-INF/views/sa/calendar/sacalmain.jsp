@@ -48,7 +48,7 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-8">
-					<h2>고객관리</h2>
+					<h2>영업일정</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><strong>목록</strong></li>
 					</ol>
@@ -165,7 +165,11 @@
         var d = date.getDate();
         var m = date.getMonth();
         var y = date.getFullYear();
-
+		
+        var test = new Date();
+        var yyyy = '2001-01-01'.get
+        
+        
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -182,6 +186,10 @@
                 }
             },
             events: [
+            	 {
+                     title: '이벤트테스트',
+                     start: new Date(y, m, 1)
+                 },
                 {
                     title: 'All Day Event',
                     start: new Date(y, m, 1)

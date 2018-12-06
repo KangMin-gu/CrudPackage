@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import saas.crud.crm.sa.dto.ClientDto;
+import saas.crud.crm.sa.dto.SaleStateDto;
 import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.dto.SalesDto;
 
@@ -58,20 +59,63 @@ public class SalesDaoImpl implements SalesDao {
 	public int salesDelete(SalesDto salesDto) {
 		int res = session.update("sales.salesDelete",salesDto);
 		return res;
-	}
-	
-	//관련고객 영업용
-	@Override
-	public List<Map<String, Object>> salesCustList(SalesDto SalesDto) {
-		List<Map<String, Object>> saCustList = new ArrayList<Map<String,Object>>();
-		saCustList = session.selectList("sales.salesCustList",SalesDto);
-		return saCustList;
-	}
-	//거래처-영업리스트
+	}	
+	//거래처화면-영업리스트
 	@Override
 	public List<Map<String, Object>> cliSalesList(Map<String, Object> prm) {
 		List<Map<String,Object>> cliSalesList = session.selectList("sales.cliSalesList",prm);
 		return cliSalesList;
+	}
+	
+	//영업 상세- 영업관련고객카운터
+	@Override
+	public int salesCustListCnt(Map<String, Object> searchVal) {
+		int res = session.selectOne("sales.salesCustListCnt",searchVal);
+		return res;
+	}
+	//영업 상세 - 영업관련고객 리스트
+	@Override
+	public List<Map<String, Object>> salesCustList(Map<String, Object> prm) {
+		List<Map<String, Object>> salesCustList = session.selectList("sales.salesCustList",prm);
+		return salesCustList;
+	}
+	
+		
+	//관련고객팝업 -추가
+	@Override
+	public int salesCustInsert(SalesCustDto salesCustDto) {
+		int res = session.insert("sales.salesCustInsert",salesCustDto);
+		return res;
+	}
+	//관련고객팝업-상세
+	@Override
+	public Map<String, Object> salesCustDetail(SalesCustDto salesCustDto) {
+		Map<String,Object> salesCustDetail = session.selectOne("sales.salesCustDetail",salesCustDto);
+		return salesCustDetail;
+	}
+	//관련고객 팝업-삭제
+	@Override
+	public int salesCustDelete(SalesCustDto salesCustDto) {
+		int res = session.update("sales.salesCustDelete",salesCustDto);
+		return res;
+	}
+	//관련고객 팝업-수정
+	@Override
+	public int salesCustUpdate(SalesCustDto salesCustDto) {
+		int res = session.update("sales.salesCustUpdate",salesCustDto);
+		return res;
+	}
+	//영업단계-리스트
+	@Override
+	public List<Map<String, Object>> salesStateList(SalesDto salesDto) {
+		List<Map<String, Object>> salesStateList = session.selectList("sales.salesStateList",salesDto);
+		return salesStateList;
+	}
+	//영업단계-추가실행
+	@Override
+	public int salesStateInsert(Map<String,Object> insVal) {
+		int res = session.insert("sales.salesStateInsert",insVal);
+		return res;
 	}
 
 }

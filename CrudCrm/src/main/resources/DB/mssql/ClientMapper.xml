@@ -7,7 +7,7 @@
 
 	SELECT 
 		COUNT(*)
-	FROM TB200010 
+	FROM TB200010  with (nolock)
 	WHERE 
 		SITEID = #{siteid}
 		AND ISDELETE = 0
@@ -46,8 +46,8 @@
 			,BSTYPE,MEMO
 			,IMPORTANCE, FRIENDLY
 			,A.OWNER, B.USERNAME 
-		FROM TB200010 A
-		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO	
+		FROM TB200010 A with (nolock)
+		LEFT OUTER JOIN TB980010 B with (nolock) ON A.OWNER = B.USERNO	
 		WHERE 
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
@@ -97,69 +97,7 @@
 		AND A.CLINO = #{clino}
 	</select>	
 	
-	
-	
-	<!-- 거래처 화면 관련고객 리스트 카운터-->
-	<select id="cliCustListCnt" parameterType="hashMap" resultType="int">	
-	
-	SELECT 
-		COUNT(*)
-			
-	FROM TB250010 A
-	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
-	INNER JOIN TB200010 C ON A.CLINO = C.CLINO
-	LEFT OUTER JOIN TB210010 D ON A.SALESNO = D.SALESNO
-	
-	WHERE 
-		A.SITEID = #{siteid}
-		<if test="clino != null">
-		AND A.CLINO = #{clino}
-		</if>
-		AND A.ISDELETE = 0
-		<if test="custname != null">
-		AND B.CUSTNAME like '%'+#{custname} +'%'
-		</if>
-			  		
-	</select>
-	
-	<!-- 거래처 화면 관련고객 리스트 -->
-	<select id="cliCustList" parameterType="hashMap" resultType="hashMap">	
-	
-	SELECT
-		ROWNUM,SALESCUSTNO
-		,KEYMAN, ROLENAME, MEMO
-		,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
-		,CLINO, CLINAME
-		,SALESNO
-	FROM (
-		SELECT
-			(ROW_NUMBER() OVER(ORDER BY B.CUSTNAME)) AS ROWNUM
-			,A.SALESCUSTNO
-			,A.KEYMAN, A.ROLENAME, A.MEMO
-			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
-			,C.CLINO, C.CLINAME
-			,D.SALESNO
-		FROM TB250010 A
-		INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
-		INNER JOIN TB200010 C ON A.CLINO = C.CLINO
-		LEFT OUTER JOIN TB210010 D ON A.SALESNO = D.SALESNO
-	
-		WHERE 
-			A.SITEID = #{siteid}
-			<if test="clino != null">
-			AND A.CLINO = #{clino}
-			</if>
-			AND A.ISDELETE = 0
-			<if test="custname != null">
-			AND B.CUSTNAME like '%'+#{custname} +'%'
-			</if>
-		)t
-		
-	WHERE 
-		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
-	</select>
-	
-	
+
 	<!-- 거래처 추가 -->	
 	<insert id="clientInsert" parameterType="saas.crud.crm.sa.dto.ClientDto">
 		<selectKey keyProperty="clino"  resultType="integer" order="AFTER">
@@ -293,4 +231,172 @@
 		AND SITEID = #{siteid} 
 		
 	</update>
+	
+	
+	
+	<!-- 거래처 화면 관련고객 리스트 카운터-->
+	<select id="cliCustListCnt" parameterType="hashMap" resultType="int">	
+	
+	SELECT 
+		COUNT(*)
+			
+	FROM TB280010 A
+	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
+	
+	WHERE 
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0
+		AND A.CLINO = #{clino}
+
+		<if test="custname != null">
+		AND B.CUSTNAME like '%'+#{custname} +'%'
+		</if>
+			  		
+	</select>
+	
+	<!-- 거래처 화면 관련고객 리스트 -->
+	<select id="cliCustList" parameterType="hashMap" resultType="hashMap">	
+	
+	SELECT
+		ROWNUM,CLICUSTNO
+		,KEYMAN, ROLENAME, MEMO
+		,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
+		,CLINO, CLINAME
+
+	FROM (
+		SELECT
+			(ROW_NUMBER() OVER(ORDER BY B.CUSTNAME)) AS ROWNUM
+			,A.CLICUSTNO
+			,A.KEYMAN, A.ROLENAME, A.MEMO
+			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
+			,C.CLINO, C.CLINAME
+		FROM TB280010 A with (nolock)
+		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+		INNER JOIN TB200010 C with (nolock) ON A.CLINO = C.CLINO
+	
+		WHERE 
+			A.SITEID = #{siteid}			
+			AND A.CLINO = #{clino}							
+			AND A.ISDELETE = 0
+			<if test="custname != null">
+			AND B.CUSTNAME like '%'+#{custname} +'%'
+			</if>
+		)t
+		
+	WHERE 
+		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 거래처관련고객 추가 -->
+	<insert id="cliCustInsert" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
+	
+	INSERT INTO TB280010
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,ISDELETE
+	,REGDATE
+	,EDTDATE
+	
+	,CUSTNO
+	,CLINO
+	,ROLENAME
+	,KEYMAN
+	,CHKSUPPORT
+	,MEMO
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{reguser}
+	,#{edtuser}
+	,0
+	,getdate()
+	,getdate()
+	
+	,#{custno}
+	,#{clino}
+	,#{rolename}
+	,#{keyman}
+	,#{chksupport}
+	,#{memo}
+	)
+	</insert>
+	
+		
+	<!-- 영업 관련고객 상세 -->
+	<select id="cliCustDetail" parameterType="hashMap" resultType="hashMap">	
+	
+	SELECT
+			A.CLICUSTNO,A.CLINO
+			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
+			,A.CUSTNO, B.CUSTNAME
+			
+		FROM TB280010 A with (nolock)
+		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+				
+		WHERE 
+			A.SITEID = #{siteid}			
+			AND A.CLICUSTNO = #{clicustno}
+	</select>
+	
+	<!-- 영업관련고객 삭제 -->
+	<update id="cliCustDelete" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
+	
+	UPDATE TB280010
+	SET
+	EDTUSER = #{edtuser}
+	,EDTDATE = GETDATE() 
+	,ISDELETE = 1
+	
+	WHERE 
+		CLICUSTNO = #{clicustno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+	
+	<!-- 영업관련고객 수정 -->
+	<update id="cliCustUpdate" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
+	
+	UPDATE TB280010
+	SET
+	SITEID = #{siteid}
+	,EDTUSER = #{edtuser}
+	,ISDELETE = #{isdelete}
+	,EDTDATE = #{edtdate}
+	
+	,CUSTNO = #{custno}
+	,CLINO = #{clino}
+	,ROLENAME = #{rolename}
+	,KEYMAN = #{keyman}
+	,CHKSUPPORT = #{chksupport}
+	,MEMO = #{memo}
+	
+	WHERE 
+		CLICUSTNO = #{clicustno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

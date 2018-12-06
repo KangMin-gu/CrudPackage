@@ -1,11 +1,11 @@
 package saas.crud.crm.sa.dto;
 
-public class SalesCustDto {
+public class ClientCustDto {
 
-	private int salescustno;
+	private int clicustno;
 	private int siteid;
 	private int custno;
-	private int salesno;
+	private int clino;
 	private String rolename;
 	private int chksupport;
 	private int keyman;
@@ -16,15 +16,15 @@ public class SalesCustDto {
 	private int edtuser;
 	private int isdelete;
 	
-	public SalesCustDto() {}
+	public ClientCustDto() {}
 
-	public SalesCustDto(int salescustno, int siteid, int custno, int salesno, String rolename, int chksupport,
-			int keyman, String memo, String regdate, String edtdate, int reguser, int edtuser, int isdelete) {
+	public ClientCustDto(int clicustno, int siteid, int custno, int clino, String rolename, int chksupport, int keyman,
+			String memo, String regdate, String edtdate, int reguser, int edtuser, int isdelete) {
 		super();
-		this.salescustno = salescustno;
+		this.clicustno = clicustno;
 		this.siteid = siteid;
 		this.custno = custno;
-		this.salesno = salesno;
+		this.clino = clino;
 		this.rolename = rolename;
 		this.chksupport = chksupport;
 		this.keyman = keyman;
@@ -36,12 +36,12 @@ public class SalesCustDto {
 		this.isdelete = isdelete;
 	}
 
-	public int getSalescustno() {
-		return salescustno;
+	public int getClicustno() {
+		return clicustno;
 	}
 
-	public void setSalescustno(int salescustno) {
-		this.salescustno = salescustno;
+	public void setClicustno(int clicustno) {
+		this.clicustno = clicustno;
 	}
 
 	public int getSiteid() {
@@ -60,12 +60,12 @@ public class SalesCustDto {
 		this.custno = custno;
 	}
 
-	public int getSalesno() {
-		return salesno;
+	public int getClino() {
+		return clino;
 	}
 
-	public void setSalesno(int salesno) {
-		this.salesno = salesno;
+	public void setClino(int clino) {
+		this.clino = clino;
 	}
 
 	public String getRolename() {
@@ -139,11 +139,6 @@ public class SalesCustDto {
 	public void setIsdelete(int isdelete) {
 		this.isdelete = isdelete;
 	}
-	
 
-	
-	
-	
-	
 	
 }

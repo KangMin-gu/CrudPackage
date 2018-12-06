@@ -136,7 +136,7 @@
 												<td>${salesDetail.CLINAME }</td>
 											</tr>
 											<tr>
-												<th>확률</th>
+												<th>확률(%)</th>
 												<td>${salesDetail.PROB }</td>
 											</tr>
 											<tr>
@@ -222,11 +222,28 @@
 										<li><a class="nav-link" data-toggle="tab" href="#tab3">고객접촉</a></li>
 									</ul>
 									<div class="tab-content">
+																				<!-- 관련고객 -->
 										<div role="tabpanel" id="tab1" class="tab-pane active">
 											<div class="panel-body table-responsive">
+												
 												<div class="w-100 text-right mb-2">
-													<a href="javascript:void(0);" class="btn btn-primary">추가</a>
-												</div>
+                                               	   <Button class="btn btn-primary relcustBtn" id="salesno" value= "${salesDetail.SALESNO }">추가</Button>
+                                            	</div>				
+																	
+												<div class="box1 col-xl-3 p-0">	
+													<div class="form-group row">
+														<label class="col-sm-3 col-form-label" style="padding-top: 3px;"><strong>고객명</strong></label>
+														<div class="col-sm-8">
+                                        					<div class="input-group">                                        						
+                                        						<input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname }"> 
+                                        						<span class="input-group-append"> 
+                                        							<a href="#" onClick="relCustSearch();" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+                                        						</span>
+                                        					</div>
+                                    					</div>
+                                					</div>
+												</div>		
+												
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 150px;" />
@@ -242,29 +259,80 @@
 															<th>직장명</th>
 															<th>직책</th>
 															<th>키맨여부</th>
-															<th>핵심여부</th>
-															<th>관심여부</th>
+															<th>역할</th>
+															<th>메모</th>
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach var="custList" items="${salesCustList }">
-														<tr>
-															<td>${custList.CUSTNAME }</td>
-															<td></td>
-															<td>사원</td>
-															<td>NO</td>
-															<td></td>
-															<td></td>
-														</tr>
-														</c:forEach>
+													
+													<c:forEach var ="custList" items="${salesCustList }">
+													<tr>
+														<td><a href="#" onclick="window.open('/popsalescust/view/${custList.SALESCUSTNO}', '', 'width=600, height=500, scrollbars=yes, resizable'); return false;">${custList.CUSTNAME }</a></td>
+														<td>${custList.CLINAME }</td>
+														<td>${custList.DUTY }</td>
+														<td>
+															<c:choose>
+																<c:when test="${custList.KEYMAN eq 1 }">O</c:when>
+																<c:when test="${custList.KEYMAN eq 2 }">X</c:when>
+															</c:choose>
+														</td>
+														<td>${custList.ROLENAME }</td>
+														<td>${custList.MEMO }</td>
+													</tr>
+													</c:forEach>	
 													</tbody>
 												</table>
-											</div>
+											
+											
+												<div class="m-auto" style="float:center;">
+													<ul class="pagination">
+														<c:choose>
+															<c:when test="${page.startPageNum ne 1 }">
+																<li class="footable-page-arrow disabled">	
+																	<a href='/sales/view/${salesDetail.SALESNO}?custname=${searchVal.custname }&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
+																</li>
+															</c:when>
+															<c:otherwise>
+																<li class="disabled"><a href="javascript:">&laquo;</a>
+																</li>
+															</c:otherwise>
+														</c:choose>
+								
+														<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
+															<c:choose>
+																<c:when test="${i eq page.pageNum }">
+																	<li class="footable-page active">
+																		<a href = '/sales/view/${salesDetail.SALESNO}?custname=${searchVal.custname }&pageNum=${i }'>${i }</a>
+																	</li>
+																</c:when>
+																<c:otherwise>
+																	<li>
+																		<a href = '/sales/view/${salesDetail.SALESNO}?custname=${searchVal.custname }&pageNum=${i }'>${i }</a>
+																	</li>
+																</c:otherwise>
+															</c:choose>
+														</c:forEach>
+										
+														<c:choose>
+															<c:when test="${page.endPageNum lt page.totalPageCount }">
+																<li>
+																	<a href = '/sales/view/${salesDetail.SALESNO}?custname=${searchVal.custname }&pageNum=${page.endPageNum+1 }'>&raquo;</a>
+																</li>
+															</c:when>
+															<c:otherwise>
+																<li class="disabled"><a href="javascript:">&raquo;</a></li>
+															</c:otherwise>
+														</c:choose>
+													</ul> 
+												</div> 
+											
+											</div>									
 										</div>
 										<div role="tabpanel" id="tab2" class="tab-pane ">
 											<div class="panel-body table-responsive">
 												<div class="w-100 text-right mb-2">
-													<a href="javascript:void(0);" class="btn btn-primary">추가</a>
+													<a href="#" class="btn btn-primary" id="saleStateBtn" onclick="saleStateInsert(${salesDetail.SALESNO },${salesDetail.SALESTATE });">추가</a>
+												
 												</div>
 												<table class="table table-bordered">
 													<colgroup>
@@ -278,19 +346,53 @@
 														<tr>
 															<th>변경일</th>
 															<th>이전단계</th>
-															<th>이후단계</th>
+															<th>변경단계</th>
 															<th>변경사유</th>
+															<th>확률</th>
 															<th>등록자</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td>2008-10-10</td>
-															<td></td>
-															<td></td>
-															<td>영업진행</td>
-															<td>2008-10-10</td>
+													
+													<c:forEach var="stateList" items="${salesStateList }">
+														<tr> 
+															<td>${stateList.ENTDATE }</td>
+															<td>
+																<c:choose>
+																	<c:when test="${stateList.PRESTATE eq 1 }">계약성공종료</c:when>
+																	<c:when test="${stateList.PRESTATE eq 2 }">계약중</c:when>
+																	<c:when test="${stateList.PRESTATE eq 3 }">제안서제출</c:when>
+																	<c:when test="${stateList.PRESTATE eq 4 }">접촉중</c:when>
+																	<c:when test="${stateList.PRESTATE eq 5 }">문의</c:when>
+																	<c:when test="${stateList.PRESTATE eq 6 }">중도포기</c:when>
+																	<c:when test="${stateList.PRESTATE eq 7 }">경쟁실패</c:when>
+																</c:choose>
+															</td>
+															<td>
+																<c:choose>
+																	<c:when test="${stateList.STATE eq 1 }">계약성공종료</c:when>
+																	<c:when test="${stateList.STATE eq 2 }">계약중</c:when>
+																	<c:when test="${stateList.STATE eq 3 }">제안서제출</c:when>
+																	<c:when test="${stateList.STATE eq 4 }">접촉중</c:when>
+																	<c:when test="${stateList.STATE eq 5 }">문의</c:when>
+																	<c:when test="${stateList.STATE eq 6 }">중도포기</c:when>
+																	<c:when test="${stateList.STATE eq 7 }">경쟁실패</c:when>
+																</c:choose>
+															</td>
+															<td>
+																<c:choose>
+																	<c:when test="${stateList.MODREASON eq 1 }">영업진행</c:when>
+																	<c:when test="${stateList.MODREASON eq 2 }">업무중단</c:when>
+																	<c:when test="${stateList.MODREASON eq 3 }">폐업</c:when>
+																	<c:when test="${stateList.MODREASON eq 4 }">거래처요청</c:when>
+																	<c:when test="${stateList.MODREASON eq 5 }">기타</c:when>
+																</c:choose>
+															</td>
+															<td>${stateList.PROB }</td>
+															<td>${stateList.REGUSER }</td>
 														</tr>
+													</c:forEach>
+														
 													</tbody>
 												</table>
 											</div>
@@ -351,5 +453,19 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 
+	<script>
+	
+	$('.relcustBtn').click(function(e){
+		var value = e.target.value;
+		var urlStr = '/popsalescust/'+value;
+		openNewWindow('관련고객',urlStr,e.target.id,600,500);
+	});
+		
+	function saleStateInsert(salesno,salestate){
+		var urlStr = '/popsalesstate/'+salesno+'?salestate='+salestate;
+		openNewWindow('영업단계',urlStr,'sales',600,500);
+	}
+	
+	</script>	
 </body>
 </html>

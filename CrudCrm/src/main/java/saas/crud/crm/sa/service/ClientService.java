@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.sa.dto.ClientCustDto;
 import saas.crud.crm.sa.dto.ClientDto;
+import saas.crud.crm.sa.dto.SalesCustDto;
 
 public interface ClientService {
 	
@@ -21,8 +23,20 @@ public interface ClientService {
 	public int svcCliDetailUpdate(ClientDto clientDto);
 
 	public int svcCliDelete(ClientDto clientDto);
+		
+	public Map<String,Object> svcCliCustList(HttpServletRequest request);
 	
 	
-	public Map<String,Object> svcRelatedCustList(HttpServletRequest request);
+	
+	
+	
+	
+	public int svcCliCustInsert(ClientCustDto clientCustDto);
+	
+	public Map<String,Object> svcCliCustDetail(ClientCustDto clientCustDto);
+	
+	public int svcCliCustDelete(ClientCustDto clientCustDto);
+	
+	public int svcCliCustUpdate(ClientCustDto clientCustDto);
 	
 }

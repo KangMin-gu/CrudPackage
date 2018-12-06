@@ -15,7 +15,9 @@ import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.sa.dao.ClientDao;
 import saas.crud.crm.sa.dao.SalesDao;
+import saas.crud.crm.sa.dto.ClientCustDto;
 import saas.crud.crm.sa.dto.ClientDto;
+import saas.crud.crm.sa.dto.SalesCustDto;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -95,15 +97,7 @@ public class ClientServiceImpl implements ClientService {
 			prm.put("clino", Integer.parseInt(request.getAttribute("clino").toString()));
 					
 			ModelAndView mView = new ModelAndView();
-			mView.addObject("cliDetail",clientDao.clientDetail(prm));//고객상세 데이터			
-					
-			
-			//mView.addObject("cliCustList",clientDao.cliCustList(prm));//탭1 - 관련고객 리스트
-			Map<String,Object> relCustList = svcRelatedCustList(request);
-			mView.addObject("page",relCustList.get("page"));
-			mView.addObject("searchVal",relCustList.get("searchVal"));
-			mView.addObject("relCustList",relCustList.get("relCustList"));
-			
+			mView.addObject("cliDetail",clientDao.clientDetail(prm));//고객상세 데이터				
 		
 			//거래처-영업 탭 최근 20 개항목 리스트 출력
 			int startRowNum = 1;
@@ -136,7 +130,7 @@ public class ClientServiceImpl implements ClientService {
 			int cliNo = clientDao.clientUpdate(clientDto);
 			return cliNo;
 		}
-
+		//거래처삭제
 		@Override
 		public int svcCliDelete(ClientDto clientDto) {
 			int res = clientDao.cliDelete(clientDto);
@@ -144,9 +138,9 @@ public class ClientServiceImpl implements ClientService {
 		}
 
 		
-		
+		//거래처관련고객 리스트
 		@Override
-		public Map<String, Object> svcRelatedCustList(HttpServletRequest request) {
+		public Map<String, Object> svcCliCustList(HttpServletRequest request) {
 
 			Map<String,Object> searchVal = new HashMap<String,Object>();
 			int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -169,12 +163,11 @@ public class ClientServiceImpl implements ClientService {
 				int clino = Integer.parseInt(request.getAttribute("clino").toString());
 				searchVal.put("clino", clino);
 			}
-			
-			System.out.println("@@@@@@@@@@@@@@@@total");
+						
 			//총자료수
 			int totalRows = clientDao.cliCustListCnt(searchVal);							
 			//paging
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+totalRows);
+
 			int pageRowCount = 10; //한페이지에서 출력될 row
 			int pageDisplayCount = 5; // 페이지 목록 수  
 					
@@ -191,15 +184,43 @@ public class ClientServiceImpl implements ClientService {
 			searchVal.put("startRowNum", startRowNum);
 			searchVal.put("endRowNum",endRowNum);
 			
-			List<Map<String,Object>> relCustList = clientDao.cliCustList(searchVal);
+			List<Map<String,Object>> cliCustList = clientDao.cliCustList(searchVal);
 			
 			Map<String,Object> resMap = new HashMap<String,Object>();
 			
 			resMap.put("page", page);
 			resMap.put("searchVal", searchVal);
-			resMap.put("relCustList", relCustList);
+			resMap.put("cliCustList", cliCustList);
 			
 			return resMap;
+		}
+		
+		
+		
+		//영업관련고객팝업- 추가
+		@Override
+		public int svcCliCustInsert(ClientCustDto clientCustDto) {
+			int res = clientDao.cliCustInsert(clientCustDto);
+			return res;
+		}
+		
+		//영업관련고객팝업-상세
+		@Override
+		public Map<String, Object> svcCliCustDetail(ClientCustDto clientCustDto) {
+			Map<String,Object> cliCustDetail = clientDao.cliCustDetail(clientCustDto);
+			return cliCustDetail;
+		}
+		//영업관련고객팝업-삭제
+		@Override
+		public int svcCliCustDelete(ClientCustDto clientCustDto) {
+			int res = clientDao.cliCustDelete(clientCustDto);
+			return res;
+		}
+		//영업관련고객팝업-수정
+		@Override
+		public int svcCliCustUpdate(ClientCustDto clientCustDto) {
+			int res = clientDao.cliCustUpdate(clientCustDto);
+			return res;
 		}
 
 

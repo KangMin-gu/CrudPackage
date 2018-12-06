@@ -91,13 +91,13 @@
 													<th>현단계<sup>*</sup></th>
 													<td>
 														<select class="form-control" style="height: 23px;" id="salestate" name="salestate">
-															<option value="1">계약성공종료</option>
-															<option value="2">계약중</option>
-															<option value="3">제안서제출</option>
-															<option value="4">접촉중</option>
-															<option value="5">문의</option>
-															<option value="6">중도포기</option>
-															<option value="7">경쟁실패</option>
+															<option value="1" ${salesUpdate.SALESTATE eq "1" ? "selected" :""}>계약성공종료</option>
+															<option value="2" ${salesUpdate.SALESTATE eq "2" ? "selected" :""}>계약중</option>
+															<option value="3" ${salesUpdate.SALESTATE eq "3" ? "selected" :""}>제안서제출</option>
+															<option value="4" ${salesUpdate.SALESTATE eq "4" ? "selected" :""}>접촉중</option>
+															<option value="5" ${salesUpdate.SALESTATE eq "5" ? "selected" :""}>문의</option>
+															<option value="6" ${salesUpdate.SALESTATE eq "6" ? "selected" :""}>중도포기</option>
+															<option value="7" ${salesUpdate.SALESTATE eq "7" ? "selected" :""}>경쟁실패</option>
 														</select>
 													</td>
 												</tr>

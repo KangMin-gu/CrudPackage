@@ -7,7 +7,7 @@
 
 	SELECT 
 		COUNT(*)
-	FROM TB210010 
+	FROM TB210010  with (nolock)
 	WHERE 
 		SITEID = #{siteid}
 		AND ISDELETE = 0
@@ -45,9 +45,9 @@
 			,A.CLINO, B.CLINAME
 			,A.FORDDATE, A.SALESTATE, A.STATEDATE
 			,A.OWNER, C.USERNAME
-		FROM TB210010 A
-		LEFT OUTER JOIN TB200010 B ON A.CLINO = B.CLINO
-		LEFT OUTER JOIN TB980010 C ON A.OWNER = C.USERNO   
+		FROM TB210010 A with (nolock)
+		LEFT OUTER JOIN TB200010 B with (nolock) ON A.CLINO = B.CLINO
+		LEFT OUTER JOIN TB980010 C with (nolock) ON A.OWNER = C.USERNO   
 		
 		WHERE 
 			A.SITEID = #{siteid}
@@ -75,6 +75,7 @@
 		ROWNUM between #{startRowNum} and #{endRowNum}	
 	</select>
 
+	<!-- 영업상세 -->
 	<select id="salesDetail" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
 	SELECT
 	A.SALESNO, A.SALENAME
@@ -237,26 +238,222 @@
 	
 	ORDER BY A.SALESNO DESC 
 	</select>
+
 	
-	<!-- 영업-관련고객  리스트 -->
-	<select id="salesCustList" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
+	<!-- 영업 관련고객 리스트 카운터-->
+	<select id="salesCustListCnt" parameterType="hashMap" resultType="int">	
 	
-	SELECT
-	A.SALESCUSTNO
-	,A.CUSTNO, B.CUSTNAME, B.DEPTNAME , B.DUTY
-	,B.CLINO, C.CLINAME
-	,A.KEYMAN
-	,A.MEMO
+	SELECT 
+		COUNT(*)
+			
+	FROM TB250010 A with (nolock)
+	INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
 	
-	FROM TB250010 A
-	LEFT OUTER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
-	LEFT OUTER JOIN TB200010 C ON B.CLINO = C.CLINO
-	
-	WHERE
+	WHERE 
 		A.SITEID = #{siteid}
 		AND A.ISDELETE = 0
 		AND A.SALESNO = #{salesno}
-	
+
+		<if test="custname != null">
+		AND B.CUSTNAME like '%'+#{custname} +'%'
+		</if>
+			  		
 	</select>
 	
+	<!-- 영업 관련고객 리스트 -->
+	<select id="salesCustList" parameterType="hashMap" resultType="hashMap">	
+	
+	SELECT
+		ROWNUM
+		,SALESCUSTNO
+		,KEYMAN, ROLENAME, MEMO
+		,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
+		,SALESNO, SALENAME
+		,CLINO, CLINAME
+
+	FROM (
+		SELECT
+			(ROW_NUMBER() OVER(ORDER BY B.CUSTNAME)) AS ROWNUM
+			,A.SALESCUSTNO
+			,A.KEYMAN, A.ROLENAME, A.MEMO
+			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
+			,C.SALESNO, C.SALENAME
+			,D.CLINO, D.CLINAME
+		FROM TB250010 A with (nolock)
+		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+		INNER JOIN TB210010 C with (nolock) ON A.SALESNO = C.SALESNO
+		LEFT OUTER JOIN TB200010 D with (nolock) ON B.CLINO = D.CLINO
+		
+		WHERE 
+			A.SITEID = #{siteid}			
+			AND A.SALESNO = #{salesno}							
+			AND A.ISDELETE = 0
+			<if test="custname != null">
+			AND B.CUSTNAME like '%'+#{custname} +'%'
+			</if>
+		)t
+		
+	WHERE 
+		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
+	</select>
+
+	
+	<!-- 영업관련고객 추가 -->
+	<insert id="salesCustInsert" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
+	
+	INSERT INTO TB250010
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,ISDELETE
+	,REGDATE
+	,EDTDATE
+	
+	,CUSTNO
+	,SALESNO
+	,ROLENAME
+	,KEYMAN
+	,CHKSUPPORT
+	,MEMO
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{reguser}
+	,#{edtuser}
+	,0
+	,getdate()
+	,getdate()
+	
+	,#{custno}
+	,#{salesno}
+	,#{rolename}
+	,#{keyman}
+	,#{chksupport}
+	,#{memo}
+	)
+	</insert>
+	
+		
+	<!-- 영업 관련고객 상세 -->
+	<select id="salesCustDetail" parameterType="hashMap" resultType="hashMap">	
+	
+	SELECT
+			A.SALESCUSTNO,A.SALESNO
+			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
+			,A.CUSTNO, B.CUSTNAME
+			
+		FROM TB250010 A with (nolock)
+		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+				
+		WHERE 
+			A.SITEID = #{siteid}			
+			AND A.SALESCUSTNO = #{salescustno}
+	</select>
+	
+	<!-- 영업관련고객 삭제 -->
+	<update id="salesCustDelete" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
+	
+	UPDATE TB250010
+	SET
+	EDTUSER = #{edtuser}
+	,EDTDATE = GETDATE() 
+	,ISDELETE = 1
+	
+	WHERE 
+		SALESCUSTNO = #{salescustno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+	
+	<!-- 영업관련고객 수정 -->
+	<update id="salesCustUpdate" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
+	
+	UPDATE TB250010
+	SET
+	SITEID = #{siteid}
+	,EDTUSER = #{edtuser}
+	,ISDELETE = #{isdelete}
+	,EDTDATE = #{edtdate}
+	
+	,CUSTNO = #{custno}
+	,SALESNO = #{salesno}
+	,ROLENAME = #{rolename}
+	,KEYMAN = #{keyman}
+	,CHKSUPPORT = #{chksupport}
+	,MEMO = #{memo}
+	
+	WHERE 
+		SALESCUSTNO = #{salescustno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+		
+	<!-- 영업단계 리스트 -->
+	<select id="salesStateList" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
+	
+	SELECT 
+	A.SALESTATENO, A.SITEID, A.SALESNO
+	,CONVERT(VARCHAR, A.ENTDATE, 112) AS ENTDATE 
+	,A.STATE, A.MODREASON, A.SSDESC, A.PRESTATE, A.PROB
+	,A.REGUSER, B.USERNAME  
+	 
+	FROM TB210020 A
+	LEFT OUTER JOIN TB980010 B ON A.REGUSER = B.USERNO
+	
+	WHERE
+		A.SALESNO = #{salesno}
+		AND A.SITEID =#{siteid}
+	ORDER BY 1 DESC	
+	</select>
+	
+	<!-- 영업단계 추가 -->
+	<insert id="salesStateInsert" parameterType="hashMap">
+	
+	INSERT INTO TB210020
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,REGDATE
+	,EDTDATE
+	,SALESNO
+	
+	,ENTDATE
+	,STATE
+	,MODREASON
+	,SSDESC
+	,PRESTATE
+	,PROB
+	)
+	VALUES
+	(
+	#{siteid}
+	,#{userno}
+	,#{userno}
+	,getdate()
+	,getdate()
+	,#{salesno}
+	
+	,getdate()
+	,#{state}
+	,#{modreason}
+	,#{ssdesc}
+	,#{prestate}
+	,#{prob}
+	)
+	
+	UPDATE TB210010 
+	SET
+		SALESTATE = #{state}
+		,STATEDATE = getdate()
+		,EDITUSER = #{userno} 
+		,EDITDATE = getdate()
+	WHERE
+		SALESNO = #{salesno}
+		
+	</insert>
+									
 </mapper>

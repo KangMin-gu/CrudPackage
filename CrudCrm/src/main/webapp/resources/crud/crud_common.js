@@ -51,7 +51,7 @@
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.target.id,650,700);
 	});
-
+	
 	
 	$('.poplogo').click(function(e){
 		openNewWindow('로고','/poplogo',e.target.id,600,700);

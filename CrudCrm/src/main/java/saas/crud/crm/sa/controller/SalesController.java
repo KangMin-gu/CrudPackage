@@ -2,6 +2,7 @@ package saas.crud.crm.sa.controller;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.dto.SalesDto;
 import saas.crud.crm.sa.service.ClientService;
 import saas.crud.crm.sa.service.SalesService;
+import saas.crud.crm.sv.service.SvService;
 
 @Controller
 public class SalesController {
@@ -30,6 +32,8 @@ public class SalesController {
 	private SalesService salesService;
 	@Autowired
 	private ClientService clientService;
+	@Autowired
+	private SvService svService;
 		
 	//영업리스트
 	@RequestMapping(value="/sales",method=RequestMethod.GET)
@@ -255,8 +259,7 @@ public class SalesController {
 			String value = request.getParameter(name);
 			
 			if(value == "") {
-					value = null;
-				
+					value = null;			
 			}
 			insVal.put(name, value);
 		}
@@ -272,5 +275,17 @@ public class SalesController {
 		mView.setViewName("sa/calendar/sacalmain");
 		return mView;
 	}
+	
+	//캘린더 - event ajax 
+	@RequestMapping(value="/sales/cal/event", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String, Object>> SvTabConvey(HttpServletRequest request){
+		int test = 1;
+		List<Map<String, Object>> tabConvey = svService.svTabConvey(request,test);
+		
+		return tabConvey;
+		
+	}
+	
 
 }

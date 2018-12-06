@@ -12,16 +12,10 @@
 
 
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/plugins/fullcalendar/fullcalendar.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/plugins/fullcalendar/fullcalendar.print.css"
-	rel='stylesheet' media='print'>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
 
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
@@ -68,6 +62,7 @@
 							<div class="ibox-content">
 								<div id='external-events'>
 									<p>Drag a event and drop into callendar.</p>
+									<div class='external-event navy-bg' >테스트 스케쥴</div>
 									<div class='external-event navy-bg' id='test'>Go to shop
 										and buy some products.</div>
 									<div class='external-event navy-bg'>Check the new CI from
@@ -80,7 +75,7 @@
 										<input type='checkbox' id='drop-remove' class="i-checks"
 											checked /> <label for='drop-remove'>remove after
 											drop</label>
-										<button class="btn btn-primary float-right">버튼</button>
+										<button class="btn btn-primary float-right" id="testBtn">버튼</button>
 									</p>
 								</div>
 							</div>
@@ -113,130 +108,137 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 
 	<!-- Mainly scripts -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/moment.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/moment.min.js"></script>
 
 	<!-- jQuery UI  -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
 	<!-- iCheck -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 
 	<!-- Full Calendar -->
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 
 	<script>
 
     $(document).ready(function() {
-
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green'
-            });
+		
+    	 $('#testBtn').click(function(){
+         	debugger;
+  //       	var test = {'hahaha':'kk','kkk':'hahaha'};
+         	
+         	$.ajax({
+     		    url: '/sales/cal/event',
+    // 		    data: test,
+     		    dataType: 'json', 
+     		    type: 'GET', 
+     		    processData: false, 
+     		    contentType: false, 
+     		    
+     		    success: function(response){ 
+     		    alert('ajax ok');        	
+     		    
+     		    },
+     		    error:function(){
+     		    alert('fail');	
+     		    }
+     		});         	
+         });
+    	
+    	
+    	
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
 
         /* initialize the external events
          -----------------------------------------------------------------*/
-
-
         $('#external-events div.external-event').each(function() {
 
             // store data so the calendar knows to render an event upon drop
             $(this).data('event', {
+            	
                 title: $.trim($(this).text()), // use the element's text as the event title
                 stick: true // maintain when user navigates (see docs on the renderEvent method)
             });
 
             // make the event draggable using jQuery UI
             $(this).draggable({
+            	
                 zIndex: 1111999,
                 revert: true,      // will cause the event to go back to its
                 revertDuration: 0  //  original position after the drag
             });
 
         });
+        
+       
+     
+  
 
 
         /* initialize the calendar
-         -----------------------------------------------------------------*/
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-		
-        var test = new Date();
-        var yyyy = '2001-01-01'.get
-        
-        
+         -----------------------------------------------------------------*/            
         $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
+            
+        	header: {//캘린더 프레임 헤더설정
+                left: 'prev,next today',//저번달, 다음달, 오늘로이동
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'month,agendaWeek,agendaDay' //월,주,일별 보기 
             },
-            editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar
-            drop: function() {
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove();
+            
+            editable: true, //false - 일정 수정 안됨. 
+            
+            droppable: false, // false - 드래그 박스의 일정 캘린더로 이동이 안됨.  
+            
+            drop: function() { //드래그 박스의 일정 캘린더로 드랍시 발생 function 
+            	console.log('drop the div');
+                
+                if ($('#drop-remove').is(':checked')) { //드래그박스에서 삭제버튼이 체크 되어있다면                     
+                    $(this).remove(); //캘린더에 일정 드랍 후 드래그 박스 목록에서 삭제.
                 }
             },
-            events: [
-            	 {
-                     title: '이벤트테스트',
-                     start: new Date(y, m, 1)
-                 },
-                {
-                    title: 'All Day Event',
-                    start: new Date(y, m, 1)
-                },
-                {
-                    title: 'Long Event',
-                    start: new Date(y, m, d-5),
-                    end: new Date(y, m, d-2)
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d-3, 16, 0),
-                    allDay: false
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d+4, 16, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Meeting',
-                    start: new Date(y, m, d, 10, 30),
-                    allDay: false
-                },
-                {
-                    title: 'Lunch',
-                    start: new Date(y, m, d, 12, 0),
-                    end: new Date(y, m, d, 14, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Birthday Party',
-                    start: new Date(y, m, d+1, 19, 0),
-                    end: new Date(y, m, d+1, 22, 30),
-                    allDay: false
-                },
-                {
-                    title: 'Click for Google',
-                    start: new Date(y, m, 28),
-                    end: new Date(y, m, 29),
-                    url: 'http://google.com/'
-                }
-            ]
-        });
-
+            
+            dayClick: function() {//캘린더 day 클릭
+            	
+            	
+            	
+            	
+        	},
+        	 
+        	eventClick: function(event, element) {//캘린더 이벤트 클릭시
+        		event.title = "CLICKED!"; 
+        		$('#calendar').fullCalendar('updateEvent', event);
+        	},
+        	
+        	eventSources: [
+			{
+        		events: [ // put the array in the `events` property
+        			{
+        			title  : '테스트케이스1'
+        			,start: new Date('2018-12-01')
+        			,color: 'black'     // an option!
+                	,textColor: 'yellow' // an option!
+        			}
+        			,{
+        			title  : '테스트이벤트'
+            		,start: new Date('2018-12-05')
+            		}
+        		
+        		]
+        	
+			
+			}
+			// any other event sources...
+			
+			]
+        		    
+         
+        });//캘린더의끝
+		
+        
+   		
 
     });
 

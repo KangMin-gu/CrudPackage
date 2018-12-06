@@ -264,4 +264,13 @@ public class CampaignController {
 		mView.setViewName("cp/campList");
 		return mView;
 	}
+	
+	@RequestMapping(value="/tab/targetHistory/{campNo}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String,Object>> authTabTargetHistory(HttpServletRequest request,@PathVariable int campNo){
+		
+		List<Map<String,Object>> tabHistory= campaignService.campTabTargetHistory(request,campNo);
+		
+		return tabHistory;
+	}
 }

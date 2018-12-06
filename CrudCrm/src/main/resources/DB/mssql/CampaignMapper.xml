@@ -117,6 +117,12 @@
 			WHERE CAMPNO = #{campno}
 	</update>
 	
+	<delete id="targetCustDelete" parameterType="hashMap">
+		DELETE Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+			WHERE SITEID=  #{siteid}
+			AND CAMPNO = #{campno}
+	</delete>
+	
 	<insert id="targetCustInsert" parameterType="hashMap">
 		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_CUST
 		(
@@ -517,5 +523,16 @@
 		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int})}
 	</update>
 	
+	<select id="tabHistory" parameterType="campaignDto" resultType="hashMap">
+		SELECT B.CODENAME
+			, ISNULL(C.CODENAME,A.VALUE) AS VALUE
+			, A.CAMPORDER
+			, A.REGDATE
+		FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST A
+        LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
+        LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
+        WHERE A.SITEID = #{siteid}
+        AND A.CAMPNO = #{campno}
+	</select>
 	
 </mapper>

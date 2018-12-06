@@ -46,5 +46,7 @@ public interface CampaignService {
 	public void campContentesMultiDelete(HttpServletRequest request);
 	
 	public void campSend(HttpServletRequest request, int campNo);
+	
+	public List<Map<String,Object>> campTabTargetHistory(HttpServletRequest request, int campNo);
 
 }

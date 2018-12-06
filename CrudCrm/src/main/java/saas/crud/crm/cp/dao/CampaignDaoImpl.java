@@ -166,6 +166,17 @@ public class CampaignDaoImpl implements CampaignDao{
 		// TODO Auto-generated method stub
 		session.update("cp.send",param);
 	}
+	@Override
+	public void campTargetCustDelete(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		session.delete("cp.targetCustDelete",param);
+	}
+	@Override
+	public List<Map<String, Object>> campTabTargetHistory(CampaignDto campaignDto) {
+		// TODO Auto-generated method stub
+		List<Map<String,Object>> tabHistory = session.selectList("cp.tabHistory",campaignDto);
+		return tabHistory;
+	}
 	
 
 }

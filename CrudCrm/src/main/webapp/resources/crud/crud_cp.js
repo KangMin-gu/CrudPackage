@@ -63,12 +63,32 @@ $('.contents').click(function(e){
 });
 
 // 대상추출에서 click 이벤트
-$('.targetcust').click(function(e){
-		var id = $('#campno').val();
-
-});
+function tabHistory(){
+	debugger;
+	var id = $('#campno').val();
+    $.ajax({
+        url: "/tab/targetHistory/"+id,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+        	$('#tab2 tbody tr').remove();
+        	$('#tab2 thead tr').remove();
+        	var length = data.length;
+        	var html ="";
+        	for (var i = 0; i < length; i++) {
+        		html = '<td>' + data[i].VALUE + '</td>';
+        		$('#tab2 thead tr').append(html);
+        		$('#tab1 tbody').append(html2);
+        		
+        	}
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
 // 대상추출에서 이력 확인 탭
-	$('.sql').click(function(e){
+	$('.tabhistory').click(function(e){
         $.ajax({
             url: "/ma/license/tab/"+id,
             method: "GET",

@@ -1,5 +1,6 @@
 package saas.crud.crm.cp.service;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -190,6 +191,7 @@ public class CampaignServiceImpl implements CampaignService{
 					campaignDao.campTargetHistInsert(param);
 			}
 		}
+		campaignDao.campTargetCustDelete(param);
 		campaignDao.campTargetCustInsert(param);
 	}
 
@@ -371,5 +373,59 @@ public class CampaignServiceImpl implements CampaignService{
 		
 		campaignDao.campSend(param);
 		
+	}
+
+	@Override
+	public List<Map<String, Object>> campTabTargetHistory(HttpServletRequest request, int campNo) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		CampaignDto campaignDto = new CampaignDto();
+		
+		campaignDto.setSiteid(siteId);
+		campaignDto.setCampno(campNo);
+		
+		List<Map<String,Object>> tabHistory = campaignDao.campTabTargetHistory(campaignDto);
+		
+		int listSize = tabHistory.size();
+		
+		Map<String,Object> tempMap = new HashMap<>();
+		Map<String,Object> input = new HashMap<>();
+		
+		StringBuilder sb = new StringBuilder();
+		List<Map<String,Object>> history = new ArrayList<Map<String,Object>>();
+		int order = 1;
+		int temp;
+		String name="";
+		String regdate = "";
+		String strHistory="";
+		for(int i= 0 ; i<listSize;i++) {
+			tempMap = tabHistory.get(i);
+			temp = Integer.parseInt(tempMap.get("CAMPORDER").toString());
+			if(order==temp) {
+				
+				if(name.equals(tempMap.get("CODENAME").toString())) {
+					sb.append(tempMap.get("VALUE"));
+					sb.append(" ");
+				}else {
+					sb.append(tempMap.get("CODENAME"));
+					sb.append("=");
+					sb.append(tempMap.get("VALUE"));
+					sb.append(" ");
+					name = tempMap.get("CODENAME").toString();
+					regdate = tempMap.get("REGDATE").toString();
+				}
+			}else {
+				strHistory = sb.toString();
+				input.put("regdate", regdate);
+				input.put("history", strHistory);
+				
+				history.add(input);
+				sb.delete(0, sb.toString().length());
+				order = order+1;
+			}
+		}
+		
+		return history;
 	}
 }

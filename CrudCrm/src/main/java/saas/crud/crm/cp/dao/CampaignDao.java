@@ -31,6 +31,8 @@ public interface CampaignDao {
 
 	public void campTargetCustInsert(Map<String,Object> param);
 	
+	public void campTargetCustDelete(Map<String,Object> param);
+	
 	public List<Map<String,Object>> campTargetRead(CampaignDto campaignDto);
 	
 	public int campTargetCustCnt(CampaignDto campaignDto);
@@ -59,4 +61,6 @@ public interface CampaignDao {
 	public void campContentsDelete(CampaignContentsDto campaignContentsDto);
 	
 	public void campSend(Map<String,Object> param);
+	
+	public List<Map<String,Object>> campTabTargetHistory(CampaignDto campaignDto);
 }

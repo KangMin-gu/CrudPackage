@@ -380,8 +380,8 @@
                                             <div class="box1 col-lg-12 p-0 mt-5">
                                                 <div class="tabs-container">
                                                     <ul class="nav nav-tabs" role="tablist">
-                                                    	<li><a class="nav-link active" data-toggle="tab" href="#tab1">추출 대상자</a></li>
-                                            			<li><a class="nav-link" data-toggle="tab" href="#tab2">추출이력</a></li>
+                                                    	<li><a class="nav-link tabcust active" data-toggle="tab" href="#tab1">추출 대상자</a></li>
+                                            			<li><a class="nav-link tabhistory" onclick="javascript:tabHistory();" data-toggle="tab" href="#tab2">추출이력</a></li>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div role="tabpanel" id="tab1" class="tab-pane active">
@@ -427,20 +427,13 @@
                                                                     </colgroup>
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>성별</th>
-                                                                            <th>나이</th>
-                                                                            <th>고객구분</th>
-                                                                            <th>고객등급</th>
-                                                                            <th>활동등급</th>
+                                                                            <th>추출번호</th>
+                                                                            <th>추출 내용</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td>남</td>
-                                                                            <td>20~30</td>
-                                                                            <td>회원</td>
-                                                                            <td>일반</td>
-                                                                            <td>VVIP</td>
+                                                                            
                                                                         </tr>
                                                                         <tr>
                                                                             <td>남</td>
@@ -471,7 +464,7 @@
                                     <div class="ibox">
                                         <div class="ibox-content row">
                                             <div class="tabs-container col-12">
-                                                <ul class="nav nav-tabs" role=0"tablist">
+                                                <ul class="nav nav-tabs" role="tablist">
                                                     <li><a class="nav-link active" data-toggle="tab" href="#sumbitTab1">EMAIL</a></li>
                                                     <li><a class="nav-link" data-toggle="tab" href="#sumbitTab2">SMS/LMS</a></li>
                                                     <li><a class="nav-link" data-toggle="tab" href="#sumbitTab3">MMS</a></li>
@@ -1121,7 +1114,6 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-	</div>
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>

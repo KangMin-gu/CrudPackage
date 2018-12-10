@@ -1,5 +1,6 @@
 package saas.crud.crm.sa.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,4 +38,15 @@ public interface SalesService {
 	public int svcSalesCustUpdate(SalesCustDto salesCustDto);
 	
 	public int svcSalesStateInsert(Map<String,Object> insVal);
+	
+	public String svcSalesSchList(Map<String,Object> schVal);
+	
+	public int svcSalesSchInsert(Map<String,Object> schVal);
+	
+	public int svcSalesSchUpdate(Map<String,Object> schVal);
+	
+	public Map<String,Object> svcSalesSchDetail(Map<String,Object> schVal);
+	
+	public List<Map<String,Object>> svcSalesComSchList(Map<String,Object> schVal);
+	
 }

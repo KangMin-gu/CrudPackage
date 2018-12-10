@@ -57,25 +57,19 @@
 					<div class="col-lg-3">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>Draggable Events</h5>
+								<h5>CUSTOM SCHEDULE</h5>
 							</div>
 							<div class="ibox-content">
-								<div id='external-events'>
-									<p>Drag a event and drop into callendar.</p>
-									<div class='external-event navy-bg' >테스트 스케쥴</div>
-									<div class='external-event navy-bg' id='test'>Go to shop
-										and buy some products.</div>
-									<div class='external-event navy-bg'>Check the new CI from
-										Corporation.</div>
-									<div class='external-event navy-bg'>Send documents to
-										John.</div>
-									<div class='external-event navy-bg'>Phone to Sandra.</div>
-									<div class='external-event navy-bg'>Chat with Michael.</div>
+								<div id='external-events'>									
+									
+									<c:forEach var="list" items="${comSchList}"  > 
+										<div class='external-event navy-bg' >${list.title }</div>
+									</c:forEach>
+																
 									<p class="m-t">
-										<input type='checkbox' id='drop-remove' class="i-checks"
-											checked /> <label for='drop-remove'>remove after
-											drop</label>
-										<button class="btn btn-primary float-right" id="testBtn">버튼</button>
+										<input type='checkbox' id='drop-remove' class="i-checks" checked /> 
+										<!-- <label for='drop-remove'>remove after drop</label> -->
+										<a class="btn btn-primary float-right" onclick='openNewWindow("자주쓰는스케쥴","/sales/cal/com/post","",600,700);'>등록</a>
 									</p>
 								</div>
 							</div>
@@ -87,6 +81,8 @@
 								<h5>Striped Table</h5>
 							</div>
 							<div class="ibox-content">
+								<input type="hidden" id="schList" name="schList" value='${schList }'/>
+								<input type="hidden" id="userno" name="userno" value="${userno }">
 								<div id="calendar"></div>
 							</div>
 						</div>
@@ -107,6 +103,8 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 
+	
+
 	<!-- Mainly scripts -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/moment.min.js"></script>
 
@@ -118,129 +116,26 @@
 
 	<!-- Full Calendar -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/fullcalendar.min.js"></script>
-
+	<!-- 캘린더 이벤트 정의 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cal.js"></script>
+	
 	<script>
-
-    $(document).ready(function() {
-		
-    	 $('#testBtn').click(function(){
-         	debugger;
-  //       	var test = {'hahaha':'kk','kkk':'hahaha'};
-         	
-         	$.ajax({
-     		    url: '/sales/cal/event',
-    // 		    data: test,
-     		    dataType: 'json', 
-     		    type: 'GET', 
-     		    processData: false, 
-     		    contentType: false, 
-     		    
-     		    success: function(response){ 
-     		    alert('ajax ok');        	
-     		    
-     		    },
-     		    error:function(){
-     		    alert('fail');	
-     		    }
-     		});         	
-         });
-    	
-    	
-    	
-        $('.i-checks').iCheck({
+	
+	
+	
+    $(document).ready(function() {    	
+        
+    	$('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green'
         });
-
-        /* initialize the external events
-         -----------------------------------------------------------------*/
-        $('#external-events div.external-event').each(function() {
-
-            // store data so the calendar knows to render an event upon drop
-            $(this).data('event', {
-            	
-                title: $.trim($(this).text()), // use the element's text as the event title
-                stick: true // maintain when user navigates (see docs on the renderEvent method)
-            });
-
-            // make the event draggable using jQuery UI
-            $(this).draggable({
-            	
-                zIndex: 1111999,
-                revert: true,      // will cause the event to go back to its
-                revertDuration: 0  //  original position after the drag
-            });
-
-        });
         
        
-     
-  
-
-
-        /* initialize the calendar
-         -----------------------------------------------------------------*/            
-        $('#calendar').fullCalendar({
-            
-        	header: {//캘린더 프레임 헤더설정
-                left: 'prev,next today',//저번달, 다음달, 오늘로이동
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay' //월,주,일별 보기 
-            },
-            
-            editable: true, //false - 일정 수정 안됨. 
-            
-            droppable: false, // false - 드래그 박스의 일정 캘린더로 이동이 안됨.  
-            
-            drop: function() { //드래그 박스의 일정 캘린더로 드랍시 발생 function 
-            	console.log('drop the div');
-                
-                if ($('#drop-remove').is(':checked')) { //드래그박스에서 삭제버튼이 체크 되어있다면                     
-                    $(this).remove(); //캘린더에 일정 드랍 후 드래그 박스 목록에서 삭제.
-                }
-            },
-            
-            dayClick: function() {//캘린더 day 클릭
-            	
-            	
-            	
-            	
-        	},
-        	 
-        	eventClick: function(event, element) {//캘린더 이벤트 클릭시
-        		event.title = "CLICKED!"; 
-        		$('#calendar').fullCalendar('updateEvent', event);
-        	},
-        	
-        	eventSources: [
-			{
-        		events: [ // put the array in the `events` property
-        			{
-        			title  : '테스트케이스1'
-        			,start: new Date('2018-12-01')
-        			,color: 'black'     // an option!
-                	,textColor: 'yellow' // an option!
-        			}
-        			,{
-        			title  : '테스트이벤트'
-            		,start: new Date('2018-12-05')
-            		}
-        		
-        		]
-        	
-			
-			}
-			// any other event sources...
-			
-			]
-        		    
-         
-        });//캘린더의끝
-		
-        
-   		
-
     });
+    
+    
+    
+    
 
 </script>
 </body>

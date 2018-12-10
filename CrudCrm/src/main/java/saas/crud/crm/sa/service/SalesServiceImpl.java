@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.sa.dao.SalesDao;
 import saas.crud.crm.sa.dto.ClientDto;
@@ -200,6 +202,42 @@ public class SalesServiceImpl implements SalesService {
 	public int svcSalesStateInsert(Map<String,Object> insVal) {
 		int res = salesDao.salesStateInsert(insVal);
 		return res;
+	}
+	
+	//영업 스케쥴러 리스트
+	@Override
+	public String svcSalesSchList(Map<String, Object> schVal) {
+		List<Map<String, Object>> schList = salesDao.salesSchList(schVal);
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(schList);
+		return jsonStr;
+	}
+	
+	//영업 스케쥴 추가
+	@Override
+	public int svcSalesSchInsert(Map<String, Object> schVal) {
+		int res = salesDao.salesSchInsert(schVal);
+		return res;
+	}
+	//영업 스케쥴 수정
+	@Override
+	public int svcSalesSchUpdate(Map<String, Object> schVal) {
+		int res = salesDao.salesSchUpdate(schVal);
+		return res;
+	}
+	
+	//영업 스케쥴 상세
+	@Override
+	public Map<String, Object> svcSalesSchDetail(Map<String, Object> schVal) {
+		Map<String, Object> schDetail = salesDao.salesSchDetail(schVal);
+		return schDetail;
+	}
+	
+	//영업 공통 스케쥴 리스트
+	@Override
+	public List<Map<String, Object>> svcSalesComSchList(Map<String, Object> schVal) {
+		List<Map<String, Object>> comSchList = salesDao.salesComSchList(schVal);
+		return comSchList;
 	}
 
 	

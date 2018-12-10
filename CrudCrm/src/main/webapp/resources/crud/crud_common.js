@@ -60,7 +60,7 @@
 	
 	var newWindow = null;
     // 부모 window 가 실행
-
+	
 	
 	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
@@ -68,12 +68,15 @@
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
-		setTimeout(function(){
-			newWindow.document.getElementById("parentid").value = target;
-		},1000);
+		if(target != ""){		
+			setTimeout(function(){
+				newWindow.document.getElementById("parentid").value = target;
+			},1000);
+		}
+		
 	}
-	
-	
+
+
 	
 	// 자식 window가 실행
 	// 영업 담당자 및 담당자 가지고옴

@@ -455,5 +455,203 @@
 		SALESNO = #{salesno}
 		
 	</insert>
-									
+	
+	
+	
+	<!-- 캘린더 리스트 -->
+	<select id="salesSchList" parameterType="hashMap" resultType="hashMap">
+		
+	SELECT 
+	SCHNO AS id
+	,CONCAT(STARTDATE,' ',STARTTIME) AS 'start'
+	,CONCAT(ENDDATE,' ',ENDTIME) AS 'end'
+	,SCHNAME AS title
+	,COLOR AS color
+	FROM TB210080
+
+	WHERE 
+		ISDELETE = 0
+		AND SITEID = #{siteid}
+		AND 		
+			(
+			SCHNO NOT IN 
+				(SELECT SCHNO FROM TB210080 WHERE ISNULL(PRIVATE,0) = 1)
+			OR
+			SCHNO IN 
+				(SELECT SCHNO FROM TB210080 WHERE ISNULL(PRIVATE,0) = 1 AND OWNER = #{userno})
+			)
+			
+	</select>
+	
+	<!-- 스케쥴추가 -->
+	<insert id="salesSchInsert" parameterType="hashMap">
+	
+	INSERT INTO
+	TB210080 
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,REGDATE
+	,EDTDATE
+	,ISDELETE
+	
+	,SCHNAME
+	,CLINO
+	,SALESNO
+	,OWNER
+	,STARTDATE
+	,STARTTIME
+	,ENDDATE
+	,ENDTIME
+	,PRIVATE
+	,COLOR
+	,MEMO
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{userno}
+	,#{userno}
+	,getdate()
+	,getdate()
+	,0
+	
+	,#{schname}
+	,#{clino}
+	,#{salesno}
+	,#{owner}
+	,#{startdate}
+	,#{starttime}
+	,#{enddate}
+	,#{endtime}
+	,#{private}
+	,#{color}
+	,#{memo}
+	
+	)								
+	</insert>
+	
+	<!-- 스케쥴 수정 -->
+	<update id="salesSchUpdate" parameterType="hashMap">
+	
+	UPDATE
+	TB210080 SET
+	EDTUSER = #{userno}
+	,EDTDATE = getdate()
+	
+	<if test="schname != null">
+	,SCHNAME = #{schname}
+	</if>
+	<if test="clino != null">
+	,CLINO = #{clino}
+	</if>
+	<if test="salesno != null">
+	,SALESNO = #{salesno}
+	</if>
+	<if test="owner != null">
+	,OWNER = #{owner}
+	</if>
+	<if test="startdate != null">
+	,STARTDATE = #{startdate}
+	</if>
+	<if test="starttime != null">
+	,STARTTIME = #{starttime}
+	</if>
+	<if test="enddate != null">
+	,ENDDATE = #{enddate}
+	</if>
+	<if test="endtime != null">
+	,ENDTIME = #{endtime}
+	</if>
+	<if test="private != null">
+	,PRIVATE = #{private}
+	</if>	
+	<if test="color != null">
+	,COLOR = #{color}
+	</if>
+	<if test="memo != null">
+	,MEMO = #{memo}
+	</if>
+	WHERE
+		SITEID = #{siteid}
+		AND SCHNO = #{schno}
+	
+	</update>
+	
+	<!-- 캘린더 상세 팝업 -->
+	<select id="salesSchDetail" parameterType="hashMap" resultType="hashMap">
+	SELECT 
+	A.SCHNO, A.SCHNAME
+	,A.SALESNO, B.SALENAME
+	,A.CLINO, C.CLINAME
+	,A.OWNER, D.USERNAME
+	,CONCAT(A.STARTDATE,' ',A.STARTTIME) AS 'START'
+	,CONCAT(A.ENDDATE,' ',A.ENDTIME) AS 'END'
+	,A.STARTDATE, A.STARTTIME, A.ENDDATE, A.ENDTIME
+	,A.PRIVATE, A.COLOR, A.MEMO
+	
+	FROM TB210080 A
+	LEFT OUTER JOIN TB210010 B ON A.SALESNO = B.SALESNO
+	LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+	INNER JOIN TB980010 D ON A.OWNER = D.USERNO
+	
+	WHERE 
+		A.ISDELETE = 0 
+		AND A.SITEID = #{siteid}
+		AND A.SCHNO = #{schno}
+				 
+	</select>
+
+
+	<!-- 공통 캘린더 리스트 -->
+	<select id="salesComSchList" parameterType="hashMap" resultType="hashMap">
+		
+	SELECT 
+	SCHNO AS id
+	,SCHNAME AS title
+	,COLOR AS color
+	FROM TB210120
+
+	WHERE 
+		ISDELETE = 0
+		AND SITEID = #{siteid}
+	
+	</select>
+
+	<!-- 공통-스케쥴추가 -->
+	<insert id="salesComSchInsert" parameterType="hashMap">
+	INSERT INTO TB210120
+	(
+	REGDATE
+	,REGUSER
+	,EDTDATE
+	,EDTUSER
+	,ISDELETE
+	,SITEID
+
+	,SCHNO
+	,SCHNAME
+	,SALESNO
+	,MEMO
+	,COLOR
+	)
+
+	VALUES
+	(
+	getdate()
+	,#{userno}
+	,getdate()
+	,#{userno}
+	,0
+	,#{siteid}
+
+	,#{schno}
+	,#{schname}
+	,#{salesno}
+	,#{memo}
+	,#{color}
+	)
+	</insert>
 </mapper>

@@ -42,4 +42,14 @@ public interface SalesDao {
 	
 	public int salesStateInsert(Map<String,Object> insVal);
 	
+	public List<Map<String,Object>> salesSchList(Map<String,Object> schVal);
+	
+	public int salesSchInsert(Map<String,Object> schVal);
+	
+	public int salesSchUpdate(Map<String,Object> schVal);
+	
+	public Map<String,Object> salesSchDetail(Map<String,Object> schVal);
+		
+	public List<Map<String,Object>> salesComSchList(Map<String,Object> schVal);
+	
 }

@@ -389,7 +389,7 @@
 																</c:choose>
 															</td>
 															<td>${stateList.PROB }</td>
-															<td>${stateList.REGUSER }</td>
+															<td>${stateList.USERNAME }</td>
 														</tr>
 													</c:forEach>
 														

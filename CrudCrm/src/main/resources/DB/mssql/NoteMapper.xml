@@ -44,7 +44,9 @@
 					AND A.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
 				</if>
 			) AS result
+		<if test="startRowNum != null">
 		WHERE result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.NOTICEID DESC
+		</if>
 	</select>
 	
 	<!-- 받은 통지중 읽지않은 갯수 -->

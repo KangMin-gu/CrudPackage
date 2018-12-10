@@ -1,5 +1,6 @@
 package saas.crud.crm.common;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,13 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
 
 @Controller
@@ -22,6 +26,9 @@ public class CommonController {
 
 	@Autowired
 	private CommonService commonService;
+	
+	@Autowired
+	private CrudEngine crud;
 	
 	//담당자팝업
 	@RequestMapping(value="/popowner", method=RequestMethod.GET)
@@ -39,21 +46,33 @@ public class CommonController {
 		return mav;
 	}
 
-	
 	//로고팝업
 	@RequestMapping(value="/poplogo", method=RequestMethod.GET)
 	public String authpopLogoForm(HttpServletRequest request) {
-		return "common/logo/logoUpload";
+		return "common/file/logoUpload";
 	}
-	
-	//로고등록
-	@RequestMapping(value="/poplogo", method=RequestMethod.POST)
-	@ResponseBody
-	public EUploadDto authpopLogo(HttpServletResponse response, HttpServletRequest request, MultipartRequest multipartRequest) {
-		EUploadDto fileInfo = commonService.logoUplaod(response, request, multipartRequest);
-		return fileInfo;
+	//싱글팝업
+	@RequestMapping(value="/singlefile", method=RequestMethod.GET)
+	public String authpopSingleForm(HttpServletRequest request) {
+		return "common/file/singlefile";
 	}
-
+	//멀티팝업
+	@RequestMapping(value="/multifile", method=RequestMethod.GET)
+	public String authpopMultiForm(HttpServletRequest request) {
+		return "common/file/multifile";
+	}
+	//로고 파일등록
+	@RequestMapping(value="/logo/fileupload", method=RequestMethod.POST)
+	public void logofileupload(HttpServletResponse response, HttpServletRequest request, @RequestParam List<MultipartFile> mFile, 
+			@RequestParam MultipartFile sFile, @RequestParam String fileSearchKey) {
+		crud.fileUpload(response, request, mFile, sFile, fileSearchKey);
+	}
+	//파일등록
+	@RequestMapping(value="/file/fileupload", method=RequestMethod.POST)
+	public void fileupload(HttpServletResponse response, HttpServletRequest request, @RequestParam List<MultipartFile> mFile, 
+			@RequestParam MultipartFile sFile, @RequestParam String fileSearchKey) {
+		crud.fileUpload(response, request, mFile, sFile, fileSearchKey);
+	}
 	// 고객팝업
 	@RequestMapping(value="/popcust", method=RequestMethod.GET)
 	public ModelAndView authpopCust(HttpServletRequest request) {			
@@ -73,6 +92,7 @@ public class CommonController {
 	}
 	
 	
+
 
 
 }

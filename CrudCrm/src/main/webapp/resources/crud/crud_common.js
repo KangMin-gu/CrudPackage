@@ -48,13 +48,60 @@
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.target.id,650,700);
 	});
-	
-	
-	$('.poplogo').click(function(e){
-		openNewWindow('로고','/poplogo',e.target.id,600,700);
+/******************************************************************/	
+	/*fileupload 필수값 싱글 sFile / 멀티 mFile
+	 * 부모창에 fileSearchKey  hidden으로 input 생성
+	 * <div class="input-group poplogo">//핵심
+       <input class="form-control" type="text" id="filename" name="filename" disabled />
+       <button type="button" id="searchKey" class="btn btn-light btn-xs">로고 등록</button>
+       <input type="hidden" id="fileSearchKey" name="fileSearchKey" />
+       </div> 
+	 * 
+	 * 자식창에 싱글업로드일경우 sFile 멀티업로드일경우 mFile 추후 등록후 라벨에 씌여지는 파일이름을 부모창에 전달
+	 * <input id="sFile" name="sFile" type="file" class="custom-file-input">
+	   <label id="sFileName" for="sFile" class="custom-file-label">파일 선택...</label>
+	   <input type="hidden" name="fileSearchKey" id="fileSearchKey" />	   	   	 //필수
+	   멀티파일
+	*  <input id=mFile" name="mFile" type="file" class="custom-file-input">
+	   <label id="mFileName" for="mFile" class="custom-file-label">파일 선택...</label>
+	   <input type="hidden" name="fileSearchKey" id="fileSearchKey" />	   	   	 //필수
+	*/
+	//오류시 리로드 파일서치키 바인딩
+	$(document).ready(function(){
+		var fsk = $.getURLParam("fsk");
+		if(fileSearchKey != null && fileSearchKey != undefined){
+			$('#fileSearchKey').val(fsk);	
+		}
 	});
-	
-	
+	//로고등록 팝업띄우면서 filesearchkey 부모와 자식창에 입력
+	$('.poplogo').click(function(e){
+		var fileSearchKey = $.makeFileSearchKey();
+		$('#fileSearchKey').val(fileSearchKey);
+		openFileWindow('로고','/poplogo',fileSearchKey,400,180);
+	});
+	//싱글파일창
+	$('.singleFile').click(function(e){
+		var fileSearchKey = $.makeFileSearchKey();
+		$('#fileSearchKey').val(fileSearchKey);
+		openFileWindow('파일업로드','/singlefile',fileSearchKey,400,180);
+	});
+	//멀티파일창
+	$('.multiFile').click(function(e){
+		var fileSearchKey = $.makeFileSearchKey();
+		$('#fileSearchKey').val(fileSearchKey);
+		openFileWindow('파일업로드','/multifile',fileSearchKey,400,180);
+	});
+	//싱글파일이름 부모값에 바인딩
+	$('#sFile').change(function(){
+		var sFileName = $("form [for=sFile]").text();
+		window.opener.$("#filename").val(sFileName);
+	});
+	//멀티파일이름 부모값에 바인딩
+	$('#mFile').change(function(){
+		var sFileName = $("form [for=mFile]").text();
+		window.opener.$("#filename").val(sFileName);
+	});	
+/******************************************************************/		
 	var newWindow = null;
     // 부모 window 가 실행
 	
@@ -72,7 +119,18 @@
 		}
 		
 	}
-
+	
+	//파일서치키 팝업으로전달
+	function openFileWindow(name,url,fileSearchKey,x,y){
+		// specs -> 팝업창의 설정들을 정의해 둔 부분
+		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
+		// window.open 함수를 통해서 팝업창 호출
+		newWindow = window.open(url, name, specs);
+		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
+		setTimeout(function(){
+			newWindow.document.getElementById("fileSearchKey").value = fileSearchKey;
+		},1000);
+	}
 
 	
 	// 자식 window가 실행
@@ -155,7 +213,6 @@
     	
     	return today;
     }
-
 	
     //로고 insertajax
     $('#logosubmit').click(function(){
@@ -227,5 +284,54 @@
 
 		
 	}
+/********************************************************************/	
+	//파일서치키 생성
+	jQuery.extend({
+		makeFileSearchKey: function(){
+			var Now = new Date();
+			var yyyy = Now.getFullYear().toString(); 
+			var MM = (Now.getMonth()+1).toString(); 
+			var dd = Now.getDate().toString(); 
+			var HH = Now.getHours().toString(); 
+			var mm = Now.getMinutes().toString(); 
+			var ss = Now.getSeconds().toString(); 
+			var SSS = Now.getMilliseconds().toString();
+			
+			var fileSearchKey = yyyy+MM+dd+HH+mm+ss+SSS;
+			
+			return fileSearchKey;
+		}
+	});
+	//jquery url 파리미터 추출
+	/*
+	* Returns get parameters.
+	* @example value = $.getURLParam("paramName");
+	*/ 
+	jQuery.extend({
+	getURLParam: function(strParamName){
+		var strReturn = "";
+		var strHref = window.location.href;
+		var bFound=false;
 
+		var cmpstring = strParamName + "=";
+		var cmplen = cmpstring.length;
 
+		if ( strHref.indexOf("?") > -1 ){
+			var strQueryString = strHref.substr(strHref.indexOf("?")+1);
+			var aQueryString = strQueryString.split("&");
+				for ( var iParam = 0; iParam < aQueryString.length; iParam++ ){
+					if (aQueryString[iParam].substr(0,cmplen)==cmpstring){
+						var aParam = aQueryString[iParam].split("=");
+						strReturn = aParam[1];
+						bFound=true;
+						break;
+					}
+
+				}
+			}
+		
+		if (bFound==false) return null;
+		return strReturn;
+		}
+	});
+/********************************************************************/

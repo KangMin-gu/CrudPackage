@@ -107,8 +107,7 @@
 	<tx:annotation-driven transaction-manager="txManager"/>
 	
 	<resources mapping="/resources/**" location="/resources/" />
-	
-	
+		
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
@@ -118,31 +117,19 @@
 	<!-- Multipart 폼 전송을 처리하기 위한 bean -->
 	<beans:bean id="multipartResolver" 
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="104857600" /> <!-- 100MB -->
+		<beans:property name="maxUploadSize" value="-1" /><!-- 50MB -->
         <beans:property name="defaultEncoding" value="UTF-8" />	
 	</beans:bean>
 
+	
 	<!-- Abstract view 가 동작하도록 설정 -->
 	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<beans:property name="order" value="0"/>
+		<beans:property name="order" value="1"/>
 	</beans:bean>
 
-	<!-- excel download 
-    <beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
-        <beans:property name="order" value="0"/> 
-        <beans:property name="defaultErrorView" value="error"/> 
-        <beans:property name="exceptionMappings"> 
-            <beans:props> 
-                <beans:prop key="RuntimeException">error</beans:prop> 
-            </beans:props> 
-        </beans:property>
-    </beans:bean>
-    --> 
-     
-     <!-- bean등록 
-    <beans:bean name="excelView" class="saas.crud.crm.common.ExcelView"/>-->
-    <context:annotation-config/>
 	
+    
+    <context:annotation-config/>
 	<context:component-scan base-package="saas.crud.crm.util" />
 	<context:component-scan base-package="saas.crud.crm.aspect" />
 	<context:component-scan base-package="saas.crud.crm.ce" />

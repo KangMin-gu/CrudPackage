@@ -4,9 +4,9 @@
 
 	<insert id="noteFile" parameterType="hashMap">
 			INSERT INTO t_file
-			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID )
+			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID, IMGPATH )
 			VALUES
-			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{siteid})			
+			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{siteid}, #{imgpath})			
 	</insert>
 	
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->

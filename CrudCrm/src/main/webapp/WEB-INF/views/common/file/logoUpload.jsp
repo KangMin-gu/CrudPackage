@@ -28,23 +28,22 @@
             <div class="col-lg-12">
             	<div class="row">
             		<div class="container">
-            			<form id="logoForm" class="form-inline" enctype="multipart/form-data">
+            			<form id="logoForm" action="/logo/fileupload" method="post" class="form-inline" enctype="multipart/form-data">
 					<div class="col-xs-9">
 						<div class="form-group">
 							<div class="custom-file">
-							    <input id="logo" name="logo" type="file" class="custom-file-input">
-							    <label for="logo" class="custom-file-label">파일 선택...</label>
+							    <input id="sFile" name="sFile" type="file" class="custom-file-input">
+							    <label id="sFileName" for="sFile" class="custom-file-label">파일 선택...</label>
+							    <input type="hidden" name="fileSearchKey" id="fileSearchKey" />
 							</div>
                         </div>                                										
 					</div>
 					<div class="col-xs-3" style="margin-left:20px;">
 						<div class="form-group">
-							<button class="btn btn-white" id="logosubmit" >등록</button>
+							<input id="logosubmit" class="btn btn-white" type="submit" value="전송"/>
 						</div>						
 					</div>
 				</form>
-					<input type="hidden" id="path" value=""/>
-					<input type="hidden" id="fileName" value=""/>
             		</div>
 				</div>
             </div>
@@ -65,7 +64,6 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>				
 <script>
-	
 </script>
 </body>
 </html>

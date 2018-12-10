@@ -19,10 +19,10 @@
 			<if test="email != null">
 			AND A.EMAIL like '%'+#{email}+'%'
 			</if>
-			<if test="custgubun != 0 ">
+			<if test="custgubun != null ">
 			AND A.CUSTGUBUN = #{custgubun}
 			</if>
-			<if test="custgrade != 0 ">
+			<if test="custgrade != null ">
 			AND A.CUSTGRADE = #{custgrade}
 			</if>
 			<if test="fromregdt != null">
@@ -45,7 +45,7 @@
 	<!-- 고객 리스트 출력 -->
 	<select id="custList" parameterType="hashMap" resultType="hashMap">
 		SELECT
-		*
+		 *
 		FROM (
 			SELECT (ROW_NUMBER() OVER(ORDER BY CUSTNAME)) AS ROWNUM
 			, CU.CUSTNO, CU.CUSTNAME, CU.DEPTNAME, CU.DUTY
@@ -69,10 +69,10 @@
 				<if test="email != null">
 				AND CU.EMAIL like '%'+#{email}+'%'
 				</if>
-				<if test="custgubun != 0 ">
+				<if test="custgubun != null ">
 				AND CUSTGUBUN = #{custgubun}
 				</if>
-				<if test="custgrade != 0 ">
+				<if test="custgrade != null ">
 				AND CUSTGRADE = #{custgrade}
 				</if>
 				<if test="fromregdt != null">
@@ -92,8 +92,9 @@
 				AND CU.CLINO = #{clino}
 				</if>	
 			) T
-		WHERE
-		ROWNUM between #{startRowNum} and #{endRowNum}
+		<if test="endRowNum != null">
+		WHERE ROWNUM between #{startRowNum} and #{endRowNum}
+		</if>	
 	</select>
 	
 	<!-- 고객 삭제 -->

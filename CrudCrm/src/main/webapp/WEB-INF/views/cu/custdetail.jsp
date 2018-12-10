@@ -160,22 +160,23 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;"> ${custDetail.EMAIL}												
+													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;">  ${custDetail.EMAIL} &nbsp; &nbsp; &nbsp;											
 														<c:choose>
 															<c:when test="${fn:trim(custDetail.EMAIL) eq ''}"></c:when>
 															<c:otherwise>
-																<a class="btn btn-primary dim" style="padding-top: 2px;padding-bottom: 2px;padding-left: 6px;padding-right: 6px;float:right;border-bottom-width: 0px;border-top-width: 0px;"><i class="fa fa-envelope-o"></a></i>
+																<a class="btn btn-primary dim" style="padding-top: 2px;padding-bottom: 2px;padding-left: 6px;padding-right: 6px;border-bottom-width: 0px;border-top-width: 0px;"><i class="fa fa-envelope-o"></a></i>
 															</c:otherwise>
 														</c:choose>											
 													</td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;"> ${custDetail.WRKURL}
+													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;">   ${custDetail.WRKURL} &nbsp; &nbsp; &nbsp;
 														<c:choose>
 															<c:when test="${fn:trim(custDetail.WRKURL) eq ''}"></c:when>
 															<c:otherwise>
-																<a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; float:right;border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a>
+																<a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a>
+																  
 															</c:otherwise>
 														</c:choose>	
 													</td>

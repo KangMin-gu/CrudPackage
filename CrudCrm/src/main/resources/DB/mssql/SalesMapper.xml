@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sales">
+
+	<!-- 영업 목록 카운팅 -->
+	<select id="salesListCount" parameterType="hashMap" resultType="int">
+
+	SELECT 
+		COUNT(*)
+	FROM TB210010  with (nolock)
+	WHERE 
+		SITEID = #{siteid}
+		AND ISDELETE = 0
+		<if test="salename != null">
+		AND SALENAME LIKE '%'+#{salename}+'%'
+		</if>
+		<if test="owner != null and owner != 0">
+		AND OWNER = #{owner}
+		</if>
+		<if test="clino != null and clino != 0">
+		AND CLINO = #{clino}
+		</if>	
+		<if test="fromregdt != null">
+		AND CONVERT(VARCHAR, REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
+		</if>
+		<if test="toregdt != null">
+		AND CONVERT(VARCHAR, REGDATE, 112) <![CDATA[<=]]> #{toregdt}
+		</if>	
+		<if test="salestate != null and salestate != 0">
+		AND SALESTATE = #{salestate}
+		</if>	
+	</select>	
+	<!-- 영업 리스트 -->
+	<select id="salesList" parameterType="hashMap" resultType="hashMap">
+	SELECT 
+		ROWNUM, SALESNO, SALENAME
+		,CLINO, CLINAME, SALESTATE
+		,CONVERT(VARCHAR, FORDDATE, 23) AS FORDDATE
+		,CONVERT(VARCHAR, STATEDATE, 23) AS STATEDATE
+		,OWNER, USERNAME		
+	FROM (
+		SELECT
+			(ROW_NUMBER() OVER(ORDER BY SALESNO DESC)) AS ROWNUM
+			,A.SALESNO, A.SALENAME
+			,A.CLINO, B.CLINAME
+			,A.FORDDATE, A.SALESTATE, A.STATEDATE
+			,A.OWNER, C.USERNAME
+		FROM TB210010 A with (nolock)
+		LEFT OUTER JOIN TB200010 B with (nolock) ON A.CLINO = B.CLINO
+		LEFT OUTER JOIN TB980010 C with (nolock) ON A.OWNER = C.USERNO   
+		
+		WHERE 
+			A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="salename != null">
+			AND A.SALENAME LIKE '%'+#{salename}+'%'
+			</if>
+			<if test="owner != null and owner != 0">
+			AND A.OWNER = #{owner}
+			</if>
+			<if test="clino != null and clino != 0">
+			AND A.CLINO = #{clino}
+			</if>	
+			<if test="fromregdt != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 23) <![CDATA[>=]]> #{fromregdt}
+			</if>
+			<if test="toregdt != null">
+			AND CONVERT(VARCHAR, A.REGDATE, 23) <![CDATA[<=]]> #{toregdt}
+			</if>	
+			<if test="salestate != null and salestate != 0">
+			AND A.SALESTATE = #{salestate}
+			</if>	
+		) T 
+	WHERE 
+		ROWNUM between #{startRowNum} and #{endRowNum}	
+	</select>
+
+	<!-- 영업상세 -->
+	<select id="salesDetail" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
+	SELECT
+	A.SALESNO, A.SALENAME
+	,A.OWNER, B.USERNAME
+	,A.CLINO, C.CLINAME
+	,A.SALESTATE
+	,( CASE WHEN   CONVERT(DATE, A.STATEDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.STATEDATE,23) END)   AS STATEDATE
+	, A.PROB
+	,( CASE WHEN   CONVERT(DATE, A.FORDDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.FORDDATE,23) END)   AS FORDDATE
+	, A.FORDAMOUNT, A.CATEGORY
+	,A.PRDNAME
+	,( CASE WHEN   CONVERT(DATE, A.RORDDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.RORDDATE,23) END)   AS RORDDATE
+	, A.RORDAMOUNT
+
+	,A.NEED, A.SOLUTION
+	,A.CUSTMEMO, A.SALESMEMO
+	,A.REFUSAL
+	,A.SURMOUNT 
+	
+	FROM TB210010 A
+	LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+	LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+	
+	WHERE
+		A.SITEID = #{siteid}
+		AND A.SALESNO = #{salesno}
+		AND A.ISDELETE = 0 	
+	</select>
+
+
+	<!-- 거래처 추가 -->	
+	<insert id="salesInsert" parameterType="saas.crud.crm.sa.dto.SalesDto">
+		<selectKey keyProperty="salesno"  resultType="integer" order="AFTER">
+	
+	INSERT INTO TB210010	
+	(
+	SITEID
+	,REGUSER
+	,EDITUSER
+	,ISDELETE
+	,REGDATE
+	,EDITDATE
+	
+	,SALENAME
+	,OWNER
+	,CLINO
+	,SALESTATE
+	,STATEDATE
+	,PROB
+	,FORDDATE
+	,FORDAMOUNT
+	,CATEGORY
+	,PRDNAME
+	,RORDDATE
+	,RORDAMOUNT
+	
+	,NEED
+	,SOLUTION
+	,CUSTMEMO
+	,SALESMEMO
+	,REFUSAL
+	,SURMOUNT
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{reguser}
+	,#{edituser}
+	,0
+	,getdate()
+	,getdate()
+	
+	,#{salename}
+	,#{owner}
+	,#{clino}
+	,#{salestate}
+	,#{statedate}
+	,#{prob}
+	,#{forddate}
+	,#{fordamount}
+	,#{category}
+	,#{prdname}
+	,#{rorddate}
+	,#{rordamount}
+	
+	,#{need}
+	,#{solution}
+	,#{custmemo}
+	,#{salesmemo}
+	,#{refusal}
+	,#{surmount}
+	)	
+		
+	SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+
+	<!-- 영업수정 -->
+	<update id="salesUpdate" parameterType="saas.crud.crm.sa.dto.SalesDto">
+	UPDATE TB210010
+	SET
+	EDITUSER = #{edituser}
+	,EDITDATE = GETDATE()
+	
+	,SALENAME = #{salename}
+	,OWNER = #{owner}
+	,CLINO = #{clino}
+	,SALESTATE = #{salestate}
+	,STATEDATE = #{statedate}
+	,PROB = #{prob}
+	,FORDDATE = #{forddate}
+	,FORDAMOUNT = #{fordamount}
+	,CATEGORY = #{category}
+	,PRDNAME = #{prdname}
+	,RORDDATE = #{rorddate}
+	,RORDAMOUNT = #{rordamount}
+	
+	,NEED = #{need}
+	,SOLUTION = #{solution}
+	,CUSTMEMO = #{custmemo}
+	,SALESMEMO = #{salesmemo}
+	,REFUSAL = #{refusal}
+	,SURMOUNT = #{surmount}
+	
+	
+	WHERE
+		SALESNO = #{salesno}
+		AND SITEID = #{siteid} 
+	</update>
+	
+	<!-- 영업삭제 -->
+	<update id="salesDelete" parameterType="saas.crud.crm.sa.dto.SalesDto">
+	
+	UPDATE TB210010
+	SET 
+	ISDELETE = 1
+	
+	WHERE 
+		SALESNO = #{salesno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+	
+	<!-- 거래처-영업 리스트 최근 20건 조회-->
+	<select id="cliSalesList" parameterType="hashMap" resultType="hashMap">
+	SELECT
+	TOP 20 
+	A.SALESNO, A.SALENAME
+	,A.OWNER, B.CUSTNAME
+	,A.FORDDATE, A.SALESTATE, A.STATEDATE
+	
+	FROM TB210010 A
+	LEFT OUTER JOIN CU100010 B ON A.OWNER = B.CUSTNO
+	
+	WHERE
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0 
+		AND A.CLINO = #{clino}
+	
+	ORDER BY A.SALESNO DESC 
+	</select>
+
+	
+	<!-- 영업 관련고객 리스트 카운터-->
+	<select id="salesCustListCnt" parameterType="hashMap" resultType="int">	
+	
+	SELECT 
+		COUNT(*)
+			
+	FROM TB250010 A with (nolock)
+	INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+	
+	WHERE 
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0
+		AND A.SALESNO = #{salesno}
+
+		<if test="custname != null">
+		AND B.CUSTNAME like '%'+#{custname} +'%'
+		</if>
+			  		
+	</select>
+	
+	<!-- 영업 관련고객 리스트 -->
+	<select id="salesCustList" parameterType="hashMap" resultType="hashMap">	
+	
+	SELECT
+		ROWNUM
+		,SALESCUSTNO
+		,KEYMAN, ROLENAME, MEMO
+		,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
+		,SALESNO, SALENAME
+		,CLINO, CLINAME
+
+	FROM (
+		SELECT
+			(ROW_NUMBER() OVER(ORDER BY B.CUSTNAME)) AS ROWNUM
+			,A.SALESCUSTNO
+			,A.KEYMAN, A.ROLENAME, A.MEMO
+			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
+			,C.SALESNO, C.SALENAME
+			,D.CLINO, D.CLINAME
+		FROM TB250010 A with (nolock)
+		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+		INNER JOIN TB210010 C with (nolock) ON A.SALESNO = C.SALESNO
+		LEFT OUTER JOIN TB200010 D with (nolock) ON B.CLINO = D.CLINO
+		
+		WHERE 
+			A.SITEID = #{siteid}			
+			AND A.SALESNO = #{salesno}							
+			AND A.ISDELETE = 0
+			<if test="custname != null">
+			AND B.CUSTNAME like '%'+#{custname} +'%'
+			</if>
+		)t
+		
+	WHERE 
+		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
+	</select>
+
+	
+	<!-- 영업관련고객 추가 -->
+	<insert id="salesCustInsert" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
+	
+	INSERT INTO TB250010
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,ISDELETE
+	,REGDATE
+	,EDTDATE
+	
+	,CUSTNO
+	,SALESNO
+	,ROLENAME
+	,KEYMAN
+	,CHKSUPPORT
+	,MEMO
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{reguser}
+	,#{edtuser}
+	,0
+	,getdate()
+	,getdate()
+	
+	,#{custno}
+	,#{salesno}
+	,#{rolename}
+	,#{keyman}
+	,#{chksupport}
+	,#{memo}
+	)
+	</insert>
+	
+		
+	<!-- 영업 관련고객 상세 -->
+	<select id="salesCustDetail" parameterType="hashMap" resultType="hashMap">	
+	
+	SELECT
+			A.SALESCUSTNO,A.SALESNO
+			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
+			,A.CUSTNO, B.CUSTNAME
+			
+		FROM TB250010 A with (nolock)
+		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+				
+		WHERE 
+			A.SITEID = #{siteid}			
+			AND A.SALESCUSTNO = #{salescustno}
+	</select>
+	
+	<!-- 영업관련고객 삭제 -->
+	<update id="salesCustDelete" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
+	
+	UPDATE TB250010
+	SET
+	EDTUSER = #{edtuser}
+	,EDTDATE = GETDATE() 
+	,ISDELETE = 1
+	
+	WHERE 
+		SALESCUSTNO = #{salescustno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+	
+	<!-- 영업관련고객 수정 -->
+	<update id="salesCustUpdate" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
+	
+	UPDATE TB250010
+	SET
+	SITEID = #{siteid}
+	,EDTUSER = #{edtuser}
+	,ISDELETE = #{isdelete}
+	,EDTDATE = #{edtdate}
+	
+	,CUSTNO = #{custno}
+	,SALESNO = #{salesno}
+	,ROLENAME = #{rolename}
+	,KEYMAN = #{keyman}
+	,CHKSUPPORT = #{chksupport}
+	,MEMO = #{memo}
+	
+	WHERE 
+		SALESCUSTNO = #{salescustno}
+		AND SITEID = #{siteid} 
+	
+	</update>
+		
+	<!-- 영업단계 리스트 -->
+	<select id="salesStateList" parameterType="saas.crud.crm.sa.dto.SalesDto" resultType="hashMap">
+	
+	SELECT 
+	A.SALESTATENO, A.SITEID, A.SALESNO
+	,CONVERT(VARCHAR, A.ENTDATE, 112) AS ENTDATE 
+	,A.STATE, A.MODREASON, A.SSDESC, A.PRESTATE, A.PROB
+	,A.REGUSER, B.USERNAME  
+	 
+	FROM TB210020 A
+	LEFT OUTER JOIN TB980010 B ON A.REGUSER = B.USERNO
+	
+	WHERE
+		A.SALESNO = #{salesno}
+		AND A.SITEID =#{siteid}
+	ORDER BY 1 DESC	
+	</select>
+	
+	<!-- 영업단계 추가 -->
+	<insert id="salesStateInsert" parameterType="hashMap">
+	
+	INSERT INTO TB210020
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,REGDATE
+	,EDTDATE
+	,SALESNO
+	
+	,ENTDATE
+	,STATE
+	,MODREASON
+	,SSDESC
+	,PRESTATE
+	,PROB
+	)
+	VALUES
+	(
+	#{siteid}
+	,#{userno}
+	,#{userno}
+	,getdate()
+	,getdate()
+	,#{salesno}
+	
+	,getdate()
+	,#{state}
+	,#{modreason}
+	,#{ssdesc}
+	,#{prestate}
+	,#{prob}
+	)
+	
+	UPDATE TB210010 
+	SET
+		SALESTATE = #{state}
+		,STATEDATE = getdate()
+		,EDITUSER = #{userno} 
+		,EDITDATE = getdate()
+	WHERE
+		SALESNO = #{salesno}
+		
+	</insert>
+	
+	
+	
+	<!-- 캘린더 리스트 -->
+	<select id="salesSchList" parameterType="hashMap" resultType="hashMap">
+		
+	SELECT 
+	SCHNO AS id
+	,CONCAT(STARTDATE,' ',STARTTIME) AS 'start'
+	,CONCAT(ENDDATE,' ',ENDTIME) AS 'end'
+	,SCHNAME AS title
+	,COLOR AS color
+	FROM TB210080
+
+	WHERE 
+		ISDELETE = 0
+		AND SITEID = #{siteid}
+		AND 		
+			(
+			SCHNO NOT IN 
+				(SELECT SCHNO FROM TB210080 WHERE ISNULL(PRIVATE,0) = 1)
+			OR
+			SCHNO IN 
+				(SELECT SCHNO FROM TB210080 WHERE ISNULL(PRIVATE,0) = 1 AND OWNER = #{userno})
+			)
+			
+	</select>
+	
+	<!-- 스케쥴추가 -->
+	<insert id="salesSchInsert" parameterType="hashMap">
+	
+	INSERT INTO
+	TB210080 
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,REGDATE
+	,EDTDATE
+	,ISDELETE
+	
+	,SCHNAME
+	,CLINO
+	,SALESNO
+	,OWNER
+	,STARTDATE
+	,STARTTIME
+	,ENDDATE
+	,ENDTIME
+	,PRIVATE
+	,COLOR
+	,MEMO
+	)
+	
+	VALUES
+	(
+	#{siteid}
+	,#{userno}
+	,#{userno}
+	,getdate()
+	,getdate()
+	,0
+	
+	,#{schname}
+	,#{clino}
+	,#{salesno}
+	,#{owner}
+	,#{startdate}
+	,#{starttime}
+	,#{enddate}
+	,#{endtime}
+	,#{private}
+	,#{color}
+	,#{memo}
+	
+	)								
+	</insert>
+	
+	<!-- 스케쥴 수정 -->
+	<update id="salesSchUpdate" parameterType="hashMap">
+	
+	UPDATE
+	TB210080 SET
+	EDTUSER = #{userno}
+	,EDTDATE = getdate()
+	
+	<if test="schname != null">
+	,SCHNAME = #{schname}
+	</if>
+	<if test="clino != null">
+	,CLINO = #{clino}
+	</if>
+	<if test="salesno != null">
+	,SALESNO = #{salesno}
+	</if>
+	<if test="owner != null">
+	,OWNER = #{owner}
+	</if>
+	<if test="startdate != null">
+	,STARTDATE = #{startdate}
+	</if>
+	<if test="starttime != null">
+	,STARTTIME = #{starttime}
+	</if>
+	<if test="enddate != null">
+	,ENDDATE = #{enddate}
+	</if>
+	<if test="endtime != null">
+	,ENDTIME = #{endtime}
+	</if>
+	<if test="private != null">
+	,PRIVATE = #{private}
+	</if>	
+	<if test="color != null">
+	,COLOR = #{color}
+	</if>
+	<if test="memo != null">
+	,MEMO = #{memo}
+	</if>
+	WHERE
+		SITEID = #{siteid}
+		AND SCHNO = #{schno}
+	
+	</update>
+	
+	<!-- 캘린더 상세 팝업 -->
+	<select id="salesSchDetail" parameterType="hashMap" resultType="hashMap">
+	SELECT 
+	A.SCHNO, A.SCHNAME
+	,A.SALESNO, B.SALENAME
+	,A.CLINO, C.CLINAME
+	,A.OWNER, D.USERNAME
+	,CONCAT(A.STARTDATE,' ',A.STARTTIME) AS 'START'
+	,CONCAT(A.ENDDATE,' ',A.ENDTIME) AS 'END'
+	,A.STARTDATE, A.STARTTIME, A.ENDDATE, A.ENDTIME
+	,A.PRIVATE, A.COLOR, A.MEMO
+	
+	FROM TB210080 A
+	LEFT OUTER JOIN TB210010 B ON A.SALESNO = B.SALESNO
+	LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+	INNER JOIN TB980010 D ON A.OWNER = D.USERNO
+	
+	WHERE 
+		A.ISDELETE = 0 
+		AND A.SITEID = #{siteid}
+		AND A.SCHNO = #{schno}
+				 
+	</select>
+
+
+	<!-- 공통 캘린더 리스트 -->
+	<select id="salesComSchList" parameterType="hashMap" resultType="hashMap">
+		
+	SELECT 
+	SCHNO AS id
+	,SCHNAME AS title
+	,COLOR AS color
+	FROM TB210120
+
+	WHERE 
+		ISDELETE = 0
+		AND SITEID = #{siteid}
+	
+	</select>
+
+	<!-- 공통-스케쥴추가 -->
+	<insert id="salesComSchInsert" parameterType="hashMap">
+	INSERT INTO TB210120
+	(
+	REGDATE
+	,REGUSER
+	,EDTDATE
+	,EDTUSER
+	,ISDELETE
+	,SITEID
+
+	,SCHNO
+	,SCHNAME
+	,SALESNO
+	,MEMO
+	,COLOR
+	)
+
+	VALUES
+	(
+	getdate()
+	,#{userno}
+	,getdate()
+	,#{userno}
+	,0
+	,#{siteid}
+
+	,#{schno}
+	,#{schname}
+	,#{salesno}
+	,#{memo}
+	,#{color}
+	)
+	</insert>
+</mapper>

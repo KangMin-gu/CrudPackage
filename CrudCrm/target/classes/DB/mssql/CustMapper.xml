@@ -6,8 +6,7 @@
 	<select id="totalcnt" parameterType="hashMap" resultType="int">
 		SELECT
 		COUNT(*)
-		FROM CU100010 A
-		LEFT OUTER JOIN TB200010 B ON A.CLINO = B.CLINO 
+		FROM CU100010 A with (nolock)
 		WHERE
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0 
@@ -39,7 +38,7 @@
 			AND A.OWNER = #{owner}
 			</if>
 			<if test="clino != null and clino != 0 ">
-			AND B.CLINO = #{clino}
+			AND A.CLINO = #{clino}
 			</if>
 	</select>
 	
@@ -55,9 +54,9 @@
 			, CU.OWNER, B.USERNAME AS OWNER_
 			, CU.CUSTGUBUN, CU.CUSTGRADE, CU.INFOAGREE, CONVERT(VARCHAR,CU.REGDATE,23) AS REGDATE
 			, CU.CLINO, C.CLINAME 
-			FROM CU100010 CU
-			LEFT OUTER JOIN TB980010 AS B ON CU.OWNER = B.USERNO 
-			LEFT OUTER JOIN TB200010 AS C ON CU.CLINO = C.CLINO	
+			FROM CU100010 CU  with (nolock)
+			LEFT OUTER JOIN TB980010 AS B with (nolock) ON CU.OWNER = B.USERNO 
+			LEFT OUTER JOIN TB200010 AS C with (nolock) ON CU.CLINO = C.CLINO	
 			WHERE
 				CU.SITEID = #{siteid}
 				AND CU.ISDELETE = 0 
@@ -241,7 +240,6 @@
 		,#{edituser}
 		,#{siteid}
 		,0
-		
 		,#{deptname}
 		,#{duty}
 		,#{mobile1},#{mobile2},#{mobile3}

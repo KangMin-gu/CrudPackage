@@ -15,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
-import saas.crud.crm.ce.EUploadLogical;
-
 import saas.crud.crm.cu.dao.CustDao;
 
 
@@ -28,10 +26,10 @@ public class CommonServiceImpl implements CommonService {
 	private CommonDao commonDao;
 	
 	@Autowired
-	private EUploadLogical upload;
+	private CustDao custDao;
 	
 	@Autowired
-	private CustDao custDao;
+	private CrudEngine crudEngine;
 
 	@Autowired
 	private CrudEngine crudEngine;
@@ -62,8 +60,7 @@ public class CommonServiceImpl implements CommonService {
 		int pageDisplayCount = 5; // 페이지 목록 수  
 		
 		int totalRows = commonDao.totalcntUser(searchVal);//총 자료수 
-		
-		
+
 		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
@@ -104,7 +101,7 @@ public class CommonServiceImpl implements CommonService {
 		//페이징
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
-				
+
 		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
@@ -149,7 +146,6 @@ public class CommonServiceImpl implements CommonService {
 	public ModelAndView svcPopGetCustName(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		
 		Map<String, Object> searchVal = crudEngine.searchParam(request);
 		
 		int totalRows = commonDao.totalCntCust(searchVal);
@@ -157,7 +153,7 @@ public class CommonServiceImpl implements CommonService {
 		//페이징
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
-			
+
 		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);

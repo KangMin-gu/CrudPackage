@@ -15,8 +15,7 @@ import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
-import saas.crud.crm.ce.PagingCommon;
-import saas.crud.crm.ce.SearchRequest;
+import saas.crud.crm.ce.CrudEngine;
 
 
 @Service
@@ -25,23 +24,23 @@ public class AuServiceImpl implements AuService{
 	@Autowired
 	private AuDao auDao;
 	
+	@Autowired
+	private CrudEngine crudEngine;
+	
 	// 사용자 List 검색 
 	@Override
 	public ModelAndView userList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 
 		int totalRows = auDao.urTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

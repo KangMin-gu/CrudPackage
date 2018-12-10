@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.ce.PagingCommon;
-import saas.crud.crm.ce.SearchRequest;
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.cp.dao.CampaignDao;
 import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
@@ -25,23 +24,23 @@ public class CampaignServiceImpl implements CampaignService{
 	@Autowired
 	private CampaignDao campaignDao;
 	
+	@Autowired
+	private CrudEngine crudEngine;
+	
 	//캠페인 List
 	@Override
 	public ModelAndView campList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 
 		int totalRows = campaignDao.campTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -241,9 +240,7 @@ public class CampaignServiceImpl implements CampaignService{
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 		search.put("userno",userNo);
 		
 		campaignDao.campTestSend(search);
@@ -255,17 +252,14 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 
 		int totalRows = campaignDao.campContentsTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -437,16 +431,14 @@ public class CampaignServiceImpl implements CampaignService{
 	@Override
 	public Map<String, Object> campTabTargetCustList(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
-		SearchRequest searchRequest = new SearchRequest();
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 		search.put("campno",campNo);
 		int totalTargetCustRows = campaignDao.campTargetCustRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 20;
 		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalTargetCustRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalTargetCustRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

@@ -12,8 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.LicenseDao;
 import saas.crud.crm.au.dto.LicenseDto;
-import saas.crud.crm.ce.PagingCommon;
-import saas.crud.crm.ce.SearchRequest;
+import saas.crud.crm.ce.CrudEngine;
 
 
 @Service
@@ -22,6 +21,9 @@ public class LicenseServiceImpl implements LicenseService{
 	@Autowired
 	private LicenseDao licenseDao;
 	
+	@Autowired
+	private CrudEngine crudEngine;
+	
 	//라이센스 List 검색
 	@Override
 	public ModelAndView licenseList(HttpServletRequest request) {
@@ -29,17 +31,14 @@ public class LicenseServiceImpl implements LicenseService{
 		
 		ModelAndView mView = new ModelAndView();
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 		
 		int totalRows = licenseDao.licenseTotalRow(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

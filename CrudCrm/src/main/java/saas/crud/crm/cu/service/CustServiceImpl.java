@@ -1,6 +1,6 @@
 package saas.crud.crm.cu.service;
 
-import java.util.Enumeration;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.CrudEngine;
-import saas.crud.crm.ce.ExcelDownLoad;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
@@ -28,7 +27,7 @@ public class CustServiceImpl implements CustService {
 	@Autowired
 	private SvDao svDao;
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	//고객리스트 출력 (검색 조건) 
 	@Override
@@ -120,7 +119,7 @@ public class CustServiceImpl implements CustService {
 		int pageDisplayCount = 5; // 페이지 목록 수  
 				
 		
-		Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 		
 		page.put("totalRows", totalRows);
 		

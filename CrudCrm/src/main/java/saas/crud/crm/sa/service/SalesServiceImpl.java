@@ -26,7 +26,7 @@ public class SalesServiceImpl implements SalesService {
 	@Autowired 
 	private SalesDao salesDao;
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	//영업리스트
 	@Override
@@ -60,7 +60,7 @@ public class SalesServiceImpl implements SalesService {
 		int pageRowCount = 20; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 				
-		Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 				
 		page.put("totalRows", totalRows);
 				
@@ -147,7 +147,7 @@ public class SalesServiceImpl implements SalesService {
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 				
-		Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 				
 		page.put("totalRows", totalRows);
 				

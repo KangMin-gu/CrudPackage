@@ -105,7 +105,7 @@
 	<select id ="detail" parameterType="rcvDto" resultType ="hashMap">
 		SELECT
 		
-		C.CUSTNAME, C.COMPANY, C.EMAIL, C.DUTY
+		C.CUSTNAME,  C.EMAIL, C.DUTY
 		, C.HOMADDR1 + C.HOMADDR2 + C.HOMADDR3 AS CUSTADDRESS
 		, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS MOBILE
 		,A.RCVNO, A.CLINO, A.CUSTNO, A.RCVTYPE

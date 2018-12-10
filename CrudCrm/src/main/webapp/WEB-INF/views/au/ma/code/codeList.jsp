@@ -31,9 +31,6 @@
                 <div class="col-lg-10">
                     <h2>코드 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
                         <li class="breadcrumb-item active">
                             <strong>코드 목록</strong>
                         </li>
@@ -258,22 +255,6 @@
                                             	<input type="text" class="form-control" name="uppercodegrp" id="uppercodegrp" value="${code.UPPERCODEGRP}">
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box4 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
-                                    <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0"><label for="menudesc">상위그룹코드 값</label></th>
-                                            <td>
-                                            	<input type="text" class="form-control" name="uppercodeval" id="uppercodeval" value="${code.UPPERCODEVAL}">
-                                            </td>
-                                        </tr>
                                         <input type="hidden" id="no" name="no"/>
                                     </tbody>
                                 </table>
@@ -316,7 +297,7 @@
     });
 	
 		$('#uppercodegrp').click(function(e){
-			openNewWindow('/common/code',e.target.id)
+			openNewWindow('상위코드','/common/code',e.target.id,'600','800')
 		});
 	</script>
 	

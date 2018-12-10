@@ -615,7 +615,6 @@
                 autoclose: true
             });
             
-
         });
     </script>
 	<!-- E: 추가 js -->

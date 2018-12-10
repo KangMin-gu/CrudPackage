@@ -75,11 +75,11 @@
                 
                
                 <c:if test="${cp  eq '40000' }">
-					<li<c:if test="${fn:substring(urls, 0, 3) eq '/cp' }"> class="active"</c:if>>
+					<li<c:if test="${fn:substring(urls, 0, 9) eq '/campaign' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">캠페인</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
-	                        <li><a href="form_basic.html">캠페인 관리</a></li>
-	                        <li><a href="form_basic.html">양식 관리</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/campaign">캠페인 관리</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/campaign/contents">양식 관리</a></li>
 	                        <li><a href="form_basic.html">캠페인 일정</a></li>                                     
 	                    </ul>
 	                </li>

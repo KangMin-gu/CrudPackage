@@ -11,10 +11,9 @@
     	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
    	,A.ISDELETE
    	,B.CODENAME AS UPPERCODENAME
-   	,B.CODEVAL AS UPPERCODEVAL
    	,ROW_NUMBER() OVER(ORDER BY A.CODENO DESC) AS ROWNUM
     FROM Crud_SaaS.dbo.T_CODE A 
-    LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.UPPERCODEGRP = A.CODEGRP AND B.UPPERCODEVAL = A.CODEVAL
+    LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.UPPERCODEGRP = A.CODENO
     WHERE A.ISDELETE = 0
     <if test ="siteid == 1">
     	AND A.SITEID = 1
@@ -60,9 +59,8 @@
     	  		  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
     	  	,A.ISDELETE
    			,A.UPPERCODEGRP
-   			,A.UPPERCODEVAL
     	FROM Crud_SaaS.dbo.T_CODE A 
-    	LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.UPPERCODEGRP = A.CODEGRP AND B.UPPERCODEVAL = A.CODEVAL
+    	LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.UPPERCODEGRP = A.CODENO
     	WHERE A.SITEID = #{siteid}
     	AND A.CODENO = #{codeno}
     	
@@ -76,7 +74,6 @@
     	,CODENAME = #{codename}
     	,CODEVAL = #{codeval}
     	,UPPERCODEGRP = #{uppercodegrp}
-    	,UPPERCODEVAL = #{uppercodeval}
     	,ISDELETE = #{isdelete}
     	,EDTDATE = getDate()
     	,EDTUSER = #{edtuser}
@@ -92,7 +89,6 @@
     ,CODENAME
     ,CODEVAL
     ,UPPERCODEGRP
-    ,UPPERCODEVAL
     ,SITEID
     ,ISDELETE
     ,REGDATE
@@ -104,7 +100,6 @@
     ,#{codename}
     ,#{codeval}
     ,#{uppercodegrp}
-    ,#{uppercodeval}
     ,#{siteid}
     ,#{isdelete}
     ,getDate()
@@ -138,12 +133,10 @@
     WHERE A.ISDELETE = 0
     <if test ="siteid == 1">
     	AND A.SITEID = 1
-    	AND A.UPPERCODEVAL IS NULL
     	AND A.UPPERCODEGRP IS NULL
     </if>
     <if test="siteid != 1">
     	AND A.SITEID = #{siteid}
-    	AND A.UPPERCODEVAL IS NULL
     	AND A.UPPERCODEGRP IS NULL
     </if>
     <if test ="codename != null">

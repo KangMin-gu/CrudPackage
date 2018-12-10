@@ -10,9 +10,6 @@
     	$('.reset').val('');
     });
 
-
-    
-
     $('thead .i-checks').on('ifChecked',function(event){
     	$('tbody .i-checks').parent().addClass('checked');
     });
@@ -169,7 +166,7 @@
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.username.textContent).trigger('keyup');
+		opener.$("#"+parentid).val(tr.children.codename.textContent).trigger('keyup');
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
@@ -247,7 +244,7 @@
     //id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
 		//유효성 검사
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
+		var namePattern = /^[가-힣a-zA-Z0-9]{0,100}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
 		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
 		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리

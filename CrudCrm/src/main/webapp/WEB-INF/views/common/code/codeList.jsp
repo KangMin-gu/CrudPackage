@@ -27,6 +27,7 @@
                 
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/code" method="POST">
+                    	<input type="hidden" id="parentid" name="parentid" value="${search.parentid}">
                         <div class="ibox-content row">
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
@@ -95,11 +96,11 @@
                                 <c:forEach var="code" items="${codeList }">
                                     <tr onclick="javascript:parentCode(this,${code.CODENO })">
                                         <td><input type="checkbox" class="i-checks" name="codeno" id="codeno" value="${code.CODENO }"></td>
-                                        <td>${code.CODEGRP}</td>
-                                        <td>${code.CODENAME }</td>
-                                        <td>${code.CODEVAL }</td>
-                                        <td>${code.UPCODEGRP_ }</td>
-                                        <td>${code.ISDELETE_ }</td>
+                                        <td id="codegrp">${code.CODEGRP}</td>
+                                        <td id="codename">${code.CODENAME }</td>
+                                        <td id="codeval">${code.CODEVAL }</td>
+                                        <td id="upcodegrp_">${code.UPCODEGRP_ }</td>
+                                        <td id="isdelete_">${code.ISDELETE_ }</td>
                                     </tr>
                                 </c:forEach>
                                        
@@ -123,7 +124,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="footable-page active"><a
 														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>

@@ -67,9 +67,9 @@
 								<div class="ibox-content row">								
 									
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
-											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) ">
-												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;( 고객명 : 한글, 영문 2자리~30자리+숫자0~5자리 , 휴대폰 : 000-000-0000 , 000-0000-0000 ) </strong>
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;display:none" >
+											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.">
+												<strong>필수 입력값을 확인해 주세요. </strong>
 											</span>
 											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
 	                          			</div>
@@ -93,7 +93,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>고객명</th>
+													<th>고객명<sup>*</sup></th>
 													<td>
 														<input type="text" class="form-control required validate name" name="custname" id="custname"  value="${custUpdate.CUSTNAME}"  >
 													</td>
@@ -142,7 +142,7 @@
 													</td>
 												</tr>
 												<tr>
-													<th>휴대전화</th><!-- form:select변경 -->
+													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
 													<td>
 														<select class="form-control col-4 float-left mr-3 validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="" ${custUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
@@ -155,13 +155,13 @@
 													</td>
 												</tr>
 												<tr>
-													<th>직장팩스</th>
+													<th>직장팩스${custUpdate.WRKFAX1}</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1" >
 															<option value="" ${custUpdate.WRKFAX1 eq "" ? "selected" :""}>선택</option>
-															<option value="010" ${custUpdate.WRKFAX1 eq "010" ? "selected" :""}>010</option>
-															<option value="011" ${custUpdate.WRKFAX1 eq "011" ? "selected" :""}>011</option>
-															<option value="017" ${custUpdate.WRKFAX1 eq "017" ? "selected" :""}>017</option>
+															<option value="02" ${custUpdate.WRKFAX1 eq "02" ? "selected" :""}>02</option>
+															<option value="031" ${custUpdate.WRKFAX1 eq "031" ? "selected" :""}>031</option>
+															<option value="070" ${custUpdate.WRKFAX1 eq "070" ? "selected" :""}>070</option>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
 														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3"  value="${custUpdate.WRKFAX3 }">
@@ -187,7 +187,7 @@
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control validate url" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) http://www.crudsystem.co.kr" ></td>
+													<td><input type="text" class="form-control validate url" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) www.crudsystem.co.kr" ></td>
 												</tr>
 											</tbody>
 										</table>
@@ -208,7 +208,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" value="${custUpdate.WRKADDR2}" readonly>
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="wrkaddr3" id="wrkaddr3" value="${custUpdate.WRKADDR3 }">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="wrkaddr3" id="wrkaddr3" value="${custUpdate.WRKADDR3 }">
 													</td>
 												</tr>
 											</tbody>
@@ -288,7 +288,7 @@
 															<div class="input-group date">
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
-																</span><input type="text" class="form-control" name="weddingday" id="weddingday" value="${custUpdate.WEDDINGDAY }" autocomplete="off">
+																</span><input type="text" class="form-control" name="weddingday" id="weddingday" data-mask="9999-99-99" value="${custUpdate.WEDDINGDAY }" autocomplete="off">
 															</div>
 														</td>
 													</tr>
@@ -365,7 +365,7 @@
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
 																</span> 
-																<input type="text" class="form-control" name="birth" id="birth" autocomplete="off" value="${custUpdate.BIRTH}">
+																<input type="text" class="form-control" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99" value="${custUpdate.BIRTH}">
 															</div>
 														</td>
 													</tr>
@@ -414,7 +414,7 @@
 																</span>
 															</div> 
 															<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" value="${custUpdate.HOMADDR2}" readonly>
-															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="homaddr3" id="homaddr3" value="${custUpdate.HOMADDR3}">
+															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="homaddr3" id="homaddr3" value="${custUpdate.HOMADDR3}">
 														</td>
 													</tr>
 												</tbody>
@@ -585,14 +585,14 @@
 	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	<!-- daum 주소 -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	
+	<!-- 유효성 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+	<!-- Input Mask-->
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 	
 	
 
     <script>
-    window.onload = function () {
-    	enableSubmit();
-    }
 	
         $(document).ready(function () {
         	

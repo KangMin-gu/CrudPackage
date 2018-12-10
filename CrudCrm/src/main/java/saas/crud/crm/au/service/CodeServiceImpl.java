@@ -73,7 +73,7 @@ public class CodeServiceImpl implements CodeService{
 	@Override
 	public void codeUpdate(HttpServletRequest request, CodeDto codeDto) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		codeDto.setEdtuser(userNo);
@@ -86,7 +86,7 @@ public class CodeServiceImpl implements CodeService{
 	@Override
 	public void codeDelete(HttpServletRequest request, int codeNo) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		CodeDto codeDto = new CodeDto();
@@ -102,7 +102,7 @@ public class CodeServiceImpl implements CodeService{
 	public int codeInsert(HttpServletRequest request, CodeDto codeDto) {
 		// TODO Auto-generated method stub
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		codeDto.setReguser(userNo);

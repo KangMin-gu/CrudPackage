@@ -18,12 +18,12 @@
 
 <!-- S: 추가 CSS-->
 <!-- Toastr style -->
-<link href="/resources/css/plugins/toastr/toastr.min.css"
+<link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css"
 	rel="stylesheet">
 <!--radioBox-->
-<link href="/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <!--datePicker-->
-<link href="/resources/css/plugins/datapicker/datepicker3.css"
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css"
 	rel="stylesheet">
 
 <!-- E: 추가 CSS-->
@@ -360,9 +360,9 @@
 	
 	<!-- S: 추가 js-->
 	<!-- radioBox-->
-	<script src="/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<!-- datePicker-->
-	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	
 
 

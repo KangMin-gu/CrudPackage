@@ -32,8 +32,8 @@ public class SvServiceImpl implements SvService{
 		Map<String, Object> search = searchRequest.Search(request);
 		
 		int totalRows = svDao.svTotalRows(search);
-		int PAGE_ROW_COUNT = 5;
-		int PAGE_DISPLAY_COUNT = 10;
+		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
 		
 		PagingCommon pages = new PagingCommon();
 		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT);

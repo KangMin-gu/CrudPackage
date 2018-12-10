@@ -111,7 +111,7 @@ public class CustServiceImpl implements CustService {
 			
 		//총자료수
 		int totalRows = custDao.totalCnt(searchVal);
-				
+		
 		//paging
 		
 		int pageRowCount = 20; //한페이지에서 출력될 row

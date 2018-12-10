@@ -5590,11 +5590,11 @@ body.mini-navbar.fixed-sidebar .logo-element {
   height: calc(1.5rem + 2px);
 }
 .custom-file-input{
-  height: calc(1.5rem + 2px);	
+  height: calc(1.5rem + 2px);
 }
 .custom-file-label {
   padding: .2rem .75rem;
-  height: calc(1.5rem + 2px)  
+  height: calc(1.5rem + 2px)
 }
 .custom-file-label::after {
   padding: .2rem .75rem;
@@ -9570,3 +9570,11 @@ body.md-skin {
 
 table{table-layout: fixed; word-wrap: break-word;}
 .date{max-height: 25px;}
+.sms-form{width: 301px; height: 313px; background: url(../img/crud/phone_bg.jpg) no-repeat; border: 1px solid #e5e6e7; border-radius: 15px; position: relative; margin: 0 auto;}
+th sup{color: #ff5050;}
+.sms-form .num-text{width: 230px; height: 30px; position: absolute; top: 58px; left: 62px;}
+.sms-form .num-text input{width: 230px; height: 30px; background: #f9f9f9; border: none !important; line-height: 30px; border-bottom: 1px solid #e5e6e7 !important;}
+.sms-form .sub-text{position: absolute; top: 100px; left: 10px;}
+.sms-form .sub-text textarea{width: 280px; height: 180px; background: #ffffff; border: 1px solid #e5e6e7; resize: none;}
+.sms-form .limit-text{position: absolute; bottom: 5px; right: 10px;}
+.sms-form .limit-text p{font-size: 13px; color: #1c1c1c;}

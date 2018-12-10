@@ -32,9 +32,6 @@
                     <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
-                        <li class="breadcrumb-item">
                             <a href="/ma/company">회원사목록</a>
                         </li>
                         <li class="breadcrumb-item active">

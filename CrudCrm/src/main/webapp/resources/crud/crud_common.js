@@ -10,9 +10,6 @@
     	$('.reset').val('');
     });
 
-
-    
-
     $('thead .i-checks').on('ifChecked',function(event){
     	$('tbody .i-checks').parent().addClass('checked');
     });
@@ -24,19 +21,19 @@
   	//주소 받아오기
     $('.daumzip').click(function(e){ //이벤트를 걸 인풋,버튼에 daumzip 클래스 추가 
 			 
-		     new daum.Postcode({
-		         oncomplete: function(data) {
+    	new daum.Postcode({
+    		oncomplete: function(data) {
 		      		
-		        	var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
-		        	var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
-	        	//addr1 : 우편번호 , addr2 : 도로명 , addr3 : 건물명 +사용자입력  
-		        	$("#"+head+"addr1").val(data.zonecode);	
-	        	$("#"+head+"addr2").val(data.roadAddress);
-	        	$("#"+head+"addr3").val(data.buildingName);
+    			var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
+    			var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
+    			//addr1 : 우편번호 , addr2 : 도로명 , addr3 : 건물명 +사용자입력  
+    			$("#"+head+"addr1").val(data.zonecode);	
+    			$("#"+head+"addr2").val(data.roadAddress);
+    			$("#"+head+"addr3").val(data.buildingName);
           
-		         }
-		     }).open();
-		 });
+		    }
+		}).open();
+	});
     
         
 	$('.owner').click(function(e){
@@ -50,75 +47,6 @@
 	// 고객 팝업
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.target.id,650,700);
-	});
-
-	//********필수 값 실시간 체크*********************************        	      
-	$('.required').keyup(function(e){
-		var res = checkVal(e.target.id);
-		enableSubmit();
-	});
-
-	$('.required').change(function(e){
-		var res = checkVal(e.target.id);
-		enableSubmit();
-	});
-	/*
-	$('.required').blur(function(e){
-		enableSubmit();
-	});
-	*/
-	//유효성검사
-	$('.submit').click(function(){
-		
-		var validate = $('.validate'); //validate 선언한 클래스 배열
-		var length = validate.length; //배열 사이즈 
-		var id; //배열의 id값
-		var value; // 배열의 value 값 
-		
-		for(var i=0; i<length ; i++){//validate 클래스의 배열만큼 반복문
-			id = $('.validate:eq('+i+')' ).attr('id'); 
-			value = $('#'+id).val(); 
-			
-			if( $('#'+id).hasClass('required') ){//필수값이면 무조건 유효성검사 
-				if(!checkVal(id)){// 유효성 통과 실패시 아래 행 실행
-					//$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-        			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
-        			return false;//메서드 종료
-				}
-			}else if( $('#'+id).hasClass('phone-group') ){//폰그룹-전화번호 유효성 			
-				
-				if( value == ''){
-					$('#'+id).removeClass('error');
-				}else{//값이 존재하면 아래 행 실행
-					var temp = id.substr(0,id.length-1);// ex) mobile1 -> mobile 
-					
-					for(var j=1;j<=3;j++){// phone-group 으로 묶인 필드 모두검사
-						if(!checkVal(temp+j)){
-							$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-							$('#'+temp+j).focus();//에러난 위치로 마우스 포인터 이동
-							return false;//메서드 종료
-						}
-					}
-				}	
-			}else{//필수값이 아니라면 
-				if( value ==''){//값이 없을때 유효성 검사 하지 않음. 
-					$('#'+id).removeClass('error');//에러 태두리 삭제      				
-				}else{//값이 있다면 유효성체크 
-					if(!checkVal(id)){
-						$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-						$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
-						return false;//메서드 종료
-					}
-				}
-			}
-
-		}
-		     		
-		$('#msgDiv').hide();//div창숨기기
-		$('#showMsg').empty();//메시지 삭제
-	
-		//$('#command').submit();//전송
-		
 	});
 /******************************************************************/	
 	/*fileupload 필수값 싱글 sFile / 멀티 mFile
@@ -184,9 +112,12 @@
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
-		setTimeout(function(){
-			newWindow.document.getElementById("parentid").value = target;
-		},1000);
+		if(target != ""){		
+			setTimeout(function(){
+				newWindow.document.getElementById("parentid").value = target;
+			},1000);
+		}
+		
 	}
 	
 	//파일서치키 팝업으로전달
@@ -200,6 +131,7 @@
 			newWindow.document.getElementById("fileSearchKey").value = fileSearchKey;
 		},1000);
 	}
+
 	
 	// 자식 window가 실행
 	// 영업 담당자 및 담당자 가지고옴
@@ -228,7 +160,7 @@
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.username.textContent).trigger('keyup');
+		opener.$("#"+parentid).val(tr.children.codename.textContent).trigger('keyup');
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
@@ -281,113 +213,25 @@
     	
     	return today;
     }
-
-    
-    //id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
-	function checkVal(id){  
-		//유효성 검사
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
-		var simplePattern = /^[s가-힣a-zA-Z]{0,30}$/; //공백허용 한글 영문 0~30글자
-		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
-		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?\s]{0,30}$/; //한글 영문 숫자 기호 0~30자리
-		var numberPattern = /^[1-9]{1,2}$/; // 0을 제외한 1~2자리숫자
-		var checkPattern = /^[0-9]{1,2}$/; // 0을 포함한 1자리 숫자
-		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
-		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
-		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호
-		var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
-		var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
-		
-		var res;//true or false
-		var value = $('#'+id).val();
-		var msg;
-		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
-			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
-			msg = '<한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
-		
-		}else if( $('#'+id).hasClass('phone1') ){
-			res = phone1Pattern.test(value);
-			msg = '숫자 2~3 자리를 입력해 주세요.';//이 문구 출력	
-			
-		}else if( $('#'+id).hasClass('phone2') ){
-			res = phone2Pattern.test(value);
-			msg = '숫자 3~4 자리를 입력해 주세요.';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('phone3') ){
-			res = phone3Pattern.test(value);
-			msg = '숫자 4 자리를 입력해 주세요.';//이 문구 출력	
-			
-		}else if( $('#'+id).hasClass('addr') ){
-			res = addrPattern.test(value);
-			msg = '한글,영어,숫자, 기호로 입력해 주세요.(특수문자x)';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('url') ){
-			res = domainPattern.test(value);
-			msg = 'http(s):// 를 제외한 url 형식으로 입력해 주세요 ex) www.crudsystem.co.kr ';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('email') ){
-			res = emailPattern.test(value);
-			msg = 'email 형식에 맞게 입력해 주세요 ex) sdw@crudsystem.co.kr ';//이 문구 출력
-			
-		}else if( $('#'+id).hasClass('simple') ){
-			res = simplePattern.test(value);
-			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
-		}else if( $('#'+id).hasClass('number') ){
-			res = numberPattern.test(value);
-			msg = '숫자로 입력해 주세요.';//이 문구 출력	
-		}else if( $('#'+id).hasClass('string') ){
-			res = stringPattern.test(value);
-			msg = '잘못된 문자열이 입력되었습니다. 학인해주세요';//이 문구 출력	
-		}else if( $('#'+id).hasClass('check') ){
-			res = checkPattern.test(value);
-			msg = '사용여부 확인 부탁드립니다.';//이 문구 출력	
-		}
-		
-		msg = $('#'+id).parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
-		
-		if(res){//유효성 통과시
-			$('#'+id).removeClass('error');//빨간 테두리 삭제
-		}else{//유효성 실패시
-			
-			if( $('#'+id).hasClass('required') ){ //required 클래스가 있다면 (필수 값이라면) 유효성 실패시
-				$('#'+id).addClass('error');
-				$('.submit').prop("disabled",true);//submit 버튼 비활성화 	
-			}else{
-				$('#showMsg').empty();
-				$('#showMsg').append(msg);
-				$('#'+id).addClass('error');//빨간 테두리 생성 
-			}				
-			
-		}
-		return res;
-	}
 	
-	
-
-	function enableSubmit(){//필수값이 모두 정상이라면 submit버튼을 활성화 시킨다.
-		
-		var reqArray = $('.required'); //필수값 배열
-		var length = reqArray.length; // 배열의 크기
-		var reqId;
-		var res=0;
-		for(var i=0;i<length;i++){// 배열만큼 반복문
-			reqId = $('.required:eq('+i+')' ).attr('id');//배열의 id값
-			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
-		}
-		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)
-			$('.submit').prop("disabled",false);//submit 활성화
-			$('#reqDefaultMsg').hide();
-			$('#reqSuccessMsg').show();
-			$('#reqMsgDiv').removeClass("alert-info");
-			$('#reqMsgDiv').addClass("alert-success");
-		}else{
-			$('#reqSuccessMsg').hide();
-			$('#reqDefaultMsg').show();
-			$('#reqMsgDiv').removeClass("alert-success");
-			$('#reqMsgDiv').addClass("alert-info");
-		}
-	}
-	
+    //로고 insertajax
+    $('#logosubmit').click(function(){
+    	var form = new FormData(document.getElementById('logoForm'));
+    	$.ajax({
+            url: '/poplogo',
+            data: form,
+            dataType: 'json', 
+            processData: false, 
+            contentType: false, 
+            type: 'POST', 
+            success: function(response){ 
+            	opener.$('#filename').val(response.orgfilename);
+            	opener.$('#sitelogo').val(response.img);
+            	alert("로그 등록 완료");
+            	window.close();
+            }
+        });
+    });
 
 	// datepicker 앞의 값이 변했을때
 	$('.date01').change(function(e){

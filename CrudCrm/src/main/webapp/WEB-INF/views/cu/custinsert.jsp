@@ -66,8 +66,8 @@
 							
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
-											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) ">
-												<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(고객명 : 한글,영문 2~30 + 숫자0~5자리, 휴대폰 : 000-000-0000, 000-0000-0000 ) </strong>
+											<span id="reqDefaultMsg" >
+												<strong>필수 입력값을 확인해 주세요. </strong>
 											</span>
 											<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
 	                          			</div>
@@ -89,7 +89,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>고객명</th>
+													<th>고객명<sup>*</sup></th>
 													<td>
 														<input type="text" class="form-control error required validate name" name="custname" id="custname" placeholder="필수 입력" >
 													</td>
@@ -141,7 +141,7 @@
 													</td>
 												</tr>
 												<tr>
-													<th>휴대전화</th><!-- form:select변경 -->
+													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
 													<td>													
 														<select class="form-control col-4 float-left mr-3 error validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="">선택</option>
@@ -159,9 +159,9 @@
 													<td>
 														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
-															<option value="010">010</option>
-															<option value="011">011</option>
-															<option value="017">017</option>
+															<option value="02">02</option>
+															<option value="031">031</option>
+															<option value="070">070</option>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3" >
@@ -208,7 +208,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" readonly>
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="wrkaddr3" id="wrkaddr3">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="wrkaddr3" id="wrkaddr3">
 													</td>
 												</tr>
 											</tbody>
@@ -281,7 +281,8 @@
 															<div class="input-group date">
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
-																</span><input type="text" class="form-control"  name="weddingday" id="weddingday" autocomplete="off">
+																</span>
+																<input type="text" class="form-control"  name="weddingday" id="weddingday" autocomplete="off" data-mask="9999-99-99">
 															</div>
 														</td>
 													</tr>
@@ -356,7 +357,7 @@
 														<td>
 															<div class="input-group date" style="height: 1.45rem;">
 																<span class="input-group-addon"> <i class="fa fa-calendar"></i> </span> 
-																<input type="text" class="form-control" name="birth" id="birth" autocomplete="off">
+																<input type="text" class="form-control" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99">
 															</div>
 														</td>
 													</tr>
@@ -405,7 +406,7 @@
 																</span>
 															</div> 
 															<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" readonly>
-															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate addr" name="homaddr3" id="homaddr3">
+															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="homaddr3" id="homaddr3">
 														</td>
 													</tr>
 												</tbody>
@@ -570,35 +571,21 @@
 	
 	<!-- S: 추가 js-->
 	<!-- radioBox-->
-	<script src="/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<!-- datePicker-->
-	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	<!-- daum 주소 -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	
-	
+	<!-- 유효성 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+	 <!-- Input Mask-->
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 
 	
 	<script>	
  
         $(document).ready(function () {
-      	
-        	//********필수 값 실시간 체크*********************************        	      
-        	/*
-        	$('#mobile1').change(function() {//셀렉트박스 change 메서드
-        		var state = $('#mobile1 option:selected').val();
-        		if(state == '') {//값이없다면
-        			$('#mobile1').addClass('error');//에러 태두리
-        			$('.submit').prop("disabled",true);//submit 비활성화
-        		} else {
-        			$('#mobile1').removeClass('error');
-        			enableSubmit();
-        		}
-        	});
-        	*/
-        	//****************************************필수값 체크 끝 ********
-        	
-        
+      	   
        	
             // icheck css
             $('.i-checks').iCheck({
@@ -615,7 +602,6 @@
                 autoclose: true
             });
             
-
         });
     </script>
 	<!-- E: 추가 js -->

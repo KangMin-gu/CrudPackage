@@ -7,7 +7,6 @@ public class CodeDto {
 	private String codename;
 	private String codeval;
 	private String uppercodegrp;
-	private String uppercodeval;
 	private int siteid;
 	private String regdate;
 	private int reguser;
@@ -16,6 +15,22 @@ public class CodeDto {
 	private int isdelete;
 	
 	public CodeDto() {}
+
+	public CodeDto(int codeno, String codegrp, String codename, String codeval, String uppercodegrp, int siteid,
+			String regdate, int reguser, String edtdate, int edtuser, int isdelete) {
+		super();
+		this.codeno = codeno;
+		this.codegrp = codegrp;
+		this.codename = codename;
+		this.codeval = codeval;
+		this.uppercodegrp = uppercodegrp;
+		this.siteid = siteid;
+		this.regdate = regdate;
+		this.reguser = reguser;
+		this.edtdate = edtdate;
+		this.edtuser = edtuser;
+		this.isdelete = isdelete;
+	}
 
 	public int getCodeno() {
 		return codeno;
@@ -55,14 +70,6 @@ public class CodeDto {
 
 	public void setUppercodegrp(String uppercodegrp) {
 		this.uppercodegrp = uppercodegrp;
-	}
-
-	public String getUppercodeval() {
-		return uppercodeval;
-	}
-
-	public void setUppercodeval(String uppercodeval) {
-		this.uppercodeval = uppercodeval;
 	}
 
 	public int getSiteid() {
@@ -113,24 +120,5 @@ public class CodeDto {
 		this.isdelete = isdelete;
 	}
 
-	public CodeDto(int codeno, String codegrp, String codename, String codeval, String uppercodegrp,
-			String uppercodeval, int siteid, String regdate, int reguser, String edtdate, int edtuser, int isdelete) {
-		super();
-		this.codeno = codeno;
-		this.codegrp = codegrp;
-		this.codename = codename;
-		this.codeval = codeval;
-		this.uppercodegrp = uppercodegrp;
-		this.uppercodeval = uppercodeval;
-		this.siteid = siteid;
-		this.regdate = regdate;
-		this.reguser = reguser;
-		this.edtdate = edtdate;
-		this.edtuser = edtuser;
-		this.isdelete = isdelete;
-	};
-	
-	
-	
 	
 }

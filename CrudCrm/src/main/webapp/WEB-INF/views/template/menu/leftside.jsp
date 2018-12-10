@@ -49,12 +49,12 @@
                 
 				
                 <c:if test="${sa  eq '20000'}">
-	                <li <c:if test="${fn:substring(urls, 0, 3)  eq '/sa' }"> class="active"</c:if>>
+	                <li <c:if test="${fn:substring(urls, 0, 6)  eq '/sales' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">영업관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
-	                        <li><a href="form_basic.html">영업 관리</a></li>
-	                        <li><a href="form_basic.html">거래처 관리</a></li>
-	                        <li><a href="form_basic.html">영업 일정</a></li>                        
+	                        <li><a href="/sales">영업 관리</a></li>
+	                        <li><a href="/sales/client">거래처 관리</a></li>
+	                        <li><a href="/sales/cal">영업 일정</a></li>                        
 	                    </ul>
 	                </li>
       			</c:if>
@@ -75,11 +75,11 @@
                 
                
                 <c:if test="${cp  eq '40000' }">
-					<li<c:if test="${fn:substring(urls, 0, 3) eq '/cp' }"> class="active"</c:if>>
+					<li<c:if test="${fn:substring(urls, 0, 9) eq '/campaign' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">캠페인</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
-	                        <li><a href="form_basic.html">캠페인 관리</a></li>
-	                        <li><a href="form_basic.html">양식 관리</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/campaign">캠페인 관리</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/campaign/contents">양식 관리</a></li>
 	                        <li><a href="form_basic.html">캠페인 일정</a></li>                                     
 	                    </ul>
 	                </li>

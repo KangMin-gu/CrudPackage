@@ -78,7 +78,7 @@ body {
 								<c:forEach var="list" items="${custList }">
 									<tr style="cursor: pointer;" onClick="javascript:parentCustname(this);" value="${list.CUSTNO }"> 
 										<td id="cstname">${list.CUSTNAME}</td>
-										<td>${list.COMPANY}</td>
+										<td>${list.CLINAME}</td>
 										<td>${list.MOBILE}</td>
 										<td>${list.EMAIL}</td>
 									</tr>

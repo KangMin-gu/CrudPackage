@@ -22,20 +22,20 @@ public class SvServiceImpl implements SvService{
 	private SvDao svDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 
 	// 서비스 List 검색
 	@Override
 	public ModelAndView svList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = svDao.svTotalRows(search);
 		int PAGE_ROW_COUNT = 10;
 		int PAGE_DISPLAY_COUNT = 5;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT);
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT);
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -82,7 +82,7 @@ public class SvServiceImpl implements SvService{
 		int chkAuth = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
 		String ractdate = request.getParameter("ractdate");
 		
-		Map<String, Object> data = crudEngine.searchParam(request);
+		Map<String, Object> data = crud.searchParam(request);
 		data.put("edtuser", userNo);
 		//권한이 10, 즉 사용자 권한이면 처리정보만 update 처리
 		if(chkAuth == 10) {
@@ -107,7 +107,7 @@ public class SvServiceImpl implements SvService{
 		
 		String ractdate = request.getParameter("ractdate");
 		
-		Map<String, Object> data = crudEngine.searchParam(request);
+		Map<String, Object> data = crud.searchParam(request);
 		
 		rcvDto.setSiteid(siteId);
 		rcvDto.setReguser(userNo);

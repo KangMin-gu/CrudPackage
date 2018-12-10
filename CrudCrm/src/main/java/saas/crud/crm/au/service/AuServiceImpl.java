@@ -25,7 +25,7 @@ public class AuServiceImpl implements AuService{
 	private AuDao auDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	// 사용자 List 검색 
 	@Override
@@ -33,14 +33,14 @@ public class AuServiceImpl implements AuService{
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 
 		int totalRows = auDao.urTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

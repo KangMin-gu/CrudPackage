@@ -25,7 +25,7 @@ public class CampaignServiceImpl implements CampaignService{
 	private CampaignDao campaignDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	//캠페인 List
 	@Override
@@ -33,14 +33,14 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 
 		int totalRows = campaignDao.campTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -240,7 +240,7 @@ public class CampaignServiceImpl implements CampaignService{
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		search.put("userno",userNo);
 		
 		campaignDao.campTestSend(search);
@@ -252,14 +252,14 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 
 		int totalRows = campaignDao.campContentsTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -431,14 +431,14 @@ public class CampaignServiceImpl implements CampaignService{
 	@Override
 	public Map<String, Object> campTabTargetCustList(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		search.put("campno",campNo);
 		int totalTargetCustRows = campaignDao.campTargetCustRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 20;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalTargetCustRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalTargetCustRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

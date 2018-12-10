@@ -21,7 +21,7 @@ public class CodeServiceImpl implements CodeService{
 	@Autowired
 	private CodeDao codeDao;
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	// 코드 List 검색
 	@Override
@@ -29,14 +29,14 @@ public class CodeServiceImpl implements CodeService{
 		// TODO Auto-generated method stub
 		
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = codeDao.codeTotalRow(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -118,14 +118,14 @@ public class CodeServiceImpl implements CodeService{
 	public ModelAndView codeUpperList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = codeDao.codeTotalRow(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

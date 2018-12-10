@@ -29,16 +29,13 @@ public class CommonServiceImpl implements CommonService {
 	private CustDao custDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 
-	@Autowired
-	private CrudEngine crudEngine;
-	
 	//담당자 검색 팝업 페이지 데이터
 	@Override
 	public ModelAndView svcPopGetUserName(HttpServletRequest request) {
 		
-		Map<String,Object> searchVal = crudEngine.searchParam(request);
+		Map<String,Object> searchVal = crud.searchParam(request);
 		
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		searchVal.put("siteid", siteid);
@@ -61,7 +58,7 @@ public class CommonServiceImpl implements CommonService {
 		
 		int totalRows = commonDao.totalcntUser(searchVal);//총 자료수 
 
-		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		Map<String,Integer> page = crud.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
 		int startRowNum = page.get("startRowNum");
@@ -102,7 +99,7 @@ public class CommonServiceImpl implements CommonService {
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 
-		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		Map<String,Integer> page = crud.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
 		int startRowNum = page.get("startRowNum");
@@ -136,8 +133,9 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public EUploadDto logoUplaod(HttpServletResponse response, HttpServletRequest request, MultipartRequest multipartRequest) {
 		MultipartFile mFile=multipartRequest.getFile("logo");
-		EUploadDto uploadInfo = upload.singleFileUpload(response, request, mFile);
-		
+		// 여기 수정 필요
+		//EUploadDto uploadInfo = crud.singleFileUpload(response, request, mFile);
+		EUploadDto uploadInfo = new EUploadDto();
 		return uploadInfo;
 	}
 
@@ -146,7 +144,7 @@ public class CommonServiceImpl implements CommonService {
 	public ModelAndView svcPopGetCustName(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		Map<String, Object> searchVal = crudEngine.searchParam(request);
+		Map<String, Object> searchVal = crud.searchParam(request);
 		
 		int totalRows = commonDao.totalCntCust(searchVal);
 		
@@ -154,7 +152,7 @@ public class CommonServiceImpl implements CommonService {
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 
-		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		Map<String,Integer> page = crud.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
 		int startRowNum = page.get("startRowNum");

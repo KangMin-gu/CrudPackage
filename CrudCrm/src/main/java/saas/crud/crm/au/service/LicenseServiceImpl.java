@@ -22,7 +22,7 @@ public class LicenseServiceImpl implements LicenseService{
 	private LicenseDao licenseDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	//라이센스 List 검색
 	@Override
@@ -31,14 +31,14 @@ public class LicenseServiceImpl implements LicenseService{
 		
 		ModelAndView mView = new ModelAndView();
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = licenseDao.licenseTotalRow(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

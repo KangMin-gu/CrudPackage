@@ -25,7 +25,7 @@ public class CompanyServiceImpl implements CompanyService{
 	private CompanyDao companyDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	// 회원사 List 검색
 	@Override
@@ -35,14 +35,14 @@ public class CompanyServiceImpl implements CompanyService{
 		//int SITEID = Integer.parseInt((String)request.getSession().getAttribute("SITEID"));
 		ModelAndView mView = new ModelAndView();
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = companyDao.companyTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 5;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -134,7 +134,7 @@ public class CompanyServiceImpl implements CompanyService{
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		
-		Map<String, Object> data = crudEngine.searchParam(request);
+		Map<String, Object> data = crud.searchParam(request);
 		
 		data.put("reguser", userNo);
 		data.put("edtuser", userNo);

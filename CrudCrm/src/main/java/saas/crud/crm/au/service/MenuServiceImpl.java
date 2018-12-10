@@ -27,7 +27,7 @@ public class MenuServiceImpl implements MenuService{
 	private LicenseDao liceseDao;
 	
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	
 	// 메뉴 List 검색
@@ -39,14 +39,14 @@ public class MenuServiceImpl implements MenuService{
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		Map<String, Object> search = crudEngine.searchParam(request);
+		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = menuDao.menuTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
 		
-		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		

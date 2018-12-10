@@ -198,8 +198,8 @@
 									<span id="checkVal"></span>
 									<a href="/cust/post" class="btn btn-primary">추 가</a> 										
 									<button class="btn btn-primary">삭 제</button>																	
-									<div class="d-inline-block mt-sx-1">
-										<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
+									<div class="d-inline-block mt-sx-1">								
+										<a href="/custexcel" class="btn btn-primary">엑셀다운로드</a>
 									</div>
 									
 								</div>

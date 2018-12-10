@@ -25,11 +25,6 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
 	private CompanyDao companyDao;
-
-	
-	@Autowired
-	private EUploadLogical upload;
-
 	
 	// 회원사 List 검색
 	@Override
@@ -83,8 +78,7 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	//회원사 수정
 	@Override
-	public void comapnyUpdate(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
-		// TODO Auto-generated method stub
+	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setEdtuser(userNo);
 		companyDao.companyUpdate(companyDto);
@@ -93,7 +87,6 @@ public class CompanyServiceImpl implements CompanyService{
 	// 회원사 추가
 	@Override
 	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
-		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);

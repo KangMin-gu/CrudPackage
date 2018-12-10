@@ -283,8 +283,8 @@
                                             <td>  
                                             	<div class="input-group poplogo">
                                             		<input class="form-control" type="text" id="filename" name="filename" disabled />
-                                            		<button type="button" class="btn btn-light btn-xs">로고 등록</button>
-                                            		<input type="hidden" id="sitelogo" name="sitelogo" />
+                                            		<button type="button" id="searchKey" class="btn btn-light btn-xs">로고 등록</button>
+                                            		<input type="hidden" id="fileSearchKey" name="fileSearchKey" />
                                             	</div>                                                 											
                                             </td>
                                         </tr>

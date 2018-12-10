@@ -49,12 +49,12 @@
 															 <div class="input-group p-0">
 			                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
 			                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-			                                                      <input id="startdate" name="startdate" type="text" class="form-control" value="${startdate }">
+			                                                      <input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작일" value="${startdate }">
 			                                                    </div>
 			                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
 			                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
 			                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-			                                                      <input id="enddate" name="enddate" type="text" class="form-control" value="${enddate }">
+			                                                      <input id="enddate" name="enddate" type="text" class="form-control" placeholder="종료일" value="${enddate }">
 			                                                    </div>
 	                                                		</div>
 														</div>
@@ -66,9 +66,9 @@
 										                                    <option value="title">제목</option>
 										                                    <option value="sender">보낸이</option>
 							                                    		</select>						                                    		
- 							                                 			<input id="keyword" name="keyword" type="text" class="form-control form-control-sm" id="keyword" name="keyword" value="${keyword }" placeholder="검색어">																	
-																		<button type="submit" class="btn btn-sm btn-primary">검색</button>						                                    		                                																																																															
-																	</div>
+ 							                                 			<input id="keyword" name="keyword" type="text" class="form-control" id="keyword" name="keyword" value="${keyword }" placeholder="검색어">																	
+																		<button type="submit" class="btn btn-sm btn-primary">검색</button>																						                                    		                                																																																														
+																	</div>								
 																</div>
 															</div>																																													
 														</div>														
@@ -183,8 +183,9 @@
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table>
+							</table>							
 						</div>
+						<a href="${pageContext.request.contextPath}/ntexcel?condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">엑셀다운로드</a>
 					</div>
 				</div>
 			</div>

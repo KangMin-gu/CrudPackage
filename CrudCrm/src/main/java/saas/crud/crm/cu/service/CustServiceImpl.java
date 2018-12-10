@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.ce.ExcelDownLoad;
 import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.cu.dto.CustDenyDto;
@@ -26,7 +27,7 @@ public class CustServiceImpl implements CustService {
 	private CustDao custDao;
 	@Autowired
 	private SvDao svDao; 
-
+	
 	//고객리스트 출력 (검색 조건) 
 	@Override
 	public ModelAndView svcCustList(HttpServletRequest request) {
@@ -65,14 +66,10 @@ public class CustServiceImpl implements CustService {
 		
 		if(request.getParameter("custgubun") != null) {
 			searchVal.put("custgubun",request.getParameter("custgubun"));
-		}else {
-			searchVal.put("custgubun",0);//선택 값이 없다면 기본값은 0
 		}
 		
 		if(request.getParameter("custgrade") != null) { 
 			searchVal.put("custgrade",request.getParameter("custgrade"));
-		}else {
-			searchVal.put("custgrade",0);//선택 값이 없다면 기본값은 0
 		}
 		//데이트 yyyy/mm/dd-> yyyymmdd 
 		if(request.getParameter("fromregdt") != null && !request.getParameter("fromregdt").toString().trim().equals("") ) {
@@ -135,7 +132,8 @@ public class CustServiceImpl implements CustService {
 		
 		//고객 리스트 출력
 		List<Map<String,Object>> custList = custDao.custList(searchVal);
-	
+		
+		
 		ModelAndView resMap = new ModelAndView();
 		resMap.addObject("page", page);//페이징 text int 저장
 		resMap.addObject("custList", custList);// 선택 된 페이지 rownum에 해당하는 리스트

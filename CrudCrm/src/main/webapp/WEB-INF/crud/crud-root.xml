@@ -17,4 +17,5 @@
 		<property name="cacheSeconds" value="180" />
 	</bean>
 	<!-- <bean id="vocCount" class="com.idea.oasis.util.VocCountHandler"/> -->
+	
 </beans>

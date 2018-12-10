@@ -24,16 +24,7 @@ public class CommonDaoImpl implements CommonDao{
 	//파일등록
 	@Override
 	public void fileUpload(EUploadDto fileInfo) {
-		String sub = fileInfo.getSub();
-		int fileSearchKey = 0;
-		
-		if(sub.equals("logo")) {
-			
-		}else if(sub.equals("note")){
-			session.insert("common.noteFile", fileInfo);			
-		}else if(sub.equals("campaign")){
-			
-		}		
+		session.insert("common.noteFile", fileInfo);					
 	}
 	
 	// 회원명 팝업 총자료수(페이징용)

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.AbstractView;
 
 @Component("fileDownView")
-public class EDownLogical extends AbstractView{
+public class DownLoadView extends AbstractView{
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,

@@ -1,5 +1,6 @@
 package saas.crud.crm.ce;
 
+
 public class EUploadDto {
 	
 	private int fileid;
@@ -8,17 +9,16 @@ public class EUploadDto {
 	private String realpath;
 	private long filesize;
 	private String path;
-	private String img;
+	private String imgpath;
 	private String filesearchkey;
 	private String tablename;
 	private int userno;
 	private int siteid;
-	private String sub;
 	
 	public EUploadDto() {}
 
 	public EUploadDto(int fileid, String savefilename, String orgfilename, String realpath, long filesize, String path,
-			String img, String filesearchkey, String tablename, int userno, int siteid, String sub) {
+			String imgpath, String filesearchkey, String tablename, int userno, int siteid) {
 		super();
 		this.fileid = fileid;
 		this.savefilename = savefilename;
@@ -26,12 +26,11 @@ public class EUploadDto {
 		this.realpath = realpath;
 		this.filesize = filesize;
 		this.path = path;
-		this.img = img;
+		this.imgpath = imgpath;
 		this.filesearchkey = filesearchkey;
 		this.tablename = tablename;
 		this.userno = userno;
 		this.siteid = siteid;
-		this.sub = sub;
 	}
 
 	public int getFileid() {
@@ -82,12 +81,12 @@ public class EUploadDto {
 		this.path = path;
 	}
 
-	public String getImg() {
-		return img;
+	public String getImgpath() {
+		return imgpath;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setImgpath(String imgpath) {
+		this.imgpath = imgpath;
 	}
 
 	public String getFilesearchkey() {
@@ -122,13 +121,7 @@ public class EUploadDto {
 		this.siteid = siteid;
 	}
 
-	public String getSub() {
-		return sub;
-	}
-
-	public void setSub(String sub) {
-		this.sub = sub;
-	}
+	
 
 	
 }

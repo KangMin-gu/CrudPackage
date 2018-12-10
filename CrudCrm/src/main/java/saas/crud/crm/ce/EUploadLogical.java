@@ -92,7 +92,7 @@ public class EUploadLogical {
 				
 				if(url.equals("/poplogo")) {
 					realPath = request.getSession().getServletContext().getRealPath("/file/logo/"+years+"/"+months);
-					fileInfo.setSub("logo");
+					//fileInfo.setSub("logo");
 					fileInfo.setPath(realPath);
 					filePath = realPath+File.separator;					
 					saveFileName = fileSearchKey+"_"+siteId+"_"+userNo+"_"+orgFileName;
@@ -117,7 +117,7 @@ public class EUploadLogical {
 					fileInfo.setPath(path);
 					fileInfo.setUserno(userNo);
 					fileInfo.setSiteid(siteId);
-					fileInfo.setImg(imgPath);
+					//fileInfo.setImg(imgPath);
 					
 					
 					return fileInfo;
@@ -187,11 +187,11 @@ public class EUploadLogical {
 					if(url.equals("/note/send")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/note/"+years+"/"+months);
 						fileInfo.setTablename("t_note");
-						fileInfo.setSub("note");
+						//fileInfo.setSub("note");
 					}else if(url.equals("/campaign/send")) {
 						realPath = request.getSession().getServletContext().getRealPath("/file/campaign/"+years+"/"+months);
 						fileInfo.setTablename("t_campaing");
-						fileInfo.setSub("campaing");
+						//fileInfo.setSub("campaing");
 					}
 					
 					String filePath = realPath+File.separator;					

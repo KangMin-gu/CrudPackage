@@ -112,8 +112,6 @@ public class CustController {
 		mview.setViewName("cu/custinsert");
 		return "redirect:/cust/view/"+res;
 	}
-
-
 		
 
 

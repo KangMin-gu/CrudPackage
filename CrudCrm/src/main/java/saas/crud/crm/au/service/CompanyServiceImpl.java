@@ -15,16 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.CompanyDao;
 import saas.crud.crm.au.dto.CompanyDto;
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
-import saas.crud.crm.ce.EUploadLogical;
-import saas.crud.crm.ce.PagingCommon;
-import saas.crud.crm.ce.SearchRequest;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
 	private CompanyDao companyDao;
+	
+	@Autowired
+	private CrudEngine crudEngine;
 	
 	// 회원사 List 검색
 	@Override
@@ -34,17 +35,14 @@ public class CompanyServiceImpl implements CompanyService{
 		//int SITEID = Integer.parseInt((String)request.getSession().getAttribute("SITEID"));
 		ModelAndView mView = new ModelAndView();
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 		
 		int totalRows = companyDao.companyTotalRows(search);
 		
 		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 5;
 		
-		PagingCommon pages =new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -135,9 +133,8 @@ public class CompanyServiceImpl implements CompanyService{
 
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		SearchRequest searchRequest = new SearchRequest();
 		
-		Map<String, Object> data = searchRequest.Search(request);
+		Map<String, Object> data = crudEngine.searchParam(request);
 		
 		data.put("reguser", userNo);
 		data.put("edtuser", userNo);

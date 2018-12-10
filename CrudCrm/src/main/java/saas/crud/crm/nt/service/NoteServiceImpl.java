@@ -18,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.ce.AdressQuarter;
-import saas.crud.crm.ce.EUploadLogical;
-import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.nt.dto.NoteDto;
@@ -32,7 +30,7 @@ public class NoteServiceImpl implements NoteService{
 	private NoteDao ntDao;
 	
 	@Autowired
-	private EUploadLogical upload;
+	private CrudEngine crudEngine;
 	
 	//inbox
 	//@Cacheable("test")
@@ -81,8 +79,7 @@ public class NoteServiceImpl implements NoteService{
 		int totalRows = ntDao.notetotalRows(noteVal);
 		
 		//페이징 생성자 호출 후 로직실행
-		PagingCommon pages = new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -157,8 +154,7 @@ public class NoteServiceImpl implements NoteService{
 		int totalRows = ntDao.noteOuttalRows(noteOutVal);
 				
 		//페이징 생성자 호출 후 로직실행
-		PagingCommon pages = new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 				
@@ -232,8 +228,7 @@ public class NoteServiceImpl implements NoteService{
 		int totalRows = ntDao.notetotalImportRows(noteImportVal);
 						
 		//페이징 생성자 호출 후 로직실행
-		PagingCommon pages = new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 						
@@ -306,8 +301,7 @@ public class NoteServiceImpl implements NoteService{
 		int totalRows = ntDao.notetotalTrashRows(noteTrashVal);
 						
 		//페이징 생성자 호출 후 로직실행
-		PagingCommon pages = new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 						
@@ -461,11 +455,15 @@ public class NoteServiceImpl implements NoteService{
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		List<MultipartFile> mFile = null;
+		MultipartFile sFile = null;
 		
 		//파일테이블 업로드 실행
 		if(fileUpload != null) {			
-			String fileSearchKey = upload.fileSearchKey(request);
-			upload.MultiFileUpload(response, request, fileUpload, fileSearchKey);
+			String fileSearchKey = crudEngine.fileSearchKey(request);
+			// 이부분 수정필요
+			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
+			crudEngine.fileUpload(response, multipartHttpServletRequest, mFile, sFile, fileSearchKey);
 			ntDto.setFilesearchkey(fileSearchKey);
 		}
 		
@@ -475,8 +473,8 @@ public class NoteServiceImpl implements NoteService{
 		ntDto.setNoticeid(noticeId);
 				
 		//To ; 기준 끈기
-		AdressQuarter quarter = new AdressQuarter();
-		List<Integer> toAdress = quarter.quarter(toTarget);
+		
+		List<Integer> toAdress = crudEngine.adressQuarter(toTarget);
 		
 		int chkcc = 1;
 		
@@ -489,7 +487,7 @@ public class NoteServiceImpl implements NoteService{
 			}
 				if( ccTarget != null && !ccTarget.equals("")) {
 					//CC가 있다면 실행
-					List<Integer> ccAdress = quarter.quarter(ccTarget);	
+					List<Integer> ccAdress = crudEngine.adressQuarter(ccTarget);	
 					for(int i = 0; i<ccAdress.size(); i++) {					
 					    int target = ccAdress.get(i);
 					    ntDto.setUserno(target);

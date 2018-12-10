@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
-import saas.crud.crm.ce.EUploadLogical;
-import saas.crud.crm.ce.PagingCommon;
-import saas.crud.crm.ce.SearchRequest;
 import saas.crud.crm.cu.dao.CustDao;
 
 
@@ -27,10 +26,10 @@ public class CommonServiceImpl implements CommonService {
 	private CommonDao commonDao;
 	
 	@Autowired
-	private EUploadLogical upload;
+	private CustDao custDao;
 	
 	@Autowired
-	private CustDao custDao;
+	private CrudEngine crudEngine;
 
 	
 	//담당자 검색 팝업 페이지 데이터
@@ -57,8 +56,7 @@ public class CommonServiceImpl implements CommonService {
 		
 		int totalRows = commonDao.totalcntUser(searchVal);//총 자료수 
 		
-		PagingCommon pages = new PagingCommon();
-		Map<String,Integer> page = pages.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
 		int startRowNum = page.get("startRowNum");
@@ -99,9 +97,8 @@ public class CommonServiceImpl implements CommonService {
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 		
-		PagingCommon pages = new PagingCommon();
 		
-		Map<String,Integer> page = pages.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
 		int startRowNum = page.get("startRowNum");
@@ -144,9 +141,7 @@ public class CommonServiceImpl implements CommonService {
 	public ModelAndView svcPopGetCustName(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> searchVal = searchRequest.Search(request);
+		Map<String, Object> searchVal = crudEngine.searchParam(request);
 		
 		int totalRows = commonDao.totalCntCust(searchVal);
 		
@@ -154,9 +149,7 @@ public class CommonServiceImpl implements CommonService {
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 		
-		PagingCommon pages = new PagingCommon();
-		
-		Map<String,Integer> page = pages.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		Map<String,Integer> page = crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);
 		
 		page.put("totalRows", totalRows);
 		int startRowNum = page.get("startRowNum");

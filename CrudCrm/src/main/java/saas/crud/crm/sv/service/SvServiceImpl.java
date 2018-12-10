@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.ce.PagingCommon;
-import saas.crud.crm.ce.SearchRequest;
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
@@ -21,22 +20,22 @@ public class SvServiceImpl implements SvService{
 	
 	@Autowired
 	private SvDao svDao;
+	
+	@Autowired
+	private CrudEngine crudEngine;
 
 	// 서비스 List 검색
 	@Override
 	public ModelAndView svList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> search = searchRequest.Search(request);
+		Map<String, Object> search = crudEngine.searchParam(request);
 		
 		int totalRows = svDao.svTotalRows(search);
 		int PAGE_ROW_COUNT = 10;
 		int PAGE_DISPLAY_COUNT = 5;
 		
-		PagingCommon pages = new PagingCommon();
-		Map<String, Integer> page = pages.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT);
+		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT);
 		int startRowNum = page.get("startRowNum");
 		int endRowNum = page.get("endRowNum");
 		
@@ -82,10 +81,8 @@ public class SvServiceImpl implements SvService{
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int chkAuth = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
 		String ractdate = request.getParameter("ractdate");
-
-		SearchRequest searchRequest = new SearchRequest();
 		
-		Map<String, Object> data = searchRequest.Search(request);
+		Map<String, Object> data = crudEngine.searchParam(request);
 		data.put("edtuser", userNo);
 		//권한이 10, 즉 사용자 권한이면 처리정보만 update 처리
 		if(chkAuth == 10) {
@@ -110,10 +107,7 @@ public class SvServiceImpl implements SvService{
 		
 		String ractdate = request.getParameter("ractdate");
 		
-
-		SearchRequest searchRequest = new SearchRequest();
-		
-		Map<String, Object> data = searchRequest.Search(request);
+		Map<String, Object> data = crudEngine.searchParam(request);
 		
 		rcvDto.setSiteid(siteId);
 		rcvDto.setReguser(userNo);

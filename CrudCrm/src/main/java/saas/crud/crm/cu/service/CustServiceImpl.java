@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.ExcelDownLoad;
-import saas.crud.crm.ce.PagingCommon;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
@@ -26,7 +26,9 @@ public class CustServiceImpl implements CustService {
 	@Autowired
 	private CustDao custDao;
 	@Autowired
-	private SvDao svDao; 
+	private SvDao svDao;
+	@Autowired
+	private CrudEngine crudEngine;
 	
 	//고객리스트 출력 (검색 조건) 
 	@Override
@@ -116,10 +118,9 @@ public class CustServiceImpl implements CustService {
 		
 		int pageRowCount = 20; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
+				
 		
-		PagingCommon  pages = new PagingCommon();			
-		 
-		Map<String, Integer> page =  pages.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+		Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 		
 		page.put("totalRows", totalRows);
 		

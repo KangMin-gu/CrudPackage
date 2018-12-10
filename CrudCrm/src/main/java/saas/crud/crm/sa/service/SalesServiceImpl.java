@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
-import saas.crud.crm.ce.PagingCommon;
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sa.dao.SalesDao;
 import saas.crud.crm.sa.dto.ClientDto;
 import saas.crud.crm.sa.dto.SaleStateDto;
@@ -25,6 +25,8 @@ public class SalesServiceImpl implements SalesService {
 
 	@Autowired 
 	private SalesDao salesDao;
+	@Autowired
+	private CrudEngine crudEngine;
 	
 	//영업리스트
 	@Override
@@ -58,9 +60,7 @@ public class SalesServiceImpl implements SalesService {
 		int pageRowCount = 20; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 				
-		PagingCommon  pages = new PagingCommon();			
-				 
-		Map<String, Integer> page =  pages.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+		Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 				
 		page.put("totalRows", totalRows);
 				
@@ -147,9 +147,7 @@ public class SalesServiceImpl implements SalesService {
 		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 				
-		PagingCommon  pages = new PagingCommon();			
-				 
-		Map<String, Integer> page =  pages.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+		Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 				
 		page.put("totalRows", totalRows);
 				

@@ -26,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
 	@Autowired
 	private SalesDao salesDao;
 	@Autowired
-	private CrudEngine crudEngine;
+	private CrudEngine crud;
 	
 	
 		//거래처리스트
@@ -65,7 +65,7 @@ public class ClientServiceImpl implements ClientService {
 					
 			
 					 
-			Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+			Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 					
 			page.put("totalRows", totalRows);
 					
@@ -172,7 +172,7 @@ public class ClientServiceImpl implements ClientService {
 			int pageDisplayCount = 5; // 페이지 목록 수  
 					
 				 
-			Map<String, Integer> page =  crudEngine.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+			Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
 					
 			page.put("totalRows", totalRows);
 					

@@ -25,8 +25,6 @@ public interface CampaignDao {
 	
 	public void campTargetHistInsert(Map<String,Object> param);
 	
-	public int campTargetHistCount(Map<String,Object> param);
-	
 	public void campTargetDelete(Map<String,Object> param);
 
 	public void campTargetCustInsert(Map<String,Object> param);
@@ -37,7 +35,7 @@ public interface CampaignDao {
 	
 	public int campTargetCustCnt(CampaignDto campaignDto);
 	
-	public List<Map<String,Object>> campTargetCustList(CampaignDto campaignDto);
+	public List<Map<String,Object>> campTargetCustList(Map<String,Object> search);
 	
 	public void campFormInsert(CampaignFormDto campaignFormDto);
 	
@@ -62,5 +60,12 @@ public interface CampaignDao {
 	
 	public void campSend(Map<String,Object> param);
 	
-	public List<Map<String,Object>> campTabTargetHistory(CampaignDto campaignDto);
+	public List<Map<String,Object>> campTabTargetHistory(Map<String, Object> param);
+	
+	public int targetOrderMax(Map<String, Object> param);
+	
+	public int campTargetCustRows(Map<String,Object> search);
+	
+	public void campStepUpdate(CampaignDto campaignDto);
+	
 }

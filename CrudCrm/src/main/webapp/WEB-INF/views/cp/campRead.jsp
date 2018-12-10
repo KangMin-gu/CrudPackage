@@ -380,75 +380,74 @@
                                             <div class="box1 col-lg-12 p-0 mt-5">
                                                 <div class="tabs-container">
                                                     <ul class="nav nav-tabs" role="tablist">
-                                                    	<li><a class="nav-link tabcust active" data-toggle="tab" href="#tab1">추출 대상자</a></li>
+                                                    	<li><a class="nav-link tabcust active" onclick="javaacript:tabTargetCust(1);" data-toggle="tab" href="#tab1">추출 대상자</a></li>
                                             			<li><a class="nav-link tabhistory" onclick="javascript:tabHistory();" data-toggle="tab" href="#tab2">추출이력</a></li>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div role="tabpanel" id="tab1" class="tab-pane active">
-                                                            <div class="panel-body table-responsive">
-                                                                <table class="table table-bordered">
-                                                                    <colgroup>
-                                                                        <col style="width: 100px;"/>
-                                                                        <col style="width: 100px;"/>
-                                                                        <col style="width: 150px;"/>
-                                                                        <col style="width: 150px;"/>
-                                                                        <col style="width: 150px;"/>
-                                                                        <col style="width: 100px;"/>
-                                                                        <col style="width: 100px;"/>
-                                                                        <col style="width: 300px;"/>
-                                                                    </colgroup>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>고객명</th>
-                                                                            <th>고객ID</th>
-                                                                            <th>전화번호</th>
-                                                                            <th>이메일</th>
-                                                                            <th>정보활용동의</th>
-                                                                            <th>고객구분</th>
-                                                                            <th>고객등급</th>
-                                                                            <th>주소</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+															<div class="panel-body table-responsive">				
+																<div class="box1 col-xl-3 p-0">
+																	<div class="form-group row">
+																		<label class="col-sm-3 col-form-label" style="padding-top: 3px;"><strong>고객명</strong></label>
+																		<div class="col-sm-8">
+                                        									<div class="input-group">                                        						
+                                        										<input type="text" class="form-control" id="custname" name="custname" value="${search.custname }"> 
+                                        										<span class="input-group-append"> 
+                                        											<a onclick="javaacript:tabTargetCust(1)" class="btn btn-primary" style="padding-top: 2px;">검색 </a>
+                                        										</span>
+                                        									</div>
+                                    									</div>
+                                									</div>
+																</div>		
+																<table class="table table-bordered">
+																	<colgroup>
+																		<col style="width: 130px;" />
+																		<col style="width: 130px;" />
+																		<col style="width: 130px;" />
+																		<col style="width: 200px;" />
+																		<col style="width: 100px;" />
+																		<col style="width: 100px;" />
+																		<col style="width: 100px;" />
+																		<col style="width: 300px;" />
+																	</colgroup>
+																	<thead>
+																		<tr>
+																			<th>고객명</th>
+																			<th>고객ID</th>
+																			<th>전화번호</th>
+																			<th>이메일</th>
+																			<th>정보활용동의</th>
+																			<th>고객구분</th>
+																			<th>고객등급</th>
+																			<th>주소</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		
+																	</tbody>
+																</table>
+																<div class="m-auto" style="float:center;">
+																	<ul class="pagination">
+																		
+																	</ul> 
+																</div> 
+															</div>									
+														</div>
                                                         <div role="tabpanel" id="tab2" class="tab-pane ">
                                                             <div class="panel-body table-responsive">
                                                                 <table class="table table-bordered">
                                                                     <colgroup>
-                                                                        <col style="width: 150px;" />
-                                                                        <col style="width: 150px;" />
-                                                                        <col style="width: 150px;" />
-                                                                        <col style="width: 150px;" />
-                                                                        <col style="width: 150px;" />
+                                                                        <col style="width: 10%" />
+                                                                        <col style="width: 90%" />
                                                                     </colgroup>
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>추출번호</th>
+                                                                             <th>등록일시</th>
                                                                             <th>추출 내용</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>남</td>
-                                                                            <td>20~30</td>
-                                                                            <td>회원</td>
-                                                                            <td>일반</td>
-                                                                            <td>VVIP</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>남</td>
-                                                                            <td>20~30</td>
-                                                                            <td>회원</td>
-                                                                            <td>일반</td>
-                                                                            <td>VVIP</td>
-                                                                        </tr>
+                                                                      
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -1131,7 +1130,10 @@
 			enableAllSteps: true,
 		    enablePagination: false
 		});
-//		$('.content').css('height','700px');
+		
+		var totalHash = window.location.hash;
+		hash = totalHash.split('?');
+		campStep(hash[0]);
 
 	});
 

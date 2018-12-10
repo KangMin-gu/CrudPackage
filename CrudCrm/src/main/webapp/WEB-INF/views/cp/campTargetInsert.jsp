@@ -111,11 +111,12 @@
                                     <tbody>
                                         <tr>
                                             <th>진행단계</th>
-                                            <td>출처</td>
+                                            <td>추출</td>
+                                            <input type="hidden" name="campstep" id="campstep" class="form-control" value="2"/>
                                         </tr>
                                         <tr>
                                             <th>대상 고객수</th>
-                                            <td>${campInfo.CNT_ }</td>
+                                            <td>${targetCustCnt } 명</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -231,142 +232,6 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>주소지 1</th>
-                                            <td>
-                                                <select name="addr11" id="addr11" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                </select>
-                                                <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                </select>
-                                                <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                </select>
-                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>주소지 2</th>
-                                            <td>
-                                                <select name="addr21" id="addr21" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                </select>
-                                                <select name="addr22" id="addr22" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                </select>
-                                                <select name="addr23" id="addr23" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                </select>
-                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>주소지 3</th>
-                                            <td>
-                                                <select name="addr31" id="addr31" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                </select>
-                                                <select name="addr32" id="addr32" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                </select>
-                                                <select name="addr33" id="addr33" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                </select>
-                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>주소지 4</th>
-                                            <td>
-                                                <select name="addr41" id="addr41" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                    <option>경기도 부천시</option>
-                                                </select>
-                                                <select name="addr42" id="addr42" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                    <option>소사구</option>
-                                                </select>
-                                                <select name="addr43" id="addr43" class="form-control col-3 float-left mr-2" style="height: 23px;">
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                    <option>괴안동</option>
-                                                </select>
-                                                <button class="btn btn-primary float-left" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
                                             <th>고객등록일</th>
                                             <td style="padding: 7px 8px;">
                                                 <div class="input-group p-0">
@@ -392,11 +257,12 @@
                                     <tbody>
                                         <tr>
                                             <th>추출내용</th>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control">
+                                            <td class="border-top-0 border-bottom-0">
+                                            	<div class="input-group camptarget">
+                                                    <input type="text" class="form-control" autocomplete="off" name="camptargetno_" id="camptargetno_" value="">
+                                                    <input type="hidden" name="ractowner" id="camptargetno" value="0">
                                                     <span class="input-group-addon">
-                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
+                                                        <a><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
                                             </td>
@@ -404,124 +270,41 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <input type="hidden" name="campno" id="campno" value="${campInfo.CAMPNO }">
-                        </div>
-                        <div class="ibox-content row">
-                            <div class="box1 col-lg-12 p-0 mt-5">
-                                <div class="tabs-container">
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li><a class="nav-link active" data-toggle="tab" href="#tab1">추출 대상자</a></li>
-                                        <li><a class="nav-link" data-toggle="tab" href="#tab2">추출 이력</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div role="tabpanel" id="tab1" class="tab-pane active">
-                                            <div class="panel-body table-responsive">
-                                                <table class="table table-bordered">
-                                                    <colgroup>
-                                                        <col style="width: 100px;"/>
-                                                        <col style="width: 100px;"/>
-                                                        <col style="width: 150px;"/>
-                                                        <col style="width: 150px;"/>
-                                                        <col style="width: 150px;"/>
-                                                        <col style="width: 100px;"/>
-                                                        <col style="width: 100px;"/>
-                                                        <col style="width: 300px;"/>
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>고객명</th>
-                                                            <th>고객ID</th>
-                                                            <th>전화번호</th>
-                                                            <th>이메일</th>
-                                                            <th>정보활용동의</th>
-                                                            <th>고객구분</th>
-                                                            <th>고객등급</th>
-                                                            <th>주소</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>박진열</td>
-                                                            <td>jypark</td>
-                                                            <td>010-7777-777</td>
-                                                            <td>asda@adasd.com</td>
-                                                            <td>동의</td>
-                                                            <td>회원</td>
-                                                            <td>VIP</td>
-                                                            <td>경기도 부천시 소사구 괴안동</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>박진열</td>
-                                                            <td>jypark</td>
-                                                            <td>010-7777-777</td>
-                                                            <td>asda@adasd.com</td>
-                                                            <td>동의</td>
-                                                            <td>회원</td>
-                                                            <td>VIP</td>
-                                                            <td>경기도 부천시 소사구 괴안동</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>박진열</td>
-                                                            <td>jypark</td>
-                                                            <td>010-7777-777</td>
-                                                            <td>asda@adasd.com</td>
-                                                            <td>동의</td>
-                                                            <td>회원</td>
-                                                            <td>VIP</td>
-                                                            <td>경기도 부천시 소사구 괴안동</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div role="tabpanel" id="tab2" class="tab-pane ">
-                                            <div class="panel-body table-responsive">
-                                                <table class="table table-bordered">
-                                                    <colgroup>
-                                                        <col style="width: 150px;" />
-                                                        <col style="width: 150px;" />
-                                                        <col style="width: 150px;" />
-                                                        <col style="width: 150px;" />
-                                                        <col style="width: 150px;" />
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>성별</th>
-                                                            <th>나이</th>
-                                                            <th>고객구분</th>
-                                                            <th>고객등급</th>
-                                                            <th>활동등급</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>남</td>
-                                                            <td>20~30</td>
-                                                            <td>회원</td>
-                                                            <td>일반</td>
-                                                            <td>VVIP</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>남</td>
-                                                            <td>20~30</td>
-                                                            <td>회원</td>
-                                                            <td>일반</td>
-                                                            <td>VVIP</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>남</td>
-                                                            <td>20~30</td>
-                                                            <td>회원</td>
-                                                            <td>일반</td>
-                                                            <td>VVIP</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="box1 col-lg-12 col-xl-6 p-0 addr">
+                                    <table class="table table-bordered mb-0">
+                                        <colgroup>
+                                            <col style="width: 110px; background: #fafafa;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th>주소지 1</th>
+                                                <td>
+                                                    <select name="addr11" id="addr11" class="form-control col-3 float-left mr-2" style="height: 23px;">
+                                                        <option>경기도 부천시</option>
+                                                        <option>경기도 부천시</option>
+                                                        <option>경기도 부천시</option>
+                                                        <option>경기도 부천시</option>
+                                                    </select>
+                                                    <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2" style="height: 23px;">
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                    </select>
+                                                    <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2" style="height: 23px;">
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                    </select>
+                                                    <a onclick="javascript:addAddr($(this))" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>
+                            <input type="hidden" name="campno" id="campno" value="${campInfo.CAMPNO }">
                         </div>
                     </div>
                     </form:form>
@@ -541,7 +324,8 @@
 		</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script><!-- summernote-->		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>

@@ -166,7 +166,7 @@
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.username.textContent).trigger('keyup');
+		opener.$("#"+parentid).val(tr.children.codename.textContent).trigger('keyup');
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}

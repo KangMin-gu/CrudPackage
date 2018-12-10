@@ -117,7 +117,7 @@
                                 		<tr>
                                 			<th>진행단계</th>
                                         	<td><input type="text" name="campstep_" id="campstep_" disabled class="form-control" value="접수">
-                                        		<input type="hidden" name="campstep" id="campstep" class="form-control" value="0"/>
+                                        		<input type="hidden" name="campstep" id="campstep" class="form-control" value="1"/>
                                         	</td>
                                         	
                                     	</tr>

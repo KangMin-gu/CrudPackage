@@ -136,6 +136,7 @@
                                                                 <tr>
                                                                     <th>진행단계</th>
                                                                     <td>발송</td>
+                                                                    <input type="hidden" name="campstep" id="campstep" class="form-control" value="3"/>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>대상고객수</th>

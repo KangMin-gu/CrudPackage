@@ -275,7 +275,6 @@ if(window.location.pathname == '/ad/code') {
                 $('.body #codeval').val(data.CODEVAL);
                 $('.body #isdelete').val(data.ISDELETE);
                 $('.body #uppercodegrp').val(data.UPPERCODEGRP);
-                $('.body #uppercodeval').val(data.UPPERCODEVAL);
                 btnRead();
             },
             error: function (request, status, error) {
@@ -326,9 +325,8 @@ if(window.location.pathname == '/ad/code') {
         var codeval = $(".body #codeval").val();
         var isdelete = $(".body #isdelete").val();
         var uppercodegrp = $(".body #uppercodegrp").val();
-        var uppercodeval = $(".body #uppercodeval").val();
         
-        var param = {"codegrp":codegrp,"codename":codename,"codeval":codeval,"isdelete":isdelete,"uppercodegrp":uppercodegrp,"uppercodeval":uppercodeval};
+        var param = {"codegrp":codegrp,"codename":codename,"codeval":codeval,"isdelete":isdelete,"uppercodegrp":uppercodegrp};
         
         
         $.ajax({
@@ -366,7 +364,6 @@ if(window.location.pathname == '/ad/code') {
                 $('.body #codeval').val(data.CODEVAL);
                 $('.body #isdelete').val(data.ISDELETE);
                 $('.body #uppercodegrp').val(data.UPPERCODEGRP);
-                $('.body #uppercodeval').val(data.UPPERCODEVAL);
             },
             error: function (request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

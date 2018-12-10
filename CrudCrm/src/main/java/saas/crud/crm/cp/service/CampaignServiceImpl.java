@@ -87,8 +87,9 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignDto.setSiteid(siteId);
 		
 		Map<String,Object> campInfo = campaignDao.campRead(campaignDto);
-		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
+		
 		Map<String,Object> campForm = campaignDao.campFormRead(campaignDto);
+		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
 		String name;
 		String value;
 		int targetListSize = targetList.size();
@@ -98,13 +99,14 @@ public class CampaignServiceImpl implements CampaignService{
 			value = targetList.get(i).get("VALUE").toString();
 			campInfo.put(name, value);
 			
-		}
+		}	
 		
 		int targetCustCnt = campaignDao.campTargetCustCnt(campaignDto);
+
+		mView.addObject("campInfo", campInfo);
+		mView.addObject("targetCustCnt", targetCustCnt);
+		mView.addObject("campForm", campForm);
 		
-		mView.addObject("campInfo",campInfo);
-		mView.addObject("targetCustCnt",targetCustCnt);
-		mView.addObject("campForm",campForm);
 		return mView;
 	}
 	//캠페인 수정
@@ -167,11 +169,19 @@ public class CampaignServiceImpl implements CampaignService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		Map<String,Object> param = new HashMap();
 		
+		int campStep = Integer.parseInt(request.getParameter("campstep"));
+		
+		CampaignDto campaignDto = new CampaignDto();
+		campaignDto.setSiteid(siteId);
+		campaignDto.setEdtuser(userNo);
+		campaignDto.setCampno(campNo);
+		campaignDto.setCampstep(campStep);
+		
 		Enumeration params = request.getParameterNames();
 		param.put("campno", campNo);
 		param.put("userno", userNo);
 		param.put("siteid", siteId);
-		int order = campaignDao.campTargetHistCount(param);
+		int order = campaignDao.targetOrderMax(param);
 		
 		param.put("order", order+1);
 		
@@ -193,21 +203,8 @@ public class CampaignServiceImpl implements CampaignService{
 		}
 		campaignDao.campTargetCustDelete(param);
 		campaignDao.campTargetCustInsert(param);
-	}
-
-	@Override
-	public List<Map<String, Object>> campTargetCustList(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
-		CampaignDto campaignDto = new CampaignDto();
-		
-		campaignDto.setSiteid(siteId);
-		campaignDto.setCampno(campNo);
-		
-		List<Map<String,Object>> campaignTargetCustList = campaignDao.campTargetCustList(campaignDto);
-		
-		return campaignTargetCustList;
+		campaignDao.campStepUpdate(campaignDto);
 	}
 
 	@Override
@@ -228,6 +225,13 @@ public class CampaignServiceImpl implements CampaignService{
 		}else {
 			campaignDao.campFormInsert(campaignFormDto);
 		}
+		CampaignDto campaignDto = new CampaignDto();
+		int campStep = Integer.parseInt(request.getParameter("campstep"));
+		campaignDto.setSiteid(siteId);
+		campaignDto.setEdtuser(userNo);
+		campaignDto.setCampno(campNo);
+		campaignDto.setCampstep(campStep);
+		campaignDao.campStepUpdate(campaignDto);
 		return campNo;
 	}
 
@@ -380,52 +384,97 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
-		CampaignDto campaignDto = new CampaignDto();
+		Map<String,Object> param = new HashMap<>();
 		
-		campaignDto.setSiteid(siteId);
-		campaignDto.setCampno(campNo);
+		param.put("siteid", siteId);
+		param.put("campno", campNo);
 		
-		List<Map<String,Object>> tabHistory = campaignDao.campTabTargetHistory(campaignDto);
+		List<Map<String,Object>> tabHistory = campaignDao.campTabTargetHistory(param);
 		
 		int listSize = tabHistory.size();
 		
 		Map<String,Object> tempMap = new HashMap<>();
-		Map<String,Object> input = new HashMap<>();
 		
-		StringBuilder sb = new StringBuilder();
+		StringBuffer sb = new StringBuffer();
 		List<Map<String,Object>> history = new ArrayList<Map<String,Object>>();
-		int order = 1;
-		int temp;
+		int maxOrder = campaignDao.targetOrderMax(param);
+		int campOrder;
 		String name="";
 		String regdate = "";
 		String strHistory="";
-		for(int i= 0 ; i<listSize;i++) {
-			tempMap = tabHistory.get(i);
-			temp = Integer.parseInt(tempMap.get("CAMPORDER").toString());
-			if(order==temp) {
-				
-				if(name.equals(tempMap.get("CODENAME").toString())) {
-					sb.append(tempMap.get("VALUE"));
-					sb.append(" ");
-				}else {
-					sb.append(tempMap.get("CODENAME"));
-					sb.append("=");
-					sb.append(tempMap.get("VALUE"));
-					sb.append(" ");
-					name = tempMap.get("CODENAME").toString();
-					regdate = tempMap.get("REGDATE").toString();
+		
+		for(int j = 1; j<= maxOrder; j++) {
+			for(int i = 0; i < listSize; i++) {
+				tempMap = tabHistory.get(i);
+				campOrder = Integer.parseInt(tempMap.get("CAMPORDER").toString());
+				if(j==campOrder) {
+					if(name.equals(tempMap.get("CODENAME").toString())) {
+						sb.append(tempMap.get("VALUE"));
+						sb.append("|");
+						regdate = tempMap.get("REGDATE").toString();
+					}else {
+						sb.append(tempMap.get("CODENAME"));
+						sb.append("-");
+						sb.append(tempMap.get("VALUE"));
+						sb.append("|");
+						name = tempMap.get("CODENAME").toString();
+						
+					}
 				}
-			}else {
-				strHistory = sb.toString();
-				input.put("regdate", regdate);
-				input.put("history", strHistory);
-				
-				history.add(input);
-				sb.delete(0, sb.toString().length());
-				order = order+1;
 			}
+			Map<String,Object> input = new HashMap<>();
+			strHistory = sb.toString();
+			input.put("regdate", regdate);
+			input.put("history", strHistory);
+			history.add(j-1, input);
+			sb.delete(0,sb.toString().length());
+			
 		}
 		
 		return history;
 	}
+
+	@Override
+	public Map<String, Object> campTabTargetCustList(HttpServletRequest request, int campNo) {
+		// TODO Auto-generated method stub
+		SearchRequest searchRequest = new SearchRequest();
+		Map<String, Object> search = searchRequest.Search(request);
+		search.put("campno",campNo);
+		int totalTargetCustRows = campaignDao.campTargetCustRows(search);
+		
+		int PAGE_DISPLAY_COUNT = 5;
+		int PAGE_ROW_COUNT = 20;
+		
+		PagingCommon pages =new PagingCommon();
+		Map<String, Integer> page = pages.paging(request, totalTargetCustRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+		
+		search.put("startRowNum", startRowNum);
+		search.put("endRowNum", endRowNum);
+		
+		List<Map<String,Object>> campaignTargetCustList = campaignDao.campTargetCustList(search);
+		
+		Map<String,Object> total = new HashMap<>();
+		total.put("tabCust",campaignTargetCustList);
+		total.put("page",page);
+		total.put("search",search);
+		total.put("totalRows",totalTargetCustRows);
+		return total;
+	}
+
+	@Override
+	public List<Map<String, Object>> campTargetRead(HttpServletRequest request, int campNo) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		CampaignDto campaignDto = new CampaignDto();
+		
+		campaignDto.setCampno(campNo);
+		campaignDto.setSiteid(siteId);
+		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
+		return targetList;
+	}
+	
+
 }

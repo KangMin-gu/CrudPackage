@@ -68,7 +68,7 @@
                                     <tbody>
                                         <tr>
                                             <th>캠페인명</th>
-                                            <td><input type="text" class="form-control reset"></td>
+                                            <td><input type="text" class="form-control reset" name="campname" id="campname" value="${search.campname }"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -81,9 +81,15 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>발송매체</th>
+                                            <th>진행단계</th>
                                             <td>
-                                                <input type="text" class="form-control reset">
+                                                <select name="campstep" id="campstep" class="form-control reset" style="height: 23px;">
+                                                	<option value="">선택</option>
+                                                	<option value=1 <c:if test='${search.campstep eq 1}'>selected</c:if>>생성</option>
+                                                	<option value=2 <c:if test='${search.campstep eq 2}'>selected</c:if>>추출</option>
+                                                	<option value=3 <c:if test='${search.campstep eq 3}'>selected</c:if>>발송</option>
+                                                	<option value=4 <c:if test='${search.campstep eq 4}'>selected</c:if>>완료</option>
+                                            	</select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -98,9 +104,14 @@
                                     <tbody>
                                         <tr>
                                             <th>유형</th>
-                                            <td>
-                                                <input type="text" class="form-control reset">
-                                            </td>
+                                            <td class="border-top-0" style="height: 40px;">
+                                            	<select name="camptype" id="camptype" class="form-control reset" style="height: 23px;">
+                                                	<option value="">검색</option>
+                                                	<option value=10 <c:if test='${search.camptype eq 10}'>selected</c:if>>세미나</option>
+                                                	<option value=20 <c:if test='${search.camptype eq 20}'>selected</c:if>>뉴스레터</option>
+                                                	<option value=30 <c:if test='${search.camptype eq 30}'>selected</c:if>>테스트</option>
+                                            	</select>
+                                        	</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -138,8 +149,14 @@
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0" class="border-top-0">담당자</th>
-                                            <td class="border-top-0" class="border-top-0">
-                                                <input type="text" class="form-control reset">
+                                            <td class="border-top-0 border-bottom-0">
+                                            	<div class="input-group owner">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="owner_" id="owner_" value="${search.owner_ }">
+                                                    <input type="hidden" class="reset" name="owner" id="owner" value="0">
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -200,39 +217,37 @@
                             <div class="m-auto">
                                 <ul class="pagination">
                                     <c:choose>
-										<c:when test="${page.startPageNum ne 1 }">
-											<li><a
-												href="${pageContext.request.contextPath}/user?pageNum=${page.startPageNum-1 }&">&laquo;</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="disabled"><a href="javascript:">&laquo;</a>
-											</li>
-										</c:otherwise>
-									</c:choose>
-									<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
-										<c:choose>
-											<c:when test="${i eq page.pageNum }">
-												<li class="footable-page active"><a
-													href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
+											<c:when test="${page.startPageNum ne 1 }">
+												<li><a onclick="javascript:paging(${page.startPageNum-1})">&laquo;</a>
+												</li>
 											</c:when>
 											<c:otherwise>
-												<li><a
-													href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
+												<li class="disabled"><a href="javascript:">&laquo;</a>
+												</li>
 											</c:otherwise>
 										</c:choose>
-									</c:forEach>
-									<c:choose>
-										<c:when test="${page.endPageNum lt page.totalPageCount }">
-											<li><a
-												href="${pageContext.request.contextPath}/user?pageNum=${page.endPageNum+1 }">&raquo;</a>
-											</li>
-										</c:when>
-										<c:otherwise>
-											<li class="disabled"><a href="javascript:">&raquo;</a>
-											</li>
-										</c:otherwise>
-									</c:choose>
+										<c:forEach var="i" begin="${page.startPageNum }"
+											end="${page.endPageNum }">
+											<c:choose>
+												<c:when test="${i eq page.pageNum }">
+													<li class="footable-page active"><a
+														onclick="javascript:paging(${i})">${i }</a></li>
+												</c:when>
+												<c:otherwise>
+													<li><a onclick="javascript:paging(${i})">${i }</a></li>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										<c:choose>
+											<c:when test="${page.endPageNum lt page.totalPageCount }">
+												<li><a onclick="javascript:paging(${page.endPageNum+1 })"></a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&raquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
                                 </ul>
                             </div>
                            <h4 class="float-right">&middot; 총 자료수 : ${totalRows }건</h4>

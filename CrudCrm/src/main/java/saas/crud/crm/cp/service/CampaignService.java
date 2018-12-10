@@ -27,8 +27,6 @@ public interface CampaignService {
 	
 	public void campTargetInsert(HttpServletRequest request,int campNo);
 	
-	public List<Map<String,Object>> campTargetCustList(HttpServletRequest request, int campNo);
-	
 	public int campFormInsertUpdate(HttpServletRequest request, CampaignFormDto campaignFormDto);
 	
 	public void campTestSend(HttpServletRequest request, int campNo);
@@ -48,5 +46,8 @@ public interface CampaignService {
 	public void campSend(HttpServletRequest request, int campNo);
 	
 	public List<Map<String,Object>> campTabTargetHistory(HttpServletRequest request, int campNo);
-
+	
+	public Map<String,Object> campTabTargetCustList(HttpServletRequest request, int campNo);
+	
+	public List<Map<String,Object>> campTargetRead(HttpServletRequest request, int campNo);
 }

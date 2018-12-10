@@ -68,14 +68,6 @@ public class CampaignDaoImpl implements CampaignDao{
 		// TODO Auto-generated method stub
 		session.insert("cp.targetInsert",param);
 	}
-	// 캠페인 이력 갯수확인 ( 갯수를 확인해서 +1 해서 order를 추가함)
-	@Override
-	public int campTargetHistCount(Map<String, Object> param) {
-		// TODO Auto-generated method stub
-		int order = session.selectOne("cp.targetHistCount",param);
-		
-		return order;
-	}
 	// 캠페인 타겟 삭제 ( 타겟을 수정하는 경우 campNO,siteId로 확인해서 지워버림)
 	@Override
 	public void campTargetDelete(Map<String, Object> param) {
@@ -101,9 +93,9 @@ public class CampaignDaoImpl implements CampaignDao{
 		return targetCustCnt;
 	}
 	@Override
-	public List<Map<String, Object>> campTargetCustList(CampaignDto campaignDto) {
+	public List<Map<String, Object>> campTargetCustList(Map<String,Object> search) {
 		// TODO Auto-generated method stub
-		List<Map<String,Object>> campTargetCustList = session.selectList("cp.targetCustList",campaignDto);
+		List<Map<String,Object>> campTargetCustList = session.selectList("cp.targetCustList",search);
 		return campTargetCustList;
 	}
 	@Override
@@ -172,10 +164,25 @@ public class CampaignDaoImpl implements CampaignDao{
 		session.delete("cp.targetCustDelete",param);
 	}
 	@Override
-	public List<Map<String, Object>> campTabTargetHistory(CampaignDto campaignDto) {
+	public List<Map<String, Object>> campTabTargetHistory(Map<String, Object> param) {
 		// TODO Auto-generated method stub
-		List<Map<String,Object>> tabHistory = session.selectList("cp.tabHistory",campaignDto);
+		List<Map<String,Object>> tabHistory = session.selectList("cp.tabHistory",param);
 		return tabHistory;
+	}
+	@Override
+	public int targetOrderMax(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cp.targetOrderMax",param);
+	}
+	@Override
+	public int campTargetCustRows(Map<String, Object> search) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cp.campTargetCustRows",search);
+	}
+	@Override
+	public void campStepUpdate(CampaignDto campaignDto) {
+		// TODO Auto-generated method stub
+		session.update("cp.stepUpdate",campaignDto);
 	}
 	
 

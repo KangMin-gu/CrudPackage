@@ -154,14 +154,6 @@ public class CampaignController {
 		mView.setViewName("cp/campSend");
 		return mView;
 	}
-	// 캠페인 추출된 고객 List(추출의 탭1번)
-	@RequestMapping(value="/campaign/cust/{campNo}", method=RequestMethod.GET)
-	@ResponseBody
-	public List<Map<String,Object>> authCampaignTargetCustList(HttpServletRequest request, @PathVariable int campNo){
-		
-		List<Map<String,Object>> campaignCustList = campaignService.campTargetCustList(request, campNo);
-		return campaignCustList;
-	}
 	// 캠페인 발송 폼 저장
 	@RequestMapping(value="/campaignform/{campNo}",method=RequestMethod.POST)
 	public ModelAndView authCampaignFormUpdate(HttpServletRequest request,@ModelAttribute CampaignFormDto campaignFormDto) {
@@ -269,8 +261,46 @@ public class CampaignController {
 	@ResponseBody
 	public List<Map<String,Object>> authTabTargetHistory(HttpServletRequest request,@PathVariable int campNo){
 		
-		List<Map<String,Object>> tabHistory= campaignService.campTabTargetHistory(request,campNo);
+ 		List<Map<String,Object>> tabHistory= campaignService.campTabTargetHistory(request,campNo);
 		
 		return tabHistory;
 	}
+	
+	@RequestMapping(value="/poptarget", method=RequestMethod.GET)
+	public ModelAndView authPopCampTarget(HttpServletRequest request) {
+		
+		ModelAndView mView = campaignService.campList(request);
+		
+		mView.setViewName("cp/popTarget");
+		return mView;
+	}
+	@RequestMapping(value="/poptarget", method=RequestMethod.POST)
+	public ModelAndView authPopCampTargetSearch(HttpServletRequest request) {
+		
+		ModelAndView mView = campaignService.campList(request);
+		
+		mView.setViewName("cp/popTarget");
+		return mView;
+	}
+	
+	@RequestMapping(value="/tab/targetCust/{campNo}",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authTabTargetCust(HttpServletRequest request,@PathVariable int campNo){
+		
+		Map<String,Object> targetCust = campaignService.campTabTargetCustList(request, campNo);
+		
+		return targetCust;
+		
+	}
+	
+	@RequestMapping(value="/poptarget/{campNo}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String,Object>> authPopTargetRead(HttpServletRequest request,@PathVariable int campNo){
+		
+		List<Map<String,Object>> targetList = campaignService.campTargetRead(request, campNo);
+		
+		return targetList;
+		
+	}
+	
 }

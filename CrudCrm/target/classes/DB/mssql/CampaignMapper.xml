@@ -21,8 +21,26 @@
 				, CONVERT(nvarchar,A.STARTDATE,23) + '-' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
 				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
 			FROM Crud_SaaS.dbo.T_CAMPAIGN A
-			WHERE SITEID = #{siteid}
-			AND ISDELETE = 0
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="campname != null">
+				AND  A.CAMPNAME LIKE '%' + #{campname} + '%'
+			</if>
+			<if test="campstep != null">
+				AND  A.CAMPSTEP = #{campstep}
+			</if>
+			<if test="camptype != null">
+				AND  A.CAMPTYPE = #{camptype}
+			</if>
+			<if test="startdate != null">
+				AND  A.STARTDATE <![CDATA[>]]> #{startdate}
+			</if>
+			<if test="enddate != null">
+				AND  A.ENDDATE <![CDATA[<]]> #{enddate}
+			</if>
+			<if test="owner_ != null">
+				AND  A.OWNER = #{owner}
+			</if>
 			) X 
 		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
@@ -53,9 +71,27 @@
 	
 	<select id="totalRows" parameterType="hashMap" resultType="int">
 	SELECT count(*)
-			FROM Crud_SaaS.dbo.T_CAMPAIGN
-			WHERE SITEID = #{siteid}
-			AND ISDELETE = 0
+			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="campname != null">
+				AND  A.CAMPNAME LIKE '%' + #{campname} + '%'
+			</if>
+			<if test="campstep != null">
+				AND  A.CAMPSTEP = #{campstep}
+			</if>
+			<if test="camptype != null">
+				AND  A.CAMPTYPE = #{camptype}
+			</if>
+			<if test="startdate != null">
+				AND  A.STARTDATE <![CDATA[>]]> #{startdate}
+			</if>
+			<if test="enddate != null">
+				AND  A.ENDDATE <![CDATA[<]]> #{enddate}
+			</if>
+			<if test="owner_ != null">
+				AND  A.OWNER = #{owner}
+			</if>
 	</select>
 	
 	<insert id="insert" parameterType="campaignDto">
@@ -178,9 +214,6 @@
 	<if test="age2 != null">
 		AND Year(getDate())-Year(BIRTH) <![CDATA[<]]>= #{age2}
 	</if>
-	<if test ="addr11 != null">
-		AND LEFT(HOMADDR2,2) = #{addr11}
-	</if>
 	
 	</insert>
 	
@@ -206,15 +239,6 @@
 		,#{userno}
 		)
 	</insert>
-	
-	<select id="targetHistCount" parameterType="hashMap" resultType="int">
-		SELECT COUNT(*) 
-			FROM (
-					SELECT CAMPNO  
-						FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST 
-						WHERE SITEID = #{siteid}
-                        AND CAMPNO = #{campno} GROUP BY CAMPNO) X
-	</select>
 	
 	<delete id="targetDelete" parameterType="hashMap">
 		DELETE FROM Crud_SaaS.dbo.T_CAMP_TARGET
@@ -249,11 +273,8 @@
 	
 	<select id="targetList" parameterType="campaignDto" resultType="hashMap">
 		SELECT A.NAME
-			, ISNULL(C.CODENAME,A.VALUE) AS VALUE
+			, A.VALUE
 		FROM T_CAMP_TARGET A
-        LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
-        LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
-        
         WHERE A.CAMPNO = #{campno}
         AND A.SITEID = #{siteid}
 	</select>
@@ -265,15 +286,31 @@
             AND CAMPNO = #{campno}
 	</select>
 	
-	<select id="targetCustList" parameterType="campaignDto" resultType="hashMap">
-		SELECT 
-			 CUSTNO
-			,CUSTNAME
-			,MOBILENO
-			,EMAIL
-		FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST
-		WHERE SITEID = #{siteid}
-		AND CAMPNO = #{campno}
+	<select id="targetCustList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM 
+		(SELECT 
+			 A.CUSTNO
+			,A.CUSTNAME
+			,A.MOBILENO
+			,A.EMAIL
+			,CASE WHEN B.INFOAGREE = 0 THEN '동의'
+				  WHEN B.INFOAGREE = 1 THEN '미동의' END AS INFOAGREE_
+			,CASE WHEN B.CUSTGUBUN = 1 THEN '회원'
+				  WHEN B.CUSTGUBUN = 2 THEN '비회원' END AS CUSTGUBUN_
+			,CASE WHEN B.CUSTGRADE = 1 THEN '일반'
+				  WHEN B.CUSTGRADE = 2 THEN 'VIP'
+				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
+			,B.HOMADDR1 +' '+ B.HOMADDR2 + B.HOMADDR3 AS ADDR_
+			,ROW_NUMBER() OVER(ORDER BY A.CUSTNO DESC) AS ROWNUM
+		FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST A 
+		INNER JOIN Crud_SaaS.dbo.CU100010 B ON B.CUSTNO = A.CUSTNO
+		WHERE A.SITEID = #{siteid}
+		AND A.CAMPNO = #{campno}
+		<if test="custname != null">
+			AND  A.CUSTNAME LIKE '%'+ #{custname} +'%'
+		</if>
+		) X
+		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
 	
 	<insert id="formInsert" parameterType="campaignFormDto">
@@ -523,7 +560,7 @@
 		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int})}
 	</update>
 	
-	<select id="tabHistory" parameterType="campaignDto" resultType="hashMap">
+	<select id="tabHistory" parameterType="hashMap" resultType="hashMap">
 		SELECT B.CODENAME
 			, ISNULL(C.CODENAME,A.VALUE) AS VALUE
 			, A.CAMPORDER
@@ -534,5 +571,30 @@
         WHERE A.SITEID = #{siteid}
         AND A.CAMPNO = #{campno}
 	</select>
+	
+	<select id="targetOrderMax" parameterType="hashMap" resultType="int">
+		SELECT ISNULL(MAX(CAMPORDER),0) FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+	</select>
+	
+	<select id="campTargetCustRows" parameterType="hashMap" resultType="int">
+		SELECT COUNT(CUSTNO) FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+		<if test="custname != null">
+			AND  CUSTNAME LIKE '%'+ #{custname} +'%'
+		</if>
+	</select>
+	
+	<update id="stepUpdate" parameterType="campaignDto">
+		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+			SET CAMPSTEP = #{campstep}
+				,EDTUSER = #{edtuser}
+				,EDTDATE = getDate()
+			WHERE SITEID = #{siteid}
+			AND CAMPNO = #{campno}
+	</update>
+	
 	
 </mapper>

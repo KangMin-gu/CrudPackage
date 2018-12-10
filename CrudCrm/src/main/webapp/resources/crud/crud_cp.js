@@ -62,9 +62,12 @@ $('.contents').click(function(e){
 	openNewWindow('서식','/popcontents',e.target.id,650,700);
 });
 
+$('.camptarget').click(function(e){
+	openNewWindow('추출내용','/poptarget',e.target.id,650,700);
+})
+
 // 대상추출에서 click 이벤트
 function tabHistory(){
-	debugger;
 	var id = $('#campno').val();
     $.ajax({
         url: "/tab/targetHistory/"+id,
@@ -72,14 +75,11 @@ function tabHistory(){
         dataType: "json",
         success: function (data) {
         	$('#tab2 tbody tr').remove();
-        	$('#tab2 thead tr').remove();
         	var length = data.length;
         	var html ="";
         	for (var i = 0; i < length; i++) {
-        		html = '<td>' + data[i].VALUE + '</td>';
-        		$('#tab2 thead tr').append(html);
-        		$('#tab1 tbody').append(html2);
-        		
+        		html = '<tr><td>' + data[i].regdate + '</td><td>' + data[i].history + '</td>';
+        		$('#tab2 tbody').append(html);
         	}
         },
         error: function (request, status, error) {
@@ -87,28 +87,49 @@ function tabHistory(){
         }
     });
 }
-// 대상추출에서 이력 확인 탭
-	$('.tabhistory').click(function(e){
-        $.ajax({
-            url: "/ma/license/tab/"+id,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
-            	$('#tab1 tbody tr').remove();
-            	var length = data.length;
-            	for (var i = 0; i < length; i++) {
-            		var html = '<tr><td>' + data[i].LICENSENAME + '</td><td>' + data[i].LICENSECOST + '</td><td>' + data[i].BUYCNT + '</td><td>' + data[i].LASTDATE + '</td></tr>';
-            		$('#tab1 tbody').append(html);
-            	}
-            },
-            error: function (request, status, error) {
-                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+function tabTargetCust(pageNum){
+	var id = $('#campno').val();
+	var custname = $('#custname').val();
+    $.ajax({
+        url: '/tab/targetCust/'+id+'?pageNum='+pageNum+'&custname='+encodeURI(custname) ,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+        	$('#tab1 tbody tr').remove();
+        	$('#tab1 .pagination li').remove();
+        	var length = data.tabCust.length;
+        	var html ="";
+        	for (var i = 0; i < length; i++) {
+        		html = '<tr><td>' + data.tabCust[i].CUSTNAME + '</td><td>' + data.tabCust[i].CUSTID + '</td><td>' + data.tabCust[i].MOBILENO + '</td><td>' + data.tabCust[i].EMAIL + '</td><td>' + data.tabCust[i].INFOAGREE_ + '</td><td>' + data.tabCust[i].CUSTGUBUN_ + '</td><td>' + data.tabCust[i].CUSTGRADE_ + '</td><td>' + data.tabCust[i].ADDR_ + '</td></tr>';
+        		$('#tab1 tbody').append(html);
+        	}
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCust(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
             }
-        });
-
-	});
-	
-	
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetCust(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetCust(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetCust(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            
+            $('#tab1 .pagination').append(html2);
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}	
 	// 대상추출에서 추가를 클릭했을때 동작시키는 함수
 	function addAddr(Obj){
 
@@ -131,18 +152,46 @@ function tabHistory(){
 }
 	
 	function parentContents(tr){
-		// 접수자, 담당자가 겹치는 경우에 발생할 것 같아서 한번에 처리 할수 있게 수정작업함..
-		// parentid => 버튼을 눌렀을때의 id 값
+
 		var parentid = $('#parentid').val();
-		// opener -> 부모의 window를 의미함.
-		// tr.getAttribute("value") -> tr 값에 value를 넣어두었는데 해당 value 값을 가지고옴 => 여기서는 영업담당자의 키값(USERNO)
-		// 버튼을 눌렀을때의 id 값의 next값 즉 Owner_ 옆의 Owner 값(DB에 들어갈값)
+
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
-		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
-		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
 		opener.$("#"+parentid).val(tr.children.title.textContent).trigger('keyup');
 		opener.$("#senddesc").text(tr.children.content.textContent).trigger('keyup');
 		opener.$('#senddesc').summernote('code', tr.children.content.textContent);
-		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
+	}
+	
+	function parentTarget(tr){
+		
+		var parentid = $('#parentid').val();
+		var id = tr.getAttribute("value");
+		
+		$.ajax({
+	        url: "/poptarget/"+id,
+	        method: "GET",
+	        dataType: "json",
+	        success: function (data) {
+	        	
+	        	var length = data.length;
+	        	
+	        	for(i = 0; i < length; i++){
+	        		opener.$('#'+data[i].NAME).val(data[i].VALUE);
+	        	}
+	        	
+	        	opener.$("#"+parentid).val(tr.children.campname.textContent).trigger('keyup');
+	        	window.close();
+	        	
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+			
+		});
+		
+		
+		
+		
+		// window 창을 종료 -> 담당자 팝업을 종료함.
+		
 	}

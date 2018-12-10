@@ -49,7 +49,7 @@ body {
 						
 						
 						<div class="col-sm-12 col-xs-12 p-0 float-left">
-							<form:form action="/popcontents" method="GET">
+							<form:form action="/popcontents" method="POST">
 								<input type="hidden" id="parentid" name="parentid" value="${search.parentid}">
 								 <div class="form-group  row"><label class="col-sm-12 col-form-label">캠페인명</label>
                                     <div class="col-sm-12">
@@ -73,18 +73,14 @@ body {
 							<thead>
 								<tr>
 									<th>캠페인명</th>
-									<th></th>
-									<th>사용매체</th>
-									<th>용도</th>
+									<th>등록일자</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="contentsList" items="${contents}">
-									<tr  style="cursor: pointer;" onClick="javascript:parentContents(this);" value="${contentsList.NO }">
-										<td id="title">${contentsList.TITLE}</td> 
-										<td id="content">${contentsList.CONTENT}</td>
-										<td>${contentsList.FORMTYPE_}</td>
-										<td>${contentsList.PURP}</td>
+								<c:forEach var="campList" items="${camp}">
+									<tr  style="cursor: pointer;" onClick="javascript:parentTarget(this);" value="${campList.CAMPNO }">
+										<td id="campname">${campList.CAMPNAME}</td> 
+										<td id="regdate">${campList.REGDATE}</td>
 									</tr>
 								</c:forEach>
 							</tbody>

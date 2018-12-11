@@ -49,7 +49,7 @@ body {
 				<div class="ibox">
 					<div class="ibox-content row">
 						<div class="box1 col-sm-6 col-xs-6 p-0">
-							<form:form action="/popowner" method="GET">
+							<form:form action="/popcust" method="GET">
 								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
 								<div class="input-group">
 									<input type="text" name="cstname" id="cstname"

@@ -9,18 +9,30 @@
     	e.preventDefault();
     	$('.reset').val('');
     });
+    
+    $('.delete').click(function(e){
+    	var bool = $('.icheckbox_square-green').hasClass('checked');
+    	if(!bool){
+    		e.preventDefault();
+    		alert("삭제할 항목이 정해지지 않았습니다.");
+    		return false;
+    	}else{
+    		return true;
+    	}
+    	return true;
+    });
+    
+	//checkbox 전체 선택/해제 이벤트
+	$('#icheckAll').on('ifChecked', function(event){
+		$('.chksquare').iCheck('check'); 
+	});
+	$('#icheckAll').on('ifUnchecked', function(event){
+		$('.chksquare').iCheck('uncheck'); 
+	});
 
-    $('thead .i-checks').on('ifChecked',function(event){
-    	$('tbody .i-checks').parent().addClass('checked');
-    });
-    //i-check 해제 이벤트
-    $('thead .i-checks').on('ifUnchecked',function(event){
-    	$('tbody .i-checks').parent().removeClass('checked');
-    });
     
   	//주소 받아오기
     $('.daumzip').click(function(e){ //이벤트를 걸 인풋,버튼에 daumzip 클래스 추가 
-			 
     	new daum.Postcode({
     		oncomplete: function(data) {
 		      		
@@ -35,18 +47,25 @@
 		}).open();
 	});
     
+    // 탭이 존재하면 무조건 가장앞에있는 탭 클릭시킴
+    if($('.tabs-container').length > 0){
+    	setTimeout(function(){
+    		$('a[href="#tab1"]').click();
+    	},500);
+    }
+    
         
 	$('.owner').click(function(e){
 		//openNewWindow('담당자','/common/user',e.target.id,650,700);
-		openNewWindow('담당자','/popowner',e.target.id,600,600);
+		openNewWindow('담당자','/popowner',e.currentTarget.id,600,600);
 	});
 	//거래처팝업
 	$('.cli').click(function(e){
-		openNewWindow('거래처','/popclient',e.target.id,650,700);
+		openNewWindow('거래처','/popclient',e.currentTarget.id,650,700);
 	});
 	// 고객 팝업
 	$('.cust').click(function(e){
-		openNewWindow('고객','/popcust',e.target.id,650,700);
+		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
 	});
 /******************************************************************/	
 	/*fileupload 필수값 싱글 sFile / 멀티 mFile
@@ -67,12 +86,14 @@
 	   <input type="hidden" name="fileSearchKey" id="fileSearchKey" />	   	   	 //필수
 	*/
 	//오류시 리로드 파일서치키 바인딩
+	/*
 	$(document).ready(function(){
 		var fsk = $.getURLParam("fsk");
 		if(fileSearchKey != null && fileSearchKey != undefined){
 			$('#fileSearchKey').val(fsk);	
 		}
 	});
+	*/
 	//로고등록 팝업띄우면서 filesearchkey 부모와 자식창에 입력
 	$('.poplogo').click(function(e){
 		var fileSearchKey = $.makeFileSearchKey();
@@ -143,10 +164,11 @@
 		// opener -> 부모의 window를 의미함.
 		// tr.getAttribute("value") -> tr 값에 value를 넣어두었는데 해당 value 값을 가지고옴 => 여기서는 영업담당자의 키값(USERNO)
 		// 버튼을 눌렀을때의 id 값의 next값 즉 Owner_ 옆의 Owner 값(DB에 들어갈값)
-		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
+		opener.$('[name="'+parentid+'"]').next().val(tr.getAttribute("value"));
 		// tr.children.userName.textContent -> tr하위에있는 td 값중 userName의 text값을 가지고옴 => 여기서는 영업담당자의 이름을 의미
 		// 버튼을 눌렀을때의 id 값을 실제로 넣음. 
-		opener.$("#"+parentid).val(tr.children.username.textContent).trigger('keyup');
+		opener.$('[name="'+parentid+'"]').val(tr.children.username.textContent).trigger('keyup');
+		opener.$('#'+parentid).trigger('keyup');
 		// window 창을 종료 -> 담당자 팝업을 종료함.
 		window.close();
 	}
@@ -168,16 +190,16 @@
 	//팝업 거래처 이름 선택.
 	function parentCliname(tr){	
 		var parentid = $('#parentid').val();	
-		opener.$("#"+parentid).next().val(tr.getAttribute("value"));		
-		opener.$("#"+parentid).val(tr.children.cliname.textContent);		
+		opener.$('[name="'+parentid+'"]').next().val(tr.getAttribute("value"));		
+		opener.$('[name="'+parentid+'"]').val(tr.children.cliname.textContent);		
 		window.close();
 	}
 	
 	function parentCustname(tr){	
 		var parentid = $('#parentid').val();	
 		var id = tr.getAttribute("value");
-		opener.$("#"+parentid).next().val(id);		
-		opener.$("#"+parentid).val(tr.children.cstname.textContent);
+		opener.$('[name="'+parentid+'"]').next().val(id);		
+		opener.$('[name="'+parentid+'"]').val(tr.children.cstname.textContent);
 		popCustClick(id);
 		
 		setTimeout(function(){
@@ -213,6 +235,11 @@
     	
     	return today;
     }
+    
+ // step 강제 클릭 함수
+    function stepClick(hash){	
+    	$(hash).click();
+    }
 	
     //로고 insertajax
     $('#logosubmit').click(function(){
@@ -246,7 +273,7 @@
 		
 		var date1val = $('.date01 input').val();
 		var date2val = $('.date02 input').val();
-		var msg = "정상적인 날자 범위가 아닙니다. 다시 선택해 주세요";
+		var msg = "정상적인 날짜 범위가 아닙니다. 다시 선택해 주세요";
 		if(date1val !='' && date2val !=''){
 			if(date1val > date2val){
 				$('#showMsg').empty();
@@ -255,6 +282,9 @@
 				alert(msg);
 				$('.date01 input').val('');
 				$('.date01 input').focus();
+			}else{
+				$('#showMsg').empty();
+				$('#msgDiv').hide();
 			}
 		}
 	}

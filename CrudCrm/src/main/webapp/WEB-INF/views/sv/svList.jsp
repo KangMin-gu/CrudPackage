@@ -84,10 +84,10 @@
                                         </tr>
                                         <tr>
                                             <th>고객명</th>
-                                            <td>
-                                                <div class="input-group cust">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="custno_" id="custno_" value="${search.custno_ }">
-                                                    <input type="hidden" class="form-control reset" name="custno" id="custno" value="${search.custno }">
+                                            <td class="border-top-0">
+                                                <div class="input-group cust" id="custno_">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="custno_" value="${search.custno_ }">
+                                                    <input type="hidden" class="reset" name="custno" value="${search.custno }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -125,10 +125,10 @@
                                         </tr>
                                         <tr>
                                             <th>거래처명</th>
-                                            <td>
-                                                <div class="input-group cli">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="clino_" id="clino_" value="${search.clino_ }">
-                                                    <input type="hidden" class="form-control reset" name="clino" id="clino" value="${search.clino }">
+                                            <td class="border-top-0">
+                                                <div class="input-group cli" id="clino_">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="clino_" value="${search.clino_ }">
+                                                    <input type="hidden" class="reset" name="clino" value="${search.clino }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -158,10 +158,10 @@
                                     <tbody>
                                         <tr>
                                             <th>접수자</th>
-                                            <td>
-                                                <div class="input-group owner" style="height: 1.6rem;">
-                                                    <input type="text" class="form-control required reset" autocomplete="off" name="rcvowner_" id="rcvowner_" value="${search.rcvowner_ }">
-                                                    <input type="hidden" class="reset" name="rcvowner" id="rcvowner" value="${search.rcvowner }">
+                                            <td class="border-top-0">
+                                                <div class="input-group owner" id="rcvowner_">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="rcvowner_" value="${search.rcvowner_ }">
+                                                    <input type="hidden" class="reset" name="rcvowner" value="${search.rcvower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -170,10 +170,10 @@
                                         </tr>
                                         <tr>
                                             <th>담당자</th>
-                                            <td>
-                                                <div class="input-group owner">
-                                                    <input type="text" class="form-control required reset" autocomplete="off" name="ractowner_" id="ractowner_" value="${search.ractowner_ }">
-                                                    <input type="hidden" class="reset" name="ractowner" id="ractowner" value="${search.ractowner }">
+                                            <td class="border-top-0">
+                                                <div class="input-group owner" id="ractowner_">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="ractowner_" value="${search.ractowner_ }">
+                                                    <input type="hidden" class="reset" name="ractowner" value="${search.ractower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -203,7 +203,7 @@
                                 <a href="${pageContext.request.contextPath}/service/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">삭제</button>
+                                <button class="btn btn-primary delete">삭제</button>
                                 </div>
                              
                             </div>

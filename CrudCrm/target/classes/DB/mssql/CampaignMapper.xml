@@ -447,7 +447,8 @@
 	</insert>
 	
 	<select id="contentsList" parameterType="hashMap" resultType="hashMap">
-		SELECT * FROM(
+	
+		SELECT * FROM (
 			SELECT 
 			A.NO
 			, A.FORMTYPE
@@ -460,18 +461,41 @@
 			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
 			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
 			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
-			, ROW_NUMBER() OVER(ORDER BY NO DESC) AS ROWNUM
+			, USECNT
+			,ROW_NUMBER() OVER(ORDER BY A.NO DESC) AS ROWNUM
 			FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
-			) X 
-			WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 			<if test="title != null">
 				AND  TITLE LIKE '%'+#{title} +'%'
 			</if>
 			<if test="formtype != null">
 				AND  FORMTYPE = #{formtype}
 			</if>
+			) X 
+			WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<select id="contentsUseDescList" parameterType="hashMap" resultType="hashMap">
+			SELECT 
+			TOP 5
+			A.NO
+			, A.FORMTYPE
+			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
+				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
+				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
+			, A.TITLE, A.CONTENT, A.PURP
+			, A.SITEID, A.ISDELETE
+			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+			, USECNT
+			FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			AND A.FORMTYPE = #{formtype}
+			ORDER BY USECNT DESC
 	</select>
 	
 	<select id="contentsTotalRows" parameterType="hashMap" resultType="int">
@@ -595,6 +619,28 @@
 			WHERE SITEID = #{siteid}
 			AND CAMPNO = #{campno}
 	</update>
+	 
+	<select id="calList" parameterType="campaignDto" resultType="hashMap">
+
+		SELECT CAMPNO AS id
+				,CAMPNAME AS title
+				,STARTDATE AS 'start'
+				,ENDDATE AS 'end'
+				,CASE WHEN SENDTYPE = 10 THEN '#FF0000'
+					  WHEN SENDTYPE = 20 THEN '#0040FF'
+					  WHEN SENDTYPE = 30 THEN '#FF00FF' END AS 'color'
+		FROM Crud_SaaS.dbo.T_CAMPAIGN
+		WHERE SITEID = #{siteid}
+		AND ISDELETE = #{isdelete}
+	</select>
 	
+	<update id="sendTypeUpdate" parameterType="hashMap">
+		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+			SET SENDTYPE = #{sendtype}
+				,EDTDATE = getDate()
+				,EDTUSER = #{userno}
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+	</update>
 	
 </mapper>

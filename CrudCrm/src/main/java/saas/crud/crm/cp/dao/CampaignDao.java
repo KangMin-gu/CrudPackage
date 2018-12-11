@@ -68,4 +68,10 @@ public interface CampaignDao {
 	
 	public void campStepUpdate(CampaignDto campaignDto);
 	
+	public List<Map<String,Object>> campCalList(CampaignDto campaignDto);
+	
+	public void campSendType(Map<String,Object> param);
+	
+	public List<Map<String,Object>> campContentsUseDescList(Map<String,Object> param);
+	
 }

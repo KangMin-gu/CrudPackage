@@ -1,7 +1,4 @@
-// step 강제 클릭 함수
-function campStep(hash){	
-	$(hash).click();
-}
+
 
 $('#sendtype').change(function(e){
 	var data = $('#sendtype').val();
@@ -188,10 +185,45 @@ function tabTargetCust(pageNum){
 	        }
 			
 		});
-		
-		
-		
-		
-		// window 창을 종료 -> 담당자 팝업을 종료함.
-		
+
 	}
+	
+	function contents(hash){
+		$.ajax({
+			 url: "/campContents/"+hash,
+		        method: "GET",
+		        dataType: "json",
+		        success: function (data) {
+		        	var length = data.length;
+		        	var html="";
+		        	for(i = 0; i < length; i++){
+		        		html = '<div class="panel panel-default"><div class="panel-heading"><h5 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse'+i+'"class="collapsed" aria-expanded="false">'+data[i].TITLE+'</a></h5></div>';						
+		        		html += '<div id="collapse'+i+'" class="panel-collapse in collapse" style=""><div class="panel-body">'+data[i].CONTENT+'</div></div></div>';
+		        		$('.panel-group').append(html);
+		        	}
+		        },
+		        error: function (request, status, error) {
+		            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		        }
+		});
+	}
+	
+	$('.panel-body').click(function(e){
+		var accordion = $(e.currentTarget).children().attr('id');
+		if(accordion == 'accordion'){
+			var text = e.target.parentElement.innerHTML;
+			$('.summernote').summernote('code',text);
+			//ibox-tools 클릭 ( 화살표 모양 클릭해서 접음)
+			$(e.currentTarget).parent().parent().children('.ibox-title').children('.ibox-tools').children().click();
+		}
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -263,9 +263,9 @@
                                         <tr>
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
-                                                <div class="input-group owner">
-                                                    <input type="text" class="form-control error required name" autocomplete="off" name="owner_" id="owner_" value="${memCompany.owner_ }">
-                                                    <input type="hidden" name="owner" id="owner" value="${memCompany.ower }">
+                                                <div class="input-group owner" id="owner_">
+                                                    <input type="text" class="form-control error required simple" autocomplete="off" name="owner_" value="${memCompany.OWNER_ }">
+                                                    <input type="hidden" name="owner" value="${memCompany.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -279,7 +279,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><label for="sitelogo">사이트로고</label></th>
+                                            <th><label for="sitelogo">회원사로고</label></th>
                                             <td>  
                                             	<div class="input-group poplogo">
                                             		<input class="form-control" type="text" id="filename" name="filename" disabled />

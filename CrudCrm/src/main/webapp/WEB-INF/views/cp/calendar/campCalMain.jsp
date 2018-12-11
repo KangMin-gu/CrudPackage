@@ -49,28 +49,18 @@
 				</div>
 				<div class="col-lg-2"></div>
 			</div>
-
-
-
 			<div class="wrapper wrapper-content">
 				<div class="row animated fadeInDown">
 					<div class="col-lg-3">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>CUSTOM SCHEDULE</h5>
+								<h5>캠페인 일정</h5>
 							</div>
 							<div class="ibox-content">
 								<div id='external-events'>									
-									
 									<c:forEach var="list" items="${comSchList}"  > 
-										<div class='external-event navy-bg' style="background-color:${list.color}" >${list.title }</div>
+										<div class='external-event navy-bg' style='background-color:${list.color }' >${list.title }</div>
 									</c:forEach>
-																
-									<p class="m-t">
-										<input type='checkbox' id='drop-remove' class="i-checks" checked /> 
-										<!-- <label for='drop-remove'>remove after drop</label> -->
-										<a class="btn btn-primary float-right" onclick='openNewWindow("자주쓰는스케쥴","/sales/cal/com/post","",600,700);'>등록</a>
-									</p>
 								</div>
 							</div>
 						</div>
@@ -78,11 +68,10 @@
 					<div class="col-lg-9">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>Striped Table</h5>
+								<h5>캠페인 일정 관리</h5>
 							</div>
 							<div class="ibox-content">
 								<input type="hidden" id="schList" name="schList" value='${schList }'/>
-								<input type="hidden" id="userno" name="userno" value="${userno }">
 								<div id="calendar"></div>
 							</div>
 						</div>

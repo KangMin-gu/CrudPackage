@@ -365,6 +365,7 @@
                                                             </tr>
                                                         </table>
                                                     </div>
+                                                    <input type="hidden" name="sendtype" id="sendtype" class="form-control" value="10">
                                                 </div>
                                             </div>
                                         </div>
@@ -648,6 +649,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" name="sendtype" id="sendtype" class="form-control" value="20">
                                                 </div>
                                             </div>
                                         </div>
@@ -929,6 +931,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" name="sendtype" id="sendtype" class="form-control" value="30">
                                                 </div>
                                             </div>
                                         </div>
@@ -936,6 +939,24 @@
                                         <div role="tabpanel" id="sumbitTab4" class="tab-pane">
                                             <div class="panel-body"></div>
                                         </div>
+                                        <div class="col-lg-6">
+                    						<div class="ibox ">
+                        						<div class="ibox-title">
+                            						<h5>자주사용하는 양식</h5>
+                            						<div class="ibox-tools">
+                                						<a class="collapse-link">
+                                    						<i class="fa fa-chevron-up"></i>
+                                						</a>
+                            						</div>
+                        						</div>
+                        						<div class="ibox-content">
+                            						<div class="panel-body">
+                                						<div class="panel-group" id="accordion">
+                                						</div>
+                            						</div>
+                        						</div>
+                    						</div>
+                						</div>
                                     </div>
                                 </div>
                             </div>
@@ -943,8 +964,6 @@
                 	</div>
                	</div>
             </div>
-    
-
 <!-- Content End -->
 			
 <!-- foot -->
@@ -980,6 +999,18 @@
 		if(no ==''){
 			$('#no').val(0);
 		}
+		debugger;
+		var url = window.location.pathname;
+		var type = url.split('/');
+		var id;
+		if(type[2] == 'email'){
+			id = 1;
+		}else if(type[2] == 'sms'){
+			id = 2;
+		}else if(type[2] == 'mms'){
+			id = 3;
+		}
+		contents(id);
 	});
 
 	</script>		

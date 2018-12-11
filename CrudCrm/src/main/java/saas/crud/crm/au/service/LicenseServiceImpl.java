@@ -1,6 +1,5 @@
 package saas.crud.crm.au.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,8 +34,8 @@ public class LicenseServiceImpl implements LicenseService{
 		
 		int totalRows = licenseDao.licenseTotalRow(search);
 		
-		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
 		
 		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
@@ -68,7 +67,7 @@ public class LicenseServiceImpl implements LicenseService{
 	public int licenseInsert(HttpServletRequest request, LicenseDto licenseDto) {
 		// TODO Auto-generated method stub
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		licenseDto.setEdtuser(userNo);
 		licenseDto.setReguser(userNo);
 		int licenseNo = licenseDao.licenseInsert(licenseDto);
@@ -80,7 +79,7 @@ public class LicenseServiceImpl implements LicenseService{
 	@Override
 	public void licenseUpdate(HttpServletRequest request, LicenseDto licenseDto) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		licenseDto.setEdtuser(userNo);
 		licenseDao.licenseUpdate(licenseDto);
 	}
@@ -89,7 +88,7 @@ public class LicenseServiceImpl implements LicenseService{
 	@Override
 	public void licenseDelete(HttpServletRequest request, int licenseno) {
 		// TODO Auto-generated method stub
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		LicenseDto licenseDto = new LicenseDto();
 		licenseDto.setEdtuser(userNo);
 		licenseDto.setLicenseno(licenseno);
@@ -102,7 +101,7 @@ public class LicenseServiceImpl implements LicenseService{
 	public void licenseMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-		int userNo = Integer.parseInt(request.getSession().getAttribute("userNo").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		LicenseDto licenseDto = new LicenseDto();
 		licenseDto.setEdtuser(userNo);
 		

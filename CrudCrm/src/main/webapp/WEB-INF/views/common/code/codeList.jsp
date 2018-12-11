@@ -94,12 +94,12 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach var="code" items="${codeList }">
-                                    <tr onclick="javascript:parentCode(this,${code.CODENO })">
+                                    <tr onclick="javascript:parentCode(this,${code.CODENO })" value="${code.CODENO }">
                                         <td><input type="checkbox" class="i-checks" name="codeno" id="codeno" value="${code.CODENO }"></td>
                                         <td id="codegrp">${code.CODEGRP}</td>
                                         <td id="codename">${code.CODENAME }</td>
                                         <td id="codeval">${code.CODEVAL }</td>
-                                        <td id="upcodegrp_">${code.UPCODEGRP_ }</td>
+                                        <td id="upcodegrp_">${code.UPPERCODENAME }</td>
                                         <td id="isdelete_">${code.ISDELETE_ }</td>
                                     </tr>
                                 </c:forEach>

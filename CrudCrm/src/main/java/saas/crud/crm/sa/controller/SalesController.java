@@ -398,34 +398,4 @@ public class SalesController {
 		return mView;
 	}
 	
-	
-	
-	
-	
-	
-	
-	//캘린더화면구성 안쓰고있음.
-	@RequestMapping(value="/sales/cal/list",method=RequestMethod.GET)
-	@ResponseBody
-	public String authsaCalendarList(HttpServletRequest request) {		
-		Map<String,Object> schVal = new HashMap<String,Object>();
-		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int chkauth = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
-		
-		schVal.put("siteid", siteid);
-		schVal.put("userno", userno);
-		schVal.put("chkauth", chkauth);		
-		String schList = salesService.svcSalesSchList(schVal);
-		return schList;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

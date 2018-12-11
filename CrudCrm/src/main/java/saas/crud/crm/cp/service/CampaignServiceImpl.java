@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.cp.dao.CampaignDao;
 import saas.crud.crm.cp.dto.CampaignContentsDto;
@@ -37,8 +40,8 @@ public class CampaignServiceImpl implements CampaignService{
 
 		int totalRows = campaignDao.campTotalRows(search);
 		
-		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
 		
 		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
@@ -256,8 +259,8 @@ public class CampaignServiceImpl implements CampaignService{
 
 		int totalRows = campaignDao.campContentsTotalRows(search);
 		
-		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
 		
 		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
@@ -362,14 +365,18 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
+		int sendType = Integer.parseInt(request.getParameter("sendtype").toString());
 		Map<String,Object> param = new HashMap<String,Object>();
 		
 		param.put("userno", userNo);
 		param.put("siteid", siteId);
 		param.put("campno", campNo);
+		param.put("sendtype", sendType);
 		
+		
+		campaignDao.campSendType(param);
 		campaignDao.campSend(param);
+		
 		
 	}
 
@@ -467,6 +474,46 @@ public class CampaignServiceImpl implements CampaignService{
 		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
 		return targetList;
 	}
-	
 
+	@Override
+	public ModelAndView campCalList(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		ModelAndView mView = new ModelAndView();
+		CampaignDto campaignDto = new CampaignDto();
+		
+		
+		campaignDto.setSiteid(siteId);
+		
+		List<Map<String,Object>> campCalList = campaignDao.campCalList(campaignDto);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(campCalList);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mView.addObject("schList",jsonStr);//캘린더 스케쥴
+		mView.addObject("comSchList",campCalList);//캘린더 틀 목록.
+
+		return mView;
+	}
+
+	@Override
+	public List<Map<String, Object>> campContentsUseDescList(HttpServletRequest request, int id) {
+		// TODO Auto-generated method stub
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("siteid", siteId);
+		param.put("formtype", id);
+		List<Map<String,Object>> contentsUseDescList = campaignDao.campContentsUseDescList(param);
+		return contentsUseDescList;
+	}
+	
 }

@@ -40,21 +40,25 @@ if(window.location.pathname == '/ma/license') {
     btnFirst();
     
     $('#cancel').click(function (e) {
-        var id = $('.selected').attr('value');
-        $.ajax({
-            url: QueryString+"/"+id,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
+    	var id = $('.selected').attr('value');
+        if(id == undefined){
+        	btnFirst();
+        }else{
+        	$.ajax({
+        		url: QueryString+"/"+id,
+        		method: "GET",
+        		dataType: "json",
+        		success: function (data) {
 
-                $('.body input[id="licensename"]').val(data.LICENSENAME);
-                $('.body input[id="licensecost"]').val(data.LICENSECOST);
-                btnRead();
-            },
-            error: function (request, status, error) {
-                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            }
-        });
+        			$('.body input[id="licensename"]').val(data.LICENSENAME);
+        			$('.body input[id="licensecost"]').val(data.LICENSECOST);
+        			btnRead();
+        		},
+        		error: function (request, status, error) {
+        			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        		}
+        	});
+        }
     });
     $('#reset').click(function (e) {
     	bodyReset();
@@ -146,24 +150,28 @@ if(window.location.pathname == '/ma/menu') {
     btnFirst();
     
     $('#cancel').click(function (e) {
-        var id = $('.selected').attr('value');
-        $.ajax({
-            url: QueryString+"/"+id,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
+    	var id = $('.selected').attr('value');
+        if(id == undefined){
+        	btnFirst();
+        }else{
+        	$.ajax({
+        		url: QueryString+"/"+id,
+        		method: "GET",
+        		dataType: "json",
+        		success: function (data) {
 
-                $('.body #namename').val(data.MENUNAME);
-                $('.body #nameval').val(data.NAMEVAL);
-                $('.body #licensename').val(data.LICENSENAME_);
-                $('.body #isdelete').val(data.ISDELETE);
-                $('.body #menudesc').val(data.MENUDESC);
-                btnRead();
-            },
-            error: function (request, status, error) {
-                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            }
-        });
+        			$('.body #namename').val(data.MENUNAME);
+        			$('.body #nameval').val(data.NAMEVAL);
+        			$('.body #licensename').val(data.LICENSENAME_);
+        			$('.body #isdelete').val(data.ISDELETE);
+        			$('.body #menudesc').val(data.MENUDESC);
+        			btnRead();
+        		},
+        		error: function (request, status, error) {
+        			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        		}
+        	});
+        }
     });
     $('#reset').click(function (e) {
     	bodyReset();
@@ -264,24 +272,30 @@ if(window.location.pathname == '/ad/code') {
     
     $('#cancel').click(function (e) {
         var id = $('.selected').attr('value');
-        $.ajax({
-            url: QueryString+"/"+id,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
+        if(id == undefined){
+        	btnFirst();
+        }else{
+        	$.ajax({
+        		url: QueryString+"/"+id,
+        		method: "GET",
+        		dataType: "json",
+        		success: function (data) {
 
-                $('.body #codegrp').val(data.CODEGRP);
-                $('.body #codename').val(data.CODENAME);
-                $('.body #codeval').val(data.CODEVAL);
-                $('.body #isdelete').val(data.ISDELETE);
-                $('.body #uppercodegrp').val(data.UPPERCODEGRP);
-                btnRead();
-            },
-            error: function (request, status, error) {
-                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            }
-        });
+        			$('.body #codegrp').val(data.CODEGRP);
+        			$('.body #codename').val(data.CODENAME);
+        			$('.body #codeval').val(data.CODEVAL);
+        			$('.body #isdelete').val(data.ISDELETE);
+        			$('.body #uppercodegrp').val(data.UPPERCODEGRP);
+
+        			btnRead();
+        		},
+        		error: function (request, status, error) {
+        			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        		}
+        	});
+        }
     });
+    
     $('#reset').click(function (e) {
     	bodyReset();
     });
@@ -364,6 +378,7 @@ if(window.location.pathname == '/ad/code') {
                 $('.body #codeval').val(data.CODEVAL);
                 $('.body #isdelete').val(data.ISDELETE);
                 $('.body #uppercodegrp').val(data.UPPERCODEGRP);
+                $('.body #uppercodegrp_').val(data.UPPERCODENAME);
             },
             error: function (request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

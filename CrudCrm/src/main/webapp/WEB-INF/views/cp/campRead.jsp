@@ -1133,7 +1133,7 @@
 		
 		var totalHash = window.location.hash;
 		hash = totalHash.split('?');
-		campStep(hash[0]);
+		stepClick(hash[0]);
 
 	});
 

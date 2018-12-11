@@ -116,7 +116,7 @@
                                         <td>${code.CODEGRP}</td>
                                         <td>${code.CODENAME }</td>
                                         <td>${code.CODEVAL }</td>
-                                        <td>${code.UPCODEGRP_ }</td>
+                                        <td>${code.UPPERCODENAME }</td>
                                         <td>${code.ISDELETE_ }</td>
                                     </tr>
                                 </c:forEach>
@@ -151,7 +151,7 @@
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
-												<li><a onclick="javascript:paging(${page.endPageNum+1 })"></a>
+												<li><a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -217,7 +217,7 @@
                                         <tr>
                                             <th><label for="licenseno">코드 값</label></th>
                                             <td>
-                                            	<input type="text" class="form-control required" name="codename" id="codename" value="${code.CODENAME}">
+                                            	<input type="text" class="form-control required" name="codeval" id="codeval" value="${code.CODEVAL}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -252,7 +252,8 @@
                                         <tr>
                                             <th class="border-top-0"><label for="menudesc">상위그룹코드 명</label></th>
                                             <td>
-                                            	<input type="text" class="form-control" name="uppercodegrp" id="uppercodegrp" value="${code.UPPERCODEGRP}">
+                                            	<input type="text" class="form-control" name="uppercodegrp_" id="uppercodegrp_" value="${code.UPPERCODEGRP_}">
+                                            	<input type="hidden" class="form-control" name="uppercodegrp" id="uppercodegrp" value="${code.UPPERCODEGRP}">
                                             </td>
                                         </tr>
                                         <input type="hidden" id="no" name="no"/>
@@ -296,8 +297,11 @@
         });
     });
 	
-		$('#uppercodegrp').click(function(e){
-			openNewWindow('상위코드','/common/code',e.target.id,'600','800')
+		$('#uppercodegrp_').click(function(e){
+			if($('#uppercodegrp_').attr('readonly') != 'readonly'){
+				openNewWindow('상위코드','/common/code',e.target.id,'600','800')	
+			}
+			
 		});
 	</script>
 	

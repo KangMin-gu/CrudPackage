@@ -32,9 +32,6 @@
                 <div class="col-lg-10">
                     <h2>메뉴 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
                         <li class="breadcrumb-item active">
                             <strong>메뉴 목록</strong>
                         </li>
@@ -49,7 +46,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/ma/me" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/ma/menu" method="POST">
                         <div class="ibox-content row">
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered">
@@ -175,7 +172,7 @@
                             <div class="w-100 text-right mb-2">
                                 <button class="btn btn-primary" id="reset">초기화</button>
                             	<button class="btn btn-primary" id="create">추가</button>
-                            	<button class="btn btn-primary" id="save">저장</button>
+                            	<button class="btn btn-primary submit" id="save">저장</button>
                             	<button class="btn btn-primary" id="update">수정</button>
                             	<button class="btn btn-primary" id="cancel">취소</button>
                                 <button class="btn btn-primary" id="delete">삭제</button>
@@ -189,7 +186,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="menuname">메뉴명</label></th>
-                                            <td><input type="text" class="form-control required" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
+                                            <td><input type="text" class="form-control required error validate simple" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -205,7 +202,7 @@
                                             <th><label for="menuval">메뉴 값</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required" name="menuval" id="menuval" value="${menu.MENUVAL}">
+                                                    <input type="text" class="form-control required error validate longnumber" name="menuval" id="menuval" value="${menu.MENUVAL}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -223,7 +220,7 @@
                                             <th><label for="licenseno">라이센스명</label></th>
                                             <td>
                                             
-                                            	<select class="form-control col-12 float-left mr-12 required" name="licenseno" id="licenseno" value="${menu.LICENSENO }">
+                                            	<select class="form-control col-12 float-left mr-12 required error validate check" name="licenseno" id="licenseno" value="${menu.LICENSENO }">
                                             		<option value="">선택</option>
                                             </select>
                                             </td>
@@ -240,8 +237,7 @@
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0"><label for="isdelete">사용여부</label></th>
-                                            <td><select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
-                                            		<option>선택</option>
+                                            <td><select class="form-control col-12 float-left mr-12" name="isdelete" id="isdelete">
                                                     <option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select></td>

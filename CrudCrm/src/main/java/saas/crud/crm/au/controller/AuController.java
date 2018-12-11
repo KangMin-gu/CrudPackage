@@ -142,7 +142,7 @@ public class AuController {
 		int userNo = userMenuDto.getUserno();
 		ModelAndView mView = new ModelAndView();
 		auService.userMenuInsert(request, userMenuDto);
-		mView.setViewName("redirect:/ad/user/"+userNo);
+		mView.setViewName("redirect:/ad/user/"+userNo+"/#wizard-t-1");
 		return mView;
 	}
 	// 회원이 보는 회원사 상세

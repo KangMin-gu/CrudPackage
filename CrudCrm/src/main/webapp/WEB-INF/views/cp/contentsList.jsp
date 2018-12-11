@@ -112,7 +112,6 @@
                                 <colgroup>
                                     <col style="width: 50px"/>
                                     <col style="width: 200px"/>
-                                    <col style="width: 200px"/>
                                     <col style="width: 100px"/>
                                     <col style="width: 150px"/>
                                     <col style="width: 150px"/>
@@ -122,7 +121,6 @@
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name=""></th>
                                         <th>제목</th>
-                                        <th>본문</th>
                                         <th>사용매체</th>
                                         <th>용도</th>
                                         <th>등록자</th>
@@ -134,7 +132,6 @@
                                     	<tr>
                                         	<td><input type="checkbox" class="i-checks" name="no" id="no" value="${contentsList.NO }"></td>
                                         	<td><a href="${pagecontext.request.contextpath}/campaign/contents/${contentsList.NO }">${contentsList.TITLE}</a></td>
-                                        	<td>${contentsList.CONTENT }</td>
                                         	<td>${contentsList.FORMTYPE_ }</td>
                                         	<td>${contentsList.PURP }</td>
                                         	<td>${contentsList.REGUSER_ }</td>

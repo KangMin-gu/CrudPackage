@@ -191,6 +191,10 @@
              selectorMinimalHeight: 160
          });
 		 
+		 var totalHash = window.location.hash;
+			hash = totalHash.split('?');
+			stepClick(hash[0]);
+		 
 		 $(".bootstrap-duallistbox-container").find("*").prop("disabled",true);
 		 
 			var unselected = $('#usermenuno option:not(:selected)')

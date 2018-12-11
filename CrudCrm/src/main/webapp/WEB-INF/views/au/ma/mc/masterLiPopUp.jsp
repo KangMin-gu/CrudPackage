@@ -39,7 +39,7 @@
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
 									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(라이센스제품 : 선택해주세요. 라이센스수량 : 숫자만 입력해야 합니다.) ">
-										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(라이센스제품 : 선택해주세요. 라이센스수량 : 숫자만 입력해야 합니다.) </strong>
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(라이센스제품 : 선택해주세요. 라이센스수량 : 숫자로 2자리까지만 입력해야 합니다.) </strong>
 									</span>
 									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
 	                        	</div>
@@ -89,7 +89,7 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스수량</label></th>
-                                            <td><input type="text" class="form-control required validation error check" name="buycnt" id="buycnt" value=""></td>
+                                            <td><input type="text" class="form-control required validation error phone1" maxlength="3" name="buycnt" id="buycnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -132,7 +132,7 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -168,6 +168,7 @@
         	data : param,
         	dataType: "json",
         	success: function (data) {
+        		opener.$('.li').click();
         		window.close();
         	},
         	error: function (request, status, error) {

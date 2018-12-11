@@ -164,7 +164,7 @@
                                         <tr>
                                             <th>최초가입일</th>
                                             <td>
-                                                ${memCompany.FREGDATE }
+                                                ${memCompany.FREGDATE_ }
                                             </td>
                                         </tr>
                                     </tbody>

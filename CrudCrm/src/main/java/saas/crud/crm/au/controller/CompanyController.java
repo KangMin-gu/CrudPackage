@@ -54,7 +54,7 @@ public class CompanyController {
 	}
 
 	// 회원사 UPDATE 실행
-	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.PUT)
+	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.POST)
 
 	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto companyDto,HttpServletRequest request) {
 		companyService.comapnyUpdate(request, companyDto);	

@@ -33,8 +33,8 @@ public class CodeServiceImpl implements CodeService{
 		
 		int totalRows = codeDao.codeTotalRow(search);
 		
-		int PAGE_DISPLAY_COUNT = 5;
 		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
 		
 		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");

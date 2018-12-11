@@ -60,8 +60,8 @@
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
-									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(캠페인명 : 입력이 필요합니다.) ">
-										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(캠페인명 : 입력이 필요합니다.)</strong>
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서식명 : 입력이 필요합니다.) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서식명 : 입력이 필요합니다.)</strong>
 									</span>
 									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
 	                        	</div>
@@ -98,9 +98,9 @@
                                         	<th>매체유형</th>
                                             <td><select class="form-control" name="formtype" id="formtype" style="height: 23px;">
                                             		<option value="0">선택</option>
-                                            		<option value="1" <c:if test='${search.formtype eq 1}'>selected</c:if>>EMAIL</option>
-                                                   	<option value="2" <c:if test='${search.formtype eq 2}'>selected</c:if>>SMS/LMS</option>
-                                                   	<option value="3" <c:if test='${search.formtype eq 3}'>selected</c:if>>MMS</option>
+                                            		<option value="1" <c:if test='${contentsInfo.FORMTYPE eq 1}'>selected</c:if>>EMAIL</option>
+                                                   	<option value="2" <c:if test='${contentsInfo.FORMTYPE eq 2}'>selected</c:if>>SMS/LMS</option>
+                                                   	<option value="3" <c:if test='${contentsInfo.FORMTYPE eq 3}'>selected</c:if>>MMS</option>
                                                 </select>
                                             </td>
                                         </tr>

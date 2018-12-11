@@ -63,10 +63,12 @@
 									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) ">
 										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) </strong>
 									</span>
-									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>
+													
 	                        	</div>
 								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-									<Strong><span id="showMsg"></span></Strong>				
+									<Strong><span id="showMsg"></span></Strong>
+									<Strong><span id="idCheckMsg"></span></Strong>				
 	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
@@ -88,6 +90,7 @@
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
                                                 <select class="form-control col-3 float-left mr-3 validate phone1 phone-group" name="mobile1" id="mobile1">
+                                                	<option value= <c:if test='${user.MOBILE1 eq 0}'>selected</c:if>>선택</option>
                                                     <option value=010 <c:if test='${user.MOBILE1 eq 010}'>selected</c:if>>010</option>
                                                     <option value=011 <c:if test='${user.MOBILE1 eq 011}'>selected</c:if>>011</option>
                                                     <option value=016 <c:if test='${user.MOBILE1 eq 016}'>selected</c:if>>016</option>
@@ -101,6 +104,7 @@
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
                                                 <select class="form-control col-3 float-left mr-3 validate phone1 phone-group" name="telno1" id="telno1" >
+                                                	<option value= <c:if test='${user.TELNO1 eq 0}'>selected</c:if>>선택</option>
                                                     <option value=02 <c:if test='${user.TELNO1 eq 02}'>selected</c:if>>02</option>
                                                     <option value=031 <c:if test='${user.TELNO1 eq 031}'>selected</c:if>>031</option>
                                                     <option value=032 <c:if test='${user.TELNO1 eq 032}'>selected</c:if>>032</option>
@@ -157,7 +161,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control error required string"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control error required validate string"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
@@ -167,7 +171,6 @@
                                             <th><label for="mobile">관리자여부</label></th>
                                             <td>
                                                 <select class="form-control float-left error required validate check" name="chkauth" id="chkauth">
-                                                	<option>선택</option>
                                                     <option value=10 <c:if test='${user.CHKAUTH eq 10}'>selected</c:if>>일반사용자</option>
                                                     <option value=20 <c:if test='${user.CHKAUTH eq 20}'>selected</c:if>>관리자사용자</option>
                                                 </select>
@@ -227,13 +230,15 @@
 		});
 		
 	});
-	$('#submit').click(function(e){
+	$('#userid').keyup(function(e){
 		id_check();
 	});
 	
 	function id_check(){
+		debugger;
 		var idcheck = $('#userid').val();
 		var check = $("#idcheck");
+		var text ="";
 		if(idcheck.length < 5){
 			if(check.val() != 1){
 				alert('5글자이상 입력해주세요 .');
@@ -246,11 +251,17 @@
 	            dataType: "json",
 	            success:function(data){
 	                if(data == 0){
-	                	alert('사용 가능한 ID 입니다.');
+	                	text = '사용 가능한 ID 입니다.';
+	                	$('#idCheckMsg').append(text);
+	                	$('#idCheckMsg').show();
 	                	check.val(0);
+	                	return true;
 	                }else{
-	                	alert('이미 존재하고 있는 ID 입니다.');
+	                	text = '이미 존재하고 있는 ID 입니다.';
+	                	$('#idCheckMsg').append(text);
+	                	$('#idCheckMsg').show();
 	                		check.val(1);
+	                		return false;
 	                }
 	            },
 	            error:function(request,status,error){

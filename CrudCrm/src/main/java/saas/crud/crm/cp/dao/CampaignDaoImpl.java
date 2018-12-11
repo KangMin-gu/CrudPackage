@@ -184,6 +184,24 @@ public class CampaignDaoImpl implements CampaignDao{
 		// TODO Auto-generated method stub
 		session.update("cp.stepUpdate",campaignDto);
 	}
+	@Override
+	public List<Map<String, Object>> campCalList(CampaignDto campaignDto) {
+		// TODO Auto-generated method stub
+		List<Map<String,Object>> campCalList = session.selectList("cp.calList",campaignDto);
+		return campCalList;
+	}
+	@Override
+	public void campSendType(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		session.update("cp.sendTypeUpdate",param);
+		
+	}
+	@Override
+	public List<Map<String, Object>> campContentsUseDescList(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		List<Map<String,Object>> contentsUseDescList = session.selectList("cp.contentsUseDescList",param);
+		return contentsUseDescList;
+	}
 	
 
 }

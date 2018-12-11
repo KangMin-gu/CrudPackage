@@ -31,9 +31,6 @@
                 <div class="col-lg-10">
                     <h2>라이센스 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/">메인</a>
-                        </li>
                         <li class="breadcrumb-item active">
                             <strong>라이센스 목록</strong>
                         </li>
@@ -79,7 +76,7 @@
                             <div class="overflow-x w-100 head">
                             <table class="table table-bordered table-hover">
                                 <colgroup>
-                            		<col style="width: 15px;">
+                            		<col style="width: 0px;">
                             		<col style="width: 100px;">
                             		<col style="width: 100px;">
                             		<col style="width: 100px;">
@@ -88,7 +85,7 @@
                             	</colgroup>  
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="i-checks" name=""></th>
+                                        <th></th>
                                         <th>라이센스명</th>
                                         <th>단가</th>
                                         <th>총사용량</th>
@@ -99,7 +96,7 @@
                                 <tbody>
                                 <c:forEach var="license" items="${license }">
                                     <tr value="${license.LICENSENO}">
-                                        <td><input type="checkbox" class="i-checks" name="licenseno" id="licenseno" value="${license.LICENSENO }"></td>
+                                        <td><input type="hidden" name="licenseno" id="licenseno" value="${license.LICENSENO }"></td>
                                         <td><a>${license.LICENSENAME}</td>
                                         <td>${license.LICENSECOST }</td>
                                         <td>${license.TOTALCNT }</td>
@@ -157,7 +154,7 @@
                             <div class="w-100 text-right mb-2">
                             	<button class="btn btn-primary" id="reset">초기화</button>
                             	<button class="btn btn-primary" id="create">추가</button>
-                            	<button class="btn btn-primary" id="save">저장</button>
+                            	<button class="btn btn-primary submit" id="save">저장</button>
                             	<button class="btn btn-primary" id="update">수정</button>
                             	<button class="btn btn-primary" id="cancel">취소</button>
                                 <button class="btn btn-primary" id="delete">삭제</button>
@@ -171,7 +168,7 @@
                                     <tbody>
                                         <tr>
                                             <th>라이센스명</th>
-                                            <td><input type="text" class="form-control required" name="licensename" id="licensename"></td>
+                                            <td><input type="text" class="form-control error validate required simple" name="licensename" id="licensename" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -187,7 +184,7 @@
                                             <th>라이센스 단가</th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required" name="licensecost" id="licensecost">
+                                                    <input type="text" class="form-control error validate required longnumber" name="licensecost" id="licensecost" value="">
                                                 </div>
                                             </td>
                                         </tr>
@@ -205,7 +202,7 @@
                                         <tr> 
                                         	<th class="border-top-0"><label for="isdelete">사용여부</label></th>
                                             <td>
-                                            	<select class="form-control col-12 float-left mr-12 required" name="isdelete" id="isdelete">
+                                            	<select class="form-control col-12 float-left mr-12" name="isdelete" id="isdelete">
                                                 	<option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                 	<option value=1 <c:if test='${menu.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select>

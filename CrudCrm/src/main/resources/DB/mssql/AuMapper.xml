@@ -28,10 +28,10 @@
 				AND ISDELETE = #{isdelete}
 			</if>
 			<if test="strdate != null">
-				AND REGDATE <![CDATA[>]]>=#{strdate}
+				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[>=]]> #{strdate}
 			</if>
 			<if test="enddate != null">
-				AND REGDATE <![CDATA[<]]>=#{enddate}
+				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[<=]]> #{enddate}
 			</if>
 			) X 
 		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}

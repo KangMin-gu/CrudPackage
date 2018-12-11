@@ -15,6 +15,7 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 </head>
 
 <body>
@@ -57,12 +58,15 @@
                         
                         <div class="ibox-content row">
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                        		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-                        			<a class="alert-link" href="#">
-                        				<span id="showMsg"></span>
-                        			</a>
-                        		</div>
-                        			
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(회원사명 : 한글,영어,숫자로 입력해 주세요. 영업담당자 : 지정해주세요.) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(회원사명 : 한글,영어,숫자로 입력해 주세요. 영업담당자 : 지정해주세요.) </strong>
+									</span>
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                        	</div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+									<Strong><span id="showMsg"></span></Strong>				
+	                        	</div>
                             	<div class="w-100 text-right mb-2">
                                 	<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">취소</a>
                                 	<button class="btn btn-primary submit">저장</button>
@@ -77,7 +81,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control error required validate name" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control error required validate simple" maxlength ="30" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -93,7 +97,7 @@
                                             <th><label for="bsno">사업자번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="bsno" id="bsno" value="${memCompany.BSNO}">
+                                                    <input type="text" class="form-control validate bs" name="bsno" id="bsno" value="${memCompany.BSNO}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -109,7 +113,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">법인번호</label></th>
-                                            <td><input type="text" class="form-control" name="incno" id="incno" value="${memCompany.INCNO}"></td>
+                                            <td><input type="text" class="form-control validate corp" name="incno" id="incno" value="${memCompany.INCNO}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -188,7 +192,12 @@
                                         <tr>
                                             <th><label for="fregdate">최초가입일</label></th>
                                             <td>
-                                                <input type="text" class="form-control date" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                                <div class="input-group">
+                                            		<span class="input-group-addon">
+                                    					<span class="fa fa-calendar"></span>
+                                					</span>
+                                            		<input type="text" class="form-control date" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                            	</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -237,7 +246,6 @@
                                             </th>
                                             <td>
                                                <select class="form-control float-left error required validate check" name="isdelete" id="isdelete">
-                                                    <option value="">선택</option>
                                                     <option value=0 <c:if test='${memCompany.ISDELETE eq 0}'>selected</c:if>>사용</option>
                                                     <option value=1 <c:if test='${memCompany.ISDELETE eq 1}'>selected</c:if>>미사용</option>
                                                 </select>
@@ -268,9 +276,9 @@
                                         <tr>
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
-                                                <div class="input-group owner">
-                                                    <input type="text" class="form-control error required name" autocomplete="off" name="owner_" id="owner_" value="${memCompany.owner_ }">
-                                                    <input type="hidden" name="owner" id="owner" value="${memCompany.ower }">
+                                                <div class="input-group owner" id="owner_">
+                                                    <input type="text" class="form-control error required simple" autocomplete="off" name="owner_" value="${memCompany.owner_ }">
+                                                    <input type="hidden" name="owner" value="${memCompany.ower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

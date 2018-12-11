@@ -61,14 +61,12 @@
       			
       			
                 <c:if test="${sv  eq '30000' }">
-	                <li <c:if test="${fn:substring(urls, 0, 8)  eq '/servive' }"> class="active"</c:if>>
+	                <li <c:if test="${fn:substring(urls, 0, 8)  eq '/service' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">서비스관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="${pageContext.request.contextPath}/service">서비스 접수</a></li>
-	                        <li><a href="form_basic.html">서비스 처리</a></li>
 	                        <li><a href="form_basic.html">서비스 이관</a></li>
-	                        <li><a href="form_basic.html">서비스 일정</a></li>   
-	                        <li><a href="form_basic.html">서비스 포탈</a></li>                                              
+	                        <li><a href="form_basic.html">서비스 일정</a></li>
 	                    </ul>
 	                </li>
                 </c:if>
@@ -80,7 +78,7 @@
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="${pageContext.request.contextPath}/campaign">캠페인 관리</a></li>
 	                        <li><a href="${pageContext.request.contextPath}/campaign/contents">양식 관리</a></li>
-	                        <li><a href="form_basic.html">캠페인 일정</a></li>                                     
+	                        <li><a href="${pageContext.request.contextPath}/campaign/cal">캠페인 일정</a></li>                                     
 	                    </ul>
 	                </li>
                 </c:if>
@@ -120,8 +118,6 @@
 			       				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>
 			       				<li><a href="${pageContext.request.contextPath}/ad/code">회원사 코드관리</a></li>
 			       				<li><a href="${pageContext.request.contextPath}/ad/company/${sessionScope.SITEID}">회원사 관리</a></li>
-			       				<li><a href="form_basic.html">서비스 관리</a></li>
-			       				<li><a href="form_basic.html">VOC 관리</a></li>
 			       			</ul>
 			       		</li>
 		         	</c:if>

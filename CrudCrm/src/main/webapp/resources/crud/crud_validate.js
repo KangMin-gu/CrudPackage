@@ -13,10 +13,11 @@
 	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
 		//유효성 검사
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{1,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
+		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
 		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
 		var simplePattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,30}$/; //한글 영문 숫자 기호 1~30자리
 		var numberPattern = /^[1-9]{1,2}$/; // 0을 제외한 1~2자리숫자
+		var longnumberPattern = /^[0-9]{1,10}$/; // 0을 포함한 10자리숫자
 		var checkPattern = /^[0-9]{1,2}$/; // 0을 포함한 1자리 숫자
 		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
 		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
@@ -33,68 +34,81 @@
 		debugger;//*******테스트종료시 반드시삭제*******
 		
 		var res;//true or false
-		var value = $('#'+id).val();
+		var value = $('[name="'+id+'"]').val();
+		var length = $('[name="'+id+'"]').length;
+		var check;
+		// license 부분에서 검색 조건과 데이터 저장하는 body 부분과 name 값이 동일해서 해당 부분 확인해서 check 하는 걸로 변경..
+		for(i = 0 ; i < length ; i++){
+			check = $('[name="'+id+'"]:eq('+i+')').hasClass("validate");
+			if(check){
+				value = $('[name="'+id+'"]:eq('+i+')').val();
+			}
+		}
 		var msg;
-		if( $('#'+id).hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
+		if( $('[name="'+id+'"]').hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
 			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
 			msg = '<한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
 		
-		}else if( $('#'+id).hasClass('phone1') ){
+		}else if( $('[name="'+id+'"]').hasClass('phone1') ){
 			res = phone1Pattern.test(value);
 			msg = '숫자 2~3 자리를 입력해 주세요.';//이 문구 출력	
 			
-		}else if( $('#'+id).hasClass('phone2') ){
+		}else if( $('[name="'+id+'"]').hasClass('phone2') ){
 			res = phone2Pattern.test(value);
 			msg = '숫자 3~4 자리를 입력해 주세요.';//이 문구 출력
 			
-		}else if( $('#'+id).hasClass('phone3') ){
+		}else if( $('[name="'+id+'"]').hasClass('phone3') ){
 			res = phone3Pattern.test(value);
 			msg = '숫자 4 자리를 입력해 주세요.';//이 문구 출력	
 			
-		}else if( $('#'+id).hasClass('addr') ){
+		}else if( $('[name="'+id+'"]').hasClass('addr') ){
 			res = addrPattern.test(value);
 			msg = '한글,영어,숫자,기호로 입력해 주세요.(특수문자x)';//이 문구 출력
 			
-		}else if( $('#'+id).hasClass('url') ){
+		}else if( $('[name="'+id+'"]').hasClass('url') ){
 			res = domainPattern.test(value);
 			msg = 'http(s):// 를 제외한 url 형식으로 입력해 주세요 ex) www.crudsystem.co.kr ';//이 문구 출력
 			
-		}else if( $('#'+id).hasClass('email') ){
+		}else if( $('[name="'+id+'"]').hasClass('email') ){
 			res = emailPattern.test(value);
 			msg = 'email 형식에 맞게 입력해 주세요 ex) sdw@crudsystem.co.kr ';//이 문구 출력
 			
-		}else if( $('#'+id).hasClass('simple') ){
+		}else if( $('[name="'+id+'"]').hasClass('simple') ){
 			res = simplePattern.test(value);
 			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
 		
-		}else if( $('#'+id).hasClass('number') ){
+		}else if( $('[name="'+id+'"]').hasClass('number') ){
 			res = numberPattern.test(value);
 			msg = '숫자로 입력해 주세요.';//이 문구 출력	
 		
-		}else if( $('#'+id).hasClass('string') ){
+		}else if( $('[name="'+id+'"]').hasClass('longnumber') ){
+			res = longnumberPattern.test(value);
+			msg = '숫자로 입력해 주세요.';//이 문구 출력	
+		
+		}else if( $('[name="'+id+'"]').hasClass('string') ){
 			res = stringPattern.test(value);
 			msg = '잘못된 문자열이 입력되었습니다. 학인해주세요';//이 문구 출력	
 		
-		}else if( $('#'+id).hasClass('check') ){
+		}else if( $('[name="'+id+'"]').hasClass('check') ){
 			res = checkPattern.test(value);
 			msg = '사용여부 확인 부탁드립니다.';//이 문구 출력	
 		
-		}else if( $('#'+id).hasClass('cost') ){
+		}else if( $('[name="'+id+'"]').hasClass('cost') ){
 			res = costPattern.test(value);
 			msg = '1~15자리의 숫자를 입력해주세요.';//이 문구 출력	
 		
-		}else if( $('#'+id).hasClass('percent') ){
+		}else if( $('[name="'+id+'"]').hasClass('percent') ){
 			res = percentPattern.test(value);
 			msg = '0~100까지의 정수를 입력해주세요';//이 문구 출력	
 		
-		}else if( $('#'+id).hasClass('corp') ){//법인번호는 999999-999999 형식  - 제거 후 유효성검사					
+		}else if( $('[name="'+id+'"]').hasClass('corp') ){//법인번호는 999999-999999 형식  - 제거 후 유효성검사					
 			if(value.length==13){ 
 				var temp = value.replace('-','');
 				value = temp;
 			}		
 			res = corpnoPattern.test(value);
 			msg = '법인번호 12자리를 확인 해주세요';//이 문구 출력	
-		}else if( $('#'+id).hasClass('bs') ){//사업자번호는 999-99-99999  형식  - 제거 후 유효성검사		
+		}else if( $('[name="'+id+'"]').hasClass('bs') ){//사업자번호는 999-99-99999  형식  - 제거 후 유효성검사		
 			if(value.length==12){ // - 제거
 				var temp = value.replace(/\-/g,'');
 				value = temp;
@@ -105,16 +119,16 @@
 		}
 		
 		
-		msg = $('#'+id).parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
+		msg = $('[name="'+id+'"]').parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
 		reqMsg = "<strong class='text-danger'> "+ msg.replace('*','') +"</strong>";//필수값 메시지 
 		
 		if(res){//유효성 통과시
-			$('#'+id).removeClass('error');//빨간 테두리 삭제
-		
+			$('[name="'+id+'"]').removeClass('error');//빨간 테두리 삭제
+			
 		}else{//유효성 실패시
-			$('#'+id).addClass('error');//빨간 테두리 생성
+			$('[name="'+id+'"]').addClass('error');//빨간 테두리 생성
 			$('#msgDiv').addClass(id);//에러 메시지에 현재 id 값을 기록한다.  
-			if( $('#'+id).hasClass('required') ){ //필수 값이라면 유효성실패시 submit 버튼 비활성화
+			if( $('[name="'+id+'"]').hasClass('required') ){ //필수 값이라면 유효성실패시 submit 버튼 비활성화
 				
 				$('#reqDefaultMsg').empty();
 				$('#reqDefaultMsg').append(reqMsg);				
@@ -133,12 +147,12 @@
 	//필수 값 실시간체크
 	function changeDetection(id){
 		var res;
-		if( $('#'+id).hasClass('required') == true ){//필수값이면 무조건 유효성검사 + 서브밋 활성화 메서드실행
+		if( $('[name="'+id+'"]').hasClass('required') == true ){//필수값이면 무조건 유효성검사 + 서브밋 활성화 메서드실행
 			checkVal(id);
 			enableSubmit();
 		
 		}else{//필수값이 아니라면 공백값을 유효성 통과로 간주
-			if ( $('#'+id).val() == '' ){
+			if ( $('[name="'+id+'"]').val() == '' ){
 				res = true;
 			
 			}else{
@@ -187,13 +201,12 @@
 
 //********필수 값 실시간 체크*********************************        	      	
 	$('.validate').keyup(function(e){
-		var id = e.target.id;
+		var id = e.target.name;
 		changeDetection(id);
 	});
 	
-	
 	$('.validate').change(function(e){
-		var id = e.target.id;
+		var id = e.target.name;
 		changeDetection(id);
 	});
 //*********************************************************	
@@ -209,18 +222,18 @@
 		
 		for(var i=0; i<length ; i++){//validate 클래스의 배열만큼 반복문
 			id = $('.validate:eq('+i+')' ).attr('id'); 
-			value = $('#'+id).val(); 
+			value = $('[name="'+id+'"]').val(); 
 			
-			if( $('#'+id).hasClass('required') ){//필수값이면 무조건 유효성검사 
+			if( $('[name="'+id+'"]').hasClass('required') ){//필수값이면 무조건 유효성검사 
 				if(!checkVal(id)){// 유효성 통과 실패시 아래 행 실행
 					//$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-        			$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
+        			$('[name="'+id+'"]').focus();//에러난 위치로 마우스 포인터 이동
         			return false;//메서드 종료
 				}
-			}else if( $('#'+id).hasClass('phone-group') ){//폰그룹-전화번호 유효성 			
+			}else if( $('[name="'+id+'"]').hasClass('phone-group') ){//폰그룹-전화번호 유효성 			
 				
 				if( value == ''){
-					$('#'+id).removeClass('error');
+					$('[name="'+id+'"]').removeClass('error');
 				}else{//값이 존재하면 아래 행 실행
 					var temp = id.substr(0,id.length-1);// ex) mobile1 -> mobile 
 					
@@ -240,7 +253,7 @@
 					if(!checkVal(id)){
 						$('#reqMsgDiv').hide();//필수값 성공 div 비활성화
 						$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
-						$('#'+id).focus();//에러난 위치로 마우스 포인터 이동
+						$('[name="'+id+'"]').focus();//에러난 위치로 마우스 포인터 이동
 						return false;//메서드 종료
 					}
 				}

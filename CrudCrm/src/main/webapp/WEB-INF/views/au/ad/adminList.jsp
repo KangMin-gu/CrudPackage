@@ -131,7 +131,7 @@
                                 <a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">삭제</button>
+                                <button class="btn btn-primary delete">삭제</button>
                                 </div>
                              
                             </div>
@@ -175,11 +175,10 @@
                             </table>
                             </div>
                             <div class="m-auto">
-                                <ul class="pagination">
+                            	<ul class="pagination">
                                     <c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
-												<li><a
-													href="${pageContext.request.contextPath}/user?pageNum=${page.startPageNum-1 }&">&laquo;</a>
+												<li><a onclick="javascript:paging(${page.startPageNum-1})">&laquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -192,18 +191,16 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="footable-page active"><a
-														href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
+														onclick="javascript:paging(${i})">${i }</a></li>
 												</c:when>
 												<c:otherwise>
-													<li><a
-														href="${pageContext.request.contextPath}/user?pageNum=${i }">${i }</a></li>
+													<li><a onclick="javascript:paging(${i})">${i }</a></li>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
-												<li><a
-													href="${pageContext.request.contextPath}/user?pageNum=${page.endPageNum+1 }">&raquo;</a>
+												<li><a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>

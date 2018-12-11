@@ -41,3 +41,6 @@
 <!-- crud js -->	
 <script
 	src="${pageContext.request.contextPath}/resources/crud/crud_common.js"></script>
+	<!--  crud 유효성 js -->
+<script
+	src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>

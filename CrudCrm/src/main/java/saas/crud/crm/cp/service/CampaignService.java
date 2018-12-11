@@ -50,4 +50,8 @@ public interface CampaignService {
 	public Map<String,Object> campTabTargetCustList(HttpServletRequest request, int campNo);
 	
 	public List<Map<String,Object>> campTargetRead(HttpServletRequest request, int campNo);
+	
+	public ModelAndView campCalList(HttpServletRequest request);
+	
+	public List<Map<String,Object>> campContentsUseDescList(HttpServletRequest request, int id);
 }

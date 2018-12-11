@@ -82,7 +82,7 @@
 			SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="cstname != null">
-			AND CSTNAME like '%'+#{cstname}+'%'
+			AND CUSTNAME like '%'+#{cstname}+'%'
 			</if>
 	</select>
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
@@ -99,7 +99,7 @@
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="cstname != null">
-			AND A.CSTNAME like '%'+#{cstname}+'%'
+			AND A.CUSTNAME like '%'+#{cstname}+'%'
 			</if>
 		) T
 	WHERE 

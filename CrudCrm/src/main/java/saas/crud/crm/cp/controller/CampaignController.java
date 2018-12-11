@@ -1,5 +1,6 @@
 package saas.crud.crm.cp.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -242,6 +243,7 @@ public class CampaignController {
 		mView.setViewName("redirect:/campaign/contents");
 		return mView;
 	}
+	// 서식 팝업
 	@RequestMapping(value="/popcontents", method=RequestMethod.GET)
 	public ModelAndView authPopContents(HttpServletRequest request) {
 		ModelAndView mView = campaignService.campContentsList(request);
@@ -300,6 +302,24 @@ public class CampaignController {
 		List<Map<String,Object>> targetList = campaignService.campTargetRead(request, campNo);
 		
 		return targetList;
+		
+	}
+	
+	//캘린더메인-리스트
+	@RequestMapping(value="/campaign/cal",method=RequestMethod.GET)
+	public ModelAndView authsaCalendar(HttpServletRequest request) {
+		ModelAndView mView = campaignService.campCalList(request);
+		mView.setViewName("cp/calendar/campCalMain");
+		return mView;
+	}
+	
+	@RequestMapping(value="/campContents/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String,Object>> authCampContents(HttpServletRequest request,@PathVariable int id){
+		
+		List<Map<String,Object>> contents = campaignService.campContentsUseDescList(request, id);
+		
+		return contents;
 		
 	}
 	

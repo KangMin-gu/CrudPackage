@@ -467,19 +467,12 @@
 	,CONCAT(ENDDATE,' ',ENDTIME) AS 'end'
 	,SCHNAME AS title
 	,COLOR AS color
-	FROM TB210080
+	FROM Crud_SaaS.dbo.TB210080
 
 	WHERE 
 		ISDELETE = 0
 		AND SITEID = #{siteid}
-		AND 		
-			(
-			SCHNO NOT IN 
-				(SELECT SCHNO FROM TB210080 WHERE ISNULL(PRIVATE,0) = 1)
-			OR
-			SCHNO IN 
-				(SELECT SCHNO FROM TB210080 WHERE ISNULL(PRIVATE,0) = 1 AND OWNER = #{userno})
-			)
+		AND ( OWNER = #{owner} OR ISNULL(PRIVACY,0) = 0)
 			
 	</select>
 	
@@ -609,7 +602,7 @@
 	<select id="salesComSchList" parameterType="hashMap" resultType="hashMap">
 		
 	SELECT 
-	SCHNO AS id
+	COMSCHNO AS id
 	,SCHNAME AS title
 	,COLOR AS color
 	FROM TB210120

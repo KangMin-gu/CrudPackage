@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import saas.crud.crm.ce.CrudEngine;
@@ -206,8 +208,14 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public String svcSalesSchList(Map<String, Object> schVal) {
 		List<Map<String, Object>> schList = salesDao.salesSchList(schVal);
-		Gson gson = new Gson();
-		String jsonStr = gson.toJson(schList);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(schList);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return jsonStr;
 	}
 	

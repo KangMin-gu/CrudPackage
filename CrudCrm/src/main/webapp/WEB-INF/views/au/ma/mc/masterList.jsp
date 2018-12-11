@@ -134,7 +134,7 @@
                                 <a href="${pageContext.request.contextPath}/ma/company/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary">삭제</button>
+                                <button class="btn btn-primary delete">삭제</button>
                                 </div>
                              
                             </div>
@@ -154,7 +154,7 @@
                             	</colgroup>  
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="i-checks" name=""></th>
+                                        <th><input type="checkbox" class="i-checks" id="icheckAll" name="icheckAll"></th>
                                         <th>회원사명</th>
                                         <th>대표자명</th>
                                         <th>사업자번호</th>
@@ -183,7 +183,6 @@
                                 </c:forEach>
                                        
                                 </tbody>
-                                <tfoot>
                             </table>
                             </div>
                             <div class="m-auto">
@@ -212,7 +211,7 @@
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
-												<li><a onclick="javascript:paging(${page.endPageNum+1 })"></a>
+												<li><a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>

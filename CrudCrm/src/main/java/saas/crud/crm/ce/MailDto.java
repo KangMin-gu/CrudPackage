@@ -1,6 +1,6 @@
-package saas.crud.crm.email.dto;
+package saas.crud.crm.ce;
 
-public class EmailDto {
+public class MailDto {
 
     private int emaillogid;
     private int siteid;
@@ -47,9 +47,9 @@ public class EmailDto {
     private int dayvalue;
     private String senddate;
 
-    public EmailDto() { }
+    public MailDto() { }
 
-    public EmailDto(int emaillogid, int siteid, int cstid, int caseid, int userid, int subjectid, String fromemail, String fromname, String toemail, String ccemail, String bccemail, String subject, String content, int fileid, String stbdatetime, String schdatetime, String senddatetime, String rltdate, String rltcode, String rltcodeext, int owner, String logdesc, int ntcid, int adminpass, String regdate, int reguser, String edtdate, int edtuser, int chksendmail, String tonameemail, String ccnameemail, int resendid, String monthdate, String isValid, int year, int month, int date, int hour, int dayOfWeek, String kordayOfWeek, String day, String today, int dayvalue, String senddate) {
+    public MailDto(int emaillogid, int siteid, int cstid, int caseid, int userid, int subjectid, String fromemail, String fromname, String toemail, String ccemail, String bccemail, String subject, String content, int fileid, String stbdatetime, String schdatetime, String senddatetime, String rltdate, String rltcode, String rltcodeext, int owner, String logdesc, int ntcid, int adminpass, String regdate, int reguser, String edtdate, int edtuser, int chksendmail, String tonameemail, String ccnameemail, int resendid, String monthdate, String isValid, int year, int month, int date, int hour, int dayOfWeek, String kordayOfWeek, String day, String today, int dayvalue, String senddate) {
         this.emaillogid = emaillogid;
         this.siteid = siteid;
         this.cstid = cstid;

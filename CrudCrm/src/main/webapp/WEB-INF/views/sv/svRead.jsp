@@ -80,7 +80,7 @@
                                     <tbody>
                                         <tr>
                                             <th>거래처명</th>
-                                            <td>${serviceInfo.SITENAME}</td>
+                                            <td>${serviceInfo.CLINAME}</td>
                                         </tr>
                                         <tr>
                                             <th>대표자명</th>

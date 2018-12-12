@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
 import saas.crud.crm.cu.dao.CustDao;
+import saas.crud.crm.sa.dao.ClientDao;
 
 
 
@@ -27,6 +28,9 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
 	private CustDao custDao;
+	
+	@Autowired
+	private ClientDao clientDao;
 	
 	@Autowired
 	private CrudEngine crud;
@@ -181,6 +185,19 @@ public class CommonServiceImpl implements CommonService {
 		
 		Map<String,Object> custDetail = custDao.custDetail(cstVal);
 		return custDetail;
+	}
+
+	@Override
+	public Map<String, Object> svcPopGetClientDetail(HttpServletRequest request, int cliNo) {
+		// TODO Auto-generated method stub
+		Map<String,Object> cliVal = new HashMap<>();
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		cliVal.put("siteid", siteId);
+		cliVal.put("clino", cliNo);
+		
+		Map<String,Object> cliDetail = clientDao.clientDetail(cliVal);
+		return cliDetail;
 	}
 
 }

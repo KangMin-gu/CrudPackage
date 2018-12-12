@@ -87,10 +87,10 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="clino">거래처명</label></th>
-                                            <td>
-                                            	<div class="input-group cli">
-                                                    <input type="text" class="form-control" name="clino_" id="clino_" value="${serviceInfo.CLINO_ }">
-                                                    <input type="hidden" class="form-control" name="clino" id="clino" value="0">
+                                            <td class="border-top-0">
+                                                <div class="input-group cli" id="clino_">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="clino_" value="${serviceInfo.CLINO_ }">
+                                                    <input type="hidden" class="reset" name="clino" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -103,10 +103,10 @@
                                         </tr>
                                         <tr>
                                             <th><label for="custname">고객명</label></th>
-                                            <td>
-                                            	<div class="input-group cust">
-                                                    <input type="text" class="form-control" name="custno_" id="custno_" value="${serviceInfo.CUSTNAME }">
-                                                    <input type="hidden" class="form-control" name="custno" id="custno" value="0">
+                                            <td class="border-top-0">
+                                                <div class="input-group cust" id="custno_">
+                                                    <input type="text" class="form-control reset" autocomplete="off" name="custno_" value="${serviceInfo.CUSTNAME }">
+                                                    <input type="hidden" class="reset" name="custno" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

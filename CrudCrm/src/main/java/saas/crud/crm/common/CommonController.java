@@ -82,8 +82,9 @@ public class CommonController {
 	}
 	
 	//popcust에서 tr 값 클릭했을때 데이터를 화면에 뿌려주기위해서 처리
-	@ResponseBody
+	
 	@RequestMapping(value="/popcust/{custNo}", method=RequestMethod.GET)
+	@ResponseBody
 	public Map<String,Object> authpopCustDetail(HttpServletRequest request,@PathVariable int custNo){
 		
 		Map<String,Object> CustDetail = commonService.svcPopGetCustDetail(request,custNo);
@@ -91,8 +92,15 @@ public class CommonController {
 		
 	}
 	
+	//popclient에서 tr 값 클릭했을때 데이터를 화면에 뿌려주기위해서 처리
 	
-
-
+	@RequestMapping(value="/popclient/{cliNo}", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authPopClientDetail(HttpServletRequest request,@PathVariable int cliNo){
+		
+		Map<String,Object> clientDetail = commonService.svcPopGetClientDetail(request,cliNo);
+		return clientDetail;
+		
+	}
 
 }

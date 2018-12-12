@@ -189,10 +189,16 @@
 	
 	//팝업 거래처 이름 선택.
 	function parentCliname(tr){	
-		var parentid = $('#parentid').val();	
-		opener.$('[name="'+parentid+'"]').next().val(tr.getAttribute("value"));		
+		var parentid = $('#parentid').val();
+		var id = tr.getAttribute("value");
+		opener.$('[name="'+parentid+'"]').next().val(id);		
 		opener.$('[name="'+parentid+'"]').val(tr.children.cliname.textContent);		
-		window.close();
+		
+		popClientClick(id);
+
+		setTimeout(function(){
+			window.close();
+		},300);
 	}
 	
 	function parentCustname(tr){	
@@ -311,8 +317,30 @@
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
-
-		
+	}
+	function popClientClick(id){
+		$.ajax({
+	        url: "/popclient/"+id,
+	        method: "GET",
+	        dataType: "json",
+	        success: function (data) {
+	        	var TEL = data.MOBILE1 +'-'+ data.MOBILE2 +'-'+data.MOBILE3
+	        	opener.$('#bsno').val('');
+	        	opener.$('#incno').val('');
+	        	opener.$('#prsdname').val('');
+	        	opener.$('#clitelno').val('');
+	        	opener.$('#homepage').val('');
+	        	
+	        	opener.$('#bsno').val(data.BSNO);
+	        	opener.$('#incno').val(data.CORP_SN);
+	        	opener.$('#prsdname').val(data.PRSDNAME);
+	        	opener.$('#clitelno').val(TEL);
+	        	opener.$('#homepage').val(data.HOMEPAGE);
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
 	}
 /********************************************************************/	
 	//파일서치키 생성

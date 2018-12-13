@@ -15,7 +15,7 @@ public class MailDaoImpl implements MailDao {
 
     //이메일 배치 코드10 로우가져오기
     @Override
-    public List<Map<String, Object>> Alltarget(MailDto emailDto){
+    public List<Map<String, Object>> allTarget(MailDto emailDto){
 
         List<Map<String, Object>> list = session.selectList("email.allTarget", emailDto);
 

@@ -21,6 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -32,36 +33,53 @@ public class MailScheduler {
 	@Autowired
 	private MailDao mailDao;
 	
-	//	@Scheduled(cron="10 0/1 * * * ?")
+	@Scheduled(cron="10 0/1 * * * ?")
 	public void sendmail() throws Exception {
 		boolean isValid = false;
 
 		//날짜비교
-		Date datetime = new Date();
-		SimpleDateFormat formattime = new SimpleDateFormat("yyyy-MM-dd");
-		String today = formattime.format(datetime);
-		Calendar cal = Calendar.getInstance();
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		Date dateTime = new Date();
+		//SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		//SimpleDateFormat formatTime = new SimpleDateFormat("H:mm");
+		SimpleDateFormat formatTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//String today = formatDate.format(dateTime);
+		//String currentTime = formatTime.format(dateTime);
+		String today = formatTime.format(dateTime);
+		//Calendar cal = Calendar.getInstance();
+		//int hour = cal.get(Calendar.HOUR_OF_DAY);
+		
 		MailDto emailDto = new MailDto();
-		emailDto.setToday(today);
-
-		List<Map<String, Object>> list = mailDao.Alltarget(emailDto);
+		emailDto.setRltdate(today);
+		
+		List<Map<String, Object>> list = mailDao.allTarget(emailDto);//미발송 메일 100건 리스트 긁어오기
 
 		for(int i=0; i<list.size(); i++){
-			String fromemail = list.get(i).get("FROMEMAIL").toString();
-			String toemail =  list.get(i).get("TOEMAIL").toString();
-			String subject =  list.get(i).get("SUBJECT").toString();
-			String content =  list.get(i).get("CONTENT").toString();
-			String ccemail =  (String) list.get(i).get("CCEMAIL");
-			String bccemail =  (String) list.get(i).get("BCCEMAIL");
-			int emaillogid = Integer.parseInt(list.get(i).get("EMAILLOGID").toString());
-			String senddatetime =  list.get(i).get("SENDDATETIME").toString();
-			int time = Integer.parseInt(list.get(i).get("TIME").toString());
-
-			if(today.equals(senddatetime) && time <= hour && time == 0){
-				send(subject,fromemail,content,toemail,ccemail,bccemail);
+			String fromEmail = list.get(i).get("FROMEMAIL").toString(); //보낸이
+			String toEmail =  list.get(i).get("TOEMAIL").toString(); //받는이 
+			String subject =  list.get(i).get("SUBJECT").toString(); //제목
+			String content =  list.get(i).get("CONTENT").toString(); //내용
+			String ccEmail =  (String) list.get(i).get("CCEMAIL"); //참조
+			String bccEmail =  (String) list.get(i).get("BCCEMAIL"); //숨은참조
+			int emailLogId = Integer.parseInt(list.get(i).get("EMAILLOGID").toString()); //이메일로그pk
+			String sendDate = list.get(i).get("RLTDATE").toString();
+			//String sendDate =  list.get(i).get("SENDDATETIME").toString(); //보낸날짜
+			//int time = Integer.parseInt(list.get(i).get("TIME").toString()); //시간
+			//String date = formatTime.format(sendDate);
+			//String time = formatTime.format(sendDate);
+			//String date = formatDate.format(sendDate);
+			/*
+			if(today.equals(date) &&  ){
+				send(subject,fromEmail,content,toEmail,ccEmail,bccEmail);
 				isValid = true;
-				emailDto.setEmaillogid(emaillogid);
+				emailDto.setEmaillogid(emailLogId);
+				UpdateState(isValid, emailDto);
+			}
+			*/
+			int compare = sendDate.compareTo(today);
+			if(compare == -1) {
+				send(subject,fromEmail,content,toEmail,ccEmail,bccEmail);
+				isValid = true;
+				emailDto.setEmaillogid(emailLogId);
 				UpdateState(isValid, emailDto);
 			}
 		}
@@ -79,7 +97,7 @@ public class MailScheduler {
 
 		// smtp 연결설정 192.168.0.32 / 182.231.77.200 / 192.168.219.102
 		Properties properties = new Properties();
-		properties.setProperty("mail.smtp.host", "192.168.0.32");
+		//properties.setProperty("mail.smtp.host", "192.168.1.32");
 		properties.setProperty("mail.smtp.port", "25");
 		properties.setProperty("mail.transport.protocol", "smtp");
 		properties.setProperty("mail.debug", "true");
@@ -132,7 +150,7 @@ public class MailScheduler {
 	private void UpdateState(Boolean isValid, MailDto emailDto) {
 
 		if (isValid == true) {
-			String rltcode = "20";
+			int rltcode = 20;
 			emailDto.setRltcode(rltcode);
 			mailDao.UpdateMailState(emailDto);
 		}

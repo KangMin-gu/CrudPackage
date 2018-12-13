@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="saas.crud.crm.email.dto.EmailDto" alias="emailDto" />
+		<typeAlias type="saas.crud.crm.ce.MailDto" alias="emailDto" />
 		<typeAlias type="saas.crud.crm.au.dto.UserDto" alias="userDto" />
 		<typeAlias type="saas.crud.crm.au.dto.MemCompanyDto" alias="memCompanyDto" />
 		<typeAlias type="saas.crud.crm.nt.dto.NoteDto" alias="noteDto" />

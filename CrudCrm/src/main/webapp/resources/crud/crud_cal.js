@@ -27,15 +27,13 @@
 	$('#external-events div.external-event').each(function() {
 
 		// store data so the calendar knows to render an event upon drop
-		$(this).data('event', {
-			
+		$(this).data('event', {			
 			title: $.trim($(this).text()), // use the element's text as the event title
 			stick: true // maintain when user navigates (see docs on the renderEvent method)
 		});
 
 		// make the event draggable using jQuery UI
-		$(this).draggable({
-
+		$(this).draggable({	
 			zIndex: 1111999,
 			revert: true,      // will cause the event to go back to its
 			revertDuration: 0  //  original position after the drag
@@ -61,14 +59,59 @@
 		editable: true, //false - 일정 수정 안됨. 
 
 		droppable: true, // false - 드래그 박스의 일정 캘린더로 이동이 안됨.  
-
-		drop: function() { //드래그 박스의 일정 캘린더로 드랍시 발생 function 
-			console.log('drop the div');
-
-			if ($('#drop-remove').is(':checked')) { //드래그박스에서 삭제버튼이 체크 되어있다면                     
-				$(this).remove(); //캘린더에 일정 드랍 후 드래그 박스 목록에서 삭제.
-			}
+				
+		drop: function(event) { //드래그 박스의 일정 캘린더로 드랍시 발생 function 
+			debugger;
+						
+			var tempDay = event.calendar(' ');
+			var yyyy = tempDay.substr(6,4);
+			var mm = tempDay.substr(0,2);
+			var dd = tempDay.substr(3,2);
+			var startdate = yyyy+'-'+mm+'-'+dd; //클릭한 날짜를 yyyy-mm-dd형식으로 변환
+			
+			console.log(startdate);
+			
+			var idx = this.id.substr(6);//this.id => 'status'+인덱스번호  형식 status의 문자열을 날리고 뒤의 인덱스 번호만 남긴다.
+			
+			var id = $('#id'+idx).val();//인덱스 번호로 hidden값에 담겨있는 key값을 꺼내온다.  
+			var urlStr = "/sales/cal/com/post/"+id;//호출할 url
+			var color = $('#color'+idx).val();
+			$('#hiddenId').val(id);
+			$('#hiddenColor').val(color);		
+			
+			//위에서 얻어온 값 json prm 으로 변환
+			var obj = new Object();
+			obj.comschno = id;
+			obj.startdate = startdate;			
+			
+			var jsonData = JSON.stringify(obj);
+			
+			$.ajax({
+				url: urlStr,
+				type: 'post',
+				dataType: 'json',
+				data: jsonData,
+				processData: false, 
+				contentType: "application/json; charset=UTF-8", 
+				
+				success: function(result){
+					alert('ajax');
+					$('#hiddenId').val(100);//test		
+				},
+				error:function(){
+					alert('fail');	
+				}
+			});
+			
+								
 		},
+		
+		eventReceive: function(event){
+		   debugger;
+		   alert('E.receiver');
+	       event.color = $('#hiddenColor').val();
+	       $('#calendar').fullCalendar('updateEvent',event)
+	     },
 		
 		
 		//한글화
@@ -101,8 +144,6 @@
 			var id = event.id;
 			openNewWindow("캘린더상세","/sales/cal/view/"+id,"",600,700);
 			
-			//event.title = "CLICKED!"; 
-			//$('#calendar').fullCalendar('renderEvent', event);
 		},
 		
 		eventDrop: function(event, delta, revertFunc) {
@@ -139,14 +180,14 @@
 
 					success: function(result){         		    
 						console.log(result);
+						
 					},
 					error:function(){
 						alert('fail');	
+						
 					}
 				});
-				
-				
-				
+											
 			}
 			
 		},

@@ -50,18 +50,19 @@ body {
 						
 						<div class="col-sm-12 col-xs-12 p-0 float-left">
 							<form:form action="/popowner" method="GET">
-								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								 <div class="form-group  row"><label class="col-sm-12 col-form-label">담당자명</label>
-                                    <div class="col-sm-12">
-                                    	<input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
-                                    </div>
+							<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
+							<div class="form-group  row"><label class="col-sm-12 col-form-label">담당자명</label>
+                                <div class="col-sm-12">
+                                   	<input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
                                 </div>
-							</form:form>
+                             </div>
+							
 						</div>
 						<div class="w-100 text-right">
 							<button type="submit" class="btn btn-primary" data-style="zoom-in" >검 색</button><br><br>
+							</form:form>		
 						</div>							
-																	
+														
 						<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
 							<thead>

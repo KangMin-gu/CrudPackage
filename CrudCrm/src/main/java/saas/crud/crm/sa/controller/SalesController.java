@@ -2,7 +2,6 @@ package saas.crud.crm.sa.controller;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 
 import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.dto.SalesDto;
@@ -287,7 +286,7 @@ public class SalesController {
 	}
 	//일정추가 팝업열기
 	@RequestMapping(value="/sales/cal/post",method=RequestMethod.GET)
-	public ModelAndView authsaCalendarForm(HttpServletRequest request) {
+	public ModelAndView authsaCalForm(HttpServletRequest request) {
 	
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		String username = request.getSession().getAttribute("USERNAME").toString();
@@ -306,7 +305,7 @@ public class SalesController {
 	//일정추가 실행
 	@RequestMapping(value="/sales/cal/post",method=RequestMethod.POST)
 	@ResponseBody
-	public int authsaCalendarInsert(HttpServletRequest request, @RequestParam Map<String,Object> schVal) {
+	public int authsaCalInsert(HttpServletRequest request, @RequestParam Map<String,Object> schVal) {
 		
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -319,12 +318,28 @@ public class SalesController {
 		return res;
 	}
 	
+	//일정추가 실행(공통스케쥴에서 Drag) 
+	@RequestMapping(value="/sales/cal/com/post/{comschno}",method=RequestMethod.POST)
+	@ResponseBody
+	public String authsaCalInsertFromCom(HttpServletRequest request, @RequestBody Map<String,Object> schVal, @PathVariable int comschno) {
+		
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+			
+		schVal.put("siteid", siteid);
+		schVal.put("userno", userno);
+		schVal.put("comschno", comschno);
+				
+		String jsonStr = salesService.svcSalesSchInsertFromCom(schVal);		
+		System.out.println(jsonStr);
+		return jsonStr;
+	}
+	
 	//일정수정 이벤트 마우스 드래그 - 실행
 	@RequestMapping(value="/sales/cal/post/{schno}",method=RequestMethod.GET)
 	@ResponseBody
-	public int authsaCalendarUpdate(HttpServletRequest request, @RequestParam Map<String,Object> schVal, @PathVariable int schno) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ schno / "+schno +" startdate / " +schVal.get("startdate")    );
-		System.out.println(request.getParameter("startdate")+"request"  );
+	public int authsaCalUpdate(HttpServletRequest request, @RequestParam Map<String,Object> schVal, @PathVariable int schno) {
+		
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 			
@@ -340,7 +355,7 @@ public class SalesController {
 	
 	//캘린더 - 이벤트 상세보기
 	@RequestMapping(value="/sales/cal/view/{schno}", method=RequestMethod.GET)
-	public ModelAndView authsaCalendarDetail(HttpServletRequest request, @PathVariable int schno){
+	public ModelAndView authsaCalDetail(HttpServletRequest request, @PathVariable int schno){
 		
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -357,7 +372,7 @@ public class SalesController {
 	
 	//캘린더 - 이벤트 팝업 수정 폼
 	@RequestMapping(value="/sales/cal/view/post/{schno}", method=RequestMethod.GET)
-	public ModelAndView authsaCalendarDetailForm(HttpServletRequest request, @PathVariable int schno){
+	public ModelAndView authsaCalDetailForm(HttpServletRequest request, @PathVariable int schno){
 			
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 			
@@ -375,7 +390,7 @@ public class SalesController {
 	//일정수정 팝업 - 실행
 	@RequestMapping(value="/sales/cal/post/{schno}",method=RequestMethod.POST)
 	@ResponseBody
-	public int authsaCalendarDetailUpdate(HttpServletRequest request, @RequestParam Map<String,Object> schVal, @PathVariable int schno) {
+	public int authsaCalDetailUpdate(HttpServletRequest request, @RequestParam Map<String,Object> schVal, @PathVariable int schno) {
 		
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -391,34 +406,44 @@ public class SalesController {
 	
 	//캘린더 - 회원사공통스케쥴 팝업 입력폼
 	@RequestMapping(value="/sales/cal/com/post", method=RequestMethod.GET)
-	public ModelAndView authsaCalendarComSch(HttpServletRequest request){
+	public ModelAndView authsaCalComSch(HttpServletRequest request){
 		
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("sa/calendar/pop/comschinsert");
 		return mView;
 	}
 	
-	
-	
-	
-	
-	
-	
-	//캘린더화면구성 안쓰고있음.
-	@RequestMapping(value="/sales/cal/list",method=RequestMethod.GET)
+	//캘린더 - 회원사공통스케쥴 팝업 입력폼
+	@RequestMapping(value="/sales/cal/com/post", method=RequestMethod.POST)
 	@ResponseBody
-	public String authsaCalendarList(HttpServletRequest request) {		
-		Map<String,Object> schVal = new HashMap<String,Object>();
+	public int authsaCalComSchInsert(HttpServletRequest request, @RequestParam Map<String,Object> schVal){
+		
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int chkauth = Integer.parseInt(request.getSession().getAttribute("CHKAUTH").toString());
-		
+			
 		schVal.put("siteid", siteid);
 		schVal.put("userno", userno);
-		schVal.put("chkauth", chkauth);		
-		String schList = salesService.svcSalesSchList(schVal);
-		return schList;
+		
+		int res = salesService.scvSalesComSchInsert(schVal);
+		return res;
 	}
+	
+	
+	//캘린더 - 공통스케쥴 상세 
+	@RequestMapping(value="/sales/cal/com/view/{comschno}", method=RequestMethod.GET)
+	public ModelAndView authsaCalComSchDetail(HttpServletRequest request, @PathVariable int comschno) {
+		System.out.println("@@@@@@tttt");
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		prmMap.put("siteid",siteid);
+		prmMap.put("comschno", comschno);
+	
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("schDetail",salesService.svcSalesComSchDetail(prmMap));
+		mView.setViewName("sa/calendar/pop/comschdetail");
+		return mView;
+	}
+	
 	
 	
 	

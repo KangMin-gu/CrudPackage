@@ -61,14 +61,13 @@
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
 									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) ">
-										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) </strong>
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다.) </strong>
 									</span>
 									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>
 													
 	                        	</div>
 								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-									<Strong><span id="showMsg"></span></Strong>
-									<Strong><span id="idCheckMsg"></span></Strong>				
+									<Strong><span id="showMsg"> </span></Strong>
 	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
@@ -129,7 +128,7 @@
                                                 <div class="input-group">
                                                     <input type="text" class="form-control error required validate name"  name="userid" id="userid" value="${user.USERID}">
                                                 </div>
-                                                <input type="hidden" class="form-control"  name="idcheck" id="idcheck" value="">
+                                                <input type="hidden" class="form-control required validate number"  name="idcheck" id="idcheck" value="">
                                             </td>
                                         </tr>
                                         <tr>
@@ -235,14 +234,14 @@
 	});
 	
 	function id_check(){
-		debugger;
 		var idcheck = $('#userid').val();
 		var check = $("#idcheck");
 		var text ="";
+		var test;
 		if(idcheck.length < 5){
-			if(check.val() != 1){
+			if(check.val() != 0){
 				alert('5글자이상 입력해주세요 .');
-				check.val(1);
+				check.val(0);
 			}
 		}else{
 	        $.ajax({
@@ -252,17 +251,24 @@
 	            success:function(data){
 	                if(data == 0){
 	                	text = '사용 가능한 ID 입니다.';
-	                	$('#idCheckMsg').append(text);
-	                	$('#idCheckMsg').show();
-	                	check.val(0);
-	                	return true;
+	                	$('#msgDiv').empty();
+	                	$('#msgDiv').show();
+	                	$('#msgDiv').append(text);
+	                	$('#userid').removeClass('error');
+	                	check.val(1);
+	                	test = true;
+	                	return test;
 	                }else{
 	                	text = '이미 존재하고 있는 ID 입니다.';
-	                	$('#idCheckMsg').append(text);
-	                	$('#idCheckMsg').show();
-	                		check.val(1);
-	                		return false;
+	                	$('#msgDiv').empty();
+	                	$('#msgDiv').show();
+	                	$('#msgDiv').append(text);
+	                	$('#userid').addClass('error');
+	                		check.val(0);
+	                		test = false
+	                		return test;
 	                }
+	                return test;
 	            },
 	            error:function(request,status,error){
 	                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

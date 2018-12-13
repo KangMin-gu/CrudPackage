@@ -260,7 +260,7 @@
                                             <td class="border-top-0 border-bottom-0">
                                             	<div class="input-group camptarget">
                                                     <input type="text" class="form-control" autocomplete="off" name="camptargetno_" id="camptargetno_" value="">
-                                                    <input type="hidden" name="ractowner" id="camptargetno" value="0">
+                                                    <input type="hidden" name="camptargetno" id="camptargetno" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

@@ -130,7 +130,7 @@
                             
                                 <a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
-                                <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
+                                <a href="/userexcel" class="btn btn-primary">엑셀다운로드</a>
                                 <button class="btn btn-primary delete">삭제</button>
                                 </div>
                              
@@ -151,8 +151,8 @@
                                         <th><input type="checkbox" class="i-checks" name="userno"></th>
                                         <th>사용자명</th>
                                         <th>사용자ID</th>
-                                        <th>부서</th>
                                         <th>직책</th>
+                                        <th>입사일자</th>
                                         <th>사용자상태</th>
                                         <th>등록일시</th>
                                     </tr>
@@ -163,8 +163,8 @@
                                         <td><input type="checkbox" class="i-checks" name="userno" id="userno" value="${user.USERNO }"></td>
                                         <td><a href="${pagecontext.request.contextpath}/ad/user/${user.USERNO }">${user.USERNAME}</a></td>
                                         <td>${user.USERID }</td>
-                                        <td>${user.DEPT_ }</td>
                                         <td>${user.USERDUTY }</td>
+                                        <td>${user.ENTERDATE }</td>
                                         <td>${user.ISDELETE_ }</td>
                                         <td>${user.REGDATE }</td>
                                     </tr>

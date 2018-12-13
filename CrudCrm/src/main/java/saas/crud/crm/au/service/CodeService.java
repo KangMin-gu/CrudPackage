@@ -22,4 +22,6 @@ public interface CodeService {
 	public int codeInsert(HttpServletRequest request, CodeDto codeDto);
 	
 	public ModelAndView codeUpperList(HttpServletRequest request);
+	
+	public Map<String, Object> getCode();
 }

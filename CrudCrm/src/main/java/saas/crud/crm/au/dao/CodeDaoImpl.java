@@ -69,4 +69,11 @@ public class CodeDaoImpl implements CodeDao {
 		return session.selectList("code.upperlist",search);
 	}
 
+	@Override
+	public List<Map<String, Object>> getCodeList() {
+		// TODO Auto-generated method stub
+		List<Map<String,Object>> getCodeList = session.selectList("code.getCodeList");
+		return getCodeList;
+	}
+
 }

@@ -18,6 +18,16 @@
 		<persistence strategy="localTempSwap" />
 	</cache>
 	
+	<cache name="code" maxEntriesLocalHeap="10000" maxEntriesLocalDisk="10000" eternal="false"
+		   diskSpoolBufferSizeMB="20"
+		   timeToIdleSeconds="600"
+		   timeToLiveSeconds="3600"
+		   overflowToDisk="false"
+		   memoryStoreEvictionPolicy="LFU"
+		   transactionalMode="off">
+		<persistence strategy="localTempSwap" />
+	</cache>
+	
 	
 <!-- 
 name: 캐시 이름을 설정한다. 캐시를 식별할때 사용한다.

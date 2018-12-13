@@ -149,7 +149,7 @@ public class AuController {
 	@RequestMapping(value="/ad/company/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authCompanyRead(@PathVariable int siteId, HttpServletRequest request) {
 		ModelAndView mView = companyService.companyRead(request, siteId);
-		mView.setViewName("au/ad/adMasterRead");
+		mView.setViewName("au/ma/mc/masterRead");
 		return mView;
 	}
 	

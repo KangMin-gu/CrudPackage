@@ -20,5 +20,7 @@ public interface CodeDao {
 	public void codeDelete(CodeDto codeDto);
 	
 	public List<Map<String,Object>> upperCodeList(Map<String,Object> search);
+	
+	public List<Map<String,Object>> getCodeList();
 
 }

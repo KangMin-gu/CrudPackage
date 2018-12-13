@@ -95,13 +95,14 @@ public class CampaignServiceImpl implements CampaignService{
 		String name;
 		String value;
 		int targetListSize = targetList.size();
+		
 		for(int i = 0; i<targetListSize;i++) {
-			
-			name = targetList.get(i).get("NAME").toString().toUpperCase();
-			value = targetList.get(i).get("VALUE").toString();
-			campInfo.put(name, value);
-			
-		}	
+			if(targetList.get(i).get("VALUE") != null) {
+				name = targetList.get(i).get("NAME").toString().toUpperCase();
+				value = targetList.get(i).get("VALUE").toString();
+				campInfo.put(name, value);
+			}
+		}
 		
 		int targetCustCnt = campaignDao.campTargetCustCnt(campaignDto);
 
@@ -409,17 +410,18 @@ public class CampaignServiceImpl implements CampaignService{
 				tempMap = tabHistory.get(i);
 				campOrder = Integer.parseInt(tempMap.get("CAMPORDER").toString());
 				if(j==campOrder) {
-					if(name.equals(tempMap.get("CODENAME").toString())) {
-						sb.append(tempMap.get("VALUE"));
-						sb.append("|");
-						regdate = tempMap.get("REGDATE").toString();
-					}else {
-						sb.append(tempMap.get("CODENAME"));
-						sb.append("-");
-						sb.append(tempMap.get("VALUE"));
-						sb.append("|");
-						name = tempMap.get("CODENAME").toString();
-						
+					if(tempMap.get("CODENAME") != null) {
+						if(name.equals(tempMap.get("CODENAME").toString())) {
+							sb.append(tempMap.get("VALUE"));
+							sb.append("|");
+							regdate = tempMap.get("REGDATE").toString();
+						}else {
+							sb.append(tempMap.get("CODENAME"));
+							sb.append("-");
+							sb.append(tempMap.get("VALUE"));
+							sb.append("|");
+							name = tempMap.get("CODENAME").toString();
+						}
 					}
 				}
 			}

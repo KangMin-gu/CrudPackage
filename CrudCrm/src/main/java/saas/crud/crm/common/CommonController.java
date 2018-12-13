@@ -103,4 +103,12 @@ public class CommonController {
 		
 	}
 
+	
+	@RequestMapping(value="/mail/check", method=RequestMethod.GET)
+	@ResponseBody
+	public void MailClick(HttpServletRequest request) {
+		
+		commonService.MailClick(request);
+
+	}
 }

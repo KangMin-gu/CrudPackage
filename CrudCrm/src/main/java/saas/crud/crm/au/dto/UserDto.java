@@ -29,6 +29,7 @@ public class UserDto {
 	private int reguser; //등록자 
 	private String edtdate; //수정일시
 	private int edtuser; //수정자
+	private String code;
 
 	public UserDto () {}
 
@@ -37,8 +38,9 @@ public class UserDto {
 			String email, int deptid, int chkauth, String enterdate, String userlang, String mobile1, String mobile2,
 			String mobile3, String telno1, String telno2, String telno3, String userduty, int chkrole, int ctiid,
 			String ctipass, String pwdchangedate, int isdelete, String regdate, int reguser, String edtdate,
-			int edtuser) {
+			int edtuser, String code) {
 		super();
+		this.code = code;
 		this.userno = userno;
 		this.siteid = siteid;
 		this.userid = userid;
@@ -67,6 +69,15 @@ public class UserDto {
 		this.edtdate = edtdate;
 		this.edtuser = edtuser;
 	}
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCdoe(String code) {
+		this.code = code;
+	}
+
 
 	public int getUserno() {
 		return userno;

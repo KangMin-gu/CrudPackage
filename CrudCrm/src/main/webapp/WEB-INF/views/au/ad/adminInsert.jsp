@@ -47,7 +47,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ad/user/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/ad/user/post" method="POST" commandName="userDto">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -88,13 +88,10 @@
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3 validate phone1 phone-group" name="mobile1" id="mobile1">
-                                                	<option value= <c:if test='${user.MOBILE1 eq 0}'>selected</c:if>>선택</option>
-                                                    <option value=010 <c:if test='${user.MOBILE1 eq 010}'>selected</c:if>>010</option>
-                                                    <option value=011 <c:if test='${user.MOBILE1 eq 011}'>selected</c:if>>011</option>
-                                                    <option value=016 <c:if test='${user.MOBILE1 eq 016}'>selected</c:if>>016</option>
-                                                    <option value=017 <c:if test='${user.MOBILE1 eq 017}'>selected</c:if>>017</option>
-                                                </select>
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="code">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${code }" />
+                                                </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>

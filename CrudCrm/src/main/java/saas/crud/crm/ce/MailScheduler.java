@@ -33,7 +33,7 @@ public class MailScheduler {
 	@Autowired
 	private MailDao mailDao;
 	
-	@Scheduled(cron="10 0/1 * * * ?")
+	@Scheduled(cron="*/30 * * * * *")
 	public void sendmail() throws Exception {
 		boolean isValid = false;
 
@@ -58,9 +58,20 @@ public class MailScheduler {
 			String toEmail =  list.get(i).get("TOEMAIL").toString(); //받는이 
 			String subject =  list.get(i).get("SUBJECT").toString(); //제목
 			String content =  list.get(i).get("CONTENT").toString(); //내용
+			
+			StringBuffer test = new StringBuffer();
+			
+			
 			String ccEmail =  (String) list.get(i).get("CCEMAIL"); //참조
 			String bccEmail =  (String) list.get(i).get("BCCEMAIL"); //숨은참조
 			int emailLogId = Integer.parseInt(list.get(i).get("EMAILLOGID").toString()); //이메일로그pk
+			test.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body><img src=\"http://192.168.0.7/mail/check?emaillogid=");
+			test.append(emailLogId);
+			test.append("\" width=\"0\" height=\"0\" border=\"0\"  />");
+			test.append(content);
+			test.append("</body></html>");
+			
+			content = test.toString();
 			String sendDate = list.get(i).get("RLTDATE").toString();
 			//String sendDate =  list.get(i).get("SENDDATETIME").toString(); //보낸날짜
 			//int time = Integer.parseInt(list.get(i).get("TIME").toString()); //시간
@@ -76,12 +87,12 @@ public class MailScheduler {
 			}
 			*/
 			int compare = sendDate.compareTo(today);
-			if(compare == -1) {
+			
 				send(subject,fromEmail,content,toEmail,ccEmail,bccEmail);
 				isValid = true;
 				emailDto.setEmaillogid(emailLogId);
 				UpdateState(isValid, emailDto);
-			}
+			
 		}
 	}
 
@@ -97,7 +108,7 @@ public class MailScheduler {
 
 		// smtp 연결설정 192.168.0.32 / 182.231.77.200 / 192.168.219.102
 		Properties properties = new Properties();
-		//properties.setProperty("mail.smtp.host", "192.168.1.32");
+		properties.setProperty("mail.smtp.host", "125.129.242.156");
 		properties.setProperty("mail.smtp.port", "25");
 		properties.setProperty("mail.transport.protocol", "smtp");
 		properties.setProperty("mail.debug", "true");
@@ -113,7 +124,7 @@ public class MailScheduler {
 
 		((MimeMessage) message).setSubject(subject, "UTF-8");
 		message.setFrom(new InternetAddress(fromemail));
-		((MimeMessage) message).setText(content, "UTF-8");
+		((MimeMessage) message).setContent(content, "text/html;charset=utf-8");
 
 		if (toemail != null) {
 			toList.add(toemail);

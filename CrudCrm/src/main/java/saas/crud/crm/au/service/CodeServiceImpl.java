@@ -1,7 +1,10 @@
 package saas.crud.crm.au.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -140,16 +143,45 @@ public class CodeServiceImpl implements CodeService{
 		
 		return mView;
 	}
-
+	@Cacheable("code")
 	@Override
 	public Map<String, Object> getCode() {
 		// TODO Auto-generated method stub
-		
+		Map<String,Object> code = new HashMap<>();
+		List<Object> list = new ArrayList();
+		Map<String,Object> realCode = new HashMap<>();
 		List<Map<String,Object>> getCodeList = codeDao.getCodeList();
 		
-		
-		
-		return null;
+		int codeListSize = getCodeList.size();
+		String codeGrp = "";
+		String codeGrpTemp = "";
+		String codeVal="";
+		String codeName="";
+		for (int i=0; i<codeListSize;i++) {
+			if(i == 0) {
+				codeGrp = getCodeList.get(i).get("CODEGRP").toString();
+				codeGrpTemp = getCodeList.get(i).get("CODEGRP").toString();
+			}else {
+				codeGrp = getCodeList.get(i).get("CODEGRP").toString();
+			}
+			if(codeGrp.equals(codeGrpTemp)) {
+				codeVal = getCodeList.get(i).get("CODEVAL").toString();
+				codeName = getCodeList.get(i).get("CODENAME").toString();
+				code.put(codeName, codeVal);
+			}else {
+				Map<String,Object> newMap = new HashMap(code);
+				Set set = newMap.entrySet(); 
+				realCode.put(codeGrpTemp, set);
+				code.clear();
+				
+				codeVal = getCodeList.get(i).get("CODEVAL").toString();
+				codeName = getCodeList.get(i).get("CODENAME").toString();
+				code.put(codeName, codeVal);
+			}
+			codeGrpTemp = getCodeList.get(i).get("CODEGRP").toString();
+		}
+
+		return realCode;
 	}
 
 }

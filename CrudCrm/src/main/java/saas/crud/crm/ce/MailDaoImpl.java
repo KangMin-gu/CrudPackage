@@ -26,4 +26,13 @@ public class MailDaoImpl implements MailDao {
     @Override
     public void UpdateMailState(MailDto emailDto) { session.update("email.sendstate", emailDto); }
 
+	@Override
+	public void mailClick(MailDto emailDto) {
+		// TODO Auto-generated method stub
+		
+		session.update("email.clickCnt",emailDto);
+		
+	}
+    
+
 }

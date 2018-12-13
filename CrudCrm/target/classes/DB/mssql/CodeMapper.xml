@@ -148,6 +148,13 @@
     </if>
     </select>
     
+    <select id="getCodeList" resultType="hashMap">
+    
+    	SELECT CODEGRP, CODENAME, CODEVAL FROM Crud_SaaS.dbo.T_CODE
+    	WHERE SITEID = 1
+    	
+    </select>
+    
     
 
 </mapper>

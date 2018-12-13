@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.au.service.AuService;
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.au.service.CompanyService;
 
 @Controller
@@ -29,6 +30,9 @@ public class AuController {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private CodeService codeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuController.class);
 	// 담당자 팝업 검색
@@ -70,6 +74,10 @@ public class AuController {
 	@RequestMapping(value="/ad/user/post", method=RequestMethod.GET)
 	public ModelAndView authAdminUserInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		UserDto userDto = new UserDto();
+		mView.addObject("userDto",userDto);
+		mView.addObject("code",code);
 		mView.setViewName("/au/ad/adminInsert");
 		return mView;
 	}

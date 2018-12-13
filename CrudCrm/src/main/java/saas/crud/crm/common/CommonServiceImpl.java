@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
+import saas.crud.crm.ce.MailDao;
+import saas.crud.crm.ce.MailDto;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.sa.dao.ClientDao;
 
@@ -34,6 +36,9 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
 	private CrudEngine crud;
+	
+	@Autowired
+	private MailDao mailDao;
 
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -187,6 +192,17 @@ public class CommonServiceImpl implements CommonService {
 		
 		Map<String,Object> cliDetail = clientDao.clientDetail(cliVal);
 		return cliDetail;
+	}
+
+	@Override
+	public void MailClick(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int emaillogid = Integer.parseInt(request.getParameter("emaillogid"));
+		
+		MailDto mailDto = new MailDto();
+		
+		mailDto.setEmaillogid(emaillogid);
+		mailDao.mailClick(mailDto);
 	}
 
 }

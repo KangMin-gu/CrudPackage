@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.au.service.UserService;
 
 @Controller
@@ -22,6 +23,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService urService;
+	
+	@Autowired
+	private CodeService codeService;
 	
 	//로그인폼요청
 	@RequestMapping(value="/login", method=RequestMethod.GET)
@@ -35,7 +39,7 @@ public class UserController {
 		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고 
 		mView.addObject("url", url);
 		mView.setViewName("au/login");
-		
+		codeService.getCode();
 		return mView;
 	}
 	

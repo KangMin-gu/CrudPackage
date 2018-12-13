@@ -239,11 +239,49 @@ public class SalesServiceImpl implements SalesService {
 		return schDetail;
 	}
 	
-	//영업 공통 스케쥴 리스트
+	//영업 -공통 스케쥴 리스트
 	@Override
 	public List<Map<String, Object>> svcSalesComSchList(Map<String, Object> schVal) {
 		List<Map<String, Object>> comSchList = salesDao.salesComSchList(schVal);
 		return comSchList;
+	}
+	//영업 - 공통스케쥴 팝업 추가 실행 
+	@Override
+	public int scvSalesComSchInsert(Map<String, Object> schVal) {
+		int res = salesDao.salesComSchInsert(schVal);
+		return res;
+	}
+	//영업- 공통 스케줄상세 팝업 
+	@Override
+	public Map<String, Object> svcSalesComSchDetail(Map<String, Object> schVal) {
+		Map<String, Object> comSchDetail = salesDao.salesComSchDetail(schVal);
+		return comSchDetail;
+	}
+	//영업 - 스케쥴추가 (공통 스케쥴에서 캘린더로 Drag) 
+	@Override
+	public String svcSalesSchInsertFromCom(Map<String, Object> schVal) {
+		
+		int schno = salesDao.salesSchInsertFromCom(schVal);	//추가실행.
+		schVal.put("schno", schno);
+		
+		Map<String,Object> schMap = new HashMap<String,Object>();
+		schMap = salesDao.salesSchDetail(schVal);//추가한 스케쥴 조회
+		
+		Map<String,Object> toJsonMap = new HashMap<String,Object>();//스케쥴러 타입에 맞게 데이터 바인딩.
+		toJsonMap.put("id", schno);
+		toJsonMap.put("color", schMap.get("COLOR").toString() );
+		toJsonMap.put("title", schMap.get("SCHNAME").toString() );
+			
+		ObjectMapper mapper = new ObjectMapper();		
+		String jsonStr = "";
+			
+			try {
+				jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(toJsonMap);//맵 -> json형식의 String으로 변수담
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		
+		return jsonStr;	
 	}
 
 	

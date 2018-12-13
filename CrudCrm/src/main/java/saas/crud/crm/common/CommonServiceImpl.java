@@ -44,17 +44,6 @@ public class CommonServiceImpl implements CommonService {
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		searchVal.put("siteid", siteid);
 		
-		/*
-		//username 이 null 또는 공백이 아니면 대입. 
-		if(request.getParameter("username") != null && !request.getParameter("username").toString().trim().equals("") ) { 
-			String username = request.getParameter("username").toString();
-			searchVal.put("username", username);
-		}
-		if(request.getParameter("parentid") != null) { //호출한 필드명. 페이징시 값 유지를 위한 설정
-			String parentid = request.getParameter("parentid").toString();
-			searchVal.put("parentid", parentid);
-		}
-		*/
 				
 		//***** 페이징설정 *******
 		int pageRowCount = 5; //한페이지에서 출력될 row

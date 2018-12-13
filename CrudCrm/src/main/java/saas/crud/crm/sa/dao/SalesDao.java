@@ -52,4 +52,9 @@ public interface SalesDao {
 		
 	public List<Map<String,Object>> salesComSchList(Map<String,Object> schVal);
 	
+	public int salesComSchInsert(Map<String,Object> schVal);
+	
+	public Map<String,Object> salesComSchDetail(Map<String,Object> schVal);
+	
+	public int salesSchInsertFromCom(Map<String,Object> schVal);
 }

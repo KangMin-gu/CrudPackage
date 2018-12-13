@@ -22,13 +22,18 @@
 
 
 
-
-
+<style id="test">
+.fc-event,
+.fc-agenda .fc-event-time,
+.fc-event a {
+  padding: 4px 6px;
+  background-color: red;
+  /* background color */
+  border-color: #1ab394;
+  /* border color */
+}
+</style>
 </head>
-
-
-
-
 <body>
 	<div id="wrapper">
 
@@ -60,16 +65,24 @@
 								<h5>CUSTOM SCHEDULE</h5>
 							</div>
 							<div class="ibox-content">
-								<div id='external-events'>									
-									
-									<c:forEach var="list" items="${comSchList}"  > 
-										<div class='external-event navy-bg' style="background-color:${list.color}" >${list.title }</div>
+								<div id='external-events'>	
+																
+									<input type="hidden" id="hiddenId" name="hiddenId" value="">
+									<input type="hidden" id="hiddenColor" name="hiddenColor" value="">
+									<c:forEach var="list" items="${comSchList}"  varStatus="status"> 
+										<div class='external-event navy-bg' style="background-color: ${list.color}; position: relative;" id="status${status.index }"> 
+											${list.title }   <a onclick='openNewWindow("공통스케쥴상세","/sales/cal/com/view/${list.id }","",600,500);'><i class="fa fa-search" ></i></a>
+											<input type="hidden" id="id${status.index }" name="id${list.id }" value="${list.id }">
+											<input type="hidden" id="color${status.index }" name="color${list.id}" value="${list.color}"/>
+										</div>
 									</c:forEach>
 																
 									<p class="m-t">
-										<input type='checkbox' id='drop-remove' class="i-checks" checked /> 
-										<!-- <label for='drop-remove'>remove after drop</label> -->
-										<a class="btn btn-primary float-right" onclick='openNewWindow("자주쓰는스케쥴","/sales/cal/com/post","",600,700);'>등록</a>
+										<!--<input type='checkbox' id='drop-remove' class="i-checks" checked /> 
+										 <label for='drop-remove'>remove after drop</label> -->
+										<c:if test="${sessionScope.CHKAUTH ne 10 }">
+											<a class="btn btn-default btn-lg float-right" onclick='openNewWindow("자주쓰는스케쥴","/sales/cal/com/post","",600,700);'>등록</a><br/>
+										</c:if>
 									</p>
 								</div>
 							</div>

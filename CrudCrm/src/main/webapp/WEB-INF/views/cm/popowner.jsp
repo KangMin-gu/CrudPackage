@@ -58,9 +58,7 @@ body {
 								<button type="submit" class="btn btn-primary" data-style="zoom-in" >검 색</button><br><br>
 							</div>
 						</form:form>	
-						</div>
-						
-															
+						</div>																		
 						<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
 							<thead>

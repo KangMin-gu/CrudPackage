@@ -144,10 +144,30 @@ public class SalesDaoImpl implements SalesDao {
 		Map<String, Object> schDetail = session.selectOne("sales.salesSchDetail", schVal);
 		return schDetail;
 	}
+	//영업 공통일정 리스트
 	@Override
 	public List<Map<String, Object>> salesComSchList(Map<String, Object> schVal) {
 		List<Map<String, Object>> comSchList = session.selectList("sales.salesComSchList",schVal);
 		return comSchList;
+	}
+	//영업 공통일정 추가
+	@Override
+	public int salesComSchInsert(Map<String, Object> schVal) {
+		int res = session.insert("sales.salesComSchInsert",schVal);
+		return res;
+	}
+	//영업 공통일정 상세
+	@Override
+	public Map<String, Object> salesComSchDetail(Map<String, Object> schVal) {
+		Map<String,Object> comSchDetail = session.selectOne("sales.salesComSchDetail", schVal);
+		return comSchDetail;
+	}
+	//영업-스케쥴추가 (공통일정 drag를 통한 추가)
+	@Override
+	public int salesSchInsertFromCom(Map<String, Object> schVal) {
+		session.insert("salesSchInsertFromCom", schVal);
+		int schno = Integer.parseInt(schVal.get("schno").toString());//insert한 id 반환 
+		return schno;
 	}
 
 }

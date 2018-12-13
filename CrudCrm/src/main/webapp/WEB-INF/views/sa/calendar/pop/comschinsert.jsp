@@ -55,10 +55,10 @@ body {
 				<div class="ibox">
 
 					<div class="ibox-content row">
-					<form:form action="/popsalescust/post" method="post" id="command" onsubmit="return false;">
+					<form:form action="/sales/cal/com/post" method="post" id="command" onsubmit="return false;">
 						
 						<div class="w-100 text-right mb-3">
-							<Button class="btn btn-primary" id="submitBtn" onclick="formSubmit();">추가</Button>
+							<Button class="btn btn-primary" type="submit" onclick="formSubmit('/sales/cal/com/post','');">추가</Button>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -165,7 +165,7 @@ body {
 		var form = new FormData(document.getElementById('command'));
 				
 		$.ajax({
-		    url: '/sales/cal/post',
+		    url: '/sales/cal/com/post',
 		    data: form,
 		    dataType: 'json', 
 		    processData: false, 

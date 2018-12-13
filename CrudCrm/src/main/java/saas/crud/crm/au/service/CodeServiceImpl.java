@@ -1,12 +1,12 @@
 package saas.crud.crm.au.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -139,6 +139,17 @@ public class CodeServiceImpl implements CodeService{
 		mView.addObject("totalRows",totalRows);
 		
 		return mView;
+	}
+
+	@Override
+	public Map<String, Object> getCode() {
+		// TODO Auto-generated method stub
+		
+		List<Map<String,Object>> getCodeList = codeDao.getCodeList();
+		
+		
+		
+		return null;
 	}
 
 }

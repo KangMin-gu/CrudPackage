@@ -266,8 +266,8 @@ if(window.location.pathname == '/ma/menu') {
     });
 }
 
-if(window.location.pathname == '/ad/code') {
-    var QueryString = window.location.pathname;
+if(window.location.pathname.lastIndexOf('/code') > 0) {
+    var QueryString = '/ad/code';
     btnFirst();
     
     $('#cancel').click(function (e) {

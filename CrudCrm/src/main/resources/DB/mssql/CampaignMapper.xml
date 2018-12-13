@@ -272,11 +272,15 @@
 	</insert>
 	
 	<select id="targetList" parameterType="campaignDto" resultType="hashMap">
-		SELECT A.NAME
-			, A.VALUE
+		SELECT A.NAME,
+			CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN A.VALUE
+          	ELSE C.CODENAME END AS VALUE
 		FROM T_CAMP_TARGET A
+		LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
+        LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
         WHERE A.CAMPNO = #{campno}
         AND A.SITEID = #{siteid}
+        AND B.CODENAME IS NOT NULL
 	</select>
 	
 	<select id="targetCustCnt" parameterType="campaignDto" resultType="int">

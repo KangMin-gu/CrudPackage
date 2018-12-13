@@ -127,7 +127,7 @@
 			          	 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">CRUD 관리자</span><span class="fa arrow"></span></a>
 			          	 <ul class="nav nav-second-level collapse">
 							<li><a href="${pageContext.request.contextPath}/ma/company">회원사 관리</a></li>
-							<li><a href="${pageContext.request.contextPath}/ad/code">공통코드</a></li>
+							<li><a href="${pageContext.request.contextPath}/ma/code">공통코드</a></li>
 							<li><a href="${pageContext.request.contextPath}/ma/license">라이센스 관리</a></li>
 							<li><a href="${pageContext.request.contextPath}/ma/menu">메뉴 관리</a></li>
 						</ul>

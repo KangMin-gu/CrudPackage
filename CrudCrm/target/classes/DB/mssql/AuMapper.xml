@@ -10,6 +10,7 @@
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
 		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
 		,A.MOBILE1,A.MOBILE2,A.MOBILE3
+		,CONVERT(nvarchar,A.ENTERDATE,23) AS ENTERDATE
 		, A.MOBILE1 + A.MOBILE2 + A.MOBILE3 AS MOBILE
 		,ROW_NUMBER() OVER(ORDER BY A.USERNO DESC) AS ROWNUM
 			FROM Crud_SaaS.dbo.TB980010 A
@@ -34,7 +35,10 @@
 				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[<=]]> #{enddate}
 			</if>
 			) X 
-		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			<if test="endRowNum != null">
+				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			</if>
+		
 	</select>
 		<select id="detail" parameterType="userDto" resultType="hashMap">
 		SELECT 

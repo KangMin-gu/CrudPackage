@@ -30,9 +30,6 @@
 		var percentPattern = /^[0-9]{1}$|^[1-9]{1}[0-9]{1}$|^100$/; //0~100까지의 정수
 		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,30}$/;
 		
-		
-		debugger;//*******테스트종료시 반드시삭제*******
-		
 		var res;//true or false
 		var value = $('[name="'+id+'"]').val();
 		var length = $('[name="'+id+'"]').length;
@@ -79,8 +76,11 @@
 		
 		}else if( $('[name="'+id+'"]').hasClass('number') ){
 			res = numberPattern.test(value);
-			msg = '숫자로 입력해 주세요.';//이 문구 출력	
-		
+			if(id=='idcheck'){
+				msg = '중복된 ID 이거나 입력이 되지 않았습니다.';
+			}else{
+				msg = '숫자로 입력해 주세요.';//이 문구 출력	
+			}
 		}else if( $('[name="'+id+'"]').hasClass('longnumber') ){
 			res = longnumberPattern.test(value);
 			msg = '숫자로 입력해 주세요.';//이 문구 출력	

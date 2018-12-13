@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.vc.controller.VocController;
@@ -57,6 +58,8 @@ public class ExcelDownLoad {
 	private CrudEngine crud;
 	@Autowired
 	private CustDao custDao;
+	@Autowired
+	private AuDao auDao;
 	
 	//고객목록 대용량 엑셀 다운로드
 	@RequestMapping(value = "/custexcel", method = RequestMethod.GET)
@@ -251,4 +254,142 @@ public class ExcelDownLoad {
 
 
 	}
+	
+	//고객목록 대용량 엑셀 다운로드
+		@RequestMapping(value = "/userexcel", method = RequestMethod.GET)
+		public void adUser(HttpServletRequest request, HttpServletResponse response) {
+			int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+			Map<String, Object> serachVal = crud.searchParam(request);
+			
+			List<Map<String, Object>> adUser = auDao.urList(serachVal);
+			
+			//SXSSF 방식 엑셀 생성 
+			SXSSFWorkbook wb = new SXSSFWorkbook();
+			SXSSFCell cell;
+			SXSSFSheet sheet = wb.createSheet();
+			SXSSFRow row = sheet.createRow(0);
+			CellStyle style = wb.createCellStyle();
+			CellStyle columnColor = wb.createCellStyle();
+			CellStyle headerColor = wb.createCellStyle();
+			
+			style.setBorderBottom(CellStyle.BORDER_THIN);
+			style.setBorderLeft(CellStyle.BORDER_THIN);	// 셀 좌측에 얇은 실선 적용.
+			style.setBorderRight(CellStyle.BORDER_THIN);	// 셀 우측에 얇은 실선 적용.
+			style.setBorderTop(CellStyle.BORDER_THIN);	// 셀 윗쪽에 얇은 실선 적용.
+			columnColor.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+			columnColor.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			columnColor.setAlignment(CellStyle.ALIGN_CENTER);
+			
+			//시트이름생성
+			//Sheet sh = wb.createSheet("First sheet");
+
+			cell = row.createCell(0);
+			cell.setCellValue("사용자목록");
+			cell.setCellStyle(columnColor);
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+			
+			
+			row = sheet.createRow(1);
+			cell = row.createCell(0);
+			cell.setCellValue("사용자명");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(1);
+			cell.setCellValue("사용자ID");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(2);
+			cell.setCellValue("직책");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(3);
+			cell.setCellValue("입사일자");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(4);
+			cell.setCellValue("등록일");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			try {
+			
+				
+				//데이터 칼럼에 맞춰 바인딩
+				for (int rowNum = 1; rowNum < adUser.size(); rowNum++) {			
+					row = sheet.createRow(rowNum+1);			
+					String userName = crud.getMapValueNullCheck(adUser.get(rowNum), "USERNAME");
+					String userId = crud.getMapValueNullCheck(adUser.get(rowNum), "USERID");
+					String userDuty = crud.getMapValueNullCheck(adUser.get(rowNum), "USERDUTY");
+					String enterDate = crud.getMapValueNullCheck(adUser.get(rowNum), "ENTERDATE");
+					String regDate = crud.getMapValueNullCheck(adUser.get(rowNum), "REGDATE");
+
+					cell = row.createCell(0);
+					cell.setCellValue(userName);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(1);
+					cell.setCellValue(userId);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(2);
+					cell.setCellValue(userDuty);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(3);
+					cell.setCellValue(enterDate);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(4);
+					cell.setCellValue(regDate);
+					cell.setCellStyle(style);
+				}
+				
+					
+				//여기서부터 다운로드 
+				response.setHeader("Set-Cookie", "fileDownload=true; path=/");
+				String fileDate = crud.fileSearchKey(request);	
+				String excelfileName = fileDate+"_사용자목록.xlsx";
+				response.setHeader("Content-Disposition", String.format("attachment; filename=\""+excelfileName+"\""));
+				wb.write(response.getOutputStream());
+
+			} catch (Exception e) {
+				response.setHeader("Set-Cookie", "fileDownload=false; path=/");
+				response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+				response.setHeader("Content-Type", "text/html; charset=utf-8");
+				
+				logger.debug("error---------------떨어");
+				e.printStackTrace();
+				OutputStream out = null;
+				try {
+					out = response.getOutputStream();
+					logger.debug("error---------------");
+					byte[] data = new String("fail..").getBytes();
+					out.write(data, 0, data.length);
+				} catch (Exception ignore) {
+					ignore.printStackTrace();
+				} finally {
+					if (out != null)
+						try {
+							out.close();
+						} catch (Exception ignore) {
+							ignore.printStackTrace();
+						}
+				}
+
+			} finally {
+				// 디스크 적었던 임시파일을 제거합니다.
+				wb.dispose();
+
+				try {
+					wb.close();
+				} catch (Exception ignore) {
+					ignore.printStackTrace();
+				}
+			}
+
+
+		}
 }

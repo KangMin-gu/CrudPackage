@@ -36,6 +36,13 @@ public class CodeController {
 		mView.setViewName("au/ma/code/codeList");
 		return mView;
 	}
+	// 코드 List 화면
+	@RequestMapping(value="/ma/code", method=RequestMethod.GET)
+	public ModelAndView authMasterCodeList(HttpServletRequest request) {
+		ModelAndView mView = codeService.codeList(request);	
+		mView.setViewName("au/ma/code/codeList");
+		return mView;
+	}
 	// 코드 List 검색
 	@RequestMapping(value="/ad/code", method=RequestMethod.POST)
 	public ModelAndView authCodeSearchList(HttpServletRequest request) {

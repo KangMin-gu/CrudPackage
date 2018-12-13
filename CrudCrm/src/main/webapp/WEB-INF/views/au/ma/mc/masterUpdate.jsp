@@ -32,9 +32,12 @@
                 <div class="col-lg-10">
                     <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
+                    <c:set var="auth" value="${sessionScope.USERAUTH}" />
+                    <c:if test="${auth eq '30' }">
                         <li class="breadcrumb-item">
                             <a href="/ma/company">회원사목록</a>
                         </li>
+                    </c:if>
                         <li class="breadcrumb-item">
                             <a href="/ma/company/${memCompany.SITEID }">회원사정보</a>
                         </li>
@@ -43,9 +46,7 @@
                         </li>
                     </ol>
                 </div>
-                <div class="col-lg-2">
 
-                </div>
             </div>		
 		
 		

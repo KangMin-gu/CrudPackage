@@ -21,6 +21,7 @@ public interface CodeDao {
 	
 	public List<Map<String,Object>> upperCodeList(Map<String,Object> search);
 	
-	public List<Map<String,Object>> getCodeList();
+	public List<CodeDto> getCodeList(String codeGrp);
 
+	public List<CodeDto> grpCodeList();
 }

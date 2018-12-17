@@ -27,11 +27,10 @@
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
             <div class="row wrapper border-bottom white-bg page-heading">
-            <c:set var="auth" value="${sessionScope.USERAUTH}" />
                 <div class="col-lg-10">
                     <h2>회원사 관리</h2>
                     <ol class="breadcrumb">
-                    <c:if test="${auth eq '30' }">
+                    <c:if test="${sessionScope.CHKAUTH eq '30' }">
                         <li class="breadcrumb-item">
                             <a href="/ma/company">회원사목록</a>
                         </li>
@@ -60,13 +59,13 @@
                         
                             <div class="w-100 text-right mb-2">
                             <form:form action="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" method="POST">
-                            	<c:if test="${auth eq '30' }">
+                            	<c:if test="${sessionScope.CHKAUTH eq '30' }">
                                 	<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">목록</a>
                                 </c:if>
                                 
                                 	<a href="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
                                 	
-                                <c:if test="${auth eq '30' }">
+                                <c:if test="${sessionScope.CHKAUTH eq '30' }">
 									<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 								</c:if>
 							</form:form>	
@@ -266,7 +265,7 @@
                         </div>
 
                     </div>
-                    <c:if test="${auth eq '30' }">
+                    <c:if test="${sessionScope.CHKAUTH eq '30' }">
                     <div class="ibox">
                             <div class="ibox-title row border-0">
                                 <h4>회원사 상세</h4>

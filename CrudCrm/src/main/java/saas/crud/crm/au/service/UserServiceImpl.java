@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dao.CodeDao;
 import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.au.dto.UserDto;
 
@@ -83,7 +84,6 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
 			request.getSession().setAttribute("SITELOGO", urInfo.get("SITELOGO")); //회사 로고
-			
 			
 			if(url != null) {
 				buf.append("<script>location.href='");

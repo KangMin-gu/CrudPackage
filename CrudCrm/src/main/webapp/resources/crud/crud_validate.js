@@ -185,7 +185,7 @@
 		var reqId;
 		var res=0;
 		for(var i=0;i<length;i++){// 배열만큼 반복문
-			reqId = $('.required:eq('+i+')' ).attr('name');//배열의 id값
+			reqId = $('.required:eq('+i+')' ).attr('name');//배열의 name값
 			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
 		}
 		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)

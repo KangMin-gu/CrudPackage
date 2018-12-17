@@ -57,11 +57,14 @@
 			<if test="ractowner != null">
 				AND B.RACTOWNER = #{ractowner}
 			</if>
-			<if test="prcstate!= null">
+			<if test="prcstate != null">
 				AND A.PRCSTATE = #{prcstate}
-			</if>		
-    		 ) X 
-    	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			</if>
+    		 ) X
+    		 <if test="endRowNum != null">
+				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			</if> 
+    	
 
     </select>
 	
@@ -97,7 +100,7 @@
 			<if test="ractowner != null">
 				AND B.RACTOWNER = #{ractowner}
 			</if>
-			<if test="prcstate!= null">
+			<if test="prcstate != null">
 				AND A.PRCSTATE = #{prcstate}
 			</if>	
 	</select>

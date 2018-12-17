@@ -126,15 +126,15 @@
                         </form:form>
                         <form:form action="${pageContext.request.contextPath}/ad/user/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
-                            <div class="w-100 text-right mb-2">
-                            
-                                <a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
-                                <div class="d-inline-block mt-sx-1">
-                                <a href="/userexcel" class="btn btn-primary">엑셀다운로드</a>
-                                <button class="btn btn-primary delete">삭제</button>
-                                </div>
-                             
-                            </div>
+                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+	                            	 <a href="${pageContext.request.contextPath}/userexcel" class="btn btn-primary">엑셀 다운로드</a>
+	                          	</div>													
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
+									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+								</div>
+							</div>
                             <div class="overflow-x w-100">
                             <table class="table table-bordered table-hover">
                                 <colgroup>

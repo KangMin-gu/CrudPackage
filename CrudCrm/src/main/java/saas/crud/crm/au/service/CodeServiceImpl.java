@@ -1,7 +1,10 @@
 package saas.crud.crm.au.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -140,16 +143,22 @@ public class CodeServiceImpl implements CodeService{
 		
 		return mView;
 	}
+	
 
+	@Cacheable("code")
 	@Override
 	public Map<String, Object> getCode() {
 		// TODO Auto-generated method stub
-		
-		List<Map<String,Object>> getCodeList = codeDao.getCodeList();
-		
-		
-		
-		return null;
-	}
 
+		Map<String,Object> map = new HashMap<String,Object>(); 
+				List<CodeDto> grpCodeList = codeDao.grpCodeList();
+		
+		int grpCodeSize = grpCodeList.size();
+		String grpCode ="";
+		for(int i = 0; i <grpCodeSize ; i++) {
+			grpCode = grpCodeList.get(i).getCodegrp();
+			map.put(grpCode,codeDao.getCodeList(grpCode));
+		}
+		return map;
+	}
 }

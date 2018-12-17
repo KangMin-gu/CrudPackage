@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
@@ -27,9 +28,14 @@ import saas.crud.crm.cp.service.CampaignService;
 public class CampaignController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CampaignController.class);
-	@Autowired
 	
+	@Autowired
 	private CampaignService campaignService;
+	
+	@Autowired
+	private CodeService codeService;
+	
+	
 	// 캠페인 List
 	@RequestMapping(value = "/campaign", method=RequestMethod.GET)
 	public ModelAndView authCampaignList(HttpServletRequest request) {
@@ -56,8 +62,10 @@ public class CampaignController {
 	}
 	//캠페인 추가 화면
 	@RequestMapping(value="/campaign/post", method=RequestMethod.GET)
-	public ModelAndView authCampaignInsert(){
+	public ModelAndView authCampaignInsert(@ModelAttribute CampaignDto campaignDto){
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cp/campInsert");
 		return mView;
 	}
@@ -75,10 +83,11 @@ public class CampaignController {
 	}
 	// 캠페인 수정 화면
 	@RequestMapping(value="/campaign/post/{campNo}", method=RequestMethod.GET)
-	public ModelAndView authCampaignUpdate(HttpServletRequest request, @PathVariable int campNo) {
+	public ModelAndView authCampaignUpdate(HttpServletRequest request, @PathVariable int campNo,@ModelAttribute CampaignDto campaignDto) {
 		
 		ModelAndView mView = campaignService.campRead(request,campNo);
-		
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);		
 		mView.setViewName("cp/campUpdate");
 		
 		return mView;

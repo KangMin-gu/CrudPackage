@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/ma/company" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/ma/company" method="POST" commandName="companyDto">
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
@@ -113,13 +113,19 @@
                                         <tr>
                                             <th>기업규모</th>
                                             <td>
-                                                <select class="form-control reset" name="sitesize" id="sitesize" value="${search.sitesize }">
-                                                    <option value="">선택</option>
-                                                    <option value="1" <c:if test='${search.sitesize eq 1}'>selected</c:if>>대기업</option>
-                                                    <option value="2" <c:if test='${search.sitesize eq 2}'>selected</c:if>>중견기업</option>
-                                                    <option value="3" <c:if test='${search.sitesize eq 3}'>selected</c:if>>중소기업</option>
-                                                    <option value="4" <c:if test='${search.sitesize eq 4}'>selected</c:if>>소기업</option>
-                                                </select>
+                                                <form:select class="form-control reset" path="sitesize">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="companySize" items="${COMPANYSIZE }">
+                                                		<c:choose>
+                                                			<c:when test="${search.sitesize eq companySize.codeval}">
+                                                				<option selected label="${companySize.codename }" value="${companySize.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${companySize.codename }" value="${companySize.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -1,5 +1,6 @@
 package saas.crud.crm.sv.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -117,10 +118,12 @@ public class SvServiceImpl implements SvService{
 		
 		data.put("reguser", userNo);
 		data.put("edtuser", userNo);
-		
 		if(ractdate != "") {
+			data.put("prcstate", 2);
+			// 2 -> 처리상태 = 처리
 			data.put("rcvno", rcvNo);
 			svDao.svRactInsert(data);
+			svDao.svPrcState(data);
 		}
 		
 		return rcvNo;
@@ -203,6 +206,15 @@ public class SvServiceImpl implements SvService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		Map<String,Object> param = new HashMap();
+		param.put("siteid", siteId);
+		param.put("prcstate", 3);
+		// 3 -> 처리상태 = 이관
+		param.put("userno", userNo);
+		param.put("rcvno", conveyDto.getRcvno());
+		
+		svDao.svPrcState(param);
 		
 		conveyDto.setSiteid(siteId);
 		conveyDto.setReguser(userNo);

@@ -46,12 +46,13 @@
      	<if test ="endDate != null">
      		AND ISNULL(FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
      	</if>
-     	<if test ="siteName != null">
-     		AND SITENAME LIKE '%'+#{siteName} +'%'
+     	<if test ="sitename != null">
+     		AND SITENAME LIKE '%'+#{sitename} +'%'
      	</if>
-     	<if test ="siteSize != null">
-     		AND SITESIZE = #{siteSize}
+     	<if test ="sitesize != null">
+     		AND SITESIZE = #{sitesize}
      	</if>
+     	
     </select>
     
     <select id="detail" parameterType="companyDto" resultType="hashMap">

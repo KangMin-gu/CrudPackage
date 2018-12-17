@@ -13,7 +13,6 @@
 	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
 		//유효성 검사
-		debugger;
 		var allPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,}$/;    // -> 문자 + 숫자 + 특문 + 띄어쓰기 자릿수 X
 		var bsnoPattern = /^[\d]{10}$/;  //사업자번호
 		var incnoPattern =  /^[\d]{12}$/;  //법인번호
@@ -23,7 +22,7 @@
 		var phone1Pattern = /^[\d]{2,4}$/; ///2~4자리
 		var phone2Pattern = /^[\d]{3,4}$/; ///3~4자리
 		var phone3Pattern = /^[\d]{4}$/; ///4자리
-		var checkPattern = /^[1-9]{1}[0-9]+$/; //CheckBox용 0을 제외한 1자리 숫자
+		var checkPattern = /^[1-9]{1}[0-9]{0,}$/; //CheckBox용 0을 제외한 1자리 숫자
 		var numberPattern = /^[0-9]+$/; // 숫자만 자릿수 X
 		var datePattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;  //-> YYYY-MM-DD형식
 //		var passwordPattern -> 문자 + 숫자 + 특문 포함해서 8글자 이상 띄어쓰기 X

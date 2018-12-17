@@ -24,6 +24,7 @@ public class CompanyDto {
 	private String mobile3; //휴대폰3
 	private String email; //이메일
 	private String sitememo; //사이트메모
+	//private MultipartFile sitelogo; //사이트로고
 	private String sitelogo; //사이트로고
 	private String bscond; //업종
 	private String cotype; //업태
@@ -39,6 +40,7 @@ public class CompanyDto {
 	private String prsdname; // 대표자명
 	private int isdelete; //서비스상태 
 	private int owner; // 담당자
+	
 	
 	public CompanyDto() {}
 

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.sv.dto.ConveyDto;
+import saas.crud.crm.sv.dto.RactDto;
 import saas.crud.crm.sv.dto.RcvDto;
 import saas.crud.crm.sv.service.SvService;
 
@@ -23,6 +25,9 @@ public class SvController {
 	
 	@Autowired
 	private SvService svService;
+	
+	@Autowired
+	private CodeService codeService;
 	// 서비스 list 
 	@RequestMapping(value="/service",method=RequestMethod.GET)
 	public ModelAndView authSvList(HttpServletRequest request) {
@@ -46,8 +51,10 @@ public class SvController {
 	}
 	// 서비스 수정화면
 	@RequestMapping(value="/service/post/{rcvno}",method=RequestMethod.GET)
-	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno) {
+	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno, @ModelAttribute RcvDto rcvDto, @ModelAttribute RactDto ractDto) {
 		ModelAndView mView = svService.svRead(request, rcvno);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sv/svUpdate");
 		return mView;
 	}
@@ -61,7 +68,7 @@ public class SvController {
 	}
 	// 서비스 추가 화면
 	@RequestMapping(value="/service/post", method=RequestMethod.GET)
-	public ModelAndView authSvInsert(HttpServletRequest request) {
+	public ModelAndView authSvInsert(HttpServletRequest request, @ModelAttribute RcvDto rcvDto, @ModelAttribute RactDto ractDto) {
 		ModelAndView mView = new ModelAndView();
 		mView.setViewName("sv/svInsert");
 		
@@ -133,7 +140,6 @@ public class SvController {
 	}
 	
 	// 서비스 이관 이력 탭
-	
 	@RequestMapping(value="/tab/convey/{rcvno}", method=RequestMethod.GET)
 	@ResponseBody
 	public List<Map<String, Object>> authSvTabConvey(HttpServletRequest request, @PathVariable int rcvno){

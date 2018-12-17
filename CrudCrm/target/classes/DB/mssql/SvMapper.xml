@@ -10,8 +10,8 @@
     			   WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_
     		, A.RCVTYPE
     		, CASE WHEN A.PRCSTATE = 1 THEN '접수'
-    			   WHEN A.PRCSTATE = 2 THEN '이관'
-    			   WHEN A.PRCSTATE = 3 THEN '완료' END AS PRCSTATE_
+    			   WHEN A.PRCSTATE = 2 THEN '처리'
+    			   WHEN A.PRCSTATE = 3 THEN '이관' END AS PRCSTATE_
     		, CASE WHEN B.RACTCODE = 1 THEN '처리유형1'
     			   WHEN B.RACTCODE = 2 THEN '처리유형2'
     			   WHEN B.RACTCODE = 3 THEN '처리유형3' END AS RACTCODE_
@@ -134,8 +134,8 @@
     		  WHEN B.RACTCODE = 3 THEN 'option3' END AS RACTCODE_
     	, A.PRCSTATE
     	, CASE WHEN A.PRCSTATE = 1 THEN '접수'
-    		   WHEN A.PRCSTATE = 2 THEN '이관'
-    		   WHEN A.PRCSTATE = 3 THEN '완료' END AS PRCSTATE_
+    		   WHEN A.PRCSTATE = 2 THEN '처리'
+    		   WHEN A.PRCSTATE = 3 THEN '이관' END AS PRCSTATE_
     	, B.RACTDESC, B.RACTOWNER
     	, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = B.RACTOWNER) AS RACTOWNER_
     	, A.ISDELETE
@@ -191,6 +191,17 @@
 			,EDTUSER = #{edtuser}
 		WHERE SITEID = #{siteid}
 		AND RACTNO = #{ractno}
+	</update>
+	
+	<update id="svPrcState" parameterType="hashMap">
+	
+	UPDATE Crud_SaaS.dbo.T_RCV
+		SET EDTDATE = getDate()
+			EDTUSER = #{userno}
+			PRCSTATE = #{prcstate}
+		WHERE SITEID = #{siteid}
+		AND RCVNO = #{rcvno}
+	
 	</update>
 	
 	<insert id="rcvinsert" parameterType="rcvDto">

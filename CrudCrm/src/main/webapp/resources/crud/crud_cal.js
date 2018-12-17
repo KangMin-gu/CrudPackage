@@ -25,6 +25,8 @@
 	 var m = date.getMonth();
 	 var y = date.getFullYear();
 	 var url = window.location.pathname;
+	 var tempEvent = "";
+	 
 	$('#calendar').fullCalendar({
 		
 		header: {//캘린더 프레임 헤더설정
@@ -73,7 +75,13 @@
 				
 				success: function(result){
 					alert('ajax');
-					$('#hiddenId').val(100);//test		
+					
+					event = tempEvent;
+					event.id = result.id;
+					event.color = result.color;
+					event.start = result.start;
+				    $('#calendar').fullCalendar('updateEvent',event)
+										
 				},
 				error:function(){
 					alert('fail');	
@@ -86,8 +94,9 @@
 		eventReceive: function(event){
 		   debugger;
 		   alert('E.receiver');
-	       event.color = $('#hiddenColor').val();
-	       $('#calendar').fullCalendar('updateEvent',event)
+		   tempEvent = event;
+	       //event.color = $('#hiddenColor').val();
+	       //$('#calendar').fullCalendar('updateEvent',event)
 	     },
 		
 		//한글화
@@ -116,9 +125,10 @@
 		},
 
 		eventClick: function(event, element) {//캘린더 이벤트 클릭시
+			debugger;
 			var id = event.id;
 			var campUrl = url.substring(0,9);
-			if(campUrl = '/campaign'){
+			if(campUrl == '/campaign'){
 				window.location.href = campUrl+"/"+id;
 			}else {
 				openNewWindow("캘린더상세",url+"/view/"+id,"",600,700);	

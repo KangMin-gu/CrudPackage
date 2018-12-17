@@ -99,8 +99,8 @@
 												<tr>
 													<th>담당자</th>
 													<td>
-														<div class="input-group owner">
-															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${searchVal.owner_}" readonly>
+														<div class="input-group owner" id="owner_" >
+															<input type="text" class="form-control" autocomplete="off" name="owner_" value="${searchVal.owner_}" readonly>
                                                     		<input type="hidden" name="owner" id="owner" value="${searchVal.owner}">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
@@ -109,8 +109,8 @@
 													</td>
 													<th>직장명</th>
 													<td>
-														<div class="input-group cli">
-															<input type="text" class="form-control" autocomplete="off" name="cliname" id="cliname" value="${searchVal.cliname}" readonly>
+														<div class="input-group cli" id="cliname" >
+															<input type="text" class="form-control" autocomplete="off" name="cliname" value="${searchVal.cliname}" readonly>
                                                     		<input type="hidden" name="clino" id="clino" value="${searchVal.clino}">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
@@ -177,7 +177,7 @@
 													<td colspan="3">
 														<div class="i-checks" style="height: 1.60rem;">
 															<label class="pr-lg-3 mb-0">
-															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" ${searchVal.infoagree eq "0" ? "checked='checked'" :""} ><i></i> 동의</label> 
+															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" checked="checked" ${searchVal.infoagree eq "0" ? "checked='checked'" :""} ><i></i> 동의</label> 
 																<label class="pr-lg-3 mb-0">
 																<input type="radio"value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree eq "1" ? "checked='checked'" :""}><i></i> 거부</label>
 																<label class="mb-0"><input type="radio" value="2" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree gt "1" ? "checked='checked'" :""}><i></i> 전체</label>
@@ -194,15 +194,18 @@
 							
 							<form:form id="commandcheck" class="searchForm" action="/cust" method="PUT">
 							<div class="ibox-content row border-top-0 pt-lg-0">
-								<div class="w-100 text-right mb-2">
-									<span id="checkVal"></span>
-									<a href="/cust/post" class="btn btn-primary">추 가</a> 										
-									<button class="btn btn-primary">삭 제</button>																	
-									<div class="d-inline-block mt-sx-1">								
-										<a href="/custexcel" class="btn btn-primary">엑셀다운로드</a>
-									</div>
-									
-								</div>
+																
+								<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                              		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                                    	<a href="/custexcel" class="btn btn-primary">엑셀다운로드</a>                  
+                             		</div>                                       
+                              		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+                                		<span id="checkVal"></span>
+										<a href="/cust/post" class="btn btn-primary">추 가</a> 										
+										<button class="btn btn-primary delete">삭 제</button>				
+                              		</div>
+                           		</div>
+								
 								<div class="table-responsive">
 									<table class="table table-bordered table-hover">
 															
@@ -389,9 +392,10 @@
 				$('#custname').val('');
 				$('#mobile').val('');
 				$('#email').val('');
-				$('#cliname').val('');
+				$('[name="cliname"]').val('');
 				$('#clino').val(0);
-				$('#owner_').val('');
+				//$('#owner_').val('');
+				$('[name="owner_"]').val('');
 				$('#owner').val(0);
 				$('#custgubun').val(0);
 				$('#custgrade').val(0);

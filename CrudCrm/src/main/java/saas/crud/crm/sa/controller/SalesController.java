@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.dto.SalesDto;
 
@@ -29,6 +29,8 @@ public class SalesController {
 	
 	@Autowired 
 	private SalesService salesService;
+	@Autowired
+	private CrudEngine crud;
 		
 	//영업리스트
 	@RequestMapping(value="/sales",method=RequestMethod.GET)
@@ -238,7 +240,7 @@ public class SalesController {
 	@ResponseBody
 	public int authpopSaleStateInsert(HttpServletRequest request) {
 		
-		Map<String,Object> insVal = new HashMap<String,Object>();
+		Map<String,Object> insVal = crud.searchParam(request);
 		//세션 정보 값 DTO셋팅  
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -246,19 +248,7 @@ public class SalesController {
 				
 		insVal.put("userno", userno);
 		insVal.put("siteid", siteid);
-		
-		Enumeration params = request.getParameterNames();
-		
-		while (params.hasMoreElements()) {//requeset 값이 있으면 while문 가동 
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			
-			if(value == "") {
-					value = null;			
-			}
-			insVal.put(name, value);
-		}
-				
+								
 		int res = salesService.svcSalesStateInsert(insVal);//관련고객추가 서비스 실행
 		return res;			
 	}

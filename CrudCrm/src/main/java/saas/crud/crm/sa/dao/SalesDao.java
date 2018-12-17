@@ -57,4 +57,8 @@ public interface SalesDao {
 	public Map<String,Object> salesComSchDetail(Map<String,Object> schVal);
 	
 	public int salesSchInsertFromCom(Map<String,Object> schVal);
+	
+	public void mergeSalesSch(SalesDto salesDto);
+	
+	public List<Map<String,Object>> salesContList(Map<String,Object> prmMAp);
 }

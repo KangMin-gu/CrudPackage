@@ -106,7 +106,7 @@
 	</select>
 
 
-	<!-- 거래처 추가 -->	
+	<!-- 영업 추가 -->	
 	<insert id="salesInsert" parameterType="saas.crud.crm.sa.dto.SalesDto">
 		<selectKey keyProperty="salesno"  resultType="integer" order="AFTER">
 	
@@ -207,6 +207,26 @@
 		AND SITEID = #{siteid} 
 	</update>
 	
+	<!-- 영업 스케쥴 추가,수정 -->
+	<insert id="mergeSalesSch" parameterType="saas.crud.crm.sa.dto.SalesDto">
+	MERGE INTO TB210080 A
+		USING (select '1' AS DUAL ) B 
+		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno}  ) 
+		
+		WHEN MATCHED THEN
+		
+			UPDATE SET 
+			STARTDATE = #{rorddate}
+			,EDTUSER = #{edituser}, EDTDATE = getdate()
+		
+		WHEN NOT MATCHED THEN
+			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO  )
+			VALUES (#{siteid}, '[영업 실수주일]'+#{salename} ,  #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0,0,#{rorddate},#{owner},#{salesno} );
+	
+	</insert>
+	
+	
+	
 	<!-- 영업삭제 -->
 	<update id="salesDelete" parameterType="saas.crud.crm.sa.dto.SalesDto">
 	
@@ -297,6 +317,30 @@
 		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
 	</select>
 
+	<!-- 접촉 리스트 -->
+	<select id="salesContList" parameterType="hashMap" resultType="hashMap">	
+	SELECT * 
+	FROM
+	(
+	SELECT  
+	(ROW_NUMBER() OVER(ORDER BY A.CONTNO DESC)) AS ROWNUM
+	,A.*, B.CUSTNAME, C.USERNAME
+	FROM TB110010 A
+	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
+	INNER JOIN TB980010 C ON A.CTTUSER = C.USERNO
+	WHERE 
+		A.SITEID = #{siteid}
+		AND A.ISDELETE = 0 
+		<if test="salesno != 0">
+		AND A.SALESNO = #{salesno}
+		</if>
+		<if test="clino != 0">
+		AND A.CLINO = #{clino}
+		</if>
+	) T
+	WHERE
+		ROWNUM between #{startRowNum} and #{endRowNum}		   
+	</select>
 	
 	<!-- 영업관련고객 추가 -->
 	<insert id="salesCustInsert" parameterType="saas.crud.crm.sa.dto.SalesCustDto">

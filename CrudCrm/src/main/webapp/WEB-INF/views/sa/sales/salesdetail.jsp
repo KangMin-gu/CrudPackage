@@ -409,21 +409,23 @@
 													</colgroup>
 													<thead>
 														<tr>
-															<th>접촉일</th>
 															<th>접촉자</th>
+															<th>접촉일</th>
 															<th>고객명</th>
 															<th>접촉매체</th>
 															<th>접촉메모</th>
 														</tr>
 													</thead>
 													<tbody>
+														<c:forEach var="cont" items="${contList }">
 														<tr>
-															<td>2018-04-05</td>
-															<td>접촉자</td>
-															<td>고객명</td>
-															<td>접촉매체</td>
-															<td>메모입니다</td>
+															<td>${cont.CTTUSER }</td>
+															<td>${cont.CTTDATE }</td>
+															<td>${cont.CUSTNAME }</td>
+															<td>${cont.CTTCHANNEL }</td>
+															<td>${cont.MEMO }</td>
 														</tr>
+													</c:forEach>
 													</tbody>
 												</table>
 											</div>
@@ -452,20 +454,7 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-
-	<script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script>
 	
-	$('.relcustBtn').click(function(e){
-		var value = e.target.value;
-		var urlStr = '/popsalescust/'+value;
-		openNewWindow('관련고객',urlStr,e.target.id,600,500);
-	});
-		
-	function saleStateInsert(salesno,salestate){
-		var urlStr = '/popsalesstate/'+salesno+'?salestate='+salestate;
-		openNewWindow('영업단계',urlStr,'sales',600,500);
-	}
-	
-	</script>	
 </body>
 </html>

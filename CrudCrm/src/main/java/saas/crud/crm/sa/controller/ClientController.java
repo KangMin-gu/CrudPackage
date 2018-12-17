@@ -126,13 +126,6 @@ public class ClientController {
 	
 
 	
-	
-	
-	
-	
-	
-	
-	
 	//영업관련고객상세-팝업창
 	@RequestMapping(value="/popclicust/view/{clicustno}", method=RequestMethod.GET)
 	public ModelAndView authpopCliCustDetail(HttpServletRequest request, @PathVariable int clicustno) {			

@@ -95,25 +95,25 @@
 												<tr>
 													<th>고객명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control required validate name" name="custname" id="custname"  value="${custUpdate.CUSTNAME}"  >
+														<input type="text" class="form-control validate required nameV" name="custname" id="custname"  value="${custUpdate.CUSTNAME}"  >
 													</td>
 												</tr>
 												<tr>
 													<th>직책</th>
-													<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="duty" id="duty" value="${custUpdate.DUTY}"></td>
+													<td><input type="text" class="form-control validate allV" style="height: 1.45rem" name="duty" id="duty" value="${custUpdate.DUTY}"></td>
 												</tr>
 												<tr>
 													<th>직장전화</th>
 													<td>
 														<!-- form select 공통으로 변경 -->
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
 															<option value="" ${custUpdate.WRKTEL1 eq "" ? "selected" :""}>선택</option>
 															<option value="02" ${custUpdate.WRKTEL1 eq "02" ? "selected" :""}>02</option>
 															<option value="070" ${custUpdate.WRKTEL1 eq "070" ? "selected" :""}>070</option>
 															<option value="010" ${custUpdate.WRKTEL1 eq "010" ? "selected" :""}>010</option>
 														</select>
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrktel2" id="wrktel2"  value="${custUpdate.WRKTEL2}"> 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrktel3" id="wrktel3"  value="${custUpdate.WRKTEL3}">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2"  value="${custUpdate.WRKTEL2}"> 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3"  value="${custUpdate.WRKTEL3}">
 													</td>
 												</tr>
 											</tbody>
@@ -130,9 +130,8 @@
 													<th>직장명</th>
 													<!-- cli로 변경  -->
 													<td >
-														<div class="input-group cli">
-														
-															<input type="text" class="form-control"  name="cliname" id="cliname"  value="${custUpdate.CLINAME }" readonly>
+														<div class="input-group cli" id="cliname" >
+															<input type="text" class="form-control"  name="cliname"  value="${custUpdate.CLINAME }" readonly>
                                                     		<input type="hidden" name="clino" id="clino" value="${searchVal.CLINO eq null ? 0 :searchVal.CLINO}">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
@@ -144,27 +143,27 @@
 												<tr>
 													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" >
+														<select class="form-control col-4 float-left mr-3 validate required phone-group phone1V " style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="" ${custUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
 															<option value="010" ${custUpdate.MOBILE1 eq "010" ? "selected" :""}>010</option>
 															<option value="011" ${custUpdate.MOBILE1 eq "011" ? "selected" :""}>011</option>
 															<option value="017" ${custUpdate.MOBILE1 eq "017" ? "selected" :""}>017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate required phone2 " name="mobile2" id="mobile2"  value="${custUpdate.MOBILE2 }" > 
-														<input type="text" class="form-control col-3 float-left validate required phone3" name="mobile3" id="mobile3"  value="${custUpdate.MOBILE3 }" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate required phone-group phone2V" name="mobile2" id="mobile2"  value="${custUpdate.MOBILE2 }" > 
+														<input type="text" class="form-control col-3 float-left validate required phone-group phone3V" name="mobile3" id="mobile3"  value="${custUpdate.MOBILE3 }" >
 													</td>
 												</tr>
 												<tr>
 													<th>직장팩스${custUpdate.WRKFAX1}</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1" >
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1" >
 															<option value="" ${custUpdate.WRKFAX1 eq "" ? "selected" :""}>선택</option>
 															<option value="02" ${custUpdate.WRKFAX1 eq "02" ? "selected" :""}>02</option>
 															<option value="031" ${custUpdate.WRKFAX1 eq "031" ? "selected" :""}>031</option>
 															<option value="070" ${custUpdate.WRKFAX1 eq "070" ? "selected" :""}>070</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3"  value="${custUpdate.WRKFAX3 }">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3"  value="${custUpdate.WRKFAX3 }">
 													</td>
 												</tr>
 											</tbody>
@@ -179,15 +178,15 @@
 											<tbody>
 												<tr>
 													<th>부서</th>
-													<td><input type="text" class="form-control validate simple" name="deptname" id="deptname"  value="${custUpdate.DEPTNAME }"></td>
+													<td><input type="text" class="form-control validate allV" name="deptname" id="deptname"  value="${custUpdate.DEPTNAME }"></td>
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control validate email" style="height: 1.45rem" name="email" id="email" value="${custUpdate.EMAIL }" ></td>
+													<td><input type="email" class="form-control validate emailV" style="height: 1.45rem" name="email" id="email" value="${custUpdate.EMAIL }" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control validate url" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) www.crudsystem.co.kr" ></td>
+													<td><input type="text" class="form-control validate homepageV" style="height: 1.45rem" name="wrkurl" id="wrkurl" value="${custUpdate.WRKURL }" placeholder="ex) www.crudsystem.co.kr" ></td>
 												</tr>
 											</tbody>
 										</table>
@@ -208,7 +207,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" value="${custUpdate.WRKADDR2}" readonly>
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="wrkaddr3" id="wrkaddr3" value="${custUpdate.WRKADDR3 }">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="wrkaddr3" id="wrkaddr3" value="${custUpdate.WRKADDR3 }">
 													</td>
 												</tr>
 											</tbody>
@@ -224,14 +223,8 @@
 												<tr>
 													<th class="border-top-0">담당자</th>
 													<td class="border-top-0">
-														<div class="input-group owner">
-															<%-- <input type="hidden" name="owner" id="owner" value="${custUpdate.OWNER}"> 
-															<input type="text" class="form-control"  name="ownername" id="ownername" value="${custUpdate.OWNERNAME}" onClick="openPop('/popowner','owner',600,700);" readonly> 
-															<span class="input-group-addon"> 
-															<a href="#" onClick="openPop('/popowner','owner',600,700);" ><i class="fa fa-search"></i></a>
-															</span> --%>
-															
-															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${custUpdate.OWNER_}" readonly>
+														<div class="input-group owner" id="owner_">
+															<input type="text" class="form-control" autocomplete="off" name="owner_"  value="${custUpdate.OWNER_}" readonly>
                                                     		<input type="hidden" name="owner" id="owner" value="${custUpdate.OWNER}">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
@@ -263,13 +256,13 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
+															<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
 																<option value="" ${custUpdate.HOMTEL1 eq "" ? "selected" :""}>선택</option>
 																<option value="02" ${custUpdate.HOMTEL1 eq "02" ? "selected" :""}>02</option>
 																<option value="031" ${custUpdate.HOMTEL1 eq "031" ? "selected" :""}>031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="homtel2" id="homtel2" value="${custUpdate.HOMTEL2 }"> 
-															<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="homtel3" id="homtel3" value="${custUpdate.HOMTEL3 }">
+															<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" value="${custUpdate.HOMTEL2 }"> 
+															<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3" value="${custUpdate.HOMTEL3 }">
 														</td>
 													</tr>
 													<tr>
@@ -288,13 +281,13 @@
 															<div class="input-group date">
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
-																</span><input type="text" class="form-control" name="weddingday" id="weddingday" data-mask="9999-99-99" value="${custUpdate.WEDDINGDAY }" autocomplete="off">
+																</span><input type="text" class="form-control validate dateV" name="weddingday" id="weddingday" data-mask="9999-99-99" value="${custUpdate.WEDDINGDAY }" autocomplete="off">
 															</div>
 														</td>
 													</tr>
 													<tr>
 														<th>취미</th>
-														<td><input type="text" class="form-control validate simple" style="height: 1.42rem" name="hobby" id="hobby" value="${custUpdate.HOBBY }"> </td>
+														<td><input type="text" class="form-control validate allV" style="height: 1.42rem" name="hobby" id="hobby" value="${custUpdate.HOBBY }"> </td>
 													</tr>
 												</tbody>
 											</table>
@@ -365,7 +358,7 @@
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
 																</span> 
-																<input type="text" class="form-control" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99" value="${custUpdate.BIRTH}">
+																<input type="text" class="form-control validate dateV beforeDateV" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99" value="${custUpdate.BIRTH}">
 															</div>
 														</td>
 													</tr>
@@ -382,7 +375,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control validate simple" style="height: 1.52rem;" name="job" id="job"  value="${custUpdate.JOB}">
+															<input type="text" class="form-control validate allV" style="height: 1.52rem;" name="job" id="job"  value="${custUpdate.JOB}">
 														</td>
 													</tr>
 													<tr>
@@ -414,7 +407,7 @@
 																</span>
 															</div> 
 															<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" value="${custUpdate.HOMADDR2}" readonly>
-															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="homaddr3" id="homaddr3" value="${custUpdate.HOMADDR3}">
+															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="homaddr3" id="homaddr3" value="${custUpdate.HOMADDR3}">
 														</td>
 													</tr>
 												</tbody>

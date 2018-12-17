@@ -33,83 +33,12 @@ public class CustServiceImpl implements CustService {
 	@Override
 	public ModelAndView svcCustList(HttpServletRequest request) {
 		
-		Map<String, Object> searchVal = new HashMap<String, Object>();;
+		Map<String, Object> searchVal = crud.searchParam(request);
 		//**********여기부터 검색조건설정*************************************** 
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		searchVal.put("siteid", siteid);
 
-		//검색조건 설정 null 또는 공백이 아니면 if실행
 		
-		if( request.getParameter("custname") != null && !request.getParameter("custname").toString().trim().equals("") )  { 	
-			searchVal.put("custname",request.getParameter("custname"));
-		}
-		
-		if(request.getParameter("owner") != null ) {
-			searchVal.put("owner",request.getParameter("owner"));
-		}
-		if(request.getParameter("owner_") != null ) {
-			searchVal.put("owner_",request.getParameter("owner_"));
-		}
-		if(request.getParameter("clino") != null ) {
-			searchVal.put("clino",request.getParameter("clino"));
-		}
-		if( request.getParameter("cliname") != null && !request.getParameter("cliname").toString().trim().equals("") )  { 	
-			searchVal.put("cliname",request.getParameter("cliname"));
-		}
-		
-		if(request.getParameter("mobile") != null && !request.getParameter("mobile").toString().trim().equals("") ) {
-			searchVal.put("mobile",request.getParameter("mobile").toString());
-		}
-		
-		if(request.getParameter("email") != null && !request.getParameter("email").toString().trim().equals("") ) {
-			searchVal.put("email",request.getParameter("email") );
-		}
-		
-		if(request.getParameter("custgubun") != null) {
-			searchVal.put("custgubun",request.getParameter("custgubun"));
-		}
-		
-		if(request.getParameter("custgrade") != null) { 
-			searchVal.put("custgrade",request.getParameter("custgrade"));
-		}
-		//데이트 yyyy/mm/dd-> yyyymmdd 
-		if(request.getParameter("fromregdt") != null && !request.getParameter("fromregdt").toString().trim().equals("") ) {
-			String temp = request.getParameter("fromregdt");//	yyyy/mm/dd
-			String fromdt = temp.replace("-",""); // yyyymmdd
-			searchVal.put("fromregdt", fromdt);
-		}
-		if(request.getParameter("toregdt") != null && !request.getParameter("toregdt").toString().trim().equals("")) {
-			String temp = request.getParameter("toregdt");//	yyyy/mm/dd
-			String todt = temp.replace("/",""); // yyyymmdd
-			searchVal.put("toregdt", todt);
-		}
-		//정보활용동의 라디오버튼
-		if(request.getParameter("infoagree") != null) {
-			searchVal.put("infoagree",request.getParameter("infoagree"));//선택된 값으로 저장
-		}else {
-			searchVal.put("infoagree",0);//선택 값이 없다면 기본값은 0
-		}
-		
-		/*
-		Enumeration params = request.getParameterNames();
-		
-		while (params.hasMoreElements()) {
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			if(value == "") {
-				value = null;
-			}
-			if(name == "infoagree") {
-				if(value == null) {
-					value = "0";
-				}
-			}
-			
-			searchVal.put(name, value);
-		}
-		*/
-		//*********************총 자료수 검색조건끝****************************************
-			
 		//총자료수
 		int totalRows = custDao.totalCnt(searchVal);
 		
@@ -211,13 +140,18 @@ public class CustServiceImpl implements CustService {
 		
 		//고객 추가 dao호출 추가된 고객pk 값 리턴
 		int custno = custDao.custformInsert(custDto);
-		
+		System.out.println("dto custno : "+ custDto.getCustno()+" /  result custno = " + custno);
 		//수신거부 테이블 default 값 + 파라미터 dto 값 전달  
 		custDenyDto.setCustno(custno);
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
 		//수신거부 테이블에 해당 고객 데이터 생성
 		custDao.custformInsertDeny(custDenyDto);
+		
+		if(custDto.getClino() != 0) {//clino가 존재하면 거래처-관련고객 테이블에 insert 
+		custDao.mergeRelCli(custDto);
+		}
+		
 		
 		return custno;//상세 페이지 이동을 위해 생성된 pk값 리턴 
 	}
@@ -243,7 +177,12 @@ public class CustServiceImpl implements CustService {
 			custDenyDto.setEdituser(userno);
 			
 			//수신거부 dao 호출  
-			custDao.custformUpdateDeny(custDenyDto);				
+			custDao.custformUpdateDeny(custDenyDto);
+			
+			if(custDto.getClino() != 0) {//clino가 존재하면 거래처-관련고객 테이블에 update or insert
+				custDao.mergeRelCli(custDto);
+			}
+			
 			return custno;
 	}
 

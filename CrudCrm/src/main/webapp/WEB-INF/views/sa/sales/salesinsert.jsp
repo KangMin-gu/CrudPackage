@@ -84,7 +84,7 @@
 												<tr>
 													<th>영업건명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error validate required simple" id="salename" name="salename"></td>
+														<input type="text" class="form-control error " id="salename" name="salename"></td>
 												</tr>
 												<tr>
 													<th>현단계<sup>*</sup></th>
@@ -180,8 +180,8 @@
 												<tr>
 													<th>거래처명<sup>*</sup></th>
 													<td>
-														<div class="input-group">
-															<input type="text" class="form-control cli error validate required simple" id="cliname" name="cliname"> 
+														<div class="input-group cli" id="cliname">
+															<input type="text" class="form-control  error "  name="cliname"> 
 															<input type="hidden" id="clino" name="clino"> 
 															<span class="input-group-addon">
 																<a href="javascript:void(0);"><i class="fa fa-search cli"></i></a>

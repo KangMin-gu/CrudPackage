@@ -58,8 +58,13 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public void custformInsertDeny(CustDenyDto custDenyDto) {
 		session.insert("customer.custformInsertDeny", custDenyDto);
-
 	}
+	//고객추가 - 관련고객 테이블 추가
+	@Override
+	public void mergeRelCli(CustDto custDto) {
+		session.insert("customer.mergeRelCli", custDto);
+	}
+	
 	//고객 수정 폼(바인딩 정보)
 	@Override
 	public Map<String,Object> custUpdateForm(int custno){
@@ -78,6 +83,7 @@ public class CustDaoImpl implements CustDao {
 		int res = session.insert("customer.custformUpdateDeny", custDenyDto);
 		return res;
 	}
+
 
 	
 

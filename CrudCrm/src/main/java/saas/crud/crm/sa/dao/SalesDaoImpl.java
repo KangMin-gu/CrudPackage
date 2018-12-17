@@ -54,6 +54,12 @@ public class SalesDaoImpl implements SalesDao {
 		int salesNo = salesDto.getSalesno();
 		return salesNo;
 	}
+	//영업-추가,수정 시 영업-스케쥴 merge
+	@Override
+	public void mergeSalesSch(SalesDto salesDto) {
+		session.insert("sales.mergeSalesSch",salesDto);
+	}
+
 	//영업삭제
 	@Override
 	public int salesDelete(SalesDto salesDto) {
@@ -169,5 +175,11 @@ public class SalesDaoImpl implements SalesDao {
 		int schno = Integer.parseInt(schVal.get("schno").toString());//insert한 id 반환 
 		return schno;
 	}
-
+	//접촉 리스트 
+	@Override
+	public List<Map<String, Object>> salesContList(Map<String, Object> prmMAp) {
+		List contList = session.selectList("sales.salesContList",prmMAp);
+		return contList;
+	}
+	
 }

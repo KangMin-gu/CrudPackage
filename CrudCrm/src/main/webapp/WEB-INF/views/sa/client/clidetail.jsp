@@ -264,7 +264,7 @@
 											<div class="panel-body table-responsive">
 																	
 												<div class="w-100 text-right mb-2">
-                                               	   <Button class="btn btn-primary relcustBtn" id="clino" value= "${cliDetail.CLINO }">추가</Button>
+                                               	   <Button class="btn btn-primary cliCustBtn" id="clino" value= "${cliDetail.CLINO }">추가</Button>
                                             	</div>								
 																	
 												<div class="box1 col-xl-3 p-0">	
@@ -421,21 +421,23 @@
 													</colgroup>
 													<thead>
 														<tr>
-															<th>접촉일</th>
 															<th>접촉자</th>
+															<th>접촉일</th>
 															<th>고객명</th>
 															<th>접촉매체</th>
 															<th>접촉메모</th>
 														</tr>
 													</thead>
 													<tbody>
+														<c:forEach var="cont" items="${contList }">
 														<tr>
-															<td>2018-04-05</td>
-															<td>접촉자</td>
-															<td>고객명</td>
-															<td>접촉매체</td>
-															<td>메모입니다</td>
+															<td>${cont.CTTUSER }</td>
+															<td>${cont.CTTDATE }</td>
+															<td>${cont.CUSTNAME }</td>
+															<td>${cont.CTTCHANNEL }</td>
+															<td>${cont.MEMO }</td>
 														</tr>
+													</c:forEach>
 													</tbody>
 												</table>
 											</div>
@@ -464,22 +466,7 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	
-	<script>
-	function cliCustSearch(){
-		var custname = $('#custname').val();		
-		var urlStr = '/sales/client/view/${cliDetail.CLINO}?custname='+custname
-		location.replace(urlStr);
-	}
-	
-	$('.relcustBtn').click(function(e){
-		var value = e.target.value;
-		var urlStr = '/popclicust/'+value;
-		openNewWindow('관련고객',urlStr,e.target.id,600,500);
-	});
-	
-	
-	</script>
-	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cal.js"></script>
+
 </body>
 </html>

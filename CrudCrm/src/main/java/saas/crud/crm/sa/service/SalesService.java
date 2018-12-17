@@ -54,4 +54,5 @@ public interface SalesService {
 	public Map<String,Object> svcSalesComSchDetail(Map<String,Object> schVal);
 	
 	public String svcSalesSchInsertFromCom(Map<String,Object> schVal);
+	
 }

@@ -33,27 +33,9 @@ public class ClientServiceImpl implements ClientService {
 		@Override
 		public ModelAndView svcCliList(HttpServletRequest request) {
 			
-			Map<String, Object> searchVal = new HashMap<String, Object>();//검색 조건을 담을 변수 
+			Map<String, Object> searchVal = crud.searchParam(request);//검색 조건을 담을 변수 
 			int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 			searchVal.put("siteid", siteid);
-			
-			Enumeration params = request.getParameterNames();
-			
-			while (params.hasMoreElements()) {//requeset 값이 있으면 while문 가동 
-				String name = (String)params.nextElement();
-				String value = request.getParameter(name);
-				
-				if(name.equals("owner") || name.equals("importance") || name.equals("friendly") ) {//숫자 타입은 값이 없으면 0으로 초기화
-					if(value == "") {
-						value = "0";
-					}				
-				}else {//스트링 타입은 값이 없으면 NULL로 초기화				
-					if(value == "") {
-						value = null;
-					}
-				}
-				searchVal.put(name, value);
-			}
 			
 			//총자료수
 			int totalRows = clientDao.cliListCount(searchVal);
@@ -105,6 +87,11 @@ public class ClientServiceImpl implements ClientService {
 			prm.put("startRowNum", startRowNum);
 			prm.put("endRowNum",endRowNum);
 			mView.addObject("cliSalesList",salesDao.salesList(prm));
+				
+			mView.addObject("contList",salesDao.salesContList(prm));//접촉리스트 최근 20건
+			
+			
+			
 			return mView;
 		}
 		//거래처 추가
@@ -142,28 +129,14 @@ public class ClientServiceImpl implements ClientService {
 		@Override
 		public Map<String, Object> svcCliCustList(HttpServletRequest request) {
 
-			Map<String,Object> searchVal = new HashMap<String,Object>();
+			Map<String,Object> searchVal = crud.searchParam(request);
 			int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-			
-			Enumeration params = request.getParameterNames();
-								
-			searchVal.put("siteid", siteid);			
-			
-			while (params.hasMoreElements()) {//requeset 값이 있으면 while문 가동 
-				String name = (String)params.nextElement();
-				String value = request.getParameter(name);
-				
-				if(value == "") {
-						value = null;
-				}
-				searchVal.put(name, value);
-			}
-			
+
 			if( request.getAttribute("clino") != null ) {//거래처서비스에서 호출
 				int clino = Integer.parseInt(request.getAttribute("clino").toString());
 				searchVal.put("clino", clino);
 			}
-						
+				
 			//총자료수
 			int totalRows = clientDao.cliCustListCnt(searchVal);							
 			//paging

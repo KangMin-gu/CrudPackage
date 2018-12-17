@@ -20,19 +20,6 @@
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 
-
-
-<style id="test">
-.fc-event,
-.fc-agenda .fc-event-time,
-.fc-event a {
-  padding: 4px 6px;
-  background-color: red;
-  /* background color */
-  border-color: #1ab394;
-  /* border color */
-}
-</style>
 </head>
 <body>
 	<div id="wrapper">

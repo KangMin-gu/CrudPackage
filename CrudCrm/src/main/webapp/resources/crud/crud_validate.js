@@ -13,22 +13,26 @@
 	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
 		//유효성 검사
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,5}$/; //한글 영문 2~30글자 + 숫자0~5자리까지허용
-		var stringPattern = /^[s가-힣a-zA-Z0-9!@#$%*\&()-_=+,.?]{1,300}$/; //공백 미허용 문자열
-		var simplePattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,30}$/; //한글 영문 숫자 기호 1~30자리
-		var numberPattern = /^[1-9]{1,2}$/; // 0을 제외한 1~2자리숫자
-		var longnumberPattern = /^[0-9]{1,10}$/; // 0을 포함한 10자리숫자
-		var checkPattern = /^[0-9]{1,2}$/; // 0을 포함한 1자리 숫자
-		var phone1Pattern = /^[\d]{2,3}$/; //2~3자리 숫자
-		var phone2Pattern = /^[\d]{3,4}$/; //3~4자리숫자 일반 전화번호
-		var phone3Pattern = /^[\d]{4}$/; //4자리숫자 일반 전화번호
-		var domainPattern =/^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/ //http 포함하면 안됨 
-		var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //email 정규표현식
-		var corpnoPattern = /^[\d]{12}$/; //법인번호 숫자 12자리 차후 검증식 필요
-		var bsnoPattern = /^[\d]{10}$/; //사업자번호 숫자 10자리 
-		var costPattern = /^[\d]{1,15}$/;//최대 15자리 숫자
-		var percentPattern = /^[0-9]{1}$|^[1-9]{1}[0-9]{1}$|^100$/; //0~100까지의 정수
-		var addrPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,30}$/;
+	
+		var allPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,}$/;    // -> 문자 + 숫자 + 특문 + 띄어쓰기 자릿수 X
+		var bsnoPattern = /^[\d]{10}$/;  //사업자번호
+		var incnoPattern =  /^[\d]{12}$/;  //법인번호
+		var emailPattern  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일
+		var stringPattern = /^[가-힣a-zA-Z0-9\s]{1,}$/;    //-> 문자 + 숫자 + 띄어쓰기 
+		var varcharPattern = /^[가-힣a-zA-Z0-9]{1,}$/; //공백 미허용 문자열-> 문자만
+		var phone1Pattern = /^[\d]{2,4}$/; ///2~4자리
+		var phone2Pattern = /^[\d]{3,4}$/; ///3~4자리
+		var phone3Pattern = /^[\d]{4}$/; ///4자리
+		var checkPattern = /^[1-9]{1}[0-9]+$/; //CheckBox용 0을 제외한 1자리 숫자
+		var numberPattern = /^[0-9]+$/; // 숫자만 자릿수 X
+		var datePattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;  //-> YYYY-MM-DD형식
+//		var passwordPattern -> 문자 + 숫자 + 특문 포함해서 8글자 이상 띄어쓰기 X
+		var idPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?]{5,}$/; //    -> 영어 + 숫자 + 특문 5글자 이상 띄어쓰기 X
+		var homepagePattern = /^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/; //-> www.crudsystem.co.kr
+		var percentPattern = /^[0-9]{1}$|^[1-9]{1}[0-9]{1}$|^100$/; // -> 0~100 정수. 
+		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{1,15}$/; //한글 영문 2~30글자 + 숫자0~29
+		
+
 		
 		var res;//true or false
 		var value = $('[name="'+id+'"]').val();
@@ -42,82 +46,88 @@
 			}
 		}
 		var msg;
-		if( $('[name="'+id+'"]').hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
-			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
-			msg = '<한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
 		
-		}else if( $('[name="'+id+'"]').hasClass('phone1') ){
-			res = phone1Pattern.test(value);
-			msg = '숫자 2~3 자리를 입력해 주세요.';//이 문구 출력	
+				
+		if( $('[name="'+id+'"]').hasClass('allV') ){ //파라미터로 들어온 해당 name 값에 name 이라는 클래스가 있으면 
+			res = allPattern.test(value);// namePattern 매칭. 유효성검사 실행 
+			msg = 'allPattern';//이 문구 출력		
 			
-		}else if( $('[name="'+id+'"]').hasClass('phone2') ){
-			res = phone2Pattern.test(value);
-			msg = '숫자 3~4 자리를 입력해 주세요.';//이 문구 출력
-			
-		}else if( $('[name="'+id+'"]').hasClass('phone3') ){
-			res = phone3Pattern.test(value);
-			msg = '숫자 4 자리를 입력해 주세요.';//이 문구 출력	
-			
-		}else if( $('[name="'+id+'"]').hasClass('addr') ){
-			res = addrPattern.test(value);
-			msg = '한글,영어,숫자,기호로 입력해 주세요.(특수문자x)';//이 문구 출력
-			
-		}else if( $('[name="'+id+'"]').hasClass('url') ){
-			res = domainPattern.test(value);
-			msg = 'http(s):// 를 제외한 url 형식으로 입력해 주세요 ex) www.crudsystem.co.kr ';//이 문구 출력
-			
-		}else if( $('[name="'+id+'"]').hasClass('email') ){
-			res = emailPattern.test(value);
-			msg = 'email 형식에 맞게 입력해 주세요 ex) sdw@crudsystem.co.kr ';//이 문구 출력
-			
-		}else if( $('[name="'+id+'"]').hasClass('simple') ){
-			res = simplePattern.test(value);
-			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
-		
-		}else if( $('[name="'+id+'"]').hasClass('number') ){
-			res = numberPattern.test(value);
-			if(id=='idcheck'){
-				msg = '중복된 ID 이거나 입력이 되지 않았습니다.';
-			}else{
-				msg = '숫자로 입력해 주세요.';//이 문구 출력	
+		}else if( $('[name="'+id+'"]').hasClass('bsnoV') ){		
+			if(value.length==12){ // - 제거
+				var temp = value.replace(/\-/g,'');
+				value = temp;			
 			}
-		}else if( $('[name="'+id+'"]').hasClass('longnumber') ){
-			res = longnumberPattern.test(value);
-			msg = '숫자로 입력해 주세요.';//이 문구 출력	
-		
-		}else if( $('[name="'+id+'"]').hasClass('string') ){
-			res = stringPattern.test(value);
-			msg = '잘못된 문자열이 입력되었습니다. 학인해주세요';//이 문구 출력	
-		
-		}else if( $('[name="'+id+'"]').hasClass('check') ){
-			res = checkPattern.test(value);
-			msg = '사용여부 확인 부탁드립니다.';//이 문구 출력	
-		
-		}else if( $('[name="'+id+'"]').hasClass('cost') ){
-			res = costPattern.test(value);
-			msg = '1~15자리의 숫자를 입력해주세요.';//이 문구 출력	
-		
-		}else if( $('[name="'+id+'"]').hasClass('percent') ){
-			res = percentPattern.test(value);
-			msg = '0~100까지의 정수를 입력해주세요';//이 문구 출력	
-		
-		}else if( $('[name="'+id+'"]').hasClass('corp') ){//법인번호는 999999-999999 형식  - 제거 후 유효성검사					
-			if(value.length==13){ 
+			res = bsnoPattern.test(value); 
+			msg = 'bsnoPattern';	
+			
+		}else if( $('[name="'+id+'"]').hasClass('incnoV') ){
+			if(value.length==13){// - 제거 
 				var temp = value.replace('-','');
 				value = temp;
 			}		
-			res = corpnoPattern.test(value);
-			msg = '법인번호 12자리를 확인 해주세요';//이 문구 출력	
-		}else if( $('[name="'+id+'"]').hasClass('bs') ){//사업자번호는 999-99-99999  형식  - 제거 후 유효성검사		
-			if(value.length==12){ // - 제거
-				var temp = value.replace(/\-/g,'');
-				value = temp;
-			
-			}		
-			res = bsnoPattern.test(value);
-			msg = '사업자번호 10자리를 확인 해주세요';//이 문구 출력	
+			res = incnoPattern.test(value); 
+			msg = 'incnoPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('emailV') ){ 
+			res = emailPattern.test(value); 
+			msg = 'emailPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('stringV') ){ 
+			res = stringPattern.test(value); 
+			msg = 'stringPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('varcharV') ){ 
+			res = varcharPattern.test(value); 
+			msg = 'varcharPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('phone1V') ){ 
+			res = phone1Pattern.test(value); 
+			msg = 'phone1Pattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('phone2V') ){ 
+			res = phone2Pattern.test(value); 
+			msg = 'phone2Pattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('phone3V') ){ 
+			res = phone3Pattern.test(value); 
+			msg = 'phone3Pattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('checkV') ){ 
+			res = checkPattern.test(value); 
+			msg = 'checkPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('numberV') ){ 
+			res = numberPattern.test(value); 
+			msg = 'numberPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('idV') ){ 
+			res = idPattern.test(value); 
+			msg = 'idPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('dateV') ){
+			res = datePattern.test(value); 
+			msg = 'datePattern';		
+			if($('[name="'+id+'"]').hasClass('beforeV')){
+				var today = new Date();
+				var beforeDay = new Date(value);
+				res = today >= beforeDay;
+				msg = '해당 필드는 현재일 보다 미래로 설정 할 수 없습니다.';
+			}
+		
+		}else if( $('[name="'+id+'"]').hasClass('homepageV') ){ 
+			res = homepagePattern.test(value); 
+			msg = 'homepagePattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('percentV') ){ 
+			res = percentPattern.test(value); 
+			msg = 'percentPattern';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('nameV') ){ 
+			res = namePattern.test(value); 
+			msg = 'namePattern';		
 		}
 		
+
 		
 		msg = $('[name="'+id+'"]').parent().prev().text()+ " : " + msg;//에러 메시지에 필드명 추가
 		reqMsg = "<strong class='text-danger'> "+ msg.replace('*','') +"</strong>";//필수값 메시지 

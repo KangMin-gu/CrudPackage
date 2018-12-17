@@ -75,7 +75,7 @@
 											<Strong><span id="showMsg"></span></Strong>				
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<Button type="submit" class="btn btn-primary submit" disabled >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit"  >저 장</Button>
 											<a href="/cust" class="btn btn-primary">목 록</a>
 										</div>
 									</div>
@@ -91,25 +91,25 @@
 												<tr>
 													<th>고객명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error required validate name" name="custname" id="custname" placeholder="필수 입력" >
+														<input type="text" class="form-control error validate required nameV" name="custname" id="custname" placeholder="필수 입력" >
 													</td>
 												</tr>
 												<tr>
 													<th>직책</th>
-													<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="duty" id="duty"></td>
+													<td><input type="text" class="form-control validate allV" style="height: 1.45rem" name="duty" id="duty"></td>
 												</tr>
 												<tr>
 													<th>직장전화</th>
 													<td>
 														<!-- form select 공통으로 변경 -->
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select>
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrktel2" id="wrktel2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrktel3" id="wrktel3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3" >
 													</td>
 												</tr>
 											</tbody>
@@ -126,13 +126,8 @@
 													<th>직장명</th>
 													<!-- cli로 변경  -->
 													<td >
-														<div class="input-group cli">
-															<!-- <input type="text" class="form-control" name="cliname" id="cliname" onClick="openPop('/popclient','client',600,700);"readonly> 
-															<input type="hidden" name="clino" id="clino" value="0">
-															<span class="input-group-addon"> 
-																<a href="javascript:void(0);" onClick="openPop('/popclient','client',600,700);"><i class="fa fa-search"></i></a>
-															</span> -->		
-															<input type="text" class="form-control" autocomplete="off" name="cliname" id="cliname" readonly>
+														<div class="input-group cli" id="cliname">
+															<input type="text" class="form-control" autocomplete="off" name="cliname"  readonly>
                                                     		<input type="hidden" name="clino" id="clino" value="0">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
@@ -143,28 +138,28 @@
 												<tr>
 													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
 													<td>													
-														<select class="form-control col-4 float-left mr-3 error validate required phone1" style="height: 1.40rem" name="mobile1" id="mobile1" >
+														<select class="form-control col-4 float-left mr-3 error validate phone1V required phone-group" style="height: 1.40rem" name="mobile1" id="mobile1" >
 															<option value="">선택</option>
 															<option value="010">010</option>
 															<option value="011">011</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 error validate required phone2" name="mobile2" id="mobile2"  > 
-														<input type="text" class="form-control col-3 float-left error validate required phone3" name="mobile3" id="mobile3"  >														
+														<input type="text" class="form-control col-3 float-left mr-2 error validate phone1V phone-group required" name="mobile2" id="mobile2"  > 
+														<input type="text" class="form-control col-3 float-left error validate phone1V phone-group required" name="mobile3" id="mobile3"  >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="031">031</option>
 															<option value="070">070</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="wrkfax2" id="wrkfax2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="wrkfax3" id="wrkfax3" >
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3" >
 													</td>
 												</tr>
 											</tbody>
@@ -179,15 +174,15 @@
 											<tbody>
 												<tr>
 													<th>부서</th>
-													<td><input type="text" class="form-control validate simple" name="deptname" id="deptname" ></td>
+													<td><input type="text" class="form-control validate allV" name="deptname" id="deptname" ></td>
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control validate email" style="height: 1.45rem" name="email" id="email" ></td>
+													<td><input type="email" class="form-control validate emailV" style="height: 1.45rem" name="email" id="email" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control validate url"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) www.crudsystem.co.kr "></td>
+													<td><input type="text" class="form-control validate homepageV"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) www.crudsystem.co.kr "></td>
 												</tr>
 											</tbody>
 										</table>
@@ -208,7 +203,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" readonly>
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="wrkaddr3" id="wrkaddr3">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="wrkaddr3" id="wrkaddr3">
 													</td>
 												</tr>
 											</tbody>
@@ -224,8 +219,8 @@
 												<tr>
 													<th class="border-top-0">담당자</th>
 													<td class="border-top-0">
-														<div class="input-group owner">
-															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${SESSIONUSERNAME}" readonly>
+														<div class="input-group owner" id="owner_" >
+															<input type="text" class="form-control" autocomplete="off" name="owner_" value="${SESSIONUSERNAME}" readonly>
                                                     		<input type="hidden" name="owner" id="owner" value="${SESSIONUSERNO}">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
@@ -256,13 +251,13 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
+															<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
 																<option value="">선택</option>
 																<option value="02">02</option>
 																<option value="031">031</option>
 															</select> 
-															<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="homtel2" id="homtel2" > 
-															<input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="homtel3" id="homtel3">
+															<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" > 
+															<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
@@ -282,13 +277,13 @@
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
 																</span>
-																<input type="text" class="form-control"  name="weddingday" id="weddingday" autocomplete="off" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV"  name="weddingday" id="weddingday" autocomplete="off" data-mask="9999-99-99">
 															</div>
 														</td>
 													</tr>
 													<tr>
 														<th>취미</th>
-														<td><input type="text" class="form-control validate simple" style="height: 1.45rem" name="hobby" id="hobby"> </td>
+														<td><input type="text" class="form-control validate allV" style="height: 1.45rem" name="hobby" id="hobby"> </td>
 													</tr>
 												</tbody>
 											</table>
@@ -357,7 +352,7 @@
 														<td>
 															<div class="input-group date" style="height: 1.45rem;">
 																<span class="input-group-addon"> <i class="fa fa-calendar"></i> </span> 
-																<input type="text" class="form-control" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV beforeV" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99">
 															</div>
 														</td>
 													</tr>
@@ -374,7 +369,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control validate simple" style="height: 1.52rem;" name="job" id="job">
+															<input type="text" class="form-control validate allV" style="height: 1.52rem;" name="job" id="job">
 														</td>
 													</tr>
 													<tr>
@@ -406,7 +401,7 @@
 																</span>
 															</div> 
 															<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" readonly>
-															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="homaddr3" id="homaddr3">
+															<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="homaddr3" id="homaddr3">
 														</td>
 													</tr>
 												</tbody>

@@ -89,18 +89,36 @@ public class SalesServiceImpl implements SalesService {
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("salesDetail",salesDao.salesDetail(salesDto));
 		mView.addObject("salesStateList",salesDao.salesStateList(salesDto));
+		
+		Map<String,Object> prmMap= new HashMap<String,Object>();
+		int siteId = salesDto.getSiteid();
+		int salesNo = salesDto.getSalesno();
+		int startRowNum = 1;
+		int endRowNum = 20;
+		prmMap.put("startRowNum", startRowNum);
+		prmMap.put("endRowNum",endRowNum);		
+		prmMap.put("siteid",siteId);
+		prmMap.put("salesno",salesNo);
+		
+		mView.addObject("contList",salesDao.salesContList(prmMap));
 		return mView;
 	}
 	//영업추가
 	@Override
 	public int svcSalesInsert(SalesDto salesDto) {
 		int salesNo = salesDao.salesInsert(salesDto);
+		if( salesDto.getRorddate() != null &&salesDto.getRorddate() != "" ) {//clino가 존재하면 거래처-관련고객 테이블에 update or insert
+			salesDao.mergeSalesSch(salesDto);
+		}
 		return salesNo;
 	}
 	//영업수정 폼
 	@Override
 	public Map<String, Object> svcSalesDetailForm(SalesDto salesDto) {
 		Map<String,Object> resMap = salesDao.salesDetail(salesDto);
+		if( salesDto.getRorddate() != null &&salesDto.getRorddate() != "" ) {
+			salesDao.mergeSalesSch(salesDto);
+		}
 		return resMap;
 	}
 	//영업수정 실행
@@ -120,12 +138,10 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public Map<String, Object> svcSalesCustList(HttpServletRequest request) {
 
-		Map<String,Object> searchVal = new HashMap<String,Object>();
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		Map<String,Object> searchVal = crud.searchParam(request);
 		
+		/*
 		Enumeration params = request.getParameterNames();
-							
-		searchVal.put("siteid", siteid);			
 		
 		while (params.hasMoreElements()) {//requeset 값이 있으면 while문 가동 
 			String name = (String)params.nextElement();
@@ -136,12 +152,12 @@ public class SalesServiceImpl implements SalesService {
 			}
 			searchVal.put(name, value);
 		}
-		
+		*/	
 		if( request.getAttribute("salesno") != null ) {//거래처서비스에서 호출
 			int salesno = Integer.parseInt(request.getAttribute("salesno").toString());
 			searchVal.put("salesno", salesno);
 		}
-					
+				
 		//총자료수
 		int totalRows = salesDao.salesCustListCnt(searchVal);							
 		//paging
@@ -271,6 +287,7 @@ public class SalesServiceImpl implements SalesService {
 		toJsonMap.put("id", schno);
 		toJsonMap.put("color", schMap.get("COLOR").toString() );
 		toJsonMap.put("title", schMap.get("SCHNAME").toString() );
+		toJsonMap.put("start", schMap.get("START").toString() );
 			
 		ObjectMapper mapper = new ObjectMapper();		
 		String jsonStr = "";

@@ -86,7 +86,7 @@
 												<tr>
 													<th>거래처명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error required validate simple" id="cliname" name="cliname">
+														<input type="text" class="form-control error required validate StringV" id="cliname" name="cliname">
 													</td>
 												</tr>
 											</tbody>
@@ -102,7 +102,7 @@
 												<tr>
 													<th>거래처호칭<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error required validate simple" id="callname" name="callname">
+														<input type="text" class="form-control error required validate StringV" id="callname" name="callname">
 													</td>
 												</tr>
 											</tbody>
@@ -119,7 +119,7 @@
 													<th>영업담당자<sup>*</sup></th>
 													<td class="border-top-0 border-bottom-0">
 														<div class="input-group owner">
-															<input type="text" class="form-control" name="owner_" id="owner_" value="${clientInsert.USERNAME }" readOnly>
+															<input type="text" class="form-control validate required nameV" name="owner_" id="owner_" value="${clientInsert.USERNAME }" readOnly>
 															<input type="hidden" name="owner" id="owner" value="${clientInsert.USERNO }">
 															<span class="input-group-addon"> 
 																<a><i class="fa fa-search"></i></a>
@@ -148,7 +148,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="cliaddr2" id="cliaddr2" readonly> 
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="cliaddr3" id="cliaddr3">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="cliaddr3" id="cliaddr3">
 													</td>
 												</tr>
 											</tbody>
@@ -187,26 +187,26 @@
 												<tr>
 													<th class="border-top-0">법인번호</th>
 													<td class="border-top-0">
-														<input type="text" class="form-control validate corp" id="corp_sn" name="corp_sn" data-mask="999999-999999">
+														<input type="text" class="form-control validate incnoV" id="corp_sn" name="corp_sn" data-mask="999999-999999">
 													</td>
 												</tr>
 												<tr>
 													<th>대표전화</th>
 													<td>
 														<!-- form select 공통으로 변경 --> 
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" id="telno1" name="telno1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="telno1" name="telno1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" id="telno2" name="telno2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" id="telno3" name="telno3">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="telno2" name="telno2" > 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="telno3" name="telno3">
 													</td>
 												</tr>
 												<tr>
 													<th>업태</th>
-													<td><input type="text" class="form-control validate simple" id="bscond" name="bscond"></td>
+													<td><input type="text" class="form-control validate allV" id="bscond" name="bscond"></td>
 												</tr>
 												<tr>
 													<th>회사규모</th>
@@ -234,25 +234,25 @@
 												<tr>
 													<th class="border-top-0">사업자번호</th>
 													<td class="border-top-0">
-														<input type="text" class="form-control validate bs" id="bsno" name="bsno" data-mask="999-99-99999" >
+														<input type="text" class="form-control validate bsnoV" id="bsno" name="bsno" data-mask="999-99-99999" >
 													</td>
 												</tr>
 												<tr>
 													<th>팩스번호</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" id="faxtel2" name="faxtel2"> 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" id="faxtel3" name="faxtel3">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="faxtel2" name="faxtel2"> 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="faxtel3" name="faxtel3">
 													</td>
 												</tr>
 												<tr>
 													<th>업종</th>
-													<td><input type="text" class="form-control validate simple" id="bstype" name="bstype"></td>
+													<td><input type="text" class="form-control validate allV" id="bstype" name="bstype"></td>
 												</tr>
 												<tr>
 													<th>밀착도</th>
@@ -280,25 +280,25 @@
 												<tr>
 													<th class="border-top-0">대표자명</th>
 													<td class="border-top-0">
-														<input type="text" class="form-control validate name" id="prsdname" name="prsdname">
+														<input type="text" class="form-control validate nameV" id="prsdname" name="prsdname">
 													</td>
 												</tr>
 												<tr>
 													<th>핸드폰</th>
 													<td>
-														<select class="form-control col-3 float-left mr-2 validate phone1 phone-group" style="height: 23px;" id="mobile1" name="mobile1">
+														<select class="form-control col-3 float-left mr-2 validate phone1V phone-group" style="height: 23px;" id="mobile1" name="mobile1">
 															<option value=""></option>
 															<option value="010">010</option>
 															<option value="016">016</option>
 															<option value="017">017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" id="mobile2" name="mobile2"> 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" id="mobile3" name="mobile3">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="mobile2" name="mobile2"> 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="mobile3" name="mobile3">
 													</td>
 												</tr>
 												<tr>
 													<th>종목</th>
-													<td><input type="text" class="form-control validate simple" id="bscategory" name="bscategory"></td>
+													<td><input type="text" class="form-control validate allV" id="bscategory" name="bscategory"></td>
 												</tr>
 												<tr>
 													<th>국내/국외</th>

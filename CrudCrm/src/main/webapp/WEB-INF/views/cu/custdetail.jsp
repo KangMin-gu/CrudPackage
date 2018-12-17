@@ -564,9 +564,11 @@
 																</c:forEach>																								
 																</tbody>
 															</table>
+															<c:if test='${fn:length(custService) != 0 }'> 
 															<div class="text-right" >
-																<a href="${pagecontext.request.contextpath}/sv" class="btn btn-primary" >서비스이동</a>
+																<a href="/service?custno=${custDetail.CUSTNO }" class="btn btn-primary" >서비스이동</a>
 															</div>
+															</c:if>
 														</div>
 													</div>
 													<div role="tabpanel" id="tab2" class="tab-pane overflow-x">

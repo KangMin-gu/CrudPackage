@@ -137,10 +137,15 @@
 										</table>
 									</div>
 							</form:form>
-							<div class="w-100 text-right mt-3">
-								<a href="/sales/client/post" class="btn btn-primary">추가</a> 
-								<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-							</div>
+							
+							<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                              	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                                    <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>               
+                             	</div>                                       
+                              	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+                                	<a href="/sales/client/post" class="btn btn-primary">추가</a> 	
+                              	</div>
+                           	</div>				
 						</div>
 						<div class="ibox-content row border-top-0 pt-lg-0">
 							<div class="table-responsive">

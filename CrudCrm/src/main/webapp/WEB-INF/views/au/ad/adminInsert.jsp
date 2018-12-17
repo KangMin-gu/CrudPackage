@@ -88,15 +88,15 @@
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="telno1">
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mobile1">
                                             		<option label="선택" value=""/>
-                                                	<c:forEach var="phone" items="${PHONE }">
+                                                	<c:forEach var="mobile" items="${MOBILE }">
                                                 		<c:choose>
-                                                			<c:when test="${user.TELNO1 eq phone.codeval}">
-                                                				<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                			<c:when test="${user.TELNO1 eq mobile.codeval}">
+                                                				<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
                                                 			</c:when>
                                                 			<c:otherwise>
-                                                				<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                				<option label="${mobile.codename }" value="${mobile.codeval }"/>
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
@@ -109,8 +109,17 @@
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
                                                 <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="telno1">
-                                                	<option value= "">선택</option>
-                                                    <form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/>
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="phone" items="${PHONE }">
+                                                		<c:choose>
+                                                			<c:when test="${user.TELNO1 eq phone.codeval}">
+                                                				<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="telno2" id="telno2" value="${user.TELNO2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
@@ -142,7 +151,7 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control float-left dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                            		<input type="text" class="form-control float-left date dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
                                             	</div>
                                             </td>
                                         </tr>
@@ -168,12 +177,12 @@
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
-                                            <td><input type="text" class="form-control validate allV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
+                                            <td><input type="text" class="form-control validate stringV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="chkauth">관리자여부</label></th>
                                             <td>
-                                                
+                                            
                                             </td>
                                         </tr>
                                     </tbody>
@@ -213,10 +222,9 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
@@ -252,18 +260,18 @@
 	            success:function(data){
 	                if(data == 0){
 	                	text = '사용 가능한 ID 입니다.';
-	                	$('#msgDiv').empty();
-	                	$('#msgDiv').show();
-	                	$('#msgDiv').append(text);
+	                	$('#showMsg').empty();
+	                	$('#showMsg').show();
+	                	$('#showMsg').append(text);
 	                	$('#userid').removeClass('error');
 	                	check.val(1);
 	                	test = true;
 	                	return test;
 	                }else{
 	                	text = '이미 존재하고 있는 ID 입니다.';
-	                	$('#msgDiv').empty();
-	                	$('#msgDiv').show();
-	                	$('#msgDiv').append(text);
+	                	$('#showMsg').empty();
+	                	$('#showMsg').show();
+	                	$('#showMsg').append(text);
 	                	$('#userid').addClass('error');
 	                		check.val(0);
 	                		test = false

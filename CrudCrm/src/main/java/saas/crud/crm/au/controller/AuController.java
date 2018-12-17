@@ -35,7 +35,7 @@ public class AuController {
 	@Autowired
 	private CodeService codeService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(AuController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuController.class); 
 	// 담당자 팝업 검색
 	@RequestMapping(value="/common/user", method=RequestMethod.GET)
 	public ModelAndView authcommonUserList(HttpServletRequest request) {

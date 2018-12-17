@@ -86,7 +86,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control error required validate nameV" disabled name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control" disabled name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
@@ -142,7 +142,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control error required validate idV" disabled name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control" disabled name="userid" id="userid" value="${user.USERID}">
                                                 </div>
                                                 <input type="hidden" class="form-control"  name="idcheck" id="idcheck" value="">
                                             </td>
@@ -154,7 +154,7 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control float-left validate dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                            		<input type="text" class="form-control float-left validate date dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
                                             	</div>
                                             </td>
                                         </tr>
@@ -180,12 +180,11 @@
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
-                                            <td><input type="text" class="form-control validate allV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
+                                            <td><input type="text" class="form-control validate stringV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
-                                            <th><label for="mobile">관리자여부</label></th>
+                                            <th><label for="chkauth">관리자여부</label></th>
                                             <td>
-                                            	
                                             </td>
                                         </tr>
                                     </tbody>

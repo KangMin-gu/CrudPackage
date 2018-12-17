@@ -193,12 +193,12 @@
 		AND RACTNO = #{ractno}
 	</update>
 	
-	<update id="svPrcState" parameterType="hashMap">
+	<update id="prcUpdate" parameterType="hashMap">
 	
 	UPDATE Crud_SaaS.dbo.T_RCV
 		SET EDTDATE = getDate()
-			EDTUSER = #{userno}
-			PRCSTATE = #{prcstate}
+			,EDTUSER = #{edtuser}
+			,PRCSTATE = #{prcstate}
 		WHERE SITEID = #{siteid}
 		AND RCVNO = #{rcvno}
 	
@@ -337,7 +337,7 @@
 			AND SITEID = #{siteid}
 			
 			UPDATE Crud_SaaS.dbo.T_RCV
-			SET PRCSTATE = 2
+			SET PRCSTATE = 3
 			WHERE RCVNO = #{rcvno}
 			AND SITEID = #{siteid}
 	</insert>

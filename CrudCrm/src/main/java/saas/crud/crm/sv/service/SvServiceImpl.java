@@ -31,6 +31,10 @@ public class SvServiceImpl implements SvService{
 		// TODO Auto-generated method stub
 		
 		Map<String, Object> search = crud.searchParam(request);
+		String uri = request.getRequestURI();
+		if(uri.contains("convey")) {
+			search.put("prcstate", 3);
+		}
 		
 		int totalRows = svDao.svTotalRows(search);
 		int PAGE_ROW_COUNT = 10;
@@ -206,15 +210,6 @@ public class SvServiceImpl implements SvService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
-		Map<String,Object> param = new HashMap();
-		param.put("siteid", siteId);
-		param.put("prcstate", 3);
-		// 3 -> 처리상태 = 이관
-		param.put("userno", userNo);
-		param.put("rcvno", conveyDto.getRcvno());
-		
-		svDao.svPrcState(param);
 		
 		conveyDto.setSiteid(siteId);
 		conveyDto.setReguser(userNo);

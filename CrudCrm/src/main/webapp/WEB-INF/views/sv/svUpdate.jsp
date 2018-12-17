@@ -409,9 +409,9 @@
                                             <td>
                                             	<select class="form-control float-left select2" name="ractcode" id="ractcode">
                                             		<option value=0>선택</option>
-                                                    <option value=1 <c:if test='${serviceInfo.RACTCODE eq 1}'>selected</c:if>>option1</option>
-                                                    <option value=2 <c:if test='${serviceInfo.RACTCODE eq 2}'>selected</c:if>>option2</option>
-                                                    <option value=3 <c:if test='${serviceInfo.RACTCODE eq 3}'>selected</c:if>>option3</option>
+                                                    <option value=1 >option1</option>
+                                                    <option value=2 >option2</option>
+                                                    <option value=3 >option3</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -471,9 +471,9 @@
                                         <tr>
                                             <th class="border-top-0 border-bottom-0">담당자</th>
                                             <td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner">
-                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="ractowner_" id="ractowner_" value="">
-                                                    <input type="hidden" name="ractowner" id="ractowner" value="">
+                                            	<div class="input-group owner" id="ractowner_">
+                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="ractowner_" value="">
+                                                    <input type="hidden" name="ractowner" value="">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

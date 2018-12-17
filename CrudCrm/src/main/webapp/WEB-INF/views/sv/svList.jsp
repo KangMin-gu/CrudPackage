@@ -33,14 +33,22 @@
                 <div class="col-lg-10">
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">
+                    <c:set var="urls" value="${requestScope['javax.servlet.forward.request_uri']}" />
+                    <c:choose>
+                    	<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
+                    	<li class="breadcrumb-item active">
+                            <strong>서비스 이관 목록</strong>
+                        </li>
+                    	</c:when>
+                    	<c:otherwise>
+                    	<li class="breadcrumb-item active">
                             <strong>서비스 목록</strong>
                         </li>
+                    	</c:otherwise>
+                    </c:choose>
                     </ol>
                 </div>
             </div>		
-		
-		
 <!-- Content -->		
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
@@ -139,19 +147,12 @@
                                         <tr>
                                             <th>접수매체</th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="rcvchannel">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="rcvChannel" items="${RCVCHANNEL }">
-                                                		<c:choose>
-                                                			<c:when test="${search.rcvchannel eq rcvChannel.codeval}">
-                                                				<option selected label="${rcvChannel.codename }" value="${rcvChannel.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${rcvChannel.codename }" value="${rcvChannel.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                                <select class="form-control reset select2" name="rcvchannel" id="rcvchannel" value="${search.rcvchannel }">
+                                            		<option value="">선택</option>
+                                                    <option value="10" <c:if test='${search.rcvchannel eq 10}'>selected</c:if>>전화</option>
+                                                    <option value="20" <c:if test='${search.rcvchannel eq 20}'>selected</c:if>>SMS</option>
+                                                    <option value="30" <c:if test='${search.rcvchannel eq 30}'>selected</c:if>>메일</option>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -191,19 +192,12 @@
                                         <tr>
                                             <th>처리상태</th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="prcstate">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="prcState" items="${PRCSTATE }">
-                                                		<c:choose>
-                                                			<c:when test="${search.prcstate eq prcState.codeval}">
-                                                				<option selected label="${prcState.codename }" value="${prcState.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${prcState.codename }" value="${prcState.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                                <select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
+                                            		<option value="">선택</option>
+                                                    <option value="1" <c:if test='${search.prcstate eq 1}'>selected</c:if>>접수</option>
+                                                    <option value="2" <c:if test='${search.prcstate eq 2}'>selected</c:if>>이관</option>
+                                                    <option value="3" <c:if test='${search.prcstate eq 3}'>selected</c:if>>완료</option>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -215,7 +209,14 @@
                         <div class="ibox-content row border-top-0 pt-lg-0">
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-	                            	 <a href="${pageContext.request.contextPath}/serviceexcel" class="btn btn-primary">엑셀 다운로드</a>
+									<c:choose>
+                    					<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
+                    						<a href="${pageContext.request.contextPath}/serviceexcel?prcstate=3" class="btn btn-primary">엑셀 다운로드</a>
+                    					</c:when>
+                    					<c:otherwise>
+                    						<a href="${pageContext.request.contextPath}/serviceexcel" class="btn btn-primary">엑셀 다운로드</a>
+                    					</c:otherwise>
+                    				</c:choose>
 	                          	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<a href="${pageContext.request.contextPath}/service/post" class="btn btn-primary">추가</a>

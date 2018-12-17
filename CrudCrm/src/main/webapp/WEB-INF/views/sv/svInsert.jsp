@@ -242,11 +242,11 @@
                                         <tr>
                                             <th>서비스유형</th>
                                             <td>
-                                            	<select class="form-control select2" name="rcvtype" id="rcvtype" value="${search.rcvtype }">
+                                            	<select class="form-control select2" name="rcvcode" id="rcvcode" value="${serviceInfo.RCVCODE }">
                                                     	<option value="">선택</option>
-                                                    	<option value="1" <c:if test='${search.rcvtype eq 1}'>selected</c:if>>문의</option>
-                                                    	<option value="2" <c:if test='${search.rcvtype eq 2}'>selected</c:if>>개선</option>
-                                                    	<option value="3" <c:if test='${search.rcvtype eq 3}'>selected</c:if>>오류</option>
+                                                    	<option value="1" <c:if test='${serviceInfo.RCVCODE eq 1}'>selected</c:if>>클라1</option>
+                                                    	<option value="2" <c:if test='${serviceInfo.RCVCODE eq 2}'>selected</c:if>>클라2</option>
+                                                    	<option value="3" <c:if test='${serviceInfo.RCVCODE eq 3}'>selected</c:if>>클라3</option>
                                                 	</select>
 											</td>
                                         </tr>
@@ -462,9 +462,9 @@
                                         <tr>
                                             <th class="border-top-0 border-bottom-0">담당자</th>
                                             <td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner">
-                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="ractowner_" id="ractowner_" value="${serviceInfo.RACTOWNER_ }">
-                                                    <input type="hidden" name="ractowner" id="ractowner" value="0">
+                                            	<div class="input-group owner" id="ractowner_">
+                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="ractowner_" value="${serviceInfo.RACTOWNER_ }">
+                                                    <input type="hidden" name="ractowner" value="${serviceInfo.RACTOWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

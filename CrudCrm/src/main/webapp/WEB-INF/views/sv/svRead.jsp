@@ -471,16 +471,7 @@
 			$('#ractdesc').summernote('disable');
 		});
 		
-		$('.servicenext').click(function(e){
-			var name = '담당자이관'
-			var id = $('#rcvno').val();
-			var url = '/convey/'+id;
-			var x = '1232';
-			var y = '377';
-			
-			openNewWindow(name,url,e,x,y);
-			
-		});
+		
 	
 	</script>
 </body>

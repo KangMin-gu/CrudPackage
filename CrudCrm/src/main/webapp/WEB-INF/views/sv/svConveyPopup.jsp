@@ -28,7 +28,7 @@
                     <div class="ibox">
                         <div class="ibox-content row body">
                             <div class="w-100 text-right mb-2">
-                            	<button class="btn btn-primary submit" disabled id="save">저장</button>
+                            	<button class="btn btn-primary submit" disabled id="svSave">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -74,6 +74,7 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                        <form:form commandName="conveyDto">
                                             <th><label for="conveyreason">이관사유</label></th>
                                             <td class="border-top-0">
                                                 <form:select class="form-control validate error required checkV" path="conveyreason">
@@ -83,6 +84,7 @@
                                                 	</c:forEach>
                                                 </form:select>
                                             </td>
+                                            </form:form>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -104,9 +106,9 @@
                                         <tr>
                                             <th><label for="nextowner">이관담당자</label></th>
                                             <td>
-                                            	<div class="input-group owner" >
-                                                    <input type="text" class="form-control required error validate nameV" data-autoclose="true"  name="nextowner_" id="nextowner_" value="${serviceInfo.NEXTOWNER_ }">
-                                            		<input type="hidden" class="form-control" name="nextowner" id="nextowner" value="${serviceInfo.NEXTOWNER }">	
+                                            	<div class="input-group owner" id="nextowner_">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="nextowner_" value="${serviceInfo.OWNER_ }">
+                                                    <input type="hidden" name="nextowner" value="${serviceInfo.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -156,42 +158,18 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
 	
-	$(document).ready(function () {
-		
-		$('#conveydesc').summernote({
-			 height: 115,   
-		});
-		
-		$('.date').datepicker({
-			keyboardNavigation:false,
-			forceParse:false,
-			autoclose:true
-		});
-	});
-		$('#save').click(function(e){
-			    	var	url= "/convey";	
-			    	var rcvno = $('#rcvno').val();
-			        var conveydate= $("#conveydate").val();
-			        var conveyreason = $("#conveyreason").val();
-			        var nextowner = $("#nextowner").val();
-			        var conveydesc = $('#conveydesc').val();
-			        var param = {"rcvno":rcvno,"conveydate":conveydate,"conveyreason":conveyreason,"nextowner":nextowner,"conveydesc":conveydesc};
-			        
-			        $.ajax({
-			            url: url,
-			            method: "POST",
-			            dataType: "json",
-			            data:param,
-			            success: function () {
-			                alert("저장되었습니다.");
-			                window.close();
-			            },
-			            error: function (request, status, error) {
-			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			            }
-			        });
-
+		$(document).ready(function () {
+			
+			$('#conveydesc').summernote({
+				 height: 115,   
 			});
+			
+			$('.date').datepicker({
+				keyboardNavigation:false,
+				forceParse:false,
+				autoclose:true
+			});
+		});
 	</script>
 	
 </body>

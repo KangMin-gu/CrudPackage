@@ -65,7 +65,7 @@
 	                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">서비스관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="${pageContext.request.contextPath}/service">서비스 접수</a></li>
-	                        <li><a href="form_basic.html">서비스 이관</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/service/convey">서비스 이관</a></li>
 	                        <li><a href="form_basic.html">서비스 일정</a></li>
 	                    </ul>
 	                </li>

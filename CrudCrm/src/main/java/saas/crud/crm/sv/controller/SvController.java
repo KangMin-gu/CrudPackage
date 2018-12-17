@@ -70,6 +70,8 @@ public class SvController {
 	@RequestMapping(value="/service/post", method=RequestMethod.GET)
 	public ModelAndView authSvInsert(HttpServletRequest request, @ModelAttribute RcvDto rcvDto, @ModelAttribute RactDto ractDto) {
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sv/svInsert");
 		
 		return mView;
@@ -110,8 +112,10 @@ public class SvController {
 	
 	// 서비스 이관 팝업
 	@RequestMapping(value="/convey/{rcvno}", method=RequestMethod.GET)
-	public ModelAndView authcommonUserList(HttpServletRequest request,@PathVariable int rcvno) {
+	public ModelAndView authcommonUserList(HttpServletRequest request, @PathVariable int rcvno, @ModelAttribute ConveyDto conveyDto) {
 		ModelAndView mView = svService.svRead(request, rcvno);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("/sv/svConveyPopup");
 		return mView;
 	}
@@ -147,6 +151,13 @@ public class SvController {
 		
 		return tabConvey;
 		
+	}
+	
+	@RequestMapping(value="/service/convey", method=RequestMethod.GET)
+	public ModelAndView authSvConveyList(HttpServletRequest request) {
+		ModelAndView mView = svService.svList(request);
+		mView.setViewName("sv/svList");
+		return mView;
 	}
 	
 }

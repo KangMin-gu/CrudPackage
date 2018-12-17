@@ -312,7 +312,7 @@
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="owner_">
-                                                    <input type="text" class="form-control error required nameV" autocomplete="off" name="owner_" value="${memCompany.OWNER_ }">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="owner_" value="${memCompany.OWNER_ }">
                                                     <input type="hidden" name="owner" value="${memCompany.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>

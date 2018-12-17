@@ -76,7 +76,7 @@
                                     </ul>
                                     <div class="tab-content">
                                     <c:if test="${fn:substring(urls, 0, 15)  eq '/campaign/email' }">
-                                    <form:form action="${pageContext.request.contextPath}/campaignform/${campInfo.CAMPNO }" method="POST">
+                                    <form:form action="${pageContext.request.contextPath}/campaignform/${campInfo.CAMPNO }" method="POST" commandName="campaignFormDto">
                                     	<div role="tabpanel" id="sumbitTab1" class="tab-pane active">
                                         	<div class="panel-body">
                                             	<div class="w-100 text-right mb-2">
@@ -191,13 +191,19 @@
                                                                 <tr>
                                                                     <th class="border-top-0">발송형태</th>
                                                                     <td class="border-top-0" style="height: 40px;">
-                                                                        <select name="sendtype" id="sendtype" class="form-control" style="height: 23px;">
-                                                                        	<option value="0" <c:if test='${campForm.SENDTYPE eq 0}'>selected</c:if>>선택</option>
-                                                                        	<option value="1" <c:if test='${campForm.SENDTYPE eq 1}'>selected</c:if>>즉시발송</option>
-                                                                        	<option value="2" <c:if test='${campForm.SENDTYPE eq 2}'>selected</c:if>>예약발송</option>
-                                                   							<option value="3" <c:if test='${campForm.SENDTYPE eq 3}'>selected</c:if>>요일반복발송</option>
-                                                   							<option value="4" <c:if test='${campForm.SENDTYPE eq 4}'>selected</c:if>>기간반복발송</option>
-                                                                        </select>
+                                                                        <form:select class="form-control validate error required checkV" path="sendtype">
+                                            								<option label="선택" value=""/>
+                                                							<c:forEach var="sendType" items="${SENDTYPE }">
+                                                								<c:choose>
+                                                									<c:when test="${campForm.SENDTYPE eq sendType.codeval}">
+                                                										<option selected label="${sendType.codename }" value="${sendType.codeval }"/>
+                                                									</c:when>
+                                                									<c:otherwise>
+                                                										<option label="${sendType.codename }" value="${sendType.codeval }"/>
+                                                									</c:otherwise>
+                                                								</c:choose>
+                                                							</c:forEach>
+                                                						</form:select>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>

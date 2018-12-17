@@ -185,6 +185,19 @@
                                         <tr>
                                             <th><label for="chkauth">관리자여부</label></th>
                                             <td>
+                                            <form:select class="form-control" path="chkauth">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="chkAuth" items="${CHKAUTH }">
+                                                		<c:choose>
+                                                			<c:when test="${user.CHKAUTH eq chkAuth.codeval}">
+                                                				<option selected label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>

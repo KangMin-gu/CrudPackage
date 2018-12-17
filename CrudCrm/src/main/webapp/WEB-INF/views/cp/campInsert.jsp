@@ -82,7 +82,7 @@
                                     <tbody>
                                     	<tr>
                                         	<th>캠페인명</th>
-                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error allV"></td>
+                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error allV" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -97,7 +97,7 @@
                                     	<tr>
                                         	<th>캠페인유형</th>
                                             <td>
-                                                <form:select class="form-control validate check" path="camptype">
+                                                <form:select class="form-control validate checkV" path="camptype">
                                             		<option label="선택" value="0"/>
                                                 	<c:forEach var="campType" items="${CAMPTYPE }">
                                                 		<c:choose>

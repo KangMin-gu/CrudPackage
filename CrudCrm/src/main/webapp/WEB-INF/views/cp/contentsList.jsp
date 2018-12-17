@@ -100,11 +100,10 @@
                         </form:form>
                         <form:form action="${pageContext.request.contextPath}/campaign/contents/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
-                        	<div class="w-100 mb-2">
-                        		<a href="javascript:void(0);" class="btn btn-primary text-left">엑셀다운로드</a>
-                        		<a href="${pageContext.request.contextPath}/campaign/contents/post" class="btn btn-primary text-right">추가</a>
+                        	<div class="w-100 text-right mb-2">
+                                <a href="${pageContext.request.contextPath}/campaign/contents/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
-                                	<button class="btn btn-primary text-right">삭제</button>
+                                	<button class="btn btn-primary">삭제</button>
                                 </div>
                             </div>
                             <div class="table-responsive">

@@ -83,19 +83,13 @@
                                         <tr>
                                             <th>진행단계</th>
                                             <td>
-                                                <form:select class="form-control reset" path="campstep">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="campStep" items="${CAMPSTEP }">
-                                                		<c:choose>
-                                                			<c:when test="${search.campstep eq campStep.codeval}">
-                                                				<option selected label="${campStep.codename }" value="${campStep.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${campStep.codename }" value="${campStep.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                                <select name="campstep" id="campstep" class="form-control reset" style="height: 23px;">
+                                                	<option value="">선택</option>
+                                                	<option value=1 <c:if test='${search.campstep eq 1}'>selected</c:if>>생성</option>
+                                                	<option value=2 <c:if test='${search.campstep eq 2}'>selected</c:if>>추출</option>
+                                                	<option value=3 <c:if test='${search.campstep eq 3}'>selected</c:if>>발송</option>
+                                                	<option value=4 <c:if test='${search.campstep eq 4}'>selected</c:if>>완료</option>
+                                            	</select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -111,19 +105,12 @@
                                         <tr>
                                             <th>캠페인유형</th>
                                             <td>
-                                                <form:select class="form-control reset" path="camptype">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="campType" items="${CAMPTYPE }">
-                                                		<c:choose>
-                                                			<c:when test="${search.camptype eq campType.codeval}">
-                                                				<option selected label="${campType.codename }" value="${campType.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${campType.codename }" value="${campType.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                                <select name="camptype" id="camptype" class="form-control reset" style="height: 23px;">
+                                                	<option value="">검색</option>
+                                                	<option value=10 <c:if test='${search.camptype eq 10}'>selected</c:if>>세미나</option>
+                                                	<option value=20 <c:if test='${search.camptype eq 20}'>selected</c:if>>뉴스레터</option>
+                                                	<option value=30 <c:if test='${search.camptype eq 30}'>selected</c:if>>테스트</option>
+                                            	</select>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -84,13 +84,13 @@
 												<tr>
 													<th>영업건명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control validate required simple" id="salename" name="salename" value="${salesUpdate.SALENAME }">
+														<input type="text" class="form-control validate required stringV" id="salename" name="salename" value="${salesUpdate.SALENAME }">
 													</td>
 												</tr>
 												<tr>
 													<th>현단계<sup>*</sup></th>
 													<td>
-														<select class="form-control" style="height: 23px;" id="salestate" name="salestate">
+														<select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
 															<option value="1" ${salesUpdate.SALESTATE eq "1" ? "selected" :""}>계약성공종료</option>
 															<option value="2" ${salesUpdate.SALESTATE eq "2" ? "selected" :""}>계약중</option>
 															<option value="3" ${salesUpdate.SALESTATE eq "3" ? "selected" :""}>제안서제출</option>
@@ -109,7 +109,7 @@
 																<span class="input-group-addon">
 																	<i class="fa fa-calendar"></i>
 																</span> 
-																<input type="text" class="form-control" id="forddate" name="forddate" value="${salesUpdate.FORDDATE }" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV" id="forddate" name="forddate" value="${salesUpdate.FORDDATE }" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -117,7 +117,7 @@
 												<tr>
 													<th>제품명</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="prdname" name="prdname" value="${salesUpdate.PRDNAME }">
+														<input type="text" class="form-control validate stringV" id="prdname" name="prdname" value="${salesUpdate.PRDNAME }">
 													</td>
 												</tr>
 												
@@ -135,7 +135,7 @@
 													<th>영업담당자<sup>*</sup></th>
 													<td>
 														<div class="input-group owner">
-															<input type="text" class="form-control" autocomplete="off" name="username" id="username" value="${salesUpdate.USERNAME }"> 
+															<input type="text" class="form-control required validate nameV" autocomplete="off" name="username" id="username" value="${salesUpdate.USERNAME }"> 
 															<input type="hidden" name="owner" id="owner" value="${salesUpdate.OWNER }"> 
 															<span class="input-group-addon"> 
 																<a><i class="fa fa-search"></i></a>
@@ -149,7 +149,7 @@
 														<div class="input-group p-0">
 															<div class="d-flex date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-																<input type="text" class="form-control" id="statedate" name="statedate" value="${salesUpdate.STATEDATE }" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV beforeV" id="statedate" name="statedate" value="${salesUpdate.STATEDATE }" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -157,7 +157,7 @@
 												<tr>
 													<th>예상수주액</th>
 													<td>
-														<input type="text" class="form-control validate cost" id="fordamount" name="fordamount" value="${salesUpdate.FORDAMOUNT }">
+														<input type="text" class="form-control validate numberV" id="fordamount" name="fordamount" value="${salesUpdate.FORDAMOUNT }">
 													</td>
 												</tr>
 												<tr>
@@ -166,7 +166,7 @@
 														<div class="input-group p-0">
 															<div class="d-flex date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-																<input type="text" class="form-control" id="rorddate" name="rorddate" value="${salesUpdate.RORDDATE }" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV" id="rorddate" name="rorddate" value="${salesUpdate.RORDDATE }" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -186,7 +186,7 @@
 													<th>거래처명<sup>*</sup></th>
 													<td>
 														<div class="input-group">
-															<input type="text" class="form-control cli validate required simple" id="cliname" name="cliname" value="${salesUpdate.CLINAME }">
+															<input type="text" class="form-control cli validate required allV" id="cliname" name="cliname" value="${salesUpdate.CLINAME }">
 															<input type="hidden" id="clino" name="clino" value="${salesUpdate.CLINO }"> 
 															<span class="input-group-addon"> 
 																<a href="javascript:void(0);"><i class="fa fa-search cli"></i></a>
@@ -197,19 +197,19 @@
 												<tr>
 													<th>확률</th>
 													<td>
-														<input type="number" class="form-control validate percent" id="prob" name="prob" value="${salesUpdate.PROB }">
+														<input type="number" class="form-control validate percentV" id="prob" name="prob" value="${salesUpdate.PROB }">
 													</td>
 												</tr>
 												<tr>
 													<th>영업건구분</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="category" name="category" value="${salesUpdate.CATEGORY }">
+														<input type="text" class="form-control validate stringV" id="category" name="category" value="${salesUpdate.CATEGORY }">
 													</td>
 												</tr>
 												<tr>
 													<th>실수주액</th>
 													<td>
-														<input type="text" class="form-control validate cost" id="rordamount" name="rordamount" value="${salesUpdate.RORDAMOUNT }">
+														<input type="text" class="form-control validate numberV" id="rordamount" name="rordamount" value="${salesUpdate.RORDAMOUNT }">
 													</td>
 												</tr>
 											

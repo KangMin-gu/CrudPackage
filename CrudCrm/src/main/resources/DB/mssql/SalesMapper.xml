@@ -207,24 +207,44 @@
 		AND SITEID = #{siteid} 
 	</update>
 	
-	<!-- 영업 스케쥴 추가,수정 -->
+	<!-- 영업 스케쥴 추가,수정 . 시행일,예정일 영업 스케쥴은 sort (1,2) 로 구분 -->
 	<insert id="mergeSalesSch" parameterType="saas.crud.crm.sa.dto.SalesDto">
+	<if test="rorddate != null and rorddate != '' ">
 	MERGE INTO TB210080 A
 		USING (select '1' AS DUAL ) B 
-		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno}  ) 
+		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 1  ) 
 		
 		WHEN MATCHED THEN
 		
 			UPDATE SET 
-			STARTDATE = #{rorddate}
+			STARTDATE = #{rorddate}	
 			,EDTUSER = #{edituser}, EDTDATE = getdate()
 		
 		WHEN NOT MATCHED THEN
-			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO  )
-			VALUES (#{siteid}, '[영업 실수주일]'+#{salename} ,  #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0,0,#{rorddate},#{owner},#{salesno} );
+			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
+			VALUES (#{siteid}, '[영업 실수주일]'+#{salename} ,  #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0,0
+			,#{rorddate},#{owner},#{salesno}, 1 );
+	</if>
 	
+	<if test="forddate != null and forddate != '' ">
+	MERGE INTO TB210080 A
+		USING (select '1' AS DUAL ) B 
+		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 2 ) 
+		
+		WHEN MATCHED THEN
+		
+			UPDATE SET 
+			STARTDATE = #{forddate}	
+			,EDTUSER = #{edituser}, EDTDATE = getdate()
+		
+		WHEN NOT MATCHED THEN
+			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
+			VALUES (#{siteid}, '[영업 예상수주일]'+#{salename} ,  #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0,0
+			,#{forddate},#{owner},#{salesno}, 2 );
+		</if>
+		
+		
 	</insert>
-	
 	
 	
 	<!-- 영업삭제 -->

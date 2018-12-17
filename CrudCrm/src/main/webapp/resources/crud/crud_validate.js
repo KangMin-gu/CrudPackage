@@ -13,7 +13,7 @@
 	//id값이 들어오면 유효성 검사 후 true false를 반환하고 false면 인풋창에 빨간 테두리 생성
 	function checkVal(id){  
 		//유효성 검사
-	
+		debugger;
 		var allPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,}$/;    // -> 문자 + 숫자 + 특문 + 띄어쓰기 자릿수 X
 		var bsnoPattern = /^[\d]{10}$/;  //사업자번호
 		var incnoPattern =  /^[\d]{12}$/;  //법인번호
@@ -30,7 +30,7 @@
 		var idPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?]{5,}$/; //    -> 영어 + 숫자 + 특문 5글자 이상 띄어쓰기 X
 		var homepagePattern = /^[^((http(s?))\:\/\/)]([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/; //-> www.crudsystem.co.kr
 		var percentPattern = /^[0-9]{1}$|^[1-9]{1}[0-9]{1}$|^100$/; // -> 0~100 정수. 
-		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{1,15}$/; //한글 영문 2~30글자 + 숫자0~29
+		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,15}$/; //한글 영문 2~30글자 + 숫자0~29
 		
 
 		
@@ -50,7 +50,7 @@
 				
 		if( $('[name="'+id+'"]').hasClass('allV') ){ //파라미터로 들어온 해당 name 값에 name 이라는 클래스가 있으면 
 			res = allPattern.test(value);// namePattern 매칭. 유효성검사 실행 
-			msg = 'allPattern';//이 문구 출력		
+			msg = '한글,영어,숫자,기호  입력 가능 합니다.';//이 문구 출력		
 			
 		}else if( $('[name="'+id+'"]').hasClass('bsnoV') ){		
 			if(value.length==12){ // - 제거
@@ -58,7 +58,7 @@
 				value = temp;			
 			}
 			res = bsnoPattern.test(value); 
-			msg = 'bsnoPattern';	
+			msg = '사업자번호 10자리를 입력해 주세요.';	
 			
 		}else if( $('[name="'+id+'"]').hasClass('incnoV') ){
 			if(value.length==13){// - 제거 
@@ -66,43 +66,43 @@
 				value = temp;
 			}		
 			res = incnoPattern.test(value); 
-			msg = 'incnoPattern';		
+			msg = '법인번호 12자리를 입력해 주세요.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('emailV') ){ 
 			res = emailPattern.test(value); 
-			msg = 'emailPattern';		
+			msg = 'email형식에 맞게 입력해 주세요.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('stringV') ){ 
 			res = stringPattern.test(value); 
-			msg = 'stringPattern';		
+			msg = '한글,영어,숫자 입력 가능 합니다.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('varcharV') ){ 
 			res = varcharPattern.test(value); 
-			msg = 'varcharPattern';		
+			msg = '띄어쓰기 제외. 한글,영어,숫자 입력 가능 합니다.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('phone1V') ){ 
 			res = phone1Pattern.test(value); 
-			msg = 'phone1Pattern';		
+			msg = '2~4자리의 숫자를 입력해 주세요';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('phone2V') ){ 
 			res = phone2Pattern.test(value); 
-			msg = 'phone2Pattern';		
+			msg = '3~4자리의 숫자를 입력해 주세요';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('phone3V') ){ 
 			res = phone3Pattern.test(value); 
-			msg = 'phone3Pattern';		
+			msg = '4자리의 숫자를 입력해 주세요';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('checkV') ){ 
 			res = checkPattern.test(value); 
-			msg = 'checkPattern';		
+			msg = '체크박스를 선택해 주세요.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('numberV') ){ 
 			res = numberPattern.test(value); 
-			msg = 'numberPattern';		
+			msg = '숫자만 입력 가능합니다.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('idV') ){ 
 			res = idPattern.test(value); 
-			msg = 'idPattern';		
+			msg = '한글,영어,숫자,기호 5글자 이상의 문자를 입력해 주세요. ';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('dateV') ){
 			res = datePattern.test(value); 
@@ -116,15 +116,15 @@
 		
 		}else if( $('[name="'+id+'"]').hasClass('homepageV') ){ 
 			res = homepagePattern.test(value); 
-			msg = 'homepagePattern';		
+			msg = 'http://, https:// 제외한 주소를 입력해 주세요.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('percentV') ){ 
 			res = percentPattern.test(value); 
-			msg = 'percentPattern';		
+			msg = '0~100까지의 정수를 입력해 주세요.';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('nameV') ){ 
 			res = namePattern.test(value); 
-			msg = 'namePattern';		
+			msg = '띄어쓰기를 제외한 한글,영문,숫자 입력 가능합니다.';		
 		}
 		
 
@@ -185,7 +185,7 @@
 		var reqId;
 		var res=0;
 		for(var i=0;i<length;i++){// 배열만큼 반복문
-			reqId = $('.required:eq('+i+')' ).attr('id');//배열의 id값
+			reqId = $('.required:eq('+i+')' ).attr('name');//배열의 id값
 			res += checkVal(reqId);//유효성검사 통과(true)  = 1 ,실패(false)= 0 
 		}
 		if (res == length){//통과수가 배열길이와 같다면.(즉, 모든 항목이 유효성 검사에 통과했다면)
@@ -224,14 +224,14 @@
 
 	//유효성검사
 	$('.submit').click(function(){
-		
+		debugger;
 		var validate = $('.validate'); //validate 선언한 클래스 배열
 		var length = validate.length; //배열 사이즈 
 		var id; //배열의 id값
 		var value; // 배열의 value 값 
 		
 		for(var i=0; i<length ; i++){//validate 클래스의 배열만큼 반복문
-			id = $('.validate:eq('+i+')' ).attr('id'); 
+			id = $('.validate:eq('+i+')' ).attr('name'); 
 			value = $('[name="'+id+'"]').val(); 
 			
 			if( $('[name="'+id+'"]').hasClass('required') ){//필수값이면 무조건 유효성검사 

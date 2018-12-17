@@ -192,7 +192,7 @@
 		var parentid = $('#parentid').val();
 		var id = tr.getAttribute("value");
 		opener.$('[name="'+parentid+'"]').next().val(id);		
-		opener.$('[name="'+parentid+'"]').val(tr.children.cliname.textContent);		
+		opener.$('[name="'+parentid+'"]').val(tr.children.cliname.textContent).trigger('keyup');		
 		
 		popClientClick(id);
 

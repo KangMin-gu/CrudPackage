@@ -86,7 +86,7 @@
 												<tr>
 													<th>거래처명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error required validate StringV" id="cliname" name="cliname">
+														<input type="text" class="form-control error required validate allV" id="cliname" name="cliname">
 													</td>
 												</tr>
 											</tbody>
@@ -102,7 +102,7 @@
 												<tr>
 													<th>거래처호칭<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error required validate StringV" id="callname" name="callname">
+														<input type="text" class="form-control error required validate allV" id="callname" name="callname">
 													</td>
 												</tr>
 											</tbody>

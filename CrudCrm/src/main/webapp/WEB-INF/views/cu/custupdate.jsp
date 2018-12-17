@@ -358,7 +358,7 @@
 																<span class="input-group-addon"> <i
 																	class="fa fa-calendar"></i>
 																</span> 
-																<input type="text" class="form-control validate dateV beforeDateV" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99" value="${custUpdate.BIRTH}">
+																<input type="text" class="form-control validate dateV beforeV" name="birth" id="birth" autocomplete="off" data-mask="9999-99-99" value="${custUpdate.BIRTH}">
 															</div>
 														</td>
 													</tr>

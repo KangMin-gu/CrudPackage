@@ -68,10 +68,10 @@ body {
 								</colgroup>
 								<tbody>
 									<tr>
-										<th>고객명</th>
+										<th>고객명<sup>*</sup></th>
 										<td>
 											<div class="input-group">
-												<input type="text" class="form-control" autocomplete="off" name="custname" id="custname" readonly value="${cliCustUpdate.CUSTNAME}">
+												<input type="text" class="form-control validate required nameV" autocomplete="off" name="custname" id="custname" readonly value="${cliCustUpdate.CUSTNAME}">
                                                 <input type="hidden" name="custno" id="custno" value="${cliCustUpdate.CUSTNO}">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
@@ -81,7 +81,7 @@ body {
 									</tr>								
 									<tr>
 										<th>역할명</th>
-										<td><input type="text" class="form-control" id="rolename" name="rolename" value="${cliCustUpdate.ROLENAME}"></td>
+										<td><input type="text" class="form-control validate allV" id="rolename" name="rolename" value="${cliCustUpdate.ROLENAME}"></td>
 									</tr>
 									<tr>
 										<th>키맨여부</th>
@@ -127,6 +127,10 @@ body {
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<!-- 유효성 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+	<!-- sales JS -->
+    <script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script>
 	<script>
 	
 	function formSubmit(prm){

@@ -95,7 +95,7 @@
 												<tr>
 													<th>거래처명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control required validate simple" id="cliname" name="cliname" value="${cliUpdate.CLINAME }">
+														<input type="text" class="form-control required validate allV" id="cliname" name="cliname" value="${cliUpdate.CLINAME }">
 													</td>
 												</tr>
 											</tbody>
@@ -111,7 +111,7 @@
 												<tr>
 													<th>거래처호칭<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control required validate simple" id="callname" name="callname" value="${cliUpdate.CALLNAME }">
+														<input type="text" class="form-control required validate allV" id="callname" name="callname" value="${cliUpdate.CALLNAME }">
 													</td>
 												</tr>
 											</tbody>
@@ -129,7 +129,7 @@
 
 													<td class="border-top-0 border-bottom-0">
 														<div class="input-group owner">
-															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${cliUpdate.USERNAME }"> 
+															<input type="text" class="form-control validate required nameV" autocomplete="off" name="owner_" id="owner_" value="${cliUpdate.USERNAME }"> 
 															<input type="hidden" name="owner" id="owner" value="${cliUpdate.OWNER }"> 
 															<span class="input-group-addon"> <a><i class="fa fa-search"></i></a> </span>
 														</div>
@@ -155,7 +155,7 @@
 															</span>
 														</div> 
 														<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="cliaddr2" id="cliaddr2" value="${cliUpdate.CLIADDR2 }" readonly> 
-														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate simple" name="cliaddr3" id="cliaddr3" value="${cliUpdate.CLIADDR3 }">
+														<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="cliaddr3" id="cliaddr3" value="${cliUpdate.CLIADDR3 }">
 													</td>
 												</tr>
 											</tbody>
@@ -194,27 +194,27 @@
 												<tr>
 													<th class="border-top-0">법인번호</th>
 													<td class="border-top-0">
-														<input type="text" class="form-control validate corp" id="corp_sn" name="corp_sn" value="${cliUpdate.CORP_SN }" data-mask="999999-999999">
+														<input type="text" class="form-control validate incnoV" id="corp_sn" name="corp_sn" value="${cliUpdate.CORP_SN }" data-mask="999999-999999">
 													</td>
 												</tr>
 												<tr>
 													<th>대표전화</th>
 													<td>
 														<!-- form select 공통으로 변경 --> 
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" id="telno1" name="telno1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="telno1" name="telno1">
 															<option value="" ${cliUpdate.TELNO1 eq "" ? "selected" :""}>선택</option>
 															<option value="02" ${cliUpdate.TELNO1 eq "02" ? "selected" :""}>02</option>
 															<option value="070" ${cliUpdate.TELNO1 eq "070" ? "selected" :""}>070</option>
 															<option value="010" ${cliUpdate.TELNO1 eq "010" ? "selected" :""}>010</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" id="telno2" name="telno2" value="${cliUpdate.TELNO2 }">
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" id="telno3" name="telno3" value="${cliUpdate.TELNO3 }">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="telno2" name="telno2" value="${cliUpdate.TELNO2 }">
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="telno3" name="telno3" value="${cliUpdate.TELNO3 }">
 													</td>
 												</tr>
 												<tr>
 													<th>업태</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="bscond" name="bscond" value="${cliUpdate.BSCOND }">
+														<input type="text" class="form-control validate allV" id="bscond" name="bscond" value="${cliUpdate.BSCOND }">
 													</td>
 												</tr>
 												<tr>
@@ -243,26 +243,26 @@
 												<tr>
 													<th class="border-top-0">사업자번호</th>
 													<td class="border-top-0">
-														<input type="text" class="form-control validate bs" id="bsno" name="bsno" value="${cliUpdate.BSNO }" data-mask="999-99-99999" >
+														<input type="text" class="form-control validate bsnoV" id="bsno" name="bsno" value="${cliUpdate.BSNO }" data-mask="999-99-99999" >
 													</td>
 												</tr>
 												<tr>
 													<th>팩스번호</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1 phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
 															<option value="" ${cliUpdate.FAXTEL1 eq "" ? "selected" :""}>선택</option>
 															<option value="02" ${cliUpdate.FAXTEL1 eq "02" ? "selected" :""}>02</option>
 															<option value="070" ${cliUpdate.FAXTEL1 eq "070" ? "selected" :""}>070</option>
 															<option value="010" ${cliUpdate.FAXTEL1 eq "010" ? "selected" :""}>010</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" id="faxtel2" name="faxtel2" value="${cliUpdate.FAXTEL2 }">
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" id="faxtel3" name="faxtel3" value="${cliUpdate.FAXTEL3 }">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="faxtel2" name="faxtel2" value="${cliUpdate.FAXTEL2 }">
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="faxtel3" name="faxtel3" value="${cliUpdate.FAXTEL3 }">
 													</td>
 												</tr>
 												<tr>
 													<th>업종</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="bstype" name="bstype" value="${cliUpdate.BSTYPE }"></td>
+														<input type="text" class="form-control validate allV" id="bstype" name="bstype" value="${cliUpdate.BSTYPE }"></td>
 												</tr>
 												<tr>
 													<th>밀착도</th>
@@ -290,26 +290,26 @@
 												<tr>
 													<th class="border-top-0">대표자명</th>
 													<td class="border-top-0">
-														<input type="text" class="form-control validate name" id="prsdname" name="prsdname" value="${cliUpdate.PRSDNAME }">
+														<input type="text" class="form-control validate nameV" id="prsdname" name="prsdname" value="${cliUpdate.PRSDNAME }">
 													</td>
 												</tr>
 												<tr>
 													<th>핸드폰</th>
 													<td>
-														<select class="form-control col-3 float-left mr-2 validate phone1 phone-group" style="height: 23px;" id="mobile1" name="mobile1">
+														<select class="form-control col-3 float-left mr-2 validate phone1V phone-group" style="height: 23px;" id="mobile1" name="mobile1">
 															<option value="" ${cliUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
 															<option value="010" ${cliUpdate.MOBILE1 eq "010" ? "selected" :""}>010</option>
 															<option value="016" ${cliUpdate.MOBILE1 eq "016" ? "selected" :""}>016</option>
 															<option value="017" ${cliUpdate.MOBILE1 eq "017" ? "selected" :""}>017</option>
 														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" id="mobile2" name="mobile2" value="${cliUpdate.MOBILE2 }"> 
-														<input type="text" class="form-control col-3 float-left validate phone3 phone-group" id="mobile3" name="mobile3" value="${cliUpdate.MOBILE3 }">
+														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="mobile2" name="mobile2" value="${cliUpdate.MOBILE2 }"> 
+														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="mobile3" name="mobile3" value="${cliUpdate.MOBILE3 }">
 													</td>
 												</tr>
 												<tr>
 													<th>종목</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="bscategory" name="bscategory" value="${cliUpdate.BSCATEGORY }">
+														<input type="text" class="form-control validate allV" id="bscategory" name="bscategory" value="${cliUpdate.BSCATEGORY }">
 													</td>
 												</tr>
 												<tr>

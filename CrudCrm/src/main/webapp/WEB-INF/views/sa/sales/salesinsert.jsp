@@ -84,12 +84,12 @@
 												<tr>
 													<th>영업건명<sup>*</sup></th>
 													<td>
-														<input type="text" class="form-control error " id="salename" name="salename"></td>
+														<input type="text" class="form-control error validate required allV" id="salename" name="salename"></td>
 												</tr>
 												<tr>
 													<th>현단계<sup>*</sup></th>
 													<td>
-														<select class="form-control" style="height: 23px;" id="salestate" name="salestate">
+														<select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
 															<option value="1">계약성공종료</option>
 															<option value="2">계약중</option>
 															<option value="3">제안서제출</option>
@@ -106,7 +106,7 @@
 														<div class="input-group p-0">
 															<div class="d-flex date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-																<input type="text" class="form-control" id="forddate" name="forddate" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV" id="forddate" name="forddate" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -114,7 +114,7 @@
 												<tr>
 													<th>제품명</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="prdname" name="prdname">
+														<input type="text" class="form-control validate stringV" id="prdname" name="prdname">
 													</td>
 												</tr>
 												
@@ -131,8 +131,8 @@
 												<tr>
 													<th>영업담당자<sup>*</sup></th>
 													<td>
-														<div class="input-group owner">
-															<input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="${salesInsert.USERNAME }">
+														<div class="input-group owner" id="owner_">
+															<input type="text" class="form-control validate required allV" autocomplete="off" name="owner_"  value="${salesInsert.USERNAME }">
 															<input type="hidden" name="owner" id="owner" value="${salesInsert.USERNO }">
 															<span class="input-group-addon"> <a><i class="fa fa-search"></i></a> </span>
 														</div>
@@ -144,7 +144,7 @@
 														<div class="input-group p-0">
 															<div class="d-flex date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-																<input type="text" class="form-control" id="statedate" name="statedate" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV beforeV" id="statedate" name="statedate" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -152,7 +152,7 @@
 												<tr>
 													<th>예상수주액</th>
 													<td>
-													<input type="text" class="form-control validate cost" id="fordamount" name="fordamount">
+													<input type="text" class="form-control validate numberV" id="fordamount" name="fordamount">
 													</td>
 												</tr>
 												<tr>
@@ -161,7 +161,7 @@
 														<div class="input-group p-0">
 															<div class="d-flex date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-																<input type="text" class="form-control" id="rorddate" name="rorddate" data-mask="9999-99-99">
+																<input type="text" class="form-control validate dateV" id="rorddate" name="rorddate" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -181,7 +181,7 @@
 													<th>거래처명<sup>*</sup></th>
 													<td>
 														<div class="input-group cli" id="cliname">
-															<input type="text" class="form-control  error "  name="cliname"> 
+															<input type="text" class="form-control error validate required allV"  name="cliname"> 
 															<input type="hidden" id="clino" name="clino"> 
 															<span class="input-group-addon">
 																<a href="javascript:void(0);"><i class="fa fa-search cli"></i></a>
@@ -192,19 +192,19 @@
 												<tr>
 													<th>확률</th>
 													<td>
-														<input type="text" class="form-control validate percent" id="prob" name="prob">
+														<input type="text" class="form-control validate percentV" id="prob" name="prob">
 													</td>
 												</tr>
 												<tr>
 													<th>영업건구분</th>
 													<td>
-														<input type="text" class="form-control validate simple" id="category" name="category">
+														<input type="text" class="form-control validate stringV" id="category" name="category">
 													</td>
 												</tr>
 												<tr>
 													<th>실수주액</th>
 													<td>
-														<input type="text" class="form-control validate cost" id="rordamount" name="rordamount">
+														<input type="text" class="form-control validate numberV" id="rordamount" name="rordamount">
 													</td>
 												</tr>
 												

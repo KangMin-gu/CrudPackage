@@ -70,10 +70,18 @@ public class CodeDaoImpl implements CodeDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getCodeList() {
+	public List<CodeDto> getCodeList(String codeGrp) {
 		// TODO Auto-generated method stub
-		List<Map<String,Object>> getCodeList = session.selectList("code.getCodeList");
+		List<CodeDto> getCodeList = session.selectList("code.getCodeList",codeGrp);
 		return getCodeList;
+	}
+
+	@Override
+	public List<CodeDto> grpCodeList() {
+		// TODO Auto-generated method stub
+		
+		List<CodeDto> grpCodeList = session.selectList("code.grpCodeList");
+		return grpCodeList;
 	}
 
 }

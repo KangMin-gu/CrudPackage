@@ -76,7 +76,6 @@
                             <div class="overflow-x w-100 head">
                             <table class="table table-bordered table-hover">
                                 <colgroup>
-                            		<col style="width: 0px;">
                             		<col style="width: 100px;">
                             		<col style="width: 100px;">
                             		<col style="width: 100px;">
@@ -85,7 +84,7 @@
                             	</colgroup>  
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        
                                         <th>라이센스명</th>
                                         <th>단가</th>
                                         <th>총사용량</th>
@@ -95,8 +94,8 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach var="license" items="${license }">
-                                    <tr value="${license.LICENSENO}">
-                                        <td><input type="hidden" name="licenseno" id="licenseno" value="${license.LICENSENO }"></td>
+                                    <tr name="licenseno" id="licenseno" value="${license.LICENSENO}">
+                                        
                                         <td><a>${license.LICENSENAME}</td>
                                         <td>${license.LICENSECOST }</td>
                                         <td>${license.TOTALCNT }</td>

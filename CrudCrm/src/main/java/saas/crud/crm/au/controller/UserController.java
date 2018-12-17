@@ -1,5 +1,7 @@
 package saas.crud.crm.au.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,18 +38,20 @@ public class UserController {
 		if(url==null){        
 			url=request.getContextPath()+"/"; 
 		}
-		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고 
+		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.addObject("url", url);
 		mView.setViewName("au/login");
-		codeService.getCode();
 		return mView;
 	}
 	
 	//로그인 요청
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {
-		System.out.println("controll : "+request.getParameter("url"));
-		 urService.login(response, request, urDto);
+		
+		System.out.println("controll : "+ request.getParameter("url"));
+		 urService.login(response, request, urDto); 
 	}
 	
 	//로그아웃

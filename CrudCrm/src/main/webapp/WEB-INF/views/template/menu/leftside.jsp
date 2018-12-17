@@ -47,7 +47,7 @@
 	                </li>
                 </c:if> 
                 
-				
+
                 <c:if test="${sa  eq '20000'}">
 	                <li <c:if test="${fn:substring(urls, 0, 6)  eq '/sales' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">영업관리</span><span class="fa arrow"></span></a>

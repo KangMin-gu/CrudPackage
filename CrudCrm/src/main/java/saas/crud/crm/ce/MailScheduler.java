@@ -59,19 +59,19 @@ public class MailScheduler {
 			String subject =  list.get(i).get("SUBJECT").toString(); //제목
 			String content =  list.get(i).get("CONTENT").toString(); //내용
 			
-			StringBuffer test = new StringBuffer();
+			StringBuffer sb = new StringBuffer();
 			
 			
 			String ccEmail =  (String) list.get(i).get("CCEMAIL"); //참조
 			String bccEmail =  (String) list.get(i).get("BCCEMAIL"); //숨은참조
 			int emailLogId = Integer.parseInt(list.get(i).get("EMAILLOGID").toString()); //이메일로그pk
-			test.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body><img src=\"http://192.168.0.7/mail/check?emaillogid=");
-			test.append(emailLogId);
-			test.append("\" width=\"0\" height=\"0\" border=\"0\"  />");
-			test.append(content);
-			test.append("</body></html>");
+			sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body><img src=\"http://192.168.0.7/mail/check?emaillogid=");
+			sb.append(emailLogId);
+			sb.append("\" width=\"0\" height=\"0\" border=\"0\"  />");
+			sb.append(content);
+			sb.append("</body></html>");
 			
-			content = test.toString();
+			content = sb.toString();
 			String sendDate = list.get(i).get("RLTDATE").toString();
 			//String sendDate =  list.get(i).get("SENDDATETIME").toString(); //보낸날짜
 			//int time = Integer.parseInt(list.get(i).get("TIME").toString()); //시간
@@ -172,7 +172,7 @@ public class MailScheduler {
 		for (int i = 0; i < targetList.size(); i++) {
 			strAddress += targetList.get(i);
 			if (i < targetList.size() - 1) {
-				strAddress += ",";
+				strAddress += ";";
 			}
 		}
 		return strAddress;

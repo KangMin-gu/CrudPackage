@@ -50,7 +50,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ad/user/post/${user.USERNO }" method="PUT">
+<form:form action ="${pageContext.request.contextPath}/ad/user/post/${user.USERNO }" method="PUT" commandName="userDto">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -64,15 +64,14 @@
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
 									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) ">
-										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다. 관리자여부 : 선택해주세요 ) </strong>
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(사용자명 : 입력이 필요합니다. 사용자ID : 입력이 필요합니다. 비밀번호 : 입력이 필요합니다.) </strong>
 									</span>
 									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>
 													
 	                        	</div>
 								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-									<Strong><span id="showMsg"></span></Strong>
-									<Strong><span id="idCheckMsg"></span></Strong>				
-	                        	</div>													
+									<Strong><span id="showMsg"> </span></Strong>
+	                        	</div>												
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
 									<a href="/ad/user/${user.USERNO }" class="btn btn-primary">취소</a>
@@ -87,18 +86,14 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control error required validate name"  name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control error required validate name" disabled name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3 validate phone1 phone-group" name="mobile1" id="mobile1">
-                                                	<option value= <c:if test='${user.MOBILE1 eq 0}'>selected</c:if>>선택</option>
-                                                    <option value=010 <c:if test='${user.MOBILE1 eq 010}'>selected</c:if>>010</option>
-                                                    <option value=011 <c:if test='${user.MOBILE1 eq 011}'>selected</c:if>>011</option>
-                                                    <option value=016 <c:if test='${user.MOBILE1 eq 016}'>selected</c:if>>016</option>
-                                                    <option value=017 <c:if test='${user.MOBILE1 eq 017}'>selected</c:if>>017</option>
-                                                </select>
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="mobile1">
+                                                	<form:options items="${MOBILE}" value="${user.MOBILE1 }" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
@@ -106,12 +101,9 @@
                                         <tr>
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3 validate phone1 phone-group" name="telno1" id="telno1" >
-                                                	<option value= <c:if test='${user.TELNO1 eq 0}'>selected</c:if>>선택</option>
-                                                    <option value=02 <c:if test='${user.TELNO1 eq 02}'>selected</c:if>>02</option>
-                                                    <option value=031 <c:if test='${user.TELNO1 eq 031}'>selected</c:if>>031</option>
-                                                    <option value=032 <c:if test='${user.TELNO1 eq 032}'>selected</c:if>>032</option>
-                                                </select>
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="telno1" itemValue="${user.TELNO1 }">
+                                                    <form:options items="${PHONE}" value="${user.TELNO1 }" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="telno2" id="telno2" value="${user.TELNO2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
                                             </td>
@@ -130,7 +122,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control error required validate name"  name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control error required validate name" disabled name="userid" id="userid" value="${user.USERID}">
                                                 </div>
                                                 <input type="hidden" class="form-control"  name="idcheck" id="idcheck" value="">
                                             </td>
@@ -173,10 +165,9 @@
                                         <tr>
                                             <th><label for="mobile">관리자여부</label></th>
                                             <td>
-                                                <select class="form-control float-left error required validate check" name="chkauth" id="chkauth">
-                                                    <option value=10 <c:if test='${user.CHKAUTH eq 10}'>selected</c:if>>일반사용자</option>
-                                                    <option value=20 <c:if test='${user.CHKAUTH eq 20}'>selected</c:if>>관리자사용자</option>
-                                                </select>
+                                            	<form:select class="form-control col-3 float-left mr-3" path="chkauth">
+                                                	<form:options items="${CHKAUTH}" value="${user.CHKAUTH }" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -88,9 +88,9 @@
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="code">
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="mobile1">
                                                 	<option value= 0>선택</option>
-                                                    <form:options items="${code }" />
+                                                    <form:options items="${MOBILE}" itemLabel="codename" itemValue="codeval"/>
                                                 </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
@@ -99,12 +99,10 @@
                                         <tr>
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3 validate phone1 phone-group" name="telno1" id="telno1" >
-                                                	<option value= <c:if test='${user.TELNO1 eq 0}'>selected</c:if>>선택</option>
-                                                    <option value=02 <c:if test='${user.TELNO1 eq 02}'>selected</c:if>>02</option>
-                                                    <option value=031 <c:if test='${user.TELNO1 eq 031}'>selected</c:if>>031</option>
-                                                    <option value=032 <c:if test='${user.TELNO1 eq 032}'>selected</c:if>>032</option>
-                                                </select>
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="telno1">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="telno2" id="telno2" value="${user.TELNO2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
                                             </td>
@@ -164,12 +162,11 @@
                                             <td><input type="text" class="form-control validate simple" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
-                                            <th><label for="mobile">관리자여부</label></th>
+                                            <th><label for="chkauth">관리자여부</label></th>
                                             <td>
-                                                <select class="form-control float-left error required validate check" name="chkauth" id="chkauth">
-                                                    <option value=10 <c:if test='${user.CHKAUTH eq 10}'>selected</c:if>>일반사용자</option>
-                                                    <option value=20 <c:if test='${user.CHKAUTH eq 20}'>selected</c:if>>관리자사용자</option>
-                                                </select>
+                                                <form:select class="form-control col-3 float-left mr-3" path="chkauth">
+                                                    <form:options items="${CHKAUTH}" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>

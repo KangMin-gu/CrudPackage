@@ -463,7 +463,7 @@ public class NoteServiceImpl implements NoteService{
 			String fileSearchKey = crudEngine.fileSearchKey(request);
 			// 이부분 수정필요
 			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
-			crudEngine.fileUpload(response, multipartHttpServletRequest, mFile, sFile, fileSearchKey);
+			crudEngine.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
 			ntDto.setFilesearchkey(fileSearchKey);
 		}
 		

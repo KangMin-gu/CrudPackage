@@ -48,7 +48,7 @@
 		
 		
 <!-- Content -->		
-		<form:form action ="${pageContext.request.contextPath}/service/post" method="POST">
+		<form:form action ="${pageContext.request.contextPath}/service/post" method="POST" commandName="svDto">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -207,12 +207,10 @@
                                         <tr>
                                             <th style="height: 45px;">접수유형</th>
                                             <td>
-                                            	<select class="form-control float-left error required validate number" name="rcvtype" id="rcvtype">
-                                            		<option value="0">선택</option>
-                                                    <option value=1 <c:if test='${serviceInfo.RCVTYPE eq 1}'>selected</c:if>>문의</option>
-                                                    <option value=2 <c:if test='${serviceInfo.RCVTYPE eq 2}'>selected</c:if>>개선</option>
-                                                    <option value=3 <c:if test='${serviceInfo.RCVTYPE eq 3}'>selected</c:if>>오류</option>
-                                                </select>
+                                            	<form:select class="form-control col-3 float-left mr-3" path="rcvtype">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${RCVTYPE}" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -235,12 +233,10 @@
                                         <tr>
                                             <th>서비스유형</th>
                                             <td>
-                                            	<select class="form-control float-left select2" name="rcvcode" id="rcvcode">
-                                            		<option value="0">선택</option>
-                                                    <option value=1 <c:if test='${serviceInfo.RCVCODE eq 1}'>selected</c:if>>클라1</option>
-                                                    <option value=2 <c:if test='${serviceInfo.RCVCODE eq 2}'>selected</c:if>>클라2</option>
-                                                    <option value=3 <c:if test='${serviceInfo.RCVCODE eq 3}'>selected</c:if>>클라3</option>
-                                                </select>
+                                            	<form:select class="form-control col-3 float-left mr-3" path="rcvcode">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${RCVCODE}" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
 											</td>
                                         </tr>
                                         <tr>
@@ -279,12 +275,10 @@
                                         <tr>
                                             <th>처리상태</th>
                                             <td style="height: 42px;">
-                                            	<select class="form-control float-left" name="prcstate" id="prcstate">
-                                            		<option value="0">선택</option>
-                                                    <option value=1 <c:if test='${serviceInfo.PRCSTATE eq 1}'>selected</c:if>>접수</option>
-                                                    <option value=2 <c:if test='${serviceInfo.PRCSTATE eq 2}'>selected</c:if>>이관</option>
-                                                    <option value=3 <c:if test='${serviceInfo.PRCSTATE eq 3}'>selected</c:if>>완료</option>
-                                                </select>
+                                            	<form:select class="form-control col-3 float-left mr-3" path="prcstate">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${PRCSTATE}" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
 											</td>
                                         </tr>
                                         
@@ -317,12 +311,10 @@
                                         <tr>
                                         	<th class="border-top-0">접수매체</th>
                                         	<td class="border-top-0">
-                                        		<select class="form-control float-left" name="rcvchannel" id="rcvchannel">
-                                            		<option value="0">선택</option>
-                                                    <option value=10 <c:if test='${serviceInfo.RCVCHANNEL eq 10}'>selected</c:if>>전화</option>
-                                                    <option value=20 <c:if test='${serviceInfo.RCVCHANNEL eq 20}'>selected</c:if>>SMS</option>
-                                                    <option value=30 <c:if test='${serviceInfo.RCVCHANNEL eq 30}'>selected</c:if>>메일</option>
-                                                </select>
+                                        		<form:select class="form-control col-3 float-left mr-3" path="rcvchannel">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${RCVCHANNEL}" itemLabel="codename" itemValue="codeval"/>
+                                                </form:select>
                                         	</td>
                                         </tr>
                                     </tbody>

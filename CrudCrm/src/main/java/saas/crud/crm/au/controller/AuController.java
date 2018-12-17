@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dto.CodeDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.au.service.AuService;
@@ -74,10 +75,11 @@ public class AuController {
 	@RequestMapping(value="/ad/user/post", method=RequestMethod.GET)
 	public ModelAndView authAdminUserInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
-		Map<String,Object> code = codeService.getCode();
+		//Map<String,Object> code = codeService.getCode();
 		UserDto userDto = new UserDto();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.addObject("userDto",userDto);
-		mView.addObject("code",code);
 		mView.setViewName("/au/ad/adminInsert");
 		return mView;
 	}
@@ -91,8 +93,10 @@ public class AuController {
 	}
 	// 회원 정보 수정 화면
 	@RequestMapping(value="/ad/user/post/{userno}", method=RequestMethod.GET)
-	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno) {
+	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno, @ModelAttribute UserDto userDto) {
 		ModelAndView mView = auService.userRead(request, userno);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("/au/ad/adminUpdate");
 		return mView;
 	}

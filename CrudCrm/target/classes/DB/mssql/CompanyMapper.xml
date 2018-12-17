@@ -30,7 +30,10 @@
      		AND A.SITESIZE = #{sitesize}
      	</if>
      	) X 
-     	WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
+     	<if test ="endRowNum != null">
+     		WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
+     	</if>
+     	
     </select>
     <select id="totalRow" parameterType="hashMap" resultType="int">
      	SELECT 

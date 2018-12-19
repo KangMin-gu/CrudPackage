@@ -20,5 +20,7 @@ public interface CommonService {
 	public Map<String,Object> svcPopGetClientDetail(HttpServletRequest request, int cliNo);
 	
 	public void MailClick(HttpServletRequest request);
+	
+	public ModelAndView svcPopNote(HttpServletRequest request);
 
 }

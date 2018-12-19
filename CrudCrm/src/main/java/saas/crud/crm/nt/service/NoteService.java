@@ -1,6 +1,7 @@
 package saas.crud.crm.nt.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,4 +25,6 @@ public interface NoteService {
 	public void noteReturnChk(HttpServletRequest request, List<Integer> noticeid);
 	public ModelAndView noteSet(HttpServletRequest request);
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest);
+	
+	public Map<String,String> noteChosen(String[] userEmail);
 }

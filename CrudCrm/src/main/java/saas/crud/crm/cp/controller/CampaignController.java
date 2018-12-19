@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.service.CodeService;
+import saas.crud.crm.common.CommonService;
 import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
@@ -34,6 +37,9 @@ public class CampaignController {
 	
 	@Autowired
 	private CodeService codeService;
+	
+	@Autowired
+	private CommonService commonService;
 	
 	
 	// 캠페인 List
@@ -71,11 +77,11 @@ public class CampaignController {
 	}
 	// 캠페인 추가
 	@RequestMapping(value="/campaign/post", method=RequestMethod.POST)
-	public ModelAndView authCampaignInsertSet(HttpServletRequest request, CampaignDto campaignDto) {
+	public ModelAndView authCampaignInsertSet(HttpServletResponse response,HttpServletRequest request,MultipartHttpServletRequest multipartHttpServletRequest ,CampaignDto campaignDto) {
 		
 		ModelAndView mView = new ModelAndView();
 		
-		int campNo = campaignService.campInsert(request, campaignDto);
+		int campNo = campaignService.campInsert(response, request, multipartHttpServletRequest, campaignDto);
 		
 		mView.setViewName("redirect:/campaign/"+campNo);
 		
@@ -94,11 +100,11 @@ public class CampaignController {
 	}
 	//캠페인 수정
 	@RequestMapping(value="/campaign/post/{campNo}", method=RequestMethod.POST)
-	public ModelAndView authCampaignUpdateSet(HttpServletRequest request, @ModelAttribute CampaignDto campaignDto) {
+	public ModelAndView authCampaignUpdateSet(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest,@ModelAttribute CampaignDto campaignDto) {
 		
 		ModelAndView mView = new ModelAndView();
 		
-		campaignService.campUpdate(request,campaignDto);
+		campaignService.campUpdate(response, request, multipartHttpServletRequest, campaignDto);
 		
 		int campNo = campaignDto.getCampno();
 		
@@ -340,5 +346,13 @@ public class CampaignController {
 		return contents;
 		
 	}
+	
+	//첨부파일 다운로드
+		@RequestMapping(value="/campaign/download/{fileId}", method=RequestMethod.GET)
+		public ModelAndView notedownload(HttpServletRequest request, @PathVariable int fileId) {
+			ModelAndView mView = commonService.noteDownload(request, fileId);
+			mView.setViewName("fileDownView");
+			return mView;
+		}
 	
 }

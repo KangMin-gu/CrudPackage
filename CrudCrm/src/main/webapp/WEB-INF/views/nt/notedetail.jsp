@@ -39,6 +39,8 @@
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
 						<div class="mail-box-header">
+						<!-- 팝업여부 체크  -->
+						<input type="hidden" value="${referUrl}" id="referUrl"/>
 							<div class="float-right tooltip-demo">
 								<a href="mail_compose.html" class="btn btn-white btn-sm"
 									data-toggle="tooltip" data-placement="top" title="Reply"><i
@@ -126,6 +128,15 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script>
+$(document).ready(function() {
+			var url = $('#referUrl').val();
+			if(url.indexOf("pop") != -1){
+				self.close();
+				alert("전송되었습니다.")
+			}
 	
+	});
+	</script>
 </body>
 </html>

@@ -33,7 +33,6 @@ public class MailScheduler {
 	@Autowired
 	private MailDao mailDao;
 	
-	@Scheduled(cron="*/30 * * * * *")
 	public void sendmail() throws Exception {
 		boolean isValid = false;
 
@@ -58,17 +57,32 @@ public class MailScheduler {
 			String toEmail =  list.get(i).get("TOEMAIL").toString(); //받는이 
 			String subject =  list.get(i).get("SUBJECT").toString(); //제목
 			String content =  list.get(i).get("CONTENT").toString(); //내용
+			int userNo = Integer.parseInt(list.get(i).get("USERNO").toString());
+			int custNo = Integer.parseInt(list.get(i).get("CUSTNO").toString());
 			
 			StringBuffer sb = new StringBuffer();
-			
 			
 			String ccEmail =  (String) list.get(i).get("CCEMAIL"); //참조
 			String bccEmail =  (String) list.get(i).get("BCCEMAIL"); //숨은참조
 			int emailLogId = Integer.parseInt(list.get(i).get("EMAILLOGID").toString()); //이메일로그pk
-			sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body><img src=\"http://192.168.0.7/mail/check?emaillogid=");
+			sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body>");
+			sb.append(content);
+			
+			if(custNo != 0 && userNo == 0) {
+			// 수신거부 
+				sb.append("<p style='FONT-SIZE: 8pt; MARGIN-BOTTOM: 15px; FONT-FAMILY: dotum; MARGIN-TOP: 0px; COLOR: #666666' align='left'>");
+				sb.append("<br>본 메일은 정보통신망 이용촉진 및 정보보호 등에 관한 법률시행규칙에 의거하여 CRUD CRM 중 소식지 수신을 동의 하신 분과&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;저희 <b>[CRUD SYSTEM]</b>의 주요거래 고객분들 에게만 발송되어 [광고] 표시를 하지 않고 발송됩니다.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;본 메일은 소식지발신전용 메일이므로 소식지를 원하지 않는 분은 <a href=\'");
+				sb.append("http://192.168.0.7/mail/deny?EMAILLOGID=");
+				sb.append(emailLogId);
+				sb.append("CUSTNO=");
+				sb.append(custNo);
+				sb.append("\' target='_blank'>[수신거부]</a> 를 click 해주시기 바랍니다.</p><br>");
+			}
+			
+			//클릭여부
+			sb.append("<img src=\\\"http://192.168.0.7/mail/check?emaillogid=");
 			sb.append(emailLogId);
 			sb.append("\" width=\"0\" height=\"0\" border=\"0\"  />");
-			sb.append(content);
 			sb.append("</body></html>");
 			
 			content = sb.toString();

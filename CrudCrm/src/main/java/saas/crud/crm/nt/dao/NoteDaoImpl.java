@@ -1,5 +1,6 @@
 package saas.crud.crm.nt.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -149,6 +150,7 @@ public class NoteDaoImpl implements NoteDao{
 		session.update("note.noteReturnChk",ntDto);
 		
 	}
+	
 	//카테고리화면
 	@Override
 	public List<Map<String, Object>> noteSet(NoteCategoryDto noteCategory) {
@@ -175,4 +177,34 @@ public class NoteDaoImpl implements NoteDao{
 		List<Map<String, Object>> notefile = session.selectList("note.noteFile", noteVal);
 		return notefile;
 	}
+	
+	
+	//발송 폼 입장시 셀렉트 박스에 넣을 정보 
+	@Override
+	public List<Map<String, String>> adminMail() {
+		return session.selectList("au.adminMail");
+	}
+	
+	// 사용자번호로 이메일과 이름 받아옴 
+	@Override
+	public List<Map<String,String>> noteEmail(int fromUser) {
+		return session.selectList("note.noteEmail",fromUser);
+	}
+	
+	//t_mail_bak 테이블에 정보 삽입 
+	@Override
+	public void noteSendMail(Map<String, Object> map) {
+		session.insert("note.noteSendMail",map);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -19,8 +19,12 @@
 				, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
 				, A.CAMPDESC 
 				, CONVERT(nvarchar,A.STARTDATE,23) + '-' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
+				<!-- , COUNT(B.NO) AS TARGETCNT  -->
+				<!-- , COUNT(C.EMAILLOGID) AS SENDCNT  -->
 				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
 			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			<!-- INNER JOIN Crud_SaaS.dbo.T_CAMP_TARGET_CUST B ON B.CAMPNO = A.CAMPNO -->
+			<!-- INNER JOIN Crud_SaaS.dbo.T_MAIL_BAK C ON C.CUSTNO = B.CUSTNO -->
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
@@ -63,6 +67,7 @@
 		,A.OWNER
 		,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
 		,A.CAMPDESC
+		,A.FILESEARCHKEY
 			FROM Crud_SaaS.dbo.T_CAMPAIGN A
 			WHERE A.SITEID = #{siteid}
 			AND A.CAMPNO = #{campno}
@@ -112,6 +117,7 @@
 				,REGUSER
 				,EDTDATE
 				,EDTUSER
+				,FILESEARCHKEY
 			)VALUES(
 			#{campname}
 			,#{camptype}
@@ -126,6 +132,7 @@
 			,#{reguser}
 			,getDate()
 			,#{edtuser}
+			,#{filesearchkey}
 			)
 			SELECT SCOPE_IDENTITY()
 		</selectKey>
@@ -646,5 +653,11 @@
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 	</update>
+	
+	<select id="campaignFile" parameterType="campaignDto" resultType="hashMap">
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
+		FROM Crud_SaaS.dbo.T_FILE
+		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
+	</select>
 	
 </mapper>

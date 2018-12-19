@@ -33,20 +33,16 @@ public class CompanyController {
 	private CodeService codeService;
 	// 회원사 List
 	@RequestMapping(value = "/ma/company", method=RequestMethod.GET)
-	public ModelAndView authCompanyList(HttpServletRequest request,@ModelAttribute CompanyDto companyDto) {
+	public ModelAndView authCompanyList(HttpServletRequest request) {
 		ModelAndView mView = companyService.companyList(request);
-		Map<String,Object> code = codeService.getCode();
-		mView.addAllObjects(code);
 		
 		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
 	// 회원사 List 검색
 	@RequestMapping(value = "/ma/company", method=RequestMethod.POST)
-	public ModelAndView authCompanySearchList(HttpServletRequest request,@ModelAttribute CompanyDto companyDto) {
+	public ModelAndView authCompanySearchList(HttpServletRequest request) {
 		ModelAndView mView = companyService.companyList(request);
-		Map<String,Object> code = codeService.getCode();
-		mView.addAllObjects(code);
 		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
@@ -60,8 +56,12 @@ public class CompanyController {
 	// 회원사 UPDATE 화면
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authCompanyUpdate(@PathVariable int siteId, HttpServletRequest request,@ModelAttribute CompanyDto companyDto) {
-		ModelAndView mView = companyService.companyRead(request, siteId);
+		//ModelAndView mView = companyService.companyRead(request, siteId);
+		
 		Map<String,Object> code = codeService.getCode();
+		
+		ModelAndView mView = companyService.companyRead(request, siteId);
+		
 		mView.addAllObjects(code);
 		mView.setViewName("au/ma/mc/masterUpdate"); 
 		return mView;

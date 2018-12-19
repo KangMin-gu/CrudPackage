@@ -47,7 +47,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/campaign/post" method="POST" commandName="campaignDto">
+<form:form action ="${pageContext.request.contextPath}/campaign/post" method="POST" commandName="campaignDto" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -189,6 +189,25 @@
                                         	<th class="border-top-0">비고</th>
                                             <td class="border-top-0">
                                             	<textarea name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+			                <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="file" name="file" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
                                             </td>
                                         </tr>
                                     </tbody>

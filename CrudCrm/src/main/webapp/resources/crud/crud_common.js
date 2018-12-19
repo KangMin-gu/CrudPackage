@@ -67,6 +67,11 @@
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
 	});
+	
+	//내부통지팝업
+	$('.note').click(function(e){
+		 openNewWindow('내부통지','/popnote',e.currentTarget.id,650,1100);	
+	})
 /******************************************************************/	
 	/*fileupload 필수값 싱글 sFile / 멀티 mFile
 	 * 부모창에 fileSearchKey  hidden으로 input 생성

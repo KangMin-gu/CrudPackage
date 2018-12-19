@@ -521,7 +521,6 @@
 		$(document).ready(function () {
 
 			$('.select2').select2();
-			var date = today();
 			
 			$('.clockpicker').clockpicker();
 			
@@ -540,7 +539,7 @@
 				forceParse:false,
 				autoclose:true
 			});
-			
+			var date = today();
 			$('#rcvdate').val(date);
 			$('#rcvdate_').val(date);
 		});

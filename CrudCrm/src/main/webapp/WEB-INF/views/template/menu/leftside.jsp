@@ -71,7 +71,6 @@
 	                </li>
                 </c:if>
                 
-               
                 <c:if test="${cp  eq '40000' }">
 					<li<c:if test="${fn:substring(urls, 0, 9) eq '/campaign' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">캠페인</span><span class="fa arrow"></span></a>
@@ -109,7 +108,6 @@
 	                </li>
                 </c:if>
                 
-       
 	            <c:if test="${au  eq '90000' }">
 		           <c:if test="${CHKAUTH eq '20' || CHKAUTH eq '30'}">
 			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/ad' }"> class="active"</c:if>>

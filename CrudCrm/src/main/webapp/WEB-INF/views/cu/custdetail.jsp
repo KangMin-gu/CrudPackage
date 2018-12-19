@@ -76,7 +76,7 @@
 										<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
 										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-	                              			 <a href="#" class="btn btn-primary">내부통지</a>
+	                              			 <a href="javascript:void(0)" class="note btn btn-primary">내부통지</a>
 	                              			 <a href="#" class="btn btn-primary">이메일</a>
 	                              			 <a href="#" class="btn btn-primary">SMS</a>												
 	                          			</div>													

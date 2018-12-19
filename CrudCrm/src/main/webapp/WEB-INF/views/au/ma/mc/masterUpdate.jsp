@@ -51,7 +51,7 @@
 		
 		
 <!-- Content -->		
-	<form:form action="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID }" method="POST" commandName="companyDto" enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID }" method="POST" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -172,18 +172,11 @@
                                         <tr>
                                             <th class=" border-top-0"><label for="mobile">휴대전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mobile1">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="mobile" items="${MOBILE }">
-                                                		<c:choose>
-                                                			<c:when test="${memCompany.TELNO1 eq mobile.codeval}">
-                                                				<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${mobile.codename }" value="${mobile.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
+                                            ${mm.mobile1}      
+                                                             
+                                        		        <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mm">
+                                       				<option value="asdfsadf">asdfsadf</option>
+                                       				<form:options items="${MOBILE1 }" itemLabel="codename" itemValue="codeval"/>
                                                 </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
@@ -220,19 +213,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="telno">전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="telno1">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="phone" items="${PHONE }">
-                                                		<c:choose>
-                                                			<c:when test="${memCompany.TELNO1 eq phone.codeval}">
-                                                				<option selected label="${phone.codename }" value="${phone.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${phone.codename }" value="${phone.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                              
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="telno3" id="telno3" value="${memCompany.TELNO3 } ">
                                             </td>
@@ -240,19 +221,7 @@
                                         <tr>
                                             <th><label for="sitesize">기업규모</label></th>
                                             <td>
-                                                <form:select class="form-control validate checkV" path="sitesize">
-                                            		<option label="선택" value="0"/>
-                                                	<c:forEach var="companySize" items="${COMPANYSIZE }">
-                                                		<c:choose>
-                                                			<c:when test="${memCompany.SITESIZE eq companySize.codeval}">
-                                                				<option selected label="${companySize.codename }" value="${companySize.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${companySize.codename }" value="${companySize.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                                
                                             </td>
                                         </tr>
                                         <tr>
@@ -264,18 +233,7 @@
                                         <tr>
                                             <th><label for="isdelete">서비스상태</label></th>
                                             <td>
-                                               <form:select class="form-control validate required error numberV" path="isdelete">
-                                                	<c:forEach var="isDelete" items="${ISDELETE }">
-                                                		<c:choose>
-                                                			<c:when test="${memCompany.ISDELETE eq isDelete.codeval}">
-                                                				<option selected label="${isDelete.codename }" value="${isDelete.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${isDelete.codename }" value="${isDelete.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                              
                                             </td>
                                         </tr>
                                     </tbody>
@@ -291,19 +249,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="faxtel1">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="fax" items="${FAX }">
-                                                		<c:choose>
-                                                			<c:when test="${memCompany.FAXTEL1 eq fax.codeval}">
-                                                				<option selected label="${fax.codename }" value="${fax.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${fax.codename }" value="${fax.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                                
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 } ">
                                             </td>
@@ -362,7 +308,7 @@
                 
             </div>
         </div>
-  </form:form>
+  </form>
 <!-- Content End -->
 			
 <!-- foot -->

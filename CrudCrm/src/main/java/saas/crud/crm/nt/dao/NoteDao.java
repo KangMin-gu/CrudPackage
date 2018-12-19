@@ -35,4 +35,8 @@ public interface NoteDao {
 	public int noteSend(NoteDto ntDto);
 	public void notetoAndCc(NoteDto ntDto);
 	public List<Map<String, Object>> noteFile(Map<String, Object> noteVal);
+	
+	public List<Map<String,String>> noteEmail(int fromUser);
+	public List<Map<String,String>> adminMail();
+	public void noteSendMail(Map<String,Object> map);
 }

@@ -35,6 +35,7 @@
      	</if>
      	
     </select>
+    <!-- 리스트 총갯수  -->
     <select id="totalRow" parameterType="hashMap" resultType="int">
      	SELECT 
      	count(*)

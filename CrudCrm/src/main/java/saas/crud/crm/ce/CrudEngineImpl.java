@@ -49,6 +49,7 @@ public class CrudEngineImpl implements CrudEngine{
 		String imgPath = null;
 		boolean whiteListFlag = false;
 		boolean sizeFlag = false;
+		int FileNameSize = 0;
 		
 		List<MultipartFile> mFile = multiFile;
 		MultipartFile sFile = singleFile;
@@ -57,6 +58,8 @@ public class CrudEngineImpl implements CrudEngine{
 			
 			for(int i=0; i<mFile.size(); i++) {
 				String orgFileName = mFile.get(i).getOriginalFilename();
+				FileNameSize = orgFileName.length();
+				if(FileNameSize > 0) {
 				whiteListFlag = whiteFlag(orgFileName);
 				
 				if(!whiteListFlag) {
@@ -124,8 +127,9 @@ public class CrudEngineImpl implements CrudEngine{
 						fileInfo.setSiteid(siteId);
 						fileInfo.setFilesearchkey(fileSearchKey);
 						commonDao.fileUpload(fileInfo);
-					}
+						}
 					
+					}
 				}
 			}//for
 			
@@ -321,7 +325,7 @@ public class CrudEngineImpl implements CrudEngine{
 				return paging;
 	}
 	
-	//내부통지 주소 쿼터
+	//내부통지 사용자 번호 쿼터
 	@Override
 	public List<Integer> adressQuarter(String mailAdress) {
 		
@@ -330,7 +334,6 @@ public class CrudEngineImpl implements CrudEngine{
 		 *  형식을 [123@naver.com,123@naver.com,123@naver.com,123@naver.com] 으로 리스트 배열에 담아 리턴한다. 
 		 * 
 		 */
-		
 		List<Integer> mailTarget = new ArrayList<Integer>();
 			
 			String[] mailAdresses = mailAdress.split(";");
@@ -342,6 +345,29 @@ public class CrudEngineImpl implements CrudEngine{
 			}
 			
 			return  mailTarget;
+	}
+	@Override
+	public List<String> emailQuarter(String mailAdress) {
+		
+		/*
+		 *  메일에서 To 또는 CC  ex) 123@naver.com;123@naver.com;123@naver.com;123@naver.com
+		 *  형식을 [123@naver.com,123@naver.com,123@naver.com,123@naver.com] 으로 리스트 배열에 담아 리턴한다. 
+		 * 
+		 */
+		List<String> mailTarget = new ArrayList<String>();
+			
+		//; 기준으로 끊으면 111@naver.com 형태로 들어감
+			String[] mailAdresses = mailAdress.split(";");
+			
+			for(int i=0; i<mailAdresses.length; i++) {
+			    System.out.println("mailAdresses : " + mailAdresses[i]);
+			    
+			    String target = mailAdresses[i];
+			   
+			    mailTarget.add(target);
+			}
+			
+			return mailTarget;
 	}
 
 	@Override

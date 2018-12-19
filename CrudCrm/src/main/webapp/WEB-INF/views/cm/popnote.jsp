@@ -31,18 +31,17 @@
 <body>
 	<div id="wrapper">
 		<!-- leftside -->
-		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
+		
 		<!-- Top -->
 		<div id="page-wrapper" class="gray-bg">
-			<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
+		
 			<!-- Content -->
 			<div class="wrapper wrapper-content">
 				<div class="row">
-					<div class="col-lg-2">
-						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
-					</div>
+			
+					
 					<div class="col-lg-10 animated fadeInRight">
-						<form:form action="send" method="post"
+						<form:form action="/note/send" method="post"
 							enctype="multipart/form-data">
 							<div class="mail-box-header">
 								<div class="row">
@@ -107,7 +106,11 @@
 								</div>
 								<div class="mail-text h-200">
 									<textarea class="summernote" id="content" name="content"
-										style="height: 100px;"></textarea>
+										style="height: 100px;">
+										
+										
+										
+										</textarea>
 									<div class="clearfix"></div>
 								</div>
 								<div class="mail-body">
@@ -147,10 +150,7 @@
 			</div>
 		</div>
 
-		<!-- right side -->
-		<div id="right-sidebar">
-			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
-		</div>
+		
 	</div>
 
 	<!-- js includ -->
@@ -167,9 +167,11 @@
 	
 	$(document).ready(function() {
 		
-		
-		
-		
+		 var openerHref = window.opener.location.href;
+		 
+		 var html = '<a href= ' + openerHref + ' class="btn-primary confirm btn" id="confirm">Confirm</a>';
+		 $('.summernote').summernote('code',html);
+		 
 		//chosen
 		$('.chosen-select').chosen(
 				{
@@ -177,12 +179,9 @@
 					search_contains : true
 				}
 				);
-		//없는 유저 
-		
-
-		
-		$('.summernote').summernote();	
 		$('.note-editable').css('height','300px');
+		
+		
 		
 		$('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',

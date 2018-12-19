@@ -240,5 +240,12 @@
 		WHERE SITEID = #{siteid}
 		AND USERNO = #{userno}
 	</select>
+	<!-- 메일정보 얻어오기  -->
+	<select id="adminMail" resultType="hashMap">
+		<![CDATA[
+		SELECT EMAIL,USERNAME,USERNO,SITEID,USERID FROM Crud_SaaS.dbo.TB980010
+		WHERE EMAIL <> ' ' AND EMAIL IS NOT NULL
+		]]> 
+	</select>
 	
 </mapper>

@@ -139,6 +139,26 @@
                                                 </table>
                                                 <input type="hidden" id="campno" name="campno" value="${campInfo.CAMPNO }">
                                             </div>
+                                            <div class="mail-attachment">																	
+												<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+												<div class="attachment">
+													<c:forEach var="file" items="${campFile }">
+														<div class="file-box">
+															<div class="file">
+																<a href="${pageContext.request.contextPath}/campaign/download/${file.FILEID}"> <span class="corner"></span>
+																	<div class="icon">
+																		<i class="fa fa-file"></i>
+																	</div>
+																	<div class="file-name">
+																		${file.ORGFILENAME } <br /> <small>${file.REGDATE }</small>
+																	</div>
+																</a>
+															</div>
+														</div>	
+													</c:forEach>										
+													<div class="clearfix"></div>
+												</div>
+											</div>
                                         </div>
                                     </div>
                                 </div>

@@ -18,6 +18,8 @@ import saas.crud.crm.ce.EUploadDto;
 import saas.crud.crm.ce.MailDao;
 import saas.crud.crm.ce.MailDto;
 import saas.crud.crm.cu.dao.CustDao;
+import saas.crud.crm.nt.dao.NoteDao;
+import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.sa.dao.ClientDao;
 
 
@@ -39,6 +41,9 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
 	private MailDao mailDao;
+	
+	@Autowired
+	private NoteDao ntDao;
 
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -204,5 +209,34 @@ public class CommonServiceImpl implements CommonService {
 		mailDto.setEmaillogid(emaillogid);
 		mailDao.mailClick(mailDto);
 	}
+	
+	//내부통지 팝업 
+		@Override
+		public ModelAndView svcPopNote(HttpServletRequest request) {
+			
+			
+			
+			int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+			int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+			
+			//유저정보
+			List<Map<String,String>> adminMail = ntDao.adminMail();
+			
+			NoteCategoryDto noteCategory = new NoteCategoryDto();
+			noteCategory.setUserno(userNo);
+			noteCategory.setSiteid(siteId);
+			
+			List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+			ModelAndView mView = new ModelAndView();
+			mView.addObject("category", category);
+			mView.addObject("adminMail",adminMail);
+			
+			//팝업 띄우기 전에 주소값 가져옴 
+			mView.addObject("url",request.getHeader("referer"));
+		
+			
+			
+			return mView;
+		}
 
 }

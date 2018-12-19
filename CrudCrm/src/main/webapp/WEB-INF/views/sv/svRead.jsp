@@ -62,14 +62,20 @@
                         
                         <div class="ibox-content row">
                         
-                            <div class="w-100 text-right mb-2">
+                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                             <form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                                <a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
-                                <a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
-                                <a href="#" class="btn btn-primary servicenext">이관</a>
-								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-							</form:form>	
-                            </div>
+								
+									<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+										<a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
+	                            		<a href="#" class="btn btn-primary servicenext">이관</a>
+	                          		</div>													
+									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+										<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+									</div>
+								
+							</form:form>
+							</div>	
                             
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -466,9 +472,18 @@
 	<script>
 		$(document).ready(function () {
 			
-			$('#rcvdesc').summernote('disable');
-			$('#rcvopinion').summernote('disable');
-			$('#ractdesc').summernote('disable');
+			
+			$('#rcvdesc').summernote({
+				height:200
+			});
+			$('#rcvopinion').summernote({
+				height:200
+			});
+			$('#ractdesc').summernote({
+				height:200
+			});
+			
+			$('.note-editable').attr('contenteditable',false)
 		});
 		
 		

@@ -45,6 +45,13 @@ public class CommonController {
 		mav.setViewName("cm/popclient");
 		return mav;
 	}
+	//내부통지 팝업 --  
+	@RequestMapping(value="/popnote",method=RequestMethod.GET)
+	public ModelAndView authpopNote(HttpServletRequest request) {
+		ModelAndView mView = commonService.svcPopNote(request);
+		mView.setViewName("cm/popnote");
+		return mView;
+	}
 
 	//로고팝업
 	@RequestMapping(value="/poplogo", method=RequestMethod.GET)

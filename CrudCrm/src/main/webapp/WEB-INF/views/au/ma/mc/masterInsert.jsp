@@ -167,18 +167,9 @@
                                         <tr>
                                             <th class="border-top-0"><label for="mobile">휴대전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mobile1">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="mobile" items="${MOBILE }">
-                                                		<c:choose>
-                                                			<c:when test="${memCompany.TELNO1 eq mobile.codeval}">
-                                                				<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${mobile.codename }" value="${mobile.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
+                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="mobile1">
+                                                	<option value= 0>선택</option>
+                                                    <form:options items="${MOBILE}" itemLabel="codename" itemValue="codeval"/>
                                                 </form:select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">

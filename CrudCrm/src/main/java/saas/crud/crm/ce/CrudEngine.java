@@ -17,5 +17,8 @@ public interface CrudEngine {
 	public Map<String, Object> searchParam(HttpServletRequest request);
 	public Map<String, Integer> paging(HttpServletRequest request, int totalRows, int PAGE_ROW_COUNT, int PAGE_DISPLAY_COUNT);
 	public List<Integer> adressQuarter(String mailAdress);
+	
+	public List<String> emailQuarter(String mailAdress);
+	
 	public String getMapValueNullCheck(Map target, String key);
 }

@@ -89,7 +89,7 @@ public class MailScheduler {
 			
 			if(custNo != null) {
 			// 고객용
-				sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body><img src=\"http://192.168.0.7/mail/check?emaillogid=");
+				sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/bootstrap.min.css\" type=\"text/css\"><link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/style.css\" type=\"text/css\"><title>웹페이지 제목</title> </head> <body><img src=\"http://125.129.242.156:8888/mail/check?emaillogid=");
 				sb.append(emailLogId);
 				sb.append("&SITEID=");
 				sb.append(siteId);
@@ -100,7 +100,7 @@ public class MailScheduler {
 				
 				sb.append("<p style='FONT-SIZE: 8pt; MARGIN-BOTTOM: 15px; FONT-FAMILY: dotum; MARGIN-TOP: 0px; COLOR: #666666' align='left'>");
 				sb.append("<br>본 메일은 정보통신망 이용촉진 및 정보보호 등에 관한 법률시행규칙에 의거하여 CRUD CRM 중 소식지 수신을 동의 하신 분과&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;저희 <b>[CRUD SYSTEM]</b>의 주요거래 고객분들 에게만 발송되어 [광고] 표시를 하지 않고 발송됩니다.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;본 메일은 소식지발신전용 메일이므로 소식지를 원하지 않는 분은 <a href=\'");
-				sb.append("http://192.168.0.7/mail/deny?EMAILLOGID=");
+				sb.append("http://125.129.242.156:8888/mail/deny?EMAILLOGID=");
 				sb.append(emailLogId);
 				sb.append("&CUSTNO=");
 				sb.append(custNo);
@@ -110,7 +110,7 @@ public class MailScheduler {
 			}
 			if(userNo != null) {
 				// 내부통지용
-				sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <title>웹페이지 제목</title> </head> <body><img src=\"http://125.129.242.156:8888/mail/check?emaillogid=");
+				sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/bootstrap.min.css\" type=\"text/css\"><link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/style.css\" type=\"text/css\"><title>웹페이지 제목</title> </head> <body><img src=\"http://125.129.242.156:8888/mail/check?emaillogid=");
 				sb.append(emailLogId);
 				sb.append("&SITEID=");
 				sb.append(siteId);
@@ -138,12 +138,10 @@ public class MailScheduler {
 			}
 			*/
 			int compare = sendDate.compareTo(today);
-			if(compare == -1) {
 				send(subject,fromEmail,content,toEmail,ccEmail,bccEmail,fileSearchKey,siteId);
 				isValid = true;
 				emailDto.setEmaillogid(emailLogId);
 				UpdateState(isValid, emailDto);
-			}
 		}
 	}
 

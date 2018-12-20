@@ -79,6 +79,7 @@
                                     <form:form action="${pageContext.request.contextPath}/campaignform/${campInfo.CAMPNO }" method="POST" commandName="campaignFormDto">
                                     	<div role="tabpanel" id="sumbitTab1" class="tab-pane active">
                                         	<div class="panel-body">
+                                        	<input type="hidden" id="sendform" name="sendform" value="1"/>
                                             	<div class="w-100 text-right mb-2">
                                                 	<a href="/campaign" class="btn btn-primary">캠페인 목록</a>
                                                     <a href="/campaign/${campInfo.CAMPNO }#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
@@ -135,7 +136,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <th>진행단계</th>
-                                                                    <td>발송</td>
+                                                                    <td>${campInfo.CAMPSTEP_ }</td>
                                                                     <input type="hidden" name="campstep" id="campstep" class="form-control" value="3"/>
                                                                 </tr>
                                                                 <tr>
@@ -154,7 +155,7 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <th class="border-top-0">회신메일주소</th>
-                                                                    <td class="border-top-0"><input type="text" id="returnmail" name="returnmail" class="form-control" value="${campForm.RETURNMAIL}"></td>
+                                                                    <td class="border-top-0"><input type="text" id="sender" name="sender" class="form-control" value="${campForm.SENDER}"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -171,7 +172,7 @@
                                                                     <td class="border-top-0">
                                                                         <div class="input-group contents">
                                                     						<input type="text" class="form-control" autocomplete="off" name="contentsno_" id="contentsno_" value="${campForm.CONTENTSNO_ }">
-                                                    						<input type="hidden" name="contentsno" id="contentsno" value=${campForm.CONTENTSNO }>
+                                                    						<input type="hidden" name="contentsno" id="contentsno" value="0"/>                                                    						
                                                     						<span class="input-group-addon">
                                                         						<a><i class="fa fa-search"></i></a>
                                                     						</span>
@@ -380,6 +381,7 @@
                                         <c:if test="${fn:substring(urls, 0, 13)  eq '/campaign/sms' }">
                                         <div role="tabpanel" id="sumbitTab2" class="tab-pane">
                                                         <div class="panel-body">
+                                                        <input type="hidden" id="sendform" name="sendform" value="2"/>
                                                             <div class="w-100 text-right mb-2">
                                                                 <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
                                                                 <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
@@ -435,7 +437,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
@@ -453,7 +455,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th class="border-top-0">회신전화번호</th>
-                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
+                                                                                <td class="border-top-0">${campForm.SENDER }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>서식형태</th>
@@ -584,6 +586,7 @@
                                         <c:if test="${fn:substring(urls, 0, 13)  eq '/campaign/mms' }">
                                         <div role="tabpanel" id="sumbitTab3" class="tab-pane">
                                             <div class="panel-body">
+                                            <input type="hidden" id="sendform" name="sendform" value="4"/>
                                                 <div class="w-100 text-right mb-2">
                                                 	<a href="/campaign" class="btn btn-primary">캠페인 목록</a>
                                                     <a href="/campaign/${campInfo.CAMPNO }" class="btn btn-primary">고객 추출 화면</a>

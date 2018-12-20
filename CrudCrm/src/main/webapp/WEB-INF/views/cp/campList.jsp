@@ -78,11 +78,11 @@
                                             <td class="border-top-0">
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" id="startdate" name="startdate" value="${search.startdate }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" id="enddate" name="enddate" value="${search.enddate }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -114,15 +114,15 @@
                                         <tr>
                                             <th>발송매체</th>
                                             <td>
-                                                <select class="form-control">
+                                                <select class="form-control" name="sendform" id="sendform">
                                             		<option label="선택" value=""/>
-                                                	<c:forEach var="formType" items="${FORMTYPE }">
+                                                	<c:forEach var="sendForm" items="${SENDFORM }">
                                                 		<c:choose>
-                                                			<c:when test="${search.formtype eq formType.codeval}">
-                                                				<option selected label="${formType.codename }" value="${formType.codeval }"/>
+                                                			<c:when test="${search.sendform eq sendForm.codeval}">
+                                                				<option selected label="${sendForm.codename }" value="${sendForm.codeval }"/>
                                                 			</c:when>
                                                 			<c:otherwise>
-                                                				<option label="${formType.codename }" value="${formType.codeval }"/>
+                                                				<option label="${sendForm.codename }" value="${sendForm.codeval }"/>
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
@@ -142,7 +142,7 @@
                                         <tr>
                                             <th>진행단계</th>
                                             <td>
-                                                <select class="form-control">
+                                                <select class="form-control" id="campstep" name="campstep">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="campStep" items="${CAMPSTEP }">
                                                 		<c:choose>
@@ -170,12 +170,19 @@
                                         <tr>
                                             <th>캠페인유형</th>
                                             <td>
-                                                <select name="camptype" id="camptype" class="form-control reset" style="height: 23px;">
-                                                	<option value="">검색</option>
-                                                	<option value=10 <c:if test='${search.camptype eq 10}'>selected</c:if>>세미나</option>
-                                                	<option value=20 <c:if test='${search.camptype eq 20}'>selected</c:if>>뉴스레터</option>
-                                                	<option value=30 <c:if test='${search.camptype eq 30}'>selected</c:if>>테스트</option>
-                                            	</select>
+                                                <select class="form-control" id="camptype" name="camptype">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="campType" items="${CAMPTYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${search.camptype eq campType.codeval}">
+                                                				<option selected label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -225,7 +232,8 @@
                                     <col style="width: 150px"/>
                                     <col style="width: 150px"/>
                                     <col style="width: 100px"/>
-                                    <col style="width: 100px"/>                                    
+                                    <col style="width: 100px"/>
+                                    <col style="width: 100px"/>                             
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -235,8 +243,9 @@
                                         <th>유형</th>
                                         <th>발송매체</th>
                                         <th>담당자</th>
-                                        <th>읽은인원 / 발송인원</th>
-                                        <th>추출인원</th>
+                                        <th>진행단계</th>
+                                        <th>읽은인원 /전체인원</th>
+                                        <th>발송인원 /전체인원</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -251,14 +260,14 @@
                                         	</c:if>
                                         	<td>${cpList.CAMPDATE_ }</td>
                                         	<td>${cpList.CAMPTYPE_ }</td>
-                                        	<td>${cpList.CUSTNO_ }</td>
+                                        	<td>${cpList.CAMPFORM_ }</td>
                                         	<td>${cpList.OWNER_ }</td>
-                                        	<td>${cpList.TOTAL }</td>
-                                        	<td>${cpList.SENDUSER_ }</td>
+                                        	<td>${cpList.CAMPSTEP_ }</td>
+                                        	<td>${cpList.CLICKTOTAL }</td>
+                                        	<td>${cpList.SENDTOTAL }</td>
                                     	</tr>
                                 	</c:forEach>
                                 </tbody>
-                                <tfoot>
                             </table>
                             </div>
                             <div class="m-auto">

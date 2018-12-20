@@ -52,10 +52,8 @@ public class MailDaoImpl implements MailDao {
 	//파일첨부
   	@Override
   	public List<Map<String, Object>> fileAttach(Map<String, Object> map) {
-  			List<Map<String,Object>> fileInfo = session.selectList("common.noteAttach",map);
+  			List<Map<String,Object>> fileInfo = session.selectList("email.noteAttach",map);
   			return fileInfo;
 
   	}
-    
-
 }

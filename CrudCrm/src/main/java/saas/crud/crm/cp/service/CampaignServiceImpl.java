@@ -403,16 +403,13 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int sendType = Integer.parseInt(request.getParameter("sendtype").toString());
 		Map<String,Object> param = new HashMap<String,Object>();
 		
 		param.put("userno", userNo);
 		param.put("siteid", siteId);
 		param.put("campno", campNo);
-		param.put("sendtype", sendType);
 		
 		
-		campaignDao.campSendType(param);
 		campaignDao.campSend(param);
 		
 		

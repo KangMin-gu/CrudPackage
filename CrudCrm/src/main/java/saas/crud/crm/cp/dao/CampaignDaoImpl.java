@@ -210,13 +210,7 @@ public class CampaignDaoImpl implements CampaignDao{
 		List<Map<String,Object>> campCalList = session.selectList("cp.calList",campaignDto);
 		return campCalList;
 	}
-	// 캠페인 발송매체 update
-	@Override
-	public void campSendType(Map<String, Object> param) {
-		// TODO Auto-generated method stub
-		session.update("cp.sendTypeUpdate",param);
-		
-	}
+
 	// 캠페인 양식 List(Top 5)
 	@Override
 	public List<Map<String, Object>> campContentsUseDescList(Map<String, Object> param) {

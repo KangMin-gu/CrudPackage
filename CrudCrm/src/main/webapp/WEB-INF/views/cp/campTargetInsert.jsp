@@ -111,7 +111,7 @@
                                     <tbody>
                                         <tr>
                                             <th>진행단계</th>
-                                            <td>추출</td>
+                                            <td>${campInfo.CAMPSTEP_ }</td>
                                             <input type="hidden" name="campstep" id="campstep" class="form-control" value="2"/>
                                         </tr>
                                         <tr>

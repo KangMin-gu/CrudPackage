@@ -113,7 +113,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>진행단계</th>
-                                                            <td>추출</td>
+                                                            <td>${campInfo.CAMPSTEP_ }</td>
                                                         </tr>
                                                         <tr>
                                                             <th>대상 고객수</th>
@@ -219,7 +219,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>진행단계</th>
-                                                            <td>추출</td>
+                                                            <td>${campInfo.CAMPSTEP_ }</td>
                                                         </tr>
                                                         <tr>
                                                             <th>대상 고객수</th>
@@ -497,8 +497,12 @@
                                                                 <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
                                                                 <div class="d-inline-block mt-sx-1">
                                                                 <a href="/campaign/email/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">발송</a>
+                                                                <form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
+                                                                	<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
+                                                                </form:form>
+                                                                <form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+                                                                	<button  class="btn btn-primary">발송</button>
+                                                                </form:form>
                                                                 </div>
                                                             </div>
                                                             <div class="ibox-content row">
@@ -547,7 +551,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
@@ -643,7 +647,7 @@
                                                                                 <td class="border-top-0">
                                                                                     <div class="input-group p-0">
                                                                                         <div class="d-flex date date01">
-                                                                                          ${campForm.SENDDATE }
+                                                                                          ${campForm.SENDDATE_ }
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -760,7 +764,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
@@ -962,7 +966,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>

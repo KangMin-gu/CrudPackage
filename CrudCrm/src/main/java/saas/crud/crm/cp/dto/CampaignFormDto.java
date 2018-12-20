@@ -5,7 +5,7 @@ public class CampaignFormDto {
 	private int no;
 	private int campno;
 	private int siteid;
-	private String returnmail;
+	private String sender;
 	private int sendtype;
 	private String senddate;
 	private int week;
@@ -22,17 +22,18 @@ public class CampaignFormDto {
 	private int reguser;
 	private String edtdate;
 	private int edtuser;
+	private int sendform;
 	
 	public CampaignFormDto() {}
 
-	public CampaignFormDto(int no, int campno, int siteid, String returnmail, int sendtype, String senddate, int week,
+	public CampaignFormDto(int no, int campno, int siteid, String sender, int sendtype, String senddate, int week,
 			int day, String startdate, String enddate, int sendhour, int sendminute, int contentsno, String title,
-			String senddesc, String testmail, String regdate, int reguser, String edtdate, int edtuser) {
+			String senddesc, String testmail, String regdate, int reguser, String edtdate, int edtuser, int sendform) {
 		super();
 		this.no = no;
 		this.campno = campno;
 		this.siteid = siteid;
-		this.returnmail = returnmail;
+		this.sender = sender;
 		this.sendtype = sendtype;
 		this.senddate = senddate;
 		this.week = week;
@@ -49,6 +50,7 @@ public class CampaignFormDto {
 		this.reguser = reguser;
 		this.edtdate = edtdate;
 		this.edtuser = edtuser;
+		this.sendform = sendform;
 	}
 
 	public int getNo() {
@@ -75,12 +77,12 @@ public class CampaignFormDto {
 		this.siteid = siteid;
 	}
 
-	public String getReturnmail() {
-		return returnmail;
+	public String getSender() {
+		return sender;
 	}
 
-	public void setReturnmail(String returnmail) {
-		this.returnmail = returnmail;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 
 	public int getSendtype() {
@@ -210,6 +212,16 @@ public class CampaignFormDto {
 	public void setEdtuser(int edtuser) {
 		this.edtuser = edtuser;
 	}
+
+	public int getSendform() {
+		return sendform;
+	}
+
+	public void setSendform(int sendform) {
+		this.sendform = sendform;
+	}
+
+	
 	
 	
 }

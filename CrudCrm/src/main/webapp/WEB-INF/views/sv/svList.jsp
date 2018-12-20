@@ -95,7 +95,7 @@
                                             <th>고객명</th>
                                             <td class="border-top-0">
                                                 <div class="input-group cust" id="custno_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="custno_" value="${search.custno_ }">
+                                                    <input type="text" class="form-control reset" autocomplete="off" disabled name="custno_" value="${search.custno_ }">
                                                     <input type="hidden" class="reset" name="custno" value="${search.custno }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -136,7 +136,7 @@
                                             <th>거래처명</th>
                                             <td class="border-top-0">
                                                 <div class="input-group cli" id="clino_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="clino_" value="${search.clino_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="clino_" value="${search.clino_ }">
                                                     <input type="hidden" class="reset" name="clino" value="${search.clino }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -169,7 +169,7 @@
                                             <th>접수자</th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="rcvowner_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="rcvowner_" value="${search.rcvowner_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="rcvowner_" value="${search.rcvowner_ }">
                                                     <input type="hidden" class="reset" name="rcvowner" value="${search.rcvower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -181,7 +181,7 @@
                                             <th>담당자</th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="ractowner_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="ractowner_" value="${search.ractowner_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="ractowner_" value="${search.ractowner_ }">
                                                     <input type="hidden" class="reset" name="ractowner" value="${search.ractower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>

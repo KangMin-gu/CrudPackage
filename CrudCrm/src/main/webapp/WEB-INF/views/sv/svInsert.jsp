@@ -20,6 +20,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/select2/select2.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -48,7 +49,7 @@
 		
 		
 <!-- Content -->		
-		<form:form action ="${pageContext.request.contextPath}/service/post" method="POST" commandName="rcvDto">
+		<form:form action ="${pageContext.request.contextPath}/service/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -207,7 +208,7 @@
                                         <tr>
                                             <th style="height: 45px;">접수유형</th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="rcvtype">
+                                                <select class="form-control validate error required checkV">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="rcvType" items="${RCVTYPE }">
                                                 		<c:choose>
@@ -219,7 +220,7 @@
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -320,7 +321,7 @@
                                         <tr>
                                         	<th class="border-top-0">접수매체</th>
                                         	<td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="rcvchannel">
+                                                <select class="form-control validate error required checkV">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="rcvChannel" items="${RCVCHANNEL }">
                                                 		<c:choose>
@@ -332,7 +333,7 @@
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -370,9 +371,26 @@
                                     </tbody>
                                 </table>
                             </div>
-
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="rcvfile" name="rcvfile" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -491,6 +509,25 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="ractfile" name="ractfile" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -512,11 +549,15 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	 
+	 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+	 
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
+	
 	<script>
 		$(document).ready(function () {
 
@@ -525,8 +566,10 @@
 			$('.clockpicker').clockpicker();
 			
 			$('#rcvdesc').summernote({
-				height:200
+				lang : 'ko-KR',
+				height : "200px"
 			});
+			
 			$('#rcvopinion').summernote({
 				height:200
 			});
@@ -543,9 +586,7 @@
 			$('#rcvdate').val(date);
 			$('#rcvdate_').val(date);
 		});
-	
 
-		
 	</script>
 </body>
 </html>

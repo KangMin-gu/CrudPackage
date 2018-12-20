@@ -57,7 +57,7 @@
 		
 		
 <!-- Content -->		
-		<form:form action ="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO }" method="PUT" commandName="rcvDto">
+		<form:form action ="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO }" method="PUT">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -217,7 +217,7 @@
                                         <tr style="height: 45px;">
                                             <th>접수유형</th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="rcvtype">
+                                                <select class="form-control validate error required checkV">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="rcvType" items="${RCVTYPE }">
                                                 		<c:choose>
@@ -229,7 +229,7 @@
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -329,7 +329,7 @@
                                         <tr>
                                         	<th class="border-top-0">접수매체</th>
                                         	<td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="rcvchannel">
+                                                <select class="form-control validate error required checkV">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="rcvChannel" items="${RCVCHANNEL }">
                                                 		<c:choose>
@@ -341,7 +341,7 @@
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -97,7 +97,7 @@
                                     	<tr>
                                         	<th>매체유형</th>
                                             <td>
-                                            	<form:select class="form-control validate error required checkV" path="formtype">
+                                            	<form:select class="form-control validate error required checkV" path="formtype" style="height: 22px !important">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="formType" items="${FORMTYPE }">
                                                 		<c:choose>

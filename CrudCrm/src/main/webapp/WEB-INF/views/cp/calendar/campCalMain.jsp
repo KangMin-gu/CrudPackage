@@ -10,25 +10,13 @@
 <html>
 <head>
 
-
-
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
-
 <link href="${pageContext.request.contextPath}/resources/css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
-
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 
-
-
-
-
 </head>
-
-
-
-
 <body>
 	<div id="wrapper">
 
@@ -37,9 +25,6 @@
 		<!-- Top -->
 		<div id="page-wrapper" class="gray-bg">
 			<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
-
-
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-8">
 					<h2>영업일정</h2>
@@ -51,21 +36,8 @@
 			</div>
 			<div class="wrapper wrapper-content">
 				<div class="row animated fadeInDown">
-					<div class="col-lg-3">
-						<div class="ibox ">
-							<div class="ibox-title">
-								<h5>캠페인 일정</h5>
-							</div>
-							<div class="ibox-content">
-								<div id='external-events'>									
-									<c:forEach var="list" items="${comSchList}"  > 
-										<div class='external-event navy-bg' style='background-color:${list.color }' >${list.title }</div>
-									</c:forEach>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-9">
+
+					<div class="col-lg-12">
 						<div class="ibox ">
 							<div class="ibox-title">
 								<h5>캠페인 일정 관리</h5>

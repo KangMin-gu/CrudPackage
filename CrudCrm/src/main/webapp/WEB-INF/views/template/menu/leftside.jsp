@@ -76,6 +76,7 @@
 	                    <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">캠페인</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="${pageContext.request.contextPath}/campaign">캠페인 관리</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/campaign/cust">캠페인 추출 대상</a></li>
 	                        <li><a href="${pageContext.request.contextPath}/campaign/contents">양식 관리</a></li>
 	                        <li><a href="${pageContext.request.contextPath}/campaign/cal">캠페인 일정</a></li>                                     
 	                    </ul>

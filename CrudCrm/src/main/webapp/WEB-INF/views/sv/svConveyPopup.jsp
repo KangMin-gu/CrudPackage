@@ -74,17 +74,15 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                        <form:form commandName="conveyDto">
                                             <th><label for="conveyreason">이관사유</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control validate error required checkV" path="conveyreason">
+                                                <select class="form-control validate error required checkV">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="conveyReason" items="${CONVEYREASON }">
                                                 		<option label="${conveyReason.codename }" value="${conveyReason.codeval }"/>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                             </td>
-                                            </form:form>
                                         </tr>
                                     </tbody>
                                 </table>

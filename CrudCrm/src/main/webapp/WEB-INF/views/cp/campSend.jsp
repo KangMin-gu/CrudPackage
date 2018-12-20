@@ -191,7 +191,7 @@
                                                                 <tr>
                                                                     <th class="border-top-0">발송형태</th>
                                                                     <td class="border-top-0" style="height: 40px;">
-                                                                        <form:select class="form-control validate error required checkV" path="sendtype">
+                                                                        <select class="form-control validate error required checkV" id="sendtype" name="sendtype" >
                                             								<option label="선택" value=""/>
                                                 							<c:forEach var="sendType" items="${SENDTYPE }">
                                                 								<c:choose>
@@ -203,7 +203,7 @@
                                                 									</c:otherwise>
                                                 								</c:choose>
                                                 							</c:forEach>
-                                                						</form:select>
+                                                						</select>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -910,7 +910,7 @@
 	<script>
 	
 	$(document).ready(function () {
-		$('.summernote').summernote({});
+		$('.summernote').summernote();
 		
 		$('.date').datepicker({
 			keyboardNavigation:false,

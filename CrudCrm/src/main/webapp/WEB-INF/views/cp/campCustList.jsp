@@ -59,12 +59,8 @@
                         
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-								<div class="w-100 text-right mb-2">
-                                	<form:form action="${pageContext.request.contextPath}/campaign/contents/${contentsInfo.NO }" method="POST">
-                                		<a href="${pageContext.request.contextPath}/campaign/contents" class="btn btn-primary">목록</a>
-                                		<a href="${pageContext.request.contextPath}/campaign/contents/post/${contentsInfo.NO }" class="btn btn-primary">수정</a>
-										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-									</form:form>
+								<div class="w-100 text-left mb-2">
+                                	<a href="${pageContext.request.contextPath}/campaign/cust" class="btn btn-primary">목록</a>
                             	</div>
 							</div>
 							<div class="box1 col-lg-12 p-0 mt-5">
@@ -121,6 +117,7 @@
 											</div>									
 										</div>
 									</div>
+									<input type="hidden" id="campno" name="campno" value="${campno }" />
 								</div>
 							</div>
                         </div>
@@ -142,7 +139,8 @@
 		</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>

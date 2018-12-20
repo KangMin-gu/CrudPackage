@@ -100,7 +100,7 @@
                                     	<tr>
                                         	<th>캠페인유형</th>
                                             <td>
-                                            	<form:select class="form-control validate checkV" path="camptype">
+                                            	<form:select class="form-control validate checkV" path="camptype" style="height: 22px !important">
                                             		<option label="선택" value="0"/>
                                                 	<c:forEach var="campType" items="${CAMPTYPE }">
                                                 		<c:choose>
@@ -144,7 +144,7 @@
                                    	<tbody>
                                     	<tr>
                                         	<th class="border-top-0">발송기간</th>
-                                            <td class="border-top-0" style="padding: 7px 8px">
+                                            <td class="border-top-0">
                                             	<div class="input-group p-0">
                                                 	<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                     	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control" value="${campInfo.STARTDATE }">

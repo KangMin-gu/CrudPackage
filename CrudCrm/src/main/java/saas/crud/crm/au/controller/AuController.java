@@ -93,7 +93,7 @@ public class AuController {
 	}
 	// 회원 정보 수정 화면
 	@RequestMapping(value="/ad/user/post/{userno}", method=RequestMethod.GET)
-	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno, @ModelAttribute UserDto userDto) {
+	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);

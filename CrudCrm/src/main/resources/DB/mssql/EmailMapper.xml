@@ -23,5 +23,39 @@
     	SET DENYEMAIL = 1
     	WHERE CUSTNO = #{custno}
     </update>
+    
+    <insert id="clickHistory" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_MAIL_CLICK(
+		CUSTNO
+		,CUSTIP
+		,CUSTOS
+		,CUSTDEVICE
+		,CUSTBROWSER
+		,CLICKYEAR
+		,CLICKMONTH
+		,CLICKDAY
+		,CLICKHOUR
+		,REGDATE
+		,SITEID
+		)VALUES(
+		#{custno}
+		,#{userip}
+		,#{useros}
+		,#{userdevice}
+		,#{userbrowser}
+		,YEAR(getDate())
+		,MONTH(getDate())
+		,DAY(getDate())
+		,DATEPART(hh,getDate())
+		,getDate()
+		,#{siteid}
+		)
+	</insert>
+	
+	<!-- 내부 통지 파일첨부  -->
+	<select id="noteAttach" parameterType="hashMap" resultType="hashMap">
+		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_file WHERE SITEID = #{siteid} AND FILESEARCHKEY = #{filesearchkey}
+	</select>
+    
 
 </mapper>

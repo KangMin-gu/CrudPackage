@@ -74,8 +74,6 @@
 				contentType: "application/json; charset=UTF-8", 
 				
 				success: function(result){
-					alert('ajax');
-					
 					event = tempEvent;
 					event.id = result.id;
 					event.color = result.color;
@@ -129,7 +127,8 @@
 			var id = event.id;
 			var campUrl = url.substring(0,9);
 			if(campUrl == '/campaign'){
-				window.location.href = campUrl+"/"+id;
+				//window.location.href = campUrl+"/"+id;
+				openNewWindow("캘린더상세",url+"/"+id,"",600,700);
 			}else {
 				openNewWindow("캘린더상세",url+"/view/"+id,"",600,700);	
 			}

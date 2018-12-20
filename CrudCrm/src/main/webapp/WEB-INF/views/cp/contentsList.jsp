@@ -69,7 +69,7 @@
                                         <tr>
                                             <th>사용매체</th>
                                             <td>
-                                            	<select class="form-control reset select" name="formtype" id="formtype">
+                                            	<select class="form-control reset select" name="formtype" id="formtype" style="height: 22px !important">
                                                    	<option value="">선택</option>
                                                    	<option value="1" <c:if test='${search.formtype eq 1}'>selected</c:if>>EMAIL</option>
                                                    	<option value="2" <c:if test='${search.formtype eq 2}'>selected</c:if>>SMS/LMS</option>

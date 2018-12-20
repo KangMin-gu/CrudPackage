@@ -142,6 +142,7 @@
 	<context:component-scan base-package="saas.crud.crm.sv.*" />
 	<context:component-scan base-package="saas.crud.crm.cp.*" />
 	<context:component-scan base-package="saas.crud.crm.sa.*" />
+	<context:component-scan base-package="saas.crud.crm.ce.CrudRemote" />
 	
 
 </beans:beans>

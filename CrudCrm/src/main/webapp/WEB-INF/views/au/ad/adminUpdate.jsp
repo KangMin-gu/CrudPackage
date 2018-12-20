@@ -50,7 +50,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ad/user/post/${user.USERNO }" method="PUT" commandName="userDto">
+<form:form action ="${pageContext.request.contextPath}/ad/user/post/${user.USERNO }" method="PUT">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -91,7 +91,7 @@
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mobile1">
+                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="mobile1" name="mobile1">
                                                 	<option label="선택" value=""/>
                                                 	<c:forEach var="mobile" items="${MOBILE }">
                                                 		<c:choose>
@@ -103,7 +103,7 @@
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
@@ -111,7 +111,7 @@
                                         <tr>
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
-                                            	<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="telno1">
+                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="telno1" name="telno1">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="phone" items="${PHONE }">
                                                 		<c:choose>
@@ -123,7 +123,7 @@
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
-                                                </form:select>
+                                                </select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="telno2" id="telno2" value="${user.TELNO2}">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
                                             </td>
@@ -185,19 +185,19 @@
                                         <tr>
                                             <th><label for="chkauth">관리자여부</label></th>
                                             <td>
-                                            <form:select class="form-control" path="chkauth">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="chkAuth" items="${CHKAUTH }">
-                                                		<c:choose>
-                                                			<c:when test="${user.CHKAUTH eq chkAuth.codeval}">
-                                                				<option selected label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </form:select>
+                                            <select class="form-control" id="chkauth" name ="chkauth">
+                                            	<option label="선택" value=""/>
+                                                <c:forEach var="chkAuth" items="${CHKAUTH_ }">
+                                                	<c:choose>
+                                                		<c:when test="${user.CHKAUTH eq chkAuth.codeval}">
+                                                			<option selected label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
+                                                		</c:when>
+                                                		<c:otherwise>
+                                                			<option label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
+                                                		</c:otherwise>
+                                                	</c:choose>
+                                                </c:forEach>
+                                            </select>
                                             </td>
                                         </tr>
                                     </tbody>

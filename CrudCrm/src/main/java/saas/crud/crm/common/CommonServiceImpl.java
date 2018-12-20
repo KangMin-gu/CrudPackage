@@ -1,9 +1,14 @@
 package saas.crud.crm.common;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +19,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.CrudEngine;
+import saas.crud.crm.ce.CrudRemote;
 import saas.crud.crm.ce.EUploadDto;
 import saas.crud.crm.ce.MailDao;
 import saas.crud.crm.ce.MailDto;
@@ -44,6 +50,9 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
 	private NoteDao ntDao;
+	
+	@Autowired
+	private CrudRemote crudRemote;
 
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -200,43 +209,67 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public void MailClick(HttpServletRequest request) {
+	public void mailClick(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		int emaillogid = Integer.parseInt(request.getParameter("emaillogid"));
 		
+		Map<String,Object> remote = crudRemote.getRemote(request);
+		int emailLogId = Integer.parseInt(request.getParameter("emaillogid"));
+		int custNo = 0;
+		int userNo = 0;
+		if(request.getParameter("CUSTNO") != null) {
+			custNo = Integer.parseInt(request.getParameter("CUSTNO"));
+		}
+		if(request.getParameter("USERNO") != null) {
+			userNo = Integer.parseInt(request.getParameter("USERNO"));
+		}
+		int siteId = Integer.parseInt(request.getParameter("SITEID"));
 		MailDto mailDto = new MailDto();
 		
-		mailDto.setEmaillogid(emaillogid);
+		
+		remote.put("custno", custNo);
+		remote.put("userno", userNo);
+		remote.put("siteid", siteId);
+		
+		mailDao.clickHistory(remote);
+		
+		mailDto.setEmaillogid(emailLogId);
 		mailDao.mailClick(mailDto);
 	}
 	
 	//내부통지 팝업 
-		@Override
-		public ModelAndView svcPopNote(HttpServletRequest request) {
-			
-			
-			
-			int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-			int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-			
-			//유저정보
-			List<Map<String,String>> adminMail = ntDao.adminMail();
-			
-			NoteCategoryDto noteCategory = new NoteCategoryDto();
-			noteCategory.setUserno(userNo);
-			noteCategory.setSiteid(siteId);
-			
-			List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
-			ModelAndView mView = new ModelAndView();
-			mView.addObject("category", category);
-			mView.addObject("adminMail",adminMail);
-			
-			//팝업 띄우기 전에 주소값 가져옴 
-			mView.addObject("url",request.getHeader("referer"));
+	@Override
+	public ModelAndView svcPopNote(HttpServletRequest request) {
 		
-			
-			
-			return mView;
-		}
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		//유저정보
+		List<Map<String,String>> adminMail = ntDao.adminMail();
+		
+		NoteCategoryDto noteCategory = new NoteCategoryDto();
+		noteCategory.setUserno(userNo);
+		noteCategory.setSiteid(siteId);
+		
+		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("category", category);
+		mView.addObject("adminMail",adminMail);
+		
+		//팝업 띄우기 전에 주소값 가져옴 
+		mView.addObject("url",request.getHeader("referer"));
+		
+		return mView;
+	}
 
+	@Override
+	public void mailDeny(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int emaillogid = Integer.parseInt(request.getParameter("emaillogid"));
+		
+		MailDto mailDto = new MailDto();
+		//String test = crudRemote.getRemoteAddr(request);
+		mailDto.setEmaillogid(emaillogid);
+		mailDto.setReserv(0);
+		mailDao.mailDeny(mailDto);
+	}
 }

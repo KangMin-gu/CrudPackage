@@ -51,7 +51,7 @@ public class SvController {
 	}
 	// 서비스 수정화면
 	@RequestMapping(value="/service/post/{rcvno}",method=RequestMethod.GET)
-	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno, @ModelAttribute RcvDto rcvDto, @ModelAttribute RactDto ractDto) {
+	public ModelAndView authSvUpdate(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
@@ -68,7 +68,7 @@ public class SvController {
 	}
 	// 서비스 추가 화면
 	@RequestMapping(value="/service/post", method=RequestMethod.GET)
-	public ModelAndView authSvInsert(HttpServletRequest request, @ModelAttribute RcvDto rcvDto, @ModelAttribute RactDto ractDto) {
+	public ModelAndView authSvInsert(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
@@ -112,7 +112,7 @@ public class SvController {
 	
 	// 서비스 이관 팝업
 	@RequestMapping(value="/convey/{rcvno}", method=RequestMethod.GET)
-	public ModelAndView authcommonUserList(HttpServletRequest request, @PathVariable int rcvno, @ModelAttribute ConveyDto conveyDto) {
+	public ModelAndView authcommonUserList(HttpServletRequest request, @PathVariable int rcvno) {
 		ModelAndView mView = svService.svRead(request, rcvno);
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
@@ -121,8 +121,9 @@ public class SvController {
 	}
 	
 	// 서비스 이관 추가
-	@ResponseBody
+	
 	@RequestMapping(value="/convey",method=RequestMethod.POST)
+	@ResponseBody
 	public List<Map<String,Object>> authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
 		
 		svService.svConveyInsert(request, conveyDto);
@@ -133,8 +134,9 @@ public class SvController {
 	}
 	
 	// 서비스 처리 이력 탭
-	@ResponseBody
+	
 	@RequestMapping(value="/tab/ract/{rcvno}", method=RequestMethod.GET)
+	@ResponseBody
 	public List<Map<String, Object>> authSvTabRact(HttpServletRequest request, @PathVariable int rcvno){
 		
 		List<Map<String, Object>> tabRact = svService.svTabRact(request,rcvno);

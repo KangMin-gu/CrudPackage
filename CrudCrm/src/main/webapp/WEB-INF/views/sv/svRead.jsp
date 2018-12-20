@@ -386,6 +386,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
+                		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                			<a href="${pageContext.request.contextPath}/service" class="btn btn-primary">목록</a>
+                			<a href="#" class="btn btn-primary servicenext">이관</a>
+                		</div>
+                		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+                			<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                			<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+                		</div>
+                	</form:form>
+				</div>
                 <div class="col-lg-12" style="background: #ffffff;">
                 	<div class="ibox">
                             <div class="ibox-title row">

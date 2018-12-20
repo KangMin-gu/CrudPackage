@@ -27,14 +27,20 @@
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
+		<c:set var="url" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>캠페인 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
-                            <strong>캠페인 목록</strong>
+                        	<c:if test="${url eq '/campaign' }">
+                            	<strong>캠페인 목록</strong>
+                            </c:if>
+                            <c:if test="${url eq '/campaign/cust' }">
+                            	<strong>캠페인 추출고객 목록</strong>
+                            </c:if>
                         </li>
+                    
                     </ol>
                 </div>
             </div>		
@@ -46,6 +52,7 @@
                 <div class="col-lg-12">
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/campaign" method="POST">
+                    	
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
@@ -59,6 +66,30 @@
 								</div>
 							</div>
 							<br><br>
+							<div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">캠페인 기간</th>
+                                            <td class="border-top-0">
+                                                <div class="input-group p-0">
+                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
+                                                    </div>
+                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -68,7 +99,35 @@
                                     <tbody>
                                         <tr>
                                             <th>캠페인명</th>
-                                            <td><input type="text" class="form-control reset" name="campname" id="campname" value="${search.campname }"></td>
+                                            <td><input type="text" class="form-control reset" name="campname" id="campname" value="${search.campname }" style="height: 23px;"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>발송매체</th>
+                                            <td>
+                                                <select class="form-control">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="formType" items="${FORMTYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${search.formtype eq formType.codeval}">
+                                                				<option selected label="${formType.codename }" value="${formType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${formType.codename }" value="${formType.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -83,13 +142,19 @@
                                         <tr>
                                             <th>진행단계</th>
                                             <td>
-                                                <select name="campstep" id="campstep" class="form-control reset" style="height: 23px;">
-                                                	<option value="">선택</option>
-                                                	<option value=1 <c:if test='${search.campstep eq 1}'>selected</c:if>>생성</option>
-                                                	<option value=2 <c:if test='${search.campstep eq 2}'>selected</c:if>>추출</option>
-                                                	<option value=3 <c:if test='${search.campstep eq 3}'>selected</c:if>>발송</option>
-                                                	<option value=4 <c:if test='${search.campstep eq 4}'>selected</c:if>>완료</option>
-                                            	</select>
+                                                <select class="form-control">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="campStep" items="${CAMPSTEP }">
+                                                		<c:choose>
+                                                			<c:when test="${search.campstep eq campStep.codeval}">
+                                                				<option selected label="${campStep.codename }" value="${campStep.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${campStep.codename }" value="${campStep.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -116,30 +181,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-12 col-xl-8 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">캠페인 기간</th>
-                                            <td class="border-top-0" style="padding: 7px 8px 6px 8px;">
-                                                <div class="input-group p-0">
-                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
-                                                    </div>
-                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            
                             <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
@@ -151,7 +193,7 @@
                                             <th class="border-top-0" class="border-top-0">담당자</th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="owner_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="owner_" value="${memCompany.owner_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="owner_" value="${memCompany.owner_ }">
                                                     <input type="hidden" class="reset" name="owner" value="${search.owner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -193,7 +235,7 @@
                                         <th>유형</th>
                                         <th>발송매체</th>
                                         <th>담당자</th>
-                                        <th>발송인원</th>
+                                        <th>읽은인원 / 발송인원</th>
                                         <th>추출인원</th>
                                     </tr>
                                 </thead>
@@ -201,12 +243,17 @@
                                     <c:forEach var="cpList" items="${camp }">
                                     	<tr>
                                         	<td><input type="checkbox" class="i-checks" name="campno" id="campno" value="${cpList.CAMPNO }"></td>
+                                        	<c:if test="${url eq '/campaign' }">
                                         	<td><a href="${pagecontext.request.contextpath}/campaign/${cpList.CAMPNO }">${cpList.CAMPNAME}</a></td>
+                                        	</c:if>
+                                        	<c:if test="${url eq '/campaign/cust' }">
+                                        	<td><a href="${pagecontext.request.contextpath}/campaign/cust/${cpList.CAMPNO }">${cpList.CAMPNAME}</a></td>
+                                        	</c:if>
                                         	<td>${cpList.CAMPDATE_ }</td>
                                         	<td>${cpList.CAMPTYPE_ }</td>
                                         	<td>${cpList.CUSTNO_ }</td>
                                         	<td>${cpList.OWNER_ }</td>
-                                        	<td>${cpList.SENDUSER_ }</td>
+                                        	<td>${cpList.TOTAL }</td>
                                         	<td>${cpList.SENDUSER_ }</td>
                                     	</tr>
                                 	</c:forEach>

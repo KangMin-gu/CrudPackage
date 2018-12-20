@@ -47,6 +47,8 @@ public class CampaignController {
 	public ModelAndView authCampaignList(HttpServletRequest request) {
 		
 		ModelAndView mView = campaignService.campList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cp/campList");
 		return mView;
 	}
@@ -55,6 +57,8 @@ public class CampaignController {
 	public ModelAndView authCampaignSearchList(HttpServletRequest request) {
 		
 		ModelAndView mView = campaignService.campList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cp/campList");
 		return mView;
 	}
@@ -135,6 +139,8 @@ public class CampaignController {
 	@RequestMapping(value="/campaign/target/{campNo}", method=RequestMethod.GET)
 	public ModelAndView authCampaignTargetInsert(HttpServletRequest request,@PathVariable int campNo) {
 		ModelAndView mView = campaignService.campRead(request,campNo);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cp/campTargetInsert");
 		return mView;
 	}
@@ -195,6 +201,8 @@ public class CampaignController {
 	@RequestMapping(value="/campaign/contents", method=RequestMethod.GET)
 	public ModelAndView authCampaignContents(HttpServletRequest request) {
 		ModelAndView mView = campaignService.campContentsList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cp/contentsList");
 		return mView;
 	}
@@ -202,6 +210,8 @@ public class CampaignController {
 	@RequestMapping(value="/campaign/contents", method=RequestMethod.POST)
 	public ModelAndView authCampaignContentsSearch(HttpServletRequest request) {
 		ModelAndView mView = campaignService.campContentsList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cp/contentsList");
 		return mView;
 	}
@@ -224,7 +234,7 @@ public class CampaignController {
 		return mView;
 	}
 	
-	//서식관리 추가 화면
+	//서식관리 상세
 	@RequestMapping(value="/campaign/contents/{no}", method=RequestMethod.GET)
 	public ModelAndView authCampaignContentsDetail(HttpServletRequest request,@PathVariable int no){
 		ModelAndView mView = campaignService.campContentsRead(request,no);
@@ -348,11 +358,40 @@ public class CampaignController {
 	}
 	
 	//첨부파일 다운로드
-		@RequestMapping(value="/campaign/download/{fileId}", method=RequestMethod.GET)
-		public ModelAndView notedownload(HttpServletRequest request, @PathVariable int fileId) {
-			ModelAndView mView = commonService.noteDownload(request, fileId);
-			mView.setViewName("fileDownView");
-			return mView;
-		}
+	@RequestMapping(value="/campaign/download/{fileId}", method=RequestMethod.GET)
+	public ModelAndView authfileDownload(HttpServletRequest request, @PathVariable int fileId) {
+		ModelAndView mView = commonService.noteDownload(request, fileId);
+		mView.setViewName("fileDownView");
+		return mView;
+	}
+	
+	@RequestMapping(value="/campaign/cust", method=RequestMethod.GET)
+	public ModelAndView authcampaignTargetList(HttpServletRequest request) {
+		ModelAndView mView = campaignService.campList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("cp/campList");
+		return mView;	
+	}
+	
+	@RequestMapping(value="/campaign/cust/{campNo}", method=RequestMethod.GET)
+	public ModelAndView authcampaignTargetDetail(HttpServletRequest request,@PathVariable int campNo){
+		
+		ModelAndView mView = new ModelAndView();
+		
+		mView.setViewName("cp/campCustList");
+		mView.addObject("campno",campNo);
+		
+		return mView;
+	}
+	
+	@RequestMapping(value="/campaign/cal/{campNo}", method=RequestMethod.GET)
+	public ModelAndView authCampaignCalPopUp(HttpServletRequest request, @PathVariable int campNo) {
+		
+		ModelAndView mView = campaignService.campRead(request, campNo);
+		mView.setViewName("cp/calendar/campCalPopUp");
+		
+		return mView;
+	}
 	
 }

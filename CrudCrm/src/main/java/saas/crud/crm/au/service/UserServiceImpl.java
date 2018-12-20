@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import saas.crud.crm.au.dao.CodeDao;
 import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.ce.CrudRemote;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private CrudRemote crudRemote;
 	
 	@Override
 	public ModelAndView login(HttpServletResponse response, HttpServletRequest request, UserDto urDto) {
@@ -47,6 +51,12 @@ public class UserServiceImpl implements UserService{
 		StringBuffer buf = new StringBuffer();
 		System.out.println("url : "+url);
 		if(isValid){
+			
+			Map<String,Object> param = crudRemote.getRemote(request);
+			param.put("userno", urInfo.get("USERNO"));
+			param.put("siteid", urInfo.get("SITEID"));
+			
+			urDao.userHistory(param);
 			
 			List<Map<String,String>> urMenu = urDao.getMenu(urDto.getUserid());
 			

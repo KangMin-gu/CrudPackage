@@ -55,7 +55,7 @@ public class CompanyController {
 	}
 	// 회원사 UPDATE 화면
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.GET)
-	public ModelAndView authCompanyUpdate(@PathVariable int siteId, HttpServletRequest request,@ModelAttribute CompanyDto companyDto) {
+	public ModelAndView authCompanyUpdate(@PathVariable int siteId, HttpServletRequest request) {
 		//ModelAndView mView = companyService.companyRead(request, siteId);
 		
 		Map<String,Object> code = codeService.getCode();

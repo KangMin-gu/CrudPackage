@@ -21,4 +21,5 @@ public interface CrudEngine {
 	public List<String> emailQuarter(String mailAdress);
 	
 	public String getMapValueNullCheck(Map target, String key);
+	
 }

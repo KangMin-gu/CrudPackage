@@ -136,7 +136,7 @@
                                         <tr>
                                             <th>성별</th>
                                             <td>
-                                                <select name="sex" id="sex" class="form-control" style="height: 23px;">
+                                                <select name="sex" id="sex" class="form-control">
                                                     <option value="">선택</option>
                                                     <option value="1">남자</option>
                                                     <option value="2">여자</option>
@@ -146,7 +146,7 @@
                                         <tr>
                                             <th>고객구분</th>
                                             <td>
-                                                <select name="custgubun" id="custgubun" class="form-control" style="height: 23px;">
+                                                <select name="custgubun" id="custgubun" class="form-control">
                                                     <option value="">선택</option>
                                                     <option value="1">회원</option>
                                                     <option value="2">비회원</option>
@@ -174,7 +174,7 @@
                                         <tr>
                                             <th>고객등급</th>
                                             <td>
-                                                <select name="custgrade" id="custgrade" class="form-control" style="height: 23px;">
+                                                <select name="custgrade" id="custgrade" class="form-control" style="height: 24px !important; max-height: 24px !important;">
                                                     <option value="">선택</option>
                                                     <option value="1">일반</option>
                                                     <option value="2">VIP</option>
@@ -195,7 +195,7 @@
                                         <tr>
                                             <th>생일(월)</th>
                                             <td>
-                                                <select name="birth" id="birth" class="form-control" style="height: 23px;">
+                                                <select name="birth" id="birth" class="form-control">
                                                     <option value="">선택</option>
                                                     <option value="01">1월</option>
                                                     <option value="02">2월</option>
@@ -215,7 +215,7 @@
                                         <tr>
                                             <th>활동등급</th>
                                             <td>
-                                                <select name="actgrade" id="actgrade" class="form-control" style="height: 23px;">
+                                                <select name="actgrade" id="actgrade" class="form-control">
                                                     <option value="">선택</option>
                                                     <option value="1">우수</option>
                                                 </select>
@@ -225,15 +225,15 @@
                                 </table>
                             </div>
                             <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>고객등록일</th>
-                                            <td style="padding: 7px 8px;">
+                                            <th class="border-top-0">고객등록일</th>
+                                            <td class="border-top-0">
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="regdate1" id="regdate1" class="form-control" value="">
@@ -249,15 +249,15 @@
                                 </table>
                             </div>
                             <div class="box1 col-lg-12 col-xl-6 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0 border-top-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>추출내용</th>
-                                            <td class="border-top-0 border-bottom-0">
+                                            <th class="border-top-0">추출내용</th>
+                                            <td class="border-top-0">
                                             	<div class="input-group camptarget">
                                                     <input type="text" class="form-control" autocomplete="off" name="camptargetno_" id="camptargetno_" value="">
                                                     <input type="hidden" name="camptargetno" id="camptargetno" value="0">
@@ -271,28 +271,28 @@
                                 </table>
                             </div>
                             <div class="box1 col-lg-12 col-xl-6 p-0 addr">
-                                    <table class="table table-bordered mb-0">
+                                    <table class="table table-bordered mb-0 border-top-0">
                                         <colgroup>
                                             <col style="width: 110px; background: #fafafa;">
                                             <col style="width: auto;">
                                         </colgroup>
                                         <tbody>
                                             <tr>
-                                                <th>주소지 1</th>
-                                                <td>
-                                                    <select name="addr11" id="addr11" class="form-control col-3 float-left mr-2" style="height: 23px;">
+                                                <th class="border-top-0">주소지 1</th>
+                                                <td class="border-top-0">
+                                                    <select name="addr11" id="addr11" class="form-control col-3 float-left mr-2">
                                                         <option>경기도 부천시</option>
                                                         <option>경기도 부천시</option>
                                                         <option>경기도 부천시</option>
                                                         <option>경기도 부천시</option>
                                                     </select>
-                                                    <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2" style="height: 23px;">
+                                                    <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2">
                                                         <option>소사구</option>
                                                         <option>소사구</option>
                                                         <option>소사구</option>
                                                         <option>소사구</option>
                                                     </select>
-                                                    <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2" style="height: 23px;">
+                                                    <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2">
                                                         <option>괴안동</option>
                                                         <option>괴안동</option>
                                                         <option>괴안동</option>

@@ -65,18 +65,18 @@
 	                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">서비스관리</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="${pageContext.request.contextPath}/service">서비스 접수</a></li>
-	                        <li><a href="form_basic.html">서비스 이관</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/service/convey">서비스 이관</a></li>
 	                        <li><a href="form_basic.html">서비스 일정</a></li>
 	                    </ul>
 	                </li>
                 </c:if>
                 
-               
                 <c:if test="${cp  eq '40000' }">
 					<li<c:if test="${fn:substring(urls, 0, 9) eq '/campaign' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-envelope-o"></i> <span class="nav-label">캠페인</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
 	                        <li><a href="${pageContext.request.contextPath}/campaign">캠페인 관리</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/campaign/cust">캠페인 추출 대상</a></li>
 	                        <li><a href="${pageContext.request.contextPath}/campaign/contents">양식 관리</a></li>
 	                        <li><a href="${pageContext.request.contextPath}/campaign/cal">캠페인 일정</a></li>                                     
 	                    </ul>
@@ -109,7 +109,6 @@
 	                </li>
                 </c:if>
                 
-       
 	            <c:if test="${au  eq '90000' }">
 		           <c:if test="${CHKAUTH eq '20' || CHKAUTH eq '30'}">
 			       		<li <c:if test="${fn:substring(urls, 0, 3) eq '/ad' }"> class="active"</c:if>>

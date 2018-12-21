@@ -23,7 +23,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                 
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/ad/user" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/ad/user" method="POST" >
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
@@ -125,10 +125,10 @@
                         </div>
                         </form:form>
                         <form:form action="${pageContext.request.contextPath}/ad/user/delete" method="POST">
-                        <div class="ibox-content row border-top-0 pt-lg-0">
+                        <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-	                            	 <a href="${pageContext.request.contextPath}/userexcel" class="btn btn-primary">엑셀 다운로드</a>
+	                            	 <a href="${pageContext.request.contextPath}/userexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
 	                          	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>

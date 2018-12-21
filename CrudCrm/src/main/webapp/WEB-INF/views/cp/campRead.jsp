@@ -30,7 +30,7 @@
 	<div id="wrapper">
 <!-- leftside -->
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
+    
 <!-- Top -->
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -55,17 +55,25 @@
             <div class="row justify-content-md-center">
                 <div class="col-lg-12">
                     <div class="ibox">
-                        <div class="ibox-content row">
+                        <div class="ibox-content row tooltip-demo">
                             <div id="wizard" style="height:auto">
                                 <h1>캠페인정보</h1>
                                 <div class="step-content">
-                                	<div class="w-100 text-right mb-2">
-                                		<form:form action="${pageContext.request.contextPath}/campaign/${campInfo.CAMPNO }" method="POST">
-                                			<a href="${pageContext.request.contextPath}/campaign" class="btn btn-primary">목록</a>
-                                			<a href="${pageContext.request.contextPath}/campaign/post/${campInfo.CAMPNO }" class="btn btn-primary">수정</a>
-											<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-										</form:form>
-                            		</div>
+                                	
+                            		<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                           				<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                              				<a href="${pageContext.request.contextPath}/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+                                       		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
+                                       		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
+                                       		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>                                    
+                                   		</div>
+                           		   		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+                              				<form:form action="${pageContext.request.contextPath}/campaign/${campInfo.CAMPNO }" method="POST">
+                                				<a href="${pageContext.request.contextPath}/campaign/post/${campInfo.CAMPNO }" class="btn btn-primary">수정</a>
+												<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+											</form:form> 
+                           		   		</div>
+                        			</div>
                                     <div class="ibox">
                                         <div class="ibox-content row">
                                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -113,7 +121,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>진행단계</th>
-                                                            <td>추출</td>
+                                                            <td>${campInfo.CAMPSTEP_ }</td>
                                                         </tr>
                                                         <tr>
                                                             <th>대상 고객수</th>
@@ -139,6 +147,26 @@
                                                 </table>
                                                 <input type="hidden" id="campno" name="campno" value="${campInfo.CAMPNO }">
                                             </div>
+                                            <div class="mail-attachment">																	
+												<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+												<div class="attachment">
+													<c:forEach var="file" items="${campFile }">
+														<div class="file-box">
+															<div class="file">
+																<a href="${pageContext.request.contextPath}/campaign/download/${file.FILEID}"> <span class="corner"></span>
+																	<div class="icon">
+																		<i class="fa fa-file"></i>
+																	</div>
+																	<div class="file-name">
+																		${file.ORGFILENAME } <br /> <small>${file.REGDATE }</small>
+																	</div>
+																</a>
+															</div>
+														</div>	
+													</c:forEach>										
+													<div class="clearfix"></div>
+												</div>
+											</div>
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +227,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>진행단계</th>
-                                                            <td>추출</td>
+                                                            <td>${campInfo.CAMPSTEP_ }</td>
                                                         </tr>
                                                         <tr>
                                                             <th>대상 고객수</th>
@@ -477,8 +505,12 @@
                                                                 <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
                                                                 <div class="d-inline-block mt-sx-1">
                                                                 <a href="/campaign/email/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">발송</a>
+                                                                <form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
+                                                                	<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
+                                                                </form:form>
+                                                                <form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+                                                                	<button  class="btn btn-primary">발송</button>
+                                                                </form:form>
                                                                 </div>
                                                             </div>
                                                             <div class="ibox-content row">
@@ -527,7 +559,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
@@ -623,7 +655,7 @@
                                                                                 <td class="border-top-0">
                                                                                     <div class="input-group p-0">
                                                                                         <div class="d-flex date date01">
-                                                                                          ${campForm.SENDDATE }
+                                                                                          ${campForm.SENDDATE_ }
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -740,7 +772,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
@@ -942,7 +974,7 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>진행단계</th>
-                                                                                <td>발송</td>
+                                                                                <td>${campInfo.CAMPSTEP_ }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>대상고객수</th>
@@ -1113,7 +1145,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>

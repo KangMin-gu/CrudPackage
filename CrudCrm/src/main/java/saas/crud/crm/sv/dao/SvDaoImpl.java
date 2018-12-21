@@ -61,6 +61,12 @@ public class SvDaoImpl implements SvDao{
 		// TODO Auto-generated method stub
 		session.update("sv.update",data);
 	}
+	// 상태값 처리 접수 -> 처리 -> 이관 등등
+	@Override
+	public void svPrcState(Map<String, Object> data) {
+		// TODO Auto-generated method stub
+		session.update("sv.prcUpdate",data);
+	}
 
 	// 서비스 단일 삭제
 	@Override
@@ -98,6 +104,8 @@ public class SvDaoImpl implements SvDao{
 		// TODO Auto-generated method stub
 		session.insert("sv.conveyInsert",conveyDto);
 	}
+
+	
 
 
 

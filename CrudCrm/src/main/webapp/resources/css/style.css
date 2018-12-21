@@ -2816,7 +2816,7 @@ select.form-control:not([size]):not([multiple]) {
   padding: 3px 12px;
   text-align: center;
 }
-.input-group{max-height: 25px;}
+.input-group{max-height: 23px !important; height: 23px !important;}
 .spinner-buttons.input-group-btn .btn-xs {
   line-height: 1.13;
 }
@@ -9569,7 +9569,9 @@ body.md-skin {
 }
 
 table{table-layout: fixed; word-wrap: break-word;}
-.date{max-height: 25px;}
+.date{max-height: 23px !important; height: 23px !important;}
+.i-checks{max-height: 23px !important; height: 23px !important;}
+select.form-control{max-height: 23px !important; height: 23px !important;}
 .sms-form{width: 301px; height: 313px; background: url(../img/crud/phone_bg.jpg) no-repeat; border: 1px solid #e5e6e7; border-radius: 15px; position: relative; margin: 0 auto;}
 th sup{color: #ff5050;}
 .sms-form .num-text{width: 230px; height: 30px; position: absolute; top: 58px; left: 62px;}

@@ -47,7 +47,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/campaign/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/campaign/post" method="POST" commandName="campaignDto" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -82,7 +82,7 @@
                                     <tbody>
                                     	<tr>
                                         	<th>캠페인명</th>
-                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error name"></td>
+                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error allV" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -96,12 +96,20 @@
                                     <tbody>
                                     	<tr>
                                         	<th>캠페인유형</th>
-                                            <td><select class="form-control" name="camptype" id="camptype" style="height: 23px;">
-                                            		<option value=0>검색</option>
-                                                	<option value=10>세미나</option>
-                                                    <option value=20>뉴스레터</option>
-                                                    <option value=30>테스트</option>
-                                                </select>
+                                            <td>
+                                                <form:select class="form-control validate checkV" path="camptype">
+                                            		<option label="선택" value="0"/>
+                                                	<c:forEach var="campType" items="${CAMPTYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${campInfo.CAMPTYPE eq campType.codeval}">
+                                                				<option selected label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -136,11 +144,11 @@
                                             <td class="border-top-0" style="padding: 7px 8px">
                                             	<div class="input-group p-0">
                                                 	<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control" value="">
+                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control validate date dateV" value="">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="form-control" value="">
+                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="form-control validate date dateV" value="">
                                                     </div>
                                                 </div>
                                             </td>
@@ -157,10 +165,10 @@
                                     <tbody>
                                     	<tr>
                                         	<th class="border-top-0">담당자</th>
-                                           	<td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner">
-                                                    <input type="text" class="form-control" autocomplete="off" name="owner_" id="owner_" value="">
-                                                    <input type="hidden" name="owner" id="owner" value="">
+                                           	<td class="border-top-0">
+                                                <div class="input-group owner" id="owner_">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="owner_" value="${memCompany.owner_ }">
+                                                    <input type="hidden" name="owner" value="${memCompany.ower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -186,6 +194,25 @@
                                     </tbody>
                                 </table>
                             </div>
+			                <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="file" name="file" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,7 +230,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->

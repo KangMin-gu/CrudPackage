@@ -8,4 +8,10 @@ public interface MailDao {
     public void UpdateMailState(MailDto emailDto);
     
     public void mailClick(MailDto emailDto);
+    public void mailDeny(MailDto emailDto);
+    
+    public void clickHistory(Map<String,Object> param);
+    
+  //파일 첨부
+  	public List<Map<String,Object>> fileAttach(Map<String, Object> map);
 }

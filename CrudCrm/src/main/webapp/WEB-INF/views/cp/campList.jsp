@@ -23,18 +23,24 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
+		<c:set var="url" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>캠페인 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
-                            <strong>캠페인 목록</strong>
+                        	<c:if test="${url eq '/campaign' }">
+                            	<strong>캠페인 목록</strong>
+                            </c:if>
+                            <c:if test="${url eq '/campaign/cust' }">
+                            	<strong>캠페인 추출고객 목록</strong>
+                            </c:if>
                         </li>
+                    
                     </ol>
                 </div>
             </div>		
@@ -46,6 +52,7 @@
                 <div class="col-lg-12">
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/campaign" method="POST">
+                    	
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
@@ -59,6 +66,30 @@
 								</div>
 							</div>
 							<br><br>
+							<div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">캠페인 기간</th>
+                                            <td class="border-top-0">
+                                                <div class="input-group p-0">
+                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" id="startdate" name="startdate" value="${search.startdate }">
+                                                    </div>
+                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" id="enddate" name="enddate" value="${search.enddate }">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -68,7 +99,35 @@
                                     <tbody>
                                         <tr>
                                             <th>캠페인명</th>
-                                            <td><input type="text" class="form-control reset" name="campname" id="campname" value="${search.campname }"></td>
+                                            <td><input type="text" class="form-control reset" name="campname" id="campname" value="${search.campname }" style="height: 23px;"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>발송매체</th>
+                                            <td>
+                                                <select class="form-control" name="sendform" id="sendform">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="sendForm" items="${SENDFORM }">
+                                                		<c:choose>
+                                                			<c:when test="${search.sendform eq sendForm.codeval}">
+                                                				<option selected label="${sendForm.codename }" value="${sendForm.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${sendForm.codename }" value="${sendForm.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -83,13 +142,19 @@
                                         <tr>
                                             <th>진행단계</th>
                                             <td>
-                                                <select name="campstep" id="campstep" class="form-control reset" style="height: 23px;">
-                                                	<option value="">선택</option>
-                                                	<option value=1 <c:if test='${search.campstep eq 1}'>selected</c:if>>생성</option>
-                                                	<option value=2 <c:if test='${search.campstep eq 2}'>selected</c:if>>추출</option>
-                                                	<option value=3 <c:if test='${search.campstep eq 3}'>selected</c:if>>발송</option>
-                                                	<option value=4 <c:if test='${search.campstep eq 4}'>selected</c:if>>완료</option>
-                                            	</select>
+                                                <select class="form-control" id="campstep" name="campstep">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="campStep" items="${CAMPSTEP }">
+                                                		<c:choose>
+                                                			<c:when test="${search.campstep eq campStep.codeval}">
+                                                				<option selected label="${campStep.codename }" value="${campStep.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${campStep.codename }" value="${campStep.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -103,43 +168,27 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>유형</th>
-                                            <td class="border-top-0" style="height: 40px;">
-                                            	<select name="camptype" id="camptype" class="form-control reset" style="height: 23px;">
-                                                	<option value="">검색</option>
-                                                	<option value=10 <c:if test='${search.camptype eq 10}'>selected</c:if>>세미나</option>
-                                                	<option value=20 <c:if test='${search.camptype eq 20}'>selected</c:if>>뉴스레터</option>
-                                                	<option value=30 <c:if test='${search.camptype eq 30}'>selected</c:if>>테스트</option>
-                                            	</select>
-                                        	</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box1 col-lg-12 col-xl-8 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">캠페인 기간</th>
-                                            <td class="border-top-0" style="padding: 7px 8px 6px 8px;">
-                                                <div class="input-group p-0">
-                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
-                                                    </div>
-                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" value="">
-                                                    </div>
-                                                </div>
+                                            <th>캠페인유형</th>
+                                            <td>
+                                                <select class="form-control" id="camptype" name="camptype">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="campType" items="${CAMPTYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${search.camptype eq campType.codeval}">
+                                                				<option selected label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            
                             <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
@@ -149,10 +198,10 @@
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0" class="border-top-0">담당자</th>
-                                            <td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="owner_" id="owner_" value="${search.owner_ }">
-                                                    <input type="hidden" class="reset" name="owner" id="owner" value="0">
+                                            <td class="border-top-0">
+                                                <div class="input-group owner" id="owner_">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="owner_" value="${memCompany.owner_ }">
+                                                    <input type="hidden" class="reset" name="owner" value="${search.owner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -165,14 +214,16 @@
                         </div>
                         </form:form>
                         <form:form action="${pageContext.request.contextPath}/campaign/delete" method="POST">
-                        <div class="ibox-content row border-top-0 pt-lg-0">
-                        	<div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/campaign/post" class="btn btn-primary">추가</a>
-                                <div class="d-inline-block mt-sx-1">
-                                	<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                	<button class="btn btn-primary">삭제</button>
-                                </div>
-                            </div>
+                        <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+	                            	 <a href="${pageContext.request.contextPath}/campexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
+	                          	</div>													
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<a href="${pageContext.request.contextPath}/camp/post" class="btn btn-primary">추가</a>
+									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+								</div>
+							</div>
                             <div class="table-responsive">
                             <table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
                                 <colgroup>
@@ -183,7 +234,8 @@
                                     <col style="width: 150px"/>
                                     <col style="width: 150px"/>
                                     <col style="width: 100px"/>
-                                    <col style="width: 100px"/>                                    
+                                    <col style="width: 100px"/>
+                                    <col style="width: 100px"/>                             
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -193,25 +245,31 @@
                                         <th>유형</th>
                                         <th>발송매체</th>
                                         <th>담당자</th>
-                                        <th>발송인원</th>
-                                        <th>추출인원</th>
+                                        <th>진행단계</th>
+                                        <th>읽은인원 /전체인원</th>
+                                        <th>발송인원 /전체인원</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="cpList" items="${camp }">
                                     	<tr>
                                         	<td><input type="checkbox" class="i-checks" name="campno" id="campno" value="${cpList.CAMPNO }"></td>
+                                        	<c:if test="${url eq '/campaign' }">
                                         	<td><a href="${pagecontext.request.contextpath}/campaign/${cpList.CAMPNO }">${cpList.CAMPNAME}</a></td>
+                                        	</c:if>
+                                        	<c:if test="${url eq '/campaign/cust' }">
+                                        	<td><a href="${pagecontext.request.contextpath}/campaign/cust/${cpList.CAMPNO }">${cpList.CAMPNAME}</a></td>
+                                        	</c:if>
                                         	<td>${cpList.CAMPDATE_ }</td>
                                         	<td>${cpList.CAMPTYPE_ }</td>
-                                        	<td>${cpList.CUSTNO_ }</td>
+                                        	<td>${cpList.CAMPFORM_ }</td>
                                         	<td>${cpList.OWNER_ }</td>
-                                        	<td>${cpList.SENDUSER_ }</td>
-                                        	<td>${cpList.SENDUSER_ }</td>
+                                        	<td>${cpList.CAMPSTEP_ }</td>
+                                        	<td>${cpList.CLICKTOTAL }</td>
+                                        	<td>${cpList.SENDTOTAL }</td>
                                     	</tr>
                                 	</c:forEach>
                                 </tbody>
-                                <tfoot>
                             </table>
                             </div>
                             <div class="m-auto">
@@ -269,8 +327,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-	</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->

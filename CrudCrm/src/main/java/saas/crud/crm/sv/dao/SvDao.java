@@ -21,6 +21,8 @@ public interface SvDao {
 	
 	public void svUpdate(Map<String,Object> data);
 	
+	public void svPrcState(Map<String,Object> data);
+	
 	public void svTotalUpdate(Map<String,Object> data);
 	
 	public void svDelete(RcvDto svDto);

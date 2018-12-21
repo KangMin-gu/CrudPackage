@@ -15,4 +15,32 @@
 		INNER JOIN TB980010 AS C ON C.CHKROLE = B.ROLENO
 		WHERE USERID = #{userid}
 	</select>
+	
+	<insert id="loginHistory" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_LOGIN_HISTORY(
+		USERNO
+		,USERIP
+		,USEROS
+		,USERDEVICE
+		,USERBROWSER
+		,VISITYEAR
+		,VISITMONTH
+		,VISITDAY
+		,VISITHOUR
+		,REGDATE
+		,SITEID
+		)VALUES(
+		#{userno}
+		,#{userip}
+		,#{useros}
+		,#{userdevice}
+		,#{userbrowser}
+		,YEAR(getDate())
+		,MONTH(getDate())
+		,DAY(getDate())
+		,DATEPART(hh,getDate())
+		,getDate()
+		,#{siteid}
+		)
+	</insert>
 </mapper>

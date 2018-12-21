@@ -50,7 +50,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/campaign/post/${campInfo.CAMPNO }" method="POST">
+<form:form action ="${pageContext.request.contextPath}/campaign/post/${campInfo.CAMPNO }" method="POST" commandName="campaignDto" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -85,7 +85,7 @@
                                     <tbody>
                                     	<tr>
                                         	<th>캠페인명</th>
-                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error name" value="${campInfo.CAMPNAME }"></td>
+                                            <td><input type="text" name="campname" id="campname" class="form-control validate required error allV" value="${campInfo.CAMPNAME }"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -99,12 +99,20 @@
                                     <tbody>
                                     	<tr>
                                         	<th>캠페인유형</th>
-                                            <td><select class="form-control" name="camptype" id="camptype" style="height: 23px;">
-                                            		<option value=0 <c:if test='${campInfo.CAMPTYPE eq 0}'>selected</c:if>>검색</option>
-                                            		<option value=10 <c:if test='${campInfo.CAMPTYPE eq 10}'>selected</c:if>>세미나</option>
-                                                    <option value=20 <c:if test='${campInfo.CAMPTYPE eq 20}'>selected</c:if>>뉴스레터</option>
-                                                    <option value=30 <c:if test='${campInfo.CAMPTYPE eq 30}'>selected</c:if>>테스트</option>
-                                                </select>
+                                            <td>
+                                            	<form:select class="form-control validate checkV" path="camptype" style="height: 22px !important">
+                                            		<option label="선택" value="0"/>
+                                                	<c:forEach var="campType" items="${CAMPTYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${campInfo.CAMPTYPE eq campType.codeval}">
+                                                				<option selected label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${campType.codename }" value="${campType.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -136,7 +144,7 @@
                                    	<tbody>
                                     	<tr>
                                         	<th class="border-top-0">발송기간</th>
-                                            <td class="border-top-0" style="padding: 7px 8px">
+                                            <td class="border-top-0">
                                             	<div class="input-group p-0">
                                                 	<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                     	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control" value="${campInfo.STARTDATE }">
@@ -191,6 +199,46 @@
                                 </table>
                                 <input type="hidden" name="campno" id="campno" value="${campInfo.CAMPNO }">
                             </div>
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="file" name="file" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mail-attachment">
+                            		<!-- <input type="hidden" value="${campFile.FILESEARCHKEY }"/>  -->
+												<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+												<div class="attachment">
+													<c:forEach var="file" items="${campFile }">
+														<div class="file-box">
+															<div class="file">
+																<a href="${pageContext.request.contextPath}/campaign/download/${file.FILEID}"> <span class="corner"></span>
+																	<div class="icon">
+																		<i class="fa fa-file"></i>
+																	</div>
+																	<div class="file-name">
+																		${file.ORGFILENAME } <br /> <small>${file.REGDATE }</small>
+																	</div>
+																</a>
+															</div>
+														</div>	
+													</c:forEach>										
+													<div class="clearfix"></div>
+												</div>
+											</div>
                         </div>
                     </div>
                 </div>
@@ -208,7 +256,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->

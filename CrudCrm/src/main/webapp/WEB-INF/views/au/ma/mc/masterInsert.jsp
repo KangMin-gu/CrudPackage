@@ -22,7 +22,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>      
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -46,7 +46,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ma/company/post" method="POST" enctype="multipart/form-data" commandName="companyDto">
+<form:form action ="${pageContext.request.contextPath}/ma/company/post" method="POST" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -81,7 +81,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control error required validate simple" maxlength ="30" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control error required validate allV" maxlength ="30" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -97,7 +97,7 @@
                                             <th><label for="bsno">사업자번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control validate bs" name="bsno" id="bsno" value="${memCompany.BSNO}">
+                                                    <input type="text" class="form-control validate bsnoV" name="bsno" id="bsno" value="${memCompany.BSNO}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -113,7 +113,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">법인번호</label></th>
-                                            <td><input type="text" class="form-control validate corp" name="incno" id="incno" value="${memCompany.INCNO}"></td>
+                                            <td><input type="text" class="form-control validate incnoV" name="incno" id="incno" value="${memCompany.INCNO}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -151,7 +151,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="prsdname">대표자</label></th>
                                             <td class="border-top-0">
-                                               <input type="text" class="form-control" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
+                                               <input type="text" class="form-control validate nameV" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -167,24 +167,33 @@
                                         <tr>
                                             <th class="border-top-0"><label for="mobile">휴대전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="mobile1">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${MOBILE}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
+                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="mobile1" name="mobile1">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="mobile" items="${MOBILE }">
+                                                		<c:choose>
+                                                			<c:when test="${memCompany.MOBILE1 eq mobile.codeval}">
+                                                				<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate email" name="email" id="email" value="${memCompany.EMAIL }">
+                                                <input type="text" class="form-control validate emailV" name="email" id="email" value="${memCompany.EMAIL }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="cotype">업태</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="cotype" id="cotype" value="${memCompany.COTYPE }">
+                                                <input type="text" class="form-control StringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -194,7 +203,7 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control date" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                            		<input type="text" class="form-control date dateV" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             	</div>
                                             </td>
                                         </tr>
@@ -211,27 +220,45 @@
                                         <tr>
                                             <th class="border-top-0"><label for="telno">전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="telno1">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${TELNO}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3" name="telno3" id="telno3" value="${memCompany.TELNO3 } ">
+                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="telno1" name="telno1">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="phone" items="${PHONE }">
+                                                		<c:choose>
+                                                			<c:when test="${memCompany.TELNO1 eq phone.codeval}">
+                                                				<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="telno3" id="telno3" value="${memCompany.TELNO3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitesize">기업규모</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3" path="sitesize">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${SITESIZE}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                                <select class="form-control validate checkV" id="sitesize" name="sitesize">
+                                            		<option label="선택" value="0"/>
+                                                	<c:forEach var="companySize" items="${COMPANYSIZE }">
+                                                		<c:choose>
+                                                			<c:when test="${memCompany.SITESIZE eq companySize.codeval}">
+                                                				<option selected label="${companySize.codename }" value="${companySize.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${companySize.codename }" value="${companySize.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="bscond">업종</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="bscond" id="bscond" value="${memCompany.BSCOND }">
+                                                <input type="text" class="form-control validate stringV" name="bscond" id="bscond" value="${memCompany.BSCOND }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -239,9 +266,18 @@
                                             	<label for="isdelete">서비스상태</label>
                                             </th>
                                             <td>
-                                               <form:select class="form-control col-3 float-left mr-3" path="isdelete">
-                                                    <form:options items="${ISDELETE}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                               <select class="form-control validate required error numberV" id="isdeleted" name="isdeleted">
+                                                	<c:forEach var="isDelete" items="${ISDELETE }">
+                                                		<c:choose>
+                                                			<c:when test="${memCompany.ISDELETE eq isDelete.codeval}">
+                                                				<option selected label="${isDelete.codename }" value="${isDelete.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${isDelete.codename }" value="${isDelete.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -257,20 +293,29 @@
                                         <tr>
                                             <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="faxtel1">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 }">
+                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="fax" items="${FAX }">
+                                                		<c:choose>
+                                                			<c:when test="${memCompany.FAXTEL1 eq fax.codeval}">
+                                                				<option selected label="${fax.codename }" value="${fax.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${fax.codename }" value="${fax.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="owner_">
-                                                    <input type="text" class="form-control error required validate simple" autocomplete="off" name="owner_" value="${memCompany.owner_ }">
-                                                    <input type="hidden" name="owner" value="${memCompany.ower }">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="owner_" value="${memCompany.owner_ }">
+                                                    <input type="hidden" name="owner" value="${memCompany.owner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -280,7 +325,7 @@
                                         <tr>
                                             <th><label for="bstype">종목</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
+                                                <input type="text" class="form-control validate stringV" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
                                             </td>
                                         </tr>
                                         <tr>

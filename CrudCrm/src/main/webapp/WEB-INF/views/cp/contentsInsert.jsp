@@ -47,7 +47,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/campaign/contents/post" method="POST">
+<form:form action ="${pageContext.request.contextPath}/campaign/contents/post" method="POST" commandName="campaignContentsDto">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -82,7 +82,7 @@
                                     <tbody>
                                     	<tr>
                                         	<th>서식명</th>
-                                            <td><input type="text" name="title" id="title" class="form-control validate required error name"></td>
+                                            <td><input type="text" name="title" id="title" class="form-control validate required error allV"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -96,12 +96,20 @@
                                     <tbody>
                                     	<tr>
                                         	<th>매체유형</th>
-                                            <td><select class="form-control" name="formtype" id="formtype" style="height: 23px;">
-                                            		<option value=0>선택</option>
-                                            		<option value=1>EMAIL</option>
-                                                	<option value=2>SMS/LMS</option>
-                                                    <option value=3>MMS</option>
-                                                </select>
+                                            <td>
+                                            	<form:select class="form-control validate error required checkV" path="formtype" style="height: 22px !important">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="formType" items="${FORMTYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${campInfo.FORMTYPE eq formType.codeval}">
+                                                				<option selected label="${formType.codename }" value="${formType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${formType.codename }" value="${formType.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </form:select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -156,7 +164,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->

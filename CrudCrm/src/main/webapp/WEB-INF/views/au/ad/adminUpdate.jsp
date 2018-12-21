@@ -23,7 +23,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>      
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -50,7 +50,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/ad/user/post/${user.USERNO }" method="PUT" commandName="userDto">
+<form:form action ="${pageContext.request.contextPath}/ad/user/post/${user.USERNO }" method="PUT">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -86,26 +86,46 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control error required validate name" disabled name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control" disabled name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="mobile1">
-                                                	<form:options items="${MOBILE}" value="${user.MOBILE1 }" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
+                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="mobile1" name="mobile1">
+                                                	<option label="선택" value=""/>
+                                                	<c:forEach var="mobile" items="${MOBILE }">
+                                                		<c:choose>
+                                                			<c:when test="${user.MOBILE1 eq mobile.codeval}">
+                                                				<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="telno">전화번호</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="telno1" itemValue="${user.TELNO1 }">
-                                                    <form:options items="${PHONE}" value="${user.TELNO1 }" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2 phone-group" name="telno2" id="telno2" value="${user.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3 phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
+                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="telno1" name="telno1">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="phone" items="${PHONE }">
+                                                		<c:choose>
+                                                			<c:when test="${user.TELNO1 eq phone.codeval}">
+                                                				<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="telno2" id="telno2" value="${user.TELNO2}">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -122,7 +142,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control error required validate name" disabled name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control" disabled name="userid" id="userid" value="${user.USERID}">
                                                 </div>
                                                 <input type="hidden" class="form-control"  name="idcheck" id="idcheck" value="">
                                             </td>
@@ -134,14 +154,14 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control float-left date" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                            		<input type="text" class="form-control float-left validate date dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
                                             	</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate email" name="email" id="email" value="${user.EMAIL }">
+                                                <input type="text" class="form-control validate emailV" name="email" id="email" value="${user.EMAIL }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -156,18 +176,28 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control error required validate string"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
-                                            <td><input type="text" class="form-control validate simple" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
+                                            <td><input type="text" class="form-control validate stringV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
-                                            <th><label for="mobile">관리자여부</label></th>
+                                            <th><label for="chkauth">관리자여부</label></th>
                                             <td>
-                                            	<form:select class="form-control col-3 float-left mr-3" path="chkauth">
-                                                	<form:options items="${CHKAUTH}" value="${user.CHKAUTH }" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                            <select class="form-control" id="chkauth" name ="chkauth">
+                                            	<option label="선택" value=""/>
+                                                <c:forEach var="chkAuth" items="${CHKAUTH_ }">
+                                                	<c:choose>
+                                                		<c:when test="${user.CHKAUTH eq chkAuth.codeval}">
+                                                			<option selected label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
+                                                		</c:when>
+                                                		<c:otherwise>
+                                                			<option label="${chkAuth.codename }" value="${chkAuth.codeval }"/>
+                                                		</c:otherwise>
+                                                	</c:choose>
+                                                </c:forEach>
+                                            </select>
                                             </td>
                                         </tr>
                                     </tbody>

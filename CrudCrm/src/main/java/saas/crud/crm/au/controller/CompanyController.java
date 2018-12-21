@@ -1,5 +1,7 @@
 package saas.crud.crm.au.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.CompanyDto;
+import saas.crud.crm.au.dto.MemCompanyDto;
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.au.service.CompanyService;
 
 @Controller
@@ -24,10 +28,14 @@ public class CompanyController {
 	// 회원사 정보 등록 수정 삭제
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private CodeService codeService;
 	// 회원사 List
 	@RequestMapping(value = "/ma/company", method=RequestMethod.GET)
 	public ModelAndView authCompanyList(HttpServletRequest request) {
 		ModelAndView mView = companyService.companyList(request);
+		
 		mView.setViewName("au/ma/mc/masterList");
 		return mView;
 	}
@@ -48,7 +56,13 @@ public class CompanyController {
 	// 회원사 UPDATE 화면
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.GET)
 	public ModelAndView authCompanyUpdate(@PathVariable int siteId, HttpServletRequest request) {
+		//ModelAndView mView = companyService.companyRead(request, siteId);
+		
+		Map<String,Object> code = codeService.getCode();
+		
 		ModelAndView mView = companyService.companyRead(request, siteId);
+		
+		mView.addAllObjects(code);
 		mView.setViewName("au/ma/mc/masterUpdate"); 
 		return mView;
 	}
@@ -56,25 +70,27 @@ public class CompanyController {
 	// 회원사 UPDATE 실행
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.POST)
 
-	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto memCompanyDto,HttpServletRequest request) {
-		companyService.comapnyUpdate(request, memCompanyDto);	
+	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
+		companyService.comapnyUpdate(request, CompanyDto);	
 		ModelAndView mView = new ModelAndView();
-		int siteId = memCompanyDto.getSiteid();
+		int siteId = CompanyDto.getSiteid();
 		mView.setViewName("redirect:/ma/company/"+siteId);
 		return mView;
 	}
 	// 회원사 INSERT 화면
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.GET)
-	public ModelAndView authCompanyInsert() {
+	public ModelAndView authCompanyInsert(@ModelAttribute CompanyDto CompanyDto) {
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code  =codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("au/ma/mc/masterInsert");
 		return mView;
 	}
 	// 회원사 INSERT 실행
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.POST)
-	public ModelAndView authCompanyInsertSet(HttpServletResponse response, @ModelAttribute CompanyDto memCompanyDto,HttpServletRequest request) {
+	public ModelAndView authCompanyInsertSet(HttpServletResponse response, @ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
-		int siteid = companyService.companyInsert(response,request,memCompanyDto);
+		int siteid = companyService.companyInsert(response,request,CompanyDto);
 		
 		mView.setViewName("redirect:/ma/company/"+siteid);
 		

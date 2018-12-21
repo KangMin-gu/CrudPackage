@@ -362,4 +362,39 @@
 		VALUES
 		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, GETDATE() )
 	</insert>
+	
+		<!-- USERNO를 받아와서 EMAIL과 USERNAME를 받아옴   -->
+	<select id="noteEmail" parameterType="int" resultType="hashMap">
+		SELECT EMAIL,USERNAME FROM TB980010 
+		WHERE USERNO = #{userno}
+	</select>
+	
+	<!-- t_mail 테이블 insert  -->
+	<insert id="noteSendMail" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_MAIL
+		(SITEID,CSTNAME,USERNAME,FROMEMAIL,TOEMAIL,SUBJECT,CONTENT,REGUSER,EDTUSER,RLTDATE,EDTDATE,REGDATE,RLTCODE) VALUES
+		(
+		#{userNo},REPLACE(RTRIM(LTRIM(#{cstName})),char(13),''),#{userName},#{fromEmail},#{toEmail},#{subject},#{content},
+		#{userNo},#{userNo},GETDATE(),GETDATE(),GETDATE(),0
+		)
+	
+	</insert>
+	<!-- 메세지버튼 팝업 -->
+	<select id="noteSummary" resultType="hashMap" parameterType="int">
+		SELECT TOP(4)* FROM 
+		(
+		SELECT 
+		A.SUBJECT,
+		A.USERNAME,
+		A.RLTDATE,
+		A.NOTICENO,
+		A.USERNO,
+		B.ISDELETE 
+		FROM T_MAIL AS A
+		INNER JOIN T_NOTICE AS B ON B.NOTICEID = A.NOTICENO
+		)C
+		WHERE C.USERNO=#{USERNO} 
+		AND C.ISDELETE NOT IN(1,2)
+		ORDER BY C.RLTDATE DESC;
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +20,10 @@ public interface CommonService {
 	public Map<String,Object> svcPopGetCustDetail(HttpServletRequest request, int custNo);
 	public Map<String,Object> svcPopGetClientDetail(HttpServletRequest request, int cliNo);
 	
-	public void MailClick(HttpServletRequest request);
+	public void mailClick(HttpServletRequest request);
+	public void mailDeny(HttpServletRequest request);
+	
+	public ModelAndView svcPopNote(HttpServletRequest request);
+	
 
 }

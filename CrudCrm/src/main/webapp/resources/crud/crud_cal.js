@@ -74,8 +74,6 @@
 				contentType: "application/json; charset=UTF-8", 
 				
 				success: function(result){
-					alert('ajax');
-					
 					event = tempEvent;
 					event.id = result.id;
 					event.color = result.color;
@@ -123,13 +121,46 @@
 			openNewWindow("캘린더추가",url+"/post?startdate="+startDate,"",600,700);//팝업호출
 	
 		},
+		/*
+		eventMouseover: function(calEvent,jsEvent) {
+			var tooltip = $('.tooltipevent');
+		    
 
-		eventClick: function(event, element) {//캘린더 이벤트 클릭시
+		    $(this).mouseover(function(e) {
+		        $(this).css('z-index', 10000);
+		        tooltip.fadeIn('500');
+		        tooltip.fadeTo('10', 1.9);
+		        
+		    }).mousemove(function(e) {
+		        tooltip.css('top', e.pageY + 10);
+		        tooltip.css('left', e.pageX + 20);
+		    });
+		},
+    	eventMouseout: function(calEvent,jsEvent) {
+    		 $(this).css('z-index', 8);
+    		    $('.tooltipevent').remove();
+    	},
+		 */
+		
+		eventRender: function(event, element){
 			debugger;
+	          element.popover({
+	        	  placement:'top',
+	              animation:true,
+	              delay: 100,
+	              content: '<b>Inicio</b>:'+event.start+"<br></br><b>Fin</b>:"+event.end,
+	              trigger: 'hover',
+	              html : true
+	          });
+	        },
+		
+		eventClick: function(event, element) {//캘린더 이벤트 클릭시
+			
 			var id = event.id;
 			var campUrl = url.substring(0,9);
 			if(campUrl == '/campaign'){
-				window.location.href = campUrl+"/"+id;
+				//window.location.href = campUrl+"/"+id;
+				openNewWindow("캘린더상세",url+"/"+id,"",600,700);
 			}else {
 				openNewWindow("캘린더상세",url+"/view/"+id,"",600,700);	
 			}

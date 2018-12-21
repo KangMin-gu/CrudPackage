@@ -1,5 +1,6 @@
 package saas.crud.crm.sv.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,10 @@ public class SvServiceImpl implements SvService{
 		// TODO Auto-generated method stub
 		
 		Map<String, Object> search = crud.searchParam(request);
+		String uri = request.getRequestURI();
+		if(uri.contains("convey")) {
+			search.put("prcstate", 3);
+		}
 		
 		int totalRows = svDao.svTotalRows(search);
 		int PAGE_ROW_COUNT = 10;
@@ -117,10 +122,12 @@ public class SvServiceImpl implements SvService{
 		
 		data.put("reguser", userNo);
 		data.put("edtuser", userNo);
-		
 		if(ractdate != "") {
+			data.put("prcstate", 2);
+			// 2 -> 처리상태 = 처리
 			data.put("rcvno", rcvNo);
 			svDao.svRactInsert(data);
+			svDao.svPrcState(data);
 		}
 		
 		return rcvNo;

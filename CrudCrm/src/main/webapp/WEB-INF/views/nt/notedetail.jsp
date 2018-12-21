@@ -39,6 +39,8 @@
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
 						<div class="mail-box-header">
+						<!-- 팝업여부 체크  -->
+						<input type="hidden" value="${referUrl}" id="referUrl"/>
 							<div class="float-right tooltip-demo">
 								<a href="mail_compose.html" class="btn btn-white btn-sm"
 									data-toggle="tooltip" data-placement="top" title="Reply"><i
@@ -52,17 +54,17 @@
 							<div class="mail-tools tooltip-demo m-t-md">
 								<h5>
 									<span class="float-right font-normal">${note.REGDATE }</span> 					
-									<span class="font-normal">보낸이:&nbsp;</span>${note.FROMUSERNAME }  &#60;${note.FROMEMAIL }&#62;<br/>									
+									<span class="font-normal">보낸이:&nbsp; </span>${note.FROMUSERNAME }<br/>									
 									<span class="font-normal">받는이:&nbsp;
 									<c:forEach var="to" items="${toList }" varStatus="comma">																						
-											 ${to.USERNAME } &#60;${to.EMAIL }&#62;			 					 					
+											 ${to.USERNAME }			 					 					
 										<c:if test="${!comma.last }">,</c:if>																																	
 									</c:forEach>								
 									</span><br/>
 									
-									<span class="font-normal">참조:&nbsp;
-									<c:forEach var="cc" items="${ccList }" varStatus="commaTwo">									
-										${cc.USERNAME } &#60;${cc.EMAIL }&#62;										  										
+									<span class="font-normal">참조:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<c:forEach var="cc" items="${ccList }" varStatus="commaTwo">								
+										${cc.USERNAME }										  										
 										<c:if test="${!commaTwo.last }">,</c:if>	
 									</c:forEach>
 									 </span><br/>
@@ -73,8 +75,14 @@
 							<div class="mail-body">
 								${note.CONTENT }
 							</div>
-							<div class="mail-attachment">																	
-								<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+							<div class="mail-attachment">	
+								
+								<c:forEach var="file" items="${noteFile }">		
+									<c:if test="${file.ORGFILENAME ne null}">																	
+										<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+									</c:if>
+								</c:forEach>
+								
 								<div class="attachment">
 								<c:forEach var="file" items="${noteFile }">
 									<div class="file-box">
@@ -127,5 +135,16 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	
+	<!-- url 값이 popnote면 창이 닫침  -->
+	<script>
+$(document).ready(function() {
+			var url = $('#referUrl').val();
+			if(url.indexOf("pop") != -1){
+				self.close();
+				alert("전송되었습니다.")
+			}
+	
+	});
+	</script>
 </body>
 </html>

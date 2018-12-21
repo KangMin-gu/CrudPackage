@@ -8,7 +8,7 @@
 <div class="ibox ">
                     <div class="ibox-content mailbox-content">
                         <div class="file-manager">
-                            <a class="btn btn-block btn-primary compose-mail" href="${pageContext.request.contextPath}/note/send">통지 발송</a>
+                            <a class="btn btn-block btn-primary compose-mail" href="${pageContext.request.contextPath}/note/send">통지 작성</a>
                             <div class="space-25"></div>
                             <h5>Folders</h5>
                             <ul class="folder-list m-b-md" style="padding: 0">

@@ -23,7 +23,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>      
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -51,7 +51,7 @@
 		
 		
 <!-- Content -->		
-	<form:form action="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID }" method="POST" commandName="memCompanyDto" enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID }" method="POST" enctype="multipart/form-data">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -62,9 +62,20 @@
                         </div>
                         
                         <div class="ibox-content row">
-                            <div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" class="btn btn-primary">취소</a>
-                                <button class="btn btn-primary save">저장</button>
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        		<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(회원사명 : 한글,영어,숫자로 입력해 주세요. 영업담당자 : 지정해주세요.) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(회원사명 : 한글,영어,숫자로 입력해 주세요. 영업담당자 : 지정해주세요.) </strong>
+									</span>
+									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                        	</div>
+								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+									<Strong><span id="showMsg"></span></Strong>				
+	                        	</div>
+                            	<div class="w-100 text-right mb-2">
+                                	<a href="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" class="btn btn-primary">취소</a>
+                                	<button class="btn btn-primary submit">저장</button>
+                            	</div>
                             </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -75,7 +86,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control error required validate name" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control error required validate allV" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -91,7 +102,7 @@
                                             <th><label for="bsno">사업자번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="bsno" id="bsno" value="${memCompany.BSNO}">
+                                                    <input type="text" class="form-control validate bsnoV" name="bsno" id="bsno" value="${memCompany.BSNO}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -107,7 +118,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">법인번호</label></th>
-                                            <td><input type="text" class="form-control" name="incno" id="incno" value="${memCompany.INCNO}"></td>
+                                            <td><input type="text" class="form-control validate incnoV" name="incno" id="incno" value="${memCompany.INCNO}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -145,7 +156,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="prsdname">대표자명</label></th>
                                             <td class="border-top-0">
-                                               <input type="text" class="form-control" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
+                                               <input type="text" class="form-control validate nameV" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -161,30 +172,32 @@
                                         <tr>
                                             <th class=" border-top-0"><label for="mobile">휴대전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="mobile1">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${MOBILE}" itemLabel="codename" itemValue="codeval"/>
+                                            ${mm.mobile1}      
+                                                             
+                                        		        <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mm">
+                                       				<option value="asdfsadf">asdfsadf</option>
+                                       				<form:options items="${MOBILE1 }" itemLabel="codename" itemValue="codeval"/>
                                                 </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate email" name="email" id="email" value="${memCompany.EMAIL }">
+                                                <input type="text" class="form-control validate emailV" name="email" id="email" value="${memCompany.EMAIL }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">업태</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="cotype" id="cotype" value="${memCompany.COTYPE }">
+                                                <input type="text" class="form-control validate stringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="fregdate">최초가입일</label></th>
                                             <td>
-                                                <input type="text" class="form-control date" data-autoclose="true" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                                <input type="text" class="form-control date dateV" data-autoclose="true" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -200,35 +213,27 @@
                                         <tr>
                                             <th class="border-top-0"><label for="telno">전화번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="telno1">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${TELNO}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3" name="telno3" id="telno3" value="${memCompany.TELNO3 } ">
+                                              
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="telno3" id="telno3" value="${memCompany.TELNO3 } ">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitesize">기업규모</label></th>
                                             <td>
-                                                <form:select class="form-control col-3 float-left mr-3" path="sitesize">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${SITESIZE}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                                
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="bscond">업종</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="bscond" id="bscond" value="${memCompany.BSCOND }">
+                                                <input type="text" class="form-control validate stringV" name="bscond" id="bscond" value="${memCompany.BSCOND }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="isdelete">서비스상태</label></th>
                                             <td>
-                                               <form:select class="form-control col-3 float-left mr-3" path="isdelete">
-                                                    <form:options items="${ISDELETE}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                              
                                             </td>
                                         </tr>
                                     </tbody>
@@ -244,19 +249,16 @@
                                         <tr>
                                             <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
                                             <td class="border-top-0">
-                                                <form:select class="form-control col-3 float-left mr-3 validate phone1 phone-group" path="faxtel1">
-                                                	<option value= 0>선택</option>
-                                                    <form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 }">
+                                                
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 } ">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="owner">영업담당자</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="owner_">
-                                                    <input type="text" class="form-control error required simple" autocomplete="off" name="owner_" value="${memCompany.OWNER_ }">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="owner_" value="${memCompany.OWNER_ }">
                                                     <input type="hidden" name="owner" value="${memCompany.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -267,7 +269,7 @@
                                         <tr>
                                             <th><label for="bstype">종목</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
+                                                <input type="text" class="form-control validate stringV" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -306,7 +308,7 @@
                 
             </div>
         </div>
-  </form:form>
+  </form>
 <!-- Content End -->
 			
 <!-- foot -->

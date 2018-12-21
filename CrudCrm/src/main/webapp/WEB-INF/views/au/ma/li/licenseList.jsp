@@ -22,7 +22,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -59,28 +59,24 @@
                                             <td>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control reset" name="licensename" id="licensename" value="${search.licensename }">
+                                                    <button class="btn btn-primary btn-sm ml-1" style="line-height: 1.2;">검색</button>
                                                 </div>
-                                                
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div>
-                            	<button class="btn btn-primary" style="height: 38.61px;">검색</button>
-                            </div>
                         </div>
-                        
                         </form:form>
-                        <div class="ibox-content row border-top-0 pt-lg-0">
-                            <div class="overflow-x w-100 head">
-                            <table class="table table-bordered table-hover">
+                        <div class="ibox-content row pt-lg-0 border-top-0">
+                            <div class="table-responsive head">
+                            <table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB">
                                 <colgroup>
+                            		<col style="width: 150px;">
+                            		<col style="width: 120px;">
                             		<col style="width: 100px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 100px;">                         		                            		                            		                            		                            		                            		                            		
+                            		<col style="width: 150px;">
+                            		<col style="width: 150px;">                         		                            		                            		                            		                            		                            		                            		
                             	</colgroup>  
                                 <thead>
                                     <tr>
@@ -161,7 +157,7 @@
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0" style="height: 44.07px;">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -175,7 +171,7 @@
                             <div class="box2 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0" style="height: 44.07px;">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
@@ -191,15 +187,15 @@
                                 </table>
                             </div>
                            	<div class="box4 col-lg-4 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
-                                        <col style="width: 25%; background: #fafafa;">
+                                        <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                     
                                         <tr> 
-                                        	<th class="border-top-0"><label for="isdelete">사용여부</label></th>
+                                        	<th><label for="isdelete">사용여부</label></th>
                                             <td>
                                             	<select class="form-control col-12 float-left mr-12" name="isdelete" id="isdelete">
                                                 	<option value=0 <c:if test='${menu.ISDELETE eq 0}'>selected</c:if>>사용</option>

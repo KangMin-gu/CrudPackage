@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -62,11 +65,23 @@ public class CampaignServiceImpl implements CampaignService{
 
 	//캠페인 Insert
 	@Override
-	public int campInsert(HttpServletRequest request, CampaignDto campaignDto) {
+	public int campInsert(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest, CampaignDto campaignDto) {
 		// TODO Auto-generated method stub
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		List<MultipartFile> mFile = null;
+		MultipartFile sFile = null;
+		
+		if(fileUpload != null) {			
+			String fileSearchKey = crud.fileSearchKey(request);
+			// 이부분 수정필요
+			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
+			crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+			campaignDto.setFilesearchkey(fileSearchKey);
+		}
 		
 		campaignDto.setReguser(userNo);
 		campaignDto.setEdtuser(userNo);
@@ -103,9 +118,14 @@ public class CampaignServiceImpl implements CampaignService{
 				campInfo.put(name, value);
 			}
 		}
-		
+		if(campInfo.get("FILESEARCHKEY") != null) {
+			String fileSearchKey = (String) campInfo.get("FILESEARCHKEY");
+			campaignDto.setFilesearchkey(fileSearchKey);
+			List<Map<String,Object>> campFile = campaignDao.campFile(campaignDto);
+			mView.addObject("campFile",campFile);
+		}
 		int targetCustCnt = campaignDao.campTargetCustCnt(campaignDto);
-
+		
 		mView.addObject("campInfo", campInfo);
 		mView.addObject("targetCustCnt", targetCustCnt);
 		mView.addObject("campForm", campForm);
@@ -114,12 +134,20 @@ public class CampaignServiceImpl implements CampaignService{
 	}
 	//캠페인 수정
 	@Override
-	public void campUpdate(HttpServletRequest request, CampaignDto campaignDto) {
+	public void campUpdate(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest, CampaignDto campaignDto) {
 		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		campaignDto.setEdtuser(userNo);
 		campaignDto.setSiteid(siteId);
+		
+		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		List<MultipartFile> mFile = null;
+		MultipartFile sFile = null;
+		
+		String fileSearchKey = campaignDto.getFilesearchkey();
+		crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+		
 		campaignDao.campUpdate(campaignDto);
 		
 	}
@@ -210,6 +238,7 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignDao.campStepUpdate(campaignDto);
 	}
 
+	// 캠페인 발송 Insert 및 Update
 	@Override
 	public int campFormInsertUpdate(HttpServletRequest request, CampaignFormDto campaignFormDto) {
 		// TODO Auto-generated method stub
@@ -238,6 +267,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return campNo;
 	}
 
+	// 캠페인 테스트 발송
 	@Override
 	public void campTestSend(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
@@ -251,6 +281,7 @@ public class CampaignServiceImpl implements CampaignService{
 
 	}
 
+	// 캠페인 양식 list
 	@Override
 	public ModelAndView campContentsList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -280,6 +311,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return mView;
 	}
 
+	// 캠페인 양식 Insert
 	@Override
 	public int campContentsInsert(HttpServletRequest request,CampaignContentsDto campaignContentsDto) {
 		// TODO Auto-generated method stub
@@ -295,6 +327,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return no;
 	}
 
+	// 캠페인 양식 Read
 	@Override
 	public ModelAndView campContentsRead(HttpServletRequest request, int no) {
 		// TODO Auto-generated method stub
@@ -312,6 +345,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return mView;
 	}
 
+	//캠페인 양식 Update
 	@Override
 	public void campContentsUpdate(HttpServletRequest request, CampaignContentsDto campaignContentsDto) {
 		// TODO Auto-generated method stub
@@ -325,6 +359,7 @@ public class CampaignServiceImpl implements CampaignService{
 		
 	}
 
+	// 캠페인 양식 삭제
 	@Override
 	public void campContentsDelete(HttpServletRequest request, int no) {
 		// TODO Auto-generated method stub
@@ -341,6 +376,7 @@ public class CampaignServiceImpl implements CampaignService{
 		
 	}
 
+	// 캠페인 양식 멀티 삭제
 	@Override
 	public void campContentesMultiDelete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -361,26 +397,25 @@ public class CampaignServiceImpl implements CampaignService{
 		}
 	}
 
+	// 캠페인 발송
 	@Override
 	public void campSend(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int sendType = Integer.parseInt(request.getParameter("sendtype").toString());
 		Map<String,Object> param = new HashMap<String,Object>();
 		
 		param.put("userno", userNo);
 		param.put("siteid", siteId);
 		param.put("campno", campNo);
-		param.put("sendtype", sendType);
 		
 		
-		campaignDao.campSendType(param);
 		campaignDao.campSend(param);
 		
 		
 	}
 
+	// 캠페인 추출 이력탭
 	@Override
 	public List<Map<String, Object>> campTabTargetHistory(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
@@ -437,6 +472,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return history;
 	}
 
+	// 캠페인 추출 대상 고객 탭
 	@Override
 	public Map<String, Object> campTabTargetCustList(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
@@ -464,6 +500,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return total;
 	}
 
+	// 캠페인 대상추출 Read
 	@Override
 	public List<Map<String, Object>> campTargetRead(HttpServletRequest request, int campNo) {
 		// TODO Auto-generated method stub
@@ -477,6 +514,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return targetList;
 	}
 
+	// 캠페인 일정 List(캘린더)
 	@Override
 	public ModelAndView campCalList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -505,6 +543,7 @@ public class CampaignServiceImpl implements CampaignService{
 		return mView;
 	}
 
+	// 캠페인 양식 사용 List ( TOP 5)
 	@Override
 	public List<Map<String, Object>> campContentsUseDescList(HttpServletRequest request, int id) {
 		// TODO Auto-generated method stub

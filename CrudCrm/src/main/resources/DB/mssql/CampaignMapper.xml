@@ -15,12 +15,25 @@
 			  		  WHEN A.CAMPSTEP = 1 THEN '추출'
 			  		  WHEN A.CAMPSTEP = 2 THEN '발송'
 			  		  WHEN A.CAMPSTEP = 3 THEN '종료' END AS CAMPSTEP_
-			  	, A.STARTDATE,ENDDATE
+			  	, A.STARTDATE,A.ENDDATE
 				, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
-				, A.CAMPDESC 
+				, A.CAMPDESC
 				, CONVERT(nvarchar,A.STARTDATE,23) + '-' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
+
 				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
+				,ISNULL(B.CNT,0) AS CNT
+				,ISNULL(C.CNT,0) AS CLICKCNT
+				, CONVERT(nvarchar,ISNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS CLICKTOTAL
+				, CONVERT(nvarchar,ISNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS SENDTOTAL
+				, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
+					   WHEN E.SENDFORM = 2 THEN 'SMS'
+					   WHEN E.SENDFORM = 3 THEN 'LMS'
+					   WHEN E.SENDFORM = 4 THEN 'MMS' END AS CAMPFORM_
 			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE CLICKYN = 0 GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE RLTCODE = 20 GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN Crud_SaaS.dbo.T_CAMP_FORM E ON E.CAMPNO = A.CAMPNO
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
@@ -41,6 +54,9 @@
 			<if test="owner_ != null">
 				AND  A.OWNER = #{owner}
 			</if>
+			<if test="sendform != null">
+				AND E.SENDFORM = #{sendform}
+			</if>
 			) X 
 		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
@@ -53,16 +69,21 @@
 			  WHEN A.CAMPTYPE = 20 THEN '뉴스레터'
 			  WHEN A.CAMPTYPE = 30 THEN '테스트' END AS CAMPTYPE_
 		,A.CAMPSTEP
-		,CASE WHEN A.CAMPSTEP = 0 THEN '생성'
-			  WHEN A.CAMPSTEP = 1 THEN '추출'
-			  WHEN A.CAMPSTEP = 2 THEN '발송'
-			  WHEN A.CAMPSTEP = 3 THEN '종료' END AS CAMPSTEP_
+		,CASE WHEN A.CAMPSTEP = 1 THEN '캠페인생성'
+			  WHEN A.CAMPSTEP = 2 THEN '고객추출'
+			  WHEN A.CAMPSTEP = 3 THEN '발송중'
+			  WHEN A.CAMPSTEP = 4 THEN '종료' END AS CAMPSTEP_
+		, CASE WHEN A.SENDTYPE = 1 THEN '즉시발송'
+			   WHEN A.SENDTYPE = 2 THEN '예약발송'
+			   WHEN A.SENDTYPE = 3 THEN '요일반복발송'
+			   WHEN A.SENDTYPE = 4 THEN '기간반복발송' END AS SENDTYPE_ 
 		, CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE
 		, CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE
 		, CONVERT(nvarchar,A.STARTDATE,23) + '~' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
 		,A.OWNER
 		,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
 		,A.CAMPDESC
+		,A.FILESEARCHKEY
 			FROM Crud_SaaS.dbo.T_CAMPAIGN A
 			WHERE A.SITEID = #{siteid}
 			AND A.CAMPNO = #{campno}
@@ -112,6 +133,7 @@
 				,REGUSER
 				,EDTDATE
 				,EDTUSER
+				,FILESEARCHKEY
 			)VALUES(
 			#{campname}
 			,#{camptype}
@@ -126,6 +148,7 @@
 			,#{reguser}
 			,getDate()
 			,#{edtuser}
+			,#{filesearchkey}
 			)
 			SELECT SCOPE_IDENTITY()
 		</selectKey>
@@ -322,7 +345,7 @@
 				(
 				CAMPNO
 				,SITEID
-				,RETURNMAIL
+				,SENDER
 				,SENDTYPE
 				,SENDDATE
 				,WEEK
@@ -339,10 +362,11 @@
 				,REGUSER
 				,EDTDATE
 				,EDTUSER
+				,SENDFORM
 				)VALUES(
 				#{campno}
 				,#{siteid}
-				,#{returnmail}
+				,#{sender}
 				,#{sendtype}
 				,#{senddate}
 				,#{week}
@@ -359,12 +383,13 @@
 				,#{reguser}
 				,getDate()
 				,#{edtuser}
+				,#{sendform}
 				)
 	</insert>
 	
 	<update id="formUpdate" parameterType="campaignFormDto">
 		UPDATE Crud_SaaS.dbo.T_CAMP_FORM
-			SET RETURNMAIL = #{returnmail}
+			SET SENDER = #{sender}
 			, SENDTYPE = #{sendtype}
 			, SENDDATE = #{senddate}
 			, WEEK = #{week}
@@ -379,6 +404,7 @@
 			, CONTENTSNO = #{contentsno}
 			, EDTDATE = getDate()
 			, EDTUSER = #{edtuser}
+			, SENDFORM = #{sendform}
 		WHERE NO = #{no}
 		AND CAMPNO = #{campno}
 		AND SITEID = #{siteid}
@@ -388,7 +414,7 @@
 		SELECT A.NO
 				,A.CAMPNO
 				,A.SITEID
-				,A.RETURNMAIL
+				,A.SENDER
 				,A.SENDTYPE
 				,CASE WHEN A.SENDTYPE = 1 THEN '즉시발송'
 					  WHEN A.SENDTYPE = 2 THEN '예약발송'
@@ -437,7 +463,7 @@
 		,EDTUSER
 		)VALUES(
 		#{siteid}
-		,#{returnmail}
+		,#{sender}
 		,#{testmail}
 		,#{title}
 		,#{senddesc}
@@ -626,25 +652,53 @@
 	 
 	<select id="calList" parameterType="campaignDto" resultType="hashMap">
 
-		SELECT CAMPNO AS id
-				,CAMPNAME AS title
-				,STARTDATE AS 'start'
-				,ENDDATE AS 'end'
-				,CASE WHEN SENDTYPE = 10 THEN '#FF0000'
-					  WHEN SENDTYPE = 20 THEN '#0040FF'
-					  WHEN SENDTYPE = 30 THEN '#FF00FF' END AS 'color'
-		FROM Crud_SaaS.dbo.T_CAMPAIGN
-		WHERE SITEID = #{siteid}
-		AND ISDELETE = #{isdelete}
+		SELECT A.CAMPNO AS id
+			, A.CAMPNAME AS title
+			, CONVERT(nvarchar,A.STARTDATE,23) AS 'start'
+			, CONVERT(nvarchar,A.ENDDATE,23) AS 'end'
+			, CASE WHEN E.SENDFORM = 1 THEN '#FF0000'
+			 	   WHEN E.SENDFORM = 2 THEN '#0040FF'
+				   WHEN E.SENDFORM = 3 THEN '#FF00FF' 
+				   WHEN E.SENDFORM = 4 THEN '#FFFFFF' END AS 'color'
+				   
+			, CASE WHEN A.CAMPSTEP = 1 THEN '캠페인생성'
+				   WHEN A.CAMPSTEP = 2 THEN '대상추출'
+				   WHEN A.CAMPSTEP = 3 THEN '발송중'
+				   WHEN A.CAMPSTEP = 4 THEN '종료' END AS CAMPSTEP_
+				   
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+			
+			, ISNULL(B.CNT,0) AS CNT
+			, ISNULL(C.CNT,0) AS CLICKCNT
+			, CONVERT(nvarchar,ISNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS CLICKTOTAL
+			, CONVERT(nvarchar,ISNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS SENDTOTAL
+			
+			, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
+				   WHEN E.SENDFORM = 2 THEN 'SMS'
+				   WHEN E.SENDFORM = 3 THEN 'LMS'
+				   WHEN E.SENDFORM = 4 THEN 'MMS' END AS SENDFORM_
+				   
+			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE CLICKYN = 0 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE RLTCODE = 20 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN Crud_SaaS.dbo.T_CAMP_FORM E ON E.CAMPNO = A.CAMPNO
+		WHERE A.SITEID = #{siteid}
+		AND A.ISDELETE = #{isdelete}
+		AND A.CAMPSTEP IN (3,4)
 	</select>
 	
-	<update id="sendTypeUpdate" parameterType="hashMap">
-		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
-			SET SENDTYPE = #{sendtype}
-				,EDTDATE = getDate()
-				,EDTUSER = #{userno}
-		WHERE SITEID = #{siteid}
-		AND CAMPNO = #{campno}
-	</update>
+	<!-- 캠페인 자체 첨부파일 -->
+	<select id="campaignFile" parameterType="campaignDto" resultType="hashMap">
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
+		FROM Crud_SaaS.dbo.T_FILE
+		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
+	</select>
+	
+	<!-- 메일 발송 대상 수 -->
+	<select id="sendTotalCnt" parameterType="campaignDto" resultType="hashMap">
+		SELECT CAMPNO,COUNT(EMAILLOGID) FROM T_MAIL 
+		GROUP BY CAMPNO
+	</select>
 	
 </mapper>

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +46,13 @@ public class CommonController {
 		ModelAndView mav = commonService.svcPopGetClientName(request);
 		mav.setViewName("cm/popclient");
 		return mav;
+	}
+	//내부통지 팝업 --  
+	@RequestMapping(value="/popnote",method=RequestMethod.GET)
+	public ModelAndView authpopNote(HttpServletRequest request) {
+		ModelAndView mView = commonService.svcPopNote(request);
+		mView.setViewName("cm/popnote");
+		return mView;
 	}
 
 	//로고팝업
@@ -103,12 +112,33 @@ public class CommonController {
 		
 	}
 
-	
+	// 메일 클릭여부
 	@RequestMapping(value="/mail/check", method=RequestMethod.GET)
 	@ResponseBody
 	public void MailClick(HttpServletRequest request) {
-		
-		commonService.MailClick(request);
-
+		commonService.mailClick(request);
 	}
+	
+	@RequestMapping(value="/mail/deny", method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView MailDeny(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		
+		int emaillogid = Integer.parseInt(request.getParameter("EMAILLOGID").toString());
+		int custno = Integer.parseInt(request.getParameter("CUSTNO").toString());
+		
+		mView.addObject("emaillogid",emaillogid);
+		mView.addObject("custno",custno);
+		mView.setViewName("denyEmail");
+		return mView;
+	}
+	@RequestMapping(value="/mail/deny", method=RequestMethod.POST)
+	@ResponseBody
+	public void MailDenySet(HttpServletRequest request) {
+		
+		// 수신거부 html 생성 및 수신거부 dao 생성 필요
+		commonService.mailDeny(request);
+		
+	}
+	
 }

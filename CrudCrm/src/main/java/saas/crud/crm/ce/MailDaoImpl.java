@@ -26,6 +26,7 @@ public class MailDaoImpl implements MailDao {
     @Override
     public void UpdateMailState(MailDto emailDto) { session.update("email.sendstate", emailDto); }
 
+    // 메일 클릭
 	@Override
 	public void mailClick(MailDto emailDto) {
 		// TODO Auto-generated method stub
@@ -33,6 +34,26 @@ public class MailDaoImpl implements MailDao {
 		session.update("email.clickCnt",emailDto);
 		
 	}
-    
 
+	// 메일 수신거부
+	@Override
+	public void mailDeny(MailDto emailDto) {
+		// TODO Auto-generated method stub
+		session.update("email.denyEmail",emailDto);
+	}
+
+	// 메일 클릭 이력
+	@Override
+	public void clickHistory(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		session.insert("email.clickHistory",param);
+	}
+	
+	//파일첨부
+  	@Override
+  	public List<Map<String, Object>> fileAttach(Map<String, Object> map) {
+  			List<Map<String,Object>> fileInfo = session.selectList("email.noteAttach",map);
+  			return fileInfo;
+
+  	}
 }

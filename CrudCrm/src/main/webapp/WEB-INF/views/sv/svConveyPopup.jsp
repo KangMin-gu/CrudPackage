@@ -28,7 +28,7 @@
                     <div class="ibox">
                         <div class="ibox-content row body">
                             <div class="w-100 text-right mb-2">
-                            	<button class="btn btn-primary submit" disabled id="save">저장</button>
+                            	<button class="btn btn-primary submit" disabled id="svSave">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -51,7 +51,7 @@
                                             		<span class="input-group-addon">
                                                 		<i class="fa fa-calendar"></i>
                                                 	</span>
-                                                	<input type="text" class="form-control float-left error required validate string" autocomplete="off" name="conveydate" id="conveydate" value="${serviceInfo.CONVEYDATE }">
+                                                	<input type="text" class="form-control float-left error required validate date dateV" autocomplete="off" name="conveydate" id="conveydate" value="${serviceInfo.CONVEYDATE }">
                                                 </div>
 											</td>
                                         </tr>
@@ -69,21 +69,19 @@
                                             <th><label for="rcvdate">접수일</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control date" disabled name="rcvdate" id="rcvdate" value="${serviceInfo.RCVDATE }">
+                                                    <input type="text" class="form-control" disabled name="rcvdate" id="rcvdate" value="${serviceInfo.RCVDATE }">
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="conveyreason">이관사유</label></th>
-                                            <td height="40">
-                                                <div class="input-group">
-                                                    <select class="form-control col-12 float-left mr-12 error required validate number" name="conveyreason" id="conveyreason">
-                                                    	<option value=0>선택</option>
-                                                    	<option value=1 >업무변경</option>
-                                                    	<option value=2 >휴가</option>
-                                                    	<option value=3 >퇴사</option>
-                                                	</select>
-                                                </div>
+                                            <td class="border-top-0">
+                                                <select class="form-control validate error required checkV">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="conveyReason" items="${CONVEYREASON }">
+                                                		<option label="${conveyReason.codename }" value="${conveyReason.codeval }"/>
+                                                	</c:forEach>
+                                                </select>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -99,16 +97,16 @@
                                         <tr>
                                             <th><label for="prevowner">현담당자</label></th>
                                             <td>
-                                            	<input type="text" class="form-control error validate required string" disabled name="prevowner_" id="prevowner_" value="${serviceInfo.RACTOWNER_ }">
+                                            	<input type="text" class="form-control error validate required nameV" disabled name="prevowner_" id="prevowner_" value="${serviceInfo.RACTOWNER_ }">
                                             	<input type="hidden" class="form-control" name="prevowner" id="prevowner" value="${serviceInfo.RACTOWNER }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="nextowner">이관담당자</label></th>
                                             <td>
-                                            	<div class="input-group owner" >
-                                                    <input type="text" class="form-control required error validate string" data-autoclose="true"  name="nextowner_" id="nextowner_" value="${serviceInfo.NEXTOWNER_ }">
-                                            		<input type="hidden" class="form-control" name="nextowner" id="nextowner" value="${serviceInfo.NEXTOWNER }">	
+                                            	<div class="input-group owner" id="nextowner_">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="nextowner_" value="${serviceInfo.OWNER_ }">
+                                                    <input type="hidden" name="nextowner" value="${serviceInfo.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -158,42 +156,18 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
 	
-	$(document).ready(function () {
-		
-		$('#conveydesc').summernote({
-			 height: 115,   
-		});
-		
-		$('.date').datepicker({
-			keyboardNavigation:false,
-			forceParse:false,
-			autoclose:true
-		});
-	});
-		$('#save').click(function(e){
-			    	var	url= "/convey";	
-			    	var rcvno = $('#rcvno').val();
-			        var conveydate= $("#conveydate").val();
-			        var conveyreason = $("#conveyreason").val();
-			        var nextowner = $("#nextowner").val();
-			        var conveydesc = $('#conveydesc').val();
-			        var param = {"rcvno":rcvno,"conveydate":conveydate,"conveyreason":conveyreason,"nextowner":nextowner,"conveydesc":conveydesc};
-			        
-			        $.ajax({
-			            url: url,
-			            method: "POST",
-			            dataType: "json",
-			            data:param,
-			            success: function () {
-			                alert("저장되었습니다.");
-			                window.close();
-			            },
-			            error: function (request, status, error) {
-			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			            }
-			        });
-
+		$(document).ready(function () {
+			
+			$('#conveydesc').summernote({
+				 height: 115,   
 			});
+			
+			$('.date').datepicker({
+				keyboardNavigation:false,
+				forceParse:false,
+				autoclose:true
+			});
+		});
 	</script>
 	
 </body>

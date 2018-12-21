@@ -67,6 +67,11 @@
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
 	});
+	
+	//내부통지팝업
+	$('.note').click(function(e){
+		 openNewWindow('내부통지','/popnote',e.currentTarget.id,650,1100);	
+	})
 /******************************************************************/	
 	/*fileupload 필수값 싱글 sFile / 멀티 mFile
 	 * 부모창에 fileSearchKey  hidden으로 input 생성
@@ -341,7 +346,54 @@
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
-	}
+	};
+	$("#dropClick").click(function(){
+		var dropDown = $("#dropDown");
+		dropDown.empty();
+		
+		//ajax 메일 테이블 
+		$.ajax({
+			url:"/note/summary",
+			type:"GET",
+			success:function(data){
+				var dropHtml = "";
+				var subject = "";
+				var subjectLen = "";
+				var rltDate ="";
+				for(var i=0; i<data.length; i++){
+
+					//제목 10자리 끊기 
+					subject = data[i].SUBJECT;
+					subjectLen = data[i].SUBJECT.length;
+					if(subjectLen > 10){
+						subject = subject.substring(0,10)+"...";
+					}
+					//날짜 
+					rltDate = data[i].RLTSTR;
+					rltDate = rltDate.substring(0,16);
+					
+					
+					dropHtml += "<li class='pb-2'><div class='dropdown-messages-box pb-3' style='border-bottom:1px solid #e9ecef'><a class='dropdown-item float-left' href='#' style='color:#A4A4A4;'>";
+					dropHtml +="<small><strong>"+data[i].USERNAME+"</strong></small></a><div class='pt-1'>";
+					dropHtml +="<a class='dropdown-content ml-1' style='font-size:12px;color:black;font-weight: 500;' href=/note/inbox/"+data[i].NOTICENO+">"+subject+"</a><br>"
+					dropHtml +="<small class='text-muted m1-1 float-right' style='position:relative;'>"+rltDate+"</small></div></div></li>";
+					
+					
+					//마지막 바퀴일때 Read AllMessages 출력 
+					if(i == (data.length-1)){
+						dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
+						dropHtml +="<i class='fa fa-envelope'></i> <strong>Read AllMessages</strong>"
+						dropHtml +="</div></li>";
+					}
+					dropDown.append(dropHtml);
+				}
+			},
+			error : function(jqXHR,textStatus,errorThrown){
+				alert("에러발생 관리자에게 문의하세요." + textStatus);
+				
+			}
+		});
+	});
 /********************************************************************/	
 	//파일서치키 생성
 	jQuery.extend({

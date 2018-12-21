@@ -156,7 +156,7 @@ public class ExcelDownLoad {
 		
 			
 			//데이터 칼럼에 맞춰 바인딩
-			for (int rowNum = 1; rowNum < note.size(); rowNum++) {			
+			for (int rowNum = 0; rowNum < note.size(); rowNum++) {			
 				row = sheet.createRow(rowNum+1);			
 				String custName = crud.getMapValueNullCheck(note.get(rowNum), "CUSTNAME");
 				String deptName = crud.getMapValueNullCheck(note.get(rowNum), "DEPTNAME");
@@ -324,13 +324,13 @@ public class ExcelDownLoad {
 			
 				
 				//데이터 칼럼에 맞춰 바인딩
-				for (int rowNum = 1; rowNum < adUser.size(); rowNum++) {			
+				for (int rowNum = 1; rowNum <= adUser.size(); rowNum++) {			
 					row = sheet.createRow(rowNum+1);			
-					String userName = crud.getMapValueNullCheck(adUser.get(rowNum), "USERNAME");
-					String userId = crud.getMapValueNullCheck(adUser.get(rowNum), "USERID");
-					String userDuty = crud.getMapValueNullCheck(adUser.get(rowNum), "USERDUTY");
-					String enterDate = crud.getMapValueNullCheck(adUser.get(rowNum), "ENTERDATE");
-					String regDate = crud.getMapValueNullCheck(adUser.get(rowNum), "REGDATE");
+					String userName = crud.getMapValueNullCheck(adUser.get(rowNum-1), "USERNAME");
+					String userId = crud.getMapValueNullCheck(adUser.get(rowNum-1), "USERID");
+					String userDuty = crud.getMapValueNullCheck(adUser.get(rowNum-1), "USERDUTY");
+					String enterDate = crud.getMapValueNullCheck(adUser.get(rowNum-1), "ENTERDATE");
+					String regDate = crud.getMapValueNullCheck(adUser.get(rowNum-1), "REGDATE");
 
 					cell = row.createCell(0);
 					cell.setCellValue(userName);
@@ -477,17 +477,18 @@ public class ExcelDownLoad {
 			
 				
 				//데이터 칼럼에 맞춰 바인딩
-				for (int rowNum = 1; rowNum < company.size(); rowNum++) {			
-					row = sheet.createRow(rowNum+1);			
-					String siteName = crud.getMapValueNullCheck(company.get(rowNum), "SITENAME");
-					String prsdName = crud.getMapValueNullCheck(company.get(rowNum), "PRSDNAME");
-					String bsNo = crud.getMapValueNullCheck(company.get(rowNum), "BSNO");
-					String mobile = crud.getMapValueNullCheck(company.get(rowNum), "MOBILE");
-					String bsType = crud.getMapValueNullCheck(company.get(rowNum), "BSTYPE");
-					String siteSize = crud.getMapValueNullCheck(company.get(rowNum), "SITESIZE");
-					String fregDate = crud.getMapValueNullCheck(company.get(rowNum), "FREGDATE");
-					String buyCnt = crud.getMapValueNullCheck(company.get(rowNum), "BUYCNT");
-					String isDelete = crud.getMapValueNullCheck(company.get(rowNum), "ISDELETE");
+				for (int rowNum = 1; rowNum <= company.size(); rowNum++) {			
+					row = sheet.createRow(rowNum+1);
+					
+					String siteName = crud.getMapValueNullCheck(company.get(rowNum-1), "SITENAME");
+					String prsdName = crud.getMapValueNullCheck(company.get(rowNum-1), "PRSDNAME");
+					String bsNo = crud.getMapValueNullCheck(company.get(rowNum-1), "BSNO");
+					String mobile = crud.getMapValueNullCheck(company.get(rowNum-1), "MOBILE");
+					String bsType = crud.getMapValueNullCheck(company.get(rowNum-1), "BSTYPE");
+					String siteSize = crud.getMapValueNullCheck(company.get(rowNum-1), "SITESIZE");
+					String fregDate = crud.getMapValueNullCheck(company.get(rowNum-1), "FREGDATE");
+					String buyCnt = crud.getMapValueNullCheck(company.get(rowNum-1), "BUYCNT");
+					String isDelete = crud.getMapValueNullCheck(company.get(rowNum-1), "ISDELETE");
 
 					cell = row.createCell(0);
 					cell.setCellValue(siteName);
@@ -524,8 +525,8 @@ public class ExcelDownLoad {
 					cell = row.createCell(8);
 					cell.setCellValue(isDelete);				
 					cell.setCellStyle(style);
-									
 				}
+									
 				
 					
 				//여기서부터 다운로드 
@@ -577,7 +578,6 @@ public class ExcelDownLoad {
 		public void serviceExcel(HttpServletRequest request, HttpServletResponse response) {
 			int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 			Map<String, Object> searchVal = crud.searchParam(request);
-			searchVal.put("infoagree", 0);
 			List<Map<String, Object>> note = svDao.svList(searchVal);
 			
 			//SXSSF 방식 엑셀 생성 
@@ -656,17 +656,18 @@ public class ExcelDownLoad {
 			
 				
 				//데이터 칼럼에 맞춰 바인딩
-				for (int rowNum = 1; rowNum < note.size(); rowNum++) {			
-					row = sheet.createRow(rowNum+1);			
-					String rcvName = crud.getMapValueNullCheck(note.get(rowNum), "RCVNAME");
-					String rcvType = crud.getMapValueNullCheck(note.get(rowNum), "RCVTYPE_");
-					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum), "RCVCHANNEL_");
-					String custName = crud.getMapValueNullCheck(note.get(rowNum), "CUSTNO_");
-					String cliName = crud.getMapValueNullCheck(note.get(rowNum), "CLINO_");
-					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum), "RCVDATE_");
-					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum), "RCVOWNER_");
-					String ractOwner = crud.getMapValueNullCheck(note.get(rowNum), "RACTOWNER_");
-					String prcState = crud.getMapValueNullCheck(note.get(rowNum), "PRCSTATE_");
+				for (int rowNum = 1; rowNum <= note.size(); rowNum++) {
+						row = sheet.createRow(rowNum+1);
+								
+					String rcvName = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVNAME");
+					String rcvType = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVTYPE_");
+					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVCHANNEL_");
+					String custName = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTNO_");
+					String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINO_");
+					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVDATE_");
+					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVOWNER_");
+					String ractOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "RACTOWNER_");
+					String prcState = crud.getMapValueNullCheck(note.get(rowNum-1), "PRCSTATE_");
 
 					cell = row.createCell(0);
 					cell.setCellValue(rcvName);

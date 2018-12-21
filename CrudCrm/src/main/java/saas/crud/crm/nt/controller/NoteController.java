@@ -1,6 +1,7 @@
 package saas.crud.crm.nt.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -187,11 +188,11 @@ public class NoteController {
 		return mView;
 	}
 	
-	//카테고리설정
-	@RequestMapping(value="/note/set", method=RequestMethod.GET)
-	public ModelAndView authnoteSet(HttpServletRequest request) {
-		ModelAndView mView = ntService.noteSet(request);
-		mView.setViewName("nt/noteset");
-		return mView;
+	//쪽지팝업(ajax)
+	@ResponseBody
+	@RequestMapping(value="/note/summary",method=RequestMethod.GET)
+	public List<Map<String,Object>> noteSummary(HttpServletRequest request) {
+		List<Map<String,Object>> recentlyNote = ntService.noteSummary(request);
+		return recentlyNote;
 	}
 }

@@ -24,7 +24,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -33,14 +33,22 @@
                 <div class="col-lg-10">
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">
+                    <c:set var="urls" value="${requestScope['javax.servlet.forward.request_uri']}" />
+                    <c:choose>
+                    	<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
+                    	<li class="breadcrumb-item active">
+                            <strong>서비스 이관 목록</strong>
+                        </li>
+                    	</c:when>
+                    	<c:otherwise>
+                    	<li class="breadcrumb-item active">
                             <strong>서비스 목록</strong>
                         </li>
+                    	</c:otherwise>
+                    </c:choose>
                     </ol>
                 </div>
             </div>		
-		
-		
 <!-- Content -->		
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
@@ -87,7 +95,7 @@
                                             <th>고객명</th>
                                             <td class="border-top-0">
                                                 <div class="input-group cust" id="custno_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="custno_" value="${search.custno_ }">
+                                                    <input type="text" class="form-control reset" autocomplete="off" disabled name="custno_" value="${search.custno_ }">
                                                     <input type="hidden" class="reset" name="custno" value="${search.custno }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -128,7 +136,7 @@
                                             <th>거래처명</th>
                                             <td class="border-top-0">
                                                 <div class="input-group cli" id="clino_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="clino_" value="${search.clino_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="clino_" value="${search.clino_ }">
                                                     <input type="hidden" class="reset" name="clino" value="${search.clino }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -138,8 +146,8 @@
                                         </tr>
                                         <tr>
                                             <th>접수매체</th>
-                                            <td>
-                                            	<select class="form-control reset select2" name="rcvchannel" id="rcvchannel" value="${search.rcvchannel }">
+                                            <td class="border-top-0">
+                                                <select class="form-control reset select2" name="rcvchannel" id="rcvchannel" value="${search.rcvchannel }">
                                             		<option value="">선택</option>
                                                     <option value="10" <c:if test='${search.rcvchannel eq 10}'>selected</c:if>>전화</option>
                                                     <option value="20" <c:if test='${search.rcvchannel eq 20}'>selected</c:if>>SMS</option>
@@ -161,7 +169,7 @@
                                             <th>접수자</th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="rcvowner_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="rcvowner_" value="${search.rcvowner_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="rcvowner_" value="${search.rcvowner_ }">
                                                     <input type="hidden" class="reset" name="rcvowner" value="${search.rcvower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -173,7 +181,7 @@
                                             <th>담당자</th>
                                             <td class="border-top-0">
                                                 <div class="input-group owner" id="ractowner_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" name="ractowner_" value="${search.ractowner_ }">
+                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="ractowner_" value="${search.ractowner_ }">
                                                     <input type="hidden" class="reset" name="ractowner" value="${search.ractower }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -183,8 +191,8 @@
                                         </tr>
                                         <tr>
                                             <th>처리상태</th>
-                                            <td>
-                                            	<select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
+                                            <td class="border-top-0">
+                                                <select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
                                             		<option value="">선택</option>
                                                     <option value="1" <c:if test='${search.prcstate eq 1}'>selected</c:if>>접수</option>
                                                     <option value="2" <c:if test='${search.prcstate eq 2}'>selected</c:if>>이관</option>
@@ -198,11 +206,20 @@
                         </div>
                         </form:form>
                         <form:form action="${pageContext.request.contextPath}/service/delete" method="POST">
-                        <div class="ibox-content row border-top-0 pt-lg-0">
+                        <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-	                            	 <a href="${pageContext.request.contextPath}/serviceexcel" class="btn btn-primary">엑셀 다운로드</a>
-	                          	</div>													
+									<c:choose>
+                    					<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
+                    						<a href="${pageContext.request.contextPath}/serviceexcel?prcstate=3" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
+                    					</c:when>
+                    					<c:otherwise>
+                    						<a href="${pageContext.request.contextPath}/serviceexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
+                    					</c:otherwise>
+                    				</c:choose>
+	                          	</div>	
+	                          	
+	                          													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<a href="${pageContext.request.contextPath}/service/post" class="btn btn-primary">추가</a>
 									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
@@ -313,7 +330,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->

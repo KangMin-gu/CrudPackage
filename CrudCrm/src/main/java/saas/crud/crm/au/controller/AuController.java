@@ -35,7 +35,7 @@ public class AuController {
 	@Autowired
 	private CodeService codeService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(AuController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuController.class); 
 	// 담당자 팝업 검색
 	@RequestMapping(value="/common/user", method=RequestMethod.GET)
 	public ModelAndView authcommonUserList(HttpServletRequest request) {
@@ -93,7 +93,7 @@ public class AuController {
 	}
 	// 회원 정보 수정 화면
 	@RequestMapping(value="/ad/user/post/{userno}", method=RequestMethod.GET)
-	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno, @ModelAttribute UserDto userDto) {
+	public ModelAndView authAdminUserUpdate(HttpServletRequest request, @PathVariable int userno) {
 		ModelAndView mView = auService.userRead(request, userno);
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
@@ -164,6 +164,25 @@ public class AuController {
 		mView.setViewName("au/ma/mc/masterRead");
 		return mView;
 	}
+	// 내 정보
+	@RequestMapping(value="/myinfo",method=RequestMethod.GET)
+	public ModelAndView myInfoRead(HttpServletRequest request,@PathVariable int userNo) {
+		ModelAndView mView = auService.userRead(request, userNo);		
+		mView.setViewName("au/myinfo");
+		return mView;
+	}
+	//내정보 수정 (수정폼)
+	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.GET)
+	public ModelAndView myInfoReadSet(HttpServletRequest request,@PathVariable int userNo) {
+		ModelAndView mView = auService.userRead(request,userNo);
+		mView.setViewName("au/myinfoupdate");
+		return mView;
+	}
 	
-
+	//내정보 수정(수정실행)
+	@RequestMapping(value="/myinfo/post/{userno}",method=RequestMethod.POST)
+	public String myInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto) {
+		auService.userUpdate(request, userDto);
+		return "redirect:/myinfo";
+	}
 }

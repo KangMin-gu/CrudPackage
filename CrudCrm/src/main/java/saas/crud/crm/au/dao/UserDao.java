@@ -7,4 +7,6 @@ import java.util.Map;
 public interface UserDao {
 	public Map<String, Object> getData(String userId);
 	public List<Map<String,String>> getMenu(String userId); 
+	
+	public void userHistory(Map<String,Object> param);
 }

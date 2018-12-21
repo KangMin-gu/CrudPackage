@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.cp.dto.CampaignContentsDto;
@@ -15,11 +17,11 @@ public interface CampaignService {
 	
 	public ModelAndView campList(HttpServletRequest request); 
 	
-	public int campInsert(HttpServletRequest request,CampaignDto campaignDto);
+	public int campInsert(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest, CampaignDto campaignDto);
 	
 	public ModelAndView campRead(HttpServletRequest request, int campNo);
 	
-	public void campUpdate(HttpServletRequest request, CampaignDto campaignDto);
+	public void campUpdate(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest, CampaignDto campaignDto);
 	
 	public void campDelete(HttpServletRequest request, int campNo);
 	

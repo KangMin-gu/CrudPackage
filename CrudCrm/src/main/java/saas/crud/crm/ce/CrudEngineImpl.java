@@ -59,6 +59,7 @@ public class CrudEngineImpl implements CrudEngine{
 				String orgFileName = mFile.get(i).getOriginalFilename();
 				whiteListFlag = whiteFlag(orgFileName);
 				
+				//확장자가 올바르지 않으면 false로 떨궈서 alert() 타게함 
 				if(!whiteListFlag) {
 					buf.append("<script>alert('허가되지 않은 확장자 입니다.');");
 					buf.append("location.href='");
@@ -72,7 +73,8 @@ public class CrudEngineImpl implements CrudEngine{
 						out.flush();
 					} catch (IOException e) {					
 						e.printStackTrace();
-					}				
+					}	
+					
 				}else {
 					
 					long fileSize = mFile.get(i).getSize();
@@ -231,10 +233,14 @@ public class CrudEngineImpl implements CrudEngine{
 	//확장자체크
 	@Override
 	public boolean whiteFlag(String orgFileName) {
+		
+		//aaaa,txt 형식으로 끊어서 배열에 집어넣음 
 		boolean whiteListFlag = false;
 		String[] arrWhiteList = whiteList.split(",");
+		
 		String extention = orgFileName.substring(orgFileName.lastIndexOf(".")+1,orgFileName.length());
 		for(String chker : arrWhiteList) {
+			//확장자를 비교해서 있으면 true로 떨굼 
 			if(chker.equals(extention)) {
 				whiteListFlag = true;
 			}
@@ -343,6 +349,8 @@ public class CrudEngineImpl implements CrudEngine{
 			
 			return  mailTarget;
 	}
+	
+
 
 	@Override
 	public String getMapValueNullCheck(Map target, String key) {

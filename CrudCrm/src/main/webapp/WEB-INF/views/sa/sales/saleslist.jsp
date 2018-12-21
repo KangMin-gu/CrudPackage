@@ -52,81 +52,27 @@
 				<div class="row justify-content-md-center">
 					<div class="col-lg-12">
 						<div class="ibox">
-							<form:form id="command" action="/sales" method="GET">
+							<form:form id="command" action="/sales" method="GET" commandName="salesDto">
 								<div class="ibox-content row">
 
 									<div class="w-100 text-right mb-3 mt-3">
 										<Button type="submit" class="btn btn-primary">검색</Button>
 										<a href="javascript:void(0);" class="btn btn-primary resets">초기화</a>
 									</div>
-									<div class="box1 col-lg-12 col-xl-4 p-0">
+									
+									
+									
+									
+									
+									
+								<div class="box1 col-lg-12 col-xl-6 p-0">
 										<table class="table table-bordered mb-0">
 											<colgroup>
 												<col style="width: 110px; background: #fafafa;">
-												<col style="width: auto;">
+												<col style="width: auto;">                                             
 											</colgroup>
 											<tbody>
-												<tr>
-													<th>영업건명</th>
-													<td>
-														<input type="text" class="form-control reset" id="salename" name="salename" value="${searchVal.salename }">
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="box1 col-lg-12 col-xl-4 p-0">
-										<table class="table table-bordered mb-0">
-											<colgroup>
-												<col style="width: 110px; background: #fafafa;">
-												<col style="width: auto;">
-											</colgroup>
-											<tbody>
-												<tr>
-													<th>영업담당자</th>
-													<td>
-														<div class="input-group">
-															<input class="reset owner" type="text" class="form-control" id="username" name="username" value="${searchVal.username }" readonly> 
-															<input class="reset" type="hidden" id="owner" name="owner" value="${searchVal.owner }" /> 
-															<span class="input-group-addon"> 
-																<a href="javascript:void(0);"><i class="fa fa-search owner"></i></a>
-															</span>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="box1 col-lg-12 col-xl-4 p-0">
-										<table class="table table-bordered mb-0">
-											<colgroup>
-												<col style="width: 110px; background: #fafafa;">
-												<col style="width: auto;">
-											</colgroup>
-											<tbody>
-												<tr>
-													<th>거래처명</th>
-													<td>
-														<div class="input-group">
-															<input type="text" class="form-control cli reset" name="cliname" id="cliname" value="${searchVal.cliname }" readonly> 
-															<input class="reset" type="hidden" name="clino" id="clino" value="${searchVal.clino }"> 
-															<span class="input-group-addon"> 
-																<a><i class="fa fa-search cli"></i></a>
-															</span>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="box1 col-lg-12 col-xl-8 p-0">
-										<table class="table table-bordered mb-0 border-top-0">
-											<colgroup>
-												<col style="width: 110px; background: #fafafa;">
-												<col style="width: auto;">
-											</colgroup>
-											<tbody>
-												<tr>
+                                                <tr>
 													<th class="border-top-0">예상수주일</th>
 													<td class="border-top-0" style="padding: 7px 8px;">
 														<div class="input-group p-0">
@@ -143,39 +89,110 @@
 															</div>
 														</div>
 													</td>
-												</tr>
+												</tr>                                     
 											</tbody>
 										</table>
 									</div>
-									<div class="box1 col-lg-12 col-xl-4 p-0">
+                                    <div class="box1 col-lg-12 col-xl-6 p-0">
+										<table class="table table-bordered mb-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">                                             
+											</colgroup>
+											<tbody>
+                                                <tr>
+													<th class="border-top-0">실수주일</th>
+													<td class="border-top-0" style="padding: 7px 8px;">
+														<div class="input-group p-0">
+															<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+																<span class="input-group-addon">
+																	<i class="fa fa-calendar"></i>
+																</span>
+																<input type="text" class="form-control reset" id="fromregdt" 	name="fromregdt" value="${searchVal.fromregdt }" autocomplete="off">
+															</div>
+															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+															<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+																<input type="text" class="form-control reset" id="toregdt" name="toregdt" value="${searchVal.toregdt }" autocomplete="off">
+															</div>
+														</div>
+													</td>
+												</tr>                                     
+											</tbody>
+										</table>
+									</div>                                    
+                                    <div class="box1 col-lg-12 col-xl-6 p-0">
 										<table class="table table-bordered mb-0 border-top-0">
 											<colgroup>
 												<col style="width: 110px; background: #fafafa;">
-												<col style="width: auto;">
+												<col style="width: auto;">     
+                                                <col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">                                                                                                 
 											</colgroup>
-											<tbody>
+											<tbody>                                    
 												<tr>
-													<th class="border-top-0">현단계</th>
+													<th class="border-top-0">영업건명</th>
 													<td class="border-top-0">
-														<select class="form-control reset" style="height: 23px;" id="salestate" name="salestate">
-															<option value="0" ${searchVal.salestate eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.salestate eq "1" ? "selected" :""}>계약성공종료</option>
-															<option value="2" ${searchVal.salestate eq "2" ? "selected" :""}>계약중</option>
-															<option value="3" ${searchVal.salestate eq "3" ? "selected" :""}>제안서제출</option>
-															<option value="4" ${searchVal.salestate eq "4" ? "selected" :""}>접촉중</option>
-															<option value="5" ${searchVal.salestate eq "5" ? "selected" :""}>문의</option>
-															<option value="6" ${searchVal.salestate eq "6" ? "selected" :""}>중도포기</option>
-															<option value="7" ${searchVal.salestate eq "7" ? "selected" :""}>경쟁실패</option>
-														</select>
+														<input type="text" class="form-control reset" id="salename" name="salename" value="${searchVal.salename }">
 													</td>
+                                                    <th class="border-top-0">영업담당자</th>
+													<td class="border-top-0">
+														<div class="input-group">
+															<input type="text" class="form-control owner" name="username" id="username" value="${searchVal.username }">
+															<input class="reset" type="hidden" id="owner" name="owner" value="${searchVal.owner }" /> 
+                                                            <span class="input-group-addon"> 
+																<a><i class="fa fa-search owner"></i></a>
+															</span>                                                            
+														</div>
+													</td>                                                    
 												</tr>
 											</tbody>
 										</table>
-									</div>
-									
-									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;"><br>
+									</div>                                    
+									<div class="box1 col-lg-12 col-xl-6 p-0">
+										<table class="table table-bordered mb-0 border-top-0">
+											<colgroup>
+												<col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">     
+                                                <col style="width: 110px; background: #fafafa;">
+												<col style="width: auto;">                                                                                                 
+											</colgroup>
+											<tbody>                                    
+												<tr>
+													<th>거래처명</th>
+													<td>
+														<div class="input-group">
+															<input type="text" class="form-control cli reset" name="cliname" id="cliname" value="${searchVal.cliname }" readonly> 
+															<input class="reset" type="hidden" name="clino" id="clino" value="${searchVal.clino }"> 
+															<span class="input-group-addon"> 
+																<a><i class="fa fa-search cli"></i></a>
+															</span>
+														</div>
+													</td>
+                                                    <th class="border-top-0">현단계</th>
+													<td class="border-top-0">
+														<select class="form-control reset" style="height: 23px;" id="salestate" name="salestate">
+															<option value="0" ${searchVal.salestate eq "0" ? "selected" :""}>선택</option>
+															<c:forEach var="state" items="${STATE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${searchVal.salestate eq state.codeval}">
+                                                            			<option selected label="${state.codename }" value="${state.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${state.codename }" value="${state.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
+														</select>
+													</td>                            
+												</tr>
+											</tbody>
+										</table>
+									</div>	
+																											
+									<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;"><br>
                               			<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                                    		<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>               
+                                    		<a href="/salesexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>               
                              			</div>                                       
                               			<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 			<a href="/sales/post" class="btn btn-primary">추가</a> 

@@ -49,7 +49,7 @@
 
 			<!-- S: 영업관리 추가/수정 -->
 			<div class="wrapper wrapper-content  animated fadeInRight article">
-				<form:form id="command" action="/sales/post" method="POST">
+				<form:form id="command" action="/sales/post" method="POST" commandName="salesDto">
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12">
 							<div class="ibox">
@@ -89,7 +89,12 @@
 												<tr>
 													<th>현단계<sup>*</sup></th>
 													<td>
-														<select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
+														<form:select class="form-control required validate allV" style="height: 23px;" path="salestate">
+                                                			<form:options items="${STATE}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>	
+													
+													
+														<!-- <select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
 															<option value="1">계약성공종료</option>
 															<option value="2">계약중</option>
 															<option value="3">제안서제출</option>
@@ -97,7 +102,7 @@
 															<option value="5">문의</option>
 															<option value="6">중도포기</option>
 															<option value="7">경쟁실패</option>
-														</select>
+														</select> -->
 													</td>
 												</tr>
 												<tr>
@@ -224,7 +229,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>NEEDS</th>
+													<th>요구사항</th>
 													<td>
 														<textarea name="need" id="need" class="form-control" style="resize: none;" rows="4"></textarea>
 													</td>
@@ -252,7 +257,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>SOULTION</th>
+													<th>해결방안</th>
 													<td>
 														<textarea class="form-control" style="resize: none;" rows="4" id="solution" name="solution"></textarea>
 													</td>

@@ -25,8 +25,10 @@
 <!--datePicker-->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css"
 	rel="stylesheet">
-
-<!-- E: 추가 CSS-->
+	<!-- ui -->
+<link href="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+<!-- Text spinners style -->
+<link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
 <script>
 
 
@@ -62,7 +64,7 @@
 				<div class="row justify-content-md-center">
 					<div class="col-lg-12">
 						<div class="ibox">
-							<form:form id="command" class="searchForm" action="/cust" method="POST">
+							<form:form id="command" class="searchForm" action="/cust" method="POST" commandName="custDto">
 							<span id="selectpage" name="selectpage"> </span>
 							
 								<div class="ibox-content row">
@@ -91,6 +93,23 @@
 											</colgroup>
 											<tbody>
 												<tr>
+													<th>등록일</th>
+													<td colspan="3">
+														<div class="input-group p-0  " style="max-height: 26px; height: 26px;">
+                                                    		<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+                                                      			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                      			<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
+                                                    		</div>
+                                                    		<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                                    		<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+                                                        		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                        		<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
+                                                    		</div>
+                                                		</div>	
+													</td>
+												</tr>
+											
+												<tr>
 													<th>고객명</th>
 													<td><input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname}"></td>
 													<th>휴대폰</th>
@@ -111,7 +130,7 @@
 													<td>
 														<div class="input-group cli" id="cliname" >
 															<input type="text" class="form-control" autocomplete="off" name="cliname" value="${searchVal.cliname}" readonly>
-                                                    		<input type="hidden" name="clino" id="clino" value="${searchVal.clino}">
+                                                    		<input type="hidden" name="clino" id="clino" value="${searchVal.clino }">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
                                                     		</span>
@@ -119,22 +138,7 @@
 													</td>
 													
 												</tr>
-												<tr>
-													<th>등록일</th>
-													<td colspan="3">
-														<div class="input-group p-0  " style="max-height: 26px; height: 26px;">
-                                                    		<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                      			<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
-                                                    		</div>
-                                                    		<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    		<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        		<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
-                                                    		</div>
-                                                		</div>	
-													</td>
-												</tr>
+												
 											</tbody>
 										</table>
 									</div>
@@ -148,30 +152,44 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>이메일</th>
-													<td colspan="3"><input type="text" class="form-control" id="email" name="email" value="${searchVal.email}"></td>
-												</tr>
-												<tr>
 													<th>고객구분</th>
 													<td>
-														<select class="form-control" id="custgubun" name="custgubun" style="height: 1.45rem;">
+														<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
 															<option value="0" ${searchVal.custgubun eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.custgubun eq "1" ? "selected" :""}>회원</option>
-															<option value="2" ${searchVal.custgubun eq "2" ? "selected" :""}>비회원</option>
-															<option value="3" ${searchVal.custgubun eq "3" ? "selected" :""}>탈퇴회원</option>
+															<c:forEach var="custGubun" items="${CUSTGUBUN }">
+                                                      			<c:choose>
+                                                         			<c:when test="${searchVal.custgubun eq custGubun.codeval}">
+                                                            			<option selected label="${custGubun.codename }" value="${custGubun.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${custGubun.codename }" value="${custGubun.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
-													</td>													
-													
+													</td>	 	
 													<th>고객등급</th>
 													<td>
-														<select class="form-control" id="custgrade" name="custgrade" style="height: 1.45rem;">
+														<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
 															<option value="0" ${searchVal.custgrade eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.custgrade eq "1" ? "selected" :""}>일반</option>
-															<option value="2" ${searchVal.custgrade eq "2" ? "selected" :""}>VIP</option>
-															<option value="3" ${searchVal.custgrade eq "3" ? "selected" :""}>VVIP</option>												
+																<c:forEach var="custGrade" items="${CUSTGRADE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${searchVal.custgrade eq custGrade.codeval}">
+                                                            			<option selected label="${custGrade.codename }" value="${custGrade.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${custGrade.codename }" value="${custGrade.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 													</td>	
 												</tr>
+												<tr>
+													<th>이메일</th>
+													<td colspan="3"><input type="text" class="form-control" id="email" name="email" value="${searchVal.email}"></td>
+												</tr>
+												
 												<tr>
 													<th>정보활용</th>
 													<td colspan="3">
@@ -193,11 +211,11 @@
 							</form:form>
 							
 							<form:form id="commandcheck" class="searchForm" action="/cust" method="PUT">
-							<div class="ibox-content row border-top-0 pt-lg-0">
+							<div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
 																
 								<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                               		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                                    	<a href="/custexcel" class="btn btn-primary">엑셀다운로드</a>                  
+                                    	<a href="/custexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>                  
                              		</div>                                       
                               		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 		<span id="checkVal"></span>
@@ -206,8 +224,53 @@
                               		</div>
                            		</div>
 								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+						<!-- 	<button id="btn-excel">엑셀 다운로드</button> 
+                              파일 생성중 보여질 진행막대를 포함하고 있는 다이얼로그 입니다. 
+                             <div title="Data Download" id="preparing-file-modal" style="display: none;"> 
+                             	<div id="progressbar" style="width: 100%; height: 22px; margin-top: 20px;"></div> 
+                             </div>  에러발생시 보여질 메세지 다이얼로그 입니다.
+                             <div title="Error" id="error-modal" style="display: none;"> <p>생성실패.</p> </div>
+								
+							
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal4" id="testBtn">ttttest</button>
+                            <div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true" id="testModal">
+                                <div class="modal-dialog" >
+                                    <div class="modal-content animated fadeIn">
+                                        <div class="modal-header">
+                                            <div class="h1 m-t-xs text-navy">
+                                				<span class="loading hamburger"></span>
+                            				</div>
+                                        </div>
+                                        <div class="modal-body" style="text-align:center">
+                                        	<p><strong>엑셀 다운로드 중 입니다.</strong></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">확인</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+							
+							
+							
+							
+								
+								
+								
+								
+								
 								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
+									<table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;">
 															
 										<colgroup>
 											<col width="40px;">
@@ -361,13 +424,15 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script> 
+	
 	<!-- S: 추가 js-->
 	<!-- radioBox-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<!-- datePicker-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	
-
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	
+	<!-- file download -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>
 
 	<script>
 
@@ -379,14 +444,6 @@
 				radioClass : 'iradio_square-green'
 			});
 			
-			//checkbox 전체 선택/해제 이벤트
- 			$('#icheckAll').on('ifChecked', function(event){
-				$('.chksquare').iCheck('check'); 
-			});
-			$('#icheckAll').on('ifUnchecked', function(event){
-				$('.chksquare').iCheck('uncheck'); 
-			});
-
 			// 서치박스 리셋 라디오,셀렉스박스 제어를 위해 개별 파라미터 설정
 			$("#searchResetBtn").click(function(){	
 				$('#custname').val('');
@@ -413,13 +470,54 @@
 				autoclose : true
 			});
 			
+			
+			/*
+		    $("#btn-excel").on("click", function () {
+		    	debugger;
+		    	var $preparingFileModal = $("#preparing-file-modal");
+		        $preparingFileModal.dialog({ modal: true });
+		        $("#progressbar").progressbar({value: false});
+		        $.fileDownload("/custexcel", {
+		            successCallback: function (url) {
+		                $preparingFileModal.dialog('close');
+		            },
+		            failCallback: function (responseHtml, url) {
+		                $preparingFileModal.dialog('close');
+		                $("#error-modal").dialog({ modal: true });
+		            }
+		        });
+		        // 버튼의 원래 클릭 이벤트를 중지 시키기 위해 필요합니다.
+		        return false;
+		    });
+		    
+		    
+		    $("#testBtn").on("click", function () {
+		    	debugger;
+		    	var $testModal = $("#testModal");
+		        $testModal.dialog({ modal: true });
+		        $("#progressbar").progressbar({value: false});
+		        $.fileDownload("/custexcel", {
+		            successCallback: function (url) {
+		                $testModal.dialog('close');
+		            },
+		            failCallback: function (responseHtml, url) {
+		                $testModal.dialog('close');
+		                $("#error-modal").dialog({ modal: true });
+		            }
+		        });
+		        // 버튼의 원래 클릭 이벤트를 중지 시키기 위해 필요합니다.
+		        return false;
+		    });
+		    */
 		 
 		});
 
 	</script>
 	
-	<!-- E: 추가 js -->
-	
+
+
+
+
 	
 </body>
 </html>

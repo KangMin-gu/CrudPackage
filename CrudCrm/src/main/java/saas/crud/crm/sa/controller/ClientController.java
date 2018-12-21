@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.controller.UserController;
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.sa.dto.ClientCustDto;
 import saas.crud.crm.sa.dto.ClientDto;
 import saas.crud.crm.sa.dto.SalesCustDto;
@@ -25,15 +29,20 @@ import saas.crud.crm.sa.service.ClientService;
 @Controller
 public class ClientController {
 
-
+	
 	@Autowired 
 	private ClientService clientService;
+	@Autowired
+	private CodeService codeService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	//거래처리스트
 	@RequestMapping(value="/sales/client",method=RequestMethod.GET)
 	public ModelAndView authclientList(HttpServletRequest request) {
-		ModelAndView mView = clientService.svcCliList(request); 
+		ModelAndView mView = clientService.svcCliList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sa/client/clilist");
 		return mView;
 	}
@@ -56,11 +65,12 @@ public class ClientController {
 	
 	//거래처추가 form //세션값으로 서비스 x 바로 해당 페이지로 
 	@RequestMapping(value="/sales/client/post",method=RequestMethod.GET)
-	public ModelAndView authclientInsert(HttpServletRequest request) {		
+	public ModelAndView authclientForm(HttpServletRequest request,@ModelAttribute ClientDto clientDto) {		
 		
 		Map<String,String> defaultMap = new HashMap<String,String>();
 		ModelAndView mView= new ModelAndView();		
-		
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		defaultMap.put("USERNO", request.getSession().getAttribute("USERNO").toString());
 		defaultMap.put("USERNAME", request.getSession().getAttribute("USERNAME").toString());
 		mView.addObject("clientInsert",defaultMap);

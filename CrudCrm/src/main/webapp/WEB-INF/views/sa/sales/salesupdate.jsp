@@ -91,13 +91,18 @@
 													<th>현단계<sup>*</sup></th>
 													<td>
 														<select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
-															<option value="1" ${salesUpdate.SALESTATE eq "1" ? "selected" :""}>계약성공종료</option>
-															<option value="2" ${salesUpdate.SALESTATE eq "2" ? "selected" :""}>계약중</option>
-															<option value="3" ${salesUpdate.SALESTATE eq "3" ? "selected" :""}>제안서제출</option>
-															<option value="4" ${salesUpdate.SALESTATE eq "4" ? "selected" :""}>접촉중</option>
-															<option value="5" ${salesUpdate.SALESTATE eq "5" ? "selected" :""}>문의</option>
-															<option value="6" ${salesUpdate.SALESTATE eq "6" ? "selected" :""}>중도포기</option>
-															<option value="7" ${salesUpdate.SALESTATE eq "7" ? "selected" :""}>경쟁실패</option>
+														
+															<c:forEach var="state" items="${STATE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${salesUpdate.SALESTATE eq actGrade.codeval}">
+                                                            			<option selected label="${state.codename }" value="${state.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${state.codename }" value="${state.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
+														
 														</select>
 													</td>
 												</tr>
@@ -229,7 +234,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>NEEDS</th>
+													<th>요구사항</th>
 													<td>
 														<textarea name="need" id="need" class="form-control" style="resize: none;" rows="4">${salesUpdate.NEED }</textarea>
 													</td>
@@ -257,7 +262,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>SOULTION</th>
+													<th>해결방안</th>
 													<td>
 														<textarea class="form-control" style="resize: none;" rows="4" id="solution" name="solution">${salesUpdate.SOLUTION }</textarea>
 													</td>

@@ -33,7 +33,8 @@ public class MailScheduler {
 	@Autowired
 	private MailDao mailDao;
 	
-	@Scheduled(cron="*/30 * * * * *")
+//	@Scheduled(cron="*/30 * * * * *")
+	@Scheduled(cron="30 14 * * * *")//삭제 후 윗코드 주석 제거 요망
 	public void sendmail() throws Exception {
 		boolean isValid = false;
 

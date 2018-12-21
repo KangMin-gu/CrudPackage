@@ -42,12 +42,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dao.CompanyDao;
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.nt.dao.NoteDao;
+import saas.crud.crm.sa.dao.ClientDao;
+import saas.crud.crm.sa.dao.SalesDao;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.vc.controller.VocController;
 
@@ -66,13 +69,19 @@ public class ExcelDownLoad {
 	private CompanyDao companyDao;
 	@Autowired
 	private SvDao svDao;
+	@Autowired
+	private SalesDao saDao;
+	@Autowired
+	private ClientDao cliDao;
+	
 	
 	//고객목록 대용량 엑셀 다운로드
 	@RequestMapping(value = "/custexcel", method = RequestMethod.GET)
 	public void ccc(HttpServletRequest request, HttpServletResponse response) {
+					
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		Map<String, Object> searchVal = crud.searchParam(request);
-		searchVal.put("infoagree", 0);
+//		searchVal.put("infoagree", 0);
 		List<Map<String, Object>> note = custDao.custList(searchVal);
 		
 		//SXSSF 방식 엑셀 생성 
@@ -156,18 +165,18 @@ public class ExcelDownLoad {
 		
 			
 			//데이터 칼럼에 맞춰 바인딩
-			for (int rowNum = 1; rowNum < note.size(); rowNum++) {			
+			for (int rowNum = 1; rowNum <= note.size(); rowNum++) {			
 				row = sheet.createRow(rowNum+1);			
-				String custName = crud.getMapValueNullCheck(note.get(rowNum), "CUSTNAME");
-				String deptName = crud.getMapValueNullCheck(note.get(rowNum), "DEPTNAME");
-				String duty = crud.getMapValueNullCheck(note.get(rowNum), "DUTY");
-				String mobile = crud.getMapValueNullCheck(note.get(rowNum), "MOBILE");
-				String email = crud.getMapValueNullCheck(note.get(rowNum), "EMAIL");
-				String owner_ = crud.getMapValueNullCheck(note.get(rowNum), "OWNER_");
-				String custGubun = crud.getMapValueNullCheck(note.get(rowNum), "CUSTGUBUN");
-				String custGrade = crud.getMapValueNullCheck(note.get(rowNum), "CUSTGRADE");
-				String infoAgree = crud.getMapValueNullCheck(note.get(rowNum), "INFOAGREE");
-				String regdate = crud.getMapValueNullCheck(note.get(rowNum), "REGDATE");
+				String custName = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTNAME");
+				String deptName = crud.getMapValueNullCheck(note.get(rowNum-1), "DEPTNAME");
+				String duty = crud.getMapValueNullCheck(note.get(rowNum-1), "DUTY");
+				String mobile = crud.getMapValueNullCheck(note.get(rowNum-1), "MOBILE");
+				String email = crud.getMapValueNullCheck(note.get(rowNum-1), "EMAIL");
+				String owner_ = crud.getMapValueNullCheck(note.get(rowNum-1), "OWNER_");
+				String custGubun = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTGUBUN");
+				String custGrade = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTGRADE");
+				String infoAgree = crud.getMapValueNullCheck(note.get(rowNum-1), "INFOAGREE");
+				String regdate = crud.getMapValueNullCheck(note.get(rowNum-1), "REGDATE");
 
 				cell = row.createCell(0);
 				cell.setCellValue(custName);
@@ -656,17 +665,17 @@ public class ExcelDownLoad {
 			
 				
 				//데이터 칼럼에 맞춰 바인딩
-				for (int rowNum = 1; rowNum < note.size(); rowNum++) {			
+				for (int rowNum = 1; rowNum <= note.size(); rowNum++) {			
 					row = sheet.createRow(rowNum+1);			
-					String rcvName = crud.getMapValueNullCheck(note.get(rowNum), "RCVNAME");
-					String rcvType = crud.getMapValueNullCheck(note.get(rowNum), "RCVTYPE_");
-					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum), "RCVCHANNEL_");
-					String custName = crud.getMapValueNullCheck(note.get(rowNum), "CUSTNO_");
-					String cliName = crud.getMapValueNullCheck(note.get(rowNum), "CLINO_");
-					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum), "RCVDATE_");
-					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum), "RCVOWNER_");
-					String ractOwner = crud.getMapValueNullCheck(note.get(rowNum), "RACTOWNER_");
-					String prcState = crud.getMapValueNullCheck(note.get(rowNum), "PRCSTATE_");
+					String rcvName = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVNAME");
+					String rcvType = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVTYPE_");
+					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVCHANNEL_");
+					String custName = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTNO_");
+					String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINO_");
+					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVDATE_");
+					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVOWNER_");
+					String ractOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "RACTOWNER_");
+					String prcState = crud.getMapValueNullCheck(note.get(rowNum-1), "PRCSTATE_");
 
 					cell = row.createCell(0);
 					cell.setCellValue(rcvName);
@@ -748,4 +757,502 @@ public class ExcelDownLoad {
 				}
 			}
 		}
+		
+		
+		
+		//영업목록 엑셀 다운로드 
+		@RequestMapping(value = "/salesexcel", method = RequestMethod.GET)
+		public void salesExcel(HttpServletRequest request, HttpServletResponse response) {
+			int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+			Map<String, Object> searchVal = crud.searchParam(request);
+			List<Map<String, Object>> note = saDao.salesList(searchVal);
+			
+			//SXSSF 방식 엑셀 생성 
+			SXSSFWorkbook wb = new SXSSFWorkbook();
+			SXSSFCell cell;
+			SXSSFSheet sheet = wb.createSheet();
+			SXSSFRow row = sheet.createRow(0);
+			CellStyle style = wb.createCellStyle();
+			CellStyle columnColor = wb.createCellStyle();
+			CellStyle headerColor = wb.createCellStyle();
+			
+			style.setBorderBottom(CellStyle.BORDER_THIN);
+			style.setBorderLeft(CellStyle.BORDER_THIN);	// 셀 좌측에 얇은 실선 적용.
+			style.setBorderRight(CellStyle.BORDER_THIN);	// 셀 우측에 얇은 실선 적용.
+			style.setBorderTop(CellStyle.BORDER_THIN);	// 셀 윗쪽에 얇은 실선 적용.
+			columnColor.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+			columnColor.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			columnColor.setAlignment(CellStyle.ALIGN_CENTER);
+			
+			//시트이름생성
+			//Sheet sh = wb.createSheet("First sheet");
+
+			cell = row.createCell(0);
+			cell.setCellValue("영업목록");
+			cell.setCellStyle(columnColor);
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+			
+			
+			row = sheet.createRow(1);
+			cell = row.createCell(0);
+			cell.setCellValue("영업건명");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(1);
+			cell.setCellValue("거래처명");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(2);
+			cell.setCellValue("예상수주일");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(3);
+			cell.setCellValue("현단계");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+			cell = row.createCell(4);
+			cell.setCellValue("영업담당자");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+		
+			
+			try {
+			
+				
+				//데이터 칼럼에 맞춰 바인딩
+				for (int rowNum = 1; rowNum <= note.size(); rowNum++) {			
+					row = sheet.createRow(rowNum+1);			
+					String saleName = crud.getMapValueNullCheck(note.get(rowNum-1), "SALENAME");
+					String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINAME");
+					String fordDate = crud.getMapValueNullCheck(note.get(rowNum-1), "FORDDATE");
+					String saleState = crud.getMapValueNullCheck(note.get(rowNum-1), "SALESTATE");
+					String userName = crud.getMapValueNullCheck(note.get(rowNum-1), "USERNAME");
+					
+
+					cell = row.createCell(0);
+					cell.setCellValue(saleName);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(1);
+					cell.setCellValue(cliName);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(2);
+					cell.setCellValue(fordDate);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(3);
+					cell.setCellValue(saleState);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(4);
+					cell.setCellValue(userName);
+					cell.setCellStyle(style);
+					
+
+																					
+				}
+				
+					
+				//여기서부터 다운로드 
+				response.setHeader("Set-Cookie", "fileDownload=true; path=/");
+				String fileDate = crud.fileSearchKey(request);	
+				String excelfileName = fileDate+"_영업목록.xlsx";
+				response.setHeader("Content-Disposition", String.format("attachment; filename=\""+excelfileName+"\""));
+				wb.write(response.getOutputStream());
+
+			} catch (Exception e) {
+				response.setHeader("Set-Cookie", "fileDownload=false; path=/");
+				response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+				response.setHeader("Content-Type", "text/html; charset=utf-8");
+				
+				logger.debug("error---------------떨어");
+				e.printStackTrace();
+				OutputStream out = null;
+				try {
+					out = response.getOutputStream();
+					logger.debug("error---------------");
+					byte[] data = new String("fail..").getBytes();
+					out.write(data, 0, data.length);
+				} catch (Exception ignore) {
+					ignore.printStackTrace();
+				} finally {
+					if (out != null)
+						try {
+							out.close();
+						} catch (Exception ignore) {
+							ignore.printStackTrace();
+						}
+				}
+
+			} finally {
+				// 디스크 적었던 임시파일을 제거합니다.
+				wb.dispose();
+
+				try {
+					wb.close();
+				} catch (Exception ignore) {
+					ignore.printStackTrace();
+				}
+			}
+
+
+		}
+		
+		//거래처목록 엑셀 다운로드
+		@RequestMapping(value = "/cliexcel", method = RequestMethod.GET)
+		public void clientExcel(HttpServletRequest request, HttpServletResponse response) {
+			int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+			Map<String, Object> searchVal = crud.searchParam(request);
+			List<Map<String, Object>> note = cliDao.clientList(searchVal);
+
+			//SXSSF 방식 엑셀 생성 
+			SXSSFWorkbook wb = new SXSSFWorkbook();
+			SXSSFCell cell;
+			SXSSFSheet sheet = wb.createSheet();
+			SXSSFRow row = sheet.createRow(0);
+			CellStyle style = wb.createCellStyle();
+			CellStyle columnColor = wb.createCellStyle();
+			CellStyle headerColor = wb.createCellStyle();
+
+			style.setBorderBottom(CellStyle.BORDER_THIN);
+			style.setBorderLeft(CellStyle.BORDER_THIN);	// 셀 좌측에 얇은 실선 적용.
+			style.setBorderRight(CellStyle.BORDER_THIN);	// 셀 우측에 얇은 실선 적용.
+			style.setBorderTop(CellStyle.BORDER_THIN);	// 셀 윗쪽에 얇은 실선 적용.
+			columnColor.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+			columnColor.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			columnColor.setAlignment(CellStyle.ALIGN_CENTER);
+
+			//시트이름생성
+			//Sheet sh = wb.createSheet("First sheet");
+
+			cell = row.createCell(0);
+			cell.setCellValue("거래처목록");
+			cell.setCellStyle(columnColor);
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+
+			row = sheet.createRow(1);
+			cell = row.createCell(0);
+			cell.setCellValue("거래처명");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(1);
+			cell.setCellValue("거래처호칭");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(2);
+			cell.setCellValue("주소");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(3);
+			cell.setCellValue("업종");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(4);
+			cell.setCellValue("담당자");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(5);
+			cell.setCellValue("중요도");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(6);
+			cell.setCellValue("밀착도");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+
+			cell = row.createCell(7);
+			cell.setCellValue("거래처메모");
+			cell.setCellStyle(style);
+			cell.setCellStyle(columnColor);
+			
+
+			try {
+
+
+				//데이터 칼럼에 맞춰 바인딩
+				for (int rowNum = 1; rowNum <= note.size(); rowNum++) {			
+					row = sheet.createRow(rowNum+1);			
+					String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINAME");
+					String callName = crud.getMapValueNullCheck(note.get(rowNum-1), "CALLNAME");
+					String addr = crud.getMapValueNullCheck(note.get(rowNum-1), "ADDR");
+					String bsType = crud.getMapValueNullCheck(note.get(rowNum-1), "BSTYPE");
+					String userName = crud.getMapValueNullCheck(note.get(rowNum-1), "USERNAME");
+					String importance = crud.getMapValueNullCheck(note.get(rowNum-1), "IMPORTANCE");
+					String friendly = crud.getMapValueNullCheck(note.get(rowNum-1), "FRIENDLY");
+					String memo = crud.getMapValueNullCheck(note.get(rowNum-1), "MEMO");
+
+					cell = row.createCell(0);
+					cell.setCellValue(cliName);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(1);
+					cell.setCellValue(callName);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(2);
+					cell.setCellValue(addr);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(3);
+					cell.setCellValue(bsType);
+					cell.setCellStyle(style);
+
+					cell = row.createCell(4);
+					cell.setCellValue(userName);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(5);
+					cell.setCellValue(importance);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(6);
+					cell.setCellValue(friendly);
+					cell.setCellStyle(style);
+					
+					cell = row.createCell(7);
+					cell.setCellValue(memo);
+					cell.setCellStyle(style);
+
+
+				}
+
+
+				//여기서부터 다운로드 
+				response.setHeader("Set-Cookie", "fileDownload=true; path=/");
+				String fileDate = crud.fileSearchKey(request);	
+				String excelfileName = fileDate+"_거래처목록.xlsx";
+				response.setHeader("Content-Disposition", String.format("attachment; filename=\""+excelfileName+"\""));
+				wb.write(response.getOutputStream());
+
+			} catch (Exception e) {
+				response.setHeader("Set-Cookie", "fileDownload=false; path=/");
+				response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+				response.setHeader("Content-Type", "text/html; charset=utf-8");
+
+				logger.debug("error---------------떨어");
+				e.printStackTrace();
+				OutputStream out = null;
+				try {
+					out = response.getOutputStream();
+					logger.debug("error---------------");
+					byte[] data = new String("fail..").getBytes();
+					out.write(data, 0, data.length);
+				} catch (Exception ignore) {
+					ignore.printStackTrace();
+				} finally {
+					if (out != null)
+						try {
+							out.close();
+						} catch (Exception ignore) {
+							ignore.printStackTrace();
+						}
+				}
+
+			} finally {
+				// 디스크 적었던 임시파일을 제거합니다.
+				wb.dispose();
+
+				try {
+					wb.close();
+				} catch (Exception ignore) {
+					ignore.printStackTrace();
+				}
+			}
+
+
+		}	
+		
+		
+		
+		//거래처목록 엑셀 다운로드
+				@RequestMapping(value = "/ajaxCliexcel", method = RequestMethod.GET)
+				@ResponseBody
+				public void ajaxClientExcel(HttpServletRequest request, HttpServletResponse response) {
+					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@excel");
+					
+					int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+					Map<String, Object> searchVal = crud.searchParam(request);
+					List<Map<String, Object>> note = cliDao.clientList(searchVal);
+
+					//SXSSF 방식 엑셀 생성 
+					SXSSFWorkbook wb = new SXSSFWorkbook();
+					SXSSFCell cell;
+					SXSSFSheet sheet = wb.createSheet();
+					SXSSFRow row = sheet.createRow(0);
+					CellStyle style = wb.createCellStyle();
+					CellStyle columnColor = wb.createCellStyle();
+					CellStyle headerColor = wb.createCellStyle();
+
+					style.setBorderBottom(CellStyle.BORDER_THIN);
+					style.setBorderLeft(CellStyle.BORDER_THIN);	// 셀 좌측에 얇은 실선 적용.
+					style.setBorderRight(CellStyle.BORDER_THIN);	// 셀 우측에 얇은 실선 적용.
+					style.setBorderTop(CellStyle.BORDER_THIN);	// 셀 윗쪽에 얇은 실선 적용.
+					columnColor.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+					columnColor.setFillPattern(CellStyle.SOLID_FOREGROUND);
+					columnColor.setAlignment(CellStyle.ALIGN_CENTER);
+
+					//시트이름생성
+					//Sheet sh = wb.createSheet("First sheet");
+
+					cell = row.createCell(0);
+					cell.setCellValue("거래처목록");
+					cell.setCellStyle(columnColor);
+					sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+
+
+					row = sheet.createRow(1);
+					cell = row.createCell(0);
+					cell.setCellValue("거래처명");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(1);
+					cell.setCellValue("거래처호칭");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(2);
+					cell.setCellValue("주소");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(3);
+					cell.setCellValue("업종");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(4);
+					cell.setCellValue("담당자");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(5);
+					cell.setCellValue("중요도");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(6);
+					cell.setCellValue("밀착도");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+
+					cell = row.createCell(7);
+					cell.setCellValue("거래처메모");
+					cell.setCellStyle(style);
+					cell.setCellStyle(columnColor);
+					
+
+					try {
+
+
+						//데이터 칼럼에 맞춰 바인딩
+						for (int rowNum = 1; rowNum <= note.size(); rowNum++) {			
+							row = sheet.createRow(rowNum+1);			
+							String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINAME");
+							String callName = crud.getMapValueNullCheck(note.get(rowNum-1), "CALLNAME");
+							String addr = crud.getMapValueNullCheck(note.get(rowNum-1), "ADDR");
+							String bsType = crud.getMapValueNullCheck(note.get(rowNum-1), "BSTYPE");
+							String userName = crud.getMapValueNullCheck(note.get(rowNum-1), "USERNAME");
+							String importance = crud.getMapValueNullCheck(note.get(rowNum-1), "IMPORTANCE");
+							String friendly = crud.getMapValueNullCheck(note.get(rowNum-1), "FRIENDLY");
+							String memo = crud.getMapValueNullCheck(note.get(rowNum-1), "MEMO");
+
+							cell = row.createCell(0);
+							cell.setCellValue(cliName);
+							cell.setCellStyle(style);
+
+							cell = row.createCell(1);
+							cell.setCellValue(callName);
+							cell.setCellStyle(style);
+
+							cell = row.createCell(2);
+							cell.setCellValue(addr);
+							cell.setCellStyle(style);
+
+							cell = row.createCell(3);
+							cell.setCellValue(bsType);
+							cell.setCellStyle(style);
+
+							cell = row.createCell(4);
+							cell.setCellValue(userName);
+							cell.setCellStyle(style);
+							
+							cell = row.createCell(5);
+							cell.setCellValue(importance);
+							cell.setCellStyle(style);
+							
+							cell = row.createCell(6);
+							cell.setCellValue(friendly);
+							cell.setCellStyle(style);
+							
+							cell = row.createCell(7);
+							cell.setCellValue(memo);
+							cell.setCellStyle(style);
+
+
+						}
+
+
+						//여기서부터 다운로드 
+						response.setHeader("Set-Cookie", "fileDownload=true; path=/");
+						String fileDate = crud.fileSearchKey(request);	
+						String excelfileName = fileDate+"_거래처목록.xlsx";
+						response.setHeader("Content-Disposition", String.format("attachment; filename=\""+excelfileName+"\""));
+						wb.write(response.getOutputStream());
+						
+						
+
+					} catch (Exception e) {
+						response.setHeader("Set-Cookie", "fileDownload=false; path=/");
+						response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+						response.setHeader("Content-Type", "text/html; charset=utf-8");
+
+						logger.debug("error---------------떨어");
+						e.printStackTrace();
+						OutputStream out = null;
+						try {
+							out = response.getOutputStream();
+							logger.debug("error---------------");
+							byte[] data = new String("fail..").getBytes();
+							out.write(data, 0, data.length);
+						} catch (Exception ignore) {
+							ignore.printStackTrace();
+						} finally {
+							if (out != null)
+								try {
+									out.close();
+								} catch (Exception ignore) {
+									ignore.printStackTrace();
+								}
+						}
+						
+					} finally {
+						// 디스크 적었던 임시파일을 제거합니다.
+						wb.dispose();
+
+						try {
+							wb.close();
+						} catch (Exception ignore) {
+							ignore.printStackTrace();
+						}
+					}
+
+			
+				}
+		
+
+		
 }

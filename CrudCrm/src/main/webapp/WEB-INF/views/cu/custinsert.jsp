@@ -56,7 +56,7 @@
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12" style="background: #ffffff;">
 							
-							<form:form action="/cust/post" method="POST" id="command">
+							<form:form action="/cust/post" method="POST" id="command" commandName="custDto">
 							<div class="ibox">
 								<div class="ibox-title row">
 									<h4>기본정보</h4>
@@ -101,13 +101,11 @@
 												<tr>
 													<th>직장전화</th>
 													<td>
-														<!-- form select 공통으로 변경 -->
-														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
+														<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="wrktel1">
 															<option value="">선택</option>
-															<option value="02">02</option>
-															<option value="070">070</option>
-															<option value="010">010</option>
-														</select>
+                                                			<form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>
+													
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3" >
 													</td>
@@ -136,28 +134,26 @@
 													</td>
 												</tr>
 												<tr>
-													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
-													<td>													
-														<select class="form-control col-4 float-left mr-3 error validate phone1V required phone-group" style="height: 1.40rem" name="mobile1" id="mobile1" >
-															<option value="">선택</option>
-															<option value="010">010</option>
-															<option value="011">011</option>
-															<option value="017">017</option>
-														</select> 
-														<input type="text" class="form-control col-3 float-left mr-2 error validate phone1V phone-group required" name="mobile2" id="mobile2"  > 
-														<input type="text" class="form-control col-3 float-left error validate phone1V phone-group required" name="mobile3" id="mobile3"  >														
+													<th>휴대전화<sup>*</sup></th>
+													<td>																			
+                                                		<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mobile1">
+                                                			<option value="">선택</option>
+                                                			<form:options items="${MOBILE}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>
+														
+														<input type="text" class="form-control col-3 float-left mr-2 error validate phone2V phone-group required" name="mobile2" id="mobile2"  > 
+														<input type="text" class="form-control col-3 float-left error validate phone3V phone-group required" name="mobile3" id="mobile3"  >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1">
-															<option value="">선택</option>
-															<option value="02">02</option>
-															<option value="031">031</option>
-															<option value="070">070</option>
-														</select> 
+														 <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem"  path="wrkfax1" >
+														 	<option value="">선택</option>
+                                                   	 	 	<form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/>
+                                                		 </form:select>
+													
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3" >
 													</td>
@@ -251,11 +247,10 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
+															<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" path="homtel1">
 																<option value="">선택</option>
-																<option value="02">02</option>
-																<option value="031">031</option>
-															</select> 
+                                                				<form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 															<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" > 
 															<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3">
 														</td>
@@ -263,11 +258,10 @@
 													<tr>
 														<th>결혼여부</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="married" id="married">
+															<form:select class="form-control" style="height: 1.45rem" path="married">
 																<option value="0">선택</option>
-																<option value="1">미혼</option>
-																<option value="2">기혼</option>
-															</select>
+                                                				<form:options items="${MARRIED}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 													<tr>
@@ -298,43 +292,37 @@
 													<tr>
 														<th>성별</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="sex" id="sex">
+															<form:select class="form-control" style="height: 1.45rem" path="sex">
 																<option value="0">선택</option>
-																<option value="1">남자</option>
-																<option value="2">여자</option>
-															</select>
+                                                				<form:options items="${SEX}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 													<tr>
 														<th>발송처</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="mailto" id="mailto">
-																<option value="0" >선택</option>
-																<option value="1">자택</option>
-																<option value="2">직장</option>
-															</select>	
+															<form:select class="form-control" style="height: 1.45rem" path="mailto">
+																<option value="0">선택</option>
+                                                				<form:options items="${MAILTO}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
-																<option value="0" >선택</option>
-																<option value="1">일반</option>
-																<option value="2">VIP</option>
-																<option value="3">VVIP</option>
-															</select>
+															<form:select class="form-control" style="height: 1.52rem" path="custgrade">
+																<option value="0">선택</option>
+                                                				<form:options items="${CUSTGRADE}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 													<tr>
 														<th>회원구분</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
+															<form:select class="form-control" style="height: 1.45rem" path="custgubun">
 																<option value="0">선택</option>
-																<option  value="1">회원</option>
-																<option  value="2">비회원</option>
-																<option  value="3">탈퇴회원</option>
-															</select>
+                                                				<form:options items="${CUSTGUBUN}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 												</tbody>
@@ -359,11 +347,10 @@
 													<tr>
 														<th>양력/음력</th>
 														<td>
-															<select class="form-control" style="height: 1.45rem" name="solar" id="solar">
+															<form:select class="form-control" style="height: 1.45rem" path="solar">
 																<option value="0">선택</option>
-																<option value="1">양력</option>
-																<option value="2">음력</option>
-															</select>
+                                                				<form:options items="${SOLAR}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 													<tr>
@@ -375,10 +362,10 @@
 													<tr>
 														<th class="border-bottom-0">활동등급</th><!-- 컬럼생성필요 -->
 														<td class="border-bottom-0">
-															<select class="form-control" style="height: 1.45rem" name="actgrade" id="actgrade">
+															<form:select class="form-control" style="height: 1.45rem" path="actgrade">
 																<option value="0">선택</option>
-																<option value="1">우수</option>
-															</select>
+                                                				<form:options items="${ACTGRADE}" itemLabel="codename" itemValue="codeval"/>
+                                                			</form:select>	
 														</td>
 													</tr>
 												</tbody>

@@ -20,7 +20,6 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -291,7 +290,6 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 	
 
 </body>

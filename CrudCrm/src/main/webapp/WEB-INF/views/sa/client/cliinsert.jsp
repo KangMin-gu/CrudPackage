@@ -257,10 +257,10 @@
 												<tr>
 													<th>팩스번호</th>
 													<td>
-														<form:select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" path="faxtel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" path="faxtel1">
 															<option value="">선택</option>
-                                                			<form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/>
-                                                		</form:select>	
+                                                			<%-- <form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/> --%>
+                                                		</select>	
 													
 														<!-- <select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
 															<option value="">선택</option>

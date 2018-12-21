@@ -573,9 +573,8 @@ public class NoteServiceImpl implements NoteService{
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
 		List<MultipartFile> mFile = null;
 		MultipartFile sFile = null;
-		//파일테이블 업로드 실행
-		if(fileUpload != null) {			
 		
+
 		//받는 사람 이름,유저넘버,이메일이 넘어옴 
 		String[] toUserEmail = request.getParameterValues("touser"); 
 		String[] ccUserEmail = request.getParameterValues("ccuser");
@@ -716,11 +715,11 @@ public class NoteServiceImpl implements NoteService{
 					
 					//첨부파일이 없을때 
 					if(orgFileName.length() == 0 && !whiteListFlag && whiteSizeFlag) {
-						ntDao.noteLee(map);	
+						ntDao.noteSendMail(map);	
 					}
 					//첨부파일이 있을때 
 					if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
-						ntDao.noteLee(map);
+						ntDao.noteSendMail(map);
 					}
 					
 					//참조 유저가 있다면, 
@@ -756,11 +755,11 @@ public class NoteServiceImpl implements NoteService{
 						
 						//첨부파일이 없을때 
 						if(orgFileName.length() == 0 && !whiteListFlag && whiteSizeFlag) {
-							ntDao.noteLee(map);	
+							ntDao.noteSendMail(map);	
 						}
 						//첨부파일이 있을때 
 						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
-							ntDao.noteLee(map);
+							ntDao.noteSendMail(map);
 						}
 						
 							}

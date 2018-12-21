@@ -69,9 +69,11 @@
 			<if test="friendly != null and friendly != 0">
 			AND FRIENDLY = #{friendly}
 			</if>
-		) T 
+		) T
+	<if test="endRowNum != null">	 
 	WHERE 
 		ROWNUM between #{startRowNum} and #{endRowNum}	
+	</if>
 	</select>
 	
 	<!-- 거래처상세 -->	

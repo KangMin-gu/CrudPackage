@@ -32,8 +32,6 @@
 		//내정보 비밀번호 
 		var passwordPattern = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;	//숫자,특수문자 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상입력
 	
-			
-		
 		var res;//true or false
 		var value = $('[name="'+id+'"]').val();
 		var length = $('[name="'+id+'"]').length;

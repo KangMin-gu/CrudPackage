@@ -86,7 +86,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control" disabled name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control error required validate name " disabled name="username" id="username" value="${user.USERNAME}" ></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>

@@ -1,6 +1,8 @@
 package saas.crud.crm.cu.controller;
 
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.controller.UserController;
+import saas.crud.crm.au.dto.UserDto;
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
 import saas.crud.crm.cu.service.CustService;
@@ -26,6 +30,8 @@ public class CustController {
 	
 	@Autowired
 	private CustService custService;
+	@Autowired
+	private CodeService codeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -34,6 +40,8 @@ public class CustController {
 	@RequestMapping(value="/cust", method=RequestMethod.GET)
 	public ModelAndView authcustList(HttpServletRequest request) {
 		ModelAndView mView = custService.svcCustList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cu/custlist");
 		return mView;
 	}
@@ -42,6 +50,8 @@ public class CustController {
 	@RequestMapping(value="/cust", method=RequestMethod.POST)
 	public ModelAndView authcustListSearch(HttpServletRequest request) {
 		ModelAndView mView = custService.svcCustList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cu/custlist");
 		return mView;
 	}
@@ -80,6 +90,8 @@ public class CustController {
 	@RequestMapping(value="/cust/post/{custno}", method=RequestMethod.GET)
 	public ModelAndView authcustDetailForm(HttpServletRequest request, @PathVariable int custno) {
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.addObject("custUpdate",custService.svcCustUpdateForm(custno));
 		mView.setViewName("cu/custupdate");
 		return mView;
@@ -97,10 +109,12 @@ public class CustController {
 
 	//고객 insert 폼 	
 	@RequestMapping(value="/cust/post", method=RequestMethod.GET)
-	public ModelAndView authcustForm(HttpServletRequest request) {
-		ModelAndView mview = custService.svcCustForm(request);		
-		mview.setViewName("cu/custinsert");
-		return mview;
+	public ModelAndView authcustForm(HttpServletRequest request, @ModelAttribute CustDto custDto) {
+		ModelAndView mView = custService.svcCustForm(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("cu/custinsert");
+		return mView;
 	}
 	
 	//고객 insert (실행)	

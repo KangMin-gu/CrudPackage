@@ -53,7 +53,7 @@
 
 			<!-- S: 거래처관리 추가/수정 -->
 			<div class="wrapper wrapper-content  animated fadeInRight article">
-				<form:form id="command" action="/sales/client/post" method="POST">
+				<form:form id="command" action="/sales/client/post" method="POST" commandName="clientDto">
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12">
 							<div class="ibox">
@@ -164,14 +164,21 @@
 												<tr>
 													<th class="border-top-0">중요도</th>
 													<td class="border-top-0">
-														<select class="form-control" style="height: 23px;" id="importance" name="importance">
+														
+														<form:select class="form-control validate" style="height: 23px;" path="importance">
+															<option value="0">선택</option>
+                                                			<form:options items="${IMPORTANCE}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>	
+													
+													
+														<!-- <select class="form-control" style="height: 23px;" id="importance" name="importance">
 															<option value="0">선택</option>
 															<option value="1">A</option>
 															<option value="2">B</option>
 															<option value="3">C</option>
 															<option value="4">D</option>
 															<option value="5">E</option>
-														</select>
+														</select> -->
 													</td>
 												</tr>
 											</tbody>
@@ -194,12 +201,16 @@
 													<th>대표전화</th>
 													<td>
 														<!-- form select 공통으로 변경 --> 
-														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="telno1" name="telno1">
+														<select form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" path="telno1">
+															<option value="0">선택</option>
+                                                			<%-- <form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/> --%>
+                                                		<select>
+														<!-- <select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="telno1" name="telno1">														
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
-														</select> 
+														</select> --> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="telno2" name="telno2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="telno3" name="telno3">
 													</td>
@@ -211,14 +222,20 @@
 												<tr>
 													<th>회사규모</th>
 													<td>
-														<select class="form-control" style="height: 23px;" id="companysize" name="companysize">
+														<form:select class="form-control" style="height: 23px;" path="companysize">
+															<option value="0">선택</option>
+                                                			<form:options items="${COMPANYSIZE}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>
+													
+													
+														<!-- <select class="form-control" style="height: 23px;" id="companysize" name="companysize">
 															<option value="0">선택</option>
 															<option value="1">대기업</option>
 															<option value="2">중견기업</option>
 															<option value="3">중소기업</option>
 															<option value="4">소기업</option>
 															<option value="5">소상공인</option>
-														</select>
+														</select> -->
 													</td>
 												</tr>
 											</tbody>
@@ -240,12 +257,17 @@
 												<tr>
 													<th>팩스번호</th>
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
+														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" path="faxtel1">
+															<option value="">선택</option>
+                                                			<%-- <form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/> --%>
+                                                		</select>	
+													
+														<!-- <select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
 															<option value="">선택</option>
 															<option value="02">02</option>
 															<option value="070">070</option>
 															<option value="010">010</option>
-														</select> 
+														</select> --> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="faxtel2" name="faxtel2"> 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="faxtel3" name="faxtel3">
 													</td>
@@ -257,14 +279,19 @@
 												<tr>
 													<th>밀착도</th>
 													<td>
-														<select class="form-control" style="height: 23px;" id="friendly" name="friendly">
+														<form:select class="form-control" style="height: 23px;" path="friendly">
+															<option value="0">선택</option>
+                                                			<form:options items="${FRIENDLY}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>	
+													
+														<!-- <select class="form-control" style="height: 23px;" id="friendly" name="friendly">
 															<option value="0">선택</option>
 															<option value="1">A</option>
 															<option value="2">B</option>
 															<option value="3">C</option>
 															<option value="4">D</option>
 															<option value="5">E</option>
-														</select>
+														</select> -->
 													</td>
 												</tr>
 											</tbody>
@@ -286,12 +313,17 @@
 												<tr>
 													<th>핸드폰</th>
 													<td>
-														<select class="form-control col-3 float-left mr-2 validate phone1V phone-group" style="height: 23px;" id="mobile1" name="mobile1">
+														<form:select class="form-control col-3 float-left mr-2 validate phone1V phone-group" style="height: 23px;" path="mobile1">
+															<option value="">선택</option>
+                                                			<form:options items="${MOBILE1}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>	
+														
+														<!-- <select class="form-control col-3 float-left mr-2 validate phone1V phone-group" style="height: 23px;" id="mobile1" name="mobile1">
 															<option value=""></option>
 															<option value="010">010</option>
 															<option value="016">016</option>
 															<option value="017">017</option>
-														</select> 
+														</select>  -->
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="mobile2" name="mobile2"> 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="mobile3" name="mobile3">
 													</td>
@@ -303,11 +335,15 @@
 												<tr>
 													<th>국내/국외</th>
 													<td>
-														<select class="form-control" style="height: 23px;" id="internal" name="internal">
+														<form:select class="form-control" style="height: 23px;" path="internal">
+															<option value="0">선택</option>
+                                                			<form:options items="${INTERNAL}" itemLabel="codename" itemValue="codeval"/>
+                                                		</form:select>	
+														<!-- <select class="form-control" style="height: 23px;" id="internal" name="internal">
 															<oprtion value="0">선택</oprtion>
 															<option value="1">국내</option>
 															<option value="2">국외</option>
-														</select>
+														</select> -->
 													</td>
 												</tr>
 											</tbody>

@@ -16,22 +16,19 @@
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-<link href="/resources/font-awesome/css/font-awesome.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css"rel="stylesheet">
 
 <!-- Toastr style -->
-<link href="/resources/css/plugins/toastr/toastr.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css"rel="stylesheet">
 
-<link href="/resources/css/animate.css" rel="stylesheet">
-<link href="/resources/css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 
 <!-- S: 추가 CSS-->
-<link href="/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <!--radioBox-->
-<link href="/resources/css/plugins/datapicker/datepicker3.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!--datePicker-->
 <!-- E: 추가 CSS-->
 </head>
@@ -72,18 +69,19 @@
 								<div class="ibox-content row">
 								
 								
-									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+									<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
 										<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
 										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-	                              			 <a href="javascript:void(0)" class="note btn btn-primary">내부통지</a>
-	                              			 <a href="#" class="btn btn-primary">이메일</a>
-	                              			 <a href="#" class="btn btn-primary">SMS</a>												
+
+											<a href="/cust" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+	                              			<a href="#" class="note btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
+	                              			<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
+	                              			<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
-											<Button type="submit" class="btn btn-primary">삭 제</Button>					
-											<a href="/cust" class="btn btn-primary">목 록</a>
+											<Button type="submit" class="btn btn-primary">삭 제</Button>	
 										</div>
 										</form:form>
 									</div>
@@ -551,7 +549,7 @@
 																<tbody>			
 																<c:forEach var="svList" items="${custService}"  >
 																	<tr>
-												 						<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/sv/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+												 						<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
                                         								<td>${svList.RCVTYPE_ }</td>
                                         								<td>${svList.RACTCODE_ }</td>
                                         								<td>${svList.CUSTNO_ }</td>
@@ -750,11 +748,8 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	
-
 	<!-- S: 추가 js-->
-	<script src="/resources/js/plugins/iCheck/icheck.min.js"></script>
-	<!-- radioBox-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 
 	<script>
         $(document).ready(function () {

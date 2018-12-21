@@ -19,7 +19,7 @@
 <body class="gray-bg">
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
+        <div style="margin-top:100px;">
             <div>
 
                 <img src="${pageContext.request.contextPath}/resources/img/crud/login.png" alt="" />
@@ -36,14 +36,44 @@
                 <div class="form-group">
                     <input id="userpassword" name="userpassword" type="password" class="form-control" placeholder="비밀번호" required>
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>
-               
-                <p class="text-muted text-center"><small>고객센터 : 02-336-7800</small></p>   
-                <p class="text-muted text-center"><small>주소: 서울특별시 마포구 독막로 10 성지빌딩 5층 509호</small></p>           
+                <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>         
             </form:form>
-            <p class="m-t"> <small>Copyright CRUD XaaS SYSTEM &copy; 2018</small> </p>
+            <br/>
+            <div class="container">
+           		<div class="row justify-content-between">
+           			<div class="col-lg-4">공지사항</div>
+           			<div class="col-lg-4">
+           				<a class="btn btn-primary btn-xs" href="">더보기</a>
+           			</div>
+           		</div>
+           		<div class="row">
+           			<div class="col-lg-12">
+						<table class="table">
+							<colgroup>
+								<col style="width: 300px;">
+								<col style="width: 100px;">											
+							</colgroup>
+							<thead>
+								<tr>
+									<th>공지사항</th>
+									<th>더보기</th>
+								</tr>					
+							</thead>
+							<tbody>
+								<tr>
+									<td>[공지] 시스템 점검 예정</td>
+									<td>2018.12.25</td>
+								</tr>
+							</tbody>
+						</table>
+           			</div>
+           		</div>
+           	</div>
         </div>
     </div>
+    
+<p class="text-muted text-center"><small>고객센터 : 02-336-7800 주소: 서울특별시 마포구 독막로 10 성지빌딩 5층 509호</small></p>               
+<p class="text-muted text-center"> <small>Copyright CRUD XaaS SYSTEM &copy; 2018</small> </p>
 
     <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>

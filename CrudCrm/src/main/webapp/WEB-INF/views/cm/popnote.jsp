@@ -26,21 +26,19 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/chosen/chosen.css"
 	rel="stylesheet">
+	<style>
+body {
+	background-color: #f3f3f4;
+}
+</style>
 </head>
 
 <body>
 	<div id="wrapper">
-		<!-- leftside -->
-		
-		<!-- Top -->
-		<div id="page-wrapper" class="gray-bg">
-		
 			<!-- Content -->
 			<div class="wrapper wrapper-content">
 				<div class="row">
-			
-					
-					<div class="col-lg-10 animated fadeInRight">
+					<div class="col-lg-12 animated fadeInRight article">
 						<form:form action="/note/send" method="post"
 							enctype="multipart/form-data">
 							<div class="mail-box-header">
@@ -104,11 +102,13 @@
 										</div>
 									</div>
 								</div>
+								<!-- 
+										<a href="${url}" class="btn-primary confirm btn" id="confirm">Confirm</a>
+										 -->
 								<div class="mail-text h-200">
 									<textarea class="summernote" id="content" name="content"
 										style="height: 100px;">
-										
-										
+									
 										
 										</textarea>
 									<div class="clearfix"></div>
@@ -144,11 +144,8 @@
 			</div>
 			<!-- Content End -->
 
-			<!-- foot -->
-			<div class="footer">
-				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
-			</div>
-		</div>
+			
+		
 
 		
 	</div>
@@ -167,11 +164,18 @@
 	
 	$(document).ready(function() {
 		
-		 var openerHref = window.opener.location.href;
-		 
-		 var html = '<a href= ' + openerHref + ' class="btn-primary confirm btn" id="confirm">Confirm</a>';
-		 $('.summernote').summernote('code',html);
-		 
+		
+		
+		
+		var referer = window.opener.location.href;
+		
+		var emailTemplate = "";
+		emailTemplate += ''
+
+		$('.summernote').summernote();	
+		
+		$('.summernote').summernote('code',emailTemplate);
+		
 		//chosen
 		$('.chosen-select').chosen(
 				{
@@ -179,10 +183,9 @@
 					search_contains : true
 				}
 				);
+		
 		$('.note-editable').css('height','300px');
-		
-		
-		
+
 		$('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
@@ -190,11 +193,6 @@
 		
 		
 	});
-	
-	
-	
-	
-	
 	
 </script>
 </body>

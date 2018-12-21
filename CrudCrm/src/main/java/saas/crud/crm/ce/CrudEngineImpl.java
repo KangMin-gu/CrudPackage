@@ -49,7 +49,6 @@ public class CrudEngineImpl implements CrudEngine{
 		String imgPath = null;
 		boolean whiteListFlag = false;
 		boolean sizeFlag = false;
-		int FileNameSize = 0;
 		
 		List<MultipartFile> mFile = multiFile;
 		MultipartFile sFile = singleFile;
@@ -58,10 +57,9 @@ public class CrudEngineImpl implements CrudEngine{
 			
 			for(int i=0; i<mFile.size(); i++) {
 				String orgFileName = mFile.get(i).getOriginalFilename();
-				FileNameSize = orgFileName.length();
-				if(FileNameSize > 0) {
 				whiteListFlag = whiteFlag(orgFileName);
 				
+				//확장자가 올바르지 않으면 false로 떨궈서 alert() 타게함 
 				if(!whiteListFlag) {
 					buf.append("<script>alert('허가되지 않은 확장자 입니다.');");
 					buf.append("location.href='");
@@ -75,7 +73,8 @@ public class CrudEngineImpl implements CrudEngine{
 						out.flush();
 					} catch (IOException e) {					
 						e.printStackTrace();
-					}				
+					}	
+					
 				}else {
 					
 					long fileSize = mFile.get(i).getSize();
@@ -127,9 +126,8 @@ public class CrudEngineImpl implements CrudEngine{
 						fileInfo.setSiteid(siteId);
 						fileInfo.setFilesearchkey(fileSearchKey);
 						commonDao.fileUpload(fileInfo);
-						}
-					
 					}
+					
 				}
 			}//for
 			
@@ -235,10 +233,14 @@ public class CrudEngineImpl implements CrudEngine{
 	//확장자체크
 	@Override
 	public boolean whiteFlag(String orgFileName) {
+		
+		//aaaa,txt 형식으로 끊어서 배열에 집어넣음 
 		boolean whiteListFlag = false;
 		String[] arrWhiteList = whiteList.split(",");
+		
 		String extention = orgFileName.substring(orgFileName.lastIndexOf(".")+1,orgFileName.length());
 		for(String chker : arrWhiteList) {
+			//확장자를 비교해서 있으면 true로 떨굼 
 			if(chker.equals(extention)) {
 				whiteListFlag = true;
 			}
@@ -325,7 +327,7 @@ public class CrudEngineImpl implements CrudEngine{
 				return paging;
 	}
 	
-	//내부통지 사용자 번호 쿼터
+	//내부통지 주소 쿼터
 	@Override
 	public List<Integer> adressQuarter(String mailAdress) {
 		
@@ -334,6 +336,7 @@ public class CrudEngineImpl implements CrudEngine{
 		 *  형식을 [123@naver.com,123@naver.com,123@naver.com,123@naver.com] 으로 리스트 배열에 담아 리턴한다. 
 		 * 
 		 */
+		
 		List<Integer> mailTarget = new ArrayList<Integer>();
 			
 			String[] mailAdresses = mailAdress.split(";");
@@ -346,29 +349,8 @@ public class CrudEngineImpl implements CrudEngine{
 			
 			return  mailTarget;
 	}
-	@Override
-	public List<String> emailQuarter(String mailAdress) {
-		
-		/*
-		 *  메일에서 To 또는 CC  ex) 123@naver.com;123@naver.com;123@naver.com;123@naver.com
-		 *  형식을 [123@naver.com,123@naver.com,123@naver.com,123@naver.com] 으로 리스트 배열에 담아 리턴한다. 
-		 * 
-		 */
-		List<String> mailTarget = new ArrayList<String>();
-			
-		//; 기준으로 끊으면 111@naver.com 형태로 들어감
-			String[] mailAdresses = mailAdress.split(";");
-			
-			for(int i=0; i<mailAdresses.length; i++) {
-			    System.out.println("mailAdresses : " + mailAdresses[i]);
-			    
-			    String target = mailAdresses[i];
-			   
-			    mailTarget.add(target);
-			}
-			
-			return mailTarget;
-	}
+	
+
 
 	@Override
 	public String getMapValueNullCheck(Map target, String key) {

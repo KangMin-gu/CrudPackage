@@ -18,6 +18,11 @@
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet"> <!--datePicker-->
+<style>
+	.active{
+		background: black;
+	}
+</style>
 </head>
 
 <body>
@@ -38,7 +43,7 @@
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
 						<div class="mail-box-header">				
-							<form:form method="post" action="${pageContext.request.contextPath}/${url }">
+							<form:form method="post" action="${pageContext.request.contextPath}/${url}">
 									<div class="container-fluid">
 										<div class="row">
 											<div class="col-lg-3 "><h2>${NOTENAME } (${notReadVal })</h2></div> 
@@ -82,6 +87,8 @@
 								<div class="btn-group float-right">
 									<!--   <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
                         			<button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button> -->
+                        			
+                        			<!-- 페이징 버튼 강조 표시 -->
 									<ul class="pagination">
 										<c:choose>
 											<c:when test="${page.startPageNum ne 1 }">
@@ -98,7 +105,7 @@
 											end="${page.endPageNum }">
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
-													<li class="active"><a
+													<li class="active page-item"><a class="page-link"
 														href="${pageContext.request.contextPath}/${url }?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
 												</c:when>
 												<c:otherwise>
@@ -161,13 +168,18 @@
 						</div>
 						
 						<div class="mail-box">							
+						
 							<table class="table table-hover table-mail">
 								<tbody>
 									<c:forEach var="tmp" items="${noteList }">
-										<tr<c:choose>
+										
+										<c:if test="${tmp.FILESEARCHKEY ne 1}">
+										<tr
+										<c:choose>
 	                 						<c:when test="${tmp.READCHEK eq 0 }">class="unread"</c:when>
 	                 						<c:otherwise>class="read"</c:otherwise>
-	                 					</c:choose>>
+	                 					</c:choose>
+	                 					>
 											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks" value="${tmp.NOTICEID }"></td>
 											<td class="mail-ontact">${tmp.FROMUSERNAME }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
 											<td class="mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
@@ -181,6 +193,7 @@
 											</td>
 											<td class="text-right"><c:if test="${tmp.FILESEARCHKEY ne NULL }"><i class="fa fa-paperclip"></i></c:if></td>
 										</tr>
+										</c:if>
 									</c:forEach>
 								</tbody>
 							</table>							
@@ -276,7 +289,7 @@ $("#trashChk").click(function(){
 		checkArr.push($(this).val());
 	});
 	var allData = {"checkArr": checkArr };
-	
+	debugger;
 	$.ajax({
         url:"trashchk",
         type:'GET',

@@ -1,5 +1,6 @@
 package saas.crud.crm.nt.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
+import saas.crud.crm.common.CommonDao;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.nt.dto.NoteDto;
@@ -24,6 +28,10 @@ public class NoteServiceImpl implements NoteService{
 	
 	@Autowired
 	private NoteDao ntDao;
+	
+	//실험
+	@Autowired
+	private CommonDao commonDao;
 	
 	@Autowired
 	private CrudEngine crudEngine;
@@ -103,6 +111,9 @@ public class NoteServiceImpl implements NoteService{
 		return mView;
 	}
 
+	
+	
+
 	//보낸통지
 	@Override
 	public ModelAndView noteOutbox(HttpServletRequest request) {
@@ -176,6 +187,24 @@ public class NoteServiceImpl implements NoteService{
 		mView.addObject("NOTENAME","보낸 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		return mView;
+	}
+	
+	//상단 메세지버튼 클릭 시
+	@Override
+	public List<Map<String,Object>> noteSummary(HttpServletRequest request) {
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		List<Map<String,Object>> subject = ntDao.noteSummary(userNo);
+		
+		int size = subject.size();
+		String rltDate = null;
+		if(size > 0) {
+			for(int i = 0; i < size; i++) {
+				rltDate = subject.get(i).get("RLTDATE").toString();
+				// UTC로 나오는 부분으로 인해서 해당 부분으로 처리 추후 SQL에서 UTC 처리 예정
+				subject.get(i).put("RLTSTR", rltDate);
+			}
+		}
+		return subject;
 	}
 
 	//중요 통지
@@ -315,6 +344,8 @@ public class NoteServiceImpl implements NoteService{
 		noteCategory.setSiteid(siteId);
 		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
 		
+		
+		
 		mView.addObject("category", category);				
 		mView.addObject("url", "note/trash");		
 		mView.addObject("page", page); //페이징처리
@@ -330,8 +361,7 @@ public class NoteServiceImpl implements NoteService{
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
-		//전 경로에 pop이 포함되는지 
-		String referUrl = request.getHeader("referer");
+		String referUrl = request.getHeader("referUrl");
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> noteVal = new HashMap<>();
@@ -342,11 +372,14 @@ public class NoteServiceImpl implements NoteService{
 		//통지정보
 		Map<String, Object> note = ntDao.noteDetail(noteVal);
 		
-		System.out.println(note);
+		System.out.println("note :" +  note);
 		
 		//파일업로드
+		//if문 추가
+		if(note.get("FILESEARCHKEY") != null) {
 		String fileSearchKey = note.get("FILESEARCHKEY").toString();		
 		noteVal.put("filesearchkey", fileSearchKey);
+		}
 		
 		//첨부파일정보
 		List<Map<String, Object>> notefile = ntDao.noteFile(noteVal);
@@ -361,9 +394,8 @@ public class NoteServiceImpl implements NoteService{
 		mView.addObject("noteFile", notefile);
 		mView.addObject("ccList", ccList);
 		mView.addObject("toList", toList);
-		//전 경로 얻어옴 
 		mView.addObject("referUrl",referUrl);
-		
+
 		return mView;
 	}
 	
@@ -402,8 +434,11 @@ public class NoteServiceImpl implements NoteService{
 		for(int i = 0; i<noticeid.size(); i++) {
 			ntDto.setNoticeid(noticeid.get(i));
 			ntDao.noteTrashChk(ntDto);
+			//ntDao.noteTrashChkTwo(ntDto);
 		}		
 	}
+	
+	
 	
 	//통지 삭제
 	@Override
@@ -429,6 +464,34 @@ public class NoteServiceImpl implements NoteService{
 		}	
 		
 	}
+	// 이메일 ; 기준 자르기 
+	
+	@Override
+	public List<String> emailQuarter(String mailAdress) {
+		
+		/*
+		 *  메일에서 To 또는 CC  ex) 123@naver.com;123@naver.com;123@naver.com;123@naver.com
+		 *  형식을 [123@naver.com,123@naver.com,123@naver.com,123@naver.com] 으로 리스트 배열에 담아 리턴한다. 
+		 * 
+		 */
+		
+		List<String> mailTarget = new ArrayList<String>();
+			
+		//; 기준으로 끊으면 111@naver.com 형태로 들어감
+	
+			String[] mailAdresses = mailAdress.split(";");
+			
+			for(int i=0; i<mailAdresses.length; i++) {
+			    System.out.println("mailAdresses : " + mailAdresses[i]);
+			    
+			    String target = mailAdresses[i];
+			   
+			    mailTarget.add(target);
+			}
+			
+			return mailTarget;
+	}
+	
 	
 	//카테고리화면
 	@Override
@@ -453,7 +516,7 @@ public class NoteServiceImpl implements NoteService{
 	
 	
 	
-	//noteform.jsp에서 넘어온 값들 ; 셋팅 
+	//셀렉트박스에서 넘어온 값들 ; 붙여주기 
 	@Override
 	public HashMap<String,String> noteChosen(String[] userEmail){
 		HashMap<String,String> map = new HashMap<String,String>();
@@ -499,20 +562,19 @@ public class NoteServiceImpl implements NoteService{
 	//통지발송
 	@Override
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
-
+		
+		Boolean whiteListFlag = false;
+		Boolean whiteSizeFlag = false;
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
 		
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
-		
-		
 		List<MultipartFile> mFile = null;
 		MultipartFile sFile = null;
 		
-		
-	
+
 		//받는 사람 이름,유저넘버,이메일이 넘어옴 
 		String[] toUserEmail = request.getParameterValues("touser"); 
 		String[] ccUserEmail = request.getParameterValues("ccuser");
@@ -535,9 +597,9 @@ public class NoteServiceImpl implements NoteService{
 		//To ; 기준 끈기 (userNo)
 		List<Integer> toAdress = crudEngine.adressQuarter(toTarget);
 		//; 기준끊기 (Email)
-		List<String> cutterToEmail = crudEngine.emailQuarter(toUser);
+		List<String> cutterToEmail = emailQuarter(toUser);
 		//; 기준 끊기 (Name) 
-		List<String> cutterToName = crudEngine.emailQuarter(toName);
+		List<String> cutterToName = emailQuarter(toName);
 		
 		
 		
@@ -567,45 +629,68 @@ public class NoteServiceImpl implements NoteService{
 			ccName = ccTargetMap.get("name");
 			
 			//cc ; 기준 끊기 
-			
+
 			//; 기준끊기 (userno)
 			cutterCcAdress = crudEngine.adressQuarter(ccTarget);
 			//; 기준끊기 (Email)
-			cutterCcEmail = crudEngine.emailQuarter(ccUser);
+			cutterCcEmail = emailQuarter(ccUser);
 			//; 기준 끊기 (Name) 
-			cutterCcName = crudEngine.emailQuarter(ccName);
+			cutterCcName = emailQuarter(ccName);
 		}
 		
 		
 		
+		//확장자 체크, t_mail에 정보가  들어가지 않기 위해 값을 얻어옴 
+		String orgFileName = fileUpload.get(0).getOriginalFilename();
+		long fileSize = fileUpload.get(0).getSize();
 		
-		//파일테이블 업로드 실행
-		//fileUpload != null
-		if(fileUpload != null) {			
+		whiteListFlag = crudEngine.whiteFlag(orgFileName);		// 파일이없으면 null이니까 flase로 떨어짐 , 파일이있고 제대로 된거면 true로 떨어짐 
+	    whiteSizeFlag = crudEngine.whiteSizeFlag(fileSize);		
+		
+		
+
+		
+		//파일 업로드 실행 
+		if(orgFileName.length() > 0) {		
 			String fileSearchKey = crudEngine.fileSearchKey(request);
-			
 			System.out.println("fileSearchKey : " + fileSearchKey);
 			crudEngine.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
 			//crudEngine.fileUpload(response, multipartHttpServletRequest, mFile, sFile, fileSearchKey);
-			ntDto.setFilesearchkey(fileSearchKey);
+			
+			//파일이 잘못된 형식이면 fileSearchkey를 1로 만듬 
+			if(!whiteListFlag) {
+				ntDto.setFilesearchkey("1");	
+			}else {
+				ntDto.setFilesearchkey(fileSearchKey);
+			}
+			
 		}
 		
 		
 		
 		//통지등록, 리턴되는 값은 등록하는 사람의 통지 테이블에 자동증가된 값이 들어옴  (t_notice테이블에 등록) 
-		//게시글 번호랑 비슷함 
+		//파일이 정상인지 비정상인지 체크 여부 판단 값 
+		
+		
 		int noticeId = ntDao.noteSend(ntDto);
 		ntDto.setNoticeid(noticeId);
+		
+		
+		
 	
 	
 		//이메일 주소와 이름 구해옴 (보내는 사람) 
 		List<Map<String,String>> nameEmail = 
 		ntDao.noteEmail(ntDto.getUserno());
-			
-
 		
-		//userno 사이즈로 반복 
+		String fileSearchKey = ntDto.getFilesearchkey();
+	
+				//userno 사이즈로 반복 
 				for(int i=0; i<toAdress.size(); i++) {
+					//파일서치키가 있다면 
+					if(fileSearchKey != null){
+					map.put("fileSearchkey",fileSearchKey);
+					}	
 					//SITEID
 					map.put("siteId", siteId);
 					//제목
@@ -616,19 +701,31 @@ public class NoteServiceImpl implements NoteService{
 					map.put("toEmail",cutterToEmail.get(i));
 					//받는 사람 이름 
 					map.put("cstName",cutterToName.get(i));
+					//통지번호 
+					map.put("noticeNo",noticeId);
+					
 					
 					//보내는 사람 이름,보내는 사람 이메일 : TB980010테이블에서 가져옴 
 					map.put("userName", nameEmail.get(0).get("USERNAME"));
 					map.put("fromEmail",nameEmail.get(0).get("EMAIL") );
 					//보내는 사람 userNo
 					map.put("userNo",fromUserNo);
+					//받는 사람 userNo
+					map.put("toUserNo",toAdress.get(i));
 					
-					//t_mail에 넣음
-					ntDao.noteSendMail(map);	
+					//첨부파일이 없을때 
+					if(orgFileName.length() == 0 && !whiteListFlag && whiteSizeFlag) {
+						ntDao.noteLee(map);	
+					}
+					//첨부파일이 있을때 
+					if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
+						ntDao.noteLee(map);
+					}
 					
 					//참조 유저가 있다면, 
 					if(ccUserEmail != null) {
 						if(cutterCcAdress.size()>0) {
+							//참조 유저 수 만큼 다시 반복문을 돌림 
 						for(int j=0; j<cutterCcAdress.size(); j++) {
 						//SITEID
 						map.put("siteId", siteId);
@@ -638,19 +735,36 @@ public class NoteServiceImpl implements NoteService{
 						map.put("content",ntDto.getContent());
 						//받는 사람 이메일 
 						map.put("toEmail",cutterCcEmail.get(j));
+						
+						//파일서치키가 있다면 
+						if(fileSearchKey != null){
+							map.put("fileSearchkey",fileSearchKey);
+						}
+						
 						//받는 사람 이름 
 						map.put("cstName",cutterCcName.get(j));
-						
+						//통지번호 
+						map.put("noticeNo",noticeId);
 						//보내는 사람 이름,보내는 사람 이메일 : TB980010테이블에서 가져옴 
 						map.put("userName", nameEmail.get(0).get("USERNAME"));
 						map.put("fromEmail",nameEmail.get(0).get("EMAIL") );
 						//보내는 사람 userNo
 						map.put("userNo",fromUserNo);
+						//받는 사람 userNo
+						map.put("toUserNo",cutterCcAdress.get(j));
 						
-						ntDao.noteSendMail(map);	
+						//첨부파일이 없을때 
+						if(orgFileName.length() == 0 && !whiteListFlag && whiteSizeFlag) {
+							ntDao.noteLee(map);	
+						}
+						//첨부파일이 있을때 
+						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
+							ntDao.noteLee(map);
+						}
+						
 							}
 						// for문이 끝나면 리스트를 비움 
-							cutterCcAdress.clear();
+						cutterCcAdress.clear();
 						}
 					}
 				}
@@ -659,7 +773,7 @@ public class NoteServiceImpl implements NoteService{
 		
 		int chkcc = 1;
 		
-		//t_notice_02
+		//t_notice02
 		if( 1 <= toAdress.size()) {			
 			for(int i = 0; i<toAdress.size(); i++) {
 				//받아오는게 타겟 번호 = userno

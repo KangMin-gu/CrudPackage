@@ -1,5 +1,6 @@
 package saas.crud.crm.nt.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,14 @@ public interface NoteService {
 	public void noteDeleteChk(HttpServletRequest request, List<Integer> noticeid);
 	public void noteReturnChk(HttpServletRequest request, List<Integer> noticeid);
 	public ModelAndView noteSet(HttpServletRequest request);
-	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest);
 	
-	public Map<String,String> noteChosen(String[] userEmail);
+	
+	//수정 
+	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest);
+	//이메일,유저번호,이름 이어 붙이기 (;)
+	public HashMap<String,String> noteChosen(String[] userEmail);
+	//상단 메세지 버튼 팝업 
+	public List<Map<String,Object>> noteSummary(HttpServletRequest request);
+	//이메일 자르기 
+	public List<String> emailQuarter(String mailAdress);
 }

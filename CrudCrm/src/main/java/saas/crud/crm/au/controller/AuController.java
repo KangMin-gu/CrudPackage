@@ -164,6 +164,25 @@ public class AuController {
 		mView.setViewName("au/ma/mc/masterRead");
 		return mView;
 	}
+	// 내 정보
+	@RequestMapping(value="/myinfo",method=RequestMethod.GET)
+	public ModelAndView myInfoRead(HttpServletRequest request,@PathVariable int userNo) {
+		ModelAndView mView = auService.userRead(request, userNo);		
+		mView.setViewName("au/myinfo");
+		return mView;
+	}
+	//내정보 수정 (수정폼)
+	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.GET)
+	public ModelAndView myInfoReadSet(HttpServletRequest request,@PathVariable int userNo) {
+		ModelAndView mView = auService.userRead(request,userNo);
+		mView.setViewName("au/myinfoupdate");
+		return mView;
+	}
 	
-
+	//내정보 수정(수정실행)
+	@RequestMapping(value="/myinfo/post/{userno}",method=RequestMethod.POST)
+	public String myInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto) {
+		auService.userUpdate(request, userDto);
+		return "redirect:/myinfo";
+	}
 }

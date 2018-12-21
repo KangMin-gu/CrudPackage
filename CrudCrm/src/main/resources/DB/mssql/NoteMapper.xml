@@ -379,4 +379,22 @@
 		)
 	
 	</insert>
+	<!-- 메세지버튼 팝업 -->
+	<select id="noteSummary" resultType="hashMap" parameterType="int">
+		SELECT TOP(4)* FROM 
+		(
+		SELECT 
+		A.SUBJECT,
+		A.USERNAME,
+		A.RLTDATE,
+		A.NOTICENO,
+		A.USERNO,
+		B.ISDELETE 
+		FROM T_MAIL AS A
+		INNER JOIN T_NOTICE AS B ON B.NOTICEID = A.NOTICENO
+		)C
+		WHERE C.USERNO=#{USERNO} 
+		AND C.ISDELETE NOT IN(1,2)
+		ORDER BY C.RLTDATE DESC;
+	</select>
 </mapper>

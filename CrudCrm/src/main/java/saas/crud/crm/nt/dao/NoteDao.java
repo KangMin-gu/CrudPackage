@@ -38,5 +38,7 @@ public interface NoteDao {
 	
 	public List<Map<String,String>> noteEmail(int fromUser);
 	public List<Map<String,String>> adminMail();
-	public void noteSendMail(Map<String,Object> map);
+	public void noteLee(Map<String,Object> map);
+	//메세지버튼
+	public List<Map<String,Object>> noteSummary(int userNo);
 }

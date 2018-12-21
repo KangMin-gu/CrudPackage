@@ -193,18 +193,15 @@ public class NoteDaoImpl implements NoteDao{
 	
 	//t_mail_bak 테이블에 정보 삽입 
 	@Override
-	public void noteSendMail(Map<String, Object> map) {
-		session.insert("note.noteSendMail",map);
+	public void noteLee(Map<String, Object> map) {
+		session.insert("note.noteLee",map);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//상단 메세지버튼 팝업
+	@Override
+	public List<Map<String, Object>> noteSummary(int userNo) {
+		List<Map<String, Object>> note = session.selectList("note.noteSummary",userNo);
+		return note;
+	}
 	
 }

@@ -23,7 +23,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-    </div>
+    
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -78,11 +78,11 @@
                                             <td class="border-top-0">
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" id="startdate" name="startdate" value="${search.startdate }">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" id="startdate" name="startdate" value="${search.startdate }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" id="enddate" name="enddate" value="${search.enddate }">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" id="enddate" name="enddate" value="${search.enddate }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -214,14 +214,16 @@
                         </div>
                         </form:form>
                         <form:form action="${pageContext.request.contextPath}/campaign/delete" method="POST">
-                        <div class="ibox-content row border-top-0 pt-lg-0">
-                        	<div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/campaign/post" class="btn btn-primary">추가</a>
-                                <div class="d-inline-block mt-sx-1">
-                                	<a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                	<button class="btn btn-primary">삭제</button>
-                                </div>
-                            </div>
+                        <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+	                            	 <a href="${pageContext.request.contextPath}/campexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
+	                          	</div>													
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+									<a href="${pageContext.request.contextPath}/camp/post" class="btn btn-primary">추가</a>
+									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+								</div>
+							</div>
                             <div class="table-responsive">
                             <table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
                                 <colgroup>
@@ -325,8 +327,7 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
-	</div>
-
+</div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->

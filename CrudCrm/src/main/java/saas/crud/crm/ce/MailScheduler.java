@@ -39,7 +39,7 @@ public class MailScheduler {
 	@Autowired
 	private MailDao mailDao;
 	
-	@Scheduled(cron="*/10 * * * * *")
+	//@Scheduled(cron="*/10 * * * * *")
 	public void sendmail() throws Exception {
 		boolean isValid = false;
 

@@ -22,7 +22,7 @@
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 
-        </div>
+        
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -55,22 +55,23 @@
                             <h4>기본정보</h4>
                         </div>
                         
-                        <div class="ibox-content row">
-                        
-                            <div class="w-100 text-right mb-2">
-                            <form:form action="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" method="POST">
-                            	<c:if test="${sessionScope.CHKAUTH eq '30' }">
-                                	<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">목록</a>
-                                </c:if>
-                                
-                                	<a href="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
-                                	
-                                <c:if test="${sessionScope.CHKAUTH eq '30' }">
-									<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-								</c:if>
-							</form:form>	
-                            </div>
-                            
+                        <div class="ibox-content row tooltip-demo">
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                           		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                              		<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
+                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
+                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>                                    
+                                </div>
+                                <div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+                              		<form:form action="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" method="POST">
+                            			<c:if test="${sessionScope.CHKAUTH eq '30' }">
+                            				<a href="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
+											<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+										</c:if>
+									</form:form> 
+								</div>
+                        	</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>

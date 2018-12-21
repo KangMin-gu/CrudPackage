@@ -60,11 +60,8 @@
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
 	</div>
-
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-
-	
 
 	<!-- Mainly scripts -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/moment.min.js"></script>
@@ -78,11 +75,9 @@
 	<!-- Full Calendar -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 	<!-- 캘린더 이벤트 정의 -->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cal.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>
 	
 	<script>
-	
-	
 	
     $(document).ready(function() {    	
         

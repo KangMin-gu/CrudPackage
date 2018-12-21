@@ -67,10 +67,10 @@
 		,A.TELNO3
 		, A.TELNO1 + '-' + A.TELNO2 + '-' + A.TELNO3 AS TELNO
 		,A.USERDESC
-		,(SELECT SITENAME FROM Crud_SaaS.dbo.TB980070 B ON B.SITEID = A.SITEID) AS SITENAME
+		,(SELECT SITENAME FROM Crud_SaaS.dbo.TB980070 B WHERE B.SITEID = A.SITEID) AS SITENAME
 			FROM Crud_SaaS.dbo.TB980010 A
-			WHERE SITEID = #{siteid}
-			AND USERNO = #{userno}
+			WHERE A.SITEID = #{siteid}
+			AND A.USERNO = #{userno}
 			
 	</select>
 	

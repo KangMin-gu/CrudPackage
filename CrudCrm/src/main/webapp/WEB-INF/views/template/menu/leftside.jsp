@@ -19,7 +19,7 @@
                             <span class="text-muted text-xs block">${USERNAME }<b class="caret"></b></span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="dropdown-item" href="profile.html">내 정보</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/myinfo/${sessionScope.USERNO}">내 정보</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/note/inbox">내부통지</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>

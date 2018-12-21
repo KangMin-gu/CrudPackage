@@ -33,7 +33,7 @@
 			LEFT OUTER JOIN Crud_Saas.dbo.t_notice02 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS D ON B.USERNO = D.USERNO			
-			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND B.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
+			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND A.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
 				<if test="title != null">
 					AND A.TITLE LIKE '%'+#{title}+'%'
 				</if>

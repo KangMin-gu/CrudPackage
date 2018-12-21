@@ -165,7 +165,7 @@ public class AuController {
 		return mView;
 	}
 	// 내 정보
-	@RequestMapping(value="/myinfo",method=RequestMethod.GET)
+	@RequestMapping(value="/myinfo/{userNo}",method=RequestMethod.GET)
 	public ModelAndView myInfoRead(HttpServletRequest request,@PathVariable int userNo) {
 		ModelAndView mView = auService.userRead(request, userNo);		
 		mView.setViewName("au/myinfo");

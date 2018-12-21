@@ -138,7 +138,7 @@
 													
 													<th>입사일자</th>
 													<td>													
-														<input type="text" class="form-control float-left mr-2" id='enterdate' name='enterdate' value="${user.ENTERDATE}"/>
+														<input type="text" class="form-control float-left mr-2" disabled id='enterdate' name='enterdate' value="${user.ENTERDATE}"/>
 													</td>
 												</tr>	
 																						
@@ -162,8 +162,8 @@
 														<option value="070" ${user.TELNO1 eq "070" ? "selected" :""}>070</option>
 														<option value="010" ${user.TELNO1 eq "010" ? "selected" :""}>010</option>
 													</select>
-													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="telno2" id="telno2"  value="${user.TELNO2}">
-													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="telno3" id="telno3"  value="${user.TELNO3}">
+													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="telno2" id="telno2" value="${user.TELNO2}">
+													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="telno3" id="telno3" value="${user.TELNO3}">
 													</td>
 												</tr>
 												

@@ -23,7 +23,7 @@
 		var phone1Pattern = /^[\d]{2,4}$/; ///2~4자리
 		var phone2Pattern = /^[\d]{3,4}$/; ///3~4자리
 		var phone3Pattern = /^[\d]{4}$/; ///4자리
-		var checkPattern = /^[1-9]{1}[0-9]+$/; //CheckBox용 0을 제외한 1자리 숫자
+		var checkPattern = /^[1-9]{1}[0-9]{0,}$/; //CheckBox용 0을 제외한 1자리 숫자
 		var numberPattern = /^[0-9]+$/; // 숫자만 자릿수 X
 		var datePattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;  //-> YYYY-MM-DD형식
 //		var passwordPattern -> 문자 + 숫자 + 특문 포함해서 8글자 이상 띄어쓰기 X

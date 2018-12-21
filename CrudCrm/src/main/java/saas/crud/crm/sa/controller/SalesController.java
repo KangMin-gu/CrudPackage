@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.controller.UserController;
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.dto.SalesDto;
@@ -31,11 +35,16 @@ public class SalesController {
 	private SalesService salesService;
 	@Autowired
 	private CrudEngine crud;
-		
+	@Autowired
+	private CodeService codeService;
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	//영업리스트
 	@RequestMapping(value="/sales",method=RequestMethod.GET)
-	public ModelAndView authsalesList(HttpServletRequest request) {
+	public ModelAndView authsalesList(HttpServletRequest request) {		
 		ModelAndView mView = salesService.svcSalesList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sa/sales/saleslist");
 		return mView;
 	}
@@ -60,10 +69,12 @@ public class SalesController {
 	}	
 	//영업추가. 로그인한 본인 정보 바인딩. 서비스 X 
 	@RequestMapping(value="/sales/post",method=RequestMethod.GET)
-	public ModelAndView authsalesForm(HttpServletRequest request) {
+	public ModelAndView authsalesForm(HttpServletRequest request,@ModelAttribute SalesDto SalesDto) {
 			
 		Map<String,String> defaultMap = new HashMap<String,String>();
 		ModelAndView mView= new ModelAndView();		
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		
 		defaultMap.put("USERNO", request.getSession().getAttribute("USERNO").toString());
 		defaultMap.put("USERNAME", request.getSession().getAttribute("USERNAME").toString());
@@ -97,7 +108,9 @@ public class SalesController {
 		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());			
 		salesDto.setSiteid(siteid);
 		
-		ModelAndView mView = new ModelAndView(); 
+		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.addObject("salesUpdate",salesService.svcSalesDetailForm(salesDto));
 		mView.setViewName("sa/sales/salesupdate");
 		return mView;

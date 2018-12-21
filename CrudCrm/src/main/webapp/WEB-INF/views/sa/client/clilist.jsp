@@ -18,7 +18,8 @@
 <!-- S: 추가 CSS-->
 <!-- Toastr style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-
+<!-- Text spinners style -->
+<link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
 </head>
 
 <body>
@@ -67,8 +68,7 @@
 												</tr>
 												<tr>
 													<th>업종</th>
-													<td><input type="text" class="form-control reset"
-														id="bstype" name="bstype" value="${searchVal.bstype }"></td>
+													<td><input type="text" class="form-control reset" id="bstype" name="bstype" value="${searchVal.bstype }"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -91,12 +91,19 @@
 													<td>
 														<select class="form-control reset" style="height: 23px;" id="importance" name="importance">
 															<option value="0" ${searchVal.importance eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.importance eq "1" ? "selected" :""}>A</option>
-															<option value="2" ${searchVal.importance eq "2" ? "selected" :""}>B</option>
-															<option value="3" ${searchVal.importance eq "3" ? "selected" :""}>C</option>
-															<option value="4" ${searchVal.importance eq "4" ? "selected" :""}>D</option>
-															<option value="5" ${searchVal.importance eq "5" ? "selected" :""}>E</option>
-													</select></td>
+														
+															<c:forEach var="importance" items="${IMPORTANCE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${searchVal.importance eq importance.codeval}">
+                                                            			<option selected label="${importance.codename }" value="${importance.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${importance.codename }" value="${importance.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
+														</select>
+													</td>
 												</tr>
 											</tbody>
 										</table>
@@ -110,14 +117,14 @@
 											<tbody>
 												<tr>
 													<th>영업담당자</th>
-													<td>
+													<td style="padding-top: 7px; border-top-width: 1px;">
 														<div class="input-group">
-															<input class="reset owner" type="text" class="form-control" id="username" name="username" value="${searchVal.username }" readonly> 
+															<input type="text" class="form-control" autocomplete="off" name="username" value="${searchVal.username}" readonly>														 
 															<input class="reset" type="hidden" id="owner" name="owner" value="${searchVal.owner }" /> 
-															<span class="input-group-addon"> 
-																<a href="javascript:void(0);"><i class="fa fa-search owner"></i></a>
-															</span>
-														</div>
+                                                    		<span class="input-group-addon">
+                                                       			<a><i class="fa fa-search owner"></i></a>
+                                                    		</span>															
+														</div>													
 													</td>
 												</tr>
 												<tr>
@@ -125,11 +132,16 @@
 													<td>
 														<select class="form-control reset" style="height: 23px;" id="friendly" name="friendly">
 															<option value="0" ${searchVal.friendly eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${searchVal.friendly eq "1" ? "selected" :""}>A</option>
-															<option value="2" ${searchVal.friendly eq "2" ? "selected" :""}>B</option>
-															<option value="3" ${searchVal.friendly eq "3" ? "selected" :""}>C</option>
-															<option value="4" ${searchVal.friendly eq "4" ? "selected" :""}>D</option>
-															<option value="5" ${searchVal.friendly eq "5" ? "selected" :""}>E</option>
+															<c:forEach var="friendly" items="${FRIENDLY }">
+                                                      			<c:choose>
+                                                         			<c:when test="${searchVal.friendly eq friendly.codeval}">
+                                                            			<option selected label="${friendly.codename }" value="${friendly.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${friendly.codename }" value="${friendly.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 													</td>
 												</tr>
@@ -137,17 +149,16 @@
 										</table>
 									</div>
 							</form:form>
-							
+						</div>
+						<div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
 							<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                               	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                                    <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>               
+                              		<a href="/cliexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>               
                              	</div>                                       
                               	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 	<a href="/sales/client/post" class="btn btn-primary">추가</a> 	
-                              	</div>
+                              	</div>                     
                            	</div>				
-						</div>
-						<div class="ibox-content row border-top-0 pt-lg-0">
 							<div class="table-responsive">
 								<table class="table table-bordered"
 									style="border-top: 1px solid #e7eaec;">
@@ -279,6 +290,7 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	
 
 </body>
 </html>

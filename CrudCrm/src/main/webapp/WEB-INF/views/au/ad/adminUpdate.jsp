@@ -86,7 +86,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명*</label></th>
-                                            <td><input type="text" class="form-control error required validate name" disabled name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control error required validate name " disabled name="username" id="username" value="${user.USERNAME}" ></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
@@ -165,9 +165,7 @@
                                         <tr>
                                             <th><label for="mobile">관리자여부</label></th>
                                             <td>
-                                            	<form:select class="form-control col-3 float-left mr-3" path="chkauth">
-                                                	<form:options items="${CHKAUTH}" value="${user.CHKAUTH }" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                            	
                                             </td>
                                         </tr>
                                     </tbody>

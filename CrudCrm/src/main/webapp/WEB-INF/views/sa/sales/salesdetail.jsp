@@ -55,11 +55,20 @@
 								<h4>기본정보</h4>
 							</div>
 							<div class="ibox-content row">
-								<div class="w-100 text-right mb-3">
-									<a href="/sales/post/${salesDetail.SALESNO }" class="btn btn-primary">수정</a> 
-									<a href="/sales/delete/${salesDetail.SALESNO }" class="btn btn-primary">삭제</a> 
-									<a href="/sales" class="btn btn-primary">목록</a>
+							
+								<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
+									<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+										<a href="/sales" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
+	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
+	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>												
+	                          		</div>													
+									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+										<a href="/sales/post/${salesDetail.SALESNO }" class="btn btn-primary">수정</a> 
+										<a href="/sales/delete/${salesDetail.SALESNO }" class="btn btn-primary">삭제</a> 
+									</div>
 								</div>
+							
 								<div class="box1 col-lg-12 col-xl-4 p-0">
 									<table class="table table-bordered mb-0">
 										<colgroup>
@@ -164,7 +173,7 @@
 										</colgroup>
 										<tbody>
 											<tr>
-												<th>NEEDS</th>
+												<th>요구사항</th>
 												<td>
 													<textarea name="textNote" id="textNote" class="form-control" style="resize: none;" rows="4" readOnly>${salesDetail.NEED }</textarea>
 												</td>
@@ -192,7 +201,7 @@
 										</colgroup>
 										<tbody>
 											<tr>
-												<th>SOULTION</th>
+												<th>해결방안</th>
 												<td>
 													<textarea name="textNote" id="textNote" class="form-control" style="resize: none;" rows="4" readOnly>${salesDetail.SOLUTION }</textarea>
 												</td>

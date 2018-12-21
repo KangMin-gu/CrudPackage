@@ -57,7 +57,7 @@
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12" style="background: #ffffff;">
 							
-							<form:form action="/cust/post/${custUpdate.CUSTNO}" method="POST">
+							<form:form action="/cust/post/${custUpdate.CUSTNO}" method="POST" commandName="custDto">
 							<input type="hidden" name="denyno" id="denyno" value="${custUpdate.DENYNO}">
 							
 							<div class="ibox">
@@ -108,9 +108,16 @@
 														<!-- form select 공통으로 변경 -->
 														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrktel1" id="wrktel1">
 															<option value="" ${custUpdate.WRKTEL1 eq "" ? "selected" :""}>선택</option>
-															<option value="02" ${custUpdate.WRKTEL1 eq "02" ? "selected" :""}>02</option>
-															<option value="070" ${custUpdate.WRKTEL1 eq "070" ? "selected" :""}>070</option>
-															<option value="010" ${custUpdate.WRKTEL1 eq "010" ? "selected" :""}>010</option>
+															<c:forEach var="phone" items="${PHONE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.WRKTEL1 eq phone.codeval}">
+                                                            			<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2"  value="${custUpdate.WRKTEL2}"> 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3"  value="${custUpdate.WRKTEL3}">
@@ -143,12 +150,19 @@
 												<tr>
 													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
 													<td>
-														<select class="form-control col-4 float-left mr-3 validate required phone-group phone1V " style="height: 1.40rem" name="mobile1" id="mobile1" >
+														<select class="form-control col-4 float-left mr-3 validate required phone-group phone1V " style="height: 1.40rem" name="mobile1" id="mobile1" >	 
 															<option value="" ${custUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
-															<option value="010" ${custUpdate.MOBILE1 eq "010" ? "selected" :""}>010</option>
-															<option value="011" ${custUpdate.MOBILE1 eq "011" ? "selected" :""}>011</option>
-															<option value="017" ${custUpdate.MOBILE1 eq "017" ? "selected" :""}>017</option>
-														</select> 
+															<c:forEach var="mobile" items="${MOBILE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.MOBILE1 eq mobile.codeval}">
+                                                            			<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
+														</select>	
 														<input type="text" class="form-control col-3 float-left mr-2 validate required phone-group phone2V" name="mobile2" id="mobile2"  value="${custUpdate.MOBILE2 }" > 
 														<input type="text" class="form-control col-3 float-left validate required phone-group phone3V" name="mobile3" id="mobile3"  value="${custUpdate.MOBILE3 }" >
 													</td>
@@ -158,9 +172,16 @@
 													<td>
 														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="wrkfax1" id="wrkfax1" >
 															<option value="" ${custUpdate.WRKFAX1 eq "" ? "selected" :""}>선택</option>
-															<option value="02" ${custUpdate.WRKFAX1 eq "02" ? "selected" :""}>02</option>
-															<option value="031" ${custUpdate.WRKFAX1 eq "031" ? "selected" :""}>031</option>
-															<option value="070" ${custUpdate.WRKFAX1 eq "070" ? "selected" :""}>070</option>
+															<c:forEach var="fax" items="${FAX }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.WRKFAX1 eq fax.codeval}">
+                                                            			<option selected label="${fax.codename }" value="${fax.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${fax.codename }" value="${fax.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" value="${custUpdate.WRKFAX2 }"> 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3"  value="${custUpdate.WRKFAX3 }">
@@ -258,8 +279,16 @@
 														<td>
 															<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="homtel1" id="homtel1">
 																<option value="" ${custUpdate.HOMTEL1 eq "" ? "selected" :""}>선택</option>
-																<option value="02" ${custUpdate.HOMTEL1 eq "02" ? "selected" :""}>02</option>
-																<option value="031" ${custUpdate.HOMTEL1 eq "031" ? "selected" :""}>031</option>
+																<c:forEach var="phone" items="${PHONE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.HOMTEL1 eq phone.codeval}">
+                                                            			<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select> 
 															<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" value="${custUpdate.HOMTEL2 }"> 
 															<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3" value="${custUpdate.HOMTEL3 }">
@@ -270,8 +299,16 @@
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="married" id="married">
 																<option value="0" ${custUpdate.MARRIED eq "0" ? "selected" :""}>선택</option>
-																<option value="1" ${custUpdate.MARRIED eq "1" ? "selected" :""}>미혼</option>
-																<option value="2" ${custUpdate.MARRIED eq "2" ? "selected" :""}>기혼</option>
+																<c:forEach var="married" items="${MARRIED }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.HOMTEL1 eq married.codeval}">
+                                                            			<option selected label="${married.codename }" value="${married.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${married.codename }" value="${married.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>
 														</td>
 													</tr>
@@ -304,8 +341,16 @@
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="sex" id="sex">
 																<option value="0" ${custUpdate.SEX eq "0" ? "selected" :""}>선택</option>
-																<option value="1" ${custUpdate.SEX eq "1" ? "selected" :""}>남자</option>
-																<option value="2" ${custUpdate.SEX eq "2" ? "selected" :""}>여자</option>
+																<c:forEach var="sex" items="${SEX }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.SEX eq sex.codeval}">
+                                                            			<option selected label="${sex.codename }" value="${sex.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${sex.codename }" value="${sex.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>
 														</td>
 													</tr>
@@ -314,8 +359,16 @@
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="mailto" id="mailto">
 																<option value="0" ${custUpdate.MAILTO eq "0" ? "selected" :""} >선택</option>
-																<option value="1" ${custUpdate.MAILTO eq "1" ? "selected" :""}>자택</option>
-																<option value="2" ${custUpdate.MAILTO eq "2" ? "selected" :""}>직장</option>
+																<c:forEach var="mailto" items="${MAILTO }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.MAILTO eq mailto.codeval}">
+                                                            			<option selected label="${mailto.codename }" value="${mailto.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${mailto.codename }" value="${mailto.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>	
 														</td>
 													</tr>
@@ -324,9 +377,16 @@
 														<td>
 															<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
 																<option value="0" ${custUpdate.CUSTGRADE eq "0" ? "selected" :""}>선택</option>
-																<option value="1" ${custUpdate.CUSTGRADE eq "1" ? "selected" :""}>일반</option>
-																<option value="2" ${custUpdate.CUSTGRADE eq "2" ? "selected" :""}>VIP</option>
-																<option value="3" ${custUpdate.CUSTGRADE eq "3" ? "selected" :""}>VVIP</option>
+																<c:forEach var="custGrade" items="${CUSTGRADE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.CUSTGRADE eq custGrade.codeval}">
+                                                            			<option selected label="${custGrade.codename }" value="${custGrade.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${custGrade.codename }" value="${custGrade.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>
 														</td>
 													</tr>
@@ -335,9 +395,16 @@
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
 																<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
-																<option  value="1" ${custUpdate.CUSTGUBUN eq "1" ? "selected" :""}>회원</option>
-																<option  value="2" ${custUpdate.CUSTGUBUN eq "2" ? "selected" :""}>비회원</option>
-																<option  value="3" ${custUpdate.CUSTGUBUN eq "3" ? "selected" :""}>탈퇴회원</option>
+																<c:forEach var="custGubun" items="${CUSTGUBUN }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.CUSTGUBUN eq custGubun.codeval}">
+                                                            			<option selected label="${custGubun.codename }" value="${custGubun.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${custGubun.codename }" value="${custGubun.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>
 														</td>
 													</tr>
@@ -367,8 +434,16 @@
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="solar" id="solar">
 																<option value="0" ${custUpdate.SOLAR eq "0" ? "selected" :""}>선택</option>
-																<option value="1" ${custUpdate.SOLAR eq "1" ? "selected" :""}>양력</option>
-																<option value="2" ${custUpdate.SOLAR eq "2" ? "selected" :""}>음력</option>
+																<c:forEach var="solar" items="${SOLAR }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.SOLAR eq solar.codeval}">
+                                                            			<option selected label="${solar.codename }" value="${solar.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${solar.codename }" value="${solar.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>
 														</td>
 													</tr>
@@ -383,7 +458,16 @@
 														<td class="border-bottom-0">
 															<select class="form-control" style="height: 1.45rem" name="actgrade" id="actgrade">
 																<option value="0" ${custUpdate.ACTGRADE eq "0" ? "selected" :""}>선택</option>
-																<option value="1" ${custUpdate.ACTGRADE eq "1" ? "selected" :""}>우수</option>
+																<c:forEach var="actGrade" items="${ACTGRADE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custUpdate.ACTGRADE eq actGrade.codeval}">
+                                                            			<option selected label="${actGrade.codename }" value="${actGrade.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${actGrade.codename }" value="${actGrade.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 															</select>
 														</td>
 													</tr>
@@ -586,7 +670,8 @@
 	
 
     <script>
-	
+
+        	
         $(document).ready(function () {
         	
             // icheck css

@@ -33,28 +33,10 @@ public class SalesServiceImpl implements SalesService {
 	//영업리스트
 	@Override
 	public ModelAndView svcSalesList(HttpServletRequest request) {
-		Map<String, Object> searchVal = new HashMap<String, Object>();//검색 조건을 담을 변수 
+		Map<String, Object> searchVal = crud.searchParam(request);
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		searchVal.put("siteid", siteid);
-		
-		Enumeration params = request.getParameterNames();
-		
-		while (params.hasMoreElements()) {//requeset 값이 있으면 while문 가동 
-			String name = (String)params.nextElement();
-			String value = request.getParameter(name);
-			
-			if(name.equals("owner") || name.equals("clino") || name.equals("salestate") ) {//숫자 타입은 값이 없으면 0으로 초기화
-				if(value == "") {
-					value = "0";
-				}				
-			}else {//스트링 타입은 값이 없으면 NULL로 초기화				
-				if(value == "") {
-					value = null;
-				}
-			}
-			searchVal.put(name, value);
-		}
-		
+				
 		//총자료수
 		int totalRows = salesDao.salesListCount(searchVal);
 						

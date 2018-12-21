@@ -71,8 +71,10 @@
 			AND A.SALESTATE = #{salestate}
 			</if>	
 		) T 
+	<if test="endRowNum != null">	
 	WHERE 
 		ROWNUM between #{startRowNum} and #{endRowNum}	
+	</if>
 	</select>
 
 	<!-- 영업상세 -->

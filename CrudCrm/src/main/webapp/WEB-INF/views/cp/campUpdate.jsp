@@ -218,8 +218,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <!-- 
                             <div class="mail-attachment">
-                            		<!-- <input type="hidden" value="${campFile.FILESEARCHKEY }"/>  -->
+                            		<!-- <input type="hidden" value="${campFile.FILESEARCHKEY }"/> 
 												<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
 												<div class="attachment">
 													<c:forEach var="file" items="${campFile }">
@@ -239,6 +240,7 @@
 													<div class="clearfix"></div>
 												</div>
 											</div>
+											 -->
                         </div>
                     </div>
                 </div>

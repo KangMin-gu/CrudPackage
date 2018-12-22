@@ -173,10 +173,15 @@
 
                                 <h1>대상추출</h1>
                                 <div class="step-content">
-                                	<div class="w-100 text-right mb-2">
-                                			<a href="${pageContext.request.contextPath}/campaign" class="btn btn-primary">목록</a>
-                                			<a href="${pageContext.request.contextPath}/campaign/target/${campInfo.CAMPNO }" class="btn btn-primary">타켓추출</a>
-                            		</div>
+                                	<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+											<a href="${pageContext.request.contextPath}/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+	                          			</div>													
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+											<a href="${pageContext.request.contextPath}/campaign/target/${campInfo.CAMPNO }" class="btn btn-primary">타켓추출</a>									
+											<Button type="submit" class="btn btn-primary">삭 제</Button>	
+										</div>
+									</div>
                                     <div class="ibox">
                                         <div class="ibox-title row border-0">
                                             <h4>캠페인 정보</h4>
@@ -500,19 +505,24 @@
                                                 <div class="tab-content">
                                                     <div role="tabpanel" id="sumbitTab1" class="tab-pane active">
                                                         <div class="panel-body">
-                                                            <div class="w-100 text-right mb-2">
-                                                                <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
-                                                                <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
-                                                                <div class="d-inline-block mt-sx-1">
-                                                                <a href="/campaign/email/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
-                                                                <form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
-                                                                	<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
-                                                                </form:form>
-                                                                <form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
-                                                                	<button  class="btn btn-primary">발송</button>
-                                                                </form:form>
-                                                                </div>
-                                                            </div>
+                                                            <div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
+																<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
+																	<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
+																	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+																		<a href="/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+																		<a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="고객 추출 화면"><i class="fa fa-list"></i></a>
+	                          										</div>													
+																	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+																		<form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
+                                                                			<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
+                                                                		</form:form>
+                                                                		<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+                                                                			<button  class="btn btn-primary">발송</button>
+                                                                		</form:form>
+                                                                		<a href="/campaign/email/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
+																	</div>
+																</form:form>
+															</div>
                                                             <div class="ibox-content row">
                                                                 <div class="box1 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0">

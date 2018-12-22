@@ -256,16 +256,16 @@
                                 <tbody>
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
-                                        <td><input type="checkbox" class="i-checks" name="rcvno" id="rcvno" value="${svList.RCVNO }"></td>
-                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
+                                        <td><input type="checkbox" class="i-checks" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
                                         <td>${svList.RCVTYPE_ }</td>
                                         <td>${svList.RCVCHANNEL_ }</td>
-                                        <td>${svList.CUSTNO_ }</td>
-                                        <td>${svList.CLINO_ }</td>
-                                        <td>${svList.RCVDATE_ }</td>
-                                        <td>${svList.RCVOWNER_ }</td>
-                                        <td>${svList.RACTOWNER_ }</td>
-                                        <td>${svList.PRCSTATE_ }</td>
+                                        <td>${svList.CUSTNAME_ }</td>
+                                        <td>${svList.CLINAME_ }</td>
+                                        <td>${svList.RECEPTIONDATE_ }</td>
+                                        <td>${svList.SERVICEOWNER_ }</td>
+                                        <td>${svList.OWNER_ }</td>
+                                        <td>${svList.SERVICESTEP_ }</td>
                                     </tr>
                                 </c:forEach>
                                        

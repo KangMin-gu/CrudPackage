@@ -20,12 +20,10 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/select2/select2.min.css" rel="stylesheet">
+
 </head>
 
 <body>
-<style>
-	span.select2 {width: 100% !important;}
-</style>
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
@@ -43,21 +41,15 @@
                             <a href="/service">서비스 목록</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <a href="/service/${serviceInfo.RCVNO }">서비스 정보</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <strong>서비스 정보 수정</strong>
+                            <strong>서비스 추가</strong>
                         </li>
                     </ol>
-                </div>
-                <div class="col-lg-2">
-
                 </div>
             </div>		
 		
 		
 <!-- Content -->		
-		<form:form action ="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO }" method="PUT">
+		<form:form action ="${pageContext.request.contextPath}/service/post" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -72,20 +64,18 @@
                         </div>
                         
                         <div class="ibox-content row">
-                        
-                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
-									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 )  ">
-										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 )  </strong>
+									<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 ) ">
+										<strong>필수 입력값을 확인해 주세요.&nbsp;&nbsp;(서비스명 : 입력이 필요합니다., 접수유형 : 선택해주세요 ) </strong>
 									</span>
 									<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
-	                          	</div>
+	                        	</div>
 								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
 									<Strong><span id="showMsg"></span></Strong>				
-	                          	</div>																		
+	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-									<Button type="submit" class="btn btn-primary submit" id="submit">저 장</Button>
-									<a class="btn btn-primary" href="/service/${serviceInfo.RCVNO}">상 세</a>
+									<Button type="submit" class="btn btn-primary submit" disabled >저 장</Button>
 									<a href="/service" class="btn btn-primary">목 록</a>
 								</div>
 							</div>
@@ -100,8 +90,8 @@
                                             <th><label for="clino">거래처명</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group cli" id="clino_">
-                                                    <input type="text" class="form-control validate allV" autocomplete="off" name="clino_" value="${serviceInfo.CLINO_ }">
-                                                    <input type="hidden" name="clino" value="${serviceInfo.CLINO }">
+                                                    <input type="text" class="form-control validate allV" disabled name="clino_" value="${serviceInfo.CLINO_ }">
+                                                    <input type="hidden" class="form-control" name="clino" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -116,8 +106,8 @@
                                             <th><label for="custname">고객명</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group cust" id="custno_">
-                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="custno_" value="${serviceInfo.CUSTNAME }">
-                                                    <input type="hidden" class="reset" name="custno" value="${serviceInfo.CUSTNO }">
+                                                    <input type="text" class="form-control validate nameV" disabled name="custno_" value="${serviceInfo.CUSTNAME }">
+                                                    <input type="hidden" class="form-control" name="custno" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -190,6 +180,7 @@
                                 </table>
                             </div>
 
+
                         </div>
 
                     </div>
@@ -206,7 +197,6 @@
                         </div>
                         
                         <div class="ibox-content row">
-                            
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -214,63 +204,72 @@
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
-                                        <tr style="height: 45px;">
-                                            <th>접수유형</th>
+                                    	<tr>
+                                            <th>접수일</th>
+                                            <td style="height: 42px;">
+                                            	<input type="text" class="form-control" disabled id="receptiondate_" >
+                                            	<input type="hidden" class="form-control date" name="receptiondate" id="receptiondate" value="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="height: 45px;">접수유형</th>
                                             <td class="border-top-0">
-                                                <select class="form-control validate error required checkV">
+                                                <select class="form-control validate error required numberV">
                                             		<option label="선택" value=""/>
-                                                	<c:forEach var="rcvType" items="${RCVTYPE }">
+                                                	<c:forEach var="serviceType" items="${SERVICETYPE }">
                                                 		<c:choose>
-                                                			<c:when test="${serviceInfo.RCVTYPE eq rcvType.codeval}">
-                                                				<option selected label="${rcvType.codename }" value="${rcvType.codeval }"/>
+                                                			<c:when test="${serviceInfo.SERVICETYPE eq serviceType.codeval}">
+                                                				<option selected label="${serviceType.codename }" value="${serviceType.codeval }"/>
                                                 			</c:when>
                                                 			<c:otherwise>
-                                                				<option label="${rcvType.codename }" value="${rcvType.codeval }"/>
+                                                				<option label="${serviceType.codename }" value="${serviceType.codeval }"/>
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <th>접수일</th>
-                                            <td style="height: 42px;">
-                                            	<input type="text" class="form-control" disabled name="rcvdate_" id="rcvdate_" value="${serviceInfo.RCVDATE }">
-                                            	<input type="hidden" class="form-control" name="rcvdate" id="rcvdate" value="${serviceInfo.RCVDATE }">
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box col-lg-12 col-xl-4 p-0">
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
-                                        <tr>
-                                            <th>서비스유형</th>
+                                    	<tr>
+                                            <th style="height: 45px;">접수자</th>
                                             <td>
-                                            	<select class="form-control select2" name="rcvtype" id="rcvtype" value="${serviceInfo.rcvtype }">
-                                                    	<option value="">선택</option>
-                                                    	<option value="1" <c:if test='${serviceInfo.rcvtype eq 1}'>selected</c:if>>문의</option>
-                                                    	<option value="2" <c:if test='${serviceInfo.rcvtype eq 2}'>selected</c:if>>개선</option>
-                                                    	<option value="3" <c:if test='${serviceInfo.rcvtype eq 3}'>selected</c:if>>오류</option>
-                                                	</select>
-											</td>
-                                        </tr>
-                                        <tr>
-                                            <th>접수시간</th>
-                                            <td style="height: 42px;">
-                                            	<div class="input-group clockpicker" data-autoclose="true">
-                                            		<span class="input-group-addon">
-                                    					<span class="fa fa-clock-o"></span>
-                                					</span>
-                                					<input type="text" class="form-control" autocomplete="off" name="rcvtime" id="rcvtime" value="${serviceInfo.RCVTIME }">
-                            					</div>	
+                                            	<div class="input-group">
+                                                    <input type="text" class="form-control error required validate nameV" disabled name="serviceowner_" id="serviceowner_" value="${sessionScope.USERNAME }">
+                                                    <input type="hidden" name="serviceowner" id="serviceowner" value="${sessionScope.USERNO }">
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
+                                    	<tr>
+                                        	<th class="border-top-0">접수매체</th>
+                                        	<td class="border-top-0">
+                                                <select class="form-control validate error required numberV">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="serviceChannel" items="${SERVICECHANNEL }">
+                                                		<c:choose>
+                                                			<c:when test="${serviceInfo.SERVICECHANNEL eq serviceChannel.codeval}">
+                                                				<option selected label="${serviceChannel.codename }" value="${serviceChannel.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${serviceChannel.codename }" value="${serviceChannel.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -281,30 +280,29 @@
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
-                                        <tr>
-                                            <th>접수자</th>
-                                            <td style="height: 45px;">
-                                            	<div class="input-group owner">
-                                                    <input type="text" class="form-control error required validate nameV" disabled name="rcvowner_" id="rcvowner_" value="${serviceInfo.RCVOWNER_ }">
-                                                    <input type="hidden" name="rcvowner" id="rcvowner" value="${serviceInfo.RCVOWNER }">
-                                                    <span class="input-group-addon">
-                                                        <a><i class="fa fa-search"></i></a>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>처리상태</th>
+                                    	<tr>
+                                            <th>진행단계</th>
                                             <td style="height: 42px;">
-                                            	<input type="text" class="form-control" disabled name="prcsate_" id="prcstate_" value="${serviceInfo.PRCSTATE_ }">
+                                            	<input type="text" disabled class="form-control" disabled name="servicestep_" id="servicestep_" value="접수">
+                                                <input type="hidden" name="servicestep" id="servicestep" value="1">
 											</td>
                                         </tr>
-                                        
+                                        <tr>
+                                            <th>서비스유형</th>
+                                            <td>
+                                            	<select class="form-control select2" name="servicecode" id="servicecode" value="${serviceInfo.SERVICECODE }">
+                                                    	<option value="">선택</option>
+                                                    	<option value="1" <c:if test='${serviceInfo.SERVICECODE eq 1}'>selected</c:if>>클라1</option>
+                                                    	<option value="2" <c:if test='${serviceInfo.SERVICECODE eq 2}'>selected</c:if>>클라2</option>
+                                                    	<option value="3" <c:if test='${serviceInfo.SERVICECODE eq 3}'>selected</c:if>>클라3</option>
+                                                </select>
+											</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="box4 col-lg-12 col-xl-8 p-0">
-                                <table class="table table-bordered border-top-0  mb-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
@@ -313,35 +311,32 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td class="border-top-0" style="height: 42px;">
-                                            	<input type="text" class="form-control error required validate allV" name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME }">
+                                            	<input type="text" class="form-control error required validate allV" name="servicename" id="servicename" value="${serviceInfo.SERVICENAME }">
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="box4 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0" style="height:42px;">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
-                                        <tr>
-                                        	<th class="border-top-0">접수매체</th>
-                                        	<td class="border-top-0">
-                                                <select class="form-control validate error required checkV">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="rcvChannel" items="${RCVCHANNEL }">
-                                                		<c:choose>
-                                                			<c:when test="${serviceInfo.RCVCHANNEL eq rcvChannel.codeval}">
-                                                				<option selected label="${rcvChannel.codename }" value="${rcvChannel.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${rcvChannel.codename }" value="${rcvChannel.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </select>
+                                    	<tr>
+                                            <th class="border-top-0 border-bottom-0">처리담당자</th>
+                                            <td class="border-top-0 border-bottom-0">
+                                            	<div class="input-group owner" id="owner_">
+                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="owner_" value="${serviceInfo.OWNER_ }">
+                                                    <input type="hidden" name="owner" value="${serviceInfo.OWNER }">
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </span>
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-child"></i></a>
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -357,13 +352,48 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea class="col-12 float-left mr-12" id="rcvdesc" name="rcvdesc" value="${serviceInfo.RCVDESC }">${serviceInfo.RCVDESC }</textarea>
+                                                <textarea name="servicedesc" class="form-control" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-12 p-0">
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="servicefile" name="servicefile" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12" style="background: #ffffff;">
+                    <div class="ibox">
+                        <div class="ibox-title row">
+                            <h4>현상 파악</h4>
+                            <div class="ibox-tools">
+                            	<a class="collapse-link">
+                                	<i class="fa fa-chevron-up"></i>
+                            	</a>
+                        	</div>
+                        </div>
+                        
+                        <div class="ibox-content row">
+                            
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
@@ -371,17 +401,152 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>메모</th>
+                                            <th style="height: 45px;">방문약속일자</th>
+                                            <td class="border-top-0">
+                                                <input type="text" class="form-control validate date dateV" name="visitdate" id="visitdate">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>현상</th>
+                                            <td style="height: 42px;">
+                                            	<select class="form-control select2" name="rewardtype" id="rewardtype" value="${rewardInfo.REWARDTYPE }">
+                                                    	<option value="">선택</option>
+                                                    	<option value="1" <c:if test='${rewardInfo.REWARDTYPE eq 1}'>selected</c:if>>클라1</option>
+                                                    	<option value="2" <c:if test='${rewardInfo.REWARDTYPE eq 2}'>selected</c:if>>클라2</option>
+                                                    	<option value="3" <c:if test='${rewardInfo.REWARDTYPE eq 3}'>selected</c:if>>클라3</option>
+                                                </select>
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>방문약속일시</th>
                                             <td>
-                                                <textarea id="rcvopinion" name="rcvopinion" value="${serviceInfo.RCVOPINION }">${serviceInfo.RCVOPINION }</textarea>
+                                            	<div class="input-group clockpicker" data-autoclose="true">
+                                            		<span class="input-group-addon">
+                                    					<span class="fa fa-clock-o"></span>
+                                					</span>
+                                					<input type="text" class="form-control" autocomplete="off" name="visittime" id="visittime" value="${rewardInfo.VISITTIME }">
+                            					</div>	
+											</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="height: 42px;">원인구분</th>
+                                            <td style="height: 42px;">
+                                            	<select class="form-control select2" name="causecode" id="causecode" value="${rewardInfo.CAUSECODE }">
+                                                    	<option value="">선택</option>
+                                                    	<option value="1" <c:if test='${rewardInfo.CAUSECODE eq 1}'>selected</c:if>>클라1</option>
+                                                    	<option value="2" <c:if test='${rewardInfo.CAUSECODE eq 2}'>selected</c:if>>클라2</option>
+                                                    	<option value="3" <c:if test='${rewardInfo.CAUSECODE eq 3}'>selected</c:if>>클라3</option>
+                                                </select>
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th style="height: 45px;">담당자</th>
+                                            <td>
+                                            	<div class="input-group">
+                                                    <input type="text" class="form-control error required validate nameV" disabled name="rewardowner_" id="rewardowner_" value="${serviceInfo.OWNER_ }">
+                                                    <input type="hidden" name="rewardowner" id="rewardowner" value="${serviceINfo.OWNER }">
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-
+                            <div class="box4 col-lg-12 col-xl-12 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">상세내역</th>
+                                            <td class="border-top-0" style="height: 42px;">
+                                            	<textarea name="rewarddesc" class="form-control" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box4 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                        	<th class="border-top-0">지연사유</th>
+                                        	<td class="border-top-0">
+                                                <select class="form-control select2" name="delaytype" id="delaytype" value="${rewardInfo.DELAYTYPE }">
+                                                    	<option value="">선택</option>
+                                                    	<option value="1" <c:if test='${rewardInfo.DELAYTYPE eq 1}'>selected</c:if>>클라1</option>
+                                                    	<option value="2" <c:if test='${rewardInfo.DELAYTYPE eq 2}'>selected</c:if>>클라2</option>
+                                                    	<option value="3" <c:if test='${rewardInfo.DELAYTYPE eq 3}'>selected</c:if>>클라3</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-12 col-xl-8 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">지연사유</th>
+                                            <td class="border-top-0">
+                                                <textarea name="delaydesc" class="form-control" id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="rewardfile" name="rewardfile" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -405,14 +570,9 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>처리유형</th>
+                                            <th>처리일</th>
                                             <td>
-                                            	<select class="form-control float-left select2" name="ractcode" id="ractcode">
-                                            		<option value=0>선택</option>
-                                                    <option value=1 >option1</option>
-                                                    <option value=2 >option2</option>
-                                                    <option value=3 >option3</option>
-                                                </select>
+                                            	<input type="text" class="form-control validate date dateV" name="rcvdate" id="rcvdate">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -426,38 +586,18 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>처리일</th>
+                                            <th>처리담당자</th>
                                             <td style="height: 45px;">
                                             	<div class="input-group">
-                                            		<span class="input-group-addon">
-                                    					<span class="fa fa-calendar"></span>
-                                					</span>
-                                            		<input type="text" class="form-control validate date dateV" autocomplete="off" name="ractdate" id="ractdate" value="">
-                                            	</div>
+                                                    <input type="text" class="form-control error required validate nameV" disabled name="ractowner_" id="ractowner_" value="${ractInfo.RACTOWNER_ }">
+                                                    <input type="hidden" name="ractowner" id="ractowner" value="${ractInfo.RACTOWNER }">
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
                                         
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box3 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>처리 시간</th>
-                                            <td style="height: 45px;">
-                                            	<div class="input-group clockpicker" data-autoclose="true">
-                                            		<span class="input-group-addon">
-                                    					<span class="fa fa-clock-o"></span>
-                                					</span>
-                                					<input type="text" class="form-control" autocomplete="off" name="racttime" id="racttime" value="">
-                            					</div>	
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -469,20 +609,15 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0 border-bottom-0">담당자</th>
+                                            <th class="border-top-0 border-bottom-0">처리발송여부</th>
                                             <td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner" id="ractowner_">
-                                                    <input type="text" class="form-control validate nameV" autocomplete="off" name="ractowner_" value="">
-                                                    <input type="hidden" name="ractowner" value="">
-                                                    <span class="input-group-addon">
-                                                        <a><i class="fa fa-search"></i></a>
-                                                    </span>
-                                                </div>
+                                            	
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="box1 col-lg-12 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -493,9 +628,27 @@
                                         <tr>
                                             <th>처리내용</th>
                                             <td>
-                                                <textarea id="ractdesc" name="ractdesc" value=""></textarea>
+                                                <textarea name="ractdesc" id="ractdesc">${ractInfo.RACTDESC }</textarea>
                                             </td>
-                                            <input type="hidden" name="rcvno" id="rcvno" value="${serviceInfo.RCVNO }">
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">첨부파일</th>
+                                            <td class="border-top-0">
+                                            	<div class="col-md-6">
+													<input id="ractfile" name="ractfile" class="form-control" type="file" multiple>
+														<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+												</div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -521,23 +674,27 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	 
+	 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+	 
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
-	<script>
 	
+	<script>
 		$(document).ready(function () {
-			
+
 			$('.select2').select2();
 			
 			$('.clockpicker').clockpicker();
 			
 			$('#rcvdesc').summernote({
-				height:200
-				
+				lang : 'ko-KR',
+				height : "200px"
 			});
+			
 			$('#rcvopinion').summernote({
 				height:200
 			});
@@ -549,10 +706,12 @@
 				keyboardNavigation:false,
 				forceParse:false,
 				autoclose:true
-				
 			});
+			var date = today();
+			$('#receptiondate').val(date);
+			$('#receptiondate_').val(date);
 		});
-		
+
 	</script>
 </body>
 </html>

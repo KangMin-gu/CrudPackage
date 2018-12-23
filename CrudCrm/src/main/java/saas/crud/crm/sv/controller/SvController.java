@@ -116,6 +116,55 @@ public class SvController {
 		return mView;
 	}
 	
+	// 서비스 이관 팝업
+	@RequestMapping(value="/convey/{rcvno}", method=RequestMethod.GET)
+	public ModelAndView authcommonUserList(HttpServletRequest request, @PathVariable int rcvno) {
+		ModelAndView mView = svService.svRead(request, rcvno);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("/sv/svConveyPopup");
+		return mView;
+	}
+		
+	// 서비스 이관 추가
 	
+	@RequestMapping(value="/convey",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String,Object>> authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
+		
+		svService.svConveyInsert(request, conveyDto);
+		int serviceNo = conveyDto.getServiceno();
+		List<Map<String, Object>> tabRact = svService.svTabConvey(request,serviceNo);
+		
+		return tabRact;
+	}
+		
+	// 서비스 처리 이력 탭
+		
+	@RequestMapping(value="/tab/ract/{serviceNo}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String, Object>> authSvTabRact(HttpServletRequest request, @PathVariable int serviceNo){
+		
+		List<Map<String, Object>> tabRact = svService.svTabRact(request,serviceNo);
+		
+		return tabRact;
+		
+	}
 	
+	// 서비스 이관 이력 탭
+	@RequestMapping(value="/tab/convey/{serviceNo}", method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String, Object>> authSvTabConvey(HttpServletRequest request, @PathVariable int serviceNo){
+		List<Map<String, Object>> tabConvey = svService.svTabConvey(request,serviceNo);
+		
+		return tabConvey;
+		
+	}
+	
+	@RequestMapping(value="/service/convey", method=RequestMethod.GET)
+	public ModelAndView authSvConveyList(HttpServletRequest request) {
+		ModelAndView mView = svService.svList(request);
+		mView.setViewName("sv/svList");
+		return mView;
+	}
 }

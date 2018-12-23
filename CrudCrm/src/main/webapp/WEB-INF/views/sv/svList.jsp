@@ -107,7 +107,7 @@
                                             <th>서비스명</th>
                                             <td>
                                                 <div class="input-group" style="height: 1.6rem;">
-                                                    <input type="text" class="form-control reset" name="rcvname" id="rcvname" value="${search.rcvname }">
+                                                    <input type="text" class="form-control reset" name="servicename" id="servicename" value="${search.servicename }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -124,11 +124,11 @@
                                         <tr>
                                             <th>접수유형</th>
                                             <td>
-                                                    <select class="form-control reset select2" name="rcvtype" id="rcvtype" value="${search.rcvtype }">
+                                                    <select class="form-control reset select2" name="servicetype" id="servicetype" value="${search.servicetype }">
                                                     	<option value="">선택</option>
-                                                    	<option value="1" <c:if test='${search.rcvtype eq 1}'>selected</c:if>>문의</option>
-                                                    	<option value="2" <c:if test='${search.rcvtype eq 2}'>selected</c:if>>개선</option>
-                                                    	<option value="3" <c:if test='${search.rcvtype eq 3}'>selected</c:if>>오류</option>
+                                                    	<option value="1" <c:if test='${search.servicetype eq 1}'>selected</c:if>>문의</option>
+                                                    	<option value="2" <c:if test='${search.servicetype eq 2}'>selected</c:if>>개선</option>
+                                                    	<option value="3" <c:if test='${search.servicetype eq 3}'>selected</c:if>>오류</option>
                                                 	</select>
                                             </td>
                                         </tr>
@@ -147,11 +147,11 @@
                                         <tr>
                                             <th>접수매체</th>
                                             <td class="border-top-0">
-                                                <select class="form-control reset select2" name="rcvchannel" id="rcvchannel" value="${search.rcvchannel }">
+                                                <select class="form-control reset select2" name="servicechannel" id="servicechannel" value="${search.servicechannel }">
                                             		<option value="">선택</option>
-                                                    <option value="10" <c:if test='${search.rcvchannel eq 10}'>selected</c:if>>전화</option>
-                                                    <option value="20" <c:if test='${search.rcvchannel eq 20}'>selected</c:if>>SMS</option>
-                                                    <option value="30" <c:if test='${search.rcvchannel eq 30}'>selected</c:if>>메일</option>
+                                                    <option value="10" <c:if test='${search.servicechannel eq 10}'>selected</c:if>>전화</option>
+                                                    <option value="20" <c:if test='${search.servicechannel eq 20}'>selected</c:if>>SMS</option>
+                                                    <option value="30" <c:if test='${search.servicechannel eq 30}'>selected</c:if>>메일</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -192,11 +192,11 @@
                                         <tr>
                                             <th>처리상태</th>
                                             <td class="border-top-0">
-                                                <select class="form-control reset select2" name="prcstate" id="prcstate" value="${search.prcstate }">
+                                                <select class="form-control reset select2" name="servicestep" id="servicestep" value="${search.servicestep }">
                                             		<option value="">선택</option>
-                                                    <option value="1" <c:if test='${search.prcstate eq 1}'>selected</c:if>>접수</option>
-                                                    <option value="2" <c:if test='${search.prcstate eq 2}'>selected</c:if>>이관</option>
-                                                    <option value="3" <c:if test='${search.prcstate eq 3}'>selected</c:if>>완료</option>
+                                                    <option value="1" <c:if test='${search.servicestep eq 1}'>selected</c:if>>접수</option>
+                                                    <option value="2" <c:if test='${search.servicestep eq 2}'>selected</c:if>>이관</option>
+                                                    <option value="3" <c:if test='${search.servicestep eq 3}'>selected</c:if>>완료</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -211,7 +211,7 @@
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
 									<c:choose>
                     					<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
-                    						<a href="${pageContext.request.contextPath}/serviceexcel?prcstate=3" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
+                    						<a href="${pageContext.request.contextPath}/serviceexcel?servicestep=3" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
                     					</c:when>
                     					<c:otherwise>
                     						<a href="${pageContext.request.contextPath}/serviceexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>

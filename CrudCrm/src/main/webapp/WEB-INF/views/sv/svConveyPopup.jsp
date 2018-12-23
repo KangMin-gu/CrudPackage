@@ -28,7 +28,7 @@
                     <div class="ibox">
                         <div class="ibox-content row body">
                             <div class="w-100 text-right mb-2">
-                            	<button class="btn btn-primary submit" disabled id="svSave">저장</button>
+                            	<button class="btn btn-primary submit" id="svSave">저장</button>
                             </div>
                             <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
@@ -40,8 +40,8 @@
                                         <tr>
                                             <th><label for="rcvno">서비스명</label></th>
                                             <td>
-                                            	<input type="text" class="form-control" disabled name="rcvname" id="rcvname" value="${serviceInfo.RCVNAME}">
-                                            	<input type="hidden" class="form-control" name="rcvno" id="rcvno" value="${serviceInfo.RCVNO}" />
+                                            	<input type="text" class="form-control" disabled name="servicename" id="servicename" value="${serviceInfo.SERVICENAME}">
+                                            	<input type="hidden" class="form-control" name="serviceno" id="serviceno" value="${serviceInfo.SERVICENO}" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -51,7 +51,7 @@
                                             		<span class="input-group-addon">
                                                 		<i class="fa fa-calendar"></i>
                                                 	</span>
-                                                	<input type="text" class="form-control float-left error required validate date dateV" autocomplete="off" name="conveydate" id="conveydate" value="${serviceInfo.CONVEYDATE }">
+                                                	<input type="text" class="form-control float-left date" autocomplete="off" name="conveydate" id="conveydate" value="${serviceInfo.CONVEYDATE }">
                                                 </div>
 											</td>
                                         </tr>
@@ -69,14 +69,14 @@
                                             <th><label for="rcvdate">접수일</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" disabled name="rcvdate" id="rcvdate" value="${serviceInfo.RCVDATE }">
+                                                    <input type="text" class="form-control" disabled name="receptiondate" id="receptiondate" value="${serviceInfo.RECEPTIONDATE_ }">
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="conveyreason">이관사유</label></th>
                                             <td class="border-top-0">
-                                                <select class="form-control validate error required checkV">
+                                                <select class="form-control" name="conveyreason" id="conveyreason">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="conveyReason" items="${CONVEYREASON }">
                                                 		<option label="${conveyReason.codename }" value="${conveyReason.codeval }"/>
@@ -97,16 +97,16 @@
                                         <tr>
                                             <th><label for="prevowner">현담당자</label></th>
                                             <td>
-                                            	<input type="text" class="form-control error validate required nameV" disabled name="prevowner_" id="prevowner_" value="${serviceInfo.RACTOWNER_ }">
-                                            	<input type="hidden" class="form-control" name="prevowner" id="prevowner" value="${serviceInfo.RACTOWNER }">
+                                            	<input type="text" class="form-control" disabled name="prevowner_" id="prevowner_" value="${serviceInfo.OWNER_ }">
+                                            	<input type="hidden" class="form-control" name="prevowner" id="prevowner" value="${serviceInfo.OWNER }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="nextowner">이관담당자</label></th>
                                             <td>
                                             	<div class="input-group owner" id="nextowner_">
-                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="nextowner_" value="${serviceInfo.OWNER_ }">
-                                                    <input type="hidden" name="nextowner" value="${serviceInfo.OWNER }">
+                                                    <input type="text" class="form-control" autocomplete="off" name="nextowner_" value="">
+                                                    <input type="hidden" name="nextowner" id ="nextowner"value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>

@@ -61,17 +61,17 @@
                         </div>
                         
                         <div class="ibox-content row">
-                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                           		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                        	<div class="box col-12 mb-2" style="padding-left: 0px;padding-right: 0px;">
+                           		<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
                             		<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
                             		<a href="#" class="btn btn-primary servicenext">이관</a>
                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
                                    	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
                                    	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
                                 </div>
-                           		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-                              		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                                		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                           		<div class="float-right text-right" style="padding-right: 0px;">
+                              		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                                		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 									</form:form> 
                            		</div>
@@ -87,7 +87,7 @@
                                     <tbody>
                                         <tr>
                                             <th>거래처명</th>
-                                            <td>${serviceInfo.CLINAME}</td>
+                                            <td>${serviceInfo.CLINAME }</td>
                                         </tr>
                                         <tr>
                                             <th>대표자명</th>
@@ -205,7 +205,7 @@
                                         </tr>
                                         <tr>
                                             <th>접수매체</th>
-                                            <td>${serviceInfo.SERVICECHANNEL }</td>
+                                            <td>${serviceInfo.SERVICECHANNEL_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -350,19 +350,19 @@
                                 </table>
                             </div>
                             <div class="box3 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-bottom-0 border-top-0 mb-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-bottom-0 border-top-0">담당자</th>
-                                            <td class="border-bottom-0 border-top-0">${serviceInfo.OWNER_ }</td>
+                                            <th>담당자</th>
+                                            <td>${serviceInfo.OWNER_ }</td>
                                         </tr>
                                         <tr>
-                                            <th class="border-bottom-0 border-top-0">????</th>
-                                            <td class="border-bottom-0 border-top-0"></td>
+                                            <th>????</th>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -379,7 +379,7 @@
                                             <td>
                                                 <textarea id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
                                             </td>
-                                            <input type="hidden" id="rcvno" value="${rewardInfo.REWARDNO }" /> 
+                                            <input type="hidden" id="serviceno" value="${serviceInfo.SERVICENO }" /> 
                                         </tr>
                                     </tbody>
                                 </table>
@@ -392,7 +392,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>지연사유</th>
+                                            <th style="height: 63px;">지연사유</th>
                                             <td>
                                                 ${rewardInfo.DELAYTYPE_ }
                                             </td>
@@ -475,7 +475,7 @@
                                     <tbody>
                                         <tr>
                                             <th>처리담당자</th>
-                                            <td>${ractInfo.RACTOWNER }</td>
+                                            <td>${serviceInfo.OWNER_ }</td>
                                         </tr>
                                         
                                     </tbody>
@@ -534,17 +534,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                <div class="box col-12 mb-2 mt-3" style="padding-left: 0px;padding-right: 0px;">
+                	<div class=" float-left" style="height:2.00rem;padding-lㄹeft: 0px;" >
                     	<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
                         <a href="#" class="btn btn-primary servicenext">이관</a>
                         <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
                         <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
                         <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
                     </div>
-                    <div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-                    	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                    <div class="float-right" style="padding-right: 0px;">
+                    	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
 							<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 						</form:form> 
                     </div>

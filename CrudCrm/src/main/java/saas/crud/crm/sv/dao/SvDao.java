@@ -39,6 +39,12 @@ public interface SvDao {
 	public Map<String,Object> rewardRead(Map<String,Object> param);
 	// 처리결과 Read
 	public Map<String,Object> ractRead(Map<String,Object> param);
+	// 처리이력 Tab
+	public List<Map<String, Object>> svTabRact(RactDto ractDto);
+	// 이관이력 Tab
+	public List<Map<String, Object>> conveyTabList(ConveyDto conveyDto);
+	// 이관 추가
+	public void conveyInsert(ConveyDto conveyDto);
 	
 
 }

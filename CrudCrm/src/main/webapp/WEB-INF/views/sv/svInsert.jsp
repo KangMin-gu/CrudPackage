@@ -76,7 +76,7 @@
 									<Strong><span id="showMsg"></span></Strong>				
 	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-									<Button type="submit" class="btn btn-primary submit" >저 장</Button>
+									<Button type="submit" disabled class="btn btn-primary submit" >저 장</Button>
 									<a href="/service" class="btn btn-primary">목 록</a>
 								</div>
 							</div>
@@ -88,10 +88,10 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="clino">거래처명</label></th>
+                                            <th><label for="clino" class="mb-0">거래처명</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group cli" id="clino_">
-                                                    <input type="text" class="form-control" disabled name="clino_" value="${serviceInfo.CLINO_ }">
+                                                    <input type="text" class="form-control validate allV" disabled name="clino_" value="${serviceInfo.CLINO_ }">
                                                     <input type="hidden" class="form-control" name="clino" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -100,14 +100,14 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><label for="prsdname">대표자명</label></th>
+                                            <th><label for="prsdname" class="mb-0">대표자명</label></th>
                                             <td><input type="text" class="form-control" disabled name="prsdname" id="prsdname" value="${serviceInfo.PRSDNAME }"></td>
                                         </tr>
                                         <tr>
-                                            <th><label for="custname">고객명</label></th>
+                                            <th><label for="custname" class="mb-0">고객명</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group cust" id="custno_">
-                                                    <input type="text" class="form-control" disabled name="custno_" value="${serviceInfo.CUSTNAME }">
+                                                    <input type="text" class="form-control validate nameV" disabled name="custno_" value="${serviceInfo.CUSTNAME }">
                                                     <input type="hidden" class="form-control" name="custno" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -133,17 +133,17 @@
                                     <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="bsno" id="bsno" value="${serviceInfo.BSNO }"></td>
+                                            <td><input type="text" class="form-control" disabled name="bsno" id="bsno" value="${serviceInfo.BSNO }"></td>
                                         </tr>
                                         <tr>
                                             <th>대표전화번호</th>
-                                            <td style="height: 43px;">
+                                            <td>
                                             	<input type="text" class="form-control" disabled name="clitelno" id="clitelno" value="${serviceInfo.CLITELNO }">
 											</td>
                                         </tr>
                                         <tr>
                                             <th>직장명</th>
-                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="company" id="company" value="${serviceInfo.COMPANY }"></td>
+                                            <td><input type="text" class="form-control" disabled name="company" id="company" value="${serviceInfo.COMPANY }"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0">휴대전화번호</th>
@@ -163,27 +163,24 @@
                                     <tbody>
                                         <tr>
                                             <th>법인번호</th>
-                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="incno" id="incno" value="${serviceInfo.INCNO }"></td>
+                                            <td><input type="text" class="form-control" disabled name="incno" id="incno" value="${serviceInfo.INCNO }"></td>
                                         </tr>
                                         <tr>
                                             <th>홈페이지</th>
-                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="homepage" id="homepage" value="${serviceInfo.HOMEPAGE }"></td>
+                                            <td><input type="text" class="form-control" disabled name="homepage" id="homepage" value="${serviceInfo.HOMEPAGE }"></td>
                                         </tr>
                                         <tr>
                                             <th>직책</th>
-                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="duty" id="duty" value="${serviceInfo.DUTY }"></td>
+                                            <td><input type="text" class="form-control" disabled name="duty" id="duty" value="${serviceInfo.DUTY }"></td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
-                                            <td style="height: 43px;"><input type="text" class="form-control" disabled name="email" id="email" value="${serviceInfo.EMAIL }"></td>
+                                            <td><input type="text" class="form-control" disabled name="email" id="email" value="${serviceInfo.EMAIL }"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-12" style="background: #ffffff;">
@@ -207,15 +204,15 @@
                                     <tbody>
                                     	<tr>
                                             <th>접수일</th>
-                                            <td style="height: 42px;">
+                                            <td>
                                             	<input type="text" class="form-control" disabled id="receptiondate_" >
                                             	<input type="hidden" class="form-control date" name="receptiondate" id="receptiondate" value="">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th style="height: 45px;">접수유형</th>
+                                            <th>접수유형</th>
                                             <td class="border-top-0">
-                                                <select class="form-control" name="servicetype" id="servicetype">
+                                                <select class="form-control validate numberV" name="servicetype" id="servicetype">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="serviceType" items="${SERVICETYPE }">
                                                 		<c:choose>
@@ -241,7 +238,7 @@
                                     </colgroup>
                                     <tbody>
                                     	<tr>
-                                            <th style="height: 45px;">접수자</th>
+                                            <th>접수자</th>
                                             <td>
                                             	<div class="input-group">
                                                     <input type="text" class="form-control" disabled name="serviceowner_" id="serviceowner_" value="${sessionScope.USERNAME }">
@@ -255,7 +252,7 @@
                                     	<tr>
                                         	<th class="border-top-0">접수매체</th>
                                         	<td class="border-top-0">
-                                                <select class="form-control" name="servicechannel" id="servicechannel">
+                                                <select class="form-control validate numberV" name="servicechannel" id="servicechannel">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="serviceChannel" items="${SERVICECHANNEL }">
                                                 		<c:choose>
@@ -283,7 +280,7 @@
                                     <tbody>
                                     	<tr>
                                             <th>진행단계</th>
-                                            <td style="height: 42px;">
+                                            <td>
                                             	<input type="text" disabled class="form-control" disabled name="servicestep_" id="servicestep_" value="접수">
                                                 <input type="hidden" name="servicestep" id="servicestep" value="1">
 											</td>
@@ -291,7 +288,7 @@
                                         <tr>
                                             <th>서비스유형</th>
                                             <td>
-                                            	<select class="form-control select2" name="servicecode" id="servicecode" value="${serviceInfo.SERVICECODE }">
+                                            	<select class="form-control select validate numberV" name="servicecode" id="servicecode" value="${serviceInfo.SERVICECODE }">
                                                     	<option value="">선택</option>
                                                     	<option value="1" <c:if test='${serviceInfo.SERVICECODE eq 1}'>selected</c:if>>클라1</option>
                                                     	<option value="2" <c:if test='${serviceInfo.SERVICECODE eq 2}'>selected</c:if>>클라2</option>
@@ -311,8 +308,8 @@
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
-                                            <td class="border-top-0" style="height: 42px;">
-                                            	<input type="text" class="form-control" name="servicename" id="servicename" value="${serviceInfo.SERVICENAME }">
+                                            <td class="border-top-0">
+                                            	<input type="text" class="form-control error required validate allV" name="servicename" id="servicename" value="${serviceInfo.SERVICENAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -329,7 +326,7 @@
                                             <th class="border-top-0 border-bottom-0">처리담당자</th>
                                             <td class="border-top-0 border-bottom-0">
                                             	<div class="input-group owner" id="owner_">
-                                                    <input type="text" class="form-control" autocomplete="off" name="owner_" value="${serviceInfo.OWNER_ }">
+                                                    <input type="text" class="form-control error required validate nameV" autocomplete="off" name="owner_" value="${serviceInfo.OWNER_ }">
                                                     <input type="hidden" name="owner" value="0">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -386,14 +383,17 @@
                         <div class="ibox-title row">
                             <h4>현상 파악</h4>
                             <div class="ibox-tools">
-                            	<a class="collapse-link">
-                                	<i class="fa fa-chevron-up"></i>
-                            	</a>
+                            <div class="float-left" style="height:2.00rem;padding-left: 0px;" >
+                            	<a href="" id="rewardSame" class="btn btn-primary" data-placement="right">접수정보와 동일</a>               
+                             </div>
+                            <a class="collapse-link">
+                               	<i class="fa fa-chevron-up"></i>
+                            </a>
                         	</div>
                         </div>
                         
                         <div class="ibox-content row">
-                            
+							                            
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -402,15 +402,24 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th style="height: 45px;">방문약속일자</th>
+                                            <th>방문약속일자</th>
                                             <td class="border-top-0">
-                                                <input type="text" class="form-control date" name="visitdate" id="visitdate">
+                                            	<div class="input-group p-0 date">
+                                            		<div class="d-flex date date01">
+                                                    	<span class="input-group-addon">
+                                                    		<i class="fa fa-calendar"></i>
+                                                    	</span>
+                                                    	<input type="text" disabled id="visitdate_" name="visitdate_" class="form-control error validate required dateV date" value="${serviceInfo.VISITDATE }">
+                                                    	<input type="hidden" id="visitdate" name="visitdate" class="form-control" value="${serviceInfo.VISITDATE }">
+                                                    </div>
+                                                </div>   
                                             </td>
+                                            
                                         </tr>
                                         <tr>
                                             <th>현상</th>
-                                            <td style="height: 42px;">
-                                            	<select class="form-control select2" name="rewardtype" id="rewardtype" value="${rewardInfo.REWARDTYPE }">
+                                            <td>
+                                            	<select class="form-control select2 validate numberV" name="rewardtype" id="rewardtype" value="${rewardInfo.REWARDTYPE }">
                                                     	<option value="0">선택</option>
                                                     	<option value="1" <c:if test='${rewardInfo.REWARDTYPE eq 1}'>selected</c:if>>클라1</option>
                                                     	<option value="2" <c:if test='${rewardInfo.REWARDTYPE eq 2}'>selected</c:if>>클라2</option>
@@ -440,9 +449,9 @@
 											</td>
                                         </tr>
                                         <tr>
-                                            <th style="height: 42px;">원인구분</th>
-                                            <td style="height: 42px;">
-                                            	<select class="form-control select2" name="causecode" id="causecode" value="${rewardInfo.CAUSECODE }">
+                                            <th>원인구분</th>
+                                            <td>
+                                            	<select class="form-control select2 validate numberV" name="causecode" id="causecode" value="${rewardInfo.CAUSECODE }">
                                                     	<option value="0">선택</option>
                                                     	<option value="1" <c:if test='${rewardInfo.CAUSECODE eq 1}'>selected</c:if>>클라1</option>
                                                     	<option value="2" <c:if test='${rewardInfo.CAUSECODE eq 2}'>selected</c:if>>클라2</option>
@@ -461,11 +470,11 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th style="height: 45px;">담당자</th>
+                                            <th>담당자</th>
                                             <td>
                                             	<div class="input-group">
-                                                    <input type="text" class="form-control" disabled name="rewardowner_" id="rewardowner_" value="${serviceInfo.OWNER_ }">
-                                                    <input type="hidden" name="rewardowner" id="rewardowner" value="${serviceINfo.OWNER }">
+                                                    <input type="text" class="form-control" disabled name="rewardowner_" value="${serviceInfo.OWNER_ }">
+                                                    <input type="hidden" name="rewardowner" id="rewardowner" value="${serviceInfo.OWNER }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -484,7 +493,7 @@
                                     <tbody>
                                         <tr>
                                             <th class="border-top-0">상세내역</th>
-                                            <td class="border-top-0" style="height: 42px;">
+                                            <td class="border-top-0">
                                             	<textarea name="rewarddesc" class="form-control" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
                                             </td>
                                         </tr>
@@ -501,7 +510,7 @@
                                         <tr>
                                         	<th class="border-top-0">지연사유</th>
                                         	<td class="border-top-0">
-                                                <select class="form-control select2" name="delaytype" id="delaytype" value="${rewardInfo.DELAYTYPE }">
+                                                <select class="form-control select2 validate numberV" name="delaytype" id="delaytype" value="${rewardInfo.DELAYTYPE }">
                                                     	<option value="0">선택</option>
                                                     	<option value="1" <c:if test='${rewardInfo.DELAYTYPE eq 1}'>selected</c:if>>클라1</option>
                                                     	<option value="2" <c:if test='${rewardInfo.DELAYTYPE eq 2}'>selected</c:if>>클라2</option>
@@ -562,7 +571,14 @@
                         </div>
                         
                         <div class="ibox-content row">
-                            
+							<div class="box col-12 tooltip-demo mb-2" style="padding-left: 0px;padding-right: 0px;">
+                       			<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
+                                    <a href="" class="btn btn-primary" data-placement="right">버튼</a>               
+                             	</div>                                       
+	                            <div class=" float-right" style="padding-right: 0px;">
+									<a href="" class="btn btn-primary" data-placement="right">버튼</a>
+	                            </div>
+                            </div>	                              
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -573,7 +589,8 @@
                                         <tr>
                                             <th>처리일</th>
                                             <td>
-                                            	<input type="text" class="form-control date" name="rcvdate" id="rcvdate">
+                                            	<input type="text" disabled class="form-control date" name="ractdate_" id="ractdate_" value="">
+                                            	<input type="hidden" class="form-control date" name="ractdate" id="ractdate" value="">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -606,18 +623,18 @@
                                 </table>
                             </div>
                             <div class="box3 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 border-bottom-0 mb-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0 border-bottom-0">처리발송여부</th>
-                                            <td class="border-top-0 border-bottom-0">
-                                            	<div class="checkbox float-left col-lg-2 p-0">
-													<input type="checkbox" class="i-checks" name="sendyn" id="sendyn"  value="0">
-													<label for="sendyn">발송여부</label>
+                                            <th>처리발송여부</th>
+                                            <td>
+                                            	<div class="checkbox float-left p-0">
+													<label for="sendyn" class="mb-0">발송여부</label>
+													<input type="checkbox" class="i-checks" name="sendyn" id="sendyn"  value="0">													
 												</div>
                                             </td>
                                         </tr>
@@ -724,6 +741,8 @@
 			var date = today();
 			$('#receptiondate').val(date);
 			$('#receptiondate_').val(date);
+			$('#ractdate').val(date);
+			$('#ractdate_').val(date);
 		});
 
 	</script>

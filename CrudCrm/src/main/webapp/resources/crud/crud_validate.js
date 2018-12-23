@@ -44,73 +44,73 @@
 			}
 		}
 		var msg;
-		if( $('[name="'+id+'"]').hasClass('name') ){ //id에 name 이라는 클래스가 있으면 
+		if( $('[name="'+id+'"]').hasClass('nameV') ){ //id에 name 이라는 클래스가 있으면 
 			res = namePattern.test(value);// namePattern 매칭. 유효성검사 실행 
 			msg = '<한글,영어 2 글자 이상을 입력해 주세요.( + 숫자 0~5 자리 )';//이 문구 출력
 		
-		}else if( $('[name="'+id+'"]').hasClass('phone1') ){
+		}else if( $('[name="'+id+'"]').hasClass('phone1V') ){
 			res = phone1Pattern.test(value);
 			msg = '숫자 2~3 자리를 입력해 주세요.';//이 문구 출력	
 			
-		}else if( $('[name="'+id+'"]').hasClass('phone2') ){
+		}else if( $('[name="'+id+'"]').hasClass('phone2V') ){
 			res = phone2Pattern.test(value);
 			msg = '숫자 3~4 자리를 입력해 주세요.';//이 문구 출력
 			
-		}else if( $('[name="'+id+'"]').hasClass('phone3') ){
+		}else if( $('[name="'+id+'"]').hasClass('phone3V') ){
 			res = phone3Pattern.test(value);
 			msg = '숫자 4 자리를 입력해 주세요.';//이 문구 출력	
 			
-		}else if( $('[name="'+id+'"]').hasClass('addr') ){
+		}else if( $('[name="'+id+'"]').hasClass('addrV') ){
 			res = addrPattern.test(value);
 			msg = '한글,영어,숫자,기호로 입력해 주세요.(특수문자x)';//이 문구 출력
 			
-		}else if( $('[name="'+id+'"]').hasClass('url') ){
+		}else if( $('[name="'+id+'"]').hasClass('urlV') ){
 			res = domainPattern.test(value);
 			msg = 'http(s):// 를 제외한 url 형식으로 입력해 주세요 ex) www.crudsystem.co.kr ';//이 문구 출력
 			
-		}else if( $('[name="'+id+'"]').hasClass('email') ){
+		}else if( $('[name="'+id+'"]').hasClass('emailV') ){
 			res = emailPattern.test(value);
 			msg = 'email 형식에 맞게 입력해 주세요 ex) sdw@crudsystem.co.kr ';//이 문구 출력
 			
-		}else if( $('[name="'+id+'"]').hasClass('simple') ){
+		}else if( $('[name="'+id+'"]').hasClass('simpleV') ){
 			res = simplePattern.test(value);
 			msg = '한글,영어,숫자로 입력해 주세요.';//이 문구 출력	
 		
-		}else if( $('[name="'+id+'"]').hasClass('number') ){
+		}else if( $('[name="'+id+'"]').hasClass('numberV') ){
 			res = numberPattern.test(value);
 			if(id=='idcheck'){
 				msg = '중복된 ID 이거나 입력이 되지 않았습니다.';
 			}else{
 				msg = '숫자로 입력해 주세요.';//이 문구 출력	
 			}
-		}else if( $('[name="'+id+'"]').hasClass('longnumber') ){
+		}else if( $('[name="'+id+'"]').hasClass('longnumberV') ){
 			res = longnumberPattern.test(value);
 			msg = '숫자로 입력해 주세요.';//이 문구 출력	
 		
-		}else if( $('[name="'+id+'"]').hasClass('string') ){
+		}else if( $('[name="'+id+'"]').hasClass('stringV') ){
 			res = stringPattern.test(value);
 			msg = '잘못된 문자열이 입력되었습니다. 학인해주세요';//이 문구 출력	
 		
-		}else if( $('[name="'+id+'"]').hasClass('check') ){
+		}else if( $('[name="'+id+'"]').hasClass('checkV') ){
 			res = checkPattern.test(value);
 			msg = '사용여부 확인 부탁드립니다.';//이 문구 출력	
 		
-		}else if( $('[name="'+id+'"]').hasClass('cost') ){
+		}else if( $('[name="'+id+'"]').hasClass('costV') ){
 			res = costPattern.test(value);
 			msg = '1~15자리의 숫자를 입력해주세요.';//이 문구 출력	
 		
-		}else if( $('[name="'+id+'"]').hasClass('percent') ){
+		}else if( $('[name="'+id+'"]').hasClass('percentV') ){
 			res = percentPattern.test(value);
 			msg = '0~100까지의 정수를 입력해주세요';//이 문구 출력	
 		
-		}else if( $('[name="'+id+'"]').hasClass('corp') ){//법인번호는 999999-999999 형식  - 제거 후 유효성검사					
+		}else if( $('[name="'+id+'"]').hasClass('corpV') ){//법인번호는 999999-999999 형식  - 제거 후 유효성검사					
 			if(value.length==13){ 
 				var temp = value.replace('-','');
 				value = temp;
 			}		
 			res = corpnoPattern.test(value);
 			msg = '법인번호 12자리를 확인 해주세요';//이 문구 출력	
-		}else if( $('[name="'+id+'"]').hasClass('bs') ){//사업자번호는 999-99-99999  형식  - 제거 후 유효성검사		
+		}else if( $('[name="'+id+'"]').hasClass('bsV') ){//사업자번호는 999-99-99999  형식  - 제거 후 유효성검사		
 			if(value.length==12){ // - 제거
 				var temp = value.replace(/\-/g,'');
 				value = temp;
@@ -120,7 +120,7 @@
 			msg = '사업자번호 10자리를 확인 해주세요';//이 문구 출력	
 			
 			
-		}else if( $('[name="'+id+'"]').hasClass('userpassword')){		//내정보 비밀번호 		
+		}else if( $('[name="'+id+'"]').hasClass('userpasswordV')){		//내정보 비밀번호 		
 	
 			res = passwordPattern.test(value);
 			if(value.length < 20){

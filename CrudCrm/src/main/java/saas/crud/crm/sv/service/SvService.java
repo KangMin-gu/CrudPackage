@@ -25,5 +25,11 @@ public interface SvService {
 	public void svDelete(HttpServletRequest request,int serviceNo);
 	
 	public void svMultiDelete(HttpServletRequest request);
+	
+	public List<Map<String, Object>> svTabRact(HttpServletRequest request,int rcvno);
+	
+	public List<Map<String,Object>> svTabConvey(HttpServletRequest request,int rcvno);
+	
+	public void svConveyInsert(HttpServletRequest request,ConveyDto conveyDto);
 
 }

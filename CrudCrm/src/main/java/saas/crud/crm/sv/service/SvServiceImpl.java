@@ -147,7 +147,7 @@ public class SvServiceImpl implements SvService{
 				rewardDto.setServiceno(serviceNo);
 				rewardDto.setReguser(userNo);
 				svDao.rewardInsert(rewardDto);
-				serviceDto.setServicestep(1);
+				serviceDto.setServicestep(2);
 				svDao.svStepUpdate(serviceDto);
 			}
 		}
@@ -162,7 +162,7 @@ public class SvServiceImpl implements SvService{
 				ractDto.setServiceno(serviceNo);
 				ractDto.setReguser(userNo);
 				svDao.ractInsert(ractDto);
-				serviceDto.setServicestep(3);
+				serviceDto.setServicestep(4);
 				svDao.svStepUpdate(serviceDto);
 			}
 		}
@@ -182,6 +182,7 @@ public class SvServiceImpl implements SvService{
 		svDao.svDelete(serviceDto);
 	}
 
+	// 서비스 멀티삭제
 	@Override
 	public void svMultiDelete(HttpServletRequest request) {
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -202,6 +203,51 @@ public class SvServiceImpl implements SvService{
 			svDao.svDelete(serviceDto);
 		}
 	}
+	// 서비스 처리이력 탭
+	@Override
+	public List<Map<String, Object>> svTabRact(HttpServletRequest request, int serviceNo) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		RactDto ractDto = new RactDto();
+		ractDto.setSiteid(siteId);
+		ractDto.setServiceno(serviceNo);
+		
+		List<Map<String, Object>> tabRact = svDao.svTabRact(ractDto);
+		
+		return tabRact;
+	}
 
-	
+	// 서비스 이관 이력 탭
+	@Override
+	public List<Map<String, Object>> svTabConvey(HttpServletRequest request, int serviceNo) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		ConveyDto conveyDto = new ConveyDto();
+		conveyDto.setServiceno(serviceNo);
+		conveyDto.setSiteid(siteId);
+		List<Map<String,Object>> tabConvey = svDao.conveyTabList(conveyDto);
+		
+		return tabConvey;
+	}
+	// 서비스 이관 추가
+	@Override
+	public void svConveyInsert(HttpServletRequest request, ConveyDto conveyDto) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		ServiceDto serviceDto = new ServiceDto();
+		
+		conveyDto.setSiteid(siteId);
+		conveyDto.setReguser(userNo);
+		conveyDto.setEdtuser(userNo);
+		
+		svDao.conveyInsert(conveyDto);
+		
+		serviceDto.setSiteid(siteId);
+		serviceDto.setEdtuser(userNo);
+		serviceDto.setServicestep(4);
+		svDao.svStepUpdate(serviceDto);
+		
+	}
 }
+

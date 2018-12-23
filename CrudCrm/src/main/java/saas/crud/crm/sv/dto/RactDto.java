@@ -18,12 +18,13 @@ public class RactDto {
 	private String edtdate;
 	private int edtuser;
 	private int siteid;
+	private int ractcode;
 	private List<MultipartFile> ractfile; //Spring 에서 파일 업로드 처리하기 위해
 	
 	public RactDto() {}
 
 	public RactDto(int ractno, int serviceno, String ractdate, int sendyn, int ractowner, String ractdesc,
-			String filesearchkey, String regdate, int reguser, String edtdate, int edtuser, int siteid,
+			String filesearchkey, String regdate, int reguser, String edtdate, int edtuser, int siteid, int ractcode,
 			List<MultipartFile> ractfile) {
 		super();
 		this.ractno = ractno;
@@ -38,6 +39,7 @@ public class RactDto {
 		this.edtdate = edtdate;
 		this.edtuser = edtuser;
 		this.siteid = siteid;
+		this.ractcode = ractcode;
 		this.ractfile = ractfile;
 	}
 
@@ -137,6 +139,14 @@ public class RactDto {
 		this.siteid = siteid;
 	}
 
+	public int getRactcode() {
+		return ractcode;
+	}
+
+	public void setRactcode(int ractcode) {
+		this.ractcode = ractcode;
+	}
+
 	public List<MultipartFile> getRactfile() {
 		return ractfile;
 	}
@@ -144,7 +154,7 @@ public class RactDto {
 	public void setRactfile(List<MultipartFile> ractfile) {
 		this.ractfile = ractfile;
 	}
-
+	
 	
 
 }

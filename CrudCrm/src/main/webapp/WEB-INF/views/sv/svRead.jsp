@@ -280,15 +280,15 @@
                             <div class="mail-attachment">																	
 								<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
 								<div class="attachment">
-									<c:forEach var="file" items="${serviceFile }">
+									<c:forEach var="serviceFile" items="${serviceFile }">
 										<div class="file-box">
 											<div class="file">
-												<a href="${pageContext.request.contextPath}/campaign/download/${file.FILEID}"> <span class="corner"></span>
+												<a href="${pageContext.request.contextPath}/campaign/download/${serviceFile.FILEID}"> <span class="corner"></span>
 													<div class="icon">
 														<i class="fa fa-file"></i>
 													</div>
 													<div class="file-name">
-														${file.ORGFILENAME } <br /> <small>${file.REGDATE }</small>
+														${serviceFile.ORGFILENAME } <br /> <small>${serviceFile.REGDATE }</small>
 													</div>
 												</a>
 											</div>
@@ -392,8 +392,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th style="height: 63px;">지연사유</th>
-                                            <td>
+                                            <th style="height: 58px;">지연사유</th>
+                                            <td style="height: 58px;">
                                                 ${rewardInfo.DELAYTYPE_ }
                                             </td>
                                         </tr>

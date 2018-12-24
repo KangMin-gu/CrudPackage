@@ -331,7 +331,7 @@
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
-                                                    <span class="input-group-addon">
+                                                    <span class="input-group-addon self">
                                                         <a><i class="fa fa-child"></i></a>
                                                     </span>
                                                 </div>
@@ -499,10 +499,10 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                        	<th class="border-top-0">지연사유</th>
-                                        	<td class="border-top-0">
-                                                <select class="form-control select2 validate numberV" name="delaytype" id="delaytype" value="${rewardInfo.DELAYTYPE }">
-                                                    	<option value="0">선택</option>
+                                        	<th class="border-top-0" style="height: 58px;">지연사유</th>
+                                        	<td class="border-top-0" style="height: 58px;">
+                                                <select class="form-control select2" name="delaytype" id="delaytype" value="${rewardInfo.DELAYTYPE }">
+                                                    	<option value="">선택</option>
                                                     	<option value="1" <c:if test='${rewardInfo.DELAYTYPE eq 1}'>selected</c:if>>클라1</option>
                                                     	<option value="2" <c:if test='${rewardInfo.DELAYTYPE eq 2}'>selected</c:if>>클라2</option>
                                                     	<option value="3" <c:if test='${rewardInfo.DELAYTYPE eq 3}'>selected</c:if>>클라3</option>

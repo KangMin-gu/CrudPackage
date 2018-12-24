@@ -79,6 +79,30 @@ $('#svSave').click(function(e){
 
 });
 
+$('.self').click(function(e){
+	
+	
+	var serviceowner_ = $('#serviceowner_').val();
+	var serviceowner = $('#serviceowner').val();
+	
+	$('[name="owner_"]').val(serviceowner_).trigger('keyup');
+	$('[name="owner"]').val(serviceowner);
+	e.stopPropagation();
+});
 
+$('#rewardSame').click(function(e){
+	
+	e.preventDefault();
+	var receptionDate = $('#receptiondate').val();
+	var owner_ = $('[name="owner_"]').val();
+	var owner = $('[name="owner"]').val();
+	var serviceDesc = $('#servicedesc').text();
+	
+	$('#visitdate').val(receptionDate);
+	$('#rewarddesc').summernote('code',serviceDesc);
+	$('[name="rewardowner_"]').val(owner_);
+	$('[name="rewardowner"]').val(owner);
+
+});
 
 

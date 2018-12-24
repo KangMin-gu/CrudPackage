@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.CrudEngine;
+import saas.crud.crm.ce.MailDao;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
@@ -28,7 +29,9 @@ public class SvServiceImpl implements SvService{
 	
 	@Autowired
 	private CrudEngine crud;
-
+	
+	@Autowired
+	private MailDao mailDao;
 	// 서비스 List
 	@Override
 	public ModelAndView svList(HttpServletRequest request) {
@@ -72,7 +75,32 @@ public class SvServiceImpl implements SvService{
 		Map<String,Object> rewardInfo = svDao.rewardRead(param);
 		Map<String,Object> ractInfo = svDao.ractRead(param);
 		
+		if(serviceInfo.get("FILESEARCHKEY") != null) {
+			String fileSearchKey = (String) serviceInfo.get("FILESEARCHKEY");
+			param.put("filesearchkey", fileSearchKey);
+			List<Map<String,Object>> serviceFile = mailDao.fileAttach(param);
+			mView.addObject("serviceFile",serviceFile);
+			param.remove("filesearchkey");
+		}
 		
+		if(rewardInfo != null) {
+			if(rewardInfo.get("FILESEARCHKEY") != null) {
+				String fileSearchKey = (String) serviceInfo.get("FILESEARCHKEY");
+				param.put("filesearchkey", fileSearchKey);
+				List<Map<String,Object>> rewardFile = mailDao.fileAttach(param);
+				mView.addObject("rewardFile",rewardFile);
+				param.remove("filesearchkey");
+			}
+		}
+		if(ractInfo != null) {
+			if(ractInfo.get("FILESEARCHKEY") != null) {
+				String fileSearchKey = (String) serviceInfo.get("FILESEARCHKEY");
+				param.put("filesearchkey", fileSearchKey);
+				List<Map<String,Object>> ractFile = mailDao.fileAttach(param);
+				mView.addObject("ractFile",ractFile);
+				param.remove("filesearchkey");
+			}
+		}
 		mView.addObject("serviceInfo", serviceInfo);
 		mView.addObject("rewardInfo", rewardInfo);
 		mView.addObject("ractInfo", ractInfo);
@@ -102,26 +130,31 @@ public class SvServiceImpl implements SvService{
 		List<MultipartFile> mFile = null;
 		MultipartFile sFile = null;
 		
-		if(serviceFileUpload != null) {			
-			String fileSearchKey = crud.fileSearchKey(request);
-			// 이부분 수정필요
-			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
-			crud.fileUpload(response, multipartHttpServletRequest, serviceFileUpload, sFile, fileSearchKey);
-			serviceDto.setFilesearchkey(fileSearchKey);
+		
+		int rewardFileUploadLength = rewardFileUpload.get(0).getOriginalFilename().length();
+		int serviceFileUploadLength = serviceFileUpload.get(0).getOriginalFilename().length();
+		int ractFileUploadLength = ractFileUpload.get(0).getOriginalFilename().length();
+		
+		if(serviceFileUpload != null) {
+			if(serviceFileUploadLength > 0) {
+				String fileSearchKey = crud.fileSearchKey(request);
+				crud.fileUpload(response, multipartHttpServletRequest, serviceFileUpload, sFile, fileSearchKey);
+				serviceDto.setFilesearchkey(fileSearchKey);
+			}
 		}
-		if(rewardFileUpload != null) {			
+		if(rewardFileUpload != null) {
+			if(rewardFileUploadLength > 0) {
 			String fileSearchKey = crud.fileSearchKey(request);
-			// 이부분 수정필요
-			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
 			crud.fileUpload(response, multipartHttpServletRequest, rewardFileUpload, sFile, fileSearchKey);
 			rewardDto.setFilesearchkey(fileSearchKey);
+			}
 		}
-		if(ractFileUpload != null) {			
-			String fileSearchKey = crud.fileSearchKey(request);
-			// 이부분 수정필요
-			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
-			crud.fileUpload(response, multipartHttpServletRequest, ractFileUpload, sFile, fileSearchKey);
-			ractDto.setFilesearchkey(fileSearchKey);
+		if(ractFileUpload != null) {
+			if(ractFileUploadLength > 0) {
+				String fileSearchKey = crud.fileSearchKey(request);
+				crud.fileUpload(response, multipartHttpServletRequest, ractFileUpload, sFile, fileSearchKey);
+				ractDto.setFilesearchkey(fileSearchKey);
+			}
 		}
 		
 		int serviceNo = serviceDto.getServiceno();

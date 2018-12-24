@@ -16,10 +16,11 @@
 					<ul class="nav navbar-top-links navbar-right">
 						<li><span class="m-r-sm text-muted welcome-message">CRUD CRM에 오신 <strong>${sessionScope.USERNAME }</strong>님 환영합니다.</span></li>
 						<li class="dropdown"><a class="dropdown-toggle count-info"
-							data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
+							data-toggle="dropdown" href="#" id='dropClick'> <i class="fa fa-envelope"></i>
 								<span class="label label-warning">16</span>
 						</a>
 							<ul class="dropdown-menu dropdown-messages" id="dropDown">
+							
 							</ul></li>
 
 						<li>

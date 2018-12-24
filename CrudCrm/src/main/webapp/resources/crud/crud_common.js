@@ -347,6 +347,7 @@
 	        }
 	    });
 	};
+	//메세지 버튼 클릭시 
 	$("#dropClick").click(function(){
 		var dropDown = $("#dropDown");
 		dropDown.empty();
@@ -356,15 +357,20 @@
 			url:"/note/summary",
 			type:"GET",
 			success:function(data){
+				//본문에 추가될 내용 
 				var dropHtml = "";
 				var subject = "";
 				var subjectLen = "";
-				var rltDate ="";
+				var rltDate = ""; 
+				
 				for(var i=0; i<data.length; i++){
-
+					
+					//반복문 다 돌고 append 초기화 
+					dropHtml = "";
 					//제목 10자리 끊기 
 					subject = data[i].SUBJECT;
 					subjectLen = data[i].SUBJECT.length;
+					
 					if(subjectLen > 10){
 						subject = subject.substring(0,10)+"...";
 					}
@@ -381,9 +387,9 @@
 					
 					//마지막 바퀴일때 Read AllMessages 출력 
 					if(i == (data.length-1)){
-						dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
-						dropHtml +="<i class='fa fa-envelope'></i> <strong>Read AllMessages</strong>"
-						dropHtml +="</div></li>";
+					dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
+					dropHtml +="<i class='fa fa-envelope'></i> <strong>Read AllMessages</strong>"
+					dropHtml +="</div></li>";
 					}
 					dropDown.append(dropHtml);
 				}

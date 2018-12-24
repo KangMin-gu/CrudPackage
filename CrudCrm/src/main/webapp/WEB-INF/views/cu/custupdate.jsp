@@ -93,7 +93,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>고객명<sup>*</sup></th>
+													<th>고객명&nbsp;<b>&#42;</b></th>
 													<td>
 														<input type="text" class="form-control validate required nameV" name="custname" id="custname"  value="${custUpdate.CUSTNAME}"  >
 													</td>
@@ -148,11 +148,11 @@
 													</td>
 												</tr>
 												<tr>
-													<th>휴대전화<sup>*</sup></th><!-- form:select변경 -->
+													<th>휴대전화&nbsp;<b>&#42;</b></th><!-- form:select변경 -->
 													<td>
 														<select class="form-control col-4 float-left mr-3 validate required phone-group phone1V " style="height: 1.40rem" name="mobile1" id="mobile1" >	 
 															<option value="" ${custUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
-															<c:forEach var="mobile" items="${MOBILE }">
+															<c:forEach var="mobile" items="${MOBILE1 }">
                                                       			<c:choose>
                                                          			<c:when test="${custUpdate.MOBILE1 eq mobile.codeval}">
                                                             			<option selected label="${mobile.codename }" value="${mobile.codeval }"/>

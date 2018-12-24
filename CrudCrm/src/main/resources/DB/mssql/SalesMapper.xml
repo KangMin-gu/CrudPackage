@@ -20,12 +20,18 @@
 		<if test="clino != null and clino != 0">
 		AND CLINO = #{clino}
 		</if>	
-		<if test="fromregdt != null">
-		AND CONVERT(VARCHAR, REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
+		<if test="fromrorddt != null">
+		AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[>=]]> #{fromrorddt}
 		</if>
-		<if test="toregdt != null">
-		AND CONVERT(VARCHAR, REGDATE, 112) <![CDATA[<=]]> #{toregdt}
-		</if>	
+		<if test="tororddt != null">
+		AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[<=]]> #{tororddt}
+		</if>
+		<if test="fromforddt != null">
+		AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[>=]]> #{fromforddt}
+		</if>
+		<if test="toforddt != null">
+		AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[<=]]> #{toforddt}
+		</if>					
 		<if test="salestate != null and salestate != 0">
 		AND SALESTATE = #{salestate}
 		</if>	
@@ -36,6 +42,7 @@
 		ROWNUM, SALESNO, SALENAME
 		,CLINO, CLINAME, SALESTATE
 		,CONVERT(VARCHAR, FORDDATE, 23) AS FORDDATE
+		,CONVERT(VARCHAR, RORDDATE, 23) AS RORDDATE
 		,CONVERT(VARCHAR, STATEDATE, 23) AS STATEDATE
 		,OWNER, USERNAME		
 	FROM (
@@ -43,7 +50,8 @@
 			(ROW_NUMBER() OVER(ORDER BY SALESNO DESC)) AS ROWNUM
 			,A.SALESNO, A.SALENAME
 			,A.CLINO, B.CLINAME
-			,A.FORDDATE, A.SALESTATE, A.STATEDATE
+			,A.FORDDATE, A.RORDDATE
+			,A.SALESTATE, A.STATEDATE
 			,A.OWNER, C.USERNAME
 		FROM TB210010 A with (nolock)
 		LEFT OUTER JOIN TB200010 B with (nolock) ON A.CLINO = B.CLINO
@@ -61,12 +69,18 @@
 			<if test="clino != null and clino != 0">
 			AND A.CLINO = #{clino}
 			</if>	
-			<if test="fromregdt != null">
-			AND CONVERT(VARCHAR, A.REGDATE, 23) <![CDATA[>=]]> #{fromregdt}
+			<if test="fromrorddt != null">
+			AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[>=]]> #{fromrorddt}
 			</if>
-			<if test="toregdt != null">
-			AND CONVERT(VARCHAR, A.REGDATE, 23) <![CDATA[<=]]> #{toregdt}
-			</if>	
+			<if test="tororddt != null">
+			AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[<=]]> #{tororddt}
+			</if>
+			<if test="fromforddt != null">
+			AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[>=]]> #{fromforddt}
+			</if>
+			<if test="toforddt != null">
+			AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[<=]]> #{toforddt}
+			</if>
 			<if test="salestate != null and salestate != 0">
 			AND A.SALESTATE = #{salestate}
 			</if>	

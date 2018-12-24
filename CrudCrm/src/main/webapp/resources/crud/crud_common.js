@@ -57,11 +57,11 @@
         
 	$('.owner').click(function(e){
 		//openNewWindow('담당자','/common/user',e.target.id,650,700);
-		openNewWindow('담당자','/popowner',e.currentTarget.id,600,600);
+		openNewWindow('담당자','/popowner',e.currentTarget.id,600,500);
 	});
 	//거래처팝업
 	$('.cli').click(function(e){
-		openNewWindow('거래처','/popclient',e.currentTarget.id,650,700);
+		openNewWindow('거래처','/popclient',e.currentTarget.id,650,750);
 	});
 	// 고객 팝업
 	$('.cust').click(function(e){
@@ -346,7 +346,8 @@
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
-	};
+	}
+		
 	$("#dropClick").click(function(){
 		var dropDown = $("#dropDown");
 		dropDown.empty();

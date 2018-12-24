@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,16 @@ public class SalesController {
 		mView.setViewName("sa/sales/saleslist");
 		return mView;
 	}
+	
+	//영업리스트 (영업삭제-멀티)
+	@RequestMapping(value="/sales/del", method=RequestMethod.PUT)
+	public String authsalesDelete(HttpServletRequest request) {
+		String[] salesno = request.getParameterValues("salesno");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@삭제할salesno"+salesno.toString());
+		salesService.svcSalesMultyDelete(request);
+		return "redirect:/sales";
+	}
+	
 	//영업상세
 	@RequestMapping(value="/sales/view/{salesno}",method=RequestMethod.GET)
 	public ModelAndView authsalesDetail(HttpServletRequest request 

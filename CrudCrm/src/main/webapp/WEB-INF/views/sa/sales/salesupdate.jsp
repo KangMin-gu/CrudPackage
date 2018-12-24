@@ -82,13 +82,13 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>영업건명<sup>*</sup></th>
+													<th>영업건명&nbsp;<b>&#42;</b></th>
 													<td>
 														<input type="text" class="form-control validate required stringV" id="salename" name="salename" value="${salesUpdate.SALENAME }">
 													</td>
 												</tr>
 												<tr>
-													<th>현단계<sup>*</sup></th>
+													<th>현단계&nbsp;<b>&#42;</b></th>
 													<td>
 														<select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
 														
@@ -188,7 +188,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>거래처명<sup>*</sup></th>
+													<th>거래처명&nbsp;<b>&#42;</b></th>
 													<td>
 														<div class="input-group">
 															<input type="text" class="form-control cli validate required allV" id="cliname" name="cliname" value="${salesUpdate.CLINAME }">

@@ -88,8 +88,8 @@
 												<col style="width: auto;">
 											</colgroup>
 											<tbody>
-												<tr>
-													<th>고객명<sup>*</sup></th>
+												<tr style="border-color:red">
+													<th>고객명&nbsp;<b>&#42;</b></th>
 													<td>
 														<input type="text" class="form-control error validate required nameV" name="custname" id="custname" placeholder="필수 입력" >
 													</td>
@@ -133,14 +133,16 @@
 														</div>
 													</td>
 												</tr>
-												<tr>
-													<th>휴대전화<sup>*</sup></th>
-													<td>																			
-                                                		<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mobile1">
-                                                			<option value="">선택</option>
-                                                			<form:options items="${MOBILE}" itemLabel="codename" itemValue="codeval"/>
-                                                		</form:select>
-														
+												<tr id="ttt">
+													<th>휴대전화&nbsp;<b>&#42;</b></th>
+													<td>
+                                                		<select class="form-control col-3 float-left mr-3 validate phone1V phone-group error required" id="mobile1" name="mobile1" >
+															<option value="" >선택</option>
+															<c:forEach var="code" items="${MOBILE1 }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   			</c:forEach>
+														</select>
+                                                		
 														<input type="text" class="form-control col-3 float-left mr-2 error validate phone2V phone-group required" name="mobile2" id="mobile2"  > 
 														<input type="text" class="form-control col-3 float-left error validate phone3V phone-group required" name="mobile3" id="mobile3"  >														
 														<span id="msgRegular"></span>

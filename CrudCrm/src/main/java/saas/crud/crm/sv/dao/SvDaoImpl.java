@@ -21,7 +21,8 @@ public class SvDaoImpl implements SvDao{
 	@Override
 	public List<Map<String, Object>> svList(Map<String, Object> search) {
 		// TODO Auto-generated method stub
-		return session.selectList("sv.list",search);
+		//return session.selectList("sv.list",search);
+		return session.selectList("sv.svList",search);
 	}
 
 	// 서비스 통합 숫자

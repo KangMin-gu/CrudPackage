@@ -82,12 +82,12 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>영업건명<sup>*</sup></th>
+													<th>영업건명&nbsp;<b>&#42;</b></th>
 													<td>
 														<input type="text" class="form-control error validate required allV" id="salename" name="salename"></td>
 												</tr>
 												<tr>
-													<th>현단계<sup>*</sup></th>
+													<th>현단계&nbsp;<b>&#42;</b></th>
 													<td>
 														<form:select class="form-control required validate allV" style="height: 23px;" path="salestate">
                                                 			<form:options items="${STATE}" itemLabel="codename" itemValue="codeval"/>
@@ -134,7 +134,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>영업담당자<sup>*</sup></th>
+													<th>영업담당자&nbsp;<b>&#42;</b></th>
 													<td>
 														<div class="input-group owner" id="owner_">
 															<input type="text" class="form-control validate required allV" autocomplete="off" name="owner_"  value="${salesInsert.USERNAME }">
@@ -157,7 +157,8 @@
 												<tr>
 													<th>예상수주액</th>
 													<td>
-													<input type="text" class="form-control validate numberV" id="fordamount" name="fordamount">
+													<input type="text" class="form-control  numberV" id="fordamount_" name="fordamount_">
+													<input type="hidden" id="fordamount" name="fordamount">
 													</td>
 												</tr>
 												<tr>
@@ -183,7 +184,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>거래처명<sup>*</sup></th>
+													<th>거래처명&nbsp;<b>&#42;</b></th>
 													<td>
 														<div class="input-group cli" id="cliname">
 															<input type="text" class="form-control error validate required allV"  name="cliname"> 
@@ -319,6 +320,19 @@
              autoclose: true
          });
 		 
+		 $('#fordamount_').keyup(function(e){
+			 debugger;
+			 var thisId = e.target.id;
+			 var thisVal = e.target.value;
+			 var commaVal = delCommas(thisVal);
+			 var commaVal = numberWithCommas(thisVal);
+			 $('#'+thisId).val(commaVal);
+			 
+			 
+			 $('#fordamount').val();
+			 
+			 
+		 });
 	 });
 	 </script>
 </body>

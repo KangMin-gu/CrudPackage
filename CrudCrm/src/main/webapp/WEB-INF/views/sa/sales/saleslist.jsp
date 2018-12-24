@@ -15,13 +15,12 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!--datePicker-->
-
-<!-- S: 추가 CSS-->
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- Toastr style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-
+<!--radioBox-->
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 </head>
 
 <body>
@@ -53,12 +52,12 @@
 					<div class="col-lg-12">
 						<div class="ibox">
 							<form:form id="command" action="/sales" method="GET" commandName="salesDto">
-								<div class="ibox-content row">
+							<div class="ibox-content row" style="padding-bottom: 0px;">
 
-									<div class="w-100 text-right mb-3 mt-3">
-										<Button type="submit" class="btn btn-primary">검색</Button>
-										<a href="javascript:void(0);" class="btn btn-primary resets">초기화</a>
-									</div>
+								<div class="w-100 text-right mb-3 mt-3">
+									<Button type="submit" class="btn btn-primary">검색</Button>
+									<a href="javascript:void(0);" class="btn btn-primary resets">초기화</a>
+								</div>
 									
 									
 									
@@ -66,26 +65,24 @@
 									
 									
 								<div class="box1 col-lg-12 col-xl-6 p-0">
-										<table class="table table-bordered mb-0">
-											<colgroup>
-												<col style="width: 110px; background: #fafafa;">
-												<col style="width: auto;">                                             
-											</colgroup>
-											<tbody>
-                                                <tr>
-													<th class="border-top-0">예상수주일</th>
-													<td class="border-top-0" style="padding: 7px 8px;">
-														<div class="input-group p-0">
-															<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-																<span class="input-group-addon">
-																	<i class="fa fa-calendar"></i>
-																</span>
-																<input type="text" class="form-control reset" id="fromregdt" 	name="fromregdt" value="${searchVal.fromregdt }" autocomplete="off">
-															</div>
+									<table class="table table-bordered mb-0">
+										<colgroup>
+											<col style="width: 110px; background: #fafafa;">
+											<col style="width: auto;">                                             
+										</colgroup>
+										<tbody>
+                                            <tr>
+												<th class="border-top-0">예상수주일</th>
+												<td class="border-top-0" style="padding: 7px 8px;">
+													<div class="input-group p-0">
+														<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+															<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+															<input type="text" class="form-control reset" id="fromforddt" 	name="fromforddt" value="${searchVal.fromforddt }" autocomplete="off">
+														</div>
 															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
 															<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-																<input type="text" class="form-control reset" id="toregdt" name="toregdt" value="${searchVal.toregdt }" autocomplete="off">
+																<input type="text" class="form-control reset" id="toforddt" name="toforddt" value="${searchVal.toforddt }" autocomplete="off">
 															</div>
 														</div>
 													</td>
@@ -108,12 +105,12 @@
 																<span class="input-group-addon">
 																	<i class="fa fa-calendar"></i>
 																</span>
-																<input type="text" class="form-control reset" id="fromregdt" 	name="fromregdt" value="${searchVal.fromregdt }" autocomplete="off">
+																<input type="text" class="form-control reset" id="fromrorddt" 	name="fromrorddt" value="${searchVal.fromrorddt }" autocomplete="off">
 															</div>
 															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
 															<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-																<input type="text" class="form-control reset" id="toregdt" name="toregdt" value="${searchVal.toregdt }" autocomplete="off">
+																<input type="text" class="form-control reset" id="tororddt" name="tororddt" value="${searchVal.tororddt }" autocomplete="off">
 															</div>
 														</div>
 													</td>
@@ -188,34 +185,43 @@
 												</tr>
 											</tbody>
 										</table>
+										</form:form>
+											
 									</div>	
-																											
+								
+																										
 									<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;"><br>
+									<form:form class="checkBoxForm" id="commandcheck" action="/sales/del" method="PUT">	
                               			<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
                                     		<a href="/salesexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>               
                              			</div>                                       
                               			<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-                                			<a href="/sales/post" class="btn btn-primary">추가</a> 
+                                			<a href="/sales/post" class="btn btn-primary">추가</a>
+                                			<input type="submit" class="btn btn-primary delete" value="삭 제"/> 
                               			</div>
                            			</div>				
 																		
-							</form:form>
+							
 						</div>
 						<div class="ibox-content row border-top-0 pt-lg-0">
 							<div class="table-responsive">
 								<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 									<colgroup>
+										<col style="width: 40px;" />
 										<col style="width: 250px" />
 										<col style="width: 200px" />
+										<col style="width: 120px" />
 										<col style="width: 120px" />
 										<col style="width: 120px" />
 										<col style="width: 120px" />
 									</colgroup>
 									<thead>
 										<tr>
+											<th><input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" ></th>
 											<th>영업건명</th>
 											<th>거래처명</th>
 											<th>예상수주일</th>
+											<th>실수주일</th>
 											<th>현단계</th>
 											<th>영업담당자</th>
 										</tr>
@@ -223,9 +229,13 @@
 									<tbody>
 										<c:forEach var="list" items="${salesList }">
 											<tr>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
+													<input type="checkbox" class="i-checks chksquare" id="salesno"name="salesno" value="${list.SALESNO}">
+												</td>
 												<td><a href="/sales/view/${list.SALESNO }">${list.SALENAME }</a></td>
 												<td>${list.CLINAME }</td>
 												<td>${list.FORDDATE }</td>
+												<td>${list.RORDDATE }</td>
 												<td>
 													<c:choose>
 														<c:when test="${list.SALESTATE eq 1 }">계약성공종료</c:when>
@@ -243,9 +253,11 @@
 									</tbody>
 									<tfoot>
 								</table>
+								
 							</div>
-
+		
 							<div class="m-auto">
+								</form:form>
 								<ul class="pagination">
 									<c:choose>
 										<c:when test="${page.startPageNum ne 1 }">
@@ -311,10 +323,16 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	<!-- datePicker-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datePicker-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script><!-- radioBox-->
 	<script>
 		$(document).ready(function() {
+			
+			// icecks
+			$('.i-checks').iCheck({
+				checkboxClass : 'icheckbox_square-green',
+				radioClass : 'iradio_square-green'
+			});
 			// datePicker
 			$('.date.date01, .date.date02').datepicker({
 				todayBtn : "linked",

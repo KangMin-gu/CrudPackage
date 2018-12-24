@@ -66,7 +66,7 @@ body {
 								</colgroup>
 								<tbody>
 									<tr>
-										<th>고객명<sub>*</sub></th>
+										<th>고객명&nbsp;<b>&#42;</b></th>
 										<td>
 											<div class="input-group cust validate required nameV" id="custname">
 												<input type="text" class="form-control validate required nameV" autocomplete="off" name="custname"  readonly value="${salesCustUpdate.CUSTNAME}">

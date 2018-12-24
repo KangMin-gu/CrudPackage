@@ -34,7 +34,7 @@ body {
 </head>
 <body>
 	<div class="wrapper">
-		<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="row wrapper border-bottom white-bg page-heading" style="padding-bottom: 12px;">
 			<div class="col-lg-10">
 				<h2>사용자검색</h2>
 			</div>
@@ -49,16 +49,17 @@ body {
 						<div class="col-sm-12 col-xs-12 p-0 float-left">
 						<form:form action="/popowner" method="GET">
 							<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								 <div class="form-group  row"><label class="col-sm-12 col-form-label">담당자명</label>
-                                    <div class="col-sm-12">
-                                    	<input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
-                                    </div>
-                                </div>
-							<div class="w-100 text-right">
-								<button type="submit" class="btn btn-primary" data-style="zoom-in" >검 색</button><br><br>
-							</div>
+							<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >담당자명</label>
+                                <div class="col-sm-7">
+                                    <input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
+                                </div>                                
+								<div class="col-sm-3 w-100 text-right">
+									<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 26px;padding-top: 0px;padding-bottom: 0px;" >검 색</button>
+								</div>							
+							</div>		
 						</form:form>	
-						</div>																		
+						</div>
+						
 						<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
 							<thead>
@@ -89,32 +90,33 @@ body {
 						</table>
 					</div>
 					
+					<div class="col-sm-4 float-left"></div>
+					<div class="col-sm-4 float-center">																	
 					
-					<div class="m-auto">
-						<ul class="pagination">
+						<div class="m-auto">
+							<ul class="pagination">
 							<c:choose>
 								<c:when test="${page.startPageNum ne 1 }">
-									<li class="footable-page-arrow disabled">
-										<a onclick="javascript:paging(${page.startPageNum-1 })">&laquo;</a>
-									</li>
+								<li class="footable-page-arrow disabled">
+									<a onclick="javascript:paging(${page.startPageNum-1 })">&laquo;</a>
+								</li>
 								</c:when>
 								<c:otherwise>
 									<li class="disabled"><a href="javascript:">&laquo;</a></li>
 								</c:otherwise>
 							</c:choose>
 
-							<c:forEach var="i" begin="${page.startPageNum }"
-								end="${page.endPageNum }">
+							<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
 								<c:choose>
 									<c:when test="${i eq page.pageNum }">
-										<li class="footable-page active">										
-											<a onclick="javascript:paging(${i })">${i }</a>
-										</li>
+									<li class="footable-page active">										
+										<a onclick="javascript:paging(${i })">${i }</a>
+									</li>
 									</c:when>
 									<c:otherwise>
-										<li>
-											<a onclick="javascript:paging(${i })">${i }</a>
-										</li>
+									<li>
+										<a onclick="javascript:paging(${i })">${i }</a>
+									</li>
 
 									</c:otherwise>
 								</c:choose>
@@ -122,19 +124,22 @@ body {
 
 							<c:choose>
 								<c:when test="${page.endPageNum lt page.totalPageCount }">
-									<li>
-										<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
-									</li>
+								<li>
+									<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
+								</li>
 								</c:when>
 								<c:otherwise>
-									<li class="disabled"><a href="javascript:">&raquo;</a></li>
+								<li class="disabled"><a href="javascript:">&raquo;</a></li>
 								</c:otherwise>
 							</c:choose>
-						</ul>
+							
+							</ul>
+						</div>
 					</div>
-					<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
-					
+					<div class="col-sm-3 float-right">		
+						<h4 class="float-right">&middot; ${page.totalRows }건</h4>																
 					</div>
+									
 				</div>
 				
 			</div>

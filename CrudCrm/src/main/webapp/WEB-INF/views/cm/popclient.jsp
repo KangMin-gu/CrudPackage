@@ -37,7 +37,7 @@ body {
 </head>
 <body>
 	<div class="wrapper">
-		<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="row wrapper border-bottom white-bg page-heading" style="padding-bottom: 12px;">
 			<div class="col-lg-10">
 				<h2>직장 검색</h2>
 				
@@ -48,23 +48,19 @@ body {
 		<!-- S: 고객 목록 ppt p01-->
 		<div class="wrapper wrapper-content  animated fadeInRight article">
 
-			<div class="col-lg-12">
-				<div class="ibox">
-					<div class="ibox-content row">
-						<div class="box1 col-sm-6 col-xs-6 p-0">
-							<form:form action="/popclient" method="GET">
-								<div class="input-group">
-									<input type="text" name="cliname" id="cliname"
-										class="form-control" value="${searchVal.cliname}"> <span
-										class="input-group-append">
-										<Button type="submit" class="btn btn-primary">검색</Button>
-									</span>
-								</div>
-							
-						</div>
-					</div>
-				</div>
 				<div class="ibox-content row border-top-0 ">
+								
+					<div class="col-sm-12 col-xs-12 p-0 float-left">
+						<form:form action="/popclient" method="GET">
+						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >담당자명</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="cliname" id="cliname" class="form-control" value="${searchVal.cliname}"> 
+                            </div>                                
+							<div class="col-sm-3 w-100 text-right">
+								<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 26px;padding-top: 0px;padding-bottom: 0px;" >검 색</button>
+							</div>							
+						</div>		
+					</div>			
 
 					<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
@@ -89,56 +85,62 @@ body {
 						</table>
 					</div>
 					</form:form>
-					
+									
 		
-					<div class="m-auto">
-						<ul class="pagination popPaging">
-							<c:choose>
-								<c:when test="${page.startPageNum ne 1 }">
-									<li class="footable-page-arrow disabled">
-										<a onclick="javascript:paging(${page.endPageNum+-1 })">&laquo;</a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="disabled"><a href="javascript:">&laquo;</a></li>
-								</c:otherwise>
-							</c:choose>
-
-							<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
+					<div class="col-sm-4 float-left"></div>
+					<div class="col-sm-4 float-center">					
+		
+						<div class="m-auto">
+							<ul class="pagination popPaging">
 								<c:choose>
-									<c:when test="${i eq page.pageNum }">
-										<li class="footable-page active">
-											<a onclick="javascript:paging(${i})">${i }</a>
+									<c:when test="${page.startPageNum ne 1 }">
+										<li class="footable-page-arrow disabled">
+											<a onclick="javascript:paging(${page.endPageNum+-1 })">&laquo;</a>
 										</li>
 									</c:when>
 									<c:otherwise>
-										<li>									
-											<a onclick="javascript:paging(${i})">${i }</a>
-										</li>
-
+										<li class="disabled"><a href="javascript:">&laquo;</a></li>
 									</c:otherwise>
 								</c:choose>
-							</c:forEach>
 
-							<c:choose>
-								<c:when test="${page.endPageNum lt page.totalPageCount }">
-									<li>
-										<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="disabled"><a href="javascript:">&raquo;</a></li>
-								</c:otherwise>
-							</c:choose>
-						</ul>
+								<c:forEach var="i" begin="${page.startPageNum }" end="${page.endPageNum }">
+									<c:choose>
+										<c:when test="${i eq page.pageNum }">
+											<li class="footable-page active">
+												<a onclick="javascript:paging(${i})">${i }</a>
+											</li>
+										</c:when>
+										<c:otherwise>
+											<li>									
+												<a onclick="javascript:paging(${i})">${i }</a>
+											</li>
+
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+
+								<c:choose>
+									<c:when test="${page.endPageNum lt page.totalPageCount }">
+										<li>
+											<a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="disabled"><a href="javascript:">&raquo;</a></li>
+									</c:otherwise>
+								</c:choose>
+							</ul>
+						</div>
 					</div>
-					<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
+					<div class="col-sm-4 float-right">		
+						<h4 class="float-right">&middot; ${page.totalRows }건</h4>																
+					</div>
+					
 				</div>
-			</div>
 	
-		</div>
+			</div>
 
-	</div>
+
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>

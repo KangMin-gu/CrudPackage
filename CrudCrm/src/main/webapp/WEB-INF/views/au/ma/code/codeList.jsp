@@ -47,8 +47,26 @@
                     <div class="ibox">
                     <form:form action="${pageContext.request.contextPath}/ad/code" method="POST">
                         <div class="ibox-content row">
-                            <div class="box1 col-lg-4 p-0">
-                                <table class="table table-bordered">
+                            <div class="box1 col-lg-12 col-xl-12 p-0">                        
+                                <table class="table border-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="border-0">
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">이관목록</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">회원구분</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">고객등급</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">친밀도</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">캠페인유형</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">서비스채널</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">중요도</a>
+												<a href="javascript:void(0);" class="btn btn-primary mb-1">영업단계</a>												
+                                            </td>
+                                        </tr>                                   
+                                    </tbody>
+                                </table> 
+                            </div>                                            
+                            <div class="box1 col-lg-6 p-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
                                         <col style="width: auto;">
@@ -65,7 +83,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-4 p-0">
+                            <div class="box2 col-lg-6 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">

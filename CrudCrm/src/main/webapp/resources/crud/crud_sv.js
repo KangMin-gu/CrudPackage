@@ -1,6 +1,6 @@
 // 서비스 처리 이력 탭
 $(".tabRact").click(function(e){
-	var id = $('#rcvno').val();
+	var id = $('#serviceno').val();
     $.ajax({
         url: "/tab/ract/"+id,
         method: "GET",
@@ -9,7 +9,7 @@ $(".tabRact").click(function(e){
         	$('#tab1 tbody tr').remove();
         	var length = data.length;
         	for (var i = 0; i < length; i++) {
-        		var html = '<tr><td>' + data[i].RACTDATE_ + '</td><td>' + data[i].RACTTIME + '</td><td>' + data[i].RACTCODE_ + '</td><td>' + data[i].RACTOWNER_ + '</td><td>' + data[i].RACTDESC + '</td></tr>';
+        		var html = '<tr><td>' + data[i].RACTDATE_ + '</td><td>' + data[i].RACTTIME + '</td><td>' + data[i].RACTCODE_ + '</td><td>' + data[i].RACTDESC + '</td></tr>';
         		$('#tab1 tbody').append(html);
         	}
         },
@@ -20,7 +20,7 @@ $(".tabRact").click(function(e){
 });
 //서비스 이관 이력 탭
 $(".tabConvey").click(function(e){
-	var id = $('#rcvno').val();
+	var id = $('#serviceno').val();
     $.ajax({
         url: "/tab/convey/"+id,
         method: "GET",
@@ -43,7 +43,7 @@ $(".tabConvey").click(function(e){
 // 이관 팝업
 $('.servicenext').click(function(e){
 	var name = '담당자이관'
-	var id = $('#rcvno').val();
+	var id = $('#serviceno').val();
 	var url = '/convey/'+id;
 	var x = '1232';
 	var y = '370';
@@ -53,13 +53,14 @@ $('.servicenext').click(function(e){
 });
 // 이관 팝업에서 저장버튼 눌렀을때 동작
 $('#svSave').click(function(e){
+	debugger;
 	var	url= "/convey";	
-	var rcvno = $('#rcvno').val();
+	var serviceno = $('#serviceno').val();
     var conveydate= $("#conveydate").val();
     var conveyreason = $("#conveyreason").val();
     var nextowner = $("#nextowner").val();
     var conveydesc = $('#conveydesc').val();
-    var param = {"rcvno":rcvno,"conveydate":conveydate,"conveyreason":conveyreason,"nextowner":nextowner,"conveydesc":conveydesc};
+    var param = {"serviceno":serviceno,"conveydate":conveydate,"conveyreason":conveyreason,"nextowner":nextowner,"conveydesc":conveydesc};
     
     $.ajax({
         url: url,
@@ -78,6 +79,30 @@ $('#svSave').click(function(e){
 
 });
 
+$('.self').click(function(e){
+	
+	
+	var serviceowner_ = $('#serviceowner_').val();
+	var serviceowner = $('#serviceowner').val();
+	
+	$('[name="owner_"]').val(serviceowner_).trigger('keyup');
+	$('[name="owner"]').val(serviceowner);
+	e.stopPropagation();
+});
 
+$('#rewardSame').click(function(e){
+	
+	e.preventDefault();
+	var receptionDate = $('#receptiondate').val();
+	var owner_ = $('[name="owner_"]').val();
+	var owner = $('[name="owner"]').val();
+	var serviceDesc = $('#servicedesc').text();
+	
+	$('#visitdate').val(receptionDate);
+	$('#rewarddesc').summernote('code',serviceDesc);
+	$('[name="rewardowner_"]').val(owner_);
+	$('[name="rewardowner"]').val(owner);
+
+});
 
 

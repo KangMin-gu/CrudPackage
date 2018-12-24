@@ -61,17 +61,17 @@
                         </div>
                         
                         <div class="ibox-content row">
-                        	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                           		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                        	<div class="box col-12 mb-2" style="padding-left: 0px;padding-right: 0px;">
+                           		<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
                             		<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
                             		<a href="#" class="btn btn-primary servicenext">이관</a>
                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
                                    	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
                                    	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
                                 </div>
-                           		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-                              		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                                		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                           		<div class="float-right text-right" style="padding-right: 0px;">
+                              		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                                		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 									</form:form> 
                            		</div>
@@ -87,7 +87,7 @@
                                     <tbody>
                                         <tr>
                                             <th>거래처명</th>
-                                            <td>${serviceInfo.CLINAME}</td>
+                                            <td>${serviceInfo.CLINAME }</td>
                                         </tr>
                                         <tr>
                                             <th>대표자명</th>
@@ -182,12 +182,12 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>접수유형</th>
-                                            <td>${serviceInfo.RCVTYPE_ }</td>
+                                            <th>접수일</th>
+                                            <td>${serviceInfo.RECEPTIONDATE_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>접수일</th>
-                                            <td>${serviceInfo.RCVDATE }</td>
+                                            <th>접수유형</th>
+                                            <td>${serviceInfo.SERVICETYPE_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -200,12 +200,12 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>서비스유형</th>
-                                            <td>${serviceInfo.RCVCODE_ }</td>
+                                            <th>접수자</th>
+                                            <td>${serviceInfo.SERVICEOWNER_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>접수시간</th>
-                                            <td>${serviceInfo.RCVTIME }</td>
+                                            <th>접수매체</th>
+                                            <td>${serviceInfo.SERVICECHANNEL_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -218,12 +218,12 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>접수자</th>
-                                            <td>${serviceInfo.RCVOWNER_ }</td>
+                                            <th>진행단계</th>
+                                            <td>${serviceInfo.SERVICESTEP_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>처리상태</th>
-                                            <td>${serviceInfo.PRCSTATE_ }</td>
+                                            <th>서비스유형</th>
+                                            <td>${serviceInfo.SERVICECODE_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -238,7 +238,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스명</th>
                                             <td class="border-top-0">
-                                                ${serviceInfo.RCVNAME }
+                                                ${serviceInfo.SERVICENAME }
                                             </td>
                                         </tr>
 
@@ -253,9 +253,9 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                        	<th class="border-top-0">접수매체</th>
+                                        	<th class="border-top-0">처리담당자</th>
                                         	<td class="border-top-0">
-                                        		${serviceInfo.RCVCHANNEL_ }
+                                        		${serviceInfo.OWNER_ }
                                         	</td>
                                         </tr>
                                     </tbody>
@@ -271,35 +271,39 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea id="rcvdesc">${serviceInfo.RCVDESC }</textarea>
+                                                <textarea id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-12 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-top-0">메모</th>
-                                            <td class="border-top-0">
-                                                <textarea id="rcvopinion">${serviceInfo.RCVOPINION }</textarea>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <div class="mail-attachment">																	
+								<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+								<div class="attachment">
+									<c:forEach var="serviceFile" items="${serviceFile }">
+										<div class="file-box">
+											<div class="file">
+												<a href="${pageContext.request.contextPath}/campaign/download/${serviceFile.FILEID}"> <span class="corner"></span>
+													<div class="icon">
+														<i class="fa fa-file"></i>
+													</div>
+													<div class="file-name">
+														${serviceFile.ORGFILENAME } <br /> <small>${serviceFile.REGDATE }</small>
+													</div>
+												</a>
+											</div>
+										</div>	
+									</c:forEach>										
+									<div class="clearfix"></div>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-12" style="background: #ffffff;">
                     <div class="ibox">
                         <div class="ibox-title row">
-                            <h4>처리 정보</h4>
+                            <h4>현상파악</h4>
                             <div class="ibox-tools">
                             	<a class="collapse-link">
                                 	<i class="fa fa-chevron-up"></i>
@@ -317,8 +321,147 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>처리유형</th>
-                                            <td>${serviceInfo.RACTCODE_}</td>
+                                            <th>방문약속일자</th>
+                                            <td>${rewardInfo.VISITDATE_}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>현상</th>
+                                            <td>${rewardInfo.REWARDTYPE_ }</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>방문약속일시</th>
+                                            <td>${rewardInfo.VISITTIME }</td>
+                                        </tr>
+                                        <tr>
+                                            <th>원인구분</th>
+                                            <td>${rewardInfo.CAUSECODE_ }</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>담당자</th>
+                                            <td>${serviceInfo.OWNER_ }</td>
+                                        </tr>
+                                        <tr>
+                                            <th>????</th>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-12 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>상세내역</th>
+                                            <td>
+                                                <textarea id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+                                            </td>
+                                            <input type="hidden" id="serviceno" value="${serviceInfo.SERVICENO }" /> 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th style="height: 58px;">지연사유</th>
+                                            <td style="height: 58px;">
+                                                ${rewardInfo.DELAYTYPE_ }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-8 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>지연내용</th>
+                                            <td>
+                                                <textarea disabled id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mail-attachment">																	
+								<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+								<div class="attachment">
+									<c:forEach var="rewardFile" items="${rewardFile }">
+										<div class="file-box">
+											<div class="file">
+												<a href="${pageContext.request.contextPath}/campaign/download/${rewardFile.FILEID}"> <span class="corner"></span>
+													<div class="icon">
+														<i class="fa fa-file"></i>
+													</div>
+													<div class="file-name">
+														${rewardFile.ORGFILENAME } <br /> <small>${rewardFile.REGDATE }</small>
+													</div>
+												</a>
+											</div>
+										</div>	
+									</c:forEach>										
+									<div class="clearfix"></div>
+								</div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12" style="background: #ffffff;">
+                    <div class="ibox">
+                        <div class="ibox-title row">
+                            <h4>처리결과</h4>
+                            <div class="ibox-tools">
+                            	<a class="collapse-link">
+                                	<i class="fa fa-chevron-up"></i>
+                            	</a>
+                        	</div>
+                        </div>
+                        
+                        <div class="ibox-content row">
+                            
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>처리일</th>
+                                            <td>${ractInfo.RACTDATE_}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -331,8 +474,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>처리일</th>
-                                            <td>${serviceInfo.RACTDATE }</td>
+                                            <th>처리담당자</th>
+                                            <td>${serviceInfo.OWNER_ }</td>
                                         </tr>
                                         
                                     </tbody>
@@ -346,27 +489,12 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>처리일시</th>
-                                            <td>${serviceInfo.RACTTIME }</td>
+                                            <th>처리발송여부</th>
+                                            <td>${ractInfo.SENDYN_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box3 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-bottom-0 border-top-0 mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th class="border-bottom-0 border-top-0">담당자</th>
-                                            <td class="border-bottom-0 border-top-0">${serviceInfo.RACTOWNER_ }</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
                             <div class="box1 col-lg-12 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -377,27 +505,46 @@
                                         <tr>
                                             <th>처리내용</th>
                                             <td>
-                                                <textarea id="ractdesc">${serviceInfo.RACTDESC }</textarea>
+                                                <textarea id="ractdesc">${ractInfo.RACTDESC }</textarea>
                                             </td>
-                                            <input type="hidden" id="rcvno" value="${serviceInfo.RCVNO }" /> 
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="mail-attachment">																	
+								<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+								<div class="attachment">
+									<c:forEach var="ractFile" items="${ractFile }">
+										<div class="file-box">
+											<div class="file">
+												<a href="${pageContext.request.contextPath}/campaign/download/${ractFile.FILEID}"> <span class="corner"></span>
+													<div class="icon">
+														<i class="fa fa-file"></i>
+													</div>
+													<div class="file-name">
+														${ractFile.ORGFILENAME } <br /> <small>${ractFile.REGDATE }</small>
+													</div>
+												</a>
+											</div>
+										</div>	
+									</c:forEach>										
+									<div class="clearfix"></div>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
-                <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                <div class="box col-12 mb-2 mt-3" style="padding-left: 0px;padding-right: 0px;">
+                	<div class=" float-left" style="height:2.00rem;padding-lㄹeft: 0px;" >
                     	<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
                         <a href="#" class="btn btn-primary servicenext">이관</a>
                         <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
                         <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
                         <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
                     </div>
-                    <div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-                    	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.RCVNO}" method="POST">
-                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.RCVNO}" class="btn btn-primary">수정</a>
+                    <div class="float-right" style="padding-right: 0px;">
+                    	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
 							<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 						</form:form> 
                     </div>
@@ -489,10 +636,10 @@
 		$(document).ready(function () {
 			
 			
-			$('#rcvdesc').summernote({
+			$('#servicedesc').summernote({
 				height:200
 			});
-			$('#rcvopinion').summernote({
+			$('#rewarddesc').summernote({
 				height:200
 			});
 			$('#ractdesc').summernote({

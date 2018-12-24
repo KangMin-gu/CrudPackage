@@ -67,62 +67,66 @@
 									</form:form>
                             	</div>
 							</div>
-							<div class="box1 col-lg-12 p-0 mt-5">
-								<div class="tabs-container">
-                                	<ul class="nav nav-tabs" role="tablist">
-                                    	<li><a class="nav-link tabcust active" onclick="javaacript:tabTargetCust(1);" data-toggle="tab" href="#tab1">추출 대상자</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                    	<div role="tabpanel" id="tab1" class="tab-pane active">
-											<div class="panel-body table-responsive">				
-												<div class="box1 col-xl-3 p-0">
-													<div class="form-group row">
-														<label class="col-sm-3 col-form-label" style="padding-top: 3px;"><strong>고객명</strong></label>
-														<div class="col-sm-8">
-                                        					<div class="input-group">                                        						
-                                        						<input type="text" class="form-control" id="custname" name="custname" value="${search.custname }"> 
-                                        						<span class="input-group-append"> 
-                                        							<a onclick="javaacript:tabTargetCust(1)" class="btn btn-primary" style="padding-top: 2px;">검색 </a>
-                                        						</span>
-                                        					</div>
-                                    					</div>
-                                					</div>
-												</div>		
-												<table class="table table-bordered">
-													<colgroup>
-														<col style="width: 130px;" />
-														<col style="width: 130px;" />
-														<col style="width: 130px;" />
-														<col style="width: 200px;" />
-														<col style="width: 100px;" />
-														<col style="width: 100px;" />
-														<col style="width: 100px;" />
-														<col style="width: 300px;" />
-													</colgroup>
-													<thead>
-														<tr>
-															<th>고객명</th>
-															<th>고객ID</th>
-															<th>전화번호</th>
-															<th>이메일</th>
-															<th>정보활용동의</th>
-															<th>고객구분</th>
-															<th>고객등급</th>
-															<th>주소</th>
-														</tr>
-													</thead>
-													<tbody>
-													</tbody>
-												</table>
-												<div class="m-auto" style="float:center;">
-													<ul class="pagination">
-													</ul> 
-												</div> 
-											</div>									
-										</div>
-									</div>
-								</div>
-							</div>
+														<div class="box1 col-lg-12 col-xl-8 p-0">
+								<table class="table table-bordered mb-0">
+									<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th>서식명</th>
+                                            <td>${contentsInfo.TITLE }</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                             </div>
+                             <div class="box2 col-lg-12 col-xl-4 p-0">
+                             	<table class="table table-bordered mb-0">
+                             		<colgroup>
+                             			<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th>매체유형</th>
+                                            <td>${contentsInfo.FORMTYPE_ }</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">용도</th>
+                                            <td class="border-top-0">
+                                            	${contentsInfo.PURP }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                             <div class="box2 col-lg-12 p-0">
+                             	<table class="table table-bordered border-top-0 mb-0">
+                             		<colgroup>
+                                    	<col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                        	<th class="border-top-0">비고</th>
+                                            <td class="border-top-0">
+                                            	<textarea name="content" id="content"  class="form-control summernote" style="resize:none; height: 8em;">${contentsInfo.CONTENT }</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

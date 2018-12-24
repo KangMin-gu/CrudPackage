@@ -21,309 +21,346 @@
 		) X
 	</select>
 
-    <select id="list" parameterType="hashMap" resultType="hashMap">
-    	SELECT * FROM (SELECT A.RCVNO
-    		, A.RCVNAME
-    		, CASE WHEN A.RCVTYPE = 1 THEN '문의'
-    			   WHEN A.RCVTYPE = 2 THEN '개선'
-    			   WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_
-    		, A.RCVTYPE
-    		, CASE WHEN A.PRCSTATE = 1 THEN '접수'
-    			   WHEN A.PRCSTATE = 2 THEN '처리'
-    			   WHEN A.PRCSTATE = 3 THEN '이관' END AS PRCSTATE_
-    		, CASE WHEN B.RACTCODE = 1 THEN '처리유형1'
-    			   WHEN B.RACTCODE = 2 THEN '처리유형2'
-    			   WHEN B.RACTCODE = 3 THEN '처리유형3' END AS RACTCODE_
-    		, CASE WHEN A.RCVCHANNEL = 10 THEN '전화' 
-    			   WHEN A.RCVCHANNEL = 20 THEN 'SMS'
-    			   WHEN A.RCVCHANNEL = 30 THEN '메일' END AS RCVCHANNEL_
-    		, C.CUSTNAME AS CUSTNO_
-    		, D.CLINAME AS CLINO_
-    		, CONVERT(nvarchar,A.RCVDATE,23) AS RCVDATE_
-    		, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RCVOWNER) AS RCVOWNER_
-    		, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = B.RACTOWNER) AS RACTOWNER_
-    		, ROW_NUMBER() OVER (ORDER BY A.RCVNO DESC)             AS ROWNUM
-    		 FROM Crud_SaaS.dbo.T_RCV A
-    		 LEFT OUTER JOIN (SELECT TOP 1 * FROM Crud_SaaS.dbo.T_RACT ORDER BY RACTNO DESC) B ON B.RCVNO = A.RCVNO
-    		 LEFT OUTER JOIN Crud_SaaS.dbo.CU100010 C ON C.CUSTNO = A.CUSTNO 
-    		 LEFT OUTER JOIN Monarch_SaaS.dbo.TB200010 D ON D.CLIID = A.CLINO
-    		 WHERE A.SITEID = #{siteid}
-    		 AND A.ISDELETE = 0
- 			<if test="strDate != null">
-				AND A.RCVDATE <![CDATA[>]]>= #{strDate}
+	<select id="svList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT
+			A.SERVICENO 
+		 	, A.SERVICENAME 
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICECODE' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECODE) AS SERVICECODE_
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICECHANNEL' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECHANNEL) AS SERVICECHANNEL_
+			, (SELECT CUSTNAME FROM Crud_SaaS.dbo.CU100010 WHERE CUSTNO = A.CUSTNO) AS CUSTNAME_
+			, (SELECT CLINAME FROM Crud_SaaS.dbo.TB200010 WHERE CLINO = A.CLINO) AS CLINAME_
+			, CONVERT(nvarchar,A.RECEPTIONDATE, 23) AS RECEPTIONDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.SERVICEOWNER) AS SERVICEOWNER_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICESTEP' AND SITEID = #{siteid} AND CODEVAL = A.SERVICESTEP) AS SERVICESTEP_
+			,(ROW_NUMBER() OVER(ORDER BY SERVICENO DESC)) AS ROWNUM
+			FROM Crud_SaaS.dbo.T_SERVICE A
+			WHERE A.ISDELETE = 0
+			AND A.SITEID = #{siteid}
+			<if test="strDate != null">
+				AND A.RECEPTIONDATE <![CDATA[>]]>= #{strDate}
 			</if>
 			<if test="endDate != null">
-				AND A.RCVDATE <![CDATA[<]]>= #{endDate}
+				AND A.RECEPTIONDATE <![CDATA[<]]>= #{endDate}
 			</if>
 			<if test="custno != null">
 				AND A.CUSTNO = #{custno}
 			</if>
-			<if test="rcvname != null">
-				AND A.RCVNAME = #{rcvname}
+			<if test="servicename != null">
+				AND A.SERVICENAME LIKE '%' + #{servicename} + '%'
 			</if>
-			<if test="rcvtype != null">
-				AND A.RCVTYPE = #{rcvtype}
+			<if test="servicetype != null">
+				AND A.SERVICETYPE = #{servicetype}
 			</if>
 			<if test="clino != null">
 				AND A.CLINO = #{clino}
 			</if>
-			<if test="rcvchannel != null">
-				AND A.RCVCHANNEL = #{rcvchannel}
+			<if test="servicechannel != null">
+				AND A.SERVICECHANNEL = #{servicechannel}
 			</if>
-			<if test="rcvowner != null">
-				AND A.RCVOWNER = #{rcvowner}
+			<if test="serviceowner != null">
+				AND A.SERVICEOWNER = #{serviceowner}
 			</if>
-			<if test="ractowner != null">
-				AND B.RACTOWNER = #{ractowner}
+			<if test="owner != null">
+				AND A.OWNER = #{owner}
 			</if>
-			<if test="prcstate != null">
-				AND A.PRCSTATE = #{prcstate}
+			<if test="servicestep != null">
+				AND A.SERVICESTEP = #{servicestep}
 			</if>
     		 ) X
     		 <if test="endRowNum != null">
 				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 			</if> 
-    	
-
-    </select>
+	</select>
 	
-	<select id="totalRows" parameterType="String" resultType="int">
-		SELECT count(*) from Crud_SaaS.dbo.T_RCV A 
-		LEFT OUTER JOIN (SELECT TOP 1 * FROM Crud_SaaS.dbo.T_RACT ORDER BY RACTNO DESC) B ON B.RCVNO = A.RCVNO
-		WHERE A.SITEID = #{siteid}
-		AND A.ISDELETE = 0
+	<select id="svServiceTotalRows" parameterType="hashMap" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM T_SERVICE A
+		WHERE A.ISDELETE = 0
+		AND A.SITEID = #{siteid}
 			<if test="strDate != null">
-				AND A.RCVDATE <![CDATA[>]]>= #{strDate}
+				AND A.RECEPTIONDATE <![CDATA[>]]>= #{strDate}
 			</if>
 			<if test="endDate != null">
-				AND A.RCVDATE <![CDATA[<]]>= #{endDate}
+				AND A.RECEPTIONDATE <![CDATA[<]]>= #{endDate}
 			</if>
 			<if test="custno != null">
 				AND A.CUSTNO = #{custno}
 			</if>
-			<if test="rcvname != null">
-				AND A.RCVNAME = #{rcvname}
+			<if test="servicename != null">
+				AND A.SERVICENAME = #{servicename}
 			</if>
-			<if test="rcvtype != null">
-				AND A.RCVTYPE = #{rcvtype}
+			<if test="servicetype != null">
+				AND A.SERVICETYPE = #{servicetype}
 			</if>
 			<if test="clino != null">
 				AND A.CLINO = #{clino}
 			</if>
-			<if test="rcvchannel != null">
-				AND A.RCVCHANNEL = #{rcvchannel}
+			<if test="servicechannel != null">
+				AND A.SERVICECHANNEL = #{servicechannel}
 			</if>
-			<if test="rcvowner != null">
-				AND A.RCVOWNER = #{rcvowner}
+			<if test="serviceowner != null">
+				AND A.SERVICEOWNER = #{serviceowner}
 			</if>
-			<if test="ractowner != null">
-				AND B.RACTOWNER = #{ractowner}
+			<if test="owner != null">
+				AND A.OWNER = #{owner}
 			</if>
-			<if test="prcstate != null">
-				AND A.PRCSTATE = #{prcstate}
-			</if>	
+			<if test="servicestep != null">
+				AND A.SERVICESTEP = #{servicestep}
+			</if>
 	</select>
 	
-	<select id ="detail" parameterType="rcvDto" resultType ="hashMap">
+	<select id="serviceRead" parameterType="hashMap" resultType="hashMap">
 		SELECT
-		C.CUSTNAME, C.EMAIL, C.DUTY
-		, C.HOMADDR1 + C.HOMADDR2 + C.HOMADDR3 AS CUSTADDRESS
-		, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS MOBILE
-		, D.BSNO, D.CORP_SN AS INCNO, D.MOBILE1 + '-' + D.MOBILE2 + '-' + D.MOBILE3 AS CLIMOBILE, D.PRSDNAME, D.HOMEPAGE
-		, D.CLINO, D.CLINAME 
-		,A.RCVNO, A.CLINO, A.CUSTNO, A.RCVTYPE
-		, CASE WHEN A.RCVTYPE = 1 THEN '문의'
-    		  WHEN A.RCVTYPE = 2 THEN '개선'
-    		  WHEN A.RCVTYPE = 3 THEN '오류' END AS RCVTYPE_
-    	, CONVERT(nvarchar,A.RCVDATE,23) AS RCVDATE
-    	, A.RCVTIME, A.RCVCODE, A.RCVNAME
-    	, CASE WHEN A.RCVCODE = 1 THEN '클라1'
-    		  WHEN A.RCVCODE = 2 THEN '클라2'
-    		  WHEN A.RCVCODE = 3 THEN '클라3' END AS RCVCODE_
-    	, A.RCVDESC, A.RCVCHANNEL
-    	, CASE WHEN A.RCVCHANNEL = 10 THEN '전화'
-    		  WHEN A.RCVCHANNEL = 20 THEN 'SMS'
-    		  WHEN A.RCVCHANNEL = 30 THEN '메일' END AS RCVCHANNEL_
-    	, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RCVOWNER) AS RCVOWNER_
-    	, A.RCVOWNER, A.RCVOPINION
-    	, CONVERT(varchar,B.RACTDATE,23) AS RACTDATE
-    	, B.RACTTIME, B.RACTCODE
-    	, CASE WHEN B.RACTCODE = 1 THEN 'option1'
-    		  WHEN B.RACTCODE = 2 THEN 'option2'
-    		  WHEN B.RACTCODE = 3 THEN 'option3' END AS RACTCODE_
-    	, A.PRCSTATE
-    	, CASE WHEN A.PRCSTATE = 1 THEN '접수'
-    		   WHEN A.PRCSTATE = 2 THEN '처리'
-    		   WHEN A.PRCSTATE = 3 THEN '이관' END AS PRCSTATE_
-    	, B.RACTDESC, B.RACTOWNER
-    	, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = B.RACTOWNER) AS RACTOWNER_
-    	, A.ISDELETE
-    	, CASE WHEN A.ISDELETE = 0 THEN '사용'
-    		   WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-		FROM Crud_SaaS.dbo.T_RCV A
-		LEFT OUTER JOIN (SELECT TOP 1 * FROM Crud_SaaS.dbo.T_RACT ORDER BY RACTNO DESC) B ON B.RCVNO = A.RCVNO 
-		LEFT OUTER JOIN Crud_SaaS.dbo.CU100010 C ON C.CUSTNO = A.CUSTNO
-		LEFT OUTER JOIN Crud_SaaS.dbo.TB200010 D ON D.CLINO = A.CLINO
+			A.SERVICENO 
+		 	, A.SERVICENAME 
+		 	, A.SERVICEDESC
+		 	, A.SERVICECODE
+		 	, A.SERVICECHANNEL
+		 	, A.SERVICETYPE
+		 	, A.SERVICEOWNER
+		 	, A.SERVICESTEP
+		 	, A.FILESEARCHKEY
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICECODE' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECODE) AS SERVICECODE_
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICECHANNEL' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECHANNEL) AS SERVICECHANNEL_
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICETYPE' AND SITEID = 1 AND CODEVAL = A.SERVICETYPE) AS SERVICETYPE_
+			, CONVERT(nvarchar,A.RECEPTIONDATE, 23) AS RECEPTIONDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.SERVICEOWNER) AS SERVICEOWNER_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+			, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SERVICESTEP' AND SITEID = #{siteid} AND CODEVAL = A.SERVICESTEP) AS SERVICESTEP_
+			, B.CUSTNAME, B.EMAIL, B.DUTY
+			, B.HOMADDR1 + B.HOMADDR2 + B.HOMADDR3 AS CUSTADDRESS
+			, B.MOBILE1 + '-' + B.MOBILE2 + '-' + B.MOBILE3 AS MOBILE
+			, C.BSNO, C.CORP_SN AS INCNO
+			, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS CLIMOBILE
+			, C.PRSDNAME, C.HOMEPAGE, C.CLINO, C.CLINAME
+			
+		FROM Crud_SaaS.dbo.T_SERVICE A
+		LEFT OUTER JOIN Crud_SaaS.dbo.CU100010 B ON B.CUSTNO = A.CUSTNO
+		LEFT OUTER JOIN Crud_SaaS.dbo.TB200010 C ON C.CLINO = A.CLINO
 		WHERE A.SITEID = #{siteid}
-		AND A.RCVNO = #{rcvno}
+		AND A.SERVICENO = #{serviceno}
 	</select>
 	
-	<update id="totalUpdate" parameterType="hashMap">
-		UPDATE Crud_SaaS.dbo.T_RCV
-		SET CLINO = #{clino}
-			, CUSTNO = #{custno}
-			, RCVTYPE = #{rcvtype}
-			, RCVDATE = #{rcvdate}
-			, RCVTIME = #{rcvtime}
-			, RCVCODE = #{rcvcode}
-			, RCVNAME = #{rcvname}
-			, RCVDESC = #{rcvdesc}
-			, RCVCHANNEL = #{rcvchannel}
-			, RCVOWNER = #{rcvowner}
-			, RCVOPINION = #{rcvopinion}
-			, PRCSTATE = #{prcstate}
-			, EDTDATE = getDate()
-			, EDTUSER = #{edtuser}
-		WHERE SITEID = #{siteid}
-		AND RCVNO = #{rcvno}
-		
-		UPDATE Crud_SaaS.dbo.T_RACT
-		SET RACTDATE = #{ractdate}
-			,RACTTIME = #{racttime}
-			,RACTCODE = #{ractcode}
-			,RACTOWNER = #{ractowner}
-			,RACTDESC = #{ractdesc}
-			,EDTDATE = getDate()
-			,EDTUSER = #{edtuser}
-		WHERE SITEID = #{siteid}
-		AND RACTNO = #{ractno}
-	</update>
+	<select id="rewardRead" parameterType="hashMap" resultType="hashMap">
+		SELECT
+		CONVERT(nvarchar,A.VISITDATE,23) AS VISITDATE_
+		,A.VISITTIME
+		,(SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'REWARDTYPE' AND SITEID = #{siteid} AND CODEVAL = A.REWARDTYPE) AS REWARDTYPE_
+		,(SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'CAUSECODE' AND SITEID = #{siteid} AND CODEVAL = A.CAUSECODE) AS CAUSECODE_
+		,(SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'DELAYTYPE' AND SITEID = #{siteid} AND CODEVAL = A.DELAYTYPE) AS DELAYTYPE_
+		,A.REWARDDESC
+		,A.DELAYDESC
+		,A.FILESEARCHKEY
+		FROM Crud_SaaS.dbo.T_REWARD A
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+	</select>
 	
-	<update id="update" parameterType="hashMap">
-	UPDATE Crud_SaaS.dbo.T_RACT
-		SET RACTDATE = #{ractdate}
-			,RACTTIME = #{racttime}
-			,RACTCODE = #{ractcode}
-			,RACTOWNER = #{ractowner}
-			,RACTDESC = #{ractdesc}
-			,EDTDATE = getDate()
-			,EDTUSER = #{edtuser}
-		WHERE SITEID = #{siteid}
-		AND RACTNO = #{ractno}
-	</update>
+	<select id="ractRead" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+		CONVERT(nvarchar,A.RACTDATE,23) AS RACTDATE_
+		, (SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'SENDYN' AND SITEID = #{siteid} AND CODEVAL = A.SENDYN) AS SENDYN_
+		, RACTDESC
+		, FILESEARCHKEY
+		FROM Crud_SaaS.dbo.T_RACT A
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+	</select>
 	
-	<update id="prcUpdate" parameterType="hashMap">
-	
-	UPDATE Crud_SaaS.dbo.T_RCV
-		SET EDTDATE = getDate()
-			,EDTUSER = #{edtuser}
-			,PRCSTATE = #{prcstate}
-		WHERE SITEID = #{siteid}
-		AND RCVNO = #{rcvno}
-	
-	</update>
-	
-	<insert id="rcvinsert" parameterType="rcvDto">
-		<selectKey keyProperty="rcvno"  resultType="integer" order="AFTER">
-		INSERT INTO Crud_SaaS.dbo.T_RCV
+	<insert id="svInsert" parameterType="serviceDto">
+		<selectKey keyProperty="serviceno"  resultType="integer" order="AFTER">
+		INSERT INTO Crud_SaaS.dbo.T_SERVICE
 		(
-			CUSTNO
-			, CLINO
-			, RCVTYPE
-			, RCVDATE
-			, RCVTIME
-			, RCVCODE
-			, RCVNAME
-			, RCVDESC
-			, RCVCHANNEL
-			, RCVOWNER
-			, RCVOPINION
-			, PRCSTATE
-			, ISDELETE
-			, SITEID
-			, REGDATE
-			, REGUSER
-			, EDTDATE
-			, EDTUSER
+		SERVICENAME
+		,SERVICEDESC
+		,SERVICEOWNER
+		,RECEPTIONDATE
+		,CUSTNO
+		,CLINO
+		,SERVICESTEP
+		,OWNER
+		,SITEID
+		,FILESEARCHKEY
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		,SERVICETYPE
+		,SERVICECODE
+		,SERVICECHANNEL
+		,ISDELETE
 		)VALUES(
-			#{custno}
-			, #{clino}
-			, #{rcvtype}
-			, #{rcvdate}
-			, #{rcvtime}
-			, #{rcvcode}
-			, #{rcvname}
-			, #{rcvdesc}
-			, #{rcvchannel}
-			, #{rcvowner}
-			, #{rcvopinion}
-			, #{prcstate}
-			, #{isdelete}
-			, #{siteid}
-			, getDate()
-			, #{reguser}
-			, getDate()
-			, #{edtuser}
+		#{servicename}
+		,#{servicedesc}
+		,#{serviceowner}
+		,#{receptiondate}
+		,#{custno}
+		,#{clino}
+		,#{servicestep}
+		,#{owner}
+		,#{siteid}
+		,#{filesearchkey}
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		,#{servicetype}
+		,#{servicecode}
+		,#{servicechannel}
+		,#{isdelete}
 		)
-		
 		SELECT SCOPE_IDENTITY()
 		</selectKey>
 	</insert>
 	
-	<insert id="ractinsert" parameterType="hashMap">
-		INSERT INTO Crud_SaaS.dbo.T_RACT
+	<update id="svUpdate" parameterType="serviceDto">
+		UPDATE Crud_SaaS.dbo.T_SERVICE
+			SET SERVICENAME = #{servicename}
+			,SERVICEDESC = #{servicedesc}
+			,SERVICEOWNER = #{serviceowner}
+			,RECEPTIONDATE = #{receptiondate}
+			,CUSTNO = #{custno}
+			,CLINO = #{clino}
+			,OWNER = #{owner}
+			,FILESEARCHKEY = #{filesearchkey}
+			,EDTDATE = getDate()
+			,EDTUSER = #{edtuser}
+			,SERVICETYPE = #{servicetype}
+			,SERVICECODE = #{servicecode}
+			,SERVICECHANNEL = #{servicechannel}
+		WHERE SERVICENO = #{serviceno}
+		AND SITEID = #{siteid}
+	</update>
+	
+	<update id ="svDelete" parameterType="serviceDto">
+		UPDATE Crud_SaaS.dbo.T_SERVICE
+			SET EDTDATE = getDate()
+				,EDTUSER = #{edtuser}
+				,ISDELETE = 1
+			WHERE SITEID = #{siteid}
+			AND SERVICENO = #{serviceno}
+	</update>
+	
+	<update id="svStep" parameterType="int">
+		UPDATE Crud_SaaS.dbo.T_SERVICE
+			SET SERVICESTEP = #{servicestep}
+		WHERE SERVICENO = #{serviceno}
+		AND SITEID = #{siteid}
+	</update>
+	
+	<insert id="rewardInsert" parameterType="rewardDto">
+		INSERT INTO Crud_SaaS.dbo.T_REWARD
 		(
-			RCVNO
-			, RACTDATE
-			, RACTTIME
-			, RACTCODE
-			, RACTOWNER
-			, RACTDESC
-			, SITEID
-			, ISDELETE
-			, REGDATE
-			, REGUSER
-			, EDTDATE
-			, EDTUSER
+		VISITDATE
+		,VISITTIME
+		,REWARDTYPE
+		,CAUSECODE
+		,DELAYTYPE
+		,DELAYDESC
+		,REWARDDESC
+		,FILESEARCHKEY
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		,SITEID
+		,SERVICENO
 		)VALUES(
-			#{rcvno}
-			, #{ractdate}
-			, #{racttime}
-			, #{ractcode}
-			, #{ractowner}
-			, #{ractdesc}
-			, #{siteid}
-			, #{isdelete}
-			, getDate()
-			, #{reguser}
-			, getDate()
-			, #{edtuser}
+		#{visitdate}
+		,#{visittime}
+		,#{rewardtype}
+		,#{causecode}
+		,#{delaytype}
+		,#{delaydesc}
+		,#{rewarddesc}
+		,#{filesearchkey}
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		,#{siteid}
+		,#{serviceno}
 		)
 	</insert>
 	
-	<update id ="delete" parameterType="int">
-		UPDATE Crud_SaaS.dbo.T_RCV
-		SET ISDELETE = 1
-		WHERE RCVNO = #{rcvno}
+	<update id="rewardUpdate" parameterType="rewardDto">
+	Update Crud_SaaS.dbo.T_REWARD
+		SET VISITDATE = #{visitdate}
+			,VISITTIME = #{visittime}
+			,REWARDTYPE = #{rewardtype}
+			,CAUSECODE = #{causecode}
+			,DELAYTYPE = #{delaytype}
+			,DELAYDESC = #{delaydesc}
+			,REWARDDESC = #{rewarddesc}
+			,FILESEARCHKEY = #{filesearchkey}
+			,EDTDATE = getDate()
+			,EDTUSER = #{edtuser}
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+		AND REWARDNO = #{rewardno}
+	</update>
+	
+	<insert id="ractInsert" parameterType="ractDto">
+		INSERT INTO Crud_SaaS.dbo.T_RACT
+		(
+		SERVICENO
+		,RACTDATE
+		,SENDYN
+		,RACTDESC
+		,FILESEARCHKEY
+		,SITEID
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		,RACTCODE
+		)VALUES(
+		#{serviceno}
+		,#{ractdate}
+		,#{sendyn}
+		,#{ractdesc}
+		,#{filesearchkey}
+		,#{siteid}
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		,#{ractcode}
+		)
+	</insert>
+	
+	<update id="ractUpdate" parameterType="ractDto">
+		UPDATE Crud_SaaS.dbo.T_RACT
+			SET RACTDATE = #{ractdate}
+				,SENDYN = #{sendyn}
+				,RACTDESC = #{ractdes}
+				,FILESEARCHKEY = #{filesearchkey}
+				,EDTDATE = getDate()
+				,EDTUSER = #{edtuser}
+				,RACTCODE = #{ractcode}
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+		AND RACTNO = #{ractno}
 	</update>
 	
 	<select id="tabRact" parameterType="ractDto" resultType="HashMap">
 		SELECT TOP 5
 		CONVERT(nvarchar,A.RACTDATE,23) AS RACTDATE_
-		,A.RACTTIME
 		, CASE WHEN A.RACTCODE = 1 THEN 'option1'
     		   WHEN A.RACTCODE = 2 THEN 'option2'
     		   WHEN A.RACTCODE = 3 THEN 'option3' END AS RACTCODE_
-    	,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.RACTOWNER)AS RACTOWNER_
     	,A.RACTDESC
     	FROM Crud_SaaS.dbo.T_RACT A
     	WHERE A.SITEID = #{siteid}
-    	AND A.RCVNO = #{rcvno}
+    	AND A.SERVICENO = #{serviceno}
 	</select>
 	
 	<insert id="conveyInsert" parameterType="conveyDto">
 		INSERT T_CONVEY
-			(RCVNO
+			(SERVICENO
 			,PREVOWNER
 			,NEXTOWNER
 			,CONVEYREASON
@@ -335,7 +372,7 @@
 			,EDTUSER
 			,SITEID
 			)VALUES(
-			#{rcvno}
+			#{serviceno}
 			,#{prevowner}
 			,#{nextowner}
 			,#{conveyreason}
@@ -348,33 +385,31 @@
 			,#{siteid}
 			)
 			
-			UPDATE Crud_SaaS.dbo.T_RACT
-			SET RACTOWNER = #{nextowner}
+			UPDATE Crud_SaaS.dbo.T_SERVICE
+			SET OWNER = #{nextowner}
 				,EDTDATE = getDate()
 				,EDTUSER = #{edtuser}
-			WHERE RCVNO = #{rcvno}
+			WHERE SERVICENO = #{serviceno}
 			AND SITEID = #{siteid}
 			
-			UPDATE Crud_SaaS.dbo.T_RCV
-			SET PRCSTATE = 3
-			WHERE RCVNO = #{rcvno}
+			UPDATE Crud_SaaS.dbo.T_SERVICE
+			SET SERVICESTEP = 3
+			WHERE SERVICENO = #{serviceno}
 			AND SITEID = #{siteid}
 	</insert>
 	
 	<select id="tabConvey" parameterType="int" resultType="HashMap">
 		SELECT A.CONVEYNO
-			,A.RCVNO
+			,A.SERVICENO
 			,A.PREVOWNER
 			,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE A.PREVOWNER = USERNO) AS PREVOWNER_
 			,A.NEXTOWNER
 			,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE A.NEXTOWNER = USERNO) AS NEXTOWNER_
-			,CASE WHEN A.CONVEYREASON = 1 THEN '업무변경'
-				  WHEN A.CONVEYREASON = 2 THEN '휴가'
-				  WHEN A.CONVEYREASON = 3 THEN '퇴사' END CONVEYREASON
+			,(SELECT CODENAME FROM Crud_SaaS.dbo.T_CODE WHERE CODEGRP = 'CONVEYREASON' AND SITEID = #{siteid} AND CODEVAL = A.CONVEYREASON) AS CONVEYREASON_
 			,CONVERT(nvarchar,A.CONVEYDATE,23) AS CONVEYDATE
 			,A.CONVEYDESC
 		FROM Crud_SaaS.dbo.T_CONVEY A
-		WHERE A.RCVNO = #{rcvno}
+		WHERE A.SERVICENO = #{serviceno}
 		AND A.SITEID = #{siteid}
 	</select>
 	

@@ -55,15 +55,12 @@
                 <div class="col-lg-12">
                     <form:form action ="${pageContext.request.contextPath}/campaign/target/${campInfo.CAMPNO }" method="POST">
                     <div class="ibox">
-                        <div class="ibox-title row pr-0">
-                            <h4>기본정보</h4>
+                        <div class="ibox-title row border-0">
+                            <h4>캠페인 정보</h4>
                             <div class="col-12 text-right mb-2">
     							<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
     							<a href="/campaign" class="btn btn-primary">목 록</a>
     						</div>
-                        </div>
-                        <div class="ibox-title row border-0">
-                            <h4>캠페인 정보</h4>
                         </div>
                         <div class="ibox-content row">
                             <div class="box1 col-lg-12 col-xl-4 p-0">

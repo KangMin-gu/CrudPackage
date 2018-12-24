@@ -93,7 +93,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>거래처명<sup>*</sup></th>
+													<th>거래처명&nbsp;<b>&#42;</b></th>
 													<td>
 														<input type="text" class="form-control required validate allV" id="cliname" name="cliname" value="${cliUpdate.CLINAME }">
 													</td>
@@ -109,7 +109,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>거래처호칭<sup>*</sup></th>
+													<th>거래처호칭&nbsp;<b>&#42;</b></th>
 													<td>
 														<input type="text" class="form-control required validate allV" id="callname" name="callname" value="${cliUpdate.CALLNAME }">
 													</td>
@@ -125,7 +125,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>영업담당자<sup>*</sup></th>
+													<th>영업담당자&nbsp;<b>&#42;</b></th>
 
 													<td class="border-top-0 border-bottom-0">
 														<div class="input-group owner">

@@ -34,7 +34,7 @@ body {
 </head>
 <body>
 	<div class="wrapper">
-		<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="row wrapper border-bottom white-bg page-heading" style="padding-bottom: 12px;">
 			<div class="col-lg-10">
 				<h2>고객검색</h2>
 

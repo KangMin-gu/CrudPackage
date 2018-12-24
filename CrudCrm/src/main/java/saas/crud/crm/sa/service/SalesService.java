@@ -26,6 +26,7 @@ public interface SalesService {
 	
 	public int svcSalesDelete(SalesDto salesDto);
 	
+	public int svcSalesMultyDelete(HttpServletRequest request); 
 	
 	public Map<String,Object> svcSalesCustList(HttpServletRequest request);
 	

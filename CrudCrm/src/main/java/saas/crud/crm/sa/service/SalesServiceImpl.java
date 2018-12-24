@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import saas.crud.crm.ce.CrudEngine;
+import saas.crud.crm.cu.dto.CustDto;
 import saas.crud.crm.sa.dao.SalesDao;
 import saas.crud.crm.sa.dto.ClientDto;
 import saas.crud.crm.sa.dto.SaleStateDto;
@@ -121,6 +122,29 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public int svcSalesDelete(SalesDto salesDto) {
 		int res = salesDao.salesDelete(salesDto);
+		return res;
+	}
+	
+	//영업 멀티 삭제 
+	@Override
+	public int svcSalesMultyDelete(HttpServletRequest request) {
+			
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		String[] salesno = request.getParameterValues("salesno");
+		
+		SalesDto salesDto=new SalesDto();			
+		salesDto.setSiteid(siteid);
+	
+			
+		int size = salesno.length; 
+		int res = 0; //실행 된 건수 체크용 카운터 현재 미사용
+		//salesno 배열 수 만큼 dao호출  
+		for (int i=0;i<size;i++) {
+			if(salesno[i].toString()!=null) {
+				salesDto.setSalesno(Integer.parseInt(salesno[i].toString()));	
+				res += salesDao.salesDelete(salesDto);			
+			}			
+		}	
 		return res;
 	}
 	

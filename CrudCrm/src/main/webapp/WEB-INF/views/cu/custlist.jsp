@@ -18,15 +18,13 @@
 
 <!-- S: 추가 CSS-->
 <!-- Toastr style -->
-<link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <!--radioBox-->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <!--datePicker-->
-<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 	<!-- ui -->
-<link href="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"> --%>
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
 <script>
@@ -215,7 +213,9 @@
 																
 								<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                               		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                                    	<a href="/custexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>                  
+                                    	<!-- <a href="/custexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>      -->             
+                             			
+                             			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4"  id="excelBtn" ><i class="fa fa-file-excel-o" ></i></button>
                              		</div>                                       
                               		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 		<span id="checkVal"></span>
@@ -234,16 +234,17 @@
 								
 								
 								
-						<!-- 	<button id="btn-excel">엑셀 다운로드</button> 
-                              파일 생성중 보여질 진행막대를 포함하고 있는 다이얼로그 입니다. 
-                             <div title="Data Download" id="preparing-file-modal" style="display: none;"> 
+							<!-- <button id="btn-excel">엑셀 다운로드</button>  -->
+                            <!--   파일 생성중 보여질 진행막대를 포함하고 있는 다이얼로그 입니다.  -->
+                             <!-- <div title="Data Download modal fade" id="preparing-file-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" > 
                              	<div id="progressbar" style="width: 100%; height: 22px; margin-top: 20px;"></div> 
-                             </div>  에러발생시 보여질 메세지 다이얼로그 입니다.
-                             <div title="Error" id="error-modal" style="display: none;"> <p>생성실패.</p> </div>
+                             </div>   -->
+                             <!-- 에러발생시 보여질 메세지 다이얼로그 입니다. -->
+                             <!-- <div title="Error" id="error-modal" style="display: none;"> <p>생성실패.</p> </div> -->
 								
 							
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal4" id="testBtn">ttttest</button>
-                            <div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true" id="testModal">
+							
+                            <div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
                                 <div class="modal-dialog" >
                                     <div class="modal-content animated fadeIn">
                                         <div class="modal-header">
@@ -255,12 +256,11 @@
                                         	<p><strong>엑셀 다운로드 중 입니다.</strong></p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-white" data-dismiss="modal">확인</button>
+                                            <button type="button" class="btn btn-white" data-dismiss="modal" id="modalCloseBtn" style="display: none;">확인</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
-							
+                            </div> 
 							
 							
 							
@@ -399,7 +399,7 @@
 									</ul>  
 															
 								</div>
-								 <h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
+								<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
 		
 							</div>
 						</div>
@@ -451,7 +451,6 @@
 				$('#email').val('');
 				$('[name="cliname"]').val('');
 				$('#clino').val(0);
-				//$('#owner_').val('');
 				$('[name="owner_"]').val('');
 				$('#owner').val(0);
 				$('#custgubun').val(0);
@@ -471,7 +470,7 @@
 			});
 			
 			
-			/*
+			//샘플 프로그레시브
 		    $("#btn-excel").on("click", function () {
 		    	debugger;
 		    	var $preparingFileModal = $("#preparing-file-modal");
@@ -490,25 +489,28 @@
 		        return false;
 		    });
 		    
-		    
-		    $("#testBtn").on("click", function () {
+		    //엑셀다운
+		    $("#excelBtn").on("click", function () {
 		    	debugger;
-		    	var $testModal = $("#testModal");
-		        $testModal.dialog({ modal: true });
-		        $("#progressbar").progressbar({value: false});
+		    	var $myModal = $("#myModal4");
+		        $myModal.dialog({ modal: true });
+	        
 		        $.fileDownload("/custexcel", {
 		            successCallback: function (url) {
-		                $testModal.dialog('close');
+		            	$myModal.dialog('close');
+		            	$('#modalCloseBtn').trigger('click');  
 		            },
 		            failCallback: function (responseHtml, url) {
-		                $testModal.dialog('close');
-		                $("#error-modal").dialog({ modal: true });
+		            	$('#modalCloseBtn').trigger('click');
+		                $myModal.dialog('close');
 		            }
 		        });
-		        // 버튼의 원래 클릭 이벤트를 중지 시키기 위해 필요합니다.
-		        return false;
+		   
 		    });
-		    */
+		    
+		    
+		  
+
 		 
 		});
 

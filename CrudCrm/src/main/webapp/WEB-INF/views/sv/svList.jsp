@@ -95,7 +95,7 @@
                                             <th>고객명</th>
                                             <td class="border-top-0">
                                                 <div class="input-group cust" id="custno_">
-                                                    <input type="text" class="form-control reset" autocomplete="off" disabled name="custno_" value="${search.custno_ }">
+                                                    <input type="text" class="form-control reset" autocomplete="off" readonly name="custno_" value="${search.custno_ }">
                                                     <input type="hidden" class="reset" name="custno" value="${search.custno }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -124,7 +124,7 @@
                                         <tr>
                                             <th>접수유형</th>
                                             <td>
-                                                    <select class="form-control reset select2" name="servicetype" id="servicetype" value="${search.servicetype }">
+                                                    <select class="form-control reset" name="servicetype" id="servicetype" value="${search.servicetype }">
                                                     	<option value="">선택</option>
                                                     	<option value="1" <c:if test='${search.servicetype eq 1}'>selected</c:if>>문의</option>
                                                     	<option value="2" <c:if test='${search.servicetype eq 2}'>selected</c:if>>개선</option>
@@ -136,7 +136,7 @@
                                             <th>거래처명</th>
                                             <td class="border-top-0">
                                                 <div class="input-group cli" id="clino_">
-                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="clino_" value="${search.clino_ }">
+                                                    <input type="text" class="form-control reset" readonly autocomplete="off" name="clino_" value="${search.clino_ }">
                                                     <input type="hidden" class="reset" name="clino" value="${search.clino }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
@@ -147,7 +147,7 @@
                                         <tr>
                                             <th>접수매체</th>
                                             <td class="border-top-0">
-                                                <select class="form-control reset select2" name="servicechannel" id="servicechannel" value="${search.servicechannel }">
+                                                <select class="form-control reset" name="servicechannel" id="servicechannel" value="${search.servicechannel }">
                                             		<option value="">선택</option>
                                                     <option value="10" <c:if test='${search.servicechannel eq 10}'>selected</c:if>>전화</option>
                                                     <option value="20" <c:if test='${search.servicechannel eq 20}'>selected</c:if>>SMS</option>
@@ -168,9 +168,9 @@
                                         <tr>
                                             <th>접수자</th>
                                             <td class="border-top-0">
-                                                <div class="input-group owner" id="rcvowner_">
-                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="rcvowner_" value="${search.rcvowner_ }">
-                                                    <input type="hidden" class="reset" name="rcvowner" value="${search.rcvower }">
+                                                <div class="input-group owner" id="serviceowner_">
+                                                    <input type="text" class="form-control reset" readonly autocomplete="off" name="serviceowner_" value="${search.serviceowner_ }">
+                                                    <input type="hidden" class="reset" name="serviceowner" value="${search.serviceowner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -180,9 +180,9 @@
                                         <tr>
                                             <th>담당자</th>
                                             <td class="border-top-0">
-                                                <div class="input-group owner" id="ractowner_">
-                                                    <input type="text" class="form-control reset" disabled autocomplete="off" name="ractowner_" value="${search.ractowner_ }">
-                                                    <input type="hidden" class="reset" name="ractowner" value="${search.ractower }">
+                                                <div class="input-group owner" id="owner_">
+                                                    <input type="text" class="form-control reset" readonly autocomplete="off" name="owner_" value="${search.owner_ }">
+                                                    <input type="hidden" class="reset" name="owner" value="${search.owner }">
                                                     <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
@@ -192,11 +192,18 @@
                                         <tr>
                                             <th>처리상태</th>
                                             <td class="border-top-0">
-                                                <select class="form-control reset select2" name="servicestep" id="servicestep" value="${search.servicestep }">
-                                            		<option value="">선택</option>
-                                                    <option value="1" <c:if test='${search.servicestep eq 1}'>selected</c:if>>접수</option>
-                                                    <option value="2" <c:if test='${search.servicestep eq 2}'>selected</c:if>>이관</option>
-                                                    <option value="3" <c:if test='${search.servicestep eq 3}'>selected</c:if>>완료</option>
+                                                <select class="form-control reset" name="servicestep" id="servicestep" value="${search.servicestep }">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="serviceStep" items="${SERVICESTEP }">
+                                                		<c:choose>
+                                                			<c:when test="${search.servicestep eq serviceStep.codeval}">
+                                                				<option selected label="${serviceStep.codename }" value="${serviceStep.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${serviceStep.codename }" value="${serviceStep.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
@@ -228,44 +235,44 @@
                             <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                             	<colgroup>
-                            		<col style="width: 30px;">
-                            		<col style="width: 150px;">
-                            		<col style="width: 70px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 200px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 100px;">
-                            		<col style="width: 70px;">                            		                            		                            		                            		                            		                            		                            		
+                            		<col style="width: 3%;">
+                            		<col style="width: 15%;">
+                            		<col style="width: 10%;">
+                            		<col style="width: 10%;">
+                            		<col style="width: 10%;">
+                            		<col style="width: 15%;">
+                            		<col style="width: 10%;">
+                            		<col style="width: 10%;">
+                            		<col style="width: 10%;">
+                            		<col style="width: 7%;">                            		                            		                            		                            		                            		                            		                            		
                             	</colgroup>                            
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="i-checks"></th>
-                                        <th>서비스명</th>
-                                        <th>접수유형</th>
-                                        <th>접수매체</th>
-                                        <th>고객명</th>
-                                        <th>거래처명</th>
-                                        <th>접수일</th>
-                                        <th>접수자</th>
-                                        <th>담당자</th>
-                                        <th>처리상태</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" name="icheckAll" id="icheckAll"></th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">서비스명</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수유형</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수매체</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">고객명</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">거래처명</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수일</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수자</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">담당자</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">처리상태</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
-                                        <td><input type="checkbox" class="i-checks" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
-                                        <td>${svList.RCVTYPE_ }</td>
-                                        <td>${svList.RCVCHANNEL_ }</td>
-                                        <td>${svList.CUSTNAME_ }</td>
-                                        <td>${svList.CLINAME_ }</td>
-                                        <td>${svList.RECEPTIONDATE_ }</td>
-                                        <td>${svList.SERVICEOWNER_ }</td>
-                                        <td>${svList.OWNER_ }</td>
-                                        <td>${svList.SERVICESTEP_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"> ${svList.SERVICETYPE_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.SERVICECHANNEL_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.CUSTNAME_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.CLINAME_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.RECEPTIONDATE_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.SERVICEOWNER_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.OWNER_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.SERVICESTEP_ }</td>
                                     </tr>
                                 </c:forEach>
                                        
@@ -322,41 +329,22 @@
 
 			
 <!-- foot -->
-			<div class="footer">
-				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
-			</div>
+		<div class="footer">
+			<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
 		</div>
+	</div>
 <!-- right side -->
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
+	</div>
 </div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
-	<script>
-    $( document ).ready(function() {
-    	
-    	$('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    	
-        $('.date').datepicker({
-            keyboardNavigation: false,
-            forceParse: false,
-            autoclose: true
-        });
-    });
-    
-    $('.resets').click(function(e){
-    	e.preventDefault();
-    	$('.reset').val('');
-    });
-
-	</script>			
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>	
 
 </body>
 </html>

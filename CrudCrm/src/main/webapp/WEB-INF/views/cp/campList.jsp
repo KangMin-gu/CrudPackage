@@ -67,15 +67,15 @@
 							</div>
 							<br><br>
 							<div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered border-top-0 mb-0">
+                                <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0">캠페인 기간</th>
-                                            <td class="border-top-0">
+                                            <th>캠페인 기간</th>
+                                            <td>
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" id="startdate" name="startdate" value="${search.startdate }">
@@ -140,8 +140,8 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>진행단계</th>
-                                            <td>
+                                            <th class="border-top-0">진행단계</th>
+                                            <td class="border-top-0">
                                                 <select class="form-control" id="campstep" name="campstep">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="campStep" items="${CAMPSTEP }">
@@ -161,15 +161,15 @@
                                 </table>
                             </div>
                             <div class="box2 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
                                         <col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>캠페인유형</th>
-                                            <td>
+                                            <th class="border-top-0">캠페인유형</th>
+                                            <td class="border-top-0">
                                                 <select class="form-control" id="camptype" name="camptype">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="campType" items="${CAMPTYPE }">
@@ -220,7 +220,7 @@
 	                            	 <a href="${pageContext.request.contextPath}/campexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
 	                          	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-									<a href="${pageContext.request.contextPath}/campaign/post" class="btn btn-primary">추가</a>
+									<a href="${pageContext.request.contextPath}/camp/post" class="btn btn-primary">추가</a>
 									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
 								</div>
 							</div>

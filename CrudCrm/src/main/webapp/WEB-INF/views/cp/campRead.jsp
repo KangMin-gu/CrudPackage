@@ -60,7 +60,7 @@
                                 <h1>캠페인정보</h1>
                                 <div class="step-content">
                                 	
-                            		<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                            		<div class="box col-12" style="padding-left: 0px;padding-right: 0px; border-top: 1px solid #e7eaec;">
                            				<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
                               				<a href="${pageContext.request.contextPath}/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
                                        		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
@@ -173,11 +173,11 @@
 
                                 <h1>대상추출</h1>
                                 <div class="step-content">
-                                	<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                                	<div class="box col-12 pt-3 pb-3 clearfix tooltip-demo" style="border-top: 1px solid #e7eaec; border-bottom: 1px solid #e7eaec">
+										<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
 											<a href="${pageContext.request.contextPath}/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
 	                          			</div>													
-										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+										<div class="float-right" style="padding-right: 0px;">
 											<a href="${pageContext.request.contextPath}/campaign/target/${campInfo.CAMPNO }" class="btn btn-primary">타켓추출</a>									
 											<Button type="submit" class="btn btn-primary">삭 제</Button>	
 										</div>
@@ -915,14 +915,15 @@
                                                                     </table>
                                                                 </div>
                                                                 <div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
-                                                                    <div class="sms-form">
-                                                                        <div class="num-text">
-                                                                            <input type="text" placeholder="번호를 입력하세요.">
-                                                                        </div>
-                                                                        <div class="sub-text">
+                                                                	<div class="sms-form">
+																		<h4>SMS</h4>
+																		<div class="sub-text">
                                                                             <textarea name="name" placeholder="내용을 입력하세요."></textarea>
                                                                         </div>
-                                                                    </div>
+                                                                        <div class="limit-text">
+                                                                        	<p><span>00</span> / 90</p>
+                                                                        </div>
+                                                                	</div>
                                                                 </div>
                                                             </div>
                                                         </div>

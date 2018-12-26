@@ -13,8 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.MailDao;
+import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
@@ -39,6 +43,10 @@ public class SvServiceImpl implements SvService{
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> search = crud.searchParam(request);
+		String uri = request.getRequestURI();
+		if(uri.contains("convey")) {
+			search.put("servicestep", 3);
+		}
 
 		int totalRows = svDao.svServiceTotalRows(search);
 		
@@ -85,7 +93,7 @@ public class SvServiceImpl implements SvService{
 		
 		if(rewardInfo != null) {
 			if(rewardInfo.get("FILESEARCHKEY") != null) {
-				String fileSearchKey = (String) serviceInfo.get("FILESEARCHKEY");
+				String fileSearchKey = (String) rewardInfo.get("FILESEARCHKEY");
 				param.put("filesearchkey", fileSearchKey);
 				List<Map<String,Object>> rewardFile = mailDao.fileAttach(param);
 				mView.addObject("rewardFile",rewardFile);
@@ -94,7 +102,7 @@ public class SvServiceImpl implements SvService{
 		}
 		if(ractInfo != null) {
 			if(ractInfo.get("FILESEARCHKEY") != null) {
-				String fileSearchKey = (String) serviceInfo.get("FILESEARCHKEY");
+				String fileSearchKey = (String) ractInfo.get("FILESEARCHKEY");
 				param.put("filesearchkey", fileSearchKey);
 				List<Map<String,Object>> ractFile = mailDao.fileAttach(param);
 				mView.addObject("ractFile",ractFile);
@@ -124,32 +132,35 @@ public class SvServiceImpl implements SvService{
 		ractDto.setSiteid(siteId);
 		ractDto.setEdtuser(userNo);
 		
-		List<MultipartFile> serviceFileUpload = multipartHttpServletRequest.getFiles("servicefile");
-		List<MultipartFile> rewardFileUpload = multipartHttpServletRequest.getFiles("rewardfile");
-		List<MultipartFile> ractFileUpload = multipartHttpServletRequest.getFiles("ractfile");
-		List<MultipartFile> mFile = null;
+		int serviceFileSize = multipartHttpServletRequest.getFiles("servicefile").size();
+		int rewardFileSize = multipartHttpServletRequest.getFiles("rewardfile").size();
+		int ractFileSize = multipartHttpServletRequest.getFiles("ractfile").size();
+		List<MultipartFile> serviceFileUpload = null;
+		List<MultipartFile> rewardFileUpload = null;
+		List<MultipartFile> ractFileUpload = null;
 		MultipartFile sFile = null;
 		
-		
-		int rewardFileUploadLength = rewardFileUpload.get(0).getOriginalFilename().length();
-		int serviceFileUploadLength = serviceFileUpload.get(0).getOriginalFilename().length();
-		int ractFileUploadLength = ractFileUpload.get(0).getOriginalFilename().length();
-		
-		if(serviceFileUpload != null) {
+		if(serviceFileSize > 0) {
+			serviceFileUpload = multipartHttpServletRequest.getFiles("servicefile");
+			int serviceFileUploadLength = serviceFileUpload.get(0).getOriginalFilename().length();
 			if(serviceFileUploadLength > 0) {
 				String fileSearchKey = crud.fileSearchKey(request);
 				crud.fileUpload(response, multipartHttpServletRequest, serviceFileUpload, sFile, fileSearchKey);
 				serviceDto.setFilesearchkey(fileSearchKey);
 			}
 		}
-		if(rewardFileUpload != null) {
+		if(rewardFileSize > 0) {
+			rewardFileUpload = multipartHttpServletRequest.getFiles("rewardfile");
+			int rewardFileUploadLength = rewardFileUpload.get(0).getOriginalFilename().length();
 			if(rewardFileUploadLength > 0) {
-			String fileSearchKey = crud.fileSearchKey(request);
-			crud.fileUpload(response, multipartHttpServletRequest, rewardFileUpload, sFile, fileSearchKey);
-			rewardDto.setFilesearchkey(fileSearchKey);
-			}
+				String fileSearchKey = crud.fileSearchKey(request);
+				crud.fileUpload(response, multipartHttpServletRequest, rewardFileUpload, sFile, fileSearchKey);
+				rewardDto.setFilesearchkey(fileSearchKey);
+				}
 		}
-		if(ractFileUpload != null) {
+		if(ractFileSize > 0) {
+			ractFileUpload = multipartHttpServletRequest.getFiles("ractfile");
+			int ractFileUploadLength = ractFileUpload.get(0).getOriginalFilename().length();
 			if(ractFileUploadLength > 0) {
 				String fileSearchKey = crud.fileSearchKey(request);
 				crud.fileUpload(response, multipartHttpServletRequest, ractFileUpload, sFile, fileSearchKey);
@@ -158,11 +169,7 @@ public class SvServiceImpl implements SvService{
 		}
 		
 		int serviceNo = serviceDto.getServiceno();
-		if(serviceNo != 0) {
-			
-			svDao.svUpdate(serviceDto);
-			
-		}else {
+		if(serviceNo == 0) {
 			serviceDto.setIsdelete(0);
 			serviceNo = svDao.svInsert(serviceDto);
 			
@@ -173,22 +180,24 @@ public class SvServiceImpl implements SvService{
 		 int rewardNo = rewardDto.getRewardno();
 		
 		 // 방문 일정이 잡히면 현상파악을 Insert 하게됨.
-		if(visitDate.length() > 0) {
-			if(rewardNo != 0) {
-				svDao.rewardUpdate(rewardDto);
-			}else {
-				rewardDto.setServiceno(serviceNo);
-				rewardDto.setReguser(userNo);
-				svDao.rewardInsert(rewardDto);
-				serviceDto.setServicestep(2);
-				svDao.svStepUpdate(serviceDto);
-			}
-		}
+		 if(visitDate != null) {
+			 if(visitDate.length() > 0) {
+				 if(rewardNo != 0) {
+					 svDao.rewardUpdate(rewardDto);
+				 }else {
+					 rewardDto.setServiceno(serviceNo);
+					 rewardDto.setReguser(userNo);
+					 svDao.rewardInsert(rewardDto);
+					 serviceDto.setServicestep(2);
+					 svDao.svStepUpdate(serviceDto);
+				 }
+			 }
+		 }
 		
-		int ractOwner = ractDto.getRactowner();
+		String ractDate = ractDto.getRactdate();
 		int ractNo = ractDto.getRactno();
 		
-		if(ractOwner != 0) {
+		if(ractDate.length() > 0) {
 			if(ractNo != 0) {
 				svDao.ractUpdate(ractDto);	
 			}else{
@@ -281,6 +290,48 @@ public class SvServiceImpl implements SvService{
 		serviceDto.setServicestep(4);
 		svDao.svStepUpdate(serviceDto);
 		
+	}
+
+	@Override
+	public void svComplete(HttpServletRequest request, int serviceNo) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		ServiceDto serviceDto = new ServiceDto();
+		
+		serviceDto.setSiteid(siteId);
+		serviceDto.setEdtuser(userNo);
+		serviceDto.setServiceno(serviceNo);
+		serviceDto.setServicestep(5);
+		
+		svDao.svStepUpdate(serviceDto);
+		
+	}
+
+	@Override
+	public ModelAndView svCalList(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		ModelAndView mView = new ModelAndView();
+		RewardDto rewardDto = new RewardDto();
+		
+		
+		rewardDto.setSiteid(siteId);
+		
+		List<Map<String,Object>> svCalList = svDao.svCalList(rewardDto);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(svCalList);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mView.addObject("schList",jsonStr);//캘린더 스케쥴
+		mView.addObject("svSchList",svCalList);//캘린더 틀 목록.
+
+		return mView;
 	}
 }
 

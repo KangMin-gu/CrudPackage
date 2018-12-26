@@ -106,5 +106,12 @@ public class SvDaoImpl implements SvDao{
 		// TODO Auto-generated method stub
 		session.insert("sv.conveyInsert",conveyDto);
 	}
+	@Override
+	public List<Map<String, Object>> svCalList(RewardDto rewardDto) {
+		// TODO Auto-generated method stub
+		
+		List<Map<String,Object>> svCalList = session.selectList("sv.calList",rewardDto);
+		return svCalList;
+	}
 	
 }

@@ -1,5 +1,7 @@
 package saas.crud.crm.sv.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,8 @@ public class SvController {
 	@RequestMapping(value="/service", method=RequestMethod.GET)
 	public ModelAndView authServiceList(HttpServletRequest request) {
 		ModelAndView mView = svService.svList(request);		
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sv/svList");
 		
 		return mView;
@@ -43,7 +47,9 @@ public class SvController {
 	//서비스 검색 List
 	@RequestMapping(value="/service", method=RequestMethod.POST)
 	public ModelAndView authServiceListSearch(HttpServletRequest request) {
-		ModelAndView mView = svService.svList(request);		
+		ModelAndView mView = svService.svList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sv/svList");
 		
 		return mView;
@@ -130,13 +136,15 @@ public class SvController {
 	
 	@RequestMapping(value="/convey",method=RequestMethod.POST)
 	@ResponseBody
-	public List<Map<String,Object>> authSvRactInsert(HttpServletRequest request, @ModelAttribute ConveyDto conveyDto) {
+	public int authSvRactInsert(HttpServletRequest request,HttpServletResponse response, @ModelAttribute ConveyDto conveyDto) throws IOException {
 		
 		svService.svConveyInsert(request, conveyDto);
 		int serviceNo = conveyDto.getServiceno();
-		List<Map<String, Object>> tabRact = svService.svTabConvey(request,serviceNo);
-		
-		return tabRact;
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('이관되엇습니다'); opener.location.reload(); self.close(); </script>");
+		out.flush();
+		return serviceNo;
 	}
 		
 	// 서비스 처리 이력 탭
@@ -164,7 +172,42 @@ public class SvController {
 	@RequestMapping(value="/service/convey", method=RequestMethod.GET)
 	public ModelAndView authSvConveyList(HttpServletRequest request) {
 		ModelAndView mView = svService.svList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("sv/svList");
 		return mView;
 	}
+	
+	@RequestMapping(value="/service/convey", method=RequestMethod.POST)
+	public ModelAndView authSvConveySearchList(HttpServletRequest request) {
+		ModelAndView mView = svService.svList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("sv/svList");
+		return mView;
+	}
+	
+	@RequestMapping(value="/service/complete/{serviceNo}", method=RequestMethod.POST)
+	@ResponseBody
+	public int authSvComplete(HttpServletRequest request,@PathVariable int serviceNo) {
+		
+		svService.svComplete(request,serviceNo);
+		return serviceNo;
+	}
+	
+	@RequestMapping(value="/service/cal", method=RequestMethod.GET)
+	public ModelAndView authSvCalendar(HttpServletRequest request) {
+		ModelAndView mView = svService.svCalList(request);
+		mView.setViewName("sv/calendar/svCalMain");
+		return mView;
+	}
+	
+	@RequestMapping(value="/service/cal/{serviceNo}", method=RequestMethod.GET)
+	public ModelAndView authSvCalendarDetail(HttpServletRequest request,@PathVariable int serviceNo) {
+		ModelAndView mView = svService.svRead(request, serviceNo);
+		mView.setViewName("sv/calendar/svCalPopUp");
+		
+		return mView;
+	}
+	
 }

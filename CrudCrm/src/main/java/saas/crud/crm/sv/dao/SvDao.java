@@ -46,5 +46,7 @@ public interface SvDao {
 	// 이관 추가
 	public void conveyInsert(ConveyDto conveyDto);
 	
+	public List<Map<String,Object>> svCalList(RewardDto rewardDto);
+	
 
 }

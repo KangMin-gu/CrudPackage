@@ -23,9 +23,12 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div style="margin-top:100px;">
             <div>
-                <img style="width:300px;" src="${pageContext.request.contextPath}/resources/img/crud/welcomlogo.png" alt="" />
+            	<a href="${pageContext.request.contextPath}/">
+            		<img style="width:300px;" src="${pageContext.request.contextPath}/resources/img/crud/welcomlogo.png" alt="" />
+            	</a>               
             </div>
-                               
+            <h4>SaaS IDEA가 19년 2월 오픈 하였습니다.</h4>
+            <small>고객 만족을 위해 최선을 다하겠습니다.</small>                   
             <form:form class="m-t" role="form" action="${pageContext.request.contextPath}/login" method="post">
             	<input type="hidden" name="url" value="${url }"/>
                 <div class="form-group">
@@ -41,7 +44,7 @@
            		<div class="row justify-content-between">
            			<div class="col-xs-4">공지사항</div>
            			<div class="col-xs-4">
-           				<a class="btn btn-primary btn-xs" href="">더보기</a>
+           				<a class="btn btn-primary btn-xs" href="">전체</a>
            			</div>
            		</div>
            		<br/>

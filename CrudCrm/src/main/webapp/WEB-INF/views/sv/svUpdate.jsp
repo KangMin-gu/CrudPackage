@@ -736,14 +736,15 @@
 	
 		});
 		
-		$('.i-checks').iCheck('check',function(){
+		$('#sendyn').on('ifChecked', function () {
 			debugger;
-			$('#sendyn').val(1);
-		});
-		$('.i-checks').iCheck('uncheck',function(){
-			debugger;
-			$('#sendyn').val(0);
-		});
+		   	   $('#sendyn').val(1);
+		   });
+
+		   //체크 해제시
+		   $('#sendyn').on('ifUnchecked', function () {
+		   	   $('#sendyn').val(0);
+		   });
 
 	</script>
 </body>

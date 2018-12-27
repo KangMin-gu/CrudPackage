@@ -52,7 +52,7 @@ body {
 					
 						
 						<div class="w-100 text-right mb-3">
-							<a class="btn btn-primary" id="submitBtn" href="/campaign/${campInfo.CAMPNO }">캠페인 상세로 이동</a>
+							<a class="btn btn-primary" id="submitBtn" onclick="javascript:moveDetail();">캠페인 상세로 이동</a>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -88,15 +88,10 @@ body {
 										<th>비고</th>
 										 <td><textarea name="memo" id="memo"  class="form-control" style="resize:none;" rows="4" readonly>${campInfo.CAMPDESC }</textarea></td>
 									</tr>
-									
+									<input type="hidden" id="no" name="no" value="${campInfo.CAMPNO }"/>
 								</tbody>
 							</table>
 						</div>
-					
-
-
-
-
 					</div>
 				</div>
 
@@ -107,6 +102,7 @@ body {
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>
 
 
 </body>

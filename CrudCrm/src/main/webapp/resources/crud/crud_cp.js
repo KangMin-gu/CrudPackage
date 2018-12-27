@@ -253,7 +253,8 @@ function tabTargetCust(pageNum){
 		eventRender: function(event, element){
 			// event.start로 하면 UTC 시간으로 나옴..
 			if(event.end == null){
-				event.end._i = '2018-12-31';
+				event.end = event.start;
+				event.end._i = event.start._i;
 			}
 			
 	          element.popover({
@@ -277,7 +278,13 @@ function tabTargetCust(pageNum){
 		]
 	});//캘린더의끝
 	
-	
+	function moveDetail(){
+		var no = $('#no').val();
+		var href = "/campaign/" + no;
+		
+		opener.window.location.href = href;
+		self.close();
+	}
 	
 	
 	

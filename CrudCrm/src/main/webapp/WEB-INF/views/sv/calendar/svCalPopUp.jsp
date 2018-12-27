@@ -52,7 +52,7 @@ body {
 					
 						
 						<div class="w-100 text-right mb-3">
-							<a class="btn btn-primary" id="submitBtn" onclick="modeDetail();">서비스 상세로 이동</a>
+							<a class="btn btn-primary" id="submitBtn" onclick="javascript:moveDetail();">서비스 상세로 이동</a>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">

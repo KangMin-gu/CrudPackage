@@ -4,6 +4,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -21,13 +23,9 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div style="margin-top:100px;">
             <div>
-
-                <img src="${pageContext.request.contextPath}/resources/img/crud/login.png" alt="" />
-
+                <img style="width:300px;" src="${pageContext.request.contextPath}/resources/img/crud/welcomlogo.png" alt="" />
             </div>
-            <h3>CRUD CRM 시스템에 오신 것을 환영합니다.</h3>
-            
-            
+                               
             <form:form class="m-t" role="form" action="${pageContext.request.contextPath}/login" method="post">
             	<input type="hidden" name="url" value="${url }"/>
                 <div class="form-group">
@@ -41,29 +39,35 @@
             <br/>
             <div class="container">
            		<div class="row justify-content-between">
-           			<div class="col-lg-4">공지사항</div>
-           			<div class="col-lg-4">
+           			<div class="col-xs-4">공지사항</div>
+           			<div class="col-xs-4">
            				<a class="btn btn-primary btn-xs" href="">더보기</a>
            			</div>
            		</div>
+           		<br/>
            		<div class="row">
-           			<div class="col-lg-12">
+           			<div class="col-xs-12">
 						<table class="table">
 							<colgroup>
-								<col style="width: 300px;">
-								<col style="width: 100px;">											
-							</colgroup>
-							<thead>
-								<tr>
-									<th>공지사항</th>
-									<th>더보기</th>
-								</tr>					
-							</thead>
+								<col style="width: 50px;">
+								<col style="width: 150px;">
+								<col style="width: 100px;">												
+							</colgroup>							
 							<tbody>
-								<tr>
-									<td>[공지] 시스템 점검 예정</td>
-									<td>2018.12.25</td>
-								</tr>
+								   <c:forEach var="crudNotice" items="${crudNotice }">
+								   		<tr>
+								   			<td>${crudNotice.ICNUM }</td>
+											   <c:choose>
+										       		<c:when test="${fn:length(crudNotice.SUBJECT) > 14}">
+										            	<td><c:out value="${fn:substring(crudNotice.SUBJECT,0,13)}"/>....</td>
+										           	</c:when>
+										           <c:otherwise>
+										            	<td><c:out value="${crudNotice.SUBJECT}"/></td>
+										           </c:otherwise> 
+										       </c:choose>													
+											<td>${crudNotice.REGDATE }</td>
+										</tr>
+								   </c:forEach> 							
 							</tbody>
 						</table>
            			</div>
@@ -71,7 +75,6 @@
            	</div>
         </div>
     </div>
-    
 <p class="text-muted text-center"><small>고객센터 : 02-336-7800 주소: 서울특별시 마포구 독막로 10 성지빌딩 5층 509호</small></p>               
 <p class="text-muted text-center"> <small>Copyright CRUD XaaS SYSTEM &copy; 2018</small> </p>
 

@@ -9,6 +9,10 @@
 		WHERE USERID = #{userid}
     </select>
 	
+	<select id="crudNotice" resultType="hashMap">
+		SELECT TOP 5 ICNUM, SUBJECT, CONVERT(CHAR(8), REGDATE, 2) AS REGDATE FROM ICNOTICE
+	</select>
+	
 	<select id="urMenu" parameterType="String" resultType="hashMap">
 		SELECT A.MENUVAL FROM t_menu AS A
 		INNER JOIN t_roledetail AS B ON B.MENUNO = A.MENUNO

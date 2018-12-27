@@ -31,7 +31,7 @@ public class UserController {
 	
 	//로그인폼요청
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public ModelAndView loginForm(HttpServletRequest request, @ModelAttribute ModelAndView mView) {
+	public ModelAndView loginForm(HttpServletRequest request) {
 		
 		String url=request.getParameter("url");
 		
@@ -39,6 +39,7 @@ public class UserController {
 			url=request.getContextPath()+"/"; 
 		}
 		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고
+		ModelAndView mView = urService.crudNotice(request);
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
 		mView.addObject("url", url);

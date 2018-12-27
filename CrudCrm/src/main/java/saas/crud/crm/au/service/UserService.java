@@ -12,5 +12,5 @@ import saas.crud.crm.au.dto.UserDto;
 public interface UserService {
 	
 	public ModelAndView login(HttpServletResponse response, HttpServletRequest request, UserDto urDto);
-	
+	public ModelAndView crudNotice(HttpServletRequest request);
 }

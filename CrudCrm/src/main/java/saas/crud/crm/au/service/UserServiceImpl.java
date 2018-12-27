@@ -143,5 +143,13 @@ public class UserServiceImpl implements UserService{
 				
 		return mView;
 	}
+	//공지사항
+	@Override
+	public ModelAndView crudNotice(HttpServletRequest request) {
+		List<Map<String, Object>> crudNotice = urDao.crudNotice();
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("crudNotice", crudNotice);
+		return mView;
+	}
 	
 }

@@ -60,7 +60,7 @@
 			) X 
 		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
-		<select id="detail" parameterType="campaignDto" resultType="hashMap">
+		<select id="detail" parameterType="hashMap" resultType="hashMap">
 		SELECT 
 		A.CAMPNO
 		,A.CAMPNAME
@@ -73,10 +73,6 @@
 			  WHEN A.CAMPSTEP = 2 THEN '고객추출'
 			  WHEN A.CAMPSTEP = 3 THEN '발송중'
 			  WHEN A.CAMPSTEP = 4 THEN '종료' END AS CAMPSTEP_
-		, CASE WHEN A.SENDTYPE = 1 THEN '즉시발송'
-			   WHEN A.SENDTYPE = 2 THEN '예약발송'
-			   WHEN A.SENDTYPE = 3 THEN '요일반복발송'
-			   WHEN A.SENDTYPE = 4 THEN '기간반복발송' END AS SENDTYPE_ 
 		, CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE
 		, CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE
 		, CONVERT(nvarchar,A.STARTDATE,23) + '~' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
@@ -237,6 +233,18 @@
 	<if test="age2 != null">
 		AND Year(getDate())-Year(BIRTH) <![CDATA[<]]>= #{age2}
 	</if>
+	<if test="addr11 != null">
+		AND LEFT(HOMADDR2,2) = #{addr11}
+	</if>
+	<if test="addr21 != null">
+		AND LEFT(HOMADDR2,2) = #{addr21}
+	</if>
+	<if test="addr31 != null">
+		AND LEFT(HOMADDR2,2) = #{addr31}
+	</if>
+	<if test="addr41 != null">
+		AND LEFT(HOMADDR2,2) = #{addr41}
+	</if>
 	
 	</insert>
 	
@@ -294,16 +302,16 @@
 		)
 	</insert>
 	
-	<select id="targetList" parameterType="campaignDto" resultType="hashMap">
+	<select id="targetList" parameterType="hashMap" resultType="hashMap">
 		SELECT A.NAME,
 			CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN A.VALUE
-          	ELSE C.CODENAME END AS VALUE
+          	ELSE C.CODENAME END AS CODENAME,
+          	A.VALUE
 		FROM T_CAMP_TARGET A
 		LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
         LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
         WHERE A.CAMPNO = #{campno}
         AND A.SITEID = #{siteid}
-        AND B.CODENAME IS NOT NULL
 	</select>
 	
 	<select id="targetCustCnt" parameterType="campaignDto" resultType="int">
@@ -352,17 +360,20 @@
 				,DAY
 				,STARTDATE
 				,ENDDATE
-				,SENDHOUR
-				,SENDMINUTE
+				,SENDTIME
 				,TITLE
 				,SENDDESC
 				,CONTENTSNO
-				,TESTMAIL
+				,TESTER
 				,REGDATE
 				,REGUSER
 				,EDTDATE
 				,EDTUSER
 				,SENDFORM
+				,FILESEARCHKEY1
+				,FILESEARCHKEY2
+				,FILESEARCHKEY3
+				,FILECNT
 				)VALUES(
 				#{campno}
 				,#{siteid}
@@ -373,17 +384,20 @@
 				,#{day}
 				,#{startdate}
 				,#{enddate}
-				,#{sendhour}
-				,#{sendminute}
+				,#{sendtime}
 				,#{title}
 				,#{senddesc}
 				,#{contentsno}
-				,#{testmail}
+				,#{tester}
 				,getDate()
 				,#{reguser}
 				,getDate()
 				,#{edtuser}
 				,#{sendform}
+				,#{filesearchkey1}
+				,#{filesearchkey2}
+				,#{filesearchkey3}
+				,#{filecnt}
 				)
 	</insert>
 	
@@ -396,26 +410,30 @@
 			, DAY = #{day}
 			, STARTDATE = #{startdate}
 			, ENDDATE = #{enddate}
-			, SENDHOUR = #{sendhour}
-			, SENDMINUTE = #{sendminute}
+			, SENDTIME = #{sendtime}
 			, TITLE = #{title}
 			, SENDDESC = #{senddesc}
-			, TESTMAIL = #{testmail}
+			, TESTER = #{tester}
 			, CONTENTSNO = #{contentsno}
 			, EDTDATE = getDate()
 			, EDTUSER = #{edtuser}
 			, SENDFORM = #{sendform}
+			, FILESEARCHKEY1 = #{filesearchkey1}
+			, FILESEARCHKEY2 = #{filesearchkey2}
+			, FILESEARCHKEY3 = #{filesearchkey3}
+			, FILECNT = #{filecnt}
 		WHERE NO = #{no}
 		AND CAMPNO = #{campno}
 		AND SITEID = #{siteid}
 	</update>
 	
-	<select id="formRead" parameterType="campaignFormDto" resultType="hashMap">
+	<select id="formRead" parameterType="hashMap" resultType="hashMap">
 		SELECT A.NO
 				,A.CAMPNO
 				,A.SITEID
 				,A.SENDER
 				,A.SENDTYPE
+				,A.SENDFORM
 				,CASE WHEN A.SENDTYPE = 1 THEN '즉시발송'
 					  WHEN A.SENDTYPE = 2 THEN '예약발송'
 					  WHEN A.SENDTYPE = 3 THEN '요일발송'
@@ -437,18 +455,20 @@
 					  WHEN A.DAY = 7 THEN '토요일' END DAY_  
 				,CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE_
 				,CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE_
-				,A.SENDHOUR
-				,A.SENDMINUTE
+				,A.SENDTIME
 				,A.TITLE
 				,A.SENDDESC
-				,A.TESTMAIL
+				,A.TESTER
 				,A.CONTENTSNO
 				,(SELECT TITLE FROM Crud_SaaS.dbo.T_CAMP_CONTENTS WHERE NO = A.CONTENTSNO) AS CONTENTSNO_
+				, A.FILESEARCHKEY1
+				, A.FILESEARCHKEY2
+				, A.FILESEARCHKEY3
 		FROM Crud_SaaS.dbo.T_CAMP_FORM A
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
+		AND SENDFORM = #{sendform}
 	</select>
-	
 	<insert id="testSend" parameterType="hashMap">
 		INSERT INTO Crud_SaaS.dbo.T_MAIL(
 		SITEID
@@ -464,7 +484,7 @@
 		)VALUES(
 		#{siteid}
 		,#{sender}
-		,#{testmail}
+		,#{tester}
 		,#{title}
 		,#{senddesc}
 		,getDate()
@@ -611,7 +631,7 @@
 	</update>
 	
 	<update id="send" statementType="CALLABLE" parameterType="hashMap">
-		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int})}
+		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int},#{sendform, mode=IN, jdbcType=INTEGER, javaType=int})}
 	</update>
 	
 	<select id="tabHistory" parameterType="hashMap" resultType="hashMap">
@@ -699,6 +719,12 @@
 	<select id="sendTotalCnt" parameterType="campaignDto" resultType="hashMap">
 		SELECT CAMPNO,COUNT(EMAILLOGID) FROM T_MAIL 
 		GROUP BY CAMPNO
+	</select>
+	
+	<select id="campaignFormList" parameterType="campaignFormDto" resultType="campaignFormDto">
+		SELECT * FROM Crud_SaaS.dbo.T_CAMP_FORM
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
 	</select>
 	
 </mapper>

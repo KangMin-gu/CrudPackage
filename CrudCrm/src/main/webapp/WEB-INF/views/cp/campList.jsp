@@ -220,7 +220,7 @@
 	                            	 <a href="${pageContext.request.contextPath}/campexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
 	                          	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-									<a href="${pageContext.request.contextPath}/camp/post" class="btn btn-primary">추가</a>
+									<a href="${pageContext.request.contextPath}/campaign/post" class="btn btn-primary">추가</a>
 									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
 								</div>
 							</div>

@@ -12,23 +12,27 @@ public class CampaignFormDto {
 	private int day;
 	private String startdate;
 	private String enddate;
-	private int sendhour;
-	private int sendminute;
+	private String sendtime;
 	private int contentsno;
 	private String title;
 	private String senddesc;
-	private String testmail;
+	private String tester;
 	private String regdate;
 	private int reguser;
 	private String edtdate;
 	private int edtuser;
 	private int sendform;
+	private String filesearchkey1;
+	private String filesearchkey2;
+	private String filesearchkey3;
+	private int filecnt;
 	
 	public CampaignFormDto() {}
 
 	public CampaignFormDto(int no, int campno, int siteid, String sender, int sendtype, String senddate, int week,
-			int day, String startdate, String enddate, int sendhour, int sendminute, int contentsno, String title,
-			String senddesc, String testmail, String regdate, int reguser, String edtdate, int edtuser, int sendform) {
+			int day, String startdate, String enddate, String sendtime, int contentsno, String title, String senddesc,
+			String tester, String regdate, int reguser, String edtdate, int edtuser, int sendform,
+			String filesearchkey1, String filesearchkey2, String filesearchkey3, int filecnt) {
 		super();
 		this.no = no;
 		this.campno = campno;
@@ -40,17 +44,20 @@ public class CampaignFormDto {
 		this.day = day;
 		this.startdate = startdate;
 		this.enddate = enddate;
-		this.sendhour = sendhour;
-		this.sendminute = sendminute;
+		this.sendtime = sendtime;
 		this.contentsno = contentsno;
 		this.title = title;
 		this.senddesc = senddesc;
-		this.testmail = testmail;
+		this.tester = tester;
 		this.regdate = regdate;
 		this.reguser = reguser;
 		this.edtdate = edtdate;
 		this.edtuser = edtuser;
 		this.sendform = sendform;
+		this.filesearchkey1 = filesearchkey1;
+		this.filesearchkey2 = filesearchkey2;
+		this.filesearchkey3 = filesearchkey3;
+		this.filecnt = filecnt;
 	}
 
 	public int getNo() {
@@ -133,20 +140,12 @@ public class CampaignFormDto {
 		this.enddate = enddate;
 	}
 
-	public int getSendhour() {
-		return sendhour;
+	public String getSendtime() {
+		return sendtime;
 	}
 
-	public void setSendhour(int sendhour) {
-		this.sendhour = sendhour;
-	}
-
-	public int getSendminute() {
-		return sendminute;
-	}
-
-	public void setSendminute(int sendminute) {
-		this.sendminute = sendminute;
+	public void setSendtime(String sendtime) {
+		this.sendtime = sendtime;
 	}
 
 	public int getContentsno() {
@@ -173,12 +172,12 @@ public class CampaignFormDto {
 		this.senddesc = senddesc;
 	}
 
-	public String getTestmail() {
-		return testmail;
+	public String getTester() {
+		return tester;
 	}
 
-	public void setTestmail(String testmail) {
-		this.testmail = testmail;
+	public void setTester(String tester) {
+		this.tester = tester;
 	}
 
 	public String getRegdate() {
@@ -221,7 +220,36 @@ public class CampaignFormDto {
 		this.sendform = sendform;
 	}
 
-	
-	
+	public String getFilesearchkey1() {
+		return filesearchkey1;
+	}
+
+	public void setFilesearchkey1(String filesearchkey1) {
+		this.filesearchkey1 = filesearchkey1;
+	}
+
+	public String getFilesearchkey2() {
+		return filesearchkey2;
+	}
+
+	public void setFilesearchkey2(String filesearchkey2) {
+		this.filesearchkey2 = filesearchkey2;
+	}
+
+	public String getFilesearchkey3() {
+		return filesearchkey3;
+	}
+
+	public void setFilesearchkey3(String filesearchkey3) {
+		this.filesearchkey3 = filesearchkey3;
+	}
+
+	public int getFilecnt() {
+		return filecnt;
+	}
+
+	public void setFilecnt(int filecnt) {
+		this.filecnt = filecnt;
+	}
 	
 }

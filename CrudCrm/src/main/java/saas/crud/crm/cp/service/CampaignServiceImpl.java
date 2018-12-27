@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -71,16 +73,20 @@ public class CampaignServiceImpl implements CampaignService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
-		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		
+		
+		int fileUploadSize = multipartHttpServletRequest.getFiles("file").size();
 		List<MultipartFile> mFile = null;
 		MultipartFile sFile = null;
 		
-		if(fileUpload != null) {			
-			String fileSearchKey = crud.fileSearchKey(request);
-			// 이부분 수정필요
-			//crudEngine.MultiFileUpload(response, request, fileUpload, fileSearchKey);
-			crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
-			campaignDto.setFilesearchkey(fileSearchKey);
+		if(fileUploadSize > 0) {
+			List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+			int serviceFileUploadLength = fileUpload.get(0).getOriginalFilename().length();
+			if(serviceFileUploadLength > 0) {
+				String fileSearchKey = crud.fileSearchKey(request);
+				crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+				campaignDto.setFilesearchkey(fileSearchKey);
+			}
 		}
 		
 		campaignDto.setReguser(userNo);
@@ -98,37 +104,86 @@ public class CampaignServiceImpl implements CampaignService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		ModelAndView mView = new ModelAndView();
+		Map<String,Object> param = new HashMap<>();
+		
+		param.put("campno", campNo);
+		param.put("siteid",siteId);
+		
 		CampaignDto campaignDto = new CampaignDto();
-		
-		campaignDto.setCampno(campNo);
 		campaignDto.setSiteid(siteId);
+		campaignDto.setCampno(campNo);
 		
-		Map<String,Object> campInfo = campaignDao.campRead(campaignDto);
+		Map<String,Object> campInfo = campaignDao.campRead(param);
 		
-		Map<String,Object> campForm = campaignDao.campFormRead(campaignDto);
-		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
+		param.put("sendform", 1);
+		Map<String,Object> campEmailForm = campaignDao.campFormRead(param);
+		param.remove("sendform");
+		param.put("sendform", 2);
+		Map<String,Object> campSmsForm = campaignDao.campFormRead(param);
+		param.remove("sendform");
+		param.put("sendform", 4);
+		Map<String,Object> campMmsForm = campaignDao.campFormRead(param);
+		
+		List<Map<String,Object>> targetList = campaignDao.campTargetRead(param);
+		
+		Map<String,Object> campTarget = new HashMap<>();
 		String name;
 		String value;
+		String codeName;
 		int targetListSize = targetList.size();
 		
 		for(int i = 0; i<targetListSize;i++) {
 			if(targetList.get(i).get("VALUE") != null) {
 				name = targetList.get(i).get("NAME").toString().toUpperCase();
 				value = targetList.get(i).get("VALUE").toString();
-				campInfo.put(name, value);
+				if(targetList.get(i).get("CODENAME") != null) {
+					codeName = targetList.get(i).get("CODENAME").toString();
+					campTarget.put(name, value);
+					campInfo.put(name, codeName);
+				}else {
+					campInfo.put(name, value);
+				}
 			}
 		}
-		if(campInfo.get("FILESEARCHKEY") != null) {
-			String fileSearchKey = (String) campInfo.get("FILESEARCHKEY");
-			campaignDto.setFilesearchkey(fileSearchKey);
-			List<Map<String,Object>> campFile = campaignDao.campFile(campaignDto);
-			mView.addObject("campFile",campFile);
+		if(campEmailForm != null) {
+			if(campEmailForm.get("FILESEARCHKEY1") != null) {
+				String fileSearchKey = (String) campEmailForm.get("FILESEARCHKEY1");
+				campaignDto.setFilesearchkey(fileSearchKey);
+				List<Map<String,Object>> EMAILFILE1 = campaignDao.campFile(campaignDto);
+				mView.addObject("EMAILFILE1",EMAILFILE1);
+			}
 		}
+		if(campMmsForm != null) {
+			if(campMmsForm.get("FILESEARCHKEY1") != null) {
+				String fileSearchKey = (String) campMmsForm.get("FILESEARCHKEY1");
+				campaignDto.setFilesearchkey(fileSearchKey);
+				List<Map<String,Object>> MMSFILE1 = campaignDao.campFile(campaignDto);
+				mView.addObject("MMSFILE1",MMSFILE1);
+			}
+			if(campMmsForm.get("FILESEARCHKEY2") != null) {
+				String fileSearchKey = (String) campMmsForm.get("FILESEARCHKEY2");
+				campaignDto.setFilesearchkey(fileSearchKey);
+				List<Map<String,Object>> MMSFILE2 = campaignDao.campFile(campaignDto);
+				mView.addObject("MMSFILE2",MMSFILE2);
+			}
+			if(campMmsForm.get("FILESEARCHKEY3") != null) {
+				String fileSearchKey = (String) campMmsForm.get("FILESEARCHKEY3");
+				campaignDto.setFilesearchkey(fileSearchKey);
+				List<Map<String,Object>> MMSFILE3 = campaignDao.campFile(campaignDto);
+				mView.addObject("MMSFILE3",MMSFILE3);
+			}
+		}
+		
+		
+		
 		int targetCustCnt = campaignDao.campTargetCustCnt(campaignDto);
 		
 		mView.addObject("campInfo", campInfo);
+		mView.addObject("campTarget", campTarget);
 		mView.addObject("targetCustCnt", targetCustCnt);
-		mView.addObject("campForm", campForm);
+		mView.addObject("campEmailForm", campEmailForm);
+		mView.addObject("campSmsForm", campSmsForm);
+		mView.addObject("campMmsForm", campMmsForm);
 		
 		return mView;
 	}
@@ -200,13 +255,11 @@ public class CampaignServiceImpl implements CampaignService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		Map<String,Object> param = new HashMap();
 		
-		int campStep = Integer.parseInt(request.getParameter("campstep"));
-		
 		CampaignDto campaignDto = new CampaignDto();
 		campaignDto.setSiteid(siteId);
 		campaignDto.setEdtuser(userNo);
 		campaignDto.setCampno(campNo);
-		campaignDto.setCampstep(campStep);
+		campaignDto.setCampstep(2);
 		
 		Enumeration params = request.getParameterNames();
 		param.put("campno", campNo);
@@ -240,31 +293,90 @@ public class CampaignServiceImpl implements CampaignService{
 
 	// 캠페인 발송 Insert 및 Update
 	@Override
-	public int campFormInsertUpdate(HttpServletRequest request, CampaignFormDto campaignFormDto) {
+	public void campFormInsertUpdate(HttpServletResponse response, MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request,@ModelAttribute CampaignFormDto campaignFormDto,@PathVariable int campNo) {
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		campaignFormDto.setSiteid(siteId);
 		campaignFormDto.setReguser(userNo);
-		campaignFormDto.setEdtuser(userNo);
+		campaignFormDto.setEdtuser(userNo);		
+		campaignFormDto.setCampno(campNo);
+		int sendForm = campaignFormDto.getSendform();
+		String sendTime = campaignFormDto.getSendtime();
 		
-		int campNo = campaignFormDto.getCampno();
-		int no = campaignFormDto.getNo();
+		if(sendTime.contains(",")) {
+			sendTime = sendTime.replaceAll(","," ");
+			campaignFormDto.setSendtime(sendTime);
+		}
 		
-		if(no != 0) {
-			campaignDao.campFormUpdate(campaignFormDto);
-		}else {
+		MultipartFile sFile = null;
+		int fileCnt = 0;
+		if(sendForm == 4) {
+			
+			int fileUploadSize1 = multipartHttpServletRequest.getFiles("file1").size();
+			
+			if(fileUploadSize1 > 0) {
+				List<MultipartFile> fileUpload1 = multipartHttpServletRequest.getFiles("file1");
+				int serviceFileUploadLength = fileUpload1.get(0).getOriginalFilename().length();
+				if(serviceFileUploadLength > 0) {
+					String fileSearchKey = crud.fileSearchKey(request);
+					crud.fileUpload(response, multipartHttpServletRequest, fileUpload1, sFile, fileSearchKey);
+					campaignFormDto.setFilesearchkey1(fileSearchKey);
+					fileCnt ++;
+				}
+			}
+			
+			int fileUploadSize2 = multipartHttpServletRequest.getFiles("file2").size();
+			
+			if(fileUploadSize2 > 0) {
+				List<MultipartFile> fileUpload2 = multipartHttpServletRequest.getFiles("file2");
+				int serviceFileUploadLength = fileUpload2.get(0).getOriginalFilename().length();
+				if(serviceFileUploadLength > 0) {
+					String fileSearchKey = crud.fileSearchKey(request);
+					crud.fileUpload(response, multipartHttpServletRequest, fileUpload2, sFile, fileSearchKey);
+					campaignFormDto.setFilesearchkey2(fileSearchKey);
+					fileCnt ++;
+				}
+			}
+			
+			int fileUploadSize3 = multipartHttpServletRequest.getFiles("file3").size();
+			if(fileUploadSize3 > 0) {
+				List<MultipartFile> fileUpload3 = multipartHttpServletRequest.getFiles("file3");
+				int serviceFileUploadLength = fileUpload3.get(0).getOriginalFilename().length();
+				if(serviceFileUploadLength > 0) {
+					String fileSearchKey = crud.fileSearchKey(request);
+					crud.fileUpload(response, multipartHttpServletRequest, fileUpload3, sFile, fileSearchKey);
+					campaignFormDto.setFilesearchkey3(fileSearchKey);
+					fileCnt ++;
+				}
+			}	
+		}
+		
+		campaignFormDto.setFilecnt(fileCnt);
+		List<CampaignFormDto> campaignForm = campaignDao.campFormList(campaignFormDto);
+
+		int campaignFormSize = campaignForm.size();
+		if(campaignFormSize == 0) {
 			campaignDao.campFormInsert(campaignFormDto);
+		}else {
+			for(int i = 0; i < campaignFormSize; i++) {
+				if(sendForm == campaignForm.get(i).getSendform()) {
+					campaignFormDto.setNo(campaignForm.get(i).getNo());
+					campaignDao.campFormUpdate(campaignFormDto);
+				}else {
+					campaignDao.campFormInsert(campaignFormDto);
+					break;
+				}
+			}
 		}
 		CampaignDto campaignDto = new CampaignDto();
-		int campStep = Integer.parseInt(request.getParameter("campstep"));
+		
 		campaignDto.setSiteid(siteId);
 		campaignDto.setEdtuser(userNo);
 		campaignDto.setCampno(campNo);
-		campaignDto.setCampstep(campStep);
+		campaignDto.setCampstep(3);
 		campaignDao.campStepUpdate(campaignDto);
-		return campNo;
 	}
 
 	// 캠페인 테스트 발송
@@ -403,16 +515,16 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int sendForm = Integer.parseInt(request.getParameter("sendform").toString());
 		Map<String,Object> param = new HashMap<String,Object>();
 		
 		param.put("userno", userNo);
 		param.put("siteid", siteId);
 		param.put("campno", campNo);
-		
+		param.put("sendform", sendForm);
 		
 		campaignDao.campSend(param);
-		
-		
+
 	}
 
 	// 캠페인 추출 이력탭
@@ -506,11 +618,10 @@ public class CampaignServiceImpl implements CampaignService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
-		CampaignDto campaignDto = new CampaignDto();
-		
-		campaignDto.setCampno(campNo);
-		campaignDto.setSiteid(siteId);
-		List<Map<String,Object>> targetList = campaignDao.campTargetRead(campaignDto);
+		Map<String,Object> param = new HashMap<>();
+		param.put("campno", campNo);
+		param.put("siteid", siteId);
+		List<Map<String,Object>> targetList = campaignDao.campTargetRead(param);
 		return targetList;
 	}
 

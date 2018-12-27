@@ -322,70 +322,6 @@
                                                     </colgroup>
                                                     <tbody>
                                                         <tr>
-                                                            <th>주소지 1</th>
-                                                            <td>
-                                                                ${campInfo.ADDR11 } ${campInfo.ADDR12 } ${campInfo.ADDR13 }
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                                <table class="table table-bordered mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 120px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>주소지 2</th>
-                                                            <td>
-                                                                ${campInfo.ADDR21 } ${campInfo.ADDR22 } ${campInfo.ADDR23 }
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                                <table class="table table-bordered mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 120px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>주소지 3</th>
-                                                            <td>
-                                                                ${campInfo.ADDR31 } ${campInfo.ADDR32 } ${campInfo.ADDR33 }
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                                <table class="table table-bordered mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 120px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>주소지 4</th>
-                                                            <td>
-                                                                ${campInfo.ADDR41 } ${campInfo.ADDR42 } ${campInfo.ADDR43 }
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="box1 col-lg-12 col-xl-6 p-0">
-                                                <table class="table table-bordered mb-0">
-                                                    <colgroup>
-                                                        <col style="width: 120px; background: #fafafa;">
-                                                        <col style="width: auto;">
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr>
                                                             <th>고객등록일</th>
                                                             <td style="padding: 7px 8px;">
                                                                 ${campInfo.REGDATE1 } ~ ${campInfo.REGDATE2 }
@@ -405,6 +341,70 @@
                                                             <th>추출내용</th>
                                                             <td>
                                                                 ${campInfo.REGDATE1 }
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box1 col-lg-12 col-xl-6 p-0 addr">
+                                                <table class="table table-bordered mb-0">
+                                                    <colgroup>
+                                                        <col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>주소지 1</th>
+                                                            <td id="addr1">
+                                                                ${campInfo.ADDR11 } ${campInfo.ADDR12 } ${campInfo.ADDR13 }
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box1 col-lg-12 col-xl-6 p-0 addr">
+                                                <table class="table table-bordered mb-0">
+                                                    <colgroup>
+                                                        <col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>주소지 2</th>
+                                                            <td id="addr2">
+                                                                ${campInfo.ADDR21 } ${campInfo.ADDR22 } ${campInfo.ADDR23 }
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box1 col-lg-12 col-xl-6 p-0 addr">
+                                                <table class="table table-bordered mb-0">
+                                                    <colgroup>
+                                                        <col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>주소지 3</th>
+                                                            <td id="addr3">
+                                                                ${campInfo.ADDR31 } ${campInfo.ADDR32 } ${campInfo.ADDR33 }
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box1 col-lg-12 col-xl-6 p-0 addr">
+                                                <table class="table table-bordered mb-0">
+                                                    <colgroup>
+                                                        <col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>주소지 4</th>
+                                                            <td id="addr4">
+                                                                ${campInfo.ADDR41 } ${campInfo.ADDR42 } ${campInfo.ADDR43 }
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -459,8 +459,8 @@
 																		
 																	</tbody>
 																</table>
-																<div class="m-auto" style="float:center;">
-																	<ul class="pagination">
+																<div class="m-auto text-center">
+																	<ul class="pagination justify-content-center">
 																		
 																	</ul> 
 																</div> 
@@ -495,6 +495,60 @@
                                 <div class="step-content">
                                     <div class="ibox">
                                         <div class="ibox-content row">
+                                        	<div class="box1 col-lg-12 col-xl-4 p-0">
+                                            	<table class="table table-bordered mb-0">
+                                                	<colgroup>
+                                                		<col style="width: 120px; background: #fafafa;">
+                                                    	<col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+	                                                	<tr>
+                                                        	<th>캠페인명</th>
+                                                        	<td>${campInfo.CAMPNAME }</td>
+                                                        </tr>
+                                                        <tr>
+	                                                    	<th>캠페인기간</th>
+                                                            <td>${campInfo.CAMPDATE_ }</td>
+                                                        </tr>
+                                                   	</tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box2 col-lg-12 col-xl-4 p-0">
+	                                        	<table class="table table-bordered mb-0">
+                                                	<colgroup>
+	                                            		<col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+	                                                	<tr>
+                                                        	<th>캠페인 유형</th>
+                                                        	<td>${campInfo.CAMPTYPE_ }</td>
+                                                      	</tr>
+                                                      	<tr>
+	                                                    	<th>담당자</th>
+                                                            <td>${campInfo.OWNER_ }</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="box3 col-lg-12 col-xl-4 p-0">
+	                                        	<table class="table table-bordered mb-0">
+                                                	<colgroup>
+	                                            		<col style="width: 120px; background: #fafafa;">
+                                                        <col style="width: auto;">
+                                                    </colgroup>
+                                                    <tbody>
+	                                                	<tr>
+                                                        	<th>진행단계</th>
+                                                            <td>${campInfo.CAMPSTEP_ }</td>
+                                                        </tr>
+                                                        <tr>
+	                                                    	<th>대상고객수</th>
+                                                            <td>${targetCustCnt} 명</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                             <div class="tabs-container col-12">
                                                 <ul class="nav nav-tabs" role="tablist">
                                                     <li><a class="nav-link active" data-toggle="tab" href="#sumbitTab1">EMAIL</a></li>
@@ -506,78 +560,25 @@
                                                     <div role="tabpanel" id="sumbitTab1" class="tab-pane active">
                                                         <div class="panel-body">
                                                             <div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
-																<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
-																	<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
+																<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
 																	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
 																		<a href="/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
-																		<a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="고객 추출 화면"><i class="fa fa-list"></i></a>
+																		<a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
 	                          										</div>													
 																	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 																		<form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
                                                                 			<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
+                                                                			<input type="hidden" name="sendform" id="sendform" value="${campEmailForm.SENDFORM }" />
                                                                 		</form:form>
                                                                 		<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
                                                                 			<button  class="btn btn-primary">발송</button>
+                                                                			<input type="hidden" name="sendform" id="sendform" value="${campEmailForm.SENDFORM }" />
                                                                 		</form:form>
                                                                 		<a href="/campaign/email/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
 																	</div>
 																</form:form>
 															</div>
                                                             <div class="ibox-content row">
-                                                                <div class="box1 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>캠페인명</th>
-                                                                                <td>${campInfo.CAMPNAME }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>캠페인기간</th>
-                                                                                <td>${campInfo.CAMPDATE_ }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box2 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>캠페인 유형</th>
-                                                                                <td>${campInfo.CAMPTYPE_ }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>담당자</th>
-                                                                                <td>${campInfo.OWNER_ }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box3 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>진행단계</th>
-                                                                                <td>${campInfo.CAMPSTEP_ }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>대상고객수</th>
-                                                                                <td>${targetCustCnt} 명</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
                                                                 <div class="box4 col-lg-12 col-xl-4 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
@@ -586,40 +587,8 @@
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">회신메일주소</th>
-                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box5 col-lg-12 col-xl-8 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th class="border-top-0">서식형태</th>
-                                                                                <td class="border-top-0">
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box6 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0 border-top-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th class="border-top-0">발송형태</th>
-                                                                                <td class="border-top-0">
-                                                                                    ${campForm.SENDTYPE_ }
-                                                                                </td>
+                                                                                <th>회신메일주소</th>
+                                                                                <td>${campEmailForm.SENDER }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -632,8 +601,8 @@
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">테스트 발송자</th>
-                                                                                <td class="border-top-0">${sessionScope.USERNAME }</td>
+                                                                                <th>테스트 발송자</th>
+                                                                                <td>${sessionScope.USERNAME }</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -646,13 +615,32 @@
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">테스트 메일</th>
+                                                                                <th>테스트 메일</th>
+                                                                                <td>${campEmailForm.TESTER }</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="box6 col-lg-12 col-xl-6 p-0">
+                                                                    <table class="table table-bordered mb-0 border-top-0">
+                                                                        <colgroup>
+                                                                            <col style="width: 120px; background: #fafafa;">
+                                                                            <col style="width: auto;">
+                                                                        </colgroup>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th class="border-top-0">발송형태</th>
                                                                                 <td class="border-top-0">
+                                                                                    ${campEmailForm.SENDTYPE_ }
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
+                                                                <div class="box7 col-lg-12 col-xl-6 p-0">
+                                                                <input type="hidden" name="sendform" id="sendform" value="${campEmailForm.SENDFORM }" />
+                                                                </div>
+                                                                
                                                                 <div class="box7 col-lg-12 col-xl-6 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
@@ -660,28 +648,34 @@
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
+                                                                        <c:if test="${campEmailForm.SENDTYPE eq 2 }">
                                                                             <tr>
                                                                                 <th class="border-top-0">발송일자</th>
                                                                                 <td class="border-top-0">
                                                                                     <div class="input-group p-0">
                                                                                         <div class="d-flex date date01">
-                                                                                          ${campForm.SENDDATE_ }
+                                                                                          ${campEmailForm.SENDDATE_ }
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campEmailForm.SENDTYPE eq 3 }">
                                                                             <tr>
                                                                                 <th>요일설정</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    ${campForm.WEEK_ } ${campForm.DAY_ }
+                                                                                    ${campEmailForm.WEEK_ } ${campEmailForm.DAY_ }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campEmailForm.SENDTYPE eq 4 }">
                                                                             <tr>
                                                                                 <th>기간설정</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    ${campForm.STARTDATE } ~ ${campForm.ENDDATE }
+                                                                                    ${campEmailForm.STARTDATE } ~ ${campEmailForm.ENDDATE }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -692,24 +686,46 @@
                                                                             <col style="width: auto;">
                                                                         </colgroup>
                                                                         <tbody>
+                                                                        <c:if test="${campEmailForm.SENDTYPE eq 2 }">
                                                                            <tr>
-                                                                                <th class="border-top-0">발송일시</th>
-                                                                                <td class="border-top-0" style="padding: 7px 8px;">
-                                                                                    ${campForm.SENDHOUR } 시 ${campForm.SENDMINUTE } 분
+                                                                                <th>발송일시</th>
+                                                                                <td style="padding: 7px 8px;">
+                                                                                    ${campEmailForm.SENDTIME }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campEmailForm.SENDTYPE eq 3 }">
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    ${campForm.SENDHOUR } 시 ${campForm.SENDMINUTE } 분
+                                                                                    ${campEmailForm.SENDTIME }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campEmailForm.SENDTYPE eq 4 }">
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    ${campForm.SENDHOUR } 시 ${campForm.SENDMINUTE } 분
+                                                                                    ${campEmailForm.SENDTIME }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="box9 col-12 p-0 border-top-0">
+                                                                    <table class="table table-bordered">
+                                                                     	<colgroup>
+                                                                            <col style="width: 120px; background: #fafafa;">
+                                                                            <col style="width: auto;">
+                                                                        </colgroup>
+                                                                        <tbody>
+                                                                        	<tr>
+                                                                        		<th>제목</th>
+                                                                            	<td>
+                                                                                	${campEmailForm.TITLE }
+                                                                            	</td>
+                                                                        	</tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -717,7 +733,7 @@
                                                                     <table class="table table-bordered">
                                                                         <tr>
                                                                             <td>
-                                                                                <textarea name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;">${campForm.SENDDESC }</textarea>
+                                                                                <textarea name="campdesc" id="campdesc"  class="form-control summernote" style="resize:none; height: 8em;">${campEmailForm.SENDDESC }</textarea>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -727,70 +743,26 @@
                                                     </div>
                                                     <div role="tabpanel" id="sumbitTab2" class="tab-pane">
                                                         <div class="panel-body">
-                                                            <div class="w-100 text-right mb-2">
-                                                                <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
-                                                                <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
-                                                                <div class="d-inline-block mt-sx-1">
-                                                                <a href="/campaign/sms/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">발송</a>
-                                                                </div>
-                                                            </div>
+                                                            <div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
+																<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+																	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+																		<a href="/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+																		<a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
+	                          										</div>													
+																	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+																		<form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
+                                                                			<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
+                                                                			<input type="hidden" name="sendform" id="sendform" value="${campSmsForm.SENDFORM }" />
+                                                                		</form:form>
+                                                                		<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+                                                                			<button  class="btn btn-primary">발송</button>
+                                                                				<input type="hidden" name="sendform" id="sendform" value="${campSmsForm.SENDFORM }" />
+                                                                		</form:form>
+                                                                		<a href="/campaign/sms/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
+																	</div>
+																</form:form>
+															</div>
                                                             <div class="ibox-content row">
-                                                                <div class="box1 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>캠페인명</th>
-                                                                                <td>${campInfo.CAMPNAME }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>캠페인기간</th>
-                                                                                <td>${campInfo.CAMPDATE_ }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box2 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>캠페인 유형</th>
-                                                                                <td>${campInfo.CAMPTYPE_ }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>담당자</th>
-                                                                                <td>${campInfo.OWNER_ }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box3 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>진행단계</th>
-                                                                                <td>${campInfo.CAMPSTEP_ }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>대상고객수</th>
-                                                                                <td>${targetCustCnt} 명</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
                                                                 <div class="box4 col-lg-12 col-xl-6 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
@@ -799,16 +771,8 @@
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">회신전화번호</th>
-                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>서식형태</th>
-                                                                                <td>
-                                                                                    <span class="input-group-addon">
-                                                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                                                    </span>
-                                                                                </td>
+                                                                                <th>회신전화번호</th>
+                                                                                <td>${campSmsForm.SENDER }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>테스트발송자</th>
@@ -816,101 +780,56 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>테스트 전화번호</th>
-                                                                                <td>010-7777-7777</td>
+                                                                                <td>${campSmsForm.TESTER }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송형태</th>
                                                                                 <td>
-                                                                                    <select class="form-control" style="height: 23px;">
-                                                                                        <option>회원</option>
-                                                                                        <option>비회원</option>
-                                                                                    </select>
+                                                                                    ${campSmsForm.SENDTYPE_ }
                                                                                 </td>
                                                                             </tr>
+                                                                            <c:if test="${campSmsForm.SENDTYPE eq 2 }">
                                                                             <tr>
                                                                                 <th>발송일자</th>
                                                                                 <td>
-                                                                                    <div class="input-group p-0">
-                                                                                        <div class="d-flex date date01">
-                                                                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    ${campSmsForm. SENDDATE}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
+                                                                                    ${campSmsForm.SENDHOUR} : ${campSmsForm.SENDMINUTE }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campSmsForm.SENDTYPE eq 3 }">
                                                                             <tr>
                                                                                 <th>요일설정</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">월</option>
-                                                                                        <option value="">화</option>
-                                                                                        <option value="">수</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">월</option>
-                                                                                        <option value="">화</option>
-                                                                                        <option value="">수</option>
-                                                                                    </select>
+                                                                                    ${campsmsForm.WEEK_ } ${campSmsForm.DAY_}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
+                                                                                    ${campSmsForm.SENDHOUR} : ${campSmsForm.SENDMINUTE }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campSmsForm.SENDTYPE eq 4 }">
                                                                             <tr>
                                                                                 <th>기간설정</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <div class="input-group p-0">
-                                                                                        <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                        <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                                                        <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    ${campSmsForm.STARTDATE_ } ~ ${campSmsForm.ENDDATE_ }
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
+                                                                                    ${campSmsForm.SENDTIME}
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -918,7 +837,7 @@
                                                                 	<div class="sms-form">
 																		<h4>SMS</h4>
 																		<div class="sub-text">
-                                                                            <textarea name="name" placeholder="내용을 입력하세요."></textarea>
+                                                                            <textarea name="name" disabled placeholder="내용을 입력하세요.">${campSmsForm.SENDDESC}</textarea>
                                                                         </div>
                                                                         <div class="limit-text">
                                                                         	<p><span>00</span> / 90</p>
@@ -930,70 +849,26 @@
                                                     </div>
                                                     <div role="tabpanel" id="sumbitTab3" class="tab-pane">
                                                         <div class="panel-body">
-                                                            <div class="w-100 text-right mb-2">
-                                                                <a href="/campaign" class="btn btn-primary">캠페인 목록</a>
-                                                                <a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
-                                                                <div class="d-inline-block mt-sx-1">
-                                                                <a href="/campaign/sms/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
-                                                                <a href="javascript:void(0);" class="btn btn-primary">발송</a>
-                                                                </div>
-                                                            </div>
+                                                            <div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
+																<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+																	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+																		<a href="/campaign" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+																		<a href="/campaign/${campInfo.CAMPNO }/#wizard-t-1" class="btn btn-primary">고객 추출 화면</a>
+	                          										</div>													
+																	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+																		<form:form action="/campaign/test/${campInfo.CAMPNO }" method="POST">
+                                                                			<a href="javascript:void(0);" class="btn btn-primary">테스트발송</a>
+                                                                			<input type="hidden" name="sendform" id="sendform" value="${campMmsForm.SENDFORM }" />
+                                                                		</form:form>
+                                                                		<form:form action="/campaign/send/${campInfo.CAMPNO }" method="POST">
+                                                                			<button  class="btn btn-primary">발송</button>
+                                                                			<input type="hidden" name="sendform" id="sendform" value="${campMmsForm.SENDFORM }" />
+                                                                		</form:form>
+                                                                		<a href="/campaign/mms/${campInfo.CAMPNO }" class="btn btn-primary">발송입력</a>
+																	</div>
+																</form:form>
+															</div>
                                                             <div class="ibox-content row">
-                                                                <div class="box1 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>캠페인명</th>
-                                                                                <td>${campInfo.CAMPNAME }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>캠페인기간</th>
-                                                                                <td>${campInfo.CAMPDATE_ }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box2 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>캠페인 유형</th>
-                                                                                <td>${campInfo.CAMPTYPE_ }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>담당자</th>
-                                                                                <td>${campInfo.OWNER_ }</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="box3 col-lg-12 col-xl-4 p-0">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <colgroup>
-                                                                            <col style="width: 120px; background: #fafafa;">
-                                                                            <col style="width: auto;">
-                                                                        </colgroup>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <th>진행단계</th>
-                                                                                <td>${campInfo.CAMPSTEP_ }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>대상고객수</th>
-                                                                                <td>${targetCustCnt} 명</td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
                                                                 <div class="box4 col-lg-12 col-xl-6 p-0">
                                                                     <table class="table table-bordered mb-0 border-top-0">
                                                                         <colgroup>
@@ -1002,16 +877,8 @@
                                                                         </colgroup>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <th class="border-top-0">회신전화번호</th>
-                                                                                <td class="border-top-0">${campForm.RETURNMAIL }</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>서식형태</th>
-                                                                                <td>
-                                                                                    <span class="input-group-addon">
-                                                                                        <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                                                                    </span>
-                                                                                </td>
+                                                                                <th>회신전화번호</th>
+                                                                                <td>${campMmsForm.SENDER }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>테스트발송자</th>
@@ -1019,113 +886,144 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>테스트 전화번호</th>
-                                                                                <td>010-7777-7777</td>
+                                                                                <td>${campMmsForm.TESTER }</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송형태</th>
                                                                                 <td>
-                                                                                    <select class="form-control" style="height: 23px;">
-                                                                                        <option>회원</option>
-                                                                                        <option>비회원</option>
-                                                                                    </select>
+                                                                                    ${campMmsForm.SENDTYPE_ }
                                                                                 </td>
                                                                             </tr>
+                                                                            <c:if test="${campMmsForm.SENDTYPE eq 2 }">
                                                                             <tr>
                                                                                 <th>발송일자</th>
                                                                                 <td>
-                                                                                    <div class="input-group p-0">
-                                                                                        <div class="d-flex date date01">
-                                                                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    ${campMmsForm.SENDDATE}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
+                                                                                    ${campMmsForm.SENDTIME}
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campMmsForm.SENDTYPE eq 3 }">
                                                                             <tr>
                                                                                 <th>요일설정</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">월</option>
-                                                                                        <option value="">화</option>
-                                                                                        <option value="">수</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">월</option>
-                                                                                        <option value="">화</option>
-                                                                                        <option value="">수</option>
-                                                                                    </select>
+                                                                                    ${campMmsForm.WEEK_ } ${campMmsForm.DAY_}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
+                                                                                    ${campMmsForm.SENDHOUR} : ${campMmsForm.SENDMINUTE }
                                                                                 </td>
                                                                             </tr>
+                                                                            </c:if>
+                                                                            <c:if test="${campMmsForm.SENDTYPE eq 4 }">
                                                                             <tr>
                                                                                 <th>기간설정</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <div class="input-group p-0">
-                                                                                        <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                                                          <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                        <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                                                        <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="">
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    ${campMmsForm.STARTDATE_ } ~ ${campMmsForm.ENDDATE_ }
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>발송일시</th>
                                                                                 <td style="padding: 7px 8px;">
-                                                                                    <select name="" id="" class="form-control float-left col-5 mr-1">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
-                                                                                    <select name="" id="" class="form-control float-left col-5">
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                        <option value="">00시</option>
-                                                                                    </select>
+                                                                                    ${campMmsForm.SENDHOUR} : ${campMmsForm.SENDMINUTE }
                                                                                 </td>
+                                                                            </tr>
+                                                                            </c:if>
+                                                                            <tr>
+                                                                            	<th>첨부파일1</th>
+                                                                            	<td>
+                                                                            		<div class="mail-attachment">																	
+																						<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+																						<div class="attachment">
+																							<c:forEach var="file1" items="${MMSFILE1 }">
+																								<div class="file-box">
+																									<div class="file">
+																										<a href="${pageContext.request.contextPath}/campaign/download/${file1.FILEID}"> <span class="corner"></span>
+																											<div class="icon">
+																												<i class="fa fa-file"></i>
+																											</div>	
+																											<div class="file-name">
+																												${file1.ORGFILENAME } <br /> <small>${file1.REGDATE }</small>
+																											</div>
+																										</a>
+																									</div>
+																								</div>	
+																							</c:forEach>										
+																							<div class="clearfix"></div>
+																						</div>
+																					</div>
+                                                                            	</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            	<th>첨부파일2</th>
+                                                                            	<td>
+                                                                            		<div class="mail-attachment">																	
+																						<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+																						<div class="attachment">
+																							<c:forEach var="file2" items="${MMSFILE2 }">
+																								<div class="file-box">
+																									<div class="file">
+																										<a href="${pageContext.request.contextPath}/campaign/download/${file2.FILEID}"> <span class="corner"></span>
+																											<div class="icon">
+																												<i class="fa fa-file"></i>
+																											</div>	
+																											<div class="file-name">
+																												${file2.ORGFILENAME } <br /> <small>${file2.REGDATE }</small>
+																											</div>
+																										</a>
+																									</div>
+																								</div>	
+																							</c:forEach>										
+																							<div class="clearfix"></div>
+																						</div>
+																					</div>
+                                                                            	</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            	<th>첨부파일3</th>
+                                                                            	<td>
+                                                                            		<div class="mail-attachment">																	
+																						<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
+																						<div class="attachment">
+																							<c:forEach var="file3" items="${MMSFILE3 }">
+																								<div class="file-box">
+																									<div class="file">
+																										<a href="${pageContext.request.contextPath}/campaign/download/${file3.FILEID}"> <span class="corner"></span>
+																											<div class="icon">
+																												<i class="fa fa-file"></i>
+																											</div>	
+																											<div class="file-name">
+																												${file3.ORGFILENAME } <br /> <small>${file3.REGDATE }</small>
+																											</div>
+																										</a>
+																									</div>
+																								</div>	
+																							</c:forEach>										
+																							<div class="clearfix"></div>
+																						</div>
+																					</div>
+                                                                            	</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
                                                                 <div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
-                                                                    <div class="sms-form">
-                                                                        <div class="num-text">
-                                                                            <input type="text" placeholder="번호를 입력하세요.">
+                                                                	<div class="sms-form">
+																		<h4>SMS</h4>
+																		<div class="sub-text">
+                                                                            <textarea name="name" disabled placeholder="내용을 입력하세요.">${campMmsForm.SENDDESC }</textarea>
                                                                         </div>
-                                                                        <div class="sub-text">
-                                                                            <textarea name="name" placeholder="내용을 입력하세요."></textarea>
+                                                                        <div class="limit-text">
+                                                                        	<p><span>00</span> / 90</p>
                                                                         </div>
-                                                                    </div>
+                                                                	</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1166,7 +1064,13 @@
 	<script>
 	$(document).ready(function () {
 
-		$('.summernote').summernote('disable');
+		$('.summernote').summernote({
+			height:200,
+			dialogsInBody: true
+		});
+		
+		
+		$('.note-editable').attr('contenteditable',false);
 
 		$('#wizard').steps({
 			headerTag: "h1",
@@ -1177,7 +1081,14 @@
 		var totalHash = window.location.hash;
 		hash = totalHash.split('?');
 		stepClick(hash[0]);
-
+		
+		var length = $('.addr').length
+		for (i = 2; i <= length; i++){
+			if($('#addr'+i).text().trim() == ''){
+				$('#addr'+i).parents('table').parent().css('display','none');
+			}
+		}
+	
 	});
 
 	</script>

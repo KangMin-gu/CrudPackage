@@ -15,7 +15,7 @@ public interface CampaignDao {
 	
 	public int campInsert(CampaignDto campaignDto);
 	
-	public Map<String,Object> campRead(CampaignDto campaignDto);
+	public Map<String,Object> campRead(Map<String,Object> param);
 	
 	public void campUpdate(CampaignDto campaignDto);
 	
@@ -31,7 +31,7 @@ public interface CampaignDao {
 	
 	public void campTargetCustDelete(Map<String,Object> param);
 	
-	public List<Map<String,Object>> campTargetRead(CampaignDto campaignDto);
+	public List<Map<String,Object>> campTargetRead(Map<String,Object> param);
 	
 	public int campTargetCustCnt(CampaignDto campaignDto);
 	
@@ -39,7 +39,7 @@ public interface CampaignDao {
 	
 	public void campFormInsert(CampaignFormDto campaignFormDto);
 	
-	public Map<String,Object> campFormRead(CampaignDto campaignDto);
+	public Map<String,Object> campFormRead(Map<String,Object> param);
 	
 	public void campFormUpdate(CampaignFormDto campaignFormDto);
 	
@@ -73,5 +73,7 @@ public interface CampaignDao {
 	public List<Map<String,Object>> campContentsUseDescList(Map<String,Object> param);
 	
 	public List<Map<String,Object>> campFile(CampaignDto campaignDto);
+	
+	public List<CampaignFormDto> campFormList(CampaignFormDto campaignFormDto);
 	
 }

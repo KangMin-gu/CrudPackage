@@ -70,6 +70,7 @@ function tabHistory(){
         url: "/tab/targetHistory/"+id,
         method: "GET",
         dataType: "json",
+        cache: false,
         success: function (data) {
         	$('#tab2 tbody tr').remove();
         	var length = data.length;
@@ -91,9 +92,11 @@ function tabTargetCust(pageNum){
         url: '/tab/targetCust/'+id+'?pageNum='+pageNum+'&custname='+encodeURI(custname) ,
         method: "GET",
         dataType: "json",
+        cache: false,
         success: function (data) {
         	$('#tab1 tbody tr').remove();
         	$('#tab1 .pagination li').remove();
+        	$('#tab1 .m-auto h4').remove();
         	var length = data.tabCust.length;
         	var html ="";
         	for (var i = 0; i < length; i++) {
@@ -119,8 +122,10 @@ function tabTargetCust(pageNum){
             } else {
                 html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
             }
+            html3 = '<h4 class="float-right">&middot; 총 자료수 : ' +data.totalRows +'건</h4>';
             
             $('#tab1 .pagination').append(html2);
+            $('#tab1 .m-auto').prepend(html3);
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -129,24 +134,15 @@ function tabTargetCust(pageNum){
 }	
 	// 대상추출에서 추가를 클릭했을때 동작시키는 함수
 	function addAddr(Obj){
-
-		var divObj = Obj.parent().parent().parent().parent().parent().parent();
-		
-		var addrLength = $('.addr').length + 1;
-		if(addrLength >=5){
-			alert("주소지는 4개까지만 가능합니다.");
-			return false;
-		}else{
-			var html = '<div class="box1 col-lg-12 col-xl-6 p-0 addr"><table class="table table-bordered mb-0"><colgroup><col style="width: 110px; background: #fafafa;"><col style="width: auto;"></colgroup><tbody><tr>'
-				html +=   '<th>주소지'+addrLength+'</th>'
-				html +=            '<td><select name="addr'+addrLength+'1" id="addr11" class="form-control col-3 float-left mr-2" style="height: 23px;"><option>경기도 부천시</option><option>경기도 부천시</option><option>경기도 부천시</option><option>경기도 부천시</option></select>'
-				html +=                '<select name="addr'+addrLength+'2" id="addr12" class="form-control col-3 float-left mr-2" style="height: 23px;"><option>소사구</option><option>소사구</option><option>소사구</option><option>소사구</option></select>'
-				html +=                '<select name="addr'+addrLength+'3" id="addr13" class="form-control col-3 float-left mr-2" style="height: 23px;"><option>괴안동</option><option>괴안동</option><option>괴안동</option><option>괴안동</option></select>'
-				html +=                '<a onclick="javascript:addAddr($(this))" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button></td></tr></tbody></table></div>'
-		
-				divObj.append(html);
+		var lastDisPlay = $('.addr:eq(3)').css('display');
+		if(lastDisPlay =='block'){
+			alert('4개 이상 추가할수 없습니다.');
 		}
-}
+		var display = Obj.parents('table').parent().next().css('display');
+		if(display == 'none'){
+			Obj.parents('table').parent().next().css('display','block');
+		}
+	}
 	
 	function parentContents(tr){
 
@@ -219,7 +215,7 @@ function tabTargetCust(pageNum){
 		
 	});
 	
-	
+if($('#calendar').length > 0){
 	var schList= $('#schList').val();//hidden value에 담겨있는 스케쥴 리스트를 받아온다.(json String) 
 	/* initialize the calendar
          -----------------------------------------------------------------*/            
@@ -277,7 +273,7 @@ function tabTargetCust(pageNum){
 			}
 		]
 	});//캘린더의끝
-	
+}
 	function moveDetail(){
 		var no = $('#no').val();
 		var href = "/campaign/" + no;

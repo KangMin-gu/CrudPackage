@@ -41,7 +41,6 @@ public class CampaignController {
 	@Autowired
 	private CommonService commonService;
 	
-	
 	// 캠페인 List
 	@RequestMapping(value = "/campaign", method=RequestMethod.GET)
 	public ModelAndView authCampaignList(HttpServletRequest request) {
@@ -149,7 +148,7 @@ public class CampaignController {
 	public ModelAndView authCampaignTargetInsertSet(HttpServletRequest request, @PathVariable int campNo) {
 		ModelAndView mView = new ModelAndView();
 		campaignService.campTargetInsert(request, campNo);
-		mView.setViewName("redirect:/campaign/"+campNo+"/#wizard-h-1");
+		mView.setViewName("redirect:/campaign/"+campNo+"/#wizard-t-1");
 		return mView;
 	}
 	// 캠페인 발송 Email 화면
@@ -181,10 +180,10 @@ public class CampaignController {
 	}
 	// 캠페인 발송 폼 저장
 	@RequestMapping(value="/campaignform/{campNo}",method=RequestMethod.POST)
-	public ModelAndView authCampaignFormUpdate(HttpServletRequest request,@ModelAttribute CampaignFormDto campaignFormDto) {
+	public ModelAndView authCampaignFormUpdate(HttpServletResponse response, MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request,@ModelAttribute CampaignFormDto campaignFormDto,@PathVariable int campNo) {
 		ModelAndView mView = new ModelAndView();
 		
-		int campNo = campaignService.campFormInsertUpdate(request, campaignFormDto);
+		campaignService.campFormInsertUpdate(response, multipartHttpServletRequest, request, campaignFormDto,campNo);
 		
 		mView.setViewName("redirect:/campaign/"+campNo+"/#wizard-t-2");
 		
@@ -289,7 +288,7 @@ public class CampaignController {
 		ModelAndView mView = new ModelAndView();
 		
 		campaignService.campSend(request,campNo);
-		mView.setViewName("cp/campList");
+		mView.setViewName("redirect:/campaign");
 		return mView;
 	}
 	
@@ -379,6 +378,8 @@ public class CampaignController {
 		
 		ModelAndView mView = new ModelAndView();
 		
+		Map<String,Object> targetCust = campaignService.campTabTargetCustList(request, campNo);
+		mView.addAllObjects(targetCust);
 		mView.setViewName("cp/campCustList");
 		mView.addObject("campno",campNo);
 		

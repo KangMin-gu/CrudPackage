@@ -347,6 +347,19 @@
 	        }
 	    });
 	};
+	
+	function getTextLength(str) {
+        var len = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (escape(str.charAt(i)).length == 6) {
+                len++;
+            }
+            len++;
+        }
+        return len;
+    }
+	
+	
 	//메세지 버튼 클릭시 
 	$("#dropClick").click(function(){
 		var dropDown = $("#dropDown");

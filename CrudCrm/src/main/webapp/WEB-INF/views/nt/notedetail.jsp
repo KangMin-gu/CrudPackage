@@ -42,13 +42,17 @@
 						<!-- 팝업여부 체크  -->
 						<input type="hidden" value="${referUrl}" id="referUrl"/>
 							<div class="float-right tooltip-demo">
-								<a href="mail_compose.html" class="btn btn-white btn-sm"
+								<a href="/note/send/${note.NOTICEID}" class="btn btn-white btn-sm"
 									data-toggle="tooltip" data-placement="top" title="Reply"><i
 									class="fa fa-reply"></i> 답장</a> 
-									<a href="mailbox.html"
+									
+									<!-- trash가 들어오면 true가 됨  -->
+									<c:if test="${!fn:contains(referUrl,'trash')}">
+									<a href="/note/intrash/${note.NOTICEID}"
 									class="btn btn-white btn-sm" data-toggle="tooltip"
 									data-placement="top" title="Move to trash"><i
 									class="fa fa-trash-o"></i> </a>
+									</c:if>
 							</div>
 							<h2>${note.TITLE }</h2>
 							<div class="mail-tools tooltip-demo m-t-md">
@@ -84,7 +88,7 @@
 								</c:forEach>
 								
 								<div class="attachment">
-								<c:forEach var="file" items="${noteFile }">
+								<c:forEach var="file" items="${noteFile}">
 									<div class="file-box">
 										<div class="file">
 											<a href="${pageContext.request.contextPath}/note/download/${file.FILEID}"> <span class="corner"></span>
@@ -102,15 +106,26 @@
 								</div>
 							</div>
 							<div class="mail-body text-right tooltip-demo">
-								<a class="btn btn-sm btn-white" href="mail_compose.html"><i
+								<a class="btn btn-sm btn-white" href="/note/send/${note.NOTICEID}"><i
 									class="fa fa-reply"></i> 답장</a> 
 									<a class="btn btn-sm btn-white"
-									href="mail_compose.html"><i class="fa fa-arrow-right"></i>
+									href="/note/forward/${note.NOTICEID}"><i class="fa fa-arrow-right"></i>
 									전달</a>
-								<button title="" data-placement="top" data-toggle="tooltip"
-									data-original-title="Trash" class="btn btn-sm btn-white">
-									<i class="fa fa-trash-o"></i> 삭제
-								</button>
+									
+										<!-- 휴지통에서는 완전삭제 -->
+									<c:choose>							
+										<c:when test="${fn:contains(referUrl,'trash')}">
+											<a class="btn btn-sm btn-white"
+											href="/note/indelete/${note.NOTICEID}"><i class="fa fa-trash-o"></i>
+											완전삭제</a>
+										</c:when>										
+										<c:otherwise>
+											<a class="btn btn-sm btn-white"
+											href="/note/intrash/${note.NOTICEID}"><i class="fa fa-trash-o"></i>
+											삭제</a>
+										</c:otherwise>
+									</c:choose>
+								
 							</div>
 							<div class="clearfix"></div>
 						</div>

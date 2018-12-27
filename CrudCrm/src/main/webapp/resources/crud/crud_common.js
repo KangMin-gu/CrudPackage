@@ -376,6 +376,8 @@
 				var subjectLen = "";
 				var rltDate = ""; 
 				
+				
+				if(data.length != 0){
 				for(var i=0; i<data.length; i++){
 					
 					//반복문 다 돌고 append 초기화 
@@ -405,7 +407,15 @@
 					dropHtml +="</div></li>";
 					}
 					dropDown.append(dropHtml);
+					}
+				}else{
+					dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
+					dropHtml +="<i class='fa fa-envelope'></i> <strong>받은 통지가 없습니다</strong>"
+					dropHtml +="</div></li>";
+					
+					dropDown.append(dropHtml);
 				}
+				
 			},
 			error : function(jqXHR,textStatus,errorThrown){
 				alert("에러발생 관리자에게 문의하세요." + textStatus);

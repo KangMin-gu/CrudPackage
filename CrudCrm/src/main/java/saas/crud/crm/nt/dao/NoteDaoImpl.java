@@ -204,4 +204,21 @@ public class NoteDaoImpl implements NoteDao{
 		return note;
 	}
 	
+	//답장버튼 
+	@Override
+	public Map<String, Object> noteReply(int noticeId) {
+		Map<String,Object> reply = session.selectOne("note.noteReply",noticeId);
+		return reply;
+	}
+	//휴지통상세 
+	@Override
+	public Map<String, Object> trashDetail(Map<String, Object> noteVal) {
+		Map<String,Object> trash = session.selectOne("note.trashDetail",noteVal);
+		return trash;
+	}
+	
+	
+	
+	
+	
 }

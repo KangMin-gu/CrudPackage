@@ -46,19 +46,19 @@
 							<form:form method="post" action="${pageContext.request.contextPath}/${url}">
 									<div class="container-fluid">
 										<div class="row">
-											<div class="col-lg-3 "><h2>${NOTENAME } (${notReadVal })</h2></div> 
+											<div class="col-lg-3 "><h2>${NOTENAME }(${notReadVal })</h2></div> 
 											<div class="col-lg-9 ">										
 												<div class="container">
 													<div class="row">
 														<div class="col-lg-6">																													
 															 <div class="input-group p-0">
-			                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-			                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                                    <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5" style="height: 29px !important; max-height: 29px !important;">
+			                                                      <span class="input-group-addon" style="padding:6px 12px;"><i class="fa fa-calendar"></i></span>
 			                                                      <input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작일" value="${startdate }">
 			                                                    </div>
 			                                                    <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-			                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-			                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                                    <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5" style="height: 29px !important; max-height: 29px !important;">
+			                                                      <span class="input-group-addon" style="padding:6px 12px;"><i class="fa fa-calendar"></i></span>
 			                                                      <input id="enddate" name="enddate" type="text" class="form-control" placeholder="종료일" value="${enddate }">
 			                                                    </div>
 	                                                		</div>
@@ -67,7 +67,7 @@
 															<div class="container">
 																<div class="row">
 																	<div class="d-flex col-lg-12">													
-																		<select id="condition" name="condition" class="form-control">										                                                                       
+																		<select id="condition" name="condition" class="form-control" style="height: 29px !important; max-height: 29px !important;">										                                                                       
 										                                    <option value="title">제목</option>
 										                                    <option value="sender">보낸이</option>
 							                                    		</select>						                                    		
@@ -168,19 +168,40 @@
 						</div>
 						
 						<div class="mail-box">							
-						
+						<!-- 수정부분  -->
 							<table class="table table-hover table-mail">
+							<colgroup>
+											<col width="35px;">
+											<col width="150px;">
+											<col width="100px;">
+											<col width="100px;">
+											<col width="50px;">
+										
+							</colgroup>
+								<thead>
+											<tr>
+												<th style="padding-left:20px">
+													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
+												</th>
+												<th style="padding-left:12px">보낸이</th>
+												<th>제목</th>
+												<th>날짜</th>
+												<th>첨부파일</th>
+												
+											
+											</tr>
+								</thead>
 								<tbody>
 									<c:forEach var="tmp" items="${noteList }">
 										
-										<c:if test="${tmp.FILESEARCHKEY ne 1}">
+										
 										<tr
 										<c:choose>
 	                 						<c:when test="${tmp.READCHEK eq 0 }">class="unread"</c:when>
 	                 						<c:otherwise>class="read"</c:otherwise>
 	                 					</c:choose>
 	                 					>
-											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks" value="${tmp.NOTICEID }"></td>
+											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks chksquare" value="${tmp.NOTICEID }"></td>
 											<td class="mail-ontact">${tmp.FROMUSERNAME }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
 											<td class="mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
 											<td class="text-right mail-date">
@@ -191,14 +212,14 @@
 			                 						<c:otherwise>${tmp.SENDDATETIME }</c:otherwise>
 												</c:choose>																	
 											</td>
+											
 											<td class="text-right"><c:if test="${tmp.FILESEARCHKEY ne NULL }"><i class="fa fa-paperclip"></i></c:if></td>
 										</tr>
-										</c:if>
+										
 									</c:forEach>
 								</tbody>
 							</table>							
 						</div>
-						<a href="${pageContext.request.contextPath}/ntexcel?condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">엑셀다운로드</a>
 					</div>
 				</div>
 			</div>
@@ -256,8 +277,8 @@ $('#eyeChk').click(function(){
             location.reload();
         },
         error:function(jqXHR, textStatus, errorThrown){
-            alert("에러발생 관리자에게 문의하세요.");
-            location.reload();
+            		alert("통지가 선택되지 않았습니다.");
+            		return false;
         }
         });
 });
@@ -277,8 +298,8 @@ $("#importChk").click(function(){
             location.reload();
         },
         error:function(jqXHR, textStatus, errorThrown){
-            alert("에러발생 관리자에게 문의하세요.");
-            location.reload();
+        	alert("통지가 선택되지 않았습니다.");
+    		return false;
         }
         });
 });
@@ -298,8 +319,8 @@ $("#trashChk").click(function(){
             location.reload();
         },
         error:function(jqXHR, textStatus, errorThrown){
-            alert("에러발생 관리자에게 문의하세요.");
-            location.reload();
+        	alert("통지가 선택되지 않았습니다.");
+    		return false;
         }
         });
 });
@@ -318,12 +339,13 @@ $("#deleteChk").click(function(){
             location.reload();
         },
         error:function(jqXHR, textStatus, errorThrown){
-            alert("에러발생 관리자에게 문의하세요.");
-            location.reload();
+        	alert("통지가 선택되지 않았습니다.");
+    		return false;
         }
         });
 });
 $("#returnChk").click(function(){
+	debugger;
 	var checkArr=[]
 	$("input[name='noticeid']:checked").each(function(i){
 		checkArr.push($(this).val());
@@ -338,8 +360,8 @@ $("#returnChk").click(function(){
             location.reload();
         },
         error:function(jqXHR, textStatus, errorThrown){
-            alert("에러발생 관리자에게 문의하세요.");
-            location.reload();
+        	alert("통지가 선택되지 않았습니다.");
+    		return false;
         }
         });
 });

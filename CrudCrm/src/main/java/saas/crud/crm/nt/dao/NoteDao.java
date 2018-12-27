@@ -41,4 +41,8 @@ public interface NoteDao {
 	public void noteSendMail(Map<String,Object> map);
 	//메세지버튼
 	public List<Map<String,Object>> noteSummary(int userNo);
+	//답장
+	public Map<String,Object> noteReply(int noticeId);
+	//휴지통 상세 
+	public Map<String, Object> trashDetail(Map<String, Object> noteVal); 
 }

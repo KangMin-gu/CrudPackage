@@ -33,7 +33,7 @@
 			LEFT OUTER JOIN Crud_Saas.dbo.t_notice02 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS D ON B.USERNO = D.USERNO			
-			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND A.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
+			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND B.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
 				<if test="title != null">
 					AND A.TITLE LIKE '%'+#{title}+'%'
 				</if>
@@ -288,6 +288,14 @@
 		WHERE A.SITEID = #{siteid} AND A.ISDELETE = 0 AND A.NTCWAYEMAIL = 1 AND A.NOTICEID = #{noticeid}
 	</select>
 	
+	<!-- 휴지통 상세정보 -->
+	<select id="trashDetail" parameterType="hashMap" resultType="hashMap">
+		SELECT A.NOTICEID, A.TITLE, A.CONTENT, A.LNKURL, A.FILESEARCHKEY, B.USERNAME AS FROMUSERNAME, B.EMAIL AS FROMEMAIL, A.REGDATE
+		FROM Crud_SaaS.dbo.t_notice AS A
+		LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS B ON A.USERNO = B.USERNO
+		WHERE A.SITEID = #{siteid} AND A.ISDELETE = 2 AND A.NTCWAYEMAIL = 1 AND A.NOTICEID = #{noticeid}
+	</select>
+	
 	<!-- 첨부파일리스트 -->
 	<select id="noteFile" parameterType="hashMap" resultType="hashMap">
 		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
@@ -323,19 +331,28 @@
 	<!-- 휴지통 이동 -->
 	<update id="noteTrashChk" parameterType="noteDto">
 		UPDATE Crud_SaaS.dbo.t_notice SET ISDELETE = 2, EDTUSER = #{userno}, EDTDATE = GETDATE()
+		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 0;
+		<!-- t_notice02 -->
+		UPDATE Crud_SaaS.dbo.t_notice02 SET ISDELETE = 2, EDTUSER = #{userno}, EDTDATE = GETDATE()
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 0
 	</update>
 	
 	<!-- 통지 삭제-->
 	<update id="noteDeleteChk" parameterType="noteDto">
 		UPDATE Crud_SaaS.dbo.t_notice SET ISDELETE = 1, EDTUSER = #{userno}, EDTDATE = GETDATE() 
+		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 2;
+		
+		UPDATE Crud_SaaS.dbo.t_notice02 SET ISDELETE = 1, EDTUSER = #{userno}, EDTDATE = GETDATE() 
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 2
 	</update>
 	
 	<!-- 보관함으로 이동-->
 	<update id="noteReturnChk" parameterType="noteDto">
 		UPDATE Crud_SaaS.dbo.t_notice SET ISDELETE = 0, EDTUSER = #{userno}, EDTDATE = GETDATE() 
-		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 1
+		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 2;			<!-- isdelete =2를 복구, 원래 1로 되있었음  -->
+		
+		UPDATE Crud_SaaS.dbo.t_notice02 SET ISDELETE = 0, EDTUSER = #{userno}, EDTDATE = GETDATE() 
+		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 2
 	</update>
 	
 	<!-- 카테고리 화면 -->
@@ -358,9 +375,9 @@
 	<!-- to / cc 등록 -->
 	<insert id="toAndCc" parameterType="noteDto">
 		INSERT INTO t_notice02
-		(NOTICEID, USERNO, CHKCC, SITEID, EDTUSER, EDTDATE )
+		(NOTICEID, USERNO, CHKCC, SITEID, EDTUSER, EDTDATE,READCHEK)
 		VALUES
-		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, GETDATE() )
+		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, GETDATE(),0)
 	</insert>
 	
 		<!-- USERNO를 받아와서 EMAIL과 USERNAME를 받아옴   -->
@@ -396,4 +413,19 @@
 		AND C.ISDELETE NOT IN(1,2)
 		ORDER BY C.RLTDATE DESC;
 	</select>
+	<!-- 답장 -->
+	<select id="noteReply" parameterType="int" resultType="hashMap">
+		select D.USERNAME,D.EMAIL,D.USERNO from
+		(
+			SELECT 
+			A.REGUSER,A.USERNAME,A.NOTICENO
+			FROM T_MAIL AS A
+			INNER JOIN T_NOTICE AS B ON B.NOTICEID = A.NOTICENO
+		)C
+		INNER JOIN TB980010 AS D ON C.REGUSER = D.USERNO
+		WHERE C.NOTICENO = #{noticeId}
+	</select>
+	
+	
+	
 </mapper>

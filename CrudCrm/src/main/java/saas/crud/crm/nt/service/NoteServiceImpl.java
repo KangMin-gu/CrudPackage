@@ -36,6 +36,44 @@ public class NoteServiceImpl implements NoteService{
 	@Autowired
 	private CrudEngine crudEngine;
 	
+	
+	
+	//추가
+	@Override
+	public Map<String, Integer> noteCommonRows(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		//totalRows의 결과값이 들어올 자리 
+		Map<String, Integer> importInbox = new HashMap<String,Integer>();
+		//총 갯수를 구하기위해 siteId와 userNo를 넣을 map 
+		Map<String, Object> noteVal = new HashMap<>();
+		
+		//받은 메세지 중 안읽은 메세지 갯수 
+		int noteReadVal = 0;
+		//중요통지함 총 갯수 
+		int importTotalRows = 0; 
+		
+		
+		//Mapper 검색 조건 담기
+		noteVal.put("siteid", siteId);
+		noteVal.put("userno", userNo);
+		
+		//받은 메세지 중 안읽은 메세지 갯수 추출
+		noteReadVal = ntDao.noteReadVal(noteVal);
+		//중요통지함 총 갯수 추출 
+		importTotalRows = ntDao.notetotalImportRows(noteVal);
+		
+		importInbox.put("inboxVal", noteReadVal);
+		importInbox.put("importBoxVal", importTotalRows);
+		
+		
+		return importInbox;
+		
+	}
+
+
+
+
 	//inbox
 	//@Cacheable("test")
 	@Override
@@ -82,6 +120,8 @@ public class NoteServiceImpl implements NoteService{
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.notetotalRows(noteVal);
 		
+	
+		
 		//페이징 생성자 호출 후 로직실행
 		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
@@ -100,14 +140,15 @@ public class NoteServiceImpl implements NoteService{
 		NoteCategoryDto noteCategory = new NoteCategoryDto();
 		noteCategory.setUserno(userNo);
 		noteCategory.setSiteid(siteId);
-		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		//List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
 		
-		mView.addObject("category", category);
+		
 		mView.addObject("url", "note/inbox");
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
 		mView.addObject("NOTENAME","받은 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
+		
 		return mView;
 	}
 
@@ -276,7 +317,9 @@ public class NoteServiceImpl implements NoteService{
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
 		mView.addObject("NOTENAME","중요 통지"); //대메뉴이름 처리
-		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
+		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리		
+		
+		
 		return mView;		
 	}
 
@@ -361,8 +404,10 @@ public class NoteServiceImpl implements NoteService{
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
-		String referUrl = request.getHeader("referUrl");
+		String referUrl = request.getHeader("REFERER");
+		String curUrl = request.getRequestURL().toString();
 		ModelAndView mView = new ModelAndView();
+		
 		
 		Map<String, Object> noteVal = new HashMap<>();
 		noteVal.put("siteid", siteId);
@@ -370,9 +415,18 @@ public class NoteServiceImpl implements NoteService{
 		noteVal.put("noticeid", noticeId);
 		
 		//통지정보
-		Map<String, Object> note = ntDao.noteDetail(noteVal);
+		Map<String, Object> note = null;
 		
+		
+		//휴지통 상세 (isDelete = 2)
+		if(referUrl.contains("note/trash")) {
+			note = ntDao.trashDetail(noteVal);
+		//기본 상세 
+		}else {
+			note = ntDao.noteDetail(noteVal);
+		}
 		System.out.println("note :" +  note);
+		
 		
 		//파일업로드
 		//if문 추가
@@ -381,21 +435,31 @@ public class NoteServiceImpl implements NoteService{
 		noteVal.put("filesearchkey", fileSearchKey);
 		}
 		
+		
 		//첨부파일정보
 		List<Map<String, Object>> notefile = ntDao.noteFile(noteVal);
 		//받는이
 		List<Map<String, Object>> toList = ntDao.toList(noteVal); 
 		//CC
 		List<Map<String, Object>> ccList = ntDao.ccList(noteVal); 
+		//전달시 셀렉트 박스 
+		List<Map<String,String>> adminMail = ntDao.adminMail();
 		
-		ntDao.noteEyeChk(noteVal);
-	
+		
+		//통지작성에서 넘어온거면 읽음체크 안함 
+		if(!referUrl.contains("note/send")) {
+			ntDao.noteEyeChk(noteVal);
+		}
+		
+		
+
+		mView.addObject("adminMail",adminMail);
 		mView.addObject("note", note);
 		mView.addObject("noteFile", notefile);
 		mView.addObject("ccList", ccList);
 		mView.addObject("toList", toList);
 		mView.addObject("referUrl",referUrl);
-
+		mView.addObject("curUrl",curUrl);
 		return mView;
 	}
 	
@@ -434,7 +498,7 @@ public class NoteServiceImpl implements NoteService{
 		for(int i = 0; i<noticeid.size(); i++) {
 			ntDto.setNoticeid(noticeid.get(i));
 			ntDao.noteTrashChk(ntDto);
-			//ntDao.noteTrashChkTwo(ntDto);
+			
 		}		
 	}
 	
@@ -513,6 +577,25 @@ public class NoteServiceImpl implements NoteService{
 		mView.addObject("adminMail",adminMail);
 		return mView;
 	}
+	
+	//답장화면
+	@Override
+	public ModelAndView noteReply(HttpServletRequest request,int noticeId) {
+		//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
+		List<Map<String,String>> adminMail = ntDao.adminMail();
+		//noticeId를 이용하여 답장받을 사람의 정보를 가져옴
+		Map<String,Object> replyUser = ntDao.noteReply(noticeId);
+		String curUrl = request.getRequestURL().toString();
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("adminMail",adminMail);
+		mView.addObject("replyUser",replyUser);
+		mView.addObject("curUrl",curUrl);
+		
+		return mView;
+	}
+	
+	
 	
 	
 	

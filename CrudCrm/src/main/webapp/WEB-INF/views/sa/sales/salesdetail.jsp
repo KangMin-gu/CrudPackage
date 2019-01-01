@@ -39,7 +39,7 @@
 					<h2>영업관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><a href="/sales">목록</a></li>
-						<li class="breadcrumb-item active"><strong>영업상세</strong></li>
+						<li class="breadcrumb-item active"><strong>상세정보</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -64,8 +64,10 @@
 	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>												
 	                          		</div>													
 									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-										<a href="/sales/post/${salesDetail.SALESNO }" class="btn btn-primary">수정</a> 
-										<a href="/sales/delete/${salesDetail.SALESNO }" class="btn btn-primary">삭제</a> 
+										<a href="/sales/post/${salesDetail.SALESNO }" class="btn btn-primary">수정</a>
+										<c:if test="${sessionScope.CHKAUTH eq 30 || sessionScope.CHKAUTH eq 20 || sessionScope.USERNO eq salesDetail.OWNER }">  
+										<a href="/sales/del/${salesDetail.SALESNO }" class="btn btn-primary">삭제</a> 
+										</c:if>
 									</div>
 								</div>
 							
@@ -122,8 +124,11 @@
 												<td>${salesDetail.STATEDATE }</td>
 											</tr>
 											<tr>
-												<th>예상수주액</th>
-												<td>${salesDetail.FORDAMOUNT }</td>
+												<th>예상수주액 (&#8361;)</th>
+												<td id="fordamount_">
+												<input type="hidden" id="fordamount" value="${salesDetail.FORDAMOUNT }">
+												
+												</td>
 											</tr>
 											<tr>
 												<th>실수주일</th>
@@ -145,7 +150,7 @@
 												<td>${salesDetail.CLINAME }</td>
 											</tr>
 											<tr>
-												<th>확률(%)</th>
+												<th>확률 (&#37;)</th>
 												<td>${salesDetail.PROB }</td>
 											</tr>
 											<tr>
@@ -153,8 +158,10 @@
 												<td>${salesDetail.CATEGORY }</td>
 											</tr>
 											<tr>
-												<th>실수주액</th>
-												<td>${salesDetail.RORDAMOUNT }</td>
+												<th>실수주액 (&#8361;)</th>
+												<td id="rordamount_">
+												<input type="hidden" id="rordamount" value="${salesDetail.RORDAMOUNT }">
+												</td>
 											</tr>
 											
 										</tbody>
@@ -227,32 +234,32 @@
 								<div class="tabs-container">
 									<ul class="nav nav-tabs" role="tablist">
 										<li><a class="nav-link active" data-toggle="tab" href="#tab1">관련고객</a></li>
-										<li><a class="nav-link" data-toggle="tab" href="#tab2">영업단계</a></li>
-										<li><a class="nav-link" data-toggle="tab" href="#tab3">고객접촉</a></li>
+										<li><a class="nav-link" onClick="javascript:tabTargetState(1);" data-toggle="tab" href="#tab2" >영업단계</a></li>
+										<li><a class="nav-link"  onClick="javascript:tabTargetContect(1);"  data-toggle="tab" href="#tab3">고객접촉</a></li>
 									</ul>
 									<div class="tab-content">
 																				<!-- 관련고객 -->
 										<div role="tabpanel" id="tab1" class="tab-pane active">
 											<div class="panel-body table-responsive">
 												
-												<div class="w-100 text-right mb-2">
-                                               	   <Button class="btn btn-primary relcustBtn" id="salesno" value= "${salesDetail.SALESNO }">추가</Button>
-                                            	</div>				
-																	
-												<div class="box1 col-xl-3 p-0">	
-													<div class="form-group row">
-														<label class="col-sm-3 col-form-label" style="padding-top: 3px;"><strong>고객명</strong></label>
-														<div class="col-sm-8">
-                                        					<div class="input-group">                                        						
-                                        						<input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname }"> 
-                                        						<span class="input-group-append"> 
-                                        							<a href="#" onClick="relCustSearch();" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
-                                        						</span>
-                                        					</div>
-                                    					</div>
-                                					</div>
-												</div>		
-												
+												<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+													<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+														
+                                						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>고객명</strong></label>
+                            								<div class="col-sm-7">
+                                								<input type="text" class="form-control" style="height: 27px;" name="custname" id="custname"  value="${searchVal.custname}"> 
+                            								</div>                                
+															<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																<a href="#" onClick="salesCustSearch(${salesDetail.SALESNO});" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+															</div>			
+														</div>		
+                                						
+													</div>
+													<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+										 				<Button class="btn btn-primary relcustBtn" id="salesno" value= "${salesDetail.SALESNO }">추가</Button>
+													</div>
+												</div>
+																						
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 150px;" />
@@ -293,7 +300,8 @@
 												</table>
 											
 											
-												<div class="m-auto" style="float:center;">
+												<div class="m-auto" style="float:center;"> 
+													<c:if test="${fn:length(salesCustList) ne 0 }"> 
 													<ul class="pagination">
 														<c:choose>
 															<c:when test="${page.startPageNum ne 1 }">
@@ -332,17 +340,48 @@
 																<li class="disabled"><a href="javascript:">&raquo;</a></li>
 															</c:otherwise>
 														</c:choose>
-													</ul> 
+													</ul>
+													</c:if> 
 												</div> 
 											
 											</div>									
 										</div>
 										<div role="tabpanel" id="tab2" class="tab-pane ">
 											<div class="panel-body table-responsive">
-												<div class="w-100 text-right mb-2">
-													<a href="#" class="btn btn-primary" id="saleStateBtn" onclick="saleStateInsert(${salesDetail.SALESNO },${salesDetail.SALESTATE });">추가</a>
-												
+											
+												<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+													<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+														
+                                						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>변경단계</strong></label>
+                            								<div class="col-sm-7">
+                                								
+																<select class="form-control required validate allV" style="height: 23px;" id="state" name="state">
+																	<option label="선택" value="0">
+																<c:forEach var="state" items="${STATE }">
+                                                      				<c:choose>
+                                                         				<c:when test="${searchVal.state eq state.codeval}">
+                                                            				<option selected label="${state.codename }" value="${state.codeval }"/>
+                                                         				</c:when>
+                                                         				<c:otherwise>
+                                                            				<option label="${state.codename }" value="${state.codeval }"/>
+                                                         				</c:otherwise>
+                                                      				</c:choose>
+                                                   				</c:forEach>
+																</select>	
+																
+                            								</div>                                
+															<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																<a href="#" onClick="tabTargetState(1);" class="btn btn-primary" style="padding-top: 2px;padding-top: 2px;height: 24px;">검색 </a> 
+															</div>			
+														</div>		
+                                						
+													</div>
+													<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+										 				<a href="#" class="btn btn-primary" id="saleStateBtn" onclick="saleStateInsert(${salesDetail.SALESNO },${salesDetail.SALESTATE });">추가</a>
+													</div>
 												</div>
+											
+											
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 200px;" />
@@ -361,53 +400,32 @@
 															<th>등록자</th>
 														</tr>
 													</thead>
-													<tbody>
-													
-													<c:forEach var="stateList" items="${salesStateList }">
-														<tr> 
-															<td>${stateList.ENTDATE }</td>
-															<td>
-																<c:choose>
-																	<c:when test="${stateList.PRESTATE eq 1 }">계약성공종료</c:when>
-																	<c:when test="${stateList.PRESTATE eq 2 }">계약중</c:when>
-																	<c:when test="${stateList.PRESTATE eq 3 }">제안서제출</c:when>
-																	<c:when test="${stateList.PRESTATE eq 4 }">접촉중</c:when>
-																	<c:when test="${stateList.PRESTATE eq 5 }">문의</c:when>
-																	<c:when test="${stateList.PRESTATE eq 6 }">중도포기</c:when>
-																	<c:when test="${stateList.PRESTATE eq 7 }">경쟁실패</c:when>
-																</c:choose>
-															</td>
-															<td>
-																<c:choose>
-																	<c:when test="${stateList.STATE eq 1 }">계약성공종료</c:when>
-																	<c:when test="${stateList.STATE eq 2 }">계약중</c:when>
-																	<c:when test="${stateList.STATE eq 3 }">제안서제출</c:when>
-																	<c:when test="${stateList.STATE eq 4 }">접촉중</c:when>
-																	<c:when test="${stateList.STATE eq 5 }">문의</c:when>
-																	<c:when test="${stateList.STATE eq 6 }">중도포기</c:when>
-																	<c:when test="${stateList.STATE eq 7 }">경쟁실패</c:when>
-																</c:choose>
-															</td>
-															<td>
-																<c:choose>
-																	<c:when test="${stateList.MODREASON eq 1 }">영업진행</c:when>
-																	<c:when test="${stateList.MODREASON eq 2 }">업무중단</c:when>
-																	<c:when test="${stateList.MODREASON eq 3 }">폐업</c:when>
-																	<c:when test="${stateList.MODREASON eq 4 }">거래처요청</c:when>
-																	<c:when test="${stateList.MODREASON eq 5 }">기타</c:when>
-																</c:choose>
-															</td>
-															<td>${stateList.PROB }</td>
-															<td>${stateList.USERNAME }</td>
-														</tr>
-													</c:forEach>
-														
-													</tbody>
+													<tbody></tbody>
 												</table>
+												<div class="m-auto" style="float:center;">
+												<ul class="pagination"></ul>
+											</div>	
 											</div>
 										</div>
+										
 										<div role="tabpanel" id="tab3" class="tab-pane">
 											<div class="panel-body table-responsive">
+												
+
+												<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+													<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+                                						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>고객명</strong></label>
+                            								<div class="col-sm-7">
+                                								<input type="text" class="form-control" style="height: 27px;" name="contcustname" id="contcustname"  value="${searchVal.contcustname}"> 
+                            								</div>                                
+															<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																<a href="#" onClick="tabTargetContect(1)" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+															</div>			
+														</div>		
+													</div>
+												</div>
+
+											
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 200px;" />
@@ -425,18 +443,11 @@
 															<th>접촉메모</th>
 														</tr>
 													</thead>
-													<tbody>
-														<c:forEach var="cont" items="${contList }">
-														<tr>
-															<td>${cont.CTTUSER }</td>
-															<td>${cont.CTTDATE }</td>
-															<td>${cont.CUSTNAME }</td>
-															<td>${cont.CTTCHANNEL }</td>
-															<td>${cont.MEMO }</td>
-														</tr>
-													</c:forEach>
-													</tbody>
+													<tbody></tbody>
 												</table>
+												<div class="m-auto" style="float:center;">
+												<ul class="pagination"></ul>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -445,7 +456,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
 			<!-- E: 영업관리 상세 -->
 
 
@@ -464,6 +474,12 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script>
-	
+	<script>
+	$(document).ready(function(){
+		$('#fordamount_').text( numberWithCommas($('#fordamount').val() ) );//금액 콤마 추가해서 보여주기
+		$('#rordamount_').text( numberWithCommas($('#rordamount').val() ) );
+	});
+		
+	</script>
 </body>
 </html>

@@ -75,8 +75,8 @@ body {
 									<tr>
 										<th>영업명</th>
 										<td>
-											<div class="input-group cust">
-												<input type="text" class="form-control" autocomplete="off" name="salename" id="salename" readonly value="${schUpdate.SALENAME }">
+											<div class="input-group sales" id="salename">
+												<input type="text" class="form-control" autocomplete="off" name="salename" readonly value="${schUpdate.SALENAME }">
                                                 <input type="hidden" name="salesno" id="salesno" value="${schUpdate.SALESNO }">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
@@ -90,8 +90,8 @@ body {
 									<tr>
 										<th>사용자명</th>
 										<td>
-											<div class="input-group owner">
-												<input type="text" class="form-control" autocomplete="off" name="ownername" id="ownername"  value="${schUpdate.USERNAME }"readonly>
+											<div class="input-group owner" id="owner_">
+												<input type="text" class="form-control" autocomplete="off" name="owner_"  value="${schUpdate.USERNAME }"readonly>
                                                 <input type="hidden" name="owner" id="owner" value="${schUpdate.OWNER }">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
@@ -197,8 +197,7 @@ body {
 		    opener.window.location.reload();
 		    	if(toUrl !="" && toUrl !=null ){
 		    		location.href = toUrl;
-		    	}else{
-		    		window.close();	
+		    		window.close();
 		    	}
 		    
 		    }

@@ -69,10 +69,8 @@ body {
 									
 									<tr>
 										<th>영업명</th>
-										<td>${schDetail.SALENAME }</td>
+										<td><a href="#" onclick="openNewWindow('영업','/sales/view/${schDetail.SALESNO }','','600','700');" >${schDetail.SALENAME }</a></td>
 									</tr>								
-									
-							
 									
 									<tr>
 										<th>사용자명</th>

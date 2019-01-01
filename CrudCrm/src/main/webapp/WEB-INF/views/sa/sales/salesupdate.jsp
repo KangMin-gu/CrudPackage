@@ -39,7 +39,9 @@
 				<div class="col-lg-10">
 					<h2>영업관리</h2>
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><strong>목록</strong></li>
+						<li class="breadcrumb-item active"><a href="/sales">목록</a></li>
+						<li class="breadcrumb-item active"><a href="/sales/view/${salesUpdate.SALESNO }">상세정보</a></li>
+						<li class="breadcrumb-item active"><strong>수정</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -94,7 +96,7 @@
 														
 															<c:forEach var="state" items="${STATE }">
                                                       			<c:choose>
-                                                         			<c:when test="${salesUpdate.SALESTATE eq actGrade.codeval}">
+                                                         			<c:when test="${salesUpdate.SALESTATE eq state.codeval}">
                                                             			<option selected label="${state.codename }" value="${state.codeval }"/>
                                                          			</c:when>
                                                          			<c:otherwise>
@@ -110,7 +112,7 @@
 													<th>예상수주일</th>
 													<td>
 														<div class="input-group p-0">
-															<div class="d-flex date date01">
+															<div class="input-group date date01">
 																<span class="input-group-addon">
 																	<i class="fa fa-calendar"></i>
 																</span> 
@@ -140,7 +142,7 @@
 													<th>영업담당자<sup>*</sup></th>
 													<td>
 														<div class="input-group owner">
-															<input type="text" class="form-control required validate nameV" autocomplete="off" name="username" id="username" value="${salesUpdate.USERNAME }"> 
+															<input type="text" class="form-control required validate nameV" autocomplete="off" name="username" id="username" value="${salesUpdate.USERNAME }" readonly> 
 															<input type="hidden" name="owner" id="owner" value="${salesUpdate.OWNER }"> 
 															<span class="input-group-addon"> 
 																<a><i class="fa fa-search"></i></a>
@@ -152,7 +154,7 @@
 													<th>현단계진입일</th>
 													<td>
 														<div class="input-group p-0">
-															<div class="d-flex date date01">
+															<div class="input-group date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 																<input type="text" class="form-control validate dateV beforeV" id="statedate" name="statedate" value="${salesUpdate.STATEDATE }" data-mask="9999-99-99">
 															</div>
@@ -162,14 +164,15 @@
 												<tr>
 													<th>예상수주액</th>
 													<td>
-														<input type="text" class="form-control validate numberV" id="fordamount" name="fordamount" value="${salesUpdate.FORDAMOUNT }">
+														<input type="text" class="form-control validate costV" id="fordamount_" name="fordamount_" placeholder="0 ~ 10,000,000,000" >
+														<input type="hidden" id="fordamount" name="fordamount" value="${salesUpdate.FORDAMOUNT }">
 													</td>
 												</tr>
 												<tr>
 													<th>실수주일</th>
 													<td>
 														<div class="input-group p-0">
-															<div class="d-flex date date01">
+															<div class="input-group date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
 																<input type="text" class="form-control validate dateV" id="rorddate" name="rorddate" value="${salesUpdate.RORDDATE }" data-mask="9999-99-99">
 															</div>
@@ -191,7 +194,7 @@
 													<th>거래처명&nbsp;<b>&#42;</b></th>
 													<td>
 														<div class="input-group">
-															<input type="text" class="form-control cli validate required allV" id="cliname" name="cliname" value="${salesUpdate.CLINAME }">
+															<input type="text" class="form-control cli validate required allV" id="cliname" name="cliname" value="${salesUpdate.CLINAME }" readonly>
 															<input type="hidden" id="clino" name="clino" value="${salesUpdate.CLINO }"> 
 															<span class="input-group-addon"> 
 																<a href="javascript:void(0);"><i class="fa fa-search cli"></i></a>
@@ -200,9 +203,20 @@
 													</td>
 												</tr>
 												<tr>
-													<th>확률</th>
+													<th>확률 (&#37;)</th>
 													<td>
-														<input type="number" class="form-control validate percentV" id="prob" name="prob" value="${salesUpdate.PROB }">
+														<select class="form-control validate percentV" style="height: 23px;" id="prob" name="prob">
+														<c:forEach var="prob" items="${PROB }">
+                                                      		<c:choose>
+                                                         		<c:when test="${salesUpdate.PROB eq prob.codeval}">
+                                                            		<option selected label="${prob.codename }" value="${prob.codeval }"/>
+                                                         		</c:when>
+                                                         		<c:otherwise>
+                                                            	<option label="${prob.codename }" value="${prob.codeval }"/>
+                                                         		</c:otherwise>
+                                                      		</c:choose>
+                                                   		</c:forEach>
+                                                   		</select>
 													</td>
 												</tr>
 												<tr>
@@ -214,7 +228,8 @@
 												<tr>
 													<th>실수주액</th>
 													<td>
-														<input type="text" class="form-control validate numberV" id="rordamount" name="rordamount" value="${salesUpdate.RORDAMOUNT }">
+														<input type="text" class="form-control validate costV" id="rordamount_" name="rordamount_" placeholder="0 ~ 10,000,000,000" >
+														<input type="hidden" id="rordamount" name="rordamount" value="${salesUpdate.RORDAMOUNT }">
 													</td>
 												</tr>
 											
@@ -322,6 +337,9 @@
              calendarWeeks: true,
              autoclose: true
          });
+		 
+         $('#fordamount_').val( numberWithCommas($('#fordamount').val() ) );
+         $('#rordamount_').val( numberWithCommas($('#rordamount').val() ) );
 	 });
 	 </script>
 </body>

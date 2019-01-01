@@ -74,7 +74,7 @@
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 	
-		<!-- 회원사의 거래처 수 카운터  -->
+		<!-- 회원사의 고객 수 카운터  -->
 	<select id="totalCntCust" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM CU100010
@@ -111,5 +111,39 @@
 		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_file WHERE SITEID = #{siteid} AND FILEID = #{fileid}
 	</select>
 	
+	<!-- 회원사의 영업 수 카운터  -->
+	<select id="totalcntSales" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM TB210010
+		WHERE 
+			SITEID = #{siteid}
+			AND ISDELETE = 0
+			<if test="salename != null">
+			AND SALENAME like '%'+#{salename}+'%'
+			</if>
+	</select>
+	<!-- 선택할 수 있는 영업 목록 출력  -->
+	<select id="popSalesList" parameterType="hashMap" resultType="hashMap">
+	SELECT * 
+	FROM  
+		(
+		SELECT 
+		ROW_NUMBER() OVER(ORDER BY A.SALENAME) AS ROWNUM
+		,A.SALESNO, A.SALENAME, A.CLINO, A.OWNER
+		,B.USERNAME
+		,C.CLINAME 
+		FROM TB210010 A
+		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+		LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+		WHERE 
+			A.SITEID= #{siteid}
+			AND A.ISDELETE = 0
+			<if test="salename != null">
+			AND SALENAME like '%'+#{salename}+'%'
+			</if>
+		) T
+	WHERE 
+		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
+	</select>
 
 </mapper>

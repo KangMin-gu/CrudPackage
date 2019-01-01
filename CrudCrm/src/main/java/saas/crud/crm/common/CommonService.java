@@ -19,7 +19,7 @@ public interface CommonService {
 	public EUploadDto logoUplaod(HttpServletResponse response, HttpServletRequest request, MultipartRequest multipartRequest);
 	public Map<String,Object> svcPopGetCustDetail(HttpServletRequest request, int custNo);
 	public Map<String,Object> svcPopGetClientDetail(HttpServletRequest request, int cliNo);
-	
+	public ModelAndView svcPopGetSalesName(HttpServletRequest request);
 	public void mailClick(HttpServletRequest request);
 	public void mailDeny(HttpServletRequest request);
 	

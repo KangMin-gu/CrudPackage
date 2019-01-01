@@ -90,7 +90,7 @@
 		,A.FAXTEL1, A.FAXTEL2, A.FAXTEL3
 		,A.MOBILE1, A.MOBILE2, A.MOBILE3
 		,A.BSCOND, A.BSTYPE, A.BSCATEGORY
-		,A.COMPANYSIZE,A.INTERNAL,A.MEMO
+		,A.COMPANYSIZE,A.INTERNAL,A.MEMO,A.EMAIL
 	FROM TB200010 A
 	LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
 	WHERE 
@@ -138,6 +138,7 @@
 	,COMPANYSIZE
 	,FRIENDLY
 	,INTERNAL
+	,EMAIL
 	,MEMO	
 	)
 	
@@ -175,6 +176,7 @@
 	,#{companysize}
 	,#{friendly}
 	,#{internal}
+	,#{email}
 	,#{memo}
 	)	
 		
@@ -214,6 +216,7 @@
 	,COMPANYSIZE = #{companysize}
 	,FRIENDLY = #{friendly}
 	,INTERNAL = #{internal}
+	,EMAIL = #{email}
 	,MEMO = #{memo}
 	
 	WHERE
@@ -223,18 +226,21 @@
 	</update>
 
 	<!-- 거래처삭제 -->
-	<update id="cliDelete" parameterType="saas.crud.crm.sa.dto.ClientDto">
+	<update id="cliDelete" parameterType="hashMap">
 	
 	UPDATE TB200010
 	SET
-	ISDELETE = 1
+	EDITDATE = GETDATE()
+	,EDITUSER = #{userno}
+	,ISDELETE = 1
 	WHERE 
-		CLINO = #{clino}
-		AND SITEID = #{siteid} 
-		
+		SITEID = #{siteid}
+		AND CLINO IN 
+		<foreach collection="arrayCliNo" item="arrayCliNo"  open="(" close=")" separator=",">
+		#{arrayCliNo }
+		</foreach>		
 	</update>
-	
-	
+	 	
 	
 	<!-- 거래처 화면 관련고객 리스트 카운터-->
 	<select id="cliCustListCnt" parameterType="hashMap" resultType="int">	
@@ -288,18 +294,7 @@
 	WHERE 
 		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	<!-- 거래처관련고객 추가 -->
 	<insert id="cliCustInsert" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
 	
@@ -392,13 +387,5 @@
 		AND SITEID = #{siteid} 
 	
 	</update>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 </mapper>

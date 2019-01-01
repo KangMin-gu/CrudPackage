@@ -30,7 +30,7 @@
 		var percentPattern = /^[0-9]{1}$|^[1-9]{1}[0-9]{1}$|^100$/; // -> 0~100 정수. 
 		var namePattern = /^[가-힣a-zA-Z]{2,30}[\d]{0,15}$/; //한글 영문 2~30글자 + 숫자0~29
 		var passwordPattern = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;	//숫자,특수문자 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상입력
-
+		
 		
 		var res;//true or false
 		var value = $('[name="'+id+'"]').val();
@@ -131,6 +131,10 @@
 			}else if(value.length >= 20){
 			msg = '20자리 이하로 입력해주세요.';	
 			}
+		}else if( $('[name="'+id+'"]').hasClass('costV') ){ 			
+			value = delCommas(value);//콤마 제거한 값으로 유효성검사.			
+			res = numberPattern.test(value); 			
+			msg = '숫자만 입력 가능합니다.';			
 		}
 		
 
@@ -283,13 +287,51 @@
 	
 		
 	});
-//********************************************************************************************************************
-	//금액에  ',' 삽입-제거 
+	//******************************금액에  ',' 삽입-제거 ***********************************************************************
+	// 사용예시  
+	// DB에 매핑할 id,name을 hidden 값 으로 설정.  
+	// 화면에 보여질값은 id,name 말미에 '_'추가.   
+	// 화면에 보여질 input창에 'costV' 클래스 추가.
+	// ex) <input type="hidden" id="ex" name="ex" /> <input type="text" class="costV" id="ex_" name="ex_">
 	
+	$('.costV').keyup(function(e){
+		
+		 var thisId = e.target.id;//보여지는 인풋 id
+		 var inputId = thisId.substring( 0,thisId.length-1 ); //_를 제거한 id값. 실제 입력 될 hidden id.   
+		 var thisVal = e.target.value;//인풋의 value
+		 thisVal = delCommas(thisVal);//콤마 제거 후
+		 var commaVal = numberWithCommas(thisVal);//다시 콤마 삽입. 
+		 
+		 $('#'+inputId).val(thisVal);//hidden값에는 콤마 제거한 값 입력. 
+		 $('#'+thisId).val(commaVal);//보여지는 input창에는 콤마 표시.		 			 			 
+	 });
+		
 	//,제거
 	function delCommas(x){
+		//debugger;
 		x = x+"";//숫자일 경우 문자타입으로 변경
-		return x.replace(/,/g,"");// , 제거		
+		x = jQuery.trim(x);//공백제거
+		x = x.replace(/[^0-9]+/g, "");  //숫자를 제외한 문자 제거.
+		var numPattern = /^[1-9]$/;//하단 for문 사용 될 패턴 비교식.
+		var tempX = x;
+		var xLen = x.length;
+		var maxCost = 10000000000;//최대금액설정
+		var maxCostStr = '입력 금액의 최대치는 '+numberWithCommas(maxCost)+' 입니다.';//표시될 경고문구.
+				
+		if( xLen > 0 ){					
+			for(var i=0 ; i < xLen ; i++){//첫번째 자리수가 0 못들어오게 
+				if( numPattern.test(tempX.substring(0,1)) == false ){
+					tempX = tempX.substring(1);
+				}else{
+					break;
+				}
+			}
+		}
+		x = tempX;
+		if(x > maxCost ){//최대금액을 초과하면 마지막 입력 문자를 지우고 경고창  
+			x = x.substring(0, maxCost.toString().length-1 );	
+		}
+		return x;// , 제거		
 	}	
 	//,삽입
 	function numberWithCommas(x) {		

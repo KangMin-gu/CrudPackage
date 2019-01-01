@@ -40,7 +40,7 @@
 					<h2>영업관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><a href="/sales">목록</a></li>
-						<li class="breadcrumb-item active"><strong>영업추가</strong></li>
+						<li class="breadcrumb-item active"><strong>추가</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -49,7 +49,7 @@
 
 			<!-- S: 영업관리 추가/수정 -->
 			<div class="wrapper wrapper-content  animated fadeInRight article">
-				<form:form id="command" action="/sales/post" method="POST" commandName="salesDto">
+				<form:form id="command" action="/sales/post" method="POST">
 					<div class="row justify-content-md-center">
 						<div class="col-lg-12">
 							<div class="ibox">
@@ -89,27 +89,18 @@
 												<tr>
 													<th>현단계&nbsp;<b>&#42;</b></th>
 													<td>
-														<form:select class="form-control required validate allV" style="height: 23px;" path="salestate">
-                                                			<form:options items="${STATE}" itemLabel="codename" itemValue="codeval"/>
-                                                		</form:select>	
-													
-													
-														<!-- <select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
-															<option value="1">계약성공종료</option>
-															<option value="2">계약중</option>
-															<option value="3">제안서제출</option>
-															<option value="4" selected>접촉중</option>
-															<option value="5">문의</option>
-															<option value="6">중도포기</option>
-															<option value="7">경쟁실패</option>
-														</select> -->
+														<select class="form-control required validate allV" style="height: 23px;" id="salestate" name="salestate">
+                                                			<c:forEach var="code" items="${STATE }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   			</c:forEach>
+                                                		</select>	
 													</td>
 												</tr>
 												<tr>
 													<th>예상수주일</th>
 													<td>
 														<div class="input-group p-0">
-															<div class="d-flex date date01">
+															<div class="input-group date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 																<input type="text" class="form-control validate dateV" id="forddate" name="forddate" data-mask="9999-99-99">
 															</div>
@@ -137,7 +128,7 @@
 													<th>영업담당자&nbsp;<b>&#42;</b></th>
 													<td>
 														<div class="input-group owner" id="owner_">
-															<input type="text" class="form-control validate required allV" autocomplete="off" name="owner_"  value="${salesInsert.USERNAME }">
+															<input type="text" class="form-control validate required allV" autocomplete="off" name="owner_"  value="${salesInsert.USERNAME }" readonly>
 															<input type="hidden" name="owner" id="owner" value="${salesInsert.USERNO }">
 															<span class="input-group-addon"> <a><i class="fa fa-search"></i></a> </span>
 														</div>
@@ -147,7 +138,7 @@
 													<th>현단계진입일</th>
 													<td>
 														<div class="input-group p-0">
-															<div class="d-flex date date01">
+															<div class="input-group date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 																<input type="text" class="form-control validate dateV beforeV" id="statedate" name="statedate" data-mask="9999-99-99">
 															</div>
@@ -155,9 +146,9 @@
 													</td>
 												</tr>
 												<tr>
-													<th>예상수주액</th>
+													<th>예상수주액 (&#8361;)</th>
 													<td>
-													<input type="text" class="form-control  numberV" id="fordamount_" name="fordamount_">
+													<input type="text" class="form-control validate costV" id="fordamount_" name="fordamount_" placeholder="0 ~ 10,000,000,000">
 													<input type="hidden" id="fordamount" name="fordamount">
 													</td>
 												</tr>
@@ -165,7 +156,7 @@
 													<th>실수주일</th>
 													<td>
 														<div class="input-group p-0">
-															<div class="d-flex date date01">
+															<div class="input-group date date01">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 																<input type="text" class="form-control validate dateV" id="rorddate" name="rorddate" data-mask="9999-99-99">
 															</div>
@@ -187,7 +178,7 @@
 													<th>거래처명&nbsp;<b>&#42;</b></th>
 													<td>
 														<div class="input-group cli" id="cliname">
-															<input type="text" class="form-control error validate required allV"  name="cliname"> 
+															<input type="text" class="form-control error validate required allV"  name="cliname" readonly> 
 															<input type="hidden" id="clino" name="clino"> 
 															<span class="input-group-addon">
 																<a href="javascript:void(0);"><i class="fa fa-search cli"></i></a>
@@ -196,9 +187,13 @@
 													</td>
 												</tr>
 												<tr>
-													<th>확률</th>
+													<th>확률 (&#37;)</th>
 													<td>
-														<input type="text" class="form-control validate percentV" id="prob" name="prob">
+														<select class="form-control required validate percentV" style="height: 23px;" id="prob" name="prob">
+                                                			<c:forEach var="code" items="${PROB }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   			</c:forEach>
+                                                		</select>
 													</td>
 												</tr>
 												<tr>
@@ -208,9 +203,10 @@
 													</td>
 												</tr>
 												<tr>
-													<th>실수주액</th>
+													<th>실수주액 (&#8361;)</th>
 													<td>
-														<input type="text" class="form-control validate numberV" id="rordamount" name="rordamount">
+														<input type="text" class="form-control validate costV" id="rordamount_" name="rordamount_" placeholder="0 ~ 10,000,000,000">
+														<input type="hidden" id="rordamount" name="rordamount">
 													</td>
 												</tr>
 												
@@ -319,20 +315,7 @@
              calendarWeeks: true,
              autoclose: true
          });
-		 
-		 $('#fordamount_').keyup(function(e){
-			 debugger;
-			 var thisId = e.target.id;
-			 var thisVal = e.target.value;
-			 var commaVal = delCommas(thisVal);
-			 var commaVal = numberWithCommas(thisVal);
-			 $('#'+thisId).val(commaVal);
-			 
-			 
-			 $('#fordamount').val();
-			 
-			 
-		 });
+		 		 
 	 });
 	 </script>
 </body>

@@ -128,8 +128,8 @@
 													<th>영업담당자&nbsp;<b>&#42;</b></th>
 
 													<td class="border-top-0 border-bottom-0">
-														<div class="input-group owner">
-															<input type="text" class="form-control validate required nameV" autocomplete="off" name="owner_" id="owner_" value="${cliUpdate.USERNAME }"> 
+														<div class="input-group owner" id="owner"_>
+															<input type="text" class="form-control validate required nameV" autocomplete="off" name="owner_"  value="${cliUpdate.USERNAME }" readonly> 
 															<input type="hidden" name="owner" id="owner" value="${cliUpdate.OWNER }"> 
 															<span class="input-group-addon"> <a><i class="fa fa-search"></i></a> </span>
 														</div>
@@ -173,11 +173,16 @@
 													<td class="border-top-0">
 														<select class="form-control" style="height: 23px;" id="importance" name="importance">
 															<option value="0" ${cliUpdate.IMPORTANCE eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${cliUpdate.IMPORTANCE eq "1" ? "selected" :""}>A</option>
-															<option value="2" ${cliUpdate.IMPORTANCE eq "2" ? "selected" :""}>B</option>
-															<option value="3" ${cliUpdate.IMPORTANCE eq "3" ? "selected" :""}>C</option>
-															<option value="4" ${cliUpdate.IMPORTANCE eq "4" ? "selected" :""}>D</option>
-															<option value="5" ${cliUpdate.IMPORTANCE eq "5" ? "selected" :""}>E</option>
+															<c:forEach var="importance" items="${IMPORTANCE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.IMPORTANCE eq importance.codeval}">
+                                                            			<option selected label="${importance.codename }" value="${importance.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${importance.codename }" value="${importance.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 													</td>
 												</tr>
@@ -203,9 +208,16 @@
 														<!-- form select 공통으로 변경 --> 
 														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="telno1" name="telno1">
 															<option value="" ${cliUpdate.TELNO1 eq "" ? "selected" :""}>선택</option>
-															<option value="02" ${cliUpdate.TELNO1 eq "02" ? "selected" :""}>02</option>
-															<option value="070" ${cliUpdate.TELNO1 eq "070" ? "selected" :""}>070</option>
-															<option value="010" ${cliUpdate.TELNO1 eq "010" ? "selected" :""}>010</option>
+															<c:forEach var="telno1" items="${PHONE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.TELNO1 eq telno1.codeval}">
+                                                            			<option selected label="${telno1.codename }" value="${telno1.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${telno1.codename }" value="${telno1.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="telno2" name="telno2" value="${cliUpdate.TELNO2 }">
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="telno3" name="telno3" value="${cliUpdate.TELNO3 }">
@@ -222,11 +234,16 @@
 													<td>
 														<select class="form-control" style="height: 23px;" id="companysize" name="companysize">
 															<option value="0" ${cliUpdateUpdate.COMPANYSIZE eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${cliUpdate.COMPANYSIZE eq "1" ? "selected" :""}>대기업</option>
-															<option value="2" ${cliUpdate.COMPANYSIZE eq "2" ? "selected" :""}>중견기업</option>
-															<option value="3" ${cliUpdate.COMPANYSIZE eq "3" ? "selected" :""}>중소기업</option>
-															<option value="4" ${cliUpdate.COMPANYSIZE eq "4" ? "selected" :""}>소기업</option>
-															<option value="5" ${cliUpdate.COMPANYSIZE eq "5" ? "selected" :""}>소상공인</option>
+															<c:forEach var="companysize" items="${COMPANYSIZE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.COMPANYSIZE eq companysize.codeval}">
+                                                            			<option selected label="${companysize.codename }" value="${companysize.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${companysize.codename }" value="${companysize.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 													</td>
 												</tr>
@@ -251,9 +268,16 @@
 													<td>
 														<select class="form-control col-4 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="faxtel1" name="faxtel1">
 															<option value="" ${cliUpdate.FAXTEL1 eq "" ? "selected" :""}>선택</option>
-															<option value="02" ${cliUpdate.FAXTEL1 eq "02" ? "selected" :""}>02</option>
-															<option value="070" ${cliUpdate.FAXTEL1 eq "070" ? "selected" :""}>070</option>
-															<option value="010" ${cliUpdate.FAXTEL1 eq "010" ? "selected" :""}>010</option>
+															<c:forEach var="faxtel1" items="${FAX }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.FAXTEL1 eq faxtel1.codeval}">
+                                                            			<option selected label="${faxtel1.codename }" value="${faxtel1.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${faxtel1.codename }" value="${faxtel1.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="faxtel2" name="faxtel2" value="${cliUpdate.FAXTEL2 }">
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="faxtel3" name="faxtel3" value="${cliUpdate.FAXTEL3 }">
@@ -269,11 +293,16 @@
 													<td>
 														<select class="form-control" style="height: 23px;" id="friendly" name="friendly">
 															<option value="0" ${cliUpdate.FRIENDLY eq "0" ? "selected" :""}>선택</option>
-															<option value="1" ${cliUpdate.FRIENDLY eq "1" ? "selected" :""}>A</option>
-															<option value="2" ${cliUpdate.FRIENDLY eq "2" ? "selected" :""}>B</option>
-															<option value="3" ${cliUpdate.FRIENDLY eq "3" ? "selected" :""}>C</option>
-															<option value="4" ${cliUpdate.FRIENDLY eq "4" ? "selected" :""}>D</option>
-															<option value="5" ${cliUpdate.FRIENDLY eq "5" ? "selected" :""}>E</option>
+															<c:forEach var="friendly" items="${FRIENDLY }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.FRIENDLY eq friendly.codeval}">
+                                                            			<option selected label="${friendly.codename }" value="${friendly.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${friendly.codename }" value="${friendly.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 													</td>
 												</tr>
@@ -298,9 +327,16 @@
 													<td>
 														<select class="form-control col-3 float-left mr-2 validate phone1V phone-group" style="height: 23px;" id="mobile1" name="mobile1">
 															<option value="" ${cliUpdate.MOBILE1 eq "" ? "selected" :""}>선택</option>
-															<option value="010" ${cliUpdate.MOBILE1 eq "010" ? "selected" :""}>010</option>
-															<option value="016" ${cliUpdate.MOBILE1 eq "016" ? "selected" :""}>016</option>
-															<option value="017" ${cliUpdate.MOBILE1 eq "017" ? "selected" :""}>017</option>
+															<c:forEach var="mobile1" items="${MOBILE1 }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.MOBILE1 eq mobile1.codeval}">
+                                                            			<option selected label="${mobile1.codename }" value="${mobile1.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${mobile1.codename }" value="${mobile1.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select> 
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" id="mobile2" name="mobile2" value="${cliUpdate.MOBILE2 }"> 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" id="mobile3" name="mobile3" value="${cliUpdate.MOBILE3 }">
@@ -317,8 +353,16 @@
 													<td>
 														<select class="form-control" style="height: 23px;" id="internal" name="internal">
 															<option value="0" ${cliUpdate.INTERNAL eq "0" ? "selected" :""}>선택 </oprtion>
-															<option value="1" ${cliUpdate.INTERNAL eq "1" ? "selected" :""}>국내</option>
-															<option value="2" ${cliUpdate.INTERNAL eq "2" ? "selected" :""}>국외</option>
+															<c:forEach var="internal" items="${INTERNAL }">
+                                                      			<c:choose>
+                                                         			<c:when test="${cliUpdate.INTERNAL eq internal.codeval}">
+                                                            			<option selected label="${internal.codename }" value="${internal.codeval }"/>
+                                                         			</c:when>
+                                                         			<c:otherwise>
+                                                            			<option label="${internal.codename }" value="${internal.codeval }"/>
+                                                         			</c:otherwise>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</select>
 													</td>
 												</tr>
@@ -332,6 +376,12 @@
 												<col style="width: auto;">
 											</colgroup>
 											<tbody>
+												<tr>
+													<th class="border-top-0">EMAIL</th>
+													<td class="border-top-0">
+														<input type="text" class="form-control validate emailV" id="email" name="email">
+													</td>
+												</tr>
 												<tr>
 													<th class="border-top-0">메모</th>
 													<td class="border-top-0">

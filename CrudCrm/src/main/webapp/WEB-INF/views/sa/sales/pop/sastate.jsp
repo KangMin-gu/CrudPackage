@@ -95,7 +95,13 @@ body {
 									
 									<tr>
 										<th>확률</th>
-										<td><input type="text" class="form-control" id="prob" name="prob" ></td>
+										<td>
+											<select class="form-control required validate percentV" style="height: 23px;" id="prob" name="prob">
+                                                <c:forEach var="code" items="${PROB }">
+                                                	<option label="${code.codename }" value="${code.codeval }"/>
+                                            	</c:forEach>
+                                            </select>
+										</td>
 									</tr>
 									
 									<tr>

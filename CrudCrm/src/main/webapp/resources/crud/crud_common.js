@@ -67,6 +67,10 @@
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
 	});
+	//영업팝업
+	$('.sales').click(function(e){
+		openNewWindow('영업','/popsales',e.currentTarget.id,650,750);
+	});
 	
 	//내부통지팝업
 	$('.note').click(function(e){
@@ -134,7 +138,7 @@
 	
 	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
-		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
+		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y+",scrollbars=yes";
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
@@ -213,6 +217,20 @@
 		opener.$('[name="'+parentid+'"]').val(tr.children.cstname.textContent);
 		popCustClick(id);
 		
+		setTimeout(function(){
+			window.close();
+		},300);
+	}
+	
+	//팝업 영업 이름 선택.
+	function parentSalename(tr){	
+		var parentid = $('#parentid').val();
+		var id = tr.getAttribute("value");
+		opener.$('[name="'+parentid+'"]').next().val(id);		
+		opener.$('[name="'+parentid+'"]').val(tr.children.salename.textContent).trigger('keyup');		
+		
+		popClientClick(id);
+
 		setTimeout(function(){
 			window.close();
 		},300);
@@ -451,3 +469,29 @@
 		}
 	});
 /********************************************************************/
+	
+	/*엑셀다운.  
+	 * url을 사용페이지 hidden 값 (id=excelUrl) 으로 사전 설정해야 동작. 
+	 * 상단에 spiner css 삽입. 하단에 ui.css, file.css 삽입. 
+    */
+    $("#excelBtn").on("click", function () {
+    	debugger;
+    	var $exModal = $("#exModal");
+		var url = $('#excelUrl').val();
+    	
+        $exModal.dialog({ modal: true });
+      	$('.ui-front').removeAttr('style');
+      	
+        $.fileDownload(url, {
+            successCallback: function (url) {
+            	$exModal.dialog('close');
+            	$('#modalCloseBtn').trigger('click');  
+            },
+            failCallback: function (responseHtml, url) {
+            	$exModal.dialog('close');
+            	$('#modalCloseBtn').trigger('click');
+            }
+        });
+    });	 
+	
+	

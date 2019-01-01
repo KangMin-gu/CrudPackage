@@ -141,4 +141,12 @@ public class CommonController {
 		
 	}
 	
+	//영업팝업
+	@RequestMapping(value="/popsales", method=RequestMethod.GET)
+	public ModelAndView authpopSales(HttpServletRequest request) {			
+		ModelAndView mav = commonService.svcPopGetSalesName(request);
+		mav.setViewName("cm/popsales");
+		return mav;
+	}
+	
 }

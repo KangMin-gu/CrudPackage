@@ -76,8 +76,8 @@ body {
 									<tr>
 										<th>영업명</th>
 										<td>
-											<div class="input-group cust">
-												<input type="text" class="form-control" autocomplete="off" name="salename" id="salename" readonly>
+											<div class="input-group sales" id="salename">
+												<input type="text" class="form-control" autocomplete="off" name="salename" readonly>
                                                 <input type="hidden" name="salesno" id="salesno" value="0">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
@@ -91,8 +91,8 @@ body {
 									<tr>
 										<th>사용자명</th>
 										<td>
-											<div class="input-group owner">
-												<input type="text" class="form-control" autocomplete="off" name="ownername" id="ownername"  value="${username }"readonly>
+											<div class="input-group owner" id="ownername">
+												<input type="text" class="form-control" autocomplete="off" name="ownername"  value="${username }"readonly>
                                                 <input type="hidden" name="owner" id="owner" value="${userno }">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>

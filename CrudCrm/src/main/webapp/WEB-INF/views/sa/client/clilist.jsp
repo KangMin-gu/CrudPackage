@@ -14,10 +14,10 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-
-<!-- S: 추가 CSS-->
 <!-- Toastr style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!--radioBox-->
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
 </head>
@@ -118,8 +118,8 @@
 												<tr>
 													<th>영업담당자</th>
 													<td style="padding-top: 7px; border-top-width: 1px;">
-														<div class="input-group">
-															<input type="text" class="form-control" autocomplete="off" name="username" value="${searchVal.username}" readonly>														 
+														<div class="input-group owner" id="owner_">
+															<input type="text" class="form-control" autocomplete="off" name="owner_" value="${searchVal.username}" readonly>														 
 															<input class="reset" type="hidden" id="owner" name="owner" value="${searchVal.owner }" /> 
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search owner"></i></a>
@@ -153,16 +153,41 @@
 						<div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
 							<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                               	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                              		<a href="/cliexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>               
+                              		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
+                             		<input type="hidden" id="excelUrl" name="excelUrl" value="/cliexcel">               
                              	</div>                                       
                               	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-                                	<a href="/sales/client/post" class="btn btn-primary">추가</a> 	
+                                	<a href="/sales/client/post" class="btn btn-primary">추가</a>
+                                	<c:if test="${sessionScope.CHKAUTH eq 30 || sessionScope.CHKAUTH eq 20  }"> 
+										<Button class="btn btn-primary" onClick="goCliDel()">삭 제</Button> 
+									</c:if> 	
                               	</div>                     
-                           	</div>				
+                           	</div>
+                           	
+                           	<div class="modal inmodal" id="exModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+                                	<div class="modal-dialog" >
+                                    	<div class="modal-content animated fadeIn">
+                                        	<div class="modal-header">
+                                            	<div class="h1 m-t-xs text-navy">
+                                					<span class="loading hamburger"></span>
+                            					</div>
+                                        	</div>
+                                        	<div class="modal-body" style="text-align:center">
+                                        		<p><strong>엑셀 다운로드 중 입니다.</strong></p>
+                                        	</div>
+                                        	<div class="modal-footer">
+                                            	<button type="button" class="btn btn-white" data-dismiss="modal" id="modalCloseBtn" style="display: none;">확인</button>
+                                        	</div>
+                                    	</div>
+                                	</div>
+                            	</div> 
+                           	
+                           					
 							<div class="table-responsive">
-								<table class="table table-bordered"
-									style="border-top: 1px solid #e7eaec;">
+							<form:form class="checkBoxForm" id="cliCheck" action="/sales/client/del" method="PUT">
+								<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 									<colgroup>
+										<col style="width: 40px;">
 										<col width="180px;">
 										<col width="120px;">
 										<col width="400px;">
@@ -175,6 +200,7 @@
 									<thead>
 
 										<tr>
+											<th><input type="checkbox" class="i-checks" id="icheckAll" name="icheckAll"></th>
 											<th>거래처명</th>
 											<th>거래처 호칭</th>
 											<th>주소</th>
@@ -189,13 +215,16 @@
 
 										<c:forEach var="list" items="${clientList}">
 											<tr>
-												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${list.CLINAME }">
+												<td>
+													<input type="checkbox" class="i-checks chksquare" id="clino" name="clino" value="${list.CLINO}">
+												</td>
+												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" >
 													<a href="/sales/client/view/${list.CLINO }">${list.CLINAME }</a>
 												</td>
-												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${list.CALLNAME }">${list.CALLNAME }</td>
-												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${list.ADDR }">${list.ADDR }</td>
+												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" >${list.CALLNAME }</td>
+												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${list.ADDR }</td>
 												<td>${list.BSTYPE }</td>
-												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${list.USERNAME }">${list.USERNAME }</td>
+												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${list.USERNAME }</td>
 												<td>
 													<c:choose>
 														<c:when test="${list.IMPORTANCE eq 1 }">A</c:when>
@@ -216,13 +245,14 @@
 														<c:when test="${list.FRIENDLY eq 6 }">F</c:when>
 													</c:choose>
 												</td>
-												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${list.MEMO }">${list.MEMO}</td>
+												<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${list.MEMO}</td>
 											</tr>
 										</c:forEach>
 
 									</tbody>
 									<tfoot>
 								</table>
+								</form:form>
 							</div>
 
 							<div class="m-auto">
@@ -273,7 +303,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		
 		<!-- E: 거래처관리 리스트 -->
 
 
@@ -287,10 +317,23 @@
 		<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 	</div>
 	</div>
-
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script> 
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script><!-- radioBox-->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 영업js -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script><!-- file download -->
+	<script>
+		
+	$(document).ready(function(){
+		// icecks
+		$('.i-checks').iCheck({
+			checkboxClass : 'icheckbox_square-green',
+			radioClass : 'iradio_square-green'
+		});	
+	});
 	
+	</script>
 
 </body>
 </html>

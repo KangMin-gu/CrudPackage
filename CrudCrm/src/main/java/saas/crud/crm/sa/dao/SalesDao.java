@@ -16,20 +16,27 @@ public interface SalesDao {
 	public int salesListCount(Map<String,Object> searchVal);	
 	public List<Map<String,Object>> salesList(Map<String,Object> searchVal);
 	
-	public Map<String,Object> salesDetail(SalesDto salesDto);
+	public Map<String,Object> salesDetail(SalesDto salesDto);	
+	
+	public int salesCustListCnt(Map<String,Object> searchVal);
+	public List<Map<String,Object>> salesCustList(Map<String,Object> searchVal);
+	public int salesStateListCnt(Map<String,Object> searchVal);
+	public List<Map<String,Object>> salesStateList(Map<String,Object> searchVal);
+	public int salesContListCnt(Map<String,Object> searchVal);
+	public List<Map<String,Object>> salesContList(Map<String,Object> searchVal);
 	
 	public int salesInsert(SalesDto salesDto);
 	
 	public int salesUpdate(SalesDto salesDto);
 	
 	public int salesDelete(SalesDto salesDto);
+	
+	public int salesDelete(Map<String,Object> prm);
 		
 	public List<Map<String,Object>> cliSalesList(Map<String,Object> prm);
 	
 	
-	public int salesCustListCnt(Map<String,Object> searchVal);
-	public List<Map<String,Object>> salesCustList(Map<String,Object> prm);
-	
+		
 	public int salesCustInsert(SalesCustDto salesCustDto);
 	
 	public Map<String,Object> salesCustDetail(SalesCustDto salesCustDto);
@@ -38,7 +45,7 @@ public interface SalesDao {
 	
 	public int salesCustUpdate(SalesCustDto salesCustDto);
 	
-	public List<Map<String,Object>> salesStateList(SalesDto salesDto);
+	
 	
 	public int salesStateInsert(Map<String,Object> insVal);
 	
@@ -60,5 +67,8 @@ public interface SalesDao {
 	
 	public void mergeSalesSch(SalesDto salesDto);
 	
-	public List<Map<String,Object>> salesContList(Map<String,Object> prmMAp);
+	
+	
+	public int salesComSchUpdate(Map<String,Object> schVal);
+	
 }

@@ -76,5 +76,18 @@ public class CommonDaoImpl implements CommonDao{
 		List<Map<String, Object>> custList = session.selectList("common.popCustList",searchVal);
 		return custList;
 	}
+	//영업 팝업-카운터
+	@Override
+	public int totalcntSales(Map<String, Object> searchVal) {
+		int totalCnt = session.selectOne("common.totalcntSales", searchVal);
+		return totalCnt;
+	}
+	//영업팝업-리스트
+	@Override
+	public List<Map<String, Object>> popSalesList(Map<String, Object> searchVal) {
+		List<Map<String, Object>> salesList = new ArrayList<Map<String, Object>>();
+		salesList = session.selectList("common.popSalesList",searchVal);
+		return salesList;
+	}
 
 }

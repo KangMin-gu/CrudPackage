@@ -46,23 +46,21 @@ body {
 		<div class="wrapper wrapper-content  animated fadeInRight article">
 
 			<div class="col-lg-12">
-				<div class="ibox">
-					<div class="ibox-content row">
-						<div class="box1 col-sm-6 col-xs-6 p-0">
-							<form:form action="/popcust" method="GET">
-								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								<div class="input-group">
-									<input type="text" name="cstname" id="cstname"
-										class="form-control" value="${searchVal.cstname}"> <span
-										class="input-group-append">
-										<Button type="submit" class="btn btn-primary">검색</Button>
-									</span>
-								</div>
-							</form:form>
-						</div>
-					</div>
-				</div>
-				<div class="ibox-content row border-top-0 ">
+				
+				<div class="ibox-content row border-top-0 ">						
+					<div class="col-sm-12 col-xs-12 p-0 float-left">
+						<form:form action="/popcust" method="GET">
+						<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
+						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >담당자명</label>
+                            <div class="col-sm-7">
+                                <input type="text" name="cstname" id="cstname" class="form-control" value="${searchVal.cstname}"> 
+                            </div>                                
+							<div class="col-sm-3 w-100" style="padding-left: 0px;">
+								<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 22px;padding-top: 0px;padding-bottom: 0px;" >검색</button>
+							</div>			
+						</div>		
+						</form:form>
+					</div>			
 
 					<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">

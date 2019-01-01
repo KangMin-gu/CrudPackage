@@ -40,6 +40,20 @@ public class SalesDaoImpl implements SalesDao {
 		Map<String,Object> salesDetail = session.selectOne("sales.salesDetail",salesDto);
 		return salesDetail;
 	}
+	//영업단계 2탭-영업단계-리스트 카운터
+	@Override
+	public int salesStateListCnt(Map<String, Object> searchVal) {
+		int res = session.selectOne("sales.salesStateListCnt", searchVal);
+		return res;
+	}
+	//영업상세 2탭-영업단계-리스트
+	@Override
+	public List<Map<String, Object>> salesStateList(Map<String, Object> searchVal) {
+		List<Map<String, Object>> salesStateList = session.selectList("sales.salesStateList",searchVal);
+		return salesStateList;
+	}
+	
+	
 	//영업추가
 	@Override
 	public int salesInsert(SalesDto salesDto) {
@@ -65,7 +79,15 @@ public class SalesDaoImpl implements SalesDao {
 	public int salesDelete(SalesDto salesDto) {
 		int res = session.update("sales.salesDelete",salesDto);
 		return res;
-	}	
+	}
+	//영업삭제-멀티
+	@Override
+	public int salesDelete(Map<String, Object> prm) {
+		int res = session.update("sales.salesDelete",prm);
+		return res;
+	}
+	
+	
 	//거래처화면-영업리스트
 	@Override
 	public List<Map<String, Object>> cliSalesList(Map<String, Object> prm) {
@@ -79,13 +101,24 @@ public class SalesDaoImpl implements SalesDao {
 		int res = session.selectOne("sales.salesCustListCnt",searchVal);
 		return res;
 	}
-	//영업 상세 - 영업관련고객 리스트
+	//영업 상세 2탭 - 영업관련고객 리스트
 	@Override
 	public List<Map<String, Object>> salesCustList(Map<String, Object> prm) {
 		List<Map<String, Object>> salesCustList = session.selectList("sales.salesCustList",prm);
 		return salesCustList;
 	}
-	
+	//영업 상세 3탭 - 접촉리스트 카운터
+	@Override
+	public int salesContListCnt(Map<String, Object> searchVal) {
+		int res = session.selectOne("sales.salesContListCnt",searchVal);
+		return res;
+	}
+	//영업 상세 3탭 - 접촉 리스트 
+	@Override
+	public List<Map<String, Object>> salesContList(Map<String, Object> prmMAp) {
+		List contList = session.selectList("sales.salesContList",prmMAp);
+		return contList;
+	}	
 		
 	//관련고객팝업 -추가
 	@Override
@@ -111,12 +144,7 @@ public class SalesDaoImpl implements SalesDao {
 		int res = session.update("sales.salesCustUpdate",salesCustDto);
 		return res;
 	}
-	//영업단계-리스트
-	@Override
-	public List<Map<String, Object>> salesStateList(SalesDto salesDto) {
-		List<Map<String, Object>> salesStateList = session.selectList("sales.salesStateList",salesDto);
-		return salesStateList;
-	}
+	
 	//영업단계-추가실행
 	@Override
 	public int salesStateInsert(Map<String,Object> insVal) {
@@ -175,11 +203,15 @@ public class SalesDaoImpl implements SalesDao {
 		int schno = Integer.parseInt(schVal.get("schno").toString());//insert한 id 반환 
 		return schno;
 	}
-	//접촉 리스트 
+	
+	//영업 공통일정 - 수정
 	@Override
-	public List<Map<String, Object>> salesContList(Map<String, Object> prmMAp) {
-		List contList = session.selectList("sales.salesContList",prmMAp);
-		return contList;
+	public int salesComSchUpdate(Map<String, Object> schVal) {
+		int res = session.update("sales.salesComSchUpdate",schVal);
+		return res;
 	}
+	
+	
+
 	
 }

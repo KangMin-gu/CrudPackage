@@ -2,6 +2,7 @@ package saas.crud.crm.sa.controller;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,16 +50,7 @@ public class SalesController {
 		mView.setViewName("sa/sales/saleslist");
 		return mView;
 	}
-	
-	//영업리스트 (영업삭제-멀티)
-	@RequestMapping(value="/sales/del", method=RequestMethod.PUT)
-	public String authsalesDelete(HttpServletRequest request) {
-		String[] salesno = request.getParameterValues("salesno");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@삭제할salesno"+salesno.toString());
-		salesService.svcSalesMultyDelete(request);
-		return "redirect:/sales";
-	}
-	
+		
 	//영업상세
 	@RequestMapping(value="/sales/view/{salesno}",method=RequestMethod.GET)
 	public ModelAndView authsalesDetail(HttpServletRequest request 
@@ -71,13 +63,33 @@ public class SalesController {
 		
 		//관련고객 리스트 추출
 		Map<String,Object> salesCustList = salesService.svcSalesCustList(request);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		
 		mView.addObject("page",salesCustList.get("page")); //페이징
 		mView.addObject("searchVal",salesCustList.get("searchVal"));//검색조건
-		mView.addObject("salesCustList",salesCustList.get("salesCustList"));//리스트 데이터
+		mView.addObject("salesCustList",salesCustList.get("salesCustList"));//관련고객
 		
 		mView.setViewName("sa/sales/salesdetail");
 		return mView;
-	}	
+	}
+	
+	//영업상세-2탭-영업단계리스트
+	@RequestMapping(value="/sales/view/tab/state",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authsalesTabState(HttpServletRequest request) {
+		Map<String,Object> stateTab = salesService.svcSalesDetailStateTabList(request);
+		return stateTab;
+	}
+	
+	//영업,거래처 상세-3탭-접촉리스트
+	@RequestMapping(value="/sales/view/tab/contect",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authsalesTabContect(HttpServletRequest request) {
+		Map<String,Object> contectTab = salesService.svcSalesDetailContectTabList(request);
+		return contectTab;
+	}
+	
 	//영업추가. 로그인한 본인 정보 바인딩. 서비스 X 
 	@RequestMapping(value="/sales/post",method=RequestMethod.GET)
 	public ModelAndView authsalesForm(HttpServletRequest request,@ModelAttribute SalesDto SalesDto) {
@@ -105,10 +117,8 @@ public class SalesController {
 		SalesDto.setEdituser(userno);
 		SalesDto.setSiteid(siteid);
 		SalesDto.setIsdelete(0);
-				
-	
-		int salesNo = salesService.svcSalesInsert(SalesDto);
-		
+					
+		int salesNo = salesService.svcSalesInsert(SalesDto);		
 		return "redirect:/sales/view/"+salesNo; 
 	}
 	
@@ -141,17 +151,37 @@ public class SalesController {
 		return "redirect:/sales/view/"+salesNo; 
 	}
 	
-	//영업삭제
-	@RequestMapping(value="/sales/delete/{salesno}",method=RequestMethod.GET)
-	public String authclientDelete(HttpServletRequest request 
-								,@PathVariable int salesno) {
+	//영업삭제-단일
+	@RequestMapping(value="/sales/del/{salesno}",method=RequestMethod.GET)
+	public String authclientDelete(HttpServletRequest request,@PathVariable int salesno) {
 		
-		SalesDto salesDto = new SalesDto();
-		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());			
-		salesDto.setSalesno(salesno);
-		salesDto.setSiteid(siteid);
-		salesService.svcSalesDelete(salesDto);
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());		
+		String[] arraySalesnoStr = {salesno+""};
 		
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		prmMap.put("arraySalesnoStr", arraySalesnoStr);
+		prmMap.put("userno", userNo);
+		prmMap.put("siteid", siteId);
+		
+		salesService.svcSalesDelete(prmMap);
+		return "redirect:/sales";
+	}
+	
+	//영업리스트 (영업삭제-멀티)
+	@RequestMapping(value="/sales/del", method=RequestMethod.PUT)
+	public String authsalesDelete(HttpServletRequest request) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());		
+		String[] arraySalesnoStr = request.getParameterValues("salesno");
+		
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		prmMap.put("arraySalesnoStr", arraySalesnoStr);
+		prmMap.put("userno", userNo);
+		prmMap.put("siteid", siteId);
+		
+		salesService.svcSalesDelete(prmMap);
 		return "redirect:/sales";
 	}
 	
@@ -251,11 +281,13 @@ public class SalesController {
 	@RequestMapping(value="/popsalesstate/{salesno}", method=RequestMethod.GET)
 	public ModelAndView authpopSalesState(HttpServletRequest request, @PathVariable int salesno, @RequestParam int salestate) {			
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("salesno",salesno);
-		mav.addObject("salestate",salestate);
-		mav.setViewName("sa/sales/pop/sastate");
-		return mav;
+		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.addObject("salesno",salesno);
+		mView.addObject("salestate",salestate);
+		mView.setViewName("sa/sales/pop/sastate");
+		return mView;
 	}
 	
 	
@@ -427,7 +459,7 @@ public class SalesController {
 		return mView;
 	}
 
-	//캘린더 - 회원사공통스케쥴 팝업 입력폼
+	//캘린더 - 회원사공통스케쥴 팝업 입력 실행
 	@RequestMapping(value="/sales/cal/com/post", method=RequestMethod.POST)
 	@ResponseBody
 	public int authsaCalComSchInsert(HttpServletRequest request, @RequestParam Map<String,Object> schVal){
@@ -446,7 +478,6 @@ public class SalesController {
 	//캘린더 - 공통스케쥴 상세 
 	@RequestMapping(value="/sales/cal/com/view/{comschno}", method=RequestMethod.GET)
 	public ModelAndView authsaCalComSchDetail(HttpServletRequest request, @PathVariable int comschno) {
-		System.out.println("@@@@@@tttt");
 		Map<String,Object> prmMap = new HashMap<String,Object>();
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		prmMap.put("siteid",siteid);
@@ -457,5 +488,34 @@ public class SalesController {
 		mView.setViewName("sa/calendar/pop/comschdetail");
 		return mView;
 	}
+	
+	//캘린더 - 공통스케쥴 수정폼 
+	@RequestMapping(value="/sales/cal/com/post/{comschno}", method=RequestMethod.GET)
+	public ModelAndView authsaCalComSchUpdateForm(HttpServletRequest request, @PathVariable int comschno) {		
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		prmMap.put("siteid",siteid);
+		prmMap.put("comschno", comschno);
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("schUpdate",salesService.svcSalesComSchDetail(prmMap));
+		mView.setViewName("sa/calendar/pop/comschupdate");
+		return mView;
+	}
+	
+	//캘린더 - 공통스케쥴 수정-실행 
+	@RequestMapping(value="/sales/cal/com/view/post/{comschno}", method=RequestMethod.POST)
+	@ResponseBody
+	public int authsaCalComSchUpdate(HttpServletRequest request, @PathVariable int comschno, @RequestParam Map<String,Object> schVal) {		
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		schVal.put("siteid",siteid);
+		schVal.put("userno",userno);
+		schVal.put("comschno", comschno);				
+		int res = salesService.scvSalesComSchUpdate(schVal);
+		return res;
+	}
+	
+
 
 }

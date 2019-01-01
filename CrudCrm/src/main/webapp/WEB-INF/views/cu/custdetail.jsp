@@ -510,9 +510,9 @@
 											<div class="tabs-container">
 												<ul class="nav nav-tabs" role="tablist">
 													<li><a class="nav-link active" data-toggle="tab" href="#tab1">서비스</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab2">영업</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab3">캠페인</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab4">접촉</a></li>
+													<li><a class="nav-link" onClick="javascript:tabTargetSalesList(1);" data-toggle="tab" href="#tab2">영업</a></li>
+													<li><a class="nav-link" onClick="javascript:tabTargetContect(1);" data-toggle="tab" href="#tab3">접촉</a></li>
+													<li><a class="nav-link" data-toggle="tab" href="#tab4">캠페인</a></li>
 													<li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li>
 												</ul>
 												<div class="tab-content">
@@ -571,39 +571,80 @@
 													</div>
 													<div role="tabpanel" id="tab2" class="tab-pane overflow-x">
 														<div class="panel-body">
+														
+															<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+																<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+														
+                                									<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>영업명</strong></label>
+                            											<div class="col-sm-7">
+                                											<input type="text" class="form-control" id="salename" name="salename" value="${searchVal.salename }" style="height: 27px;">  
+                            											</div>                                
+																		<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																			<a href="#" onClick="tabTargetSalesList(1);" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+																		</div>			
+																	</div>		
+                                						
+																</div>
+																
+															</div>
+															
+															
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th>예상수주일</th>
 																		<th>영업건명</th>
-																		<th>상담건</th>
+																		<th>예상수주일</th>
 																		<th>영업담당자</th>
+																		<th>현단계</th>
+																		<th>단계진입일</th>
 																	</tr>
 																</thead>
 																<tbody>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
-																	<tr>
-																		<td>203일</td>
-																		<td>영업건명입니다</td>
-																		<td>상담건입니다</td>
-																		<td>담당자</td>
-																	</tr>
+																	
 																</tbody>
 															</table>
+															<div class="m-auto" style="float:center;">
+																<ul class="pagination"></ul>
+															</div>
 														</div>
 													</div>
+													
 													<div role="tabpanel" id="tab3" class="tab-pane overflow-x">
+														<div class="panel-body">
+															
+															<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+																<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+                                									<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>고객명</strong></label>
+                            											<div class="col-sm-7">
+                                											<input type="text" class="form-control" style="height: 27px;" name="contcustname" id="contcustname"  value="${searchVal.contcustname}"> 
+                            											</div>                                
+																		<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																			<a href="#" onClick="tabTargetContect(1)" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+																		</div>			
+																	</div>		
+																</div>
+															</div>
+														
+															<table class="table table-bordered">
+																<thead>
+																	<tr>
+																		<th>접촉일</th>
+																		<th>접촉자</th>
+																		<th>접촉유형</th>
+																		<th>접촉매체</th>
+																		<th>접촉결과</th>
+																		<th>접촉내용</th>
+																	</tr>
+																</thead>
+																<tbody></tbody>
+															</table>
+															<div class="m-auto" style="float:center;">
+																<ul class="pagination"></ul>
+															</div>
+														</div>
+													</div>
+													
+													<div role="tabpanel" id="tab4" class="tab-pane overflow-x">
 														<div class="panel-body">
 															<table class="table table-bordered">
 																<thead>
@@ -645,48 +686,7 @@
 															</table>
 														</div>
 													</div>
-													<div role="tabpanel" id="tab4" class="tab-pane overflow-x">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>접촉일</th>
-																		<th>접촉자</th>
-																		<th>접촉유형</th>
-																		<th>접촉매체</th>
-																		<th>접촉결과</th>
-																		<th>접촉내용</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>접촉자임</td>
-																		<td>접촉유형입니다</td>
-																		<td>접촉매체입니다</td>
-																		<td>접촉결과입니다</td>
-																		<td>접촉내용입니다</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
+													
 													<div role="tabpanel" id="tab5" class="tab-pane overflow-x">
 														<div class="panel-body">
 															<table class="table table-bordered">
@@ -750,6 +750,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<!-- S: 추가 js-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 2탭사용 영업js -->
 
 	<script>
         $(document).ready(function () {

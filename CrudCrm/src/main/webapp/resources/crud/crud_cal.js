@@ -93,8 +93,6 @@
 		   debugger;
 		   alert('E.receiver');
 		   tempEvent = event;
-	       //event.color = $('#hiddenColor').val();
-	       //$('#calendar').fullCalendar('updateEvent',event)
 	     },
 		
 		//한글화
@@ -118,7 +116,7 @@
 			var dd = tempDay.substr(3,2);
 			var startDate = yyyy+'-'+mm+'-'+dd; //클릭한 날짜를 yyyy-mm-dd형식으로 변환
 			
-			openNewWindow("캘린더추가",url+"/post?startdate="+startDate,"",600,700);//팝업호출
+			openNewWindow("캘린더추가",url+"/post?startdate="+startDate,"",600,670);//팝업호출
 	
 		},
 		/*
@@ -162,7 +160,7 @@
 				//window.location.href = campUrl+"/"+id;
 				openNewWindow("캘린더상세",url+"/"+id,"",600,700);
 			}else {
-				openNewWindow("캘린더상세",url+"/view/"+id,"",600,700);	
+				openNewWindow("캘린더상세",url+"/view/"+id,"",600,670);	
 			}
 		},
 		
@@ -215,8 +213,7 @@
 			{				
 				events:  JSON.parse(schList)//json String객체를 json객체로 변환해준다  -> 스케쥴 리스트 달력에 표시됨				
 			}
-		// any other event sources...
-
+		
 			]
 
 

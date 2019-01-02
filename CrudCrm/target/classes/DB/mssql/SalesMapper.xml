@@ -533,7 +533,8 @@
 		<if test="state != null and state != 0">
 		AND A.STATE = #{state}
 		</if>
-	</select>	
+	</select>
+		
 	<!-- 영업단계 리스트 -->
 	<select id="salesStateList" parameterType="hashMap" resultType="hashMap">
 		
@@ -914,5 +915,64 @@
 		AND SITEID = #{siteid}
 	</update>
 	
+	
+	<!-- 고객 상세 탭 - 영업 리스트 카운터 -->
+	<select id="custTabSalesListCnt" parameterType="hashMap" resultType="int">
+	SELECT
+	COUNT(*)	
+	
+	FROM TB210010 A
+	LEFT OUTER JOIN TB250010 B ON A.SALESNO = B.SALESNO
+	
+	WHERE
+		B.ISDELETE = 0 AND A.ISDELETE =0
+		AND A.SITEID = #{siteid}
+		AND CUSTNO = #{custno}
+		<if test="salename != null">
+		AND A.SALENAME like '%'+#{salename}+'%' 
+		</if>	   		
+	</select>
+	
+	<!-- 고객 상세 탭 - 영업 리스트 -->
+	<select id="custTabSalesList" parameterType="hashMap" resultType="hashMap">	
+	SELECT
+	*
+	FROM
+		(
+		SELECT
+		(ROW_NUMBER() OVER(ORDER BY A.SALESNO DESC)) AS ROWNUM	
+		,A.SALESNO , A.SALENAME 
+		,CONVERT(VARCHAR,A.FORDDATE,112) AS FORDDATE
+		,A.OWNER
+		,CASE WHEN A.SALESTATE = 1 THEN '계약성공종료' 
+	  	  	WHEN A.SALESTATE = 2 THEN '계약중' 
+	  	  	WHEN A.SALESTATE = 3 THEN '제안서제출' 
+	  	  	WHEN A.SALESTATE = 4 THEN '접촉중' 
+	  	  	WHEN A.SALESTATE = 5 THEN '문의' 
+	  	  	WHEN A.SALESTATE = 6 THEN '중도포기' 
+	  	  	WHEN A.SALESTATE = 7 THEN '경쟁실패' 
+	  	  	ELSE '' 
+	  	 	 END AS SALESTATE
+		,CONVERT(VARCHAR,A.STATEDATE,112) AS STATEDATE
+		,C.USERNAME
+	
+		FROM TB210010 A
+		LEFT OUTER JOIN TB250010 B ON A.SALESNO = B.SALESNO
+		INNER JOIN TB980010 C ON A.OWNER = C.USERNO
+	
+		WHERE
+			B.ISDELETE = 0 AND A.ISDELETE =0
+			AND A.SITEID = #{siteid}
+			AND CUSTNO = #{custno}
+			<if test="salename != null">
+			AND A.SALENAME like '%'+#{salename}+'%' 
+			</if>	 
+		) AS T
+	WHERE
+		<if test="endRowNum != null">	 
+		ROWNUM between #{startRowNum} and #{endRowNum}	
+		</if>
+		 
+	</select>
 	
 </mapper>

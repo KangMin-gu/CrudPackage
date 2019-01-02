@@ -91,13 +91,6 @@ public class ClientServiceImpl implements ClientService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	//거래처 추가
 	@Override
 	public int svcCliInsert(ClientDto clientDto) {

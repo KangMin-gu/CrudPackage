@@ -220,7 +220,7 @@ public class SalesController {
 		salesCustDto.setSiteid(siteid);
 			
 		int salesNo = salesService.svcSalesCustInsert(salesCustDto);//관련고객추가 서비스 실행
-		return 0;			
+		return salesNo;			
 	}
 	
 	//팝업영업관련고객-삭제
@@ -514,6 +514,15 @@ public class SalesController {
 		schVal.put("comschno", comschno);				
 		int res = salesService.scvSalesComSchUpdate(schVal);
 		return res;
+	}
+	
+	//고객 상세탭  - 영업 리스트 
+	//영업,거래처 상세-3탭-접촉리스트
+	@RequestMapping(value="/cust/view/tab/sales",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authcustTabSalesList(HttpServletRequest request) {
+		Map<String,Object> salesTab = salesService.svcCustTabSalesList(request);
+		return salesTab;
 	}
 	
 

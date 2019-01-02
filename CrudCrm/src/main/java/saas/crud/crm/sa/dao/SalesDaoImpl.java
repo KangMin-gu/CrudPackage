@@ -210,6 +210,19 @@ public class SalesDaoImpl implements SalesDao {
 		int res = session.update("sales.salesComSchUpdate",schVal);
 		return res;
 	}
+	//고객-상세탭-영업리스트 카운터
+	@Override
+	public int custTabSalesListCnt(Map<String, Object> searchVal) {
+		int res = session.selectOne("sales.custTabSalesListCnt",searchVal);
+		return res;
+	}
+	//고객-상세탭-영업리스트
+	@Override
+	public List<Map<String, Object>> custTabSalesList(Map<String, Object> searchVal) {
+		List<Map<String,Object>> salesList = new ArrayList<Map<String,Object>>();
+		salesList = session.selectList("sales.custTabSalesList",searchVal);
+		return salesList;
+	}
 	
 	
 

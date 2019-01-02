@@ -26,4 +26,6 @@ public interface CustDao {
 	public int custformUpdate(CustDto CustDto);
 	public int custformUpdateDeny(CustDenyDto custDenyDto);
 	
+	public int custTabCampListCnt(Map<String,Object> searchVal);
+	public List<Map<String,Object>> custTabCampList(Map<String,Object> searchVal);
 }

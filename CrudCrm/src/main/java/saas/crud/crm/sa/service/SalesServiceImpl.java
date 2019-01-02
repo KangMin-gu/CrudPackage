@@ -394,5 +394,38 @@ public class SalesServiceImpl implements SalesService {
 							
 		return resMap;
 	}
+	//고객 상세 탭 - 영업리스트
+	@Override
+	public Map<String, Object> svcCustTabSalesList(HttpServletRequest request) {
+		Map<String, Object> searchVal = crud.searchParam(request);
+		
+		//총자료수
+		int totalRows = salesDao.custTabSalesListCnt(searchVal);
+							
+		//paging			
+		int pageRowCount = 20; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 
+					
+		page.put("totalRows", totalRows);
+					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+					
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+					
+		//영업 리스트 출력
+		List<Map<String,Object>> salesList = salesDao.custTabSalesList(searchVal);
+				
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("salesList", salesList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+							
+		return resMap;
+	}
 
 }

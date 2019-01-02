@@ -109,7 +109,6 @@
                                         </p>
                                     </div>
                                     <div class="modal-footer">
-
                                         <button type="button" class="btn btn-primary">받기</button>
                                         <button type="button" class="btn btn-white" data-dismiss="modal">거절</button>
                                     </div>
@@ -836,7 +835,6 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
-
             // datePicker
             $('.input-group.date').datepicker({
                 todayBtn: "linked",

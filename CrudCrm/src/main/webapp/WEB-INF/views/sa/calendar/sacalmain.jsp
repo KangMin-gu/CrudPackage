@@ -49,7 +49,7 @@
 					<div class="col-lg-3">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>CUSTOM SCHEDULE</h5>
+								<h5>자주쓰는일정</h5>
 							</div>
 							<div class="ibox-content">
 								<div id='external-events'>	
@@ -77,7 +77,7 @@
 					<div class="col-lg-9">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>Striped Table</h5>
+								<h5>영업일정</h5>
 							</div>
 							<div class="ibox-content">
 								<input type="hidden" id="schList" name="schList" value='${schList }'/>

@@ -404,6 +404,8 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	
 	<!-- file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>
+	<!-- file download -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script>
 
 	<script>
 		$(document).ready(function() {	
@@ -439,27 +441,7 @@
 				autoclose : true
 			});
 					    
-		    //엑셀다운
-		    $("#excelBtn").on("click", function () {
-		    	debugger;
-		    	var $exModal = $("#exModal");
-				var url = $('#excelUrl').val();
-		    	
-		        $exModal.dialog({ modal: true });
-		      	$('.ui-front').removeAttr('style');
-		      	
-		        $.fileDownload(url, {
-		            successCallback: function (url) {
-		            	$exModal.dialog('close');
-		            	$('#modalCloseBtn').trigger('click');  
-		            },
-		            failCallback: function (responseHtml, url) {
-		            	$exModal.dialog('close');
-		            	$('#modalCloseBtn').trigger('click');
-		            }
-		        });
-		    });	 
-		    
+	    
 		});
 	</script>
 </body>

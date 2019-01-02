@@ -410,4 +410,52 @@
 	</update>
 	
 	
+	<!-- 고객상세-탭 캠페인 리스트 카운터 -->
+	<select id="custTabCampListCnt" parameterType="hashMap" resultType="int">
+	SELECT
+  		COUNT(*)	
+		FROM T_CAMP_TARGET_CUST A
+		INNER JOIN T_CAMPAIGN B ON A.CAMPNO = B.CAMPNO   
+	
+		WHERE 
+			B.ISDELETE = 0  
+			AND B.SITEID = #{siteid} 
+			AND A.CUSTNO = #{custno}
+			<if test="campname != null">
+			AND B.CAMPNAME LIKE '%'+#{campname}+'%'
+			</if>
+	</select>
+	
+	<!-- 고객상세-탭 캠페인 리스트 -->
+	<select id="custTabCampList" parameterType="hashMap" resultType="hashMap">
+	
+	SELECT
+	*
+	FROM
+		(
+		SELECT
+  		(ROW_NUMBER() OVER(ORDER BY B.CAMPNO DESC)) AS ROWNUM
+		,B.CAMPNO, B.CAMPNAME
+		,B.CAMPTYPE, B.CAMPSTEP
+		,CONVERT(VARCHAR,B.STARTDATE,120) AS STARTDATE
+		,CONVERT(VARCHAR,B.ENDDATE,120) AS ENDDATE
+		,B.OWNER
+		,C.USERNAME 
+	
+		FROM T_CAMP_TARGET_CUST A
+		INNER JOIN T_CAMPAIGN B ON A.CAMPNO = B.CAMPNO  
+		LEFT OUTER JOIN TB980010 C ON B.OWNER = C.USERNO 
+	
+		WHERE 
+			B.ISDELETE = 0  
+			AND B.SITEID = #{siteid} 
+			AND A.CUSTNO = #{custno}
+			<if test="campname != null">
+			AND B.CAMPNAME LIKE '%'+#{campname}+'%'
+			</if>
+		) T
+		<if test="endRowNum != null">
+		WHERE ROWNUM between #{startRowNum} and #{endRowNum}
+		</if>	
+	</select>
 </mapper>

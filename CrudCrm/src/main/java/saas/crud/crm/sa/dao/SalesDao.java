@@ -66,9 +66,10 @@ public interface SalesDao {
 	public int salesSchInsertFromCom(Map<String,Object> schVal);
 	
 	public void mergeSalesSch(SalesDto salesDto);
-	
-	
-	
+		
 	public int salesComSchUpdate(Map<String,Object> schVal);
-	
+
+	public int custTabSalesListCnt(Map<String,Object> searchVal);
+
+	public List<Map<String,Object>> custTabSalesList(Map<String,Object> searchVal);
 }

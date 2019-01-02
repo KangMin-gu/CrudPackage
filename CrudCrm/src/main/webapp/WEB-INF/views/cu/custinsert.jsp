@@ -588,8 +588,7 @@
 	<script>	
  
         $(document).ready(function () {
-      	   
-       	
+      	      	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',

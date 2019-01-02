@@ -510,10 +510,10 @@
 											<div class="tabs-container">
 												<ul class="nav nav-tabs" role="tablist">
 													<li><a class="nav-link active" data-toggle="tab" href="#tab1">서비스</a></li>
-													<li><a class="nav-link" onClick="javascript:tabTargetSalesList(1);" data-toggle="tab" href="#tab2">영업</a></li>
+													<li><a class="nav-link" onClick="javascript:tabTargetCustSalesList(1);" data-toggle="tab" href="#tab2">영업</a></li>
 													<li><a class="nav-link" onClick="javascript:tabTargetContect(1);" data-toggle="tab" href="#tab3">접촉</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab4">캠페인</a></li>
-													<li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li>
+													<li><a class="nav-link" onClick="javascript:tabTargetCustCampList(1);" data-toggle="tab" href="#tab4">캠페인</a></li>
+													<!-- <li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li> -->
 												</ul>
 												<div class="tab-content">
 													<div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
@@ -580,7 +580,7 @@
                                 											<input type="text" class="form-control" id="salename" name="salename" value="${searchVal.salename }" style="height: 27px;">  
                             											</div>                                
 																		<div class="col-sm-3 w-100" style="padding-left: 0px;">
-																			<a href="#" onClick="tabTargetSalesList(1);" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+																			<a href="#" onClick="tabTargetCustSalesList(1);" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
 																		</div>			
 																	</div>		
                                 						
@@ -628,12 +628,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th>접촉일</th>
 																		<th>접촉자</th>
-																		<th>접촉유형</th>
+																		<th>접촉일</th>
+																		<th>고객명</th>
 																		<th>접촉매체</th>
-																		<th>접촉결과</th>
-																		<th>접촉내용</th>
+																		<th>접촉메모</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>
@@ -646,48 +645,39 @@
 													
 													<div role="tabpanel" id="tab4" class="tab-pane overflow-x">
 														<div class="panel-body">
+															
+															<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+																<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+                                									<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>캠페인명</strong></label>
+                            											<div class="col-sm-7">
+                                											<input type="text" class="form-control" style="height: 27px;" name="campname" id="campname"  value="${searchVal.campname}"> 
+                            											</div>                                
+																		<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																			<a href="#" onClick="tabTargetCustCampList(1)" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+																		</div>			
+																	</div>		
+																</div>
+															</div>
+														
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
 																		<th>캠페인명</th>
-																		<th>프로젝트</th>
 																		<th>시작일</th>
 																		<th>종료일</th>
 																		<th>채널매체</th>
-																		<th>결과</th>
+																		<th>캠페인담당자</th>
 																	</tr>
 																</thead>
-																<tbody>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																	<tr>
-																		<td>캠페인명입니다</td>
-																		<td>프로젝트입니다</td>
-																		<td>2018/10/12</td>
-																		<td>2018/11/22</td>
-																		<td>채널메체입니다</td>
-																		<td>결과입니다</td>
-																	</tr>
-																</tbody>
+																<tbody></tbody>
 															</table>
+															<div class="m-auto" style="float:center;">
+																<ul class="pagination"></ul>
+															</div>
 														</div>
 													</div>
-													
-													<div role="tabpanel" id="tab5" class="tab-pane overflow-x">
+													<!-- 출처 탭 보류 -->
+													<!-- <div role="tabpanel" id="tab5" class="tab-pane overflow-x">
 														<div class="panel-body">
 															<table class="table table-bordered">
 																<thead>
@@ -705,22 +695,10 @@
 																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
 																		<td>1568951615</td>
 																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
 																</tbody>
 															</table>
 														</div>
-													</div>
+													</div> -->
 												</div>
 											</div>
 										</div>
@@ -750,19 +728,17 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<!-- S: 추가 js-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 2탭사용 영업js -->
-
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 영업js 관련고객 탭 사용 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- 영업js 관련고객 탭 사용 -->
 	<script>
         $(document).ready(function () {
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
-            });
-
-    
+            });    
         });
     </script>
-	<!-- E: 추가 js -->
+	
 </body>
 </html>

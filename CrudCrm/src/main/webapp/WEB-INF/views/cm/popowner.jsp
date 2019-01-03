@@ -53,8 +53,8 @@ body {
                                 <div class="col-sm-7">
                                     <input type="text" name="username" id="username" class="form-control" value="${searchVal.username}">
                                 </div>                                
-								<div class="col-sm-3 w-100 text-right">
-									<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 26px;padding-top: 0px;padding-bottom: 0px;" >검 색</button>
+								<div class="col-sm-3 w-100" style="padding-left: 0px;">
+									<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 22px;padding-top: 0px;padding-bottom: 0px;" >검색</button>
 								</div>							
 							</div>		
 						</form:form>	
@@ -72,7 +72,6 @@ body {
 							</thead>
 							<tbody>
 								<c:forEach var="list" items="${userList}">
-									<%-- <tr style="cursor: pointer;" onClick="toParentOwner('${list.USERNO }','${list.USERNAME}');"> --%>
 									<tr style="cursor: pointer;" onClick="javascript:parentOwnerUser(this);" value="${list.USERNO }"> 
 										<td id="username">${list.USERNAME}</td>
 										<td>${list.USERID}</td>

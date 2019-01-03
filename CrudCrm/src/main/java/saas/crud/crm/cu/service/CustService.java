@@ -28,4 +28,6 @@ public interface CustService {
 	
 	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto);
 	
+	public Map<String,Object> svcCustTabCampList(HttpServletRequest request);
+	
 }

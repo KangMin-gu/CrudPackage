@@ -52,8 +52,8 @@ public class ClientDaoImpl implements ClientDao{
 		}
 		//거래처삭제
 		@Override
-		public int cliDelete(ClientDto clientDto) {
-			int res = session.update("client.cliDelete",clientDto);
+		public int cliDelete(Map<String,Object> prm) {
+			int res = session.update("client.cliDelete",prm);
 			return res;
 		}
 		//거래처 상세- 거래처관련고객카운터

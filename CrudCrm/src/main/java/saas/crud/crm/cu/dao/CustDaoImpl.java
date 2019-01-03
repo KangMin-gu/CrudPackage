@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
 
@@ -82,6 +81,18 @@ public class CustDaoImpl implements CustDao {
 	public int custformUpdateDeny(CustDenyDto custDenyDto) {
 		int res = session.insert("customer.custformUpdateDeny", custDenyDto);
 		return res;
+	}
+	//고객 상세 탭 - 캠페인 리스트 카운터
+	@Override
+	public int custTabCampListCnt(Map<String, Object> searchVal) {
+		int res = session.selectOne("customer.custTabCampListCnt",searchVal);
+		return 0;
+	}
+	//고객 상세 탭 - 캠페인 리스트
+	@Override
+	public List<Map<String, Object>> custTabCampList(Map<String, Object> searchVal) {
+		List<Map<String, Object>> campList = session.selectList("customer.custTabCampList",searchVal);
+		return campList;
 	}
 
 

@@ -101,11 +101,12 @@
 												<tr>
 													<th>직장전화</th>
 													<td>
-														<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="wrktel1">
-															<option value="">선택</option>
-                                                			<form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/>
-                                                		</form:select>
-													
+														<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="wrktel1" name="wrktel1">
+															<option value="" >선택</option>
+															<c:forEach var="code" items="${PHONE }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   			</c:forEach>
+                                                		</select>	
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3" >
 													</td>
@@ -151,10 +152,12 @@
 												<tr>
 													<th>직장팩스</th>
 													<td>
-														 <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem"  path="wrkfax1" >
-														 	<option value="">선택</option>
-                                                   	 	 	<form:options items="${FAX}" itemLabel="codename" itemValue="codeval"/>
-                                                		 </form:select>
+														 <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="wrkfax1" name="wrkfax1" >
+                                                   	 	 	<option value="" >선택</option>
+															<c:forEach var="code" items="${FAX }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   			</c:forEach>
+                                                		 </select>
 													
 														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" > 
 														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3" >
@@ -249,10 +252,12 @@
 													<tr>
 														<th>자택전화</th>
 														<td>
-															<form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" path="homtel1">
-																<option value="">선택</option>
-                                                				<form:options items="${PHONE}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" id="homtel1" name="homtel1">
+																<option value="" >선택</option>
+																<c:forEach var="code" items="${PHONE }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 															<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" > 
 															<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3">
 														</td>
@@ -260,10 +265,12 @@
 													<tr>
 														<th>결혼여부</th>
 														<td>
-															<form:select class="form-control" style="height: 1.45rem" path="married">
-																<option value="0">선택</option>
-                                                				<form:options items="${MARRIED}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.45rem" id="married" name="married">
+                                                				<option value="0" >선택</option>
+																<c:forEach var="code" items="${MARRIED }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 													<tr>
@@ -294,37 +301,45 @@
 													<tr>
 														<th>성별</th>
 														<td>
-															<form:select class="form-control" style="height: 1.45rem" path="sex">
-																<option value="0">선택</option>
-                                                				<form:options items="${SEX}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.45rem" id="sex" name="sex">
+                                                				<option value="0" >선택</option>
+																<c:forEach var="code" items="${SEX }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 													<tr>
 														<th>발송처</th>
 														<td>
-															<form:select class="form-control" style="height: 1.45rem" path="mailto">
-																<option value="0">선택</option>
-                                                				<form:options items="${MAILTO}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.45rem" id="mailto" name="mailto">
+                                                				<option value="0" >선택</option>
+																<c:forEach var="code" items="${MAILTO }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<form:select class="form-control" style="height: 1.52rem" path="custgrade">
-																<option value="0">선택</option>
-                                                				<form:options items="${CUSTGRADE}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.52rem" id="custgrade" name="custgrade">
+                                                				<option value="0" >선택</option>
+																<c:forEach var="code" items="${CUSTGRADE }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 													<tr>
 														<th>회원구분</th>
 														<td>
-															<form:select class="form-control" style="height: 1.45rem" path="custgubun">
-																<option value="0">선택</option>
-                                                				<form:options items="${CUSTGUBUN}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.45rem" id="custgubun" name="custgubun">
+                                                				<option value="0" >선택</option>
+																<c:forEach var="code" items="${CUSTGUBUN }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 												</tbody>
@@ -349,10 +364,12 @@
 													<tr>
 														<th>양력/음력</th>
 														<td>
-															<form:select class="form-control" style="height: 1.45rem" path="solar">
-																<option value="0">선택</option>
-                                                				<form:options items="${SOLAR}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.45rem" id="solar" name="solar">
+																<option value="0" >선택</option>
+																<c:forEach var="code" items="${SOLAR }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 													<tr>
@@ -364,10 +381,12 @@
 													<tr>
 														<th class="border-bottom-0">활동등급</th><!-- 컬럼생성필요 -->
 														<td class="border-bottom-0">
-															<form:select class="form-control" style="height: 1.45rem" path="actgrade">
-																<option value="0">선택</option>
-                                                				<form:options items="${ACTGRADE}" itemLabel="codename" itemValue="codeval"/>
-                                                			</form:select>	
+															<select class="form-control" style="height: 1.45rem" id="actgrade" name="actgrade">
+																<option value="0" >선택</option>
+																<c:forEach var="code" items="${ACTGRADE }">
+                                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                                   				</c:forEach>
+                                                			</select>	
 														</td>
 													</tr>
 												</tbody>
@@ -569,8 +588,7 @@
 	<script>	
  
         $(document).ready(function () {
-      	   
-       	
+      	      	
             // icheck css
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',

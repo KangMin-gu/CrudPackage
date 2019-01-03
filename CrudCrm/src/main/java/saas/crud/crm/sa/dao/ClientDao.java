@@ -19,7 +19,7 @@ public interface ClientDao {
 	
 	public int clientUpdate(ClientDto clientDto);
 	
-	public int cliDelete(ClientDto clientDto);
+	public int cliDelete(Map<String,Object> prm);
 	
 	public int cliCustListCnt(Map<String,Object> searchVal);
 	public List<Map<String,Object>> cliCustList(Map<String,Object> prm);

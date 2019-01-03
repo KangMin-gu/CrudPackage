@@ -15,8 +15,12 @@ import saas.crud.crm.sa.dto.SalesDto;
 public interface SalesService {
 		
 	public ModelAndView svcSalesList(HttpServletRequest request);
+	public Map<String,Object> svcCliSalesList(HttpServletRequest request);
 	
 	public ModelAndView svcSalesDetail(SalesDto salesDto);
+	public Map<String,Object> svcSalesDetailStateTabList(HttpServletRequest request);
+	public Map<String,Object> svcSalesDetailContectTabList(HttpServletRequest request);
+	
 	
 	public int svcSalesInsert(SalesDto salesDto);
 	
@@ -24,9 +28,7 @@ public interface SalesService {
 	public Map<String,Object> svcSalesDetailForm(SalesDto salesDto);
 	public int svcSalesDetailUpdate(SalesDto salesDto);
 	
-	public int svcSalesDelete(SalesDto salesDto);
-	
-	public int svcSalesMultyDelete(HttpServletRequest request); 
+	public int svcSalesDelete(Map<String,Object> prmMap); 
 	
 	public Map<String,Object> svcSalesCustList(HttpServletRequest request);
 	
@@ -56,4 +58,7 @@ public interface SalesService {
 	
 	public String svcSalesSchInsertFromCom(Map<String,Object> schVal);
 	
+	public int scvSalesComSchUpdate(Map<String,Object> schVal);
+
+	public Map<String,Object> svcCustTabSalesList(HttpServletRequest request);
 }

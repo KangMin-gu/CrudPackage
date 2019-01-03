@@ -39,7 +39,7 @@ body {
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading" style="padding-bottom: 12px;">
 			<div class="col-lg-10">
-				<h2>직장 검색</h2>
+				<h2>영업 검색</h2>
 				
 			</div>
 
@@ -51,10 +51,10 @@ body {
 				<div class="ibox-content row border-top-0 ">
 								
 					<div class="col-sm-12 col-xs-12 p-0 float-left">
-						<form:form action="/popclient" method="GET">
-						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >담당자명</label>
+						<form:form action="/popsales" method="GET">
+						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >영업명</label>
                             <div class="col-sm-7">
-                                <input type="text" name="cliname" id="cliname" class="form-control" value="${searchVal.cliname}"> 
+                                <input type="text" name="salename" id="salename" class="form-control" value="${searchVal.salename}"> 
                             </div>                                
 							<div class="col-sm-3 w-100" style="padding-left: 0px;">
 								<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 22px;padding-top: 0px;padding-bottom: 0px;" >검색</button>
@@ -66,18 +66,18 @@ body {
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
+									<th>영업명</th>
 									<th>거래처명</th>
-									<th>호칭명</th>
 									<th>담당자</th>
 									
 								</tr>
 							</thead>
 							<tbody>
 								<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-								<c:forEach var="list" items="${clientList}">
-									<tr style="cursor: pointer;" onclick="javascript:parentCliname(this);" value="${list.CLINO }">
-										<td id="cliname">${list.CLINAME}</td>
-										<td>${list.CALLNAME}</td>
+								<c:forEach var="list" items="${salesList}">
+									<tr style="cursor: pointer;" onclick="javascript:parentSalename(this);" value="${list.SALESNO }">
+										<td id="salename">${list.SALENAME}</td>
+										<td>${list.CLINAME}</td>
 										<td>${list.USERNAME}</td>										
 									</tr>
 								</c:forEach>

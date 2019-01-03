@@ -70,8 +70,8 @@ body {
 									<tr>
 										<th>고객명&nbsp;<b>&#42;</b></th>
 										<td>
-											<div class="input-group">
-												<input type="text" class="form-control validate required nameV" autocomplete="off" name="custname" id="custname" readonly value="${cliCustUpdate.CUSTNAME}">
+											<div class="input-group" id="custname">
+												<input type="text" class="form-control validate required nameV" autocomplete="off" name="custname"  readonly value="${cliCustUpdate.CUSTNAME}">
                                                 <input type="hidden" name="custno" id="custno" value="${cliCustUpdate.CUSTNO}">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>

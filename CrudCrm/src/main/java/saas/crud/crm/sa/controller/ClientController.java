@@ -25,6 +25,7 @@ import saas.crud.crm.sa.dto.ClientCustDto;
 import saas.crud.crm.sa.dto.ClientDto;
 import saas.crud.crm.sa.dto.SalesCustDto;
 import saas.crud.crm.sa.service.ClientService;
+import saas.crud.crm.sa.service.SalesService;
 
 @Controller
 public class ClientController {
@@ -34,6 +35,8 @@ public class ClientController {
 	private ClientService clientService;
 	@Autowired
 	private CodeService codeService;
+	@Autowired
+	private SalesService salesService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -62,6 +65,14 @@ public class ClientController {
 						
 		return mView;
 	}
+	//거래처상세-2탭-영업리스트
+	@RequestMapping(value="/sales/client/view/tab/sales",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authcliTabSales(HttpServletRequest request) {
+		System.out.println("@@2TAB");
+		Map<String,Object> salesTab = salesService.svcCliSalesList(request);
+		return salesTab;
+	}	
 	
 	//거래처추가 form //세션값으로 서비스 x 바로 해당 페이지로 
 	@RequestMapping(value="/sales/client/post",method=RequestMethod.GET)
@@ -102,6 +113,8 @@ public class ClientController {
 		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());			
 		
 		ModelAndView mView = new ModelAndView(); 
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.addObject("cliUpdate",clientService.svcCliDetailForm(siteid,clino));
 		mView.setViewName("sa/client/cliupdate");
 		return mView;
@@ -122,15 +135,34 @@ public class ClientController {
 	}
 	
 	//거래처삭제
-	@RequestMapping(value="/sales/client/delete/{clino}",method=RequestMethod.GET)
-	public String authclientDelete(HttpServletRequest request 
-											,@PathVariable int clino) {
-		ClientDto clientDto = new ClientDto();
-		int siteid= Integer.parseInt(request.getSession().getAttribute("SITEID").toString());			
-		clientDto.setClino(clino);
-		clientDto.setSiteid(siteid);
-		clientService.svcCliDelete(clientDto);
+	@RequestMapping(value="/sales/client/del/{clino}",method=RequestMethod.GET)
+	public String authclientDelete(HttpServletRequest request ,@PathVariable int clino) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());		
+		String[] arrayClinoStr = {clino+""};
 		
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		prmMap.put("arrayClinoStr", arrayClinoStr);
+		prmMap.put("userno", userNo);
+		prmMap.put("siteid", siteId);
+		
+		clientService.svcCliDelete(prmMap);
+		return "redirect:/sales/client";
+	}
+	
+	//거래처삭제-멀티
+	@RequestMapping(value="/sales/client/del",method=RequestMethod.PUT)
+	public String authclientMultDelete(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());		
+		String[] arrayClinoStr = request.getParameterValues("clino");
+		
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		prmMap.put("arrayClinoStr", arrayClinoStr);
+		prmMap.put("userno", userNo);
+		prmMap.put("siteid", siteId);
+		
+		clientService.svcCliDelete(prmMap);
 		return "redirect:/sales/client";
 	}
 	

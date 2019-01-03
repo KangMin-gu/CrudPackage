@@ -60,7 +60,9 @@
 	                          		</div>													
 									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 										<a href="/sales/client/post/${cliDetail.CLINO }" class="btn btn-primary">수정</a> 
-										<a href="/sales/client/delete/${cliDetail.CLINO }" class="btn btn-primary">삭제</a> 
+										<c:if test="${sessionScope.CHKAUTH eq 30 || sessionScope.CHKAUTH eq 20 || sessionScope.USERNO eq cliDetail.OWNER }">  
+											<a href="/sales/client/del/${cliDetail.CLINO }" class="btn btn-primary">삭제</a>
+										</c:if> 
 									</div>
 								</div>
 								
@@ -156,7 +158,7 @@
 											</tr>
 											<tr>
 												<th>대표전화</th>
-												<td>${cliDetail.TELNO1 }${cliDetail.TELNO2 }${cliDetail.TELNO3 }</td>
+												<td><c:if test="${fn:length(cliDetail.TELNO1) gt  0 && fn:length(cliDetail.TELNO2) gt 0 && fn:length(cliDetail.TELNO3) gt 0   }">${cliDetail.TELNO1 }-${cliDetail.TELNO2 }-${cliDetail.TELNO3 }</c:if></td>
 											</tr>
 											<tr>
 												<th>업태</th>
@@ -190,7 +192,7 @@
 											</tr>
 											<tr>
 												<th>팩스번호</th>
-												<td>${cliDetail.FAXTEL1 }${cliDetail.FAXTEL2 }${cliDetail.FAXTEL3 }</td>
+												<td><c:if test="${fn:length(cliDetail.FAXTEL1) gt  0 && fn:length(cliDetail.FAXTEL2) gt 0 && fn:length(cliDetail.FAXTEL3) gt 0   }">${cliDetail.FAXTEL1 }-${cliDetail.FAXTEL2 }-${cliDetail.FAXTEL3 }</c:if></td>
 											</tr>
 											<tr>
 												<th>업종</th>
@@ -225,7 +227,7 @@
 											</tr>
 											<tr>
 												<th>핸드폰</th>
-												<td>${cliDetail.MOBILE1 }${cliDetail.MOBILE2 }${cliDetail.MOBILE3 }</td>
+												<td><c:if test="${fn:length(cliDetail.MOBILE1) gt  0 && fn:length(cliDetail.MOBILE2) gt 0 && fn:length(cliDetail.MOBILE3) gt 0   }">${cliDetail.MOBILE1 }-${cliDetail.MOBILE2 }-${cliDetail.MOBILE3 }</c:if></td>
 											</tr>
 											<tr>
 												<th>종목</th>
@@ -251,6 +253,10 @@
 										</colgroup>
 										<tbody>
 											<tr>
+												<th class="border-top-0">EMAIL</th>
+												<td class="border-top-0">${cliDetail.EMAIL }</td>
+											</tr>
+											<tr>
 												<th class="border-top-0">메모</th>
 												<td class="border-top-0">${cliDetail.MEMO }</td>
 											</tr>
@@ -263,33 +269,33 @@
 								<div class="tabs-container">
 									<ul class="nav nav-tabs" role="tablist">
 										<li><a class="nav-link active" data-toggle="tab" href="#tab1">관련고객</a></li>
-										<li><a class="nav-link" data-toggle="tab" href="#tab2">영업</a></li>
-										<li><a class="nav-link" data-toggle="tab" href="#tab3">고객접촉</a></li>
+										<li><a class="nav-link" onClick="javascript:tabTargetSalesList(1);" data-toggle="tab" href="#tab2">영업</a></li>
+										<li><a class="nav-link" onClick="javascript:tabTargetContect(1);"  data-toggle="tab" href="#tab3">고객접촉</a></li>
 									</ul>
 									<div class="tab-content">
 									
 										<!-- 관련고객 -->
 										<div role="tabpanel" id="tab1" class="tab-pane active">
 											<div class="panel-body table-responsive">
-																	
-												<div class="w-100 text-right mb-2">
-                                               	   <Button class="btn btn-primary cliCustBtn" id="clino" value= "${cliDetail.CLINO }">추가</Button>
-                                            	</div>								
-																	
-												<div class="box1 col-xl-3 p-0">	
-													<div class="form-group row">
-														<label class="col-sm-3 col-form-label" style="padding-top: 3px;"><strong>고객명</strong></label>
-														<div class="col-sm-8">
-                                        					<div class="input-group">                                        						
-                                        						<input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname }"> 
-                                        						<span class="input-group-append"> 
-                                        							<a href="#" onClick="cliCustSearch();" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
-                                        						</span>
-                                        					</div>
-                                    					</div>
-                                					</div>
-												</div>		
-																						
+												
+												<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+													<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+														
+                                						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>고객명</strong></label>
+                            								<div class="col-sm-7">
+                                								<input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname }" style="height: 27px;">  
+                            								</div>                                
+															<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																<a href="#" onClick="cliCustSearch(${cliDetail.CLINO });" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+															</div>			
+														</div>		
+                                						
+													</div>
+													<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+										 				<Button class="btn btn-primary cliCustBtn" id="clino" value= "${cliDetail.CLINO }">추가</Button>
+													</div>
+												</div>
+																					
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 150px;" />
@@ -326,8 +332,8 @@
 											
 																					
 												<div class="m-auto" style="float:center;">
-													<ul class="pagination">
-														
+													<c:if test="${fn:length(cliCustList) ne 0 }"> 
+													<ul class="pagination">													
 														<c:choose>
 															<c:when test="${page.startPageNum ne 1 }">
 																<li class="footable-page-arrow disabled">	
@@ -365,16 +371,30 @@
 																<li class="disabled"><a href="javascript:">&raquo;</a></li>
 															</c:otherwise>
 														</c:choose>
-													</ul> 
+													</ul>
+													</c:if> 
 												</div> 
 											
 											</div>									
 										</div>
 										<div role="tabpanel" id="tab2" class="tab-pane ">
 											<div class="panel-body table-responsive">
-												<div class="w-100 text-right mb-2">
-													<a href="javascript:void(0);" class="btn btn-primary">추가</a>
+												
+												<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+													<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+														
+                                						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>영업명</strong></label>
+                            								<div class="col-sm-7">
+                                								<input type="text" class="form-control" id="salename" name="salename" value="${searchVal.salename }" style="height: 27px;">  
+                            								</div>                                
+															<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																<a href="#" onClick="tabTargetSalesList(1);" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+															</div>			
+														</div>		
+                                						
+													</div>
 												</div>
+							
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 200px;" />
@@ -392,34 +412,30 @@
 															<th>단계진입일</th>
 														</tr>
 													</thead>
-													<tbody>
-													
-												 	<c:forEach var="salesList" items="${cliSalesList }">
-														<tr>
-															<td>${salesList.SALENAME }</td>
-															<td>${salesList.FORDDATE }</td>
-															<td>${salesList.USERNAME }</td>
-															<td>
-																<c:choose>
-																	<c:when test="${salesList.SALESTATE eq 1 }">계약성공종료</c:when>
-																	<c:when test="${salesList.SALESTATE eq 2 }">계약중</c:when>
-																	<c:when test="${salesList.SALESTATE eq 3 }">제안서제출</c:when>
-																	<c:when test="${salesList.SALESTATE eq 4 }">접촉중</c:when>
-																	<c:when test="${salesList.SALESTATE eq 5 }">문의</c:when>
-																	<c:when test="${salesList.SALESTATE eq 6 }">중도포기</c:when>
-																	<c:when test="${salesList.SALESTATE eq 7 }">경쟁실패</c:when>
-																</c:choose>
-															</td>
-															<td>${salesList.STATEDATE }</td>
-														</tr>
-													</c:forEach> 
-														
-													</tbody>
+													<tbody></tbody>
 												</table>
+												<div class="m-auto" style="float:center;">
+													<ul class="pagination"></ul>
+												</div>
 											</div>
 										</div>
+										
 										<div role="tabpanel" id="tab3" class="tab-pane">
 											<div class="panel-body table-responsive">
+												
+												<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
+													<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
+                                						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 3px;padding-left:20px;"><strong>고객명</strong></label>
+                            								<div class="col-sm-7">
+                                								<input type="text" class="form-control" style="height: 27px;" name="contcustname" id="contcustname"  value="${searchVal.contcustname}"> 
+                            								</div>                                
+															<div class="col-sm-3 w-100" style="padding-left: 0px;">
+																<a href="#" onClick="tabTargetContect(1)" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
+															</div>			
+														</div>		
+													</div>
+												</div>
+											
 												<table class="table table-bordered">
 													<colgroup>
 														<col style="width: 200px;" />
@@ -437,18 +453,11 @@
 															<th>접촉메모</th>
 														</tr>
 													</thead>
-													<tbody>
-														<c:forEach var="cont" items="${contList }">
-														<tr>
-															<td>${cont.CTTUSER }</td>
-															<td>${cont.CTTDATE }</td>
-															<td>${cont.CUSTNAME }</td>
-															<td>${cont.CTTCHANNEL }</td>
-															<td>${cont.MEMO }</td>
-														</tr>
-													</c:forEach>
-													</tbody>
+													<tbody></tbody>
 												</table>
+												<div class="m-auto" style="float:center;">
+													<ul class="pagination"></ul>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -475,7 +484,7 @@
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cal.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script>
 
 </body>
 </html>

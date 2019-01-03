@@ -47,10 +47,9 @@ body {
 				<div class="ibox">
 
 					<div class="ibox-content row">
-					<form:form action="/sales/cal/com/post" method="post" id="command" onsubmit="return false;">
-						
+					
 						<div class="w-100 text-right mb-3">
-							<Button class="btn btn-primary" type="submit" onclick="formSubmit('/sales/cal/com/post','');">추가</Button>
+							<a class="btn btn-primary" href="/sales/cal/com/post/${schDetail.COMSCHNO }">수정</a>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -67,7 +66,7 @@ body {
 									
 									<tr>
 										<th>영업명</th>
-										<td>${schDetail.SALENAME }</td>
+										<td><a href="#" onclick="openNewWindow('영업','/sales/view/${schDetail.SALESNO }','','600','700');" >${schDetail.SALENAME }</a></td>
 									</tr>								
 																																
 									<tr>
@@ -83,16 +82,9 @@ body {
 								</tbody>
 							</table>
 						</div>
-					</form:form>
-
-
-
-
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 

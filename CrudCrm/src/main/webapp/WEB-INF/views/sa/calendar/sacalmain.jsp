@@ -49,7 +49,7 @@
 					<div class="col-lg-3">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>CUSTOM SCHEDULE</h5>
+								<h5>자주쓰는일정</h5>
 							</div>
 							<div class="ibox-content">
 								<div id='external-events'>	
@@ -58,17 +58,16 @@
 									<input type="hidden" id="hiddenColor" name="hiddenColor" value="">
 									<c:forEach var="list" items="${comSchList}"  varStatus="status"> 
 										<div class='external-event navy-bg' style="background-color: ${list.color}; position: relative;" id="status${status.index }"> 
-											${list.title }   <a onclick='openNewWindow("공통스케쥴상세","/sales/cal/com/view/${list.id }","",600,500);'><i class="fa fa-search" ></i></a>
+											${list.title }   
+											<a onclick='openNewWindow("공통스케쥴상세","/sales/cal/com/view/${list.id }","",600,500);' class="event-search"><i class="fa fa-search" ></i></a>
 											<input type="hidden" id="id${status.index }" name="id${list.id }" value="${list.id }">
 											<input type="hidden" id="color${status.index }" name="color${list.id}" value="${list.color}"/>
 										</div>
 									</c:forEach>
 																
 									<p class="m-t">
-										<!--<input type='checkbox' id='drop-remove' class="i-checks" checked /> 
-										 <label for='drop-remove'>remove after drop</label> -->
 										<c:if test="${sessionScope.CHKAUTH ne 10 }">
-											<a class="btn btn-default btn-lg float-right" onclick='openNewWindow("자주쓰는스케쥴","/sales/cal/com/post","",600,700);'>등록</a><br/>
+											<a class="btn btn-default btn-lg float-right" onclick='openNewWindow("자주쓰는스케쥴","/sales/cal/com/post","",600,500);'>등록</a><br/>
 										</c:if>
 									</p>
 								</div>
@@ -78,7 +77,7 @@
 					<div class="col-lg-9">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>Striped Table</h5>
+								<h5>영업일정</h5>
 							</div>
 							<div class="ibox-content">
 								<input type="hidden" id="schList" name="schList" value='${schList }'/>
@@ -129,8 +128,7 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green'
         });
-        
-       
+              
     });
     
     

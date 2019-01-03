@@ -27,6 +27,7 @@ import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.nt.dto.NoteCategoryDto;
 import saas.crud.crm.sa.dao.ClientDao;
+import saas.crud.crm.sa.dao.SalesDao;
 
 
 
@@ -53,6 +54,9 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
 	private CrudRemote crudRemote;
+	
+	@Autowired
+	private SalesDao salesDao;
 
 	//담당자 검색 팝업 페이지 데이터
 	@Override
@@ -271,5 +275,32 @@ public class CommonServiceImpl implements CommonService {
 		mailDto.setEmaillogid(emaillogid);
 		mailDto.setReserv(0);
 		mailDao.mailDeny(mailDto);
+	}
+	//영업 팝업
+	@Override
+	public ModelAndView svcPopGetSalesName(HttpServletRequest request) {
+		Map<String,Object> searchVal = crud.searchParam(request);
+				
+		int totalRows = commonDao.totalcntSales(searchVal);
+		
+		//페이징
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+
+		Map<String,Integer> page = crud.paging(request, totalRows,pageRowCount,pageDisplayCount);
+		
+		page.put("totalRows", totalRows);
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");	
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+		
+		List<Map<String,Object>> salesList = commonDao.popSalesList(searchVal);
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("page",page);
+		mView.addObject("searchVal",searchVal);
+		mView.addObject("salesList",salesList);
+		return mView;
 	}
 }

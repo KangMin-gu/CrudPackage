@@ -22,7 +22,7 @@ public interface ClientService {
 	public Map<String,Object> svcCliDetailForm(int siteid,int clino);
 	public int svcCliDetailUpdate(ClientDto clientDto);
 
-	public int svcCliDelete(ClientDto clientDto);
+	public int svcCliDelete(Map<String,Object> prmMap);
 		
 	public Map<String,Object> svcCliCustList(HttpServletRequest request);
 	

@@ -36,23 +36,21 @@ body {
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
-				<h2>일정추가</h2>
-
+				<h2>일정수정</h2>
 			</div>
-
 		</div>
 
-		<!-- S: 고객 목록 ppt p01-->
+
 		<div class="wrapper wrapper-content  animated fadeInRight article">
 
 			<div class="col-lg-12">
 				<div class="ibox">
 
 					<div class="ibox-content row">
-					<form:form action="/sales/cal/com/post" method="post" id="command" onsubmit="return false;">
+					
 						
 						<div class="w-100 text-right mb-3">
-							<Button class="btn btn-primary" type="submit" onclick="formSubmit('/sales/cal/com/post','');">추가</Button>
+							<Button class="btn btn-primary" onclick="formSubmit('/sales/cal/com/view/post/${schUpdate.COMSCHNO }','');">저장</Button>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -61,18 +59,18 @@ body {
 									<col style="width: auto;">
 								</colgroup>
 								<tbody>
-									
+								<form:form action="/sales/cal/com/view/post/${schUpdate.COMSCHNO }" method="post" id="comSchForm" onsubmit="return false;">	
 									<tr>
 										<th>스케쥴명</th>
-										<td><input type="text" class="form-control" id="schname" name="schname"></td>
+										<td><input type="text" class="form-control" id="schname" name="schname" value="${schUpdate.SCHNAME }"></td>
 									</tr>
 									
 									<tr>
 										<th>영업명</th>
 										<td>
 											<div class="input-group sales" id="salename">
-												<input type="text" class="form-control" autocomplete="off" name="salename" readonly>
-                                                <input type="hidden" name="salesno" id="salesno" value="0">
+												<input type="text" class="form-control" autocomplete="off" name="salename" value="${schUpdate.SALENAME }" readonly>
+                                                <input type="hidden" name="salesno" id="salesno" value="${schUpdate.SALESNO }">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
                                                 </span>
@@ -82,27 +80,20 @@ body {
 																		
 									<tr>
 										<th>색상</th>
-										<td><input type="text" class="form-control colorPicker" id="color" name="color"/></td>
+										<td><input type="text" class="form-control colorPicker" id="color" name="color" value="${schUpdate.COLOR }"/></td>
 									</tr>
 									
 									<tr>
 										<th>메모</th>
-										 <td><textarea name="memo" id="memo"  class="form-control" style="resize:none;" rows="4"></textarea></td>
+										 <td><textarea name="memo" id="memo"  class="form-control" style="resize:none;" rows="4">${schUpdate.MEMO }</textarea></td>
 									</tr>
-									
+								</form:form>	
 								</tbody>
 							</table>
-						</div>
-					</form:form>
-
-
-
-
+						</div>			
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 
@@ -117,10 +108,10 @@ body {
 			
 	function formSubmit(fromUrl,toUrl){
 		debugger;
-		var form = new FormData(document.getElementById('command'));
+		var form = new FormData(document.getElementById('comSchForm'));
 				
 		$.ajax({
-		    url: '/sales/cal/com/post',
+		    url: fromUrl,
 		    data: form,
 		    dataType: 'json', 
 		    processData: false, 

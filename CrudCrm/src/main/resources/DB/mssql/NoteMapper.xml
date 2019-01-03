@@ -34,6 +34,7 @@
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS D ON B.USERNO = D.USERNO			
 			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND B.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
+			AND (<![CDATA[A.FILESEARCHKEY <> '1']]>	OR A.FILESEARCHKEY IS NULL)
 				<if test="title != null">
 					AND A.TITLE LIKE '%'+#{title}+'%'
 				</if>
@@ -57,7 +58,8 @@
 			LEFT OUTER JOIN Crud_Saas.dbo.t_notice02 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS C ON A.USERNO = C.USERNO 
 			LEFT OUTER JOIN Crud_SaaS.dbo.TB980010 AS D ON B.USERNO = D.USERNO
-			WHERE A.SITEID = #{siteid} AND B.READCHEK = 0 AND B.ISDELETE = 0 AND B.USERNO = #{userno} AND A.NTCWAYEMAIL = 1			
+			WHERE A.SITEID = #{siteid} AND B.READCHEK = 0 AND B.ISDELETE = 0 AND B.USERNO = #{userno} AND A.NTCWAYEMAIL = 1
+			AND (<![CDATA[A.FILESEARCHKEY <> '1']]>	OR A.FILESEARCHKEY IS NULL)			
 			) AS E
 			<where>
 				<if test="title != null">
@@ -298,7 +300,7 @@
 	
 	<!-- 첨부파일리스트 -->
 	<select id="noteFile" parameterType="hashMap" resultType="hashMap">
-		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE,FILESEARCHKEY,PATH 
 		FROM Crud_SaaS.dbo.t_file 
 		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
 	</select>

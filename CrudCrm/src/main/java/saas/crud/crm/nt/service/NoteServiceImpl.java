@@ -1,5 +1,6 @@
 package saas.crud.crm.nt.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
-import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonDao;
 import saas.crud.crm.nt.dao.NoteDao;
@@ -70,9 +68,6 @@ public class NoteServiceImpl implements NoteService{
 		return importInbox;
 		
 	}
-
-
-
 
 	//inbox
 	//@Cacheable("test")
@@ -434,7 +429,36 @@ public class NoteServiceImpl implements NoteService{
 		String fileSearchKey = note.get("FILESEARCHKEY").toString();		
 		noteVal.put("filesearchkey", fileSearchKey);
 		}
+		boolean tt = curUrl.contains("forward");
+		boolean ss = note.get("FILESEARCHKEY") != null;
 		
+		
+		//전달, 파일서치키가 null이 아니면 
+		if(curUrl.contains("forward") && note.get("FILESEARCHKEY") != null) {
+			String fileSearchKey = note.get("FILESEARCHKEY").toString();
+			noteVal.put("filesearchkey", fileSearchKey);
+			//파일정보 읽어옴 
+			List<Map<String, Object>> replyFile = ntDao.noteFile(noteVal);
+			
+			
+			
+			for(int i=0; i < replyFile.size(); i++) {
+				//파일 경로 
+				String filePath = replyFile.get(i).get("PATH").toString();
+				String orgFileName = replyFile.get(i).get("ORGFILENAME").toString();
+				
+				//파일생성 
+				File file = new File(filePath);		
+				
+				mView.addObject("replyFile",file);
+				mView.addObject("orgFileName",orgFileName);
+				
+				
+			}
+			
+			
+			
+		}
 		
 		//첨부파일정보
 		List<Map<String, Object>> notefile = ntDao.noteFile(noteVal);
@@ -645,18 +669,21 @@ public class NoteServiceImpl implements NoteService{
 	//통지발송
 	@Override
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
-		
+		File file = null;
 		Boolean whiteListFlag = false;
 		Boolean whiteSizeFlag = false;
+		List<MultipartFile> mFile = null;
+		MultipartFile sFile = null;
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
 		
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
-		List<MultipartFile> mFile = null;
-		MultipartFile sFile = null;
 		
+		
+
 
 		//받는 사람 이름,유저넘버,이메일이 넘어옴 
 		String[] toUserEmail = request.getParameterValues("touser"); 
@@ -721,11 +748,14 @@ public class NoteServiceImpl implements NoteService{
 			cutterCcName = emailQuarter(ccName);
 		}
 		
-		
+		String orgFileName = "";
+		long fileSize = 0;
 		
 		//확장자 체크, t_mail에 정보가  들어가지 않기 위해 값을 얻어옴 
-		String orgFileName = fileUpload.get(0).getOriginalFilename();
-		long fileSize = fileUpload.get(0).getSize();
+		if(fileUpload.size() > 0) {
+		orgFileName = fileUpload.get(0).getOriginalFilename();
+		fileSize = fileUpload.get(0).getSize();
+		}
 		
 		whiteListFlag = crudEngine.whiteFlag(orgFileName);		// 파일이없으면 null이니까 flase로 떨어짐 , 파일이있고 제대로 된거면 true로 떨어짐 
 	    whiteSizeFlag = crudEngine.whiteSizeFlag(fileSize);		
@@ -734,7 +764,10 @@ public class NoteServiceImpl implements NoteService{
 
 		
 		//파일 업로드 실행 
-		if(orgFileName.length() > 0) {		
+		if(orgFileName.length() > 0) {
+			
+			
+			
 			String fileSearchKey = crudEngine.fileSearchKey(request);
 			System.out.println("fileSearchKey : " + fileSearchKey);
 			crudEngine.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
@@ -746,7 +779,6 @@ public class NoteServiceImpl implements NoteService{
 			}else {
 				ntDto.setFilesearchkey(fileSearchKey);
 			}
-			
 		}
 		
 		
@@ -841,7 +873,7 @@ public class NoteServiceImpl implements NoteService{
 							ntDao.noteSendMail(map);	
 						}
 						//첨부파일이 있을때 
-						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
+						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag){
 							ntDao.noteSendMail(map);
 						}
 						

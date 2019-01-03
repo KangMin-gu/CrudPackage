@@ -58,7 +58,9 @@
 				AND E.SENDFORM = #{sendform}
 			</if>
 			) X 
-		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			<if test="endRowNum != null">
+				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			</if>
 	</select>
 		<select id="detail" parameterType="hashMap" resultType="hashMap">
 		SELECT 

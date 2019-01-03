@@ -158,19 +158,17 @@
 											</c:when>
 											<c:otherwise>
 												<input id="title" name="title" type="text"
-													class="form-control  error validate allV required " value="">
+													class="form-control" value="">
 											
 											</c:otherwise>
 											
 											</c:choose>
-											<!-- error validate allV required -->
+											<!--   error validate allV required -->
 											
 										</div>
-										<div class="col-md-2 text-left">
-											<label for="col-form-label" for="important"
-												style="margin-top: 7px;">중요 여부:</label> <input
-												id="important" name="important" type="checkbox"
-												class="i-checks" value="1">
+										<div class="checkbox float-left col-lg-2 p-0">
+																<input type="checkbox" class="i-checks" name="important" id="important" value="1">
+																<label for="important">중요 여부</label>
 										</div>
 									</div>
 								</div>
@@ -179,6 +177,9 @@
 										style="height: 100px;"></textarea>
 									<div class="clearfix"></div>
 								</div>
+								
+								<c:if test="${replyFile eq null}">
+								
 								<div class="mail-body">
 									<div class="form-group row">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
@@ -187,8 +188,12 @@
 												multiple>
 											<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
 										</div>
+										
 									</div>
 								</div>
+								
+								</c:if>								
+								
 								<div class="mail-body text-right tooltip-demo">
 								
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100"  style="padding-right: 0px;">
@@ -206,7 +211,7 @@
 				</div>
 			</div>
 			<!-- Content End -->
-
+			
 			<!-- foot -->
 			<div class="footer">
 				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
@@ -228,60 +233,84 @@
 		
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script>
+	<!-- radioBox-->
 	
 	
 	
 	$(document).ready(function() {
+		
+		$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+		
+		
+		//처음 진입시 받는이,제목 빨간색 테두리 
 		$('#toto').css('border','1px solid #F5A9A9');
-
+		$('#title').css('border','1px solid #F5A9A9');
+		
+		//제목 공백체크
+		//var blank = /[\s]/g;
 		
 		
-		$(document).on('mouseup','.chosen-container:eq(0)',function(){
-			//받는사람이 없으면 
-			debugger;
-			if($('.search-choice').length <= 0){
-				 $("#reqSuccessMsg").css("display","none");
+		//통지발송 본문에 커서 존재시 
+		$('.wrapper').mouseover(function(){
+			//받는이가 있으면 
+			if($('.search-choice').length > 0){
+				//테두리를 없앰 
+				$('#toto').css('border','');
+				
+				//받는이가 있고 제목이 없으면 
+				if($('#title').val() != ""){
+					 $("#submit").removeAttr("disabled");
+					 $("#reqDefaultMsg").css("display","none");
+					 $("#reqSuccessMsg").css("display","");
+					 $("#reqMsgDiv").removeClass("alert-info");		//기존에 있던 success 제거 (녹색창)
+					 $("#reqMsgDiv").addClass("alert-success");	
+				}
+			}else{			//받는이 없으면 테두리 재생성 
+				$('#toto').css('border','1px solid #F5A9A9');
+				 $("#reqSuccessMsg").css("display","none");		    //success 제거 
 				 $("#reqDefaultMsg").css("display","");
-				 
-				 $("#reqMsgDiv").removeClass("alert-success");		//기존에 있던 success 제거 (녹색창)
+				 $("#reqMsgDiv").removeClass("alert-success");
 				 $("#reqMsgDiv").addClass("alert-info");			
 				 $("#submit").attr("disabled","disabled");
-				 $("#reqDefaultMsg").html("<strong style='color:red'>받는사람을 입력해주세요.</strong>");				
-				return false;
-			}else{			
-				if(!$('#title').hasClass('error')){
-				 $("#submit").removeAttr("disabled");
-				 $("#reqDefaultMsg").css("display","none");
-				 $("#reqSuccessMsg").css("display","");
-				 $("#reqMsgDiv").removeClass("alert-info");		//기존에 있던 success 제거 (녹색창)
-				 $("#reqMsgDiv").addClass("alert-success");	
-				 $('#toto').css('border','');
-				}
 			}
-		});
-		
-		
-		
-		$("#title").on({
-			keyup:function(){
-				debugger;
-				if($('.search-choice').length <= 0){
-					$("#reqSuccessMsg").css("display","none");
-					$("#reqDefaultMsg").css("display","");
-					
-					$("#reqMsgDiv").removeClass("alert-success");		//기존에 있던 success 제거 (녹색창)
-					 $("#reqMsgDiv").addClass("alert-info");	
-					
-					 $("#submit").attr("disabled","disabled");
-					 $("#reqDefaultMsg").html("<strong style='color:red'>받는사람을 입력해주세요.</strong>");				
-					return false;
+			
+			
+			//제목여부 
+			if($('#title').val() != ""){
+				//제목 테두리 제거 
+				$('#title').css('border','');
+				
+				//받는이가 있고 제목이 있으면 
+				if($('.search-choice').length > 0){
+					 $("#submit").removeAttr("disabled");
+					 $("#reqDefaultMsg").css("display","none");
+					 $("#reqSuccessMsg").css("display","");
+					 $("#reqMsgDiv").removeClass("alert-info");		//기존에 있던 success 제거 (녹색창)
+					 $("#reqMsgDiv").addClass("alert-success");	
+					 
 				}
+				
+			}else{			//제목 없으면 
+				 $('#title').css('border','1px solid #F5A9A9');
+				 $("#reqSuccessMsg").css("display","none");		    //success 제거 
+				 $("#reqDefaultMsg").css("display","");
+				 $("#reqMsgDiv").removeClass("alert-success");
+				 $("#reqMsgDiv").addClass("alert-info");			
+				 $("#submit").attr("disabled","disabled");
+				
 			}
+			
+
 		})
 		
 		
+		var replyFile = $('#replyFile').attr('value');
+		var fileName = $('#fileName').attr('value');
 		
 		
 		
@@ -296,8 +325,7 @@
 		
 		$('.summernote').summernote();
 		$('.note-editable').css('height','300px');
-		
-		
+	
 		
 		//summernote에 넣을 내용 
 		var forwardHtml = '';
@@ -326,16 +354,8 @@
 			$('.summernote').summernote('code',forwardHtml);
 		}
 		
+
 		
-	
-		
-		
-		
-		
-		$('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
 		
 		
 	});

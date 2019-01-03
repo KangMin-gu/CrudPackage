@@ -88,6 +88,7 @@
 								</c:forEach>
 								
 								<div class="attachment">
+								
 								<c:forEach var="file" items="${noteFile}">
 									<div class="file-box">
 										<div class="file">
@@ -98,10 +99,14 @@
 												<div class="file-name">
 													${file.ORGFILENAME } <br /> <small>${file.REGDATE }</small>
 												</div>
+												<div>
+													<input type="hidden" value="${file.FILESEARCHKEY}"/>
+												</div>												
 											</a>
 										</div>
 									</div>	
-								</c:forEach>										
+								</c:forEach>
+																		
 									<div class="clearfix"></div>
 								</div>
 							</div>
@@ -110,8 +115,7 @@
 									class="fa fa-reply"></i> 답장</a> 
 									<a class="btn btn-sm btn-white"
 									href="/note/forward/${note.NOTICEID}"><i class="fa fa-arrow-right"></i>
-									전달</a>
-									
+									전달</a>									
 										<!-- 휴지통에서는 완전삭제 -->
 									<c:choose>							
 										<c:when test="${fn:contains(referUrl,'trash')}">
@@ -124,8 +128,7 @@
 											href="/note/intrash/${note.NOTICEID}"><i class="fa fa-trash-o"></i>
 											삭제</a>
 										</c:otherwise>
-									</c:choose>
-								
+									</c:choose>								
 							</div>
 							<div class="clearfix"></div>
 						</div>

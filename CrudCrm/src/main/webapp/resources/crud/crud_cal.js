@@ -139,7 +139,7 @@
     		    $('.tooltipevent').remove();
     	},
 		 */
-		
+		/* TODO.마우스 팝오버 이벤트 펑션 
 		eventRender: function(event, element){
 			debugger;
 	          element.popover({
@@ -151,7 +151,7 @@
 	              html : true
 	          });
 	        },
-		
+		*/
 		eventClick: function(event, element) {//캘린더 이벤트 클릭시
 			
 			var id = event.id;

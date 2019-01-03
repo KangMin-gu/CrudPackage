@@ -402,11 +402,9 @@ public class SalesController {
 	//캘린더 - 이벤트 상세보기
 	@RequestMapping(value="/sales/cal/view/{schno}", method=RequestMethod.GET)
 	public ModelAndView authsaCalDetail(HttpServletRequest request, @PathVariable int schno){
-		
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		
+				
 		Map<String,Object> prmMap = new HashMap<String,Object>();
-		
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		prmMap.put("siteid", siteid);
 		prmMap.put("schno", schno);
 		
@@ -506,7 +504,7 @@ public class SalesController {
 	//캘린더 - 공통스케쥴 수정-실행 
 	@RequestMapping(value="/sales/cal/com/view/post/{comschno}", method=RequestMethod.POST)
 	@ResponseBody
-	public int authsaCalComSchUpdate(HttpServletRequest request, @PathVariable int comschno, @RequestParam Map<String,Object> schVal) {		
+	public int authsaCalComSchUpdate(HttpServletRequest request,@PathVariable int comschno, @RequestParam Map<String,Object> schVal) {		
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		schVal.put("siteid",siteid);
@@ -525,6 +523,25 @@ public class SalesController {
 		return salesTab;
 	}
 	
+	//접촉 추가 폼  
+	@RequestMapping(value="/sales/cont/post",method=RequestMethod.GET)
+	public ModelAndView authsalesContInsertForm(HttpServletRequest request) {
+		
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		prmMap.put("siteid", siteid);
 
+		ModelAndView mView = new ModelAndView();		
+		
+		String route = request.getParameter("route");			
+		if(route.equals("sch")) { //(영업일정 상세- 접촉 버튼클릭)
+			int schno = Integer.parseInt(request.getParameter("key").toString());
+			prmMap.put("schno", schno);
+			mView.addObject("schDetail",salesService.svcSalesSchDetail(prmMap));//전달할 일정
+			mView.setViewName("sa/calendar/pop/continsert");
+		}
+		
+		return mView;
+	}
 
 }

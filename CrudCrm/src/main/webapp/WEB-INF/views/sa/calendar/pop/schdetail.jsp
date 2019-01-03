@@ -53,6 +53,7 @@ body {
 						
 						<div class="w-100 text-right mb-3">
 							<a class="btn btn-primary" id="submitBtn" href="/sales/cal/view/post/${schDetail.SCHNO }">수정</a>
+							<a class="btn btn-primary" href="/sales/cont/post?key=${schDetail.SCHNO }&route=sch">접촉추가</a>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -69,17 +70,27 @@ body {
 									
 									<tr>
 										<th>영업명</th>
-										<td><a href="#" onclick="openNewWindow('영업','/sales/view/${schDetail.SALESNO }','','600','700');" >${schDetail.SALENAME }</a></td>
+										<td>
+											<a href="#" onclick="openNewWindow('영업','/sales/view/${schDetail.SALESNO }','','600','700');" >${schDetail.SALENAME }</a>
+											<input type="hidden" id="salesno" value="${schDetail.SALESNO }"/>
+										</td>
 									</tr>								
 									
 									<tr>
 										<th>사용자명</th>
-										<td>${schDetail.USERNAME }</td>
+										<td>
+											${schDetail.USERNAME } 
+											<input type="hidden" id="userno" value="${schDetail.USERNO }"/>
+										</td>
 									</tr>
 																		
 									<tr>
 										<th>시작일정</th>
-										<td>${schDetail.START }</td>
+										<td>
+										${schDetail.START }
+										<input type="hidden" id="startdate" value="${schDetail.STARTDATE }"/>
+										<input type="hidden" id="starttime" value="${schDetail.STARTTIME }"/>
+										</td>
 									</tr>
 									
 									<tr>
@@ -101,10 +112,6 @@ body {
 							</table>
 						</div>
 					
-
-
-
-
 					</div>
 				</div>
 
@@ -115,7 +122,6 @@ body {
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-
 
 </body>
 </html>

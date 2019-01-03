@@ -27,8 +27,8 @@
             		<img style="width:300px;" src="${pageContext.request.contextPath}/resources/img/crud/welcomlogo.png" alt="" />
             	</a>               
             </div>
-            <h4>SaaS IDEA가 19년 2월 오픈 하였습니다.</h4>
-            <small>고객 만족을 위해 최선을 다하겠습니다.</small>                   
+           <!--  <h4>고객 관계를 생각하는 IDEA CRM에 오신 것을 환영합니다.</h4> -->
+            <small>Internet Exploer 11이상의 버전에 최적화 되어 있습니다.</small>                   
             <form:form class="m-t" role="form" action="${pageContext.request.contextPath}/login" method="post">
             	<input type="hidden" name="url" value="${url }"/>
                 <div class="form-group">

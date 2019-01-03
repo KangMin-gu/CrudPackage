@@ -3,9 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
-
+           <div class="float-left">
+                 <img src="${pageContext.request.contextPath}/resources/img/crud/ideacrmlogo.png" alt="" />
+            </div>
             <div class="float-right">
-                 <strong>Copyright</strong> CRUD SaaS SYSTEM &copy; 2018
+                 <strong>Copyright</strong> CRUD SYSTEM &copy; 2019
+                 
             </div>
             <input type="hidden" id="hiddenSiteId" value="${SITEID }"/>
             <input type="hidden" id="hiddenUserNo" value="${USERNO }"/>

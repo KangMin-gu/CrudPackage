@@ -6,4 +6,4 @@
 
 <link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/crud/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/crud/ideafavicon.ico">

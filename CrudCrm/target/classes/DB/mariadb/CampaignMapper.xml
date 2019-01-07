@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cp">
+	
+	<select id="list" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT A.CAMPNO
+				, A.CAMPNAME
+				, A.CAMPTYPE
+				, CASE WHEN A.CAMPTYPE = 10 THEN '세미나'
+			  		  WHEN A.CAMPTYPE = 20 THEN '뉴스레터'
+			  		  WHEN A.CAMPTYPE = 30 THEN '테스트' END AS CAMPTYPE_
+				, A.CAMPSTEP
+				, CASE WHEN A.CAMPSTEP = 0 THEN '생성'
+			  		  WHEN A.CAMPSTEP = 1 THEN '추출'
+			  		  WHEN A.CAMPSTEP = 2 THEN '발송'
+			  		  WHEN A.CAMPSTEP = 3 THEN '종료' END AS CAMPSTEP_
+			  	, A.STARTDATE,A.ENDDATE
+				, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+				, A.CAMPDESC
+				, CONVERT(nvarchar,A.STARTDATE,23) + '-' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
+
+				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
+				,ISNULL(B.CNT,0) AS CNT
+				,ISNULL(C.CNT,0) AS CLICKCNT
+				, CONVERT(nvarchar,ISNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS CLICKTOTAL
+				, CONVERT(nvarchar,ISNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS SENDTOTAL
+				, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
+					   WHEN E.SENDFORM = 2 THEN 'SMS'
+					   WHEN E.SENDFORM = 3 THEN 'LMS'
+					   WHEN E.SENDFORM = 4 THEN 'MMS' END AS CAMPFORM_
+			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE CLICKYN = 0 GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE RLTCODE = 20 GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN Crud_SaaS.dbo.T_CAMP_FORM E ON E.CAMPNO = A.CAMPNO
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="campname != null">
+				AND  A.CAMPNAME LIKE '%' + #{campname} + '%'
+			</if>
+			<if test="campstep != null">
+				AND  A.CAMPSTEP = #{campstep}
+			</if>
+			<if test="camptype != null">
+				AND  A.CAMPTYPE = #{camptype}
+			</if>
+			<if test="startdate != null">
+				AND  A.STARTDATE <![CDATA[>]]> #{startdate}
+			</if>
+			<if test="enddate != null">
+				AND  A.ENDDATE <![CDATA[<]]> #{enddate}
+			</if>
+			<if test="owner_ != null">
+				AND  A.OWNER = #{owner}
+			</if>
+			<if test="sendform != null">
+				AND E.SENDFORM = #{sendform}
+			</if>
+			) X 
+		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</select>
+		<select id="detail" parameterType="campaignDto" resultType="hashMap">
+		SELECT 
+		A.CAMPNO
+		,A.CAMPNAME
+		,A.CAMPTYPE
+		,CASE WHEN A.CAMPTYPE = 10 THEN '세미나'
+			  WHEN A.CAMPTYPE = 20 THEN '뉴스레터'
+			  WHEN A.CAMPTYPE = 30 THEN '테스트' END AS CAMPTYPE_
+		,A.CAMPSTEP
+		,CASE WHEN A.CAMPSTEP = 1 THEN '캠페인생성'
+			  WHEN A.CAMPSTEP = 2 THEN '고객추출'
+			  WHEN A.CAMPSTEP = 3 THEN '발송중'
+			  WHEN A.CAMPSTEP = 4 THEN '종료' END AS CAMPSTEP_
+		, CASE WHEN A.SENDTYPE = 1 THEN '즉시발송'
+			   WHEN A.SENDTYPE = 2 THEN '예약발송'
+			   WHEN A.SENDTYPE = 3 THEN '요일반복발송'
+			   WHEN A.SENDTYPE = 4 THEN '기간반복발송' END AS SENDTYPE_ 
+		, CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE
+		, CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE
+		, CONVERT(nvarchar,A.STARTDATE,23) + '~' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
+		,A.OWNER
+		,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+		,A.CAMPDESC
+		,A.FILESEARCHKEY
+			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			WHERE A.SITEID = #{siteid}
+			AND A.CAMPNO = #{campno}
+			
+	</select>
+	
+	<select id="totalRows" parameterType="hashMap" resultType="int">
+	SELECT count(*)
+			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="campname != null">
+				AND  A.CAMPNAME LIKE '%' + #{campname} + '%'
+			</if>
+			<if test="campstep != null">
+				AND  A.CAMPSTEP = #{campstep}
+			</if>
+			<if test="camptype != null">
+				AND  A.CAMPTYPE = #{camptype}
+			</if>
+			<if test="startdate != null">
+				AND  A.STARTDATE <![CDATA[>]]> #{startdate}
+			</if>
+			<if test="enddate != null">
+				AND  A.ENDDATE <![CDATA[<]]> #{enddate}
+			</if>
+			<if test="owner_ != null">
+				AND  A.OWNER = #{owner}
+			</if>
+	</select>
+	
+	<insert id="insert" parameterType="campaignDto">
+		<selectKey keyProperty="campno"  resultType="integer" order="AFTER">
+		
+			INSERT INTO Crud_SaaS.dbo.T_CAMPAIGN
+			(
+				CAMPNAME
+				,CAMPTYPE
+				,CAMPSTEP
+				,STARTDATE
+				,ENDDATE
+				,OWNER
+				,CAMPDESC
+				,SITEID
+				,ISDELETE
+				,REGDATE
+				,REGUSER
+				,EDTDATE
+				,EDTUSER
+				,FILESEARCHKEY
+			)VALUES(
+			#{campname}
+			,#{camptype}
+			,#{campstep}
+			,#{startdate}
+			,#{enddate}
+			,#{owner}
+			,#{campdesc}
+			,#{siteid}
+			,0
+			,getDate()
+			,#{reguser}
+			,getDate()
+			,#{edtuser}
+			,#{filesearchkey}
+			)
+			SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+		
+	<update id="update" parameterType="userDto">
+		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+			SET 
+				CAMPNAME = #{campname}
+				,CAMPTYPE = #{camptype}
+				,STARTDATE = #{startdate}
+				,ENDDATE = #{enddate}
+				,OWNER = #{owner}
+				,CAMPDESC = #{campdesc}
+				,EDTDATE = getDate()
+				,EDTUSER = #{edtuser}
+			WHERE SITEID = #{siteid}
+			AND CAMPNO = #{campno}
+	</update>
+	
+	<update id="delete" parameterType="userDto">
+		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+			SET
+				ISDELETE = '1'
+			WHERE CAMPNO = #{campno}
+	</update>
+	
+	<delete id="targetCustDelete" parameterType="hashMap">
+		DELETE Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+			WHERE SITEID=  #{siteid}
+			AND CAMPNO = #{campno}
+	</delete>
+	
+	<insert id="targetCustInsert" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		(
+			SITEID
+			,CUSTNO
+			,CUSTNAME
+			,MOBILENO
+			,EMAIL
+			,CAMPNO
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)
+		SELECT
+			SITEID
+			,CUSTNO
+			,CUSTNAME 
+			,MOBILE1 + MOBILE2 + MOBILE3 AS MOBILE
+			,EMAIL
+			,#{campno}
+			,getDate()
+			,#{userno}
+			,getDate()
+			,#{userno}
+		FROM Crud_SaaS.dbo.CU100010
+		WHERE SITEID = #{siteid}
+		AND INFOAGREE = '0'
+	<if test="sex != null">
+		AND  SEX = #{sex}
+	</if>
+	<if test="custgubun != null">
+		AND CUSTGUBUN = #{custgubun}
+	</if>
+	<if test="custgrade != null">
+		AND CUSTGRADE = #{custgrade}
+	</if>
+	<if test="birth != null">
+		AND SUBSTRING(BIRTH,6,2) = #{birth}
+	</if>
+	<if test="actgrade != null">	
+		AND ACTGRADE = #{actgrade}
+	</if>
+	<if test="regdate1 != null">
+		AND REGDATE <![CDATA[>]]>= #{regdate1}
+	</if>
+	<if test="regdate2 != null">
+		AND REGDATE <![CDATA[<]]>= #{regdate2}
+	</if>
+	<if test="age1 != null">
+		AND Year(getDate())-Year(BIRTH) <![CDATA[>]]>= #{age1}
+	</if>
+	<if test="age2 != null">
+		AND Year(getDate())-Year(BIRTH) <![CDATA[<]]>= #{age2}
+	</if>
+	
+	</insert>
+	
+	<insert id="targetInsert" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET
+		(
+			NAME
+			,VALUE
+			,CAMPNO
+			,SITEID
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)VALUES(
+		#{name}
+		,#{value}
+		,#{campno}
+		,#{siteid}
+		,getDate()
+		,#{userno}
+		,getDate()
+		,#{userno}
+		)
+	</insert>
+	
+	<delete id="targetDelete" parameterType="hashMap">
+		DELETE FROM Crud_SaaS.dbo.T_CAMP_TARGET
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+	</delete>
+	
+	<insert id="targetHistInsert" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_HIST
+		(
+			NAME
+			,VALUE
+			,CAMPNO
+			,SITEID
+			,CAMPORDER
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)VALUES(
+		#{name}
+		,#{value}
+		,#{campno}
+		,#{siteid}
+		,#{order}
+		,getDate()
+		,#{userno}
+		,getDate()
+		,#{userno}
+		)
+	</insert>
+	
+	<select id="targetList" parameterType="campaignDto" resultType="hashMap">
+		SELECT A.NAME,
+			CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN A.VALUE
+          	ELSE C.CODENAME END AS VALUE
+		FROM T_CAMP_TARGET A
+		LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
+        LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
+        WHERE A.CAMPNO = #{campno}
+        AND A.SITEID = #{siteid}
+        AND B.CODENAME IS NOT NULL
+	</select>
+	
+	<select id="targetCustCnt" parameterType="campaignDto" resultType="int">
+		SELECT COUNT(CUSTNO) AS CNT
+			FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+			WHERE SITEID = #{siteid}
+            AND CAMPNO = #{campno}
+	</select>
+	
+	<select id="targetCustList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM 
+		(SELECT 
+			 A.CUSTNO
+			,A.CUSTNAME
+			,A.MOBILENO
+			,A.EMAIL
+			,CASE WHEN B.INFOAGREE = 0 THEN '동의'
+				  WHEN B.INFOAGREE = 1 THEN '미동의' END AS INFOAGREE_
+			,CASE WHEN B.CUSTGUBUN = 1 THEN '회원'
+				  WHEN B.CUSTGUBUN = 2 THEN '비회원' END AS CUSTGUBUN_
+			,CASE WHEN B.CUSTGRADE = 1 THEN '일반'
+				  WHEN B.CUSTGRADE = 2 THEN 'VIP'
+				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
+			,B.HOMADDR1 +' '+ B.HOMADDR2 + B.HOMADDR3 AS ADDR_
+			,ROW_NUMBER() OVER(ORDER BY A.CUSTNO DESC) AS ROWNUM
+		FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST A 
+		INNER JOIN Crud_SaaS.dbo.CU100010 B ON B.CUSTNO = A.CUSTNO
+		WHERE A.SITEID = #{siteid}
+		AND A.CAMPNO = #{campno}
+		<if test="custname != null">
+			AND  A.CUSTNAME LIKE '%'+ #{custname} +'%'
+		</if>
+		) X
+		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<insert id="formInsert" parameterType="campaignFormDto">
+			INSERT INTO Crud_SaaS.dbo.T_CAMP_FORM
+				(
+				CAMPNO
+				,SITEID
+				,SENDER
+				,SENDTYPE
+				,SENDDATE
+				,WEEK
+				,DAY
+				,STARTDATE
+				,ENDDATE
+				,SENDHOUR
+				,SENDMINUTE
+				,TITLE
+				,SENDDESC
+				,CONTENTSNO
+				,TESTMAIL
+				,REGDATE
+				,REGUSER
+				,EDTDATE
+				,EDTUSER
+				,SENDFORM
+				)VALUES(
+				#{campno}
+				,#{siteid}
+				,#{sender}
+				,#{sendtype}
+				,#{senddate}
+				,#{week}
+				,#{day}
+				,#{startdate}
+				,#{enddate}
+				,#{sendhour}
+				,#{sendminute}
+				,#{title}
+				,#{senddesc}
+				,#{contentsno}
+				,#{testmail}
+				,getDate()
+				,#{reguser}
+				,getDate()
+				,#{edtuser}
+				,#{sendform}
+				)
+	</insert>
+	
+	<update id="formUpdate" parameterType="campaignFormDto">
+		UPDATE Crud_SaaS.dbo.T_CAMP_FORM
+			SET SENDER = #{sender}
+			, SENDTYPE = #{sendtype}
+			, SENDDATE = #{senddate}
+			, WEEK = #{week}
+			, DAY = #{day}
+			, STARTDATE = #{startdate}
+			, ENDDATE = #{enddate}
+			, SENDHOUR = #{sendhour}
+			, SENDMINUTE = #{sendminute}
+			, TITLE = #{title}
+			, SENDDESC = #{senddesc}
+			, TESTMAIL = #{testmail}
+			, CONTENTSNO = #{contentsno}
+			, EDTDATE = getDate()
+			, EDTUSER = #{edtuser}
+			, SENDFORM = #{sendform}
+		WHERE NO = #{no}
+		AND CAMPNO = #{campno}
+		AND SITEID = #{siteid}
+	</update>
+	
+	<select id="formRead" parameterType="campaignFormDto" resultType="hashMap">
+		SELECT A.NO
+				,A.CAMPNO
+				,A.SITEID
+				,A.SENDER
+				,A.SENDTYPE
+				,CASE WHEN A.SENDTYPE = 1 THEN '즉시발송'
+					  WHEN A.SENDTYPE = 2 THEN '예약발송'
+					  WHEN A.SENDTYPE = 3 THEN '요일발송'
+					  WHEN A.SENDTYPE = 4 THEN '기간발송' END AS SENDTYPE_
+				,CONVERT(nvarchar,A.SENDDATE,23) AS SENDDATE_
+				,A.WEEK
+				,CASE WHEN A.WEEK = 1 THEN '1주차'
+					  WHEN A.WEEK = 2 THEN '2주차'
+					  WHEN A.WEEK = 3 THEN '3주차'
+					  WHEN A.WEEK = 4 THEN '4주차'
+					  WHEN A.WEEK = 5 THEN '5주차' END WEEK_
+				,A.DAY
+				,CASE WHEN A.DAY = 1 THEN '일요일'
+					  WHEN A.DAY = 2 THEN '월요일'
+					  WHEN A.DAY = 3 THEN '화요일'
+					  WHEN A.DAY = 4 THEN '수요일'
+					  WHEN A.DAY = 5 THEN '목요일'
+					  WHEN A.DAY = 6 THEN '금요일'
+					  WHEN A.DAY = 7 THEN '토요일' END DAY_  
+				,CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE_
+				,CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE_
+				,A.SENDHOUR
+				,A.SENDMINUTE
+				,A.TITLE
+				,A.SENDDESC
+				,A.TESTMAIL
+				,A.CONTENTSNO
+				,(SELECT TITLE FROM Crud_SaaS.dbo.T_CAMP_CONTENTS WHERE NO = A.CONTENTSNO) AS CONTENTSNO_
+		FROM Crud_SaaS.dbo.T_CAMP_FORM A
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+	</select>
+	
+	<insert id="testSend" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_MAIL(
+		SITEID
+		,FROMEMAIL
+		,TOEMAIL
+		,SUBJECT
+		,CONTENT
+		,RLTDATE
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		)VALUES(
+		#{siteid}
+		,#{sender}
+		,#{testmail}
+		,#{title}
+		,#{senddesc}
+		,getDate()
+		,getDate()
+		,#{userno}
+		,getDate()
+		,#{userno}
+		)
+
+	</insert>
+	
+	<select id="contentsList" parameterType="hashMap" resultType="hashMap">
+	
+		SELECT * FROM (
+			SELECT 
+			A.NO
+			, A.FORMTYPE
+			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
+				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
+				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
+			, A.TITLE, A.CONTENT, A.PURP
+			, A.SITEID, A.ISDELETE
+			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+			, USECNT
+			,ROW_NUMBER() OVER(ORDER BY A.NO DESC) AS ROWNUM
+			FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			<if test="title != null">
+				AND  TITLE LIKE '%'+#{title} +'%'
+			</if>
+			<if test="formtype != null">
+				AND  FORMTYPE = #{formtype}
+			</if>
+			) X 
+			WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<select id="contentsUseDescList" parameterType="hashMap" resultType="hashMap">
+			SELECT 
+			TOP 5
+			A.NO
+			, A.FORMTYPE
+			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
+				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
+				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
+			, A.TITLE, A.CONTENT, A.PURP
+			, A.SITEID, A.ISDELETE
+			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+			, USECNT
+			FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
+			AND A.FORMTYPE = #{formtype}
+			ORDER BY USECNT DESC
+	</select>
+	
+	<select id="contentsTotalRows" parameterType="hashMap" resultType="int">
+		SELECT COUNT(NO) 
+		FROM Crud_SaaS.dbo.T_CAMP_CONTENTS
+		WHERE SITEID = #{siteid}
+		AND ISDELETE = 0
+		<if test="title != null">
+			AND  TITLE LIKE '%' + #{title} + '%'
+		</if>
+		<if test="formtype != null">
+			AND  FORMTYPE = #{formtype}
+		</if>
+	</select>
+	
+	<insert id="contentsInsert" parameterType="campaignContentsDto">
+		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
+		
+		INSERT INTO Crud_SaaS.dbo.T_CAMP_CONTENTS(
+			FORMTYPE
+			,TITLE
+			,CONTENT
+			,PURP
+			,SITEID
+			,ISDELETE
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+		)VALUES(
+		#{formtype}
+		,#{title}
+		,#{content}
+		,#{purp}
+		,#{siteid}
+		,0
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		)
+		
+		SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+	
+	<select id="contentsRead" parameterType="campaignContentsDto" resultType="hashMap">
+		SELECT A.NO
+			, A.FORMTYPE
+			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
+				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
+				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
+			, A.TITLE, A.CONTENT, A.PURP
+			, A.SITEID, A.ISDELETE
+			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+		FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+		WHERE A.SITEID = #{siteid}
+		AND A.NO = #{no}
+	</select>
+	
+	<update id="contentsUpdate" parameterType="campaignContentsDto">
+		UPDATE Crud_SaaS.dbo.T_CAMP_CONTENTS
+			SET FORMTYPE = #{formtype}
+			,TITLE = #{title}
+			,CONTENT = #{content}
+			,PURP = #{purp}
+			,EDTDATE = getDate()
+			,EDTUSER = #{edtuser}
+		WHERE NO = #{no}
+		AND SITEID = #{siteid} 
+	</update>
+	
+	<update id="contentsDelete" parameterType="campaignContentsDto">
+		UPDATE Crud_SaaS.dbo.T_CAMP_CONTENTS
+			SET EDTDATE = getDate()
+			,EDTUSER= #{edtuser}
+			,ISDELETE = 1
+		WHERE NO = #{no}
+		AND SITEID = #{siteid}
+	</update>
+	
+	<update id="send" statementType="CALLABLE" parameterType="hashMap">
+		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int})}
+	</update>
+	
+	<select id="tabHistory" parameterType="hashMap" resultType="hashMap">
+		SELECT B.CODENAME
+			, ISNULL(C.CODENAME,A.VALUE) AS VALUE
+			, A.CAMPORDER
+			, A.REGDATE
+		FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST A
+        LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
+        LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
+        WHERE A.SITEID = #{siteid}
+        AND A.CAMPNO = #{campno}
+	</select>
+	
+	<select id="targetOrderMax" parameterType="hashMap" resultType="int">
+		SELECT ISNULL(MAX(CAMPORDER),0) FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+	</select>
+	
+	<select id="campTargetCustRows" parameterType="hashMap" resultType="int">
+		SELECT COUNT(CUSTNO) FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		WHERE SITEID = #{siteid}
+		AND CAMPNO = #{campno}
+		<if test="custname != null">
+			AND  CUSTNAME LIKE '%'+ #{custname} +'%'
+		</if>
+	</select>
+	
+	<update id="stepUpdate" parameterType="campaignDto">
+		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+			SET CAMPSTEP = #{campstep}
+				,EDTUSER = #{edtuser}
+				,EDTDATE = getDate()
+			WHERE SITEID = #{siteid}
+			AND CAMPNO = #{campno}
+	</update>
+	 
+	<select id="calList" parameterType="campaignDto" resultType="hashMap">
+
+		SELECT A.CAMPNO AS id
+			, A.CAMPNAME AS title
+			, CONVERT(nvarchar,A.STARTDATE,23) AS 'start'
+			, CONVERT(nvarchar,A.ENDDATE,23) AS 'end'
+			, CASE WHEN E.SENDFORM = 1 THEN '#FF0000'
+			 	   WHEN E.SENDFORM = 2 THEN '#0040FF'
+				   WHEN E.SENDFORM = 3 THEN '#FF00FF' 
+				   WHEN E.SENDFORM = 4 THEN '#FFFFFF' END AS 'color'
+				   
+			, CASE WHEN A.CAMPSTEP = 1 THEN '캠페인생성'
+				   WHEN A.CAMPSTEP = 2 THEN '대상추출'
+				   WHEN A.CAMPSTEP = 3 THEN '발송중'
+				   WHEN A.CAMPSTEP = 4 THEN '종료' END AS CAMPSTEP_
+				   
+			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+			
+			, ISNULL(B.CNT,0) AS CNT
+			, ISNULL(C.CNT,0) AS CLICKCNT
+			, CONVERT(nvarchar,ISNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS CLICKTOTAL
+			, CONVERT(nvarchar,ISNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS SENDTOTAL
+			
+			, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
+				   WHEN E.SENDFORM = 2 THEN 'SMS'
+				   WHEN E.SENDFORM = 3 THEN 'LMS'
+				   WHEN E.SENDFORM = 4 THEN 'MMS' END AS SENDFORM_
+				   
+			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE CLICKYN = 0 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE RLTCODE = 20 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN Crud_SaaS.dbo.T_CAMP_FORM E ON E.CAMPNO = A.CAMPNO
+		WHERE A.SITEID = #{siteid}
+		AND A.ISDELETE = #{isdelete}
+		AND A.CAMPSTEP IN (3,4)
+	</select>
+	
+	<!-- 캠페인 자체 첨부파일 -->
+	<select id="campaignFile" parameterType="campaignDto" resultType="hashMap">
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
+		FROM Crud_SaaS.dbo.T_FILE
+		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
+	</select>
+	
+	<!-- 메일 발송 대상 수 -->
+	<select id="sendTotalCnt" parameterType="campaignDto" resultType="hashMap">
+		SELECT CAMPNO,COUNT(EMAILLOGID) FROM T_MAIL 
+		GROUP BY CAMPNO
+	</select>
+	
+</mapper>

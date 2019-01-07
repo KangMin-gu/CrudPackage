@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+    <select id="idCheck" parameterType="String" resultType="hashMap">
+     	SELECT *
+     	FROM TB980010 AS A
+		INNER JOIN TB980070 AS B ON A.SITEID = B.SITEID
+		WHERE USERID = #{userid}
+    </select>
+	
+	<select id="crudNotice" resultType="hashMap">
+		SELECT TOP 5 ICNUM, SUBJECT, CONVERT(CHAR(8), REGDATE, 2) AS REGDATE FROM ICNOTICE
+	</select>
+	
+	<select id="urMenu" parameterType="String" resultType="hashMap">
+		SELECT A.MENUVAL FROM t_menu AS A
+		INNER JOIN t_roledetail AS B ON B.MENUNO = A.MENUNO
+		INNER JOIN TB980010 AS C ON C.CHKROLE = B.ROLENO
+		WHERE USERID = #{userid}
+	</select>
+	
+	<insert id="loginHistory" parameterType="hashMap">
+		INSERT INTO Crud_SaaS.dbo.T_LOGIN_HISTORY(
+		USERNO
+		,USERIP
+		,USEROS
+		,USERDEVICE
+		,USERBROWSER
+		,VISITYEAR
+		,VISITMONTH
+		,VISITDAY
+		,VISITHOUR
+		,REGDATE
+		,SITEID
+		)VALUES(
+		#{userno}
+		,#{userip}
+		,#{useros}
+		,#{userdevice}
+		,#{userbrowser}
+		,YEAR(getDate())
+		,MONTH(getDate())
+		,DAY(getDate())
+		,DATEPART(hh,getDate())
+		,getDate()
+		,#{siteid}
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="code">
+
+    <select id="list" parameterType="codeDto" resultType="hashMap">
+    SELECT * FROM (
+    SELECT 
+    A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
+    ,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+    ,CASE WHEN A.ISDELETE = 0 THEN '사용'
+    	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+   	,A.ISDELETE
+   	,B.CODENAME AS UPPERCODENAME
+   	,A.UPPERCODEGRP
+   	,ROW_NUMBER() OVER(ORDER BY A.CODENO DESC) AS ROWNUM
+    FROM Crud_SaaS.dbo.T_CODE A 
+    LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.CODENO = A.UPPERCODEGRP
+    WHERE A.ISDELETE = 0
+    <if test ="siteid == 1">
+    	AND A.SITEID = 1
+    </if>
+    <if test="siteid != 1">
+    	AND A.SITEID = #{siteid}
+    </if>
+    <if test ="codename != null">
+    	AND A.CODENAME LIKE '%'+#{codename}+'%'
+    </if>
+    <if test ="codegrp != null">
+    	AND A.CODEGRP LIKE '%'+#{codegrp}+'%'
+    </if>
+    ) X 
+    
+    WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+    </select>
+    
+    <select id="totalRow" parameterType="codeDto" resultType="int">
+     	SELECT 
+   			count(*)
+   			FROM Crud_SaaS.dbo.T_CODE
+    		WHERE ISDELETE = 0
+    	<if test ="siteid == 1">
+    		AND SITEID = 1
+    	</if>
+    	<if test="siteid != 1">
+	    	AND SITEID = #{siteid}
+    	</if>
+    	<if test ="codename != null">
+    		AND CODENAME LIKE '%'+#{codename}+'%'
+    	</if>
+    	<if test ="codegrp != null">
+	    	AND CODEGRP LIKE '%'+#{codegrp}+'%'
+	    </if>
+    </select>
+    
+    <select id="detail" parameterType="codeDto" resultType="hashMap">
+     	  SELECT 
+    		A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
+    		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+    		,CASE WHEN A.ISDELETE = 0 THEN '사용'
+    	  		  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+    	  	,A.ISDELETE
+   			,A.UPPERCODEGRP
+    	FROM Crud_SaaS.dbo.T_CODE A 
+    	LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.UPPERCODEGRP = A.CODENO
+    	WHERE A.SITEID = #{siteid}
+    	AND A.CODENO = #{codeno}
+    	
+    </select>
+    
+    <update id="update" parameterType="codeDto">
+    
+    UPDATE Crud_SaaS.dbo.T_CODE
+    SET 
+    	CODEGRP = #{codegrp}
+    	,CODENAME = #{codename}
+    	,CODEVAL = #{codeval}
+    	,UPPERCODEGRP = #{uppercodegrp}
+    	,ISDELETE = #{isdelete}
+    	,EDTDATE = getDate()
+    	,EDTUSER = #{edtuser}
+    WHERE SITEID = #{siteid}
+    AND CODENO = #{codeno}
+    
+    </update>
+    <insert id="insert" parameterType="codeDto">
+    <selectKey keyProperty="codeno"  resultType="integer" order="AFTER">
+    INSERT INTO Crud_SaaS.dbo.T_CODE
+    (
+    CODEGRP
+    ,CODENAME
+    ,CODEVAL
+    ,UPPERCODEGRP
+    ,SITEID
+    ,ISDELETE
+    ,REGDATE
+    ,REGUSER
+    ,EDTDATE
+    ,EDTUSER
+    )VALUES(
+    #{codegrp}
+    ,#{codename}
+    ,#{codeval}
+    ,#{uppercodegrp}
+    ,#{siteid}
+    ,#{isdelete}
+    ,getDate()
+    ,#{reguser}
+    ,getDate()
+    ,#{edtuser}
+    )
+    SELECT SCOPE_IDENTITY()
+    </selectKey>
+    </insert>
+    
+    <update id="delete" parameterType="codeDto">
+    
+    UPDATE Crud_SaaS.dbo.T_CODE
+    SET ISDELETE = 1
+    ,EDTDATE = getDate()
+    ,EDTUSER = #{edtuser}
+    WHERE SITEID = #{siteid}
+    AND CODENO = #{codeno}
+    
+    </update>
+    
+    <select id="upperlist" parameterType="codeDto" resultType="hashMap">
+    SELECT 
+    A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
+    ,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+    ,CASE WHEN A.ISDELETE = 0 THEN '사용'
+    	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+   	,A.ISDELETE
+    FROM Crud_SaaS.dbo.T_CODE A 
+    WHERE A.ISDELETE = 0
+    <if test ="siteid == 1">
+    	AND A.SITEID = 1
+    	AND A.UPPERCODEGRP IS NULL
+    </if>
+    <if test="siteid != 1">
+    	AND A.SITEID = #{siteid}
+    	AND A.UPPERCODEGRP IS NULL
+    </if>
+    <if test ="codename != null">
+    	AND A.CODENAME LIKE '%'+#{codename}+'%'
+    </if>
+    <if test ="codegrp != null">
+    	AND A.CODEGRP LIKE '%'+#{codegrp}+'%'
+    </if>
+    </select>
+    
+    <select id="getCodeList" parameterType="String" resultType="codeDto">
+    
+    	SELECT CODEGRP, CODENAME, CODEVAL FROM Crud_SaaS.dbo.T_CODE
+    	WHERE SITEID = 1
+    	
+    	<if test ="value != null">
+    		AND CODEGRP = #{value} 
+    	</if>
+    	
+    </select>
+    
+    <select id="grpCodeList" resultType="codeDto">
+    	select CODEGRP from t_code
+			WHERE SITEID = 1
+		GROUP BY CODEGRP
+    </select>
+</mapper>

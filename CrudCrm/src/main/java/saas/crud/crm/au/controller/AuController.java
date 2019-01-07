@@ -178,11 +178,12 @@ public class AuController {
 		mView.setViewName("au/myinfoupdate");
 		return mView;
 	}
-	
+		
 	//내정보 수정(수정실행)
-	@RequestMapping(value="/myinfo/post/{userno}",method=RequestMethod.POST)
-	public String myInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto) {
+	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.POST)
+	public String myInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto,@PathVariable int userNo) {
+		userDto.setUserno(userNo);
 		auService.userUpdate(request, userDto);
-		return "redirect:/myinfo";
+		return "redirect:/myinfo/"+userNo;
 	}
 }

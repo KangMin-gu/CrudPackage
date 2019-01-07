@@ -35,7 +35,6 @@
     $('.daumzip').click(function(e){ //이벤트를 걸 인풋,버튼에 daumzip 클래스 추가 
     	new daum.Postcode({
     		oncomplete: function(data) {
-		      		
     			var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
     			var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
     			//addr1 : 우편번호 , addr2 : 도로명 , addr3 : 건물명 +사용자입력  
@@ -54,7 +53,6 @@
     	},500);
     }
     
-        
 	$('.owner').click(function(e){
 		//openNewWindow('담당자','/common/user',e.target.id,650,700);
 		openNewWindow('담당자','/popowner',e.currentTarget.id,600,500);
@@ -66,10 +64,6 @@
 	// 고객 팝업
 	$('.cust').click(function(e){
 		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
-	});
-	//영업팝업
-	$('.sales').click(function(e){
-		openNewWindow('영업','/popsales',e.currentTarget.id,650,750);
 	});
 	
 	//내부통지팝업
@@ -138,7 +132,7 @@
 	
 	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
-		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y+",scrollbars=yes";
+		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴
@@ -217,20 +211,6 @@
 		opener.$('[name="'+parentid+'"]').val(tr.children.cstname.textContent);
 		popCustClick(id);
 		
-		setTimeout(function(){
-			window.close();
-		},300);
-	}
-	
-	//팝업 영업 이름 선택.
-	function parentSalename(tr){	
-		var parentid = $('#parentid').val();
-		var id = tr.getAttribute("value");
-		opener.$('[name="'+parentid+'"]').next().val(id);		
-		opener.$('[name="'+parentid+'"]').val(tr.children.salename.textContent).trigger('keyup');		
-		
-		popClientClick(id);
-
 		setTimeout(function(){
 			window.close();
 		},300);
@@ -365,6 +345,19 @@
 	        }
 	    });
 	};
+	
+	function getTextLength(str) {
+        var len = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (escape(str.charAt(i)).length == 6) {
+                len++;
+            }
+            len++;
+        }
+        return len;
+    }
+	
+	
 	//메세지 버튼 클릭시 
 	$("#dropClick").click(function(){
 		var dropDown = $("#dropDown");
@@ -381,6 +374,8 @@
 				var subjectLen = "";
 				var rltDate = ""; 
 				
+				
+				if(data.length != 0){
 				for(var i=0; i<data.length; i++){
 					
 					//반복문 다 돌고 append 초기화 
@@ -410,7 +405,15 @@
 					dropHtml +="</div></li>";
 					}
 					dropDown.append(dropHtml);
+					}
+				}else{
+					dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
+					dropHtml +="<i class='fa fa-envelope'></i> <strong>받은 통지가 없습니다</strong>"
+					dropHtml +="</div></li>";
+					
+					dropDown.append(dropHtml);
 				}
+				
 			},
 			error : function(jqXHR,textStatus,errorThrown){
 				alert("에러발생 관리자에게 문의하세요." + textStatus);
@@ -469,29 +472,3 @@
 		}
 	});
 /********************************************************************/
-	
-	/*엑셀다운.  
-	 * url을 사용페이지 hidden 값 (id=excelUrl) 으로 사전 설정해야 동작. 
-	 * 상단에 spiner css 삽입. 하단에 ui.css, file.css 삽입. 
-    */
-    $("#excelBtn").on("click", function () {
-    	debugger;
-    	var $exModal = $("#exModal");
-		var url = $('#excelUrl').val();
-    	
-        $exModal.dialog({ modal: true });
-      	$('.ui-front').removeAttr('style');
-      	
-        $.fileDownload(url, {
-            successCallback: function (url) {
-            	$exModal.dialog('close');
-            	$('#modalCloseBtn').trigger('click');  
-            },
-            failCallback: function (responseHtml, url) {
-            	$exModal.dialog('close');
-            	$('#modalCloseBtn').trigger('click');
-            }
-        });
-    });	 
-	
-	

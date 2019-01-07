@@ -1,5 +1,6 @@
 package saas.crud.crm.nt.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
-import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonDao;
 import saas.crud.crm.nt.dao.NoteDao;
@@ -36,6 +34,41 @@ public class NoteServiceImpl implements NoteService{
 	@Autowired
 	private CrudEngine crudEngine;
 	
+	
+	
+	//추가
+	@Override
+	public Map<String, Integer> noteCommonRows(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		//totalRows의 결과값이 들어올 자리 
+		Map<String, Integer> importInbox = new HashMap<String,Integer>();
+		//총 갯수를 구하기위해 siteId와 userNo를 넣을 map 
+		Map<String, Object> noteVal = new HashMap<>();
+		
+		//받은 메세지 중 안읽은 메세지 갯수 
+		int noteReadVal = 0;
+		//중요통지함 총 갯수 
+		int importTotalRows = 0; 
+		
+		
+		//Mapper 검색 조건 담기
+		noteVal.put("siteid", siteId);
+		noteVal.put("userno", userNo);
+		
+		//받은 메세지 중 안읽은 메세지 갯수 추출
+		noteReadVal = ntDao.noteReadVal(noteVal);
+		//중요통지함 총 갯수 추출 
+		importTotalRows = ntDao.notetotalImportRows(noteVal);
+		
+		importInbox.put("inboxVal", noteReadVal);
+		importInbox.put("importBoxVal", importTotalRows);
+		
+		
+		return importInbox;
+		
+	}
+
 	//inbox
 	//@Cacheable("test")
 	@Override
@@ -82,6 +115,8 @@ public class NoteServiceImpl implements NoteService{
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.notetotalRows(noteVal);
 		
+	
+		
 		//페이징 생성자 호출 후 로직실행
 		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
@@ -100,14 +135,15 @@ public class NoteServiceImpl implements NoteService{
 		NoteCategoryDto noteCategory = new NoteCategoryDto();
 		noteCategory.setUserno(userNo);
 		noteCategory.setSiteid(siteId);
-		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
+		//List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
 		
-		mView.addObject("category", category);
+		
 		mView.addObject("url", "note/inbox");
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
 		mView.addObject("NOTENAME","받은 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
+		
 		return mView;
 	}
 
@@ -276,7 +312,9 @@ public class NoteServiceImpl implements NoteService{
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
 		mView.addObject("NOTENAME","중요 통지"); //대메뉴이름 처리
-		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
+		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리		
+		
+		
 		return mView;		
 	}
 
@@ -361,8 +399,10 @@ public class NoteServiceImpl implements NoteService{
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
-		String referUrl = request.getHeader("referUrl");
+		String referUrl = request.getHeader("REFERER");
+		String curUrl = request.getRequestURL().toString();
 		ModelAndView mView = new ModelAndView();
+		
 		
 		Map<String, Object> noteVal = new HashMap<>();
 		noteVal.put("siteid", siteId);
@@ -370,15 +410,54 @@ public class NoteServiceImpl implements NoteService{
 		noteVal.put("noticeid", noticeId);
 		
 		//통지정보
-		Map<String, Object> note = ntDao.noteDetail(noteVal);
+		Map<String, Object> note = null;
 		
+		
+		//휴지통 상세 (isDelete = 2)
+		if(referUrl.contains("note/trash")) {
+			note = ntDao.trashDetail(noteVal);
+		//기본 상세 
+		}else {
+			note = ntDao.noteDetail(noteVal);
+		}
 		System.out.println("note :" +  note);
+		
 		
 		//파일업로드
 		//if문 추가
 		if(note.get("FILESEARCHKEY") != null) {
 		String fileSearchKey = note.get("FILESEARCHKEY").toString();		
 		noteVal.put("filesearchkey", fileSearchKey);
+		}
+		boolean tt = curUrl.contains("forward");
+		boolean ss = note.get("FILESEARCHKEY") != null;
+		
+		
+		//전달, 파일서치키가 null이 아니면 
+		if(curUrl.contains("forward") && note.get("FILESEARCHKEY") != null) {
+			String fileSearchKey = note.get("FILESEARCHKEY").toString();
+			noteVal.put("filesearchkey", fileSearchKey);
+			//파일정보 읽어옴 
+			List<Map<String, Object>> replyFile = ntDao.noteFile(noteVal);
+			
+			
+			
+			for(int i=0; i < replyFile.size(); i++) {
+				//파일 경로 
+				String filePath = replyFile.get(i).get("PATH").toString();
+				String orgFileName = replyFile.get(i).get("ORGFILENAME").toString();
+				
+				//파일생성 
+				File file = new File(filePath);		
+				
+				mView.addObject("replyFile",file);
+				mView.addObject("orgFileName",orgFileName);
+				
+				
+			}
+			
+			
+			
 		}
 		
 		//첨부파일정보
@@ -387,15 +466,24 @@ public class NoteServiceImpl implements NoteService{
 		List<Map<String, Object>> toList = ntDao.toList(noteVal); 
 		//CC
 		List<Map<String, Object>> ccList = ntDao.ccList(noteVal); 
+		//전달시 셀렉트 박스 
+		List<Map<String,String>> adminMail = ntDao.adminMail();
 		
-		ntDao.noteEyeChk(noteVal);
-	
+		
+		//통지작성에서 넘어온거면 읽음체크 안함 
+		if(!referUrl.contains("note/send")) {
+			ntDao.noteEyeChk(noteVal);
+		}
+		
+		
+
+		mView.addObject("adminMail",adminMail);
 		mView.addObject("note", note);
 		mView.addObject("noteFile", notefile);
 		mView.addObject("ccList", ccList);
 		mView.addObject("toList", toList);
 		mView.addObject("referUrl",referUrl);
-
+		mView.addObject("curUrl",curUrl);
 		return mView;
 	}
 	
@@ -434,7 +522,7 @@ public class NoteServiceImpl implements NoteService{
 		for(int i = 0; i<noticeid.size(); i++) {
 			ntDto.setNoticeid(noticeid.get(i));
 			ntDao.noteTrashChk(ntDto);
-			//ntDao.noteTrashChkTwo(ntDto);
+			
 		}		
 	}
 	
@@ -514,6 +602,25 @@ public class NoteServiceImpl implements NoteService{
 		return mView;
 	}
 	
+	//답장화면
+	@Override
+	public ModelAndView noteReply(HttpServletRequest request,int noticeId) {
+		//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
+		List<Map<String,String>> adminMail = ntDao.adminMail();
+		//noticeId를 이용하여 답장받을 사람의 정보를 가져옴
+		Map<String,Object> replyUser = ntDao.noteReply(noticeId);
+		String curUrl = request.getRequestURL().toString();
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("adminMail",adminMail);
+		mView.addObject("replyUser",replyUser);
+		mView.addObject("curUrl",curUrl);
+		
+		return mView;
+	}
+	
+	
+	
 	
 	
 	//셀렉트박스에서 넘어온 값들 ; 붙여주기 
@@ -562,18 +669,21 @@ public class NoteServiceImpl implements NoteService{
 	//통지발송
 	@Override
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
-		
+		File file = null;
 		Boolean whiteListFlag = false;
 		Boolean whiteSizeFlag = false;
+		List<MultipartFile> mFile = null;
+		MultipartFile sFile = null;
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
 		
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
-		List<MultipartFile> mFile = null;
-		MultipartFile sFile = null;
 		
+		
+
 
 		//받는 사람 이름,유저넘버,이메일이 넘어옴 
 		String[] toUserEmail = request.getParameterValues("touser"); 
@@ -638,11 +748,14 @@ public class NoteServiceImpl implements NoteService{
 			cutterCcName = emailQuarter(ccName);
 		}
 		
-		
+		String orgFileName = "";
+		long fileSize = 0;
 		
 		//확장자 체크, t_mail에 정보가  들어가지 않기 위해 값을 얻어옴 
-		String orgFileName = fileUpload.get(0).getOriginalFilename();
-		long fileSize = fileUpload.get(0).getSize();
+		if(fileUpload.size() > 0) {
+		orgFileName = fileUpload.get(0).getOriginalFilename();
+		fileSize = fileUpload.get(0).getSize();
+		}
 		
 		whiteListFlag = crudEngine.whiteFlag(orgFileName);		// 파일이없으면 null이니까 flase로 떨어짐 , 파일이있고 제대로 된거면 true로 떨어짐 
 	    whiteSizeFlag = crudEngine.whiteSizeFlag(fileSize);		
@@ -651,7 +764,10 @@ public class NoteServiceImpl implements NoteService{
 
 		
 		//파일 업로드 실행 
-		if(orgFileName.length() > 0) {		
+		if(orgFileName.length() > 0) {
+			
+			
+			
 			String fileSearchKey = crudEngine.fileSearchKey(request);
 			System.out.println("fileSearchKey : " + fileSearchKey);
 			crudEngine.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
@@ -663,7 +779,6 @@ public class NoteServiceImpl implements NoteService{
 			}else {
 				ntDto.setFilesearchkey(fileSearchKey);
 			}
-			
 		}
 		
 		
@@ -758,7 +873,7 @@ public class NoteServiceImpl implements NoteService{
 							ntDao.noteSendMail(map);	
 						}
 						//첨부파일이 있을때 
-						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
+						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag){
 							ntDao.noteSendMail(map);
 						}
 						

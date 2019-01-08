@@ -7,7 +7,7 @@
 
 	SELECT 
 		COUNT(*)
-	FROM TB210010  with (nolock)
+	FROM sa210010  with (nolock)
 	WHERE 
 		SITEID = #{siteid}
 		AND ISDELETE = 0
@@ -53,9 +53,9 @@
 			,A.FORDDATE, A.RORDDATE
 			,A.SALESTATE, A.STATEDATE
 			,A.OWNER, C.USERNAME
-		FROM TB210010 A with (nolock)
-		LEFT OUTER JOIN TB200010 B with (nolock) ON A.CLINO = B.CLINO
-		LEFT OUTER JOIN TB980010 C with (nolock) ON A.OWNER = C.USERNO   
+		FROM sa210010 A with (nolock)
+		LEFT OUTER JOIN sa200010 B with (nolock) ON A.CLINO = B.CLINO
+		LEFT OUTER JOIN me800010 C with (nolock) ON A.OWNER = C.USERNO   
 		
 		WHERE 
 			A.SITEID = #{siteid}
@@ -111,9 +111,9 @@
 	,A.REFUSAL
 	,A.SURMOUNT 
 	
-	FROM TB210010 A
-	LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
-	LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+	FROM sa210010 A
+	LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
+	LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
 	
 	WHERE
 		A.SITEID = #{siteid}
@@ -126,7 +126,7 @@
 	<insert id="salesInsert" parameterType="saas.crud.crm.sa.dto.SalesDto">
 		<selectKey keyProperty="salesno"  resultType="integer" order="AFTER">
 	
-	INSERT INTO TB210010	
+	INSERT INTO sa210010	
 	(
 	SITEID
 	,REGUSER
@@ -192,7 +192,7 @@
 
 	<!-- 영업수정 -->
 	<update id="salesUpdate" parameterType="saas.crud.crm.sa.dto.SalesDto">
-	UPDATE TB210010
+	UPDATE sa210010
 	SET
 	EDITUSER = #{edituser}
 	,EDITDATE = GETDATE()
@@ -226,7 +226,7 @@
 	<!-- 영업 스케쥴 추가,수정 . 시행일,예정일 영업 스케쥴은 sort (1,2) 로 구분 -->
 	<insert id="mergeSalesSch" parameterType="saas.crud.crm.sa.dto.SalesDto">
 	<if test="rorddate != null and rorddate != '' ">
-	MERGE INTO TB210080 A
+	MERGE INTO sa210080 A
 		USING (select '1' AS DUAL ) B 
 		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 1  ) 
 		
@@ -243,7 +243,7 @@
 	</if>
 	
 	<if test="forddate != null and forddate != '' ">
-	MERGE INTO TB210080 A
+	MERGE INTO sa210080 A
 		USING (select '1' AS DUAL ) B 
 		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 2 ) 
 		
@@ -263,7 +263,7 @@
 	<!-- 영업삭제 -->
 	<update id="salesDelete" parameterType="hashMap">
 	
-	UPDATE TB210010 
+	UPDATE sa210010 
 	
 	SET 
 	ISDELETE = 1
@@ -288,7 +288,7 @@
 	,A.OWNER, B.CUSTNAME
 	,A.FORDDATE, A.SALESTATE, A.STATEDATE
 	
-	FROM TB210010 A
+	FROM sa210010 A
 	LEFT OUTER JOIN CU100010 B ON A.OWNER = B.CUSTNO
 	
 	WHERE
@@ -306,7 +306,7 @@
 	SELECT 
 		COUNT(*)
 			
-	FROM TB250010 A with (nolock)
+	FROM sa250010 A with (nolock)
 	INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
 	
 	WHERE 
@@ -339,10 +339,10 @@
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.SALESNO, C.SALENAME
 			,D.CLINO, D.CLINAME
-		FROM TB250010 A with (nolock)
+		FROM sa250010 A with (nolock)
 		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
-		INNER JOIN TB210010 C with (nolock) ON A.SALESNO = C.SALESNO
-		LEFT OUTER JOIN TB200010 D with (nolock) ON B.CLINO = D.CLINO
+		INNER JOIN sa210010 C with (nolock) ON A.SALESNO = C.SALESNO
+		LEFT OUTER JOIN sa200010 D with (nolock) ON B.CLINO = D.CLINO
 		
 		WHERE 
 			A.SITEID = #{siteid}			
@@ -361,7 +361,7 @@
 	<select id="salesContListCnt" parameterType="hashMap" resultType="int">	
 	SELECT  
 	COUNT(*)
-	FROM TB110010 A
+	FROM cu110010 A
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 	WHERE 
 		A.SITEID = #{siteid}
@@ -405,9 +405,9 @@
 	,A.RESPONSECODE
 	,A.LOGID
 	, B.CUSTNAME, C.USERNAME
-	FROM TB110010 A
+	FROM cu110010 A
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
-	INNER JOIN TB980010 C ON A.CTTUSER = C.USERNO
+	INNER JOIN me800010 C ON A.CTTUSER = C.USERNO
 	WHERE 
 		A.SITEID = #{siteid}
 		AND A.ISDELETE = 0 
@@ -431,7 +431,7 @@
 	<!-- 영업관련고객 추가 -->
 	<insert id="salesCustInsert" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
 	
-	INSERT INTO TB250010
+	INSERT INTO sa250010
 	(
 	SITEID
 	,REGUSER
@@ -475,7 +475,7 @@
 			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
 			,A.CUSTNO, B.CUSTNAME
 			
-		FROM TB250010 A with (nolock)
+		FROM sa250010 A with (nolock)
 		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
 				
 		WHERE 
@@ -486,7 +486,7 @@
 	<!-- 영업관련고객 삭제 -->
 	<update id="salesCustDelete" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
 	
-	UPDATE TB250010
+	UPDATE sa250010
 	SET
 	EDTUSER = #{edtuser}
 	,EDTDATE = GETDATE() 
@@ -501,7 +501,7 @@
 	<!-- 영업관련고객 수정 -->
 	<update id="salesCustUpdate" parameterType="saas.crud.crm.sa.dto.SalesCustDto">
 	
-	UPDATE TB250010
+	UPDATE sa250010
 	SET
 	SITEID = #{siteid}
 	,EDTUSER = #{edtuser}
@@ -525,7 +525,7 @@
 	<select id="salesStateListCnt" parameterType="hashMap" resultType="int">
 	SELECT
 	COUNT(*)  	 
-	FROM TB210020 A	
+	FROM sa210020 A	
 	
 	WHERE
 		A.SALESNO = #{salesno}
@@ -575,8 +575,8 @@
 	, A.PROB
 	,A.REGUSER, B.USERNAME  
 	 
-	FROM TB210020 A
-	LEFT OUTER JOIN TB980010 B ON A.REGUSER = B.USERNO
+	FROM sa210020 A
+	LEFT OUTER JOIN me800010 B ON A.REGUSER = B.USERNO
 	
 	WHERE
 		A.SALESNO = #{salesno}
@@ -594,7 +594,7 @@
 	<!-- 영업단계 추가 -->
 	<insert id="salesStateInsert" parameterType="hashMap">
 	
-	INSERT INTO TB210020
+	INSERT INTO sa210020
 	(
 	SITEID
 	,REGUSER
@@ -627,7 +627,7 @@
 	,#{prob}
 	)
 	
-	UPDATE TB210010 
+	UPDATE sa210010 
 	SET
 		SALESTATE = #{state}
 		,STATEDATE = getdate()
@@ -649,7 +649,7 @@
 	,CONCAT(ENDDATE,' ',ENDTIME) AS 'end'
 	,SCHNAME AS title
 	,COLOR AS color
-	FROM Crud_SaaS.dbo.TB210080
+	FROM sa210080
 
 	WHERE 
 		ISDELETE = 0
@@ -661,7 +661,7 @@
 	<insert id="salesSchInsert" parameterType="hashMap">
 	
 	INSERT INTO
-	TB210080 
+	sa210080 
 	(
 	SITEID
 	,REGUSER
@@ -711,7 +711,7 @@
 	<update id="salesSchUpdate" parameterType="hashMap">
 	
 	UPDATE
-	TB210080 SET
+	sa210080 SET
 	EDTUSER = #{userno}
 	,EDTDATE = getdate()
 	
@@ -768,10 +768,10 @@
 	,A.STARTDATE, A.STARTTIME, A.ENDDATE, A.ENDTIME
 	,A.PRIVACY, A.COLOR, A.MEMO
 	
-	FROM TB210080 A
-	LEFT OUTER JOIN TB210010 B ON A.SALESNO = B.SALESNO
-	LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
-	INNER JOIN TB980010 D ON A.OWNER = D.USERNO
+	FROM sa210080 A
+	LEFT OUTER JOIN sa210010 B ON A.SALESNO = B.SALESNO
+	LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
+	INNER JOIN me800010 D ON A.OWNER = D.USERNO
 	
 	WHERE 
 		A.ISDELETE = 0 
@@ -788,7 +788,7 @@
 	COMSCHNO AS id
 	,SCHNAME AS title
 	,COLOR AS color
-	FROM TB210120
+	FROM sa210120
 
 	WHERE 
 		ISDELETE = 0
@@ -804,8 +804,8 @@
 	,A.SALESNO, B.SALENAME
 	,A.MEMO,A.COLOR
 	
-	FROM Crud_SaaS.DBO.TB210120 A
-	LEFT OUTER JOIN Crud_SaaS.DBO.TB210010 B ON A.SALESNO = B.SALESNO
+	FROM sa210120 A
+	LEFT OUTER JOIN sa210010 B ON A.SALESNO = B.SALESNO
 	
 	WHERE 
 		A.SITEID = #{siteid}
@@ -815,7 +815,7 @@
 
 	<!-- 회원사 공통-스케쥴추가 -->
 	<insert id="salesComSchInsert" parameterType="hashMap">
-	INSERT INTO TB210120
+	INSERT INTO sa210120
 	(
 	REGDATE
 	,REGUSER
@@ -849,7 +849,7 @@
 	<!-- 스케쥴추가 -  -->
 	<insert id="salesSchInsertFromCom" parameterType="hashMap">
 	<selectKey keyProperty="schno"  resultType="integer" order="AFTER">
-	INSERT INTO TB210080 
+	INSERT INTO sa210080 
 	(
 	SITEID
 	,REGUSER
@@ -892,7 +892,7 @@
 	,COLOR
 	,MEMO
 
-	FROM TB210120 
+	FROM sa210120 
 	WHERE 
 		SITEID = #{siteid}
 		AND COMSCHNO = #{comschno}
@@ -903,7 +903,7 @@
 	
 	<!-- 회원사 공통-스케쥴추가 -->
 	<update id="salesComSchUpdate" parameterType="hashMap">
-	UPDATE TB210120 SET
+	UPDATE sa210120 SET
 	
 	EDTDATE = getdate()
 	,EDTUSER = #{userno}
@@ -923,8 +923,8 @@
 	SELECT
 	COUNT(*)	
 	
-	FROM TB210010 A
-	LEFT OUTER JOIN TB250010 B ON A.SALESNO = B.SALESNO
+	FROM sa210010 A
+	LEFT OUTER JOIN sa250010 B ON A.SALESNO = B.SALESNO
 	
 	WHERE
 		B.ISDELETE = 0 AND A.ISDELETE =0
@@ -958,9 +958,9 @@
 		,CONVERT(VARCHAR,A.STATEDATE,112) AS STATEDATE
 		,C.USERNAME
 	
-		FROM TB210010 A
-		LEFT OUTER JOIN TB250010 B ON A.SALESNO = B.SALESNO
-		INNER JOIN TB980010 C ON A.OWNER = C.USERNO
+		FROM sa210010 A
+		LEFT OUTER JOIN sa250010 B ON A.SALESNO = B.SALESNO
+		INNER JOIN me800010 C ON A.OWNER = C.USERNO
 	
 		WHERE
 			B.ISDELETE = 0 AND A.ISDELETE =0

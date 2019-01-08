@@ -7,7 +7,7 @@
 
 	SELECT 
 		COUNT(*)
-	FROM TB200010  with (nolock)
+	FROM sa200010  with (nolock)
 	WHERE 
 		SITEID = #{siteid}
 		AND ISDELETE = 0
@@ -46,8 +46,8 @@
 			,BSTYPE,MEMO
 			,IMPORTANCE, FRIENDLY
 			,A.OWNER, B.USERNAME 
-		FROM TB200010 A with (nolock)
-		LEFT OUTER JOIN TB980010 B with (nolock) ON A.OWNER = B.USERNO	
+		FROM sa200010 A with (nolock)
+		LEFT OUTER JOIN me800010 B with (nolock) ON A.OWNER = B.USERNO	
 		WHERE 
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
@@ -91,8 +91,8 @@
 		,A.MOBILE1, A.MOBILE2, A.MOBILE3
 		,A.BSCOND, A.BSTYPE, A.BSCATEGORY
 		,A.COMPANYSIZE,A.INTERNAL,A.MEMO,A.EMAIL
-	FROM TB200010 A
-	LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+	FROM sa200010 A
+	LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 	WHERE 
 		A.SITEID = #{siteid}
 		AND A.ISDELETE = 0
@@ -104,7 +104,7 @@
 	<insert id="clientInsert" parameterType="saas.crud.crm.sa.dto.ClientDto">
 		<selectKey keyProperty="clino"  resultType="integer" order="AFTER">
 	
-	INSERT INTO TB200010	
+	INSERT INTO sa200010	
 	(
 	SITEID
 	,REGUSER
@@ -187,7 +187,7 @@
 	<!-- 거래처수정 -->
 	<update id="clientUpdate" parameterType="saas.crud.crm.sa.dto.ClientDto">
 	
-	UPDATE TB200010
+	UPDATE sa200010
 	SET
 	EDITUSER = #{edituser}
 	,EDITDATE = GETDATE()	
@@ -228,7 +228,7 @@
 	<!-- 거래처삭제 -->
 	<update id="cliDelete" parameterType="hashMap">
 	
-	UPDATE TB200010
+	UPDATE sa200010
 	SET
 	EDITDATE = GETDATE()
 	,EDITUSER = #{userno}
@@ -248,7 +248,7 @@
 	SELECT 
 		COUNT(*)
 			
-	FROM TB280010 A
+	FROM sa280010 A
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 	
 	WHERE 
@@ -278,9 +278,9 @@
 			,A.KEYMAN, A.ROLENAME, A.MEMO
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.CLINO, C.CLINAME
-		FROM TB280010 A with (nolock)
+		FROM sa280010 A with (nolock)
 		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
-		INNER JOIN TB200010 C with (nolock) ON A.CLINO = C.CLINO
+		INNER JOIN sa200010 C with (nolock) ON A.CLINO = C.CLINO
 	
 		WHERE 
 			A.SITEID = #{siteid}			
@@ -298,7 +298,7 @@
 	<!-- 거래처관련고객 추가 -->
 	<insert id="cliCustInsert" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
 	
-	INSERT INTO TB280010
+	INSERT INTO sa280010
 	(
 	SITEID
 	,REGUSER
@@ -342,7 +342,7 @@
 			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
 			,A.CUSTNO, B.CUSTNAME
 			
-		FROM TB280010 A with (nolock)
+		FROM sa280010 A with (nolock)
 		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
 				
 		WHERE 
@@ -353,7 +353,7 @@
 	<!-- 영업관련고객 삭제 -->
 	<update id="cliCustDelete" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
 	
-	UPDATE TB280010
+	UPDATE sa280010
 	SET
 	EDTUSER = #{edtuser}
 	,EDTDATE = GETDATE() 
@@ -368,7 +368,7 @@
 	<!-- 영업관련고객 수정 -->
 	<update id="cliCustUpdate" parameterType="saas.crud.crm.sa.dto.ClientCustDto">
 	
-	UPDATE TB280010
+	UPDATE sa280010
 	SET
 	SITEID = #{siteid}
 	,EDTUSER = #{edtuser}

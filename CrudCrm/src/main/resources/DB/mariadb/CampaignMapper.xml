@@ -16,7 +16,7 @@
 			  		  WHEN A.CAMPSTEP = 2 THEN '발송'
 			  		  WHEN A.CAMPSTEP = 3 THEN '종료' END AS CAMPSTEP_
 			  	, A.STARTDATE,A.ENDDATE
-				, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+				, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 				, A.CAMPDESC
 				, CONVERT(nvarchar,A.STARTDATE,23) + '-' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
 
@@ -29,11 +29,11 @@
 					   WHEN E.SENDFORM = 2 THEN 'SMS'
 					   WHEN E.SENDFORM = 3 THEN 'LMS'
 					   WHEN E.SENDFORM = 4 THEN 'MMS' END AS CAMPFORM_
-			FROM Crud_SaaS.dbo.T_CAMPAIGN A
-			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
-			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE CLICKYN = 0 GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
-			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE RLTCODE = 20 GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
-			LEFT OUTER JOIN Crud_SaaS.dbo.T_CAMP_FORM E ON E.CAMPNO = A.CAMPNO
+			FROM cp400010 A
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE CLICKYN = 0 GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE RLTCODE = 20 GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN cp400030 E ON E.CAMPNO = A.CAMPNO
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
@@ -81,10 +81,10 @@
 		, CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE
 		, CONVERT(nvarchar,A.STARTDATE,23) + '~' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
 		,A.OWNER
-		,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 		,A.CAMPDESC
 		,A.FILESEARCHKEY
-			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			FROM cp400010 A
 			WHERE A.SITEID = #{siteid}
 			AND A.CAMPNO = #{campno}
 			
@@ -92,7 +92,7 @@
 	
 	<select id="totalRows" parameterType="hashMap" resultType="int">
 	SELECT count(*)
-			FROM Crud_SaaS.dbo.T_CAMPAIGN A
+			FROM cp400010 A
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
@@ -118,7 +118,7 @@
 	<insert id="insert" parameterType="campaignDto">
 		<selectKey keyProperty="campno"  resultType="integer" order="AFTER">
 		
-			INSERT INTO Crud_SaaS.dbo.T_CAMPAIGN
+			INSERT INTO cp400010
 			(
 				CAMPNAME
 				,CAMPTYPE
@@ -155,7 +155,7 @@
 	</insert>
 		
 	<update id="update" parameterType="userDto">
-		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+		UPDATE cp400010
 			SET 
 				CAMPNAME = #{campname}
 				,CAMPTYPE = #{camptype}
@@ -170,20 +170,20 @@
 	</update>
 	
 	<update id="delete" parameterType="userDto">
-		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+		UPDATE cp400010
 			SET
 				ISDELETE = '1'
 			WHERE CAMPNO = #{campno}
 	</update>
 	
 	<delete id="targetCustDelete" parameterType="hashMap">
-		DELETE Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		DELETE cp400021
 			WHERE SITEID=  #{siteid}
 			AND CAMPNO = #{campno}
 	</delete>
 	
 	<insert id="targetCustInsert" parameterType="hashMap">
-		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		INSERT INTO cp400021
 		(
 			SITEID
 			,CUSTNO
@@ -207,7 +207,7 @@
 			,#{userno}
 			,getDate()
 			,#{userno}
-		FROM Crud_SaaS.dbo.CU100010
+		FROM cu100010
 		WHERE SITEID = #{siteid}
 		AND INFOAGREE = '0'
 	<if test="sex != null">
@@ -241,7 +241,7 @@
 	</insert>
 	
 	<insert id="targetInsert" parameterType="hashMap">
-		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET
+		INSERT INTO cp400020
 		(
 			NAME
 			,VALUE
@@ -264,13 +264,13 @@
 	</insert>
 	
 	<delete id="targetDelete" parameterType="hashMap">
-		DELETE FROM Crud_SaaS.dbo.T_CAMP_TARGET
+		DELETE FROM cp400020
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 	</delete>
 	
 	<insert id="targetHistInsert" parameterType="hashMap">
-		INSERT INTO Crud_SaaS.dbo.T_CAMP_TARGET_HIST
+		INSERT INTO cp400022
 		(
 			NAME
 			,VALUE
@@ -298,7 +298,7 @@
 		SELECT A.NAME,
 			CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN A.VALUE
           	ELSE C.CODENAME END AS VALUE
-		FROM T_CAMP_TARGET A
+		FROM cp400020 A
 		LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
         LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
         WHERE A.CAMPNO = #{campno}
@@ -308,7 +308,7 @@
 	
 	<select id="targetCustCnt" parameterType="campaignDto" resultType="int">
 		SELECT COUNT(CUSTNO) AS CNT
-			FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+			FROM cp400021
 			WHERE SITEID = #{siteid}
             AND CAMPNO = #{campno}
 	</select>
@@ -329,8 +329,8 @@
 				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
 			,B.HOMADDR1 +' '+ B.HOMADDR2 + B.HOMADDR3 AS ADDR_
 			,ROW_NUMBER() OVER(ORDER BY A.CUSTNO DESC) AS ROWNUM
-		FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST A 
-		INNER JOIN Crud_SaaS.dbo.CU100010 B ON B.CUSTNO = A.CUSTNO
+		FROM cp400021 A 
+		INNER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
 		WHERE A.SITEID = #{siteid}
 		AND A.CAMPNO = #{campno}
 		<if test="custname != null">
@@ -341,7 +341,7 @@
 	</select>
 	
 	<insert id="formInsert" parameterType="campaignFormDto">
-			INSERT INTO Crud_SaaS.dbo.T_CAMP_FORM
+			INSERT INTO cp400030
 				(
 				CAMPNO
 				,SITEID
@@ -388,7 +388,7 @@
 	</insert>
 	
 	<update id="formUpdate" parameterType="campaignFormDto">
-		UPDATE Crud_SaaS.dbo.T_CAMP_FORM
+		UPDATE cp400030
 			SET SENDER = #{sender}
 			, SENDTYPE = #{sendtype}
 			, SENDDATE = #{senddate}
@@ -443,14 +443,14 @@
 				,A.SENDDESC
 				,A.TESTMAIL
 				,A.CONTENTSNO
-				,(SELECT TITLE FROM Crud_SaaS.dbo.T_CAMP_CONTENTS WHERE NO = A.CONTENTSNO) AS CONTENTSNO_
-		FROM Crud_SaaS.dbo.T_CAMP_FORM A
+				,(SELECT TITLE FROM cp410010 WHERE NO = A.CONTENTSNO) AS CONTENTSNO_
+		FROM cp400030 A
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 	</select>
 	
 	<insert id="testSend" parameterType="hashMap">
-		INSERT INTO Crud_SaaS.dbo.T_MAIL(
+		INSERT INTO sys980010(
 		SITEID
 		,FROMEMAIL
 		,TOEMAIL
@@ -488,12 +488,12 @@
 			, A.TITLE, A.CONTENT, A.PURP
 			, A.SITEID, A.ISDELETE
 			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
 			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
 			, USECNT
 			,ROW_NUMBER() OVER(ORDER BY A.NO DESC) AS ROWNUM
-			FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+			FROM cp410010 A
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="title != null">
@@ -517,11 +517,11 @@
 			, A.TITLE, A.CONTENT, A.PURP
 			, A.SITEID, A.ISDELETE
 			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
 			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
 			, USECNT
-			FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+			FROM cp410010 A
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			AND A.FORMTYPE = #{formtype}
@@ -530,7 +530,7 @@
 	
 	<select id="contentsTotalRows" parameterType="hashMap" resultType="int">
 		SELECT COUNT(NO) 
-		FROM Crud_SaaS.dbo.T_CAMP_CONTENTS
+		FROM cp410010
 		WHERE SITEID = #{siteid}
 		AND ISDELETE = 0
 		<if test="title != null">
@@ -544,7 +544,7 @@
 	<insert id="contentsInsert" parameterType="campaignContentsDto">
 		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
 		
-		INSERT INTO Crud_SaaS.dbo.T_CAMP_CONTENTS(
+		INSERT INTO cp410010(
 			FORMTYPE
 			,TITLE
 			,CONTENT
@@ -581,16 +581,16 @@
 			, A.TITLE, A.CONTENT, A.PURP
 			, A.SITEID, A.ISDELETE
 			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
 			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
-		FROM Crud_SaaS.dbo.T_CAMP_CONTENTS A
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+		FROM cp410010 A
 		WHERE A.SITEID = #{siteid}
 		AND A.NO = #{no}
 	</select>
 	
 	<update id="contentsUpdate" parameterType="campaignContentsDto">
-		UPDATE Crud_SaaS.dbo.T_CAMP_CONTENTS
+		UPDATE cp410010
 			SET FORMTYPE = #{formtype}
 			,TITLE = #{title}
 			,CONTENT = #{content}
@@ -602,7 +602,7 @@
 	</update>
 	
 	<update id="contentsDelete" parameterType="campaignContentsDto">
-		UPDATE Crud_SaaS.dbo.T_CAMP_CONTENTS
+		UPDATE cp410010
 			SET EDTDATE = getDate()
 			,EDTUSER= #{edtuser}
 			,ISDELETE = 1
@@ -619,7 +619,7 @@
 			, ISNULL(C.CODENAME,A.VALUE) AS VALUE
 			, A.CAMPORDER
 			, A.REGDATE
-		FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST A
+		FROM cp400022 A
         LEFT OUTER JOIN T_CODE B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
         LEFT OUTER JOIN T_CODE C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE
         WHERE A.SITEID = #{siteid}
@@ -627,13 +627,13 @@
 	</select>
 	
 	<select id="targetOrderMax" parameterType="hashMap" resultType="int">
-		SELECT ISNULL(MAX(CAMPORDER),0) FROM Crud_SaaS.dbo.T_CAMP_TARGET_HIST
+		SELECT ISNULL(MAX(CAMPORDER),0) FROM cp400022
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 	</select>
 	
 	<select id="campTargetCustRows" parameterType="hashMap" resultType="int">
-		SELECT COUNT(CUSTNO) FROM Crud_SaaS.dbo.T_CAMP_TARGET_CUST
+		SELECT COUNT(CUSTNO) FROM cp400021
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 		<if test="custname != null">
@@ -642,7 +642,7 @@
 	</select>
 	
 	<update id="stepUpdate" parameterType="campaignDto">
-		UPDATE Crud_SaaS.dbo.T_CAMPAIGN
+		UPDATE cp400010
 			SET CAMPSTEP = #{campstep}
 				,EDTUSER = #{edtuser}
 				,EDTDATE = getDate()
@@ -666,7 +666,7 @@
 				   WHEN A.CAMPSTEP = 3 THEN '발송중'
 				   WHEN A.CAMPSTEP = 4 THEN '종료' END AS CAMPSTEP_
 				   
-			, (SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 			
 			, ISNULL(B.CNT,0) AS CNT
 			, ISNULL(C.CNT,0) AS CLICKCNT
@@ -678,11 +678,11 @@
 				   WHEN E.SENDFORM = 3 THEN 'LMS'
 				   WHEN E.SENDFORM = 4 THEN 'MMS' END AS SENDFORM_
 				   
-			FROM Crud_SaaS.dbo.T_CAMPAIGN A
-			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
-			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE CLICKYN = 0 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
-			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM Crud_SaaS.dbo.T_MAIL WHERE RLTCODE = 20 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
-			LEFT OUTER JOIN Crud_SaaS.dbo.T_CAMP_FORM E ON E.CAMPNO = A.CAMPNO
+			FROM cp400010 A
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE CLICKYN = 0 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE RLTCODE = 20 AND CAMPNO IS NOT NULL GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
+			LEFT OUTER JOIN cp400030 E ON E.CAMPNO = A.CAMPNO
 		WHERE A.SITEID = #{siteid}
 		AND A.ISDELETE = #{isdelete}
 		AND A.CAMPSTEP IN (3,4)
@@ -691,7 +691,7 @@
 	<!-- 캠페인 자체 첨부파일 -->
 	<select id="campaignFile" parameterType="campaignDto" resultType="hashMap">
 		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
-		FROM Crud_SaaS.dbo.T_FILE
+		FROM sys990030
 		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
 	</select>
 	

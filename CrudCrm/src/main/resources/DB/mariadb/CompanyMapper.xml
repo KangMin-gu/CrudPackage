@@ -14,8 +14,8 @@
      	,CASE WHEN A.ISDELETE = '0' THEN '사용'
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE
      	,ROW_NUMBER() OVER(ORDER BY A.SITEID DESC) AS ROWNUM
-     	,(SELECT SUM(BUYCNT) AS BUYCNT FROM Crud_SaaS.dbo.T_SITE_LICENSE WHERE SITEID = A.SITEID) AS BUYCNT
-     	FROM Crud_SaaS.dbo.TB980070 A
+     	,(SELECT SUM(BUYCNT) AS BUYCNT FROM me810010 WHERE SITEID = A.SITEID) AS BUYCNT
+     	FROM ma900010 A
      	WHERE A.ISDELETE = 0
      	<if test ="strDate != null">
      		AND ISNULL(A.FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
@@ -39,7 +39,7 @@
     <select id="totalRow" parameterType="hashMap" resultType="int">
      	SELECT 
      	count(*)
-     	FROM Crud_SaaS.dbo.TB980070
+     	FROM ma900010
      	WHERE ISDELETE = 0
      	<if test ="strDate != null">
      		AND ISNULL(FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
@@ -70,7 +70,7 @@
      		  WHEN A.SITESIZE = '3' THEN '중소기업'
      		  WHEN A.SITESIZE = '4' THEN '소기업' END AS SITESIZE_
      	,SITESIZE
-     	,(SELECT USERNAME FROM Crud_SaaS.dbo.TB980010 WHERE USERNO = A.OWNER) AS OWNER_
+     	,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
      	,A.OWNER 
      	,A.COTYPE,A.BSCOND,A.BSTYPE
      	,CONVERT(varchar,A.FREGDATE,23) AS FREGDATE_ ,A.SITELOGO
@@ -79,13 +79,13 @@
      	,A.ISDELETE
      	,A.SITEMEMO
      	,(SELECT COUNT(*) FROM T_SITE_LICENSE WHERE SITEID = A.SITEID) AS TOTALCNT
-     	FROM Crud_SaaS.dbo.TB980070 A
+     	FROM ma900010 A
      	WHERE A.SITEID = #{siteid}
     </select>
     
     <update id="update" parameterType="companyDto">
     
-    UPDATE Crud_SaaS.dbo.TB980070
+    UPDATE ma900010
     SET 
     SITENAME = #{sitename}
     ,BSNO = #{bsno}
@@ -129,7 +129,7 @@
     </update>
     <insert id="insert" parameterType="companyDto">
     <selectKey keyProperty="siteid"  resultType="integer" order="AFTER">
-    INSERT INTO Crud_SaaS.dbo.TB980070
+    INSERT INTO ma900010
     (
      SITENAME 
     ,BSNO
@@ -197,7 +197,7 @@
     
     <update id="delete" parameterType="companyDto">
     
-    	UPDATE Crud_SaaS.dbo.TB980070
+    	UPDATE ma900010
     		SET ISDELETE = 1
     		,EDTDATE = getDate()
     		,EDTUSER = #{edtuser}
@@ -205,7 +205,7 @@
     </update>
     
     <insert id="siteLicenseInsert" parameterType="HashMap">
-		MERGE INTO Crud_SaaS.dbo.T_SITE_LICENSE AS A
+		MERGE INTO me810010 AS A
 			USING (select '1' AS DUAL ) B ON (A.SITEID = #{siteid} AND A.LICENSENO = #{licenseno})
 		WHEN MATCHED THEN
 			UPDATE SET A.BUYCNT = #{buycnt}

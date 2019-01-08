@@ -15,7 +15,7 @@
 				ELSE CONVERT(nvarchar,A.ENTERDATE,23) END AS ENTERDATE
 		, A.MOBILE1 + A.MOBILE2 + A.MOBILE3 AS MOBILE
 		,ROW_NUMBER() OVER(ORDER BY A.USERNO DESC) AS ROWNUM
-			FROM Crud_SaaS.dbo.TB980010 A
+			FROM me800010 A
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="username != null">
@@ -67,8 +67,8 @@
 		,A.TELNO3
 		, A.TELNO1 + '-' + A.TELNO2 + '-' + A.TELNO3 AS TELNO
 		,A.USERDESC
-		,(SELECT SITENAME FROM Crud_SaaS.dbo.TB980070 B WHERE B.SITEID = A.SITEID) AS SITENAME
-			FROM Crud_SaaS.dbo.TB980010 A
+		,(SELECT SITENAME FROM ma900010 B WHERE B.SITEID = A.SITEID) AS SITENAME
+			FROM me800010 A
 			WHERE A.SITEID = #{siteid}
 			AND A.USERNO = #{userno}
 			
@@ -76,7 +76,7 @@
 	
 	<select id="totalRows" parameterType="hashMap" resultType="int">
 	SELECT count(*)
-			FROM Crud_SaaS.dbo.TB980010
+			FROM me800010
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="username != null">
@@ -100,7 +100,7 @@
 	</select>
 	<select id="idcheck" parameterType="String" resultType="int">
 		SELECT count(*)
-			FROM Crud_SaaS.dbo.TB980010
+			FROM me800010
 			WHERE USERID = #{userid}
 			
 	</select>
@@ -108,7 +108,7 @@
 	<insert id="insert" parameterType="userDto">
 		<selectKey keyProperty="userno"  resultType="integer" order="AFTER">
 		
-			INSERT INTO Crud_SaaS.dbo.TB980010
+			INSERT INTO me800010
 			(
 				SITEID
 				,USERNAME
@@ -157,7 +157,7 @@
 	</insert>
 		
 	<update id="update" parameterType="userDto">
-		UPDATE Crud_SaaS.dbo.TB980010
+		UPDATE me800010
 			SET 
 				USERPASSWORD = #{userpassword}
 				<if test="userdesc != null">
@@ -184,7 +184,7 @@
 	</update>
 	
 	<update id="delete" parameterType="userDto">
-		UPDATE Crud_SaaS.dbo.TB980010
+		UPDATE me800010
 			SET
 				ISDELETE = '1'
 			WHERE USERNO = #{userno}
@@ -204,7 +204,7 @@
 		,A.MOBILE1
 		,A.MOBILE2
 		,A.MOBILE3
-			FROM Crud_SaaS.dbo.TB980010 A
+			FROM me800010 A
 			WHERE A.ISDELETE = 0
 			AND A.SITEID = #{siteid}
 	</select>
@@ -214,10 +214,10 @@
 		,CASE WHEN X.CNT >= X.BUYCNT THEN 0 ELSE 1 END AS TOTAL
 		,X.CNT,X.BUYCNT 
 		FROM (SELECT B.MENUNO, B.MENUNAME, ISNULL(C.CNT, 0) AS CNT, A.BUYCNT
-				FROM T_SITE_LICENSE A
+				FROM me810010 A
 				INNER JOIN T_MENU B ON B.LICENSENO = A.LICENSENO
 				LEFT OUTER JOIN (SELECT SITEID, COUNT(MENUNO) AS CNT, MENUNO
-									FROM T_USER_MENU
+									FROM me810011
 								GROUP BY MENUNO, SITEID, MENUNO) C ON C.MENUNO = B.MENUNO
 				WHERE A.SITEID = #{siteid}) X
 		WHERE CASE WHEN X.CNT <![CDATA[>]]>= X.BUYCNT THEN 0
@@ -226,7 +226,7 @@
 	
 	<update id="menuDelete" parameterType="userMenuDto">
 	
-		UPDATE Crud_SaaS.dbo.T_USER_MENU
+		UPDATE me810011
 			SET ISDELETE = 1
 			WHERE USERNO = #{userno}
 			AND SITEID = #{siteid}
@@ -234,7 +234,7 @@
 	
 	<insert id="menuMerge" parameterType="userMenuDto">
 		
-		MERGE INTO Crud_SaaS.dbo.T_USER_MENU AS A
+		MERGE INTO me810011 AS A
 			USING (select '1' AS DUAL ) B ON (A.USERNO = #{userno} AND A.MENUNO = #{menuno})
 		WHEN MATCHED THEN
 			UPDATE SET A.ISDELETE = 0
@@ -244,14 +244,14 @@
 	</insert>
 	
 	<select id="userMenu" parameterType="userMenuDto" resultType="hashMap">
-		SELECT MENUNO FROM Crud_SaaS.dbo.T_USER_MENU
+		SELECT MENUNO FROM me810011
 		WHERE SITEID = #{siteid}
 		AND USERNO = #{userno}
 	</select>
 	<!-- 메일정보 얻어오기  -->
 	<select id="adminMail" resultType="hashMap">
 		<![CDATA[
-		SELECT EMAIL,USERNAME,USERNO,SITEID,USERID FROM Crud_SaaS.dbo.TB980010
+		SELECT EMAIL,USERNAME,USERNO,SITEID,USERID FROM me800010
 		WHERE EMAIL <> ' ' AND EMAIL IS NOT NULL
 		]]> 
 	</select>

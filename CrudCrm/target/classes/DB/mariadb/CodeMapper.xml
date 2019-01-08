@@ -13,8 +13,8 @@
    	,B.CODENAME AS UPPERCODENAME
    	,A.UPPERCODEGRP
    	,ROW_NUMBER() OVER(ORDER BY A.CODENO DESC) AS ROWNUM
-    FROM Crud_SaaS.dbo.T_CODE A 
-    LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.CODENO = A.UPPERCODEGRP
+    FROM sys990020 A 
+    LEFT OUTER JOIN sys990020 B ON B.CODENO = A.UPPERCODEGRP
     WHERE A.ISDELETE = 0
     <if test ="siteid == 1">
     	AND A.SITEID = 1
@@ -36,7 +36,7 @@
     <select id="totalRow" parameterType="codeDto" resultType="int">
      	SELECT 
    			count(*)
-   			FROM Crud_SaaS.dbo.T_CODE
+   			FROM sys990020
     		WHERE ISDELETE = 0
     	<if test ="siteid == 1">
     		AND SITEID = 1
@@ -60,8 +60,8 @@
     	  		  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
     	  	,A.ISDELETE
    			,A.UPPERCODEGRP
-    	FROM Crud_SaaS.dbo.T_CODE A 
-    	LEFT OUTER JOIN Crud_SaaS.dbo.T_CODE B ON B.UPPERCODEGRP = A.CODENO
+    	FROM sys990020 A 
+    	LEFT OUTER JOIN sys990020 B ON B.UPPERCODEGRP = A.CODENO
     	WHERE A.SITEID = #{siteid}
     	AND A.CODENO = #{codeno}
     	
@@ -69,7 +69,7 @@
     
     <update id="update" parameterType="codeDto">
     
-    UPDATE Crud_SaaS.dbo.T_CODE
+    UPDATE sys990020
     SET 
     	CODEGRP = #{codegrp}
     	,CODENAME = #{codename}
@@ -84,7 +84,7 @@
     </update>
     <insert id="insert" parameterType="codeDto">
     <selectKey keyProperty="codeno"  resultType="integer" order="AFTER">
-    INSERT INTO Crud_SaaS.dbo.T_CODE
+    INSERT INTO sys990020
     (
     CODEGRP
     ,CODENAME
@@ -114,7 +114,7 @@
     
     <update id="delete" parameterType="codeDto">
     
-    UPDATE Crud_SaaS.dbo.T_CODE
+    UPDATE sys990020
     SET ISDELETE = 1
     ,EDTDATE = getDate()
     ,EDTUSER = #{edtuser}
@@ -130,7 +130,7 @@
     ,CASE WHEN A.ISDELETE = 0 THEN '사용'
     	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
    	,A.ISDELETE
-    FROM Crud_SaaS.dbo.T_CODE A 
+    FROM sys990020 A 
     WHERE A.ISDELETE = 0
     <if test ="siteid == 1">
     	AND A.SITEID = 1
@@ -150,7 +150,7 @@
     
     <select id="getCodeList" parameterType="String" resultType="codeDto">
     
-    	SELECT CODEGRP, CODENAME, CODEVAL FROM Crud_SaaS.dbo.T_CODE
+    	SELECT CODEGRP, CODENAME, CODEVAL FROM sys990020
     	WHERE SITEID = 1
     	
     	<if test ="value != null">

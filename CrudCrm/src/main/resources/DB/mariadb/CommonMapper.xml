@@ -3,7 +3,7 @@
 <mapper namespace="common">
 
 	<insert id="noteFile" parameterType="hashMap">
-			INSERT INTO t_file
+			INSERT INTO sys990030
 			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID, IMGPATH )
 			VALUES
 			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{siteid}, #{imgpath})			
@@ -12,7 +12,7 @@
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->
 	<select id="totalcntUser" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
-		FROM TB980010
+		FROM me800010
 		WHERE 
 			SITEID = #{siteid}
 			AND ISDELETE = 0
@@ -28,7 +28,7 @@
 			SELECT 
 			ROW_NUMBER() OVER(ORDER BY USERNAME) AS ROWNUM
 			,USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
-			FROM TB980010
+			FROM me800010
 			WHERE 
 				SITEID= #{siteid}
 				AND ISDELETE = 0
@@ -44,7 +44,7 @@
 	<!-- 회원사의 거래처 수 카운터  -->
 	<select id="totalcntClient" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
-		FROM TB200010
+		FROM sa200010
 		WHERE 
 			SITEID = #{siteid}
 			AND ISDELETE = 0
@@ -61,8 +61,8 @@
 		ROW_NUMBER() OVER(ORDER BY A.CLINAME) AS ROWNUM
 		,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
 		,B.USERNAME 
-		FROM TB200010 A
-		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
+		FROM sa200010 A
+		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
@@ -94,7 +94,7 @@
 		ROW_NUMBER() OVER(ORDER BY A.CUSTNO) AS ROWNUM
 		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME,A.MOBILE1+A.MOBILE2+A.MOBILE3 AS MOBILE, A.EMAIL
 		FROM CU100010 A
-		LEFT OUTER JOIN TB200010 B ON A.CLINO = B.CLINO
+		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
@@ -108,13 +108,13 @@
 	
 	<!-- 내부통지 파일다운로드 -->
 	<select id="noteDownload" parameterType="fileDto" resultType="fileDto">
-		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM t_file WHERE SITEID = #{siteid} AND FILEID = #{fileid}
+		SELECT SAVEFILENAME, PATH, ORGFILENAME, FILESIZE, FILEID FROM sys990030 WHERE SITEID = #{siteid} AND FILEID = #{fileid}
 	</select>
 	
 	<!-- 회원사의 영업 수 카운터  -->
 	<select id="totalcntSales" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
-		FROM TB210010
+		FROM sa210010
 		WHERE 
 			SITEID = #{siteid}
 			AND ISDELETE = 0
@@ -132,9 +132,9 @@
 		,A.SALESNO, A.SALENAME, A.CLINO, A.OWNER
 		,B.USERNAME
 		,C.CLINAME 
-		FROM TB210010 A
-		LEFT OUTER JOIN TB980010 B ON A.OWNER = B.USERNO
-		LEFT OUTER JOIN TB200010 C ON A.CLINO = C.CLINO
+		FROM sa210010 A
+		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
+		LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0

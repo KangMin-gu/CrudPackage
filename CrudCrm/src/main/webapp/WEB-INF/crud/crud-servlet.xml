@@ -79,7 +79,7 @@
  		
 		<beans:bean id="mariasessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<beans:property name="dataSource" ref="mariaDataSource"/>
-			<beans:property name="configLocation" value="classpath:DB/maria/Configuration.xml"/>
+			<beans:property name="configLocation" value="classpath:DB/mariadb/Configuration.xml"/>
  		</beans:bean>
  		
  		

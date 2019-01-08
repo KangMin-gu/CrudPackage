@@ -18,13 +18,13 @@
 			  	, A.STARTDATE,A.ENDDATE
 				, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 				, A.CAMPDESC
-				, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') + '-' + DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS CAMPDATE_
+				, CONCAT(DATE_FORMAT(A.STARTDATE,'%Y-%m-%d'), '-', DATE_FORMAT(A.ENDDATE,'%Y-%m-%d')) AS CAMPDATE_
 				
 				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
 				,IFNULL(B.CNT,0) AS CNT
 				,IFNULL(C.CNT,0) AS CLICKCNT
-				, CONVERT(nvarchar,IFNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS CLICKTOTAL
-				, CONVERT(nvarchar,IFNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS SENDTOTAL
+				, CONCAT(CONVERT(IFNULL(C.CNT,0),nvarchar), ' / ', CONVERT(IFNULL(B.CNT,0),nvarchar))  AS CLICKTOTAL
+				, CONCAT(CONVERT(IFNULL(D.CNT,0),nvarchar), ' / ', CONVERT(IFNULL(B.CNT,0),nvarchar))  AS SENDTOTAL
 				, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
 					   WHEN E.SENDFORM = 2 THEN 'SMS'
 					   WHEN E.SENDFORM = 3 THEN 'LMS'
@@ -80,7 +80,7 @@
 		, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') AS STARTDATE
 		
 		, DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS ENDDATE
-		, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') + '~' + DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS CAMPDATE_
+		, CONCAT(DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') , '~' , DATE_FORMAT(A.ENDDATE,'%Y-%m-%d')) AS CAMPDATE_
 		,A.OWNER
 		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 		,A.CAMPDESC
@@ -151,7 +151,7 @@
 			,#{filesearchkey}
 			)
 		<selectKey keyProperty="campno"  resultType="integer" order="AFTER">
-			SELECT SCOPE_IDENTITY()
+			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 		
@@ -201,7 +201,7 @@
 			SITEID
 			,CUSTNO
 			,CUSTNAME 
-			,MOBILE1 + MOBILE2 + MOBILE3 AS MOBILE
+			,CONCAT(MOBILE1, MOBILE2, MOBILE3)
 			,EMAIL
 			,#{campno}
 			,now()
@@ -328,7 +328,7 @@
 			,CASE WHEN B.CUSTGRADE = 1 THEN '일반'
 				  WHEN B.CUSTGRADE = 2 THEN 'VIP'
 				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
-			,B.HOMADDR1 +' '+ B.HOMADDR2 + B.HOMADDR3 AS ADDR_
+			,CONCAT(B.HOMADDR1,' ', B.HOMADDR2, B.HOMADDR3) AS ADDR_
 			,@RNUM:=@RNUM + 1 AS ROWNUM
 		FROM cp400021 A  ,(SELECT @RNUM := 0) R
 		INNER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
@@ -354,12 +354,11 @@
 				,DAY
 				,STARTDATE
 				,ENDDATE
-				,SENDHOUR
-				,SENDMINUTE
+				,SENDTIME
 				,TITLE
 				,SENDDESC
 				,CONTENTSNO
-				,TESTMAIL
+				,TESTER
 				,REGDATE
 				,REGUSER
 				,EDTDATE
@@ -375,12 +374,11 @@
 				,#{day}
 				,#{startdate}
 				,#{enddate}
-				,#{sendhour}
-				,#{sendminute}
+				,#{sendtime}
 				,#{title}
 				,#{senddesc}
 				,#{contentsno}
-				,#{testmail}
+				,#{tester}
 				,now()
 				,#{reguser}
 				,now()
@@ -398,11 +396,10 @@
 			, DAY = #{day}
 			, STARTDATE = #{startdate}
 			, ENDDATE = #{enddate}
-			, SENDHOUR = #{sendhour}
-			, SENDMINUTE = #{sendminute}
+			, SENDTIME = #{sendtime}
 			, TITLE = #{title}
 			, SENDDESC = #{senddesc}
-			, TESTMAIL = #{testmail}
+			, TESTER = #{tester}
 			, CONTENTSNO = #{contentsno}
 			, EDTDATE = now()
 			, EDTUSER = #{edtuser}
@@ -440,8 +437,7 @@
 				,DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') AS STARTDATE_
 				
 				,DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS ENDDATE_
-				,A.SENDHOUR
-				,A.SENDMINUTE
+				,A.SENDTIME
 				,A.TITLE
 				,A.SENDDESC
 				,A.TESTMAIL
@@ -511,7 +507,6 @@
 	
 	<select id="contentsUseDescList" parameterType="hashMap" resultType="hashMap">
 			SELECT 
-			TOP 5
 			A.NO
 			, A.FORMTYPE
 			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
@@ -529,6 +524,7 @@
 			AND A.ISDELETE = 0
 			AND A.FORMTYPE = #{formtype}
 			ORDER BY USECNT DESC
+			LIMIT 5
 	</select>
 	
 	<select id="contentsTotalRows" parameterType="hashMap" resultType="int">
@@ -570,7 +566,7 @@
 		,#{edtuser}
 		)
 		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
-		SELECT SCOPE_IDENTITY()
+		SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	
@@ -672,8 +668,8 @@
 			
 			, IFNULL(B.CNT,0) AS CNT
 			, IFNULL(C.CNT,0) AS CLICKCNT
-			, CONVERT(nvarchar,IFNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS CLICKTOTAL
-			, CONVERT(nvarchar,IFNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS SENDTOTAL
+			, CONVERT(IFNULL(C.CNT,0),nvarchar) + ' / ' +CONVERT(IFNULL(B.CNT,0),nvarchar)  AS CLICKTOTAL
+			, CONVERT(IFNULL(D.CNT,0),nvarchar) + ' / ' +CONVERT(IFNULL(B.CNT,0),nvarchar)  AS SENDTOTAL
 			
 			, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
 				   WHEN E.SENDFORM = 2 THEN 'SMS'

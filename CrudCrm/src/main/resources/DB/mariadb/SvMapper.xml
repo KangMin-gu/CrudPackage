@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sv">
+	<select id="svList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT
+			A.SERVICENO 
+		 	, A.SERVICENAME 
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICECODE' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECODE) AS SERVICECODE_
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICECHANNEL' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECHANNEL) AS SERVICECHANNEL_
+			, (SELECT CUSTNAME FROM cu100010 WHERE CUSTNO = A.CUSTNO) AS CUSTNAME_
+			, (SELECT CLINAME FROM sa200010 WHERE CLINO = A.CLINO) AS CLINAME_
+			, CONVERT(nvarchar,A.RECEPTIONDATE, 23) AS RECEPTIONDATE_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.SERVICEOWNER) AS SERVICEOWNER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICESTEP' AND SITEID = #{siteid} AND CODEVAL = A.SERVICESTEP) AS SERVICESTEP_
+			,(ROW_NUMBER() OVER(ORDER BY SERVICENO DESC)) AS ROWNUM
+			FROM sv300010 A
+			WHERE A.ISDELETE = 0
+			AND A.SITEID = #{siteid}
+			<if test="strDate != null">
+				AND A.RECEPTIONDATE <![CDATA[>]]>= #{strDate}
+			</if>
+			<if test="endDate != null">
+				AND A.RECEPTIONDATE <![CDATA[<]]>= #{endDate}
+			</if>
+			<if test="custno != null">
+				AND A.CUSTNO = #{custno}
+			</if>
+			<if test="servicename != null">
+				AND A.SERVICENAME LIKE '%' + #{servicename} + '%'
+			</if>
+			<if test="servicetype != null">
+				AND A.SERVICETYPE = #{servicetype}
+			</if>
+			<if test="clino != null">
+				AND A.CLINO = #{clino}
+			</if>
+			<if test="servicechannel != null">
+				AND A.SERVICECHANNEL = #{servicechannel}
+			</if>
+			<if test="serviceowner != null">
+				AND A.SERVICEOWNER = #{serviceowner}
+			</if>
+			<if test="owner != null">
+				AND A.OWNER = #{owner}
+			</if>
+			<if test="servicestep != null">
+				AND A.SERVICESTEP = #{servicestep}
+			</if>
+    		 ) X
+    		 <if test="endRowNum != null">
+				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+			</if> 
+	</select>
+	
+	<select id="svServiceTotalRows" parameterType="hashMap" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM sv300010 A
+		WHERE A.ISDELETE = 0
+		AND A.SITEID = #{siteid}
+			<if test="strDate != null">
+				AND A.RECEPTIONDATE <![CDATA[>]]>= #{strDate}
+			</if>
+			<if test="endDate != null">
+				AND A.RECEPTIONDATE <![CDATA[<]]>= #{endDate}
+			</if>
+			<if test="custno != null">
+				AND A.CUSTNO = #{custno}
+			</if>
+			<if test="servicename != null">
+				AND A.SERVICENAME = #{servicename}
+			</if>
+			<if test="servicetype != null">
+				AND A.SERVICETYPE = #{servicetype}
+			</if>
+			<if test="clino != null">
+				AND A.CLINO = #{clino}
+			</if>
+			<if test="servicechannel != null">
+				AND A.SERVICECHANNEL = #{servicechannel}
+			</if>
+			<if test="serviceowner != null">
+				AND A.SERVICEOWNER = #{serviceowner}
+			</if>
+			<if test="owner != null">
+				AND A.OWNER = #{owner}
+			</if>
+			<if test="servicestep != null">
+				AND A.SERVICESTEP = #{servicestep}
+			</if>
+	</select>
+	
+	<select id="serviceRead" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			A.SERVICENO 
+		 	, A.SERVICENAME 
+		 	, A.SERVICEDESC
+		 	, A.SERVICECODE
+		 	, A.SERVICECHANNEL
+		 	, A.SERVICETYPE
+		 	, A.SERVICEOWNER
+		 	, A.SERVICESTEP
+		 	, A.FILESEARCHKEY
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICECODE' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECODE) AS SERVICECODE_
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICECHANNEL' AND SITEID = #{siteid} AND CODEVAL = A.SERVICECHANNEL) AS SERVICECHANNEL_
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICETYPE' AND SITEID = 1 AND CODEVAL = A.SERVICETYPE) AS SERVICETYPE_
+			, CONVERT(nvarchar,A.RECEPTIONDATE, 23) AS RECEPTIONDATE_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.SERVICEOWNER) AS SERVICEOWNER_
+			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
+			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICESTEP' AND SITEID = #{siteid} AND CODEVAL = A.SERVICESTEP) AS SERVICESTEP_
+			, B.CUSTNAME, B.EMAIL, B.DUTY
+			, B.HOMADDR1 + B.HOMADDR2 + B.HOMADDR3 AS CUSTADDRESS
+			, B.MOBILE1 + '-' + B.MOBILE2 + '-' + B.MOBILE3 AS MOBILE
+			, C.BSNO, C.CORP_SN AS INCNO
+			, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS CLIMOBILE
+			, C.PRSDNAME, C.HOMEPAGE, C.CLINO, C.CLINAME
+			
+		FROM sv300010 A
+		LEFT OUTER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
+		LEFT OUTER JOIN sa200010 C ON C.CLINO = A.CLINO
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+	</select>
+	
+	<select id="rewardRead" parameterType="hashMap" resultType="hashMap">
+		SELECT
+		CONVERT(nvarchar,A.VISITDATE,23) AS VISITDATE_
+		,A.VISITTIME
+		,(SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'REWARDTYPE' AND SITEID = #{siteid} AND CODEVAL = A.REWARDTYPE) AS REWARDTYPE_
+		,(SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'CAUSECODE' AND SITEID = #{siteid} AND CODEVAL = A.CAUSECODE) AS CAUSECODE_
+		,(SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'DELAYTYPE' AND SITEID = #{siteid} AND CODEVAL = A.DELAYTYPE) AS DELAYTYPE_
+		,A.REWARDDESC
+		,A.DELAYDESC
+		,A.FILESEARCHKEY
+		FROM sv300030 A
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+	</select>
+	
+	<select id="ractRead" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+		CONVERT(nvarchar,A.RACTDATE,23) AS RACTDATE_
+		, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SENDYN' AND SITEID = #{siteid} AND CODEVAL = A.SENDYN) AS SENDYN_
+		, RACTDESC
+		, FILESEARCHKEY
+		FROM sv300040 A
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+	</select>
+	
+	<insert id="svInsert" parameterType="serviceDto">
+		<selectKey keyProperty="serviceno"  resultType="integer" order="AFTER">
+		INSERT INTO sv300010
+		(
+		SERVICENAME
+		,SERVICEDESC
+		,SERVICEOWNER
+		,RECEPTIONDATE
+		,CUSTNO
+		,CLINO
+		,SERVICESTEP
+		,OWNER
+		,SITEID
+		,FILESEARCHKEY
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		,SERVICETYPE
+		,SERVICECODE
+		,SERVICECHANNEL
+		,ISDELETE
+		)VALUES(
+		#{servicename}
+		,#{servicedesc}
+		,#{serviceowner}
+		,#{receptiondate}
+		,#{custno}
+		,#{clino}
+		,#{servicestep}
+		,#{owner}
+		,#{siteid}
+		,#{filesearchkey}
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		,#{servicetype}
+		,#{servicecode}
+		,#{servicechannel}
+		,#{isdelete}
+		)
+		SELECT SCOPE_IDENTITY()
+		</selectKey>
+	</insert>
+	
+	<update id="svUpdate" parameterType="serviceDto">
+		UPDATE sv300010
+			SET SERVICENAME = #{servicename}
+			,SERVICEDESC = #{servicedesc}
+			,SERVICEOWNER = #{serviceowner}
+			,RECEPTIONDATE = #{receptiondate}
+			,CUSTNO = #{custno}
+			,CLINO = #{clino}
+			,OWNER = #{owner}
+			,FILESEARCHKEY = #{filesearchkey}
+			,EDTDATE = getDate()
+			,EDTUSER = #{edtuser}
+			,SERVICETYPE = #{servicetype}
+			,SERVICECODE = #{servicecode}
+			,SERVICECHANNEL = #{servicechannel}
+		WHERE SERVICENO = #{serviceno}
+		AND SITEID = #{siteid}
+	</update>
+	
+	<update id ="svDelete" parameterType="serviceDto">
+		UPDATE sv300010
+			SET EDTDATE = getDate()
+				,EDTUSER = #{edtuser}
+				,ISDELETE = 1
+			WHERE SITEID = #{siteid}
+			AND SERVICENO = #{serviceno}
+	</update>
+	
+	<update id="svStep" parameterType="int">
+		UPDATE sv300010
+			SET SERVICESTEP = #{servicestep}
+		WHERE SERVICENO = #{serviceno}
+		AND SITEID = #{siteid}
+	</update>
+	
+	<insert id="rewardInsert" parameterType="rewardDto">
+		INSERT INTO sv300030
+		(
+		VISITDATE
+		,VISITTIME
+		,REWARDTYPE
+		,CAUSECODE
+		,DELAYTYPE
+		,DELAYDESC
+		,REWARDDESC
+		,FILESEARCHKEY
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		,SITEID
+		,SERVICENO
+		)VALUES(
+		#{visitdate}
+		,#{visittime}
+		,#{rewardtype}
+		,#{causecode}
+		,#{delaytype}
+		,#{delaydesc}
+		,#{rewarddesc}
+		,#{filesearchkey}
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		,#{siteid}
+		,#{serviceno}
+		)
+	</insert>
+	
+	<update id="rewardUpdate" parameterType="rewardDto">
+	Update sv300030
+		SET VISITDATE = #{visitdate}
+			,VISITTIME = #{visittime}
+			,REWARDTYPE = #{rewardtype}
+			,CAUSECODE = #{causecode}
+			,DELAYTYPE = #{delaytype}
+			,DELAYDESC = #{delaydesc}
+			,REWARDDESC = #{rewarddesc}
+			,FILESEARCHKEY = #{filesearchkey}
+			,EDTDATE = getDate()
+			,EDTUSER = #{edtuser}
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+		AND REWARDNO = #{rewardno}
+	</update>
+	
+	<insert id="ractInsert" parameterType="ractDto">
+		INSERT INTO sv300040
+		(
+		SERVICENO
+		,RACTDATE
+		,SENDYN
+		,RACTDESC
+		,FILESEARCHKEY
+		,SITEID
+		,REGDATE
+		,REGUSER
+		,EDTDATE
+		,EDTUSER
+		,RACTCODE
+		)VALUES(
+		#{serviceno}
+		,#{ractdate}
+		,#{sendyn}
+		,#{ractdesc}
+		,#{filesearchkey}
+		,#{siteid}
+		,getDate()
+		,#{reguser}
+		,getDate()
+		,#{edtuser}
+		,#{ractcode}
+		)
+	</insert>
+	
+	<update id="ractUpdate" parameterType="ractDto">
+		UPDATE sv300040
+			SET RACTDATE = #{ractdate}
+				,SENDYN = #{sendyn}
+				,RACTDESC = #{ractdes}
+				,FILESEARCHKEY = #{filesearchkey}
+				,EDTDATE = getDate()
+				,EDTUSER = #{edtuser}
+				,RACTCODE = #{ractcode}
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+		AND RACTNO = #{ractno}
+	</update>
+	
+	<select id="tabRact" parameterType="ractDto" resultType="HashMap">
+		SELECT TOP 5
+		CONVERT(nvarchar,A.RACTDATE,23) AS RACTDATE_
+		, CASE WHEN A.RACTCODE = 1 THEN 'option1'
+    		   WHEN A.RACTCODE = 2 THEN 'option2'
+    		   WHEN A.RACTCODE = 3 THEN 'option3' END AS RACTCODE_
+    	,A.RACTDESC
+    	FROM sv300040 A
+    	WHERE A.SITEID = #{siteid}
+    	AND A.SERVICENO = #{serviceno}
+	</select>
+	
+	<insert id="conveyInsert" parameterType="conveyDto">
+		INSERT sv300050
+			(SERVICENO
+			,PREVOWNER
+			,NEXTOWNER
+			,CONVEYREASON
+			,CONVEYDATE
+			,CONVEYDESC
+			,REGDATE
+			,REGUSER
+			,EDTDATE
+			,EDTUSER
+			,SITEID
+			)VALUES(
+			#{serviceno}
+			,#{prevowner}
+			,#{nextowner}
+			,#{conveyreason}
+			,#{conveydate}
+			,#{conveydesc}
+			,getDate()
+			,#{reguser}
+			,getDate()
+			,#{edtuser}
+			,#{siteid}
+			)
+			
+			UPDATE sv300010
+			SET OWNER = #{nextowner}
+				,EDTDATE = getDate()
+				,EDTUSER = #{edtuser}
+			WHERE SERVICENO = #{serviceno}
+			AND SITEID = #{siteid}
+			
+			UPDATE sv300010
+			SET SERVICESTEP = 3
+			WHERE SERVICENO = #{serviceno}
+			AND SITEID = #{siteid}
+	</insert>
+	
+	<select id="tabConvey" parameterType="int" resultType="HashMap">
+		SELECT A.CONVEYNO
+			,A.SERVICENO
+			,A.PREVOWNER
+			,(SELECT USERNAME FROM me800010 WHERE A.PREVOWNER = USERNO) AS PREVOWNER_
+			,A.NEXTOWNER
+			,(SELECT USERNAME FROM me800010 WHERE A.NEXTOWNER = USERNO) AS NEXTOWNER_
+			,(SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'CONVEYREASON' AND SITEID = #{siteid} AND CODEVAL = A.CONVEYREASON) AS CONVEYREASON_
+			,CONVERT(nvarchar,A.CONVEYDATE,23) AS CONVEYDATE
+			,A.CONVEYDESC
+		FROM sv300050 A
+		WHERE A.SERVICENO = #{serviceno}
+		AND A.SITEID = #{siteid}
+	</select>
+	
+</mapper>

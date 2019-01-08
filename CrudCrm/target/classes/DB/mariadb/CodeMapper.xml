@@ -6,7 +6,8 @@
     SELECT * FROM (
     SELECT 
     A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
-    ,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+    ,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
+ 
     ,CASE WHEN A.ISDELETE = 0 THEN '사용'
     	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
    	,A.ISDELETE
@@ -55,7 +56,7 @@
     <select id="detail" parameterType="codeDto" resultType="hashMap">
      	  SELECT 
     		A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
-    		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+    		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
     		,CASE WHEN A.ISDELETE = 0 THEN '사용'
     	  		  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
     	  	,A.ISDELETE
@@ -76,14 +77,14 @@
     	,CODEVAL = #{codeval}
     	,UPPERCODEGRP = #{uppercodegrp}
     	,ISDELETE = #{isdelete}
-    	,EDTDATE = getDate()
+    	,EDTDATE = now()
     	,EDTUSER = #{edtuser}
     WHERE SITEID = #{siteid}
     AND CODENO = #{codeno}
     
     </update>
     <insert id="insert" parameterType="codeDto">
-    <selectKey keyProperty="codeno"  resultType="integer" order="AFTER">
+    
     INSERT INTO sys990020
     (
     CODEGRP
@@ -103,12 +104,13 @@
     ,#{uppercodegrp}
     ,#{siteid}
     ,#{isdelete}
-    ,getDate()
+    ,now()
     ,#{reguser}
-    ,getDate()
+    ,now()
     ,#{edtuser}
     )
-    SELECT SCOPE_IDENTITY()
+    <selectKey keyProperty="codeno"  resultType="integer" order="AFTER">
+    SELECT LAST_INSERT_ID()
     </selectKey>
     </insert>
     
@@ -116,7 +118,7 @@
     
     UPDATE sys990020
     SET ISDELETE = 1
-    ,EDTDATE = getDate()
+    ,EDTDATE = now()
     ,EDTUSER = #{edtuser}
     WHERE SITEID = #{siteid}
     AND CODENO = #{codeno}
@@ -126,7 +128,7 @@
     <select id="upperlist" parameterType="codeDto" resultType="hashMap">
     SELECT 
     A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
-    ,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+    , DATE_FORMAT(,A.REGDATE,'%Y-%m-%d') AS REGDATE  
     ,CASE WHEN A.ISDELETE = 0 THEN '사용'
     	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
    	,A.ISDELETE

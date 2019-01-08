@@ -7,7 +7,7 @@
 
 	SELECT 
 		COUNT(*)
-	FROM sa200010  with (nolock)
+	FROM sa200010  
 	WHERE 
 		SITEID = #{siteid}
 		AND ISDELETE = 0
@@ -40,14 +40,14 @@
 		,OWNER, USERNAME 
 	FROM (
 		SELECT
-			(ROW_NUMBER() OVER(ORDER BY CLINAME)) AS ROWNUM
+			@RNUM:=@RNUM + 1 AS ROWNUM
 			,CLINO, CLINAME, CALLNAME
 			,(CLIADDR1+' '+CLIADDR2+' '+CLIADDR3) AS ADDR 
 			,BSTYPE,MEMO
 			,IMPORTANCE, FRIENDLY
 			,A.OWNER, B.USERNAME 
-		FROM sa200010 A with (nolock)
-		LEFT OUTER JOIN me800010 B with (nolock) ON A.OWNER = B.USERNO	
+		FROM sa200010 A ,(SELECT @RNUM := 0) R
+		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO	
 		WHERE 
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
@@ -69,6 +69,7 @@
 			<if test="friendly != null and friendly != 0">
 			AND FRIENDLY = #{friendly}
 			</if>
+		ORDER BY CLINAME
 		) T
 	<if test="endRowNum != null">	 
 	WHERE 
@@ -82,8 +83,8 @@
 		CLINO, CLINAME, CALLNAME, CLIADDR1,CLIADDR2,CLIADDR3,BSTYPE,MEMO
 		,IMPORTANCE, FRIENDLY
 		,A.OWNER, B.USERNAME
-		,ISNULL( CASE WHEN LEN(A.CORP_SN) = 12 THEN SUBSTRING(A.CORP_SN,1,6)+'-'+SUBSTRING(A.CORP_SN,7,6) ELSE '' END,'')   AS CORP_SN
-		,ISNULL( CASE WHEN LEN(A.BSNO) = 10 THEN SUBSTRING(A.BSNO,1,3)+'-'+SUBSTRING(A.BSNO,4,2)+'-'+SUBSTRING(A.BSNO,6,5) ELSE '' END,'')   AS BSNO
+		,IFNULL( CASE WHEN LEN(A.CORP_SN) = 12 THEN SUBSTRING(A.CORP_SN,1,6)+'-'+SUBSTRING(A.CORP_SN,7,6) ELSE '' END,'')   AS CORP_SN
+		,IFNULL( CASE WHEN LEN(A.BSNO) = 10 THEN SUBSTRING(A.BSNO,1,3)+'-'+SUBSTRING(A.BSNO,4,2)+'-'+SUBSTRING(A.BSNO,6,5) ELSE '' END,'')   AS BSNO
 		,A.PRSDNAME
 		,A.CLIADDR1, A.CLIADDR2, CLIADDR3
 		,A.TELNO1, A.TELNO2, A.TELNO3
@@ -102,7 +103,7 @@
 
 	<!-- 거래처 추가 -->	
 	<insert id="clientInsert" parameterType="saas.crud.crm.sa.dto.ClientDto">
-		<selectKey keyProperty="clino"  resultType="integer" order="AFTER">
+		
 	
 	INSERT INTO sa200010	
 	(
@@ -148,8 +149,8 @@
 	,#{reguser}
 	,#{edituser}
 	,0
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	
 	,#{cliname}
 	,#{callname}
@@ -179,9 +180,9 @@
 	,#{email}
 	,#{memo}
 	)	
-		
-	SELECT SCOPE_IDENTITY()
-		</selectKey>
+	<selectKey keyProperty="clino"  resultType="integer" order="AFTER">	
+	SELECT LAST_INSERT_ID()
+	</selectKey>
 	</insert>
 	
 	<!-- 거래처수정 -->
@@ -190,7 +191,7 @@
 	UPDATE sa200010
 	SET
 	EDITUSER = #{edituser}
-	,EDITDATE = GETDATE()	
+	,EDITDATE = now()	
 	,CLINAME = #{cliname}
 	,CALLNAME = #{callname}
 	,OWNER = #{owner}
@@ -230,7 +231,7 @@
 	
 	UPDATE sa200010
 	SET
-	EDITDATE = GETDATE()
+	EDITDATE = now()
 	,EDITUSER = #{userno}
 	,ISDELETE = 1
 	WHERE 
@@ -273,14 +274,14 @@
 
 	FROM (
 		SELECT
-			(ROW_NUMBER() OVER(ORDER BY B.CUSTNAME)) AS ROWNUM
+			@RNUM:=@RNUM + 1 AS ROWNUM
 			,A.CLICUSTNO
 			,A.KEYMAN, A.ROLENAME, A.MEMO
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.CLINO, C.CLINAME
-		FROM sa280010 A with (nolock)
-		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
-		INNER JOIN sa200010 C with (nolock) ON A.CLINO = C.CLINO
+		FROM sa280010 A  ,(SELECT @RNUM := 0) R
+		INNER JOIN CU100010 B  ON A.CUSTNO = B.CUSTNO
+		INNER JOIN sa200010 C  ON A.CLINO = C.CLINO
 	
 		WHERE 
 			A.SITEID = #{siteid}			
@@ -289,6 +290,8 @@
 			<if test="custname != null">
 			AND B.CUSTNAME like '%'+#{custname} +'%'
 			</if>
+			
+		ORDER BY B.CUSTNAME
 		)t
 		
 	WHERE 
@@ -321,8 +324,8 @@
 	,#{reguser}
 	,#{edtuser}
 	,0
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	
 	,#{custno}
 	,#{clino}
@@ -342,8 +345,8 @@
 			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
 			,A.CUSTNO, B.CUSTNAME
 			
-		FROM sa280010 A with (nolock)
-		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+		FROM sa280010 A 
+		INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 				
 		WHERE 
 			A.SITEID = #{siteid}			
@@ -356,7 +359,7 @@
 	UPDATE sa280010
 	SET
 	EDTUSER = #{edtuser}
-	,EDTDATE = GETDATE() 
+	,EDTDATE = now() 
 	,ISDELETE = 1
 	
 	WHERE 

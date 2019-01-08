@@ -7,7 +7,7 @@
 
 	SELECT 
 		COUNT(*)
-	FROM sa210010  with (nolock)
+	FROM sa210010 
 	WHERE 
 		SITEID = #{siteid}
 		AND ISDELETE = 0
@@ -21,16 +21,16 @@
 		AND CLINO = #{clino}
 		</if>	
 		<if test="fromrorddt != null">
-		AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[>=]]> #{fromrorddt}
+		AND DATE_FORMAT(RORDDATE,'%Y%m%d') <![CDATA[>=]]> #{fromrorddt}
 		</if>
 		<if test="tororddt != null">
-		AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[<=]]> #{tororddt}
+		AND DATE_FORMAT(RORDDATE,'%Y%m%d') <![CDATA[<=]]> #{tororddt}
 		</if>
 		<if test="fromforddt != null">
-		AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[>=]]> #{fromforddt}
+		AND DATE_FORMAT(FORDDATE,'%Y%m%d') <![CDATA[>=]]> #{fromforddt}
 		</if>
 		<if test="toforddt != null">
-		AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[<=]]> #{toforddt}
+		AND DATE_FORMAT(FORDDATE,'%Y%m%d') <![CDATA[<=]]> #{toforddt}
 		</if>					
 		<if test="salestate != null and salestate != 0">
 		AND SALESTATE = #{salestate}
@@ -41,21 +41,21 @@
 	SELECT 
 		ROWNUM, SALESNO, SALENAME
 		,CLINO, CLINAME, SALESTATE
-		,(CASE WHEN CONVERT(VARCHAR, FORDDATE, 23) = '1900-01-01' THEN '' ELSE CONVERT(VARCHAR, FORDDATE, 23) END) AS FORDDATE
-		,(CASE WHEN CONVERT(VARCHAR, RORDDATE, 23) = '1900-01-01' THEN '' ELSE CONVERT(VARCHAR, RORDDATE, 23) END) AS RORDDATE
-		,(CASE WHEN CONVERT(VARCHAR, STATEDATE, 23) = '1900-01-01' THEN '' ELSE CONVERT(VARCHAR, STATEDATE, 23) END) AS STATEDATE
+		,(CASE WHEN DATE_FORMAT(FORDDATE,'%Y%m%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(FORDDATE,'%Y%m%d') END) AS FORDDATE
+		,(CASE WHEN DATE_FORMAT(RORDDATE,'%Y%m%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(RORDDATE,'%Y%m%d') END) AS RORDDATE
+		,(CASE WHEN DATE_FORMAT(STATEDATE,'%Y%m%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(STATEDATE,'%Y%m%d') END) AS STATEDATE
 		,OWNER, USERNAME		
 	FROM (
 		SELECT
-			(ROW_NUMBER() OVER(ORDER BY SALESNO DESC)) AS ROWNUM
+			@RNUM:=@RNUM + 1 AS ROWNUM
 			,A.SALESNO, A.SALENAME
 			,A.CLINO, B.CLINAME
 			,A.FORDDATE, A.RORDDATE
 			,A.SALESTATE, A.STATEDATE
 			,A.OWNER, C.USERNAME
-		FROM sa210010 A with (nolock)
-		LEFT OUTER JOIN sa200010 B with (nolock) ON A.CLINO = B.CLINO
-		LEFT OUTER JOIN me800010 C with (nolock) ON A.OWNER = C.USERNO   
+		FROM sa210010 A ,(SELECT @RNUM := 0) R
+		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
+		LEFT OUTER JOIN me800010 C ON A.OWNER = C.USERNO   
 		
 		WHERE 
 			A.SITEID = #{siteid}
@@ -70,20 +70,22 @@
 			AND A.CLINO = #{clino}
 			</if>	
 			<if test="fromrorddt != null">
-			AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[>=]]> #{fromrorddt}
+			AND DATE_FORMAT(RORDDATE,'%Y%m%d') <![CDATA[>=]]> #{fromrorddt}
 			</if>
 			<if test="tororddt != null">
-			AND CONVERT(VARCHAR, RORDDATE, 112) <![CDATA[<=]]> #{tororddt}
+			AND DATE_FORMAT(RORDDATE,'%Y%m%d') <![CDATA[<=]]> #{tororddt}
 			</if>
 			<if test="fromforddt != null">
-			AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[>=]]> #{fromforddt}
+			AND DATE_FORMAT(FORDDATE,'%Y%m%d') <![CDATA[>=]]> #{fromforddt}
 			</if>
 			<if test="toforddt != null">
-			AND CONVERT(VARCHAR, FORDDATE, 112) <![CDATA[<=]]> #{toforddt}
+			AND DATE_FORMAT(FORDDATE,'%Y%m%d') <![CDATA[<=]]> #{toforddt}
 			</if>
 			<if test="salestate != null and salestate != 0">
 			AND A.SALESTATE = #{salestate}
 			</if>	
+			
+		ORDER BY SALESNO DESC
 		) T 
 	<if test="endRowNum != null">	
 	WHERE 
@@ -98,12 +100,12 @@
 	,A.OWNER, B.USERNAME
 	,A.CLINO, C.CLINAME
 	,A.SALESTATE
-	,( CASE WHEN   CONVERT(DATE, A.STATEDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.STATEDATE,23) END)   AS STATEDATE
+	,( CASE WHEN   DATE_FORMAT(A.STATEDATE,'%Y-%m-%d') ='1900-01-01' THEN '' ELSE DATE_FORMAT(A.STATEDATE,'%Y-%m-%d') END)   AS STATEDATE
 	, A.PROB
-	,( CASE WHEN   CONVERT(DATE, A.FORDDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.FORDDATE,23) END)   AS FORDDATE
+	,( CASE WHEN   DATE_FORMAT(A.FORDDATE,'%Y-%m-%d') ='1900-01-01' THEN '' ELSE DATE_FORMAT(A.FORDDATE,'%Y-%m-%d') END)   AS FORDDATE
 	, A.FORDAMOUNT, A.CATEGORY
 	,A.PRDNAME
-	,( CASE WHEN   CONVERT(DATE, A.RORDDATE) ='1900-01-01' THEN '' ELSE CONVERT(VARCHAR, A.RORDDATE,23) END)   AS RORDDATE
+	,( CASE WHEN   DATE_FORMAT(A.RORDDATE,'%Y-%m-%d') ='1900-01-01' THEN '' ELSE DATE_FORMAT(A.RORDDATE,'%Y-%m-%d') END)   AS RORDDATE
 	, A.RORDAMOUNT
 
 	,A.NEED, A.SOLUTION
@@ -124,7 +126,7 @@
 
 	<!-- 영업 추가 -->	
 	<insert id="salesInsert" parameterType="saas.crud.crm.sa.dto.SalesDto">
-		<selectKey keyProperty="salesno"  resultType="integer" order="AFTER">
+		
 	
 	INSERT INTO sa210010	
 	(
@@ -162,8 +164,8 @@
 	,#{reguser}
 	,#{edituser}
 	,0
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	
 	,#{salename}
 	,#{owner}
@@ -185,9 +187,9 @@
 	,#{refusal}
 	,#{surmount}
 	)	
-		
-	SELECT SCOPE_IDENTITY()
-		</selectKey>
+	<selectKey keyProperty="salesno"  resultType="integer" order="AFTER">	
+	SELECT LAST_INSERT_ID()
+	</selectKey>
 	</insert>
 
 	<!-- 영업수정 -->
@@ -195,7 +197,7 @@
 	UPDATE sa210010
 	SET
 	EDITUSER = #{edituser}
-	,EDITDATE = GETDATE()
+	,EDITDATE = now()
 	
 	,SALENAME = #{salename}
 	,OWNER = #{owner}
@@ -227,35 +229,35 @@
 	<insert id="mergeSalesSch" parameterType="saas.crud.crm.sa.dto.SalesDto">
 	<if test="rorddate != null and rorddate != '' ">
 	MERGE INTO sa210080 A
-		USING (select '1' AS DUAL ) B 
+		USING (select '1' AS 'DUAL' ) B 
 		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 1  ) 
 		
 		WHEN MATCHED THEN
 		
 			UPDATE SET 
 			STARTDATE = #{rorddate}	
-			,EDTUSER = #{edituser}, EDTDATE = getdate()
+			,EDTUSER = #{edituser}, EDTDATE = now()
 		
 		WHEN NOT MATCHED THEN
 			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
-			VALUES (#{siteid}, '[영업 실수주일]'+#{salename} ,  #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0,0
+			VALUES (#{siteid}, '[영업 실수주일]'+#{salename} ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0
 			,#{rorddate},#{owner},#{salesno}, 1 );
 	</if>
 	
 	<if test="forddate != null and forddate != '' ">
 	MERGE INTO sa210080 A
-		USING (select '1' AS DUAL ) B 
+		USING (select '1' AS 'DUAL' ) B 
 		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 2 ) 
 		
 		WHEN MATCHED THEN
 		
 			UPDATE SET 
 			STARTDATE = #{forddate}	
-			,EDTUSER = #{edituser}, EDTDATE = getdate()
+			,EDTUSER = #{edituser}, EDTDATE = now()
 		
 		WHEN NOT MATCHED THEN
 			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
-			VALUES (#{siteid}, '[영업 예상수주일]'+#{salename} ,  #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0,0
+			VALUES (#{siteid}, '[영업 예상수주일]'+#{salename} ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0
 			,#{forddate},#{owner},#{salesno}, 2 );
 		</if>		
 	</insert>
@@ -268,7 +270,7 @@
 	SET 
 	ISDELETE = 1
 	,EDITUSER = #{userno}
-	,EDITDATE = GETDATE()
+	,EDITDATE = now()
 	
 	WHERE
 		SITEID = #{siteid} 
@@ -306,8 +308,8 @@
 	SELECT 
 		COUNT(*)
 			
-	FROM sa250010 A with (nolock)
-	INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+	FROM sa250010 A 
+	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 	
 	WHERE 
 		A.SITEID = #{siteid}
@@ -333,16 +335,16 @@
 
 	FROM (
 		SELECT
-			(ROW_NUMBER() OVER(ORDER BY B.CUSTNAME)) AS ROWNUM
+			@RNUM:=@RNUM + 1 AS ROWNUM
 			,A.SALESCUSTNO
 			,A.KEYMAN, A.ROLENAME, A.MEMO
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.SALESNO, C.SALENAME
 			,D.CLINO, D.CLINAME
-		FROM sa250010 A with (nolock)
-		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
-		INNER JOIN sa210010 C with (nolock) ON A.SALESNO = C.SALESNO
-		LEFT OUTER JOIN sa200010 D with (nolock) ON B.CLINO = D.CLINO
+		FROM sa250010 A ,(SELECT @RNUM := 0) R
+		INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
+		INNER JOIN sa210010 C ON A.SALESNO = C.SALESNO
+		LEFT OUTER JOIN sa200010 D ON B.CLINO = D.CLINO
 		
 		WHERE 
 			A.SITEID = #{siteid}			
@@ -351,6 +353,8 @@
 			<if test="custname != null">
 			AND B.CUSTNAME like '%'+#{custname} +'%'
 			</if>
+			
+		ORDER BY B.CUSTNAME
 		)t
 		
 	WHERE 
@@ -387,15 +391,15 @@
 	FROM
 	(
 	SELECT  
-	(ROW_NUMBER() OVER(ORDER BY A.CONTNO DESC)) AS ROWNUM
-		,A.CONTNO
+	@RNUM:=@RNUM + 1 AS ROWNUM
+	,A.CONTNO
 	,A.CTTUSER
 	,A.CUSTNO
-	,CONVERT(VARCHAR, ISNULL(A.CTTDATE,''), 112) + ISNULL(A.CTTTIME,'')  AS CTTDATE 
+	,DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y%m%d') + IFNULL(A.CTTTIME,'')  AS CTTDATE 	
 	,A.DURATION
-	,ISNULL(A.MEMO,'') AS MEMO
+	,IFNULL(A.MEMO,'') AS MEMO
 	,A.CTTLOCATION
-	,ISNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
+	,IFNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
 	,A.CTTTYPE
 	,A.SALESSTEP
 	,A.CLINO
@@ -405,7 +409,7 @@
 	,A.RESPONSECODE
 	,A.LOGID
 	, B.CUSTNAME, C.USERNAME
-	FROM cu110010 A
+	FROM cu110010 A ,(SELECT @RNUM := 0) R
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 	INNER JOIN me800010 C ON A.CTTUSER = C.USERNO
 	WHERE 
@@ -423,6 +427,8 @@
 		<if test="custno != null">
 		AND B.CUSTNO like '%'+ #{custno} +'%'
 		</if>
+		
+	ORDER BY A.CONTNO DESC
 	) T
 	WHERE
 		ROWNUM between #{startRowNum} and #{endRowNum}		   
@@ -454,8 +460,8 @@
 	,#{reguser}
 	,#{edtuser}
 	,0
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	
 	,#{custno}
 	,#{salesno}
@@ -475,8 +481,8 @@
 			,A.KEYMAN, A.ROLENAME, A.CHKSUPPORT, A.MEMO
 			,A.CUSTNO, B.CUSTNAME
 			
-		FROM sa250010 A with (nolock)
-		INNER JOIN CU100010 B with (nolock) ON A.CUSTNO = B.CUSTNO
+		FROM sa250010 A 
+		INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 				
 		WHERE 
 			A.SITEID = #{siteid}			
@@ -489,7 +495,7 @@
 	UPDATE sa250010
 	SET
 	EDTUSER = #{edtuser}
-	,EDTDATE = GETDATE() 
+	,EDTDATE = now() 
 	,ISDELETE = 1
 	
 	WHERE 
@@ -543,9 +549,10 @@
 	FROM
 	(
 	SELECT
-	(ROW_NUMBER() OVER(ORDER BY A.SALESTATENO DESC)) AS ROWNUM 
+	@RNUM:=@RNUM + 1 AS ROWNUM
 	,A.SALESTATENO, A.SITEID, A.SALESNO
-	,CONVERT(VARCHAR, A.ENTDATE, 112) AS ENTDATE 
+	,DATE_FORMAT(A.ENTDATE,'%Y%m%d') AS ENTDATE 
+
 	,CASE WHEN A.STATE = 1 THEN '계약성공종료'
 		  WHEN A.STATE = 2 THEN '계약중'
 		  WHEN A.STATE = 3 THEN '제안서제출'
@@ -575,7 +582,7 @@
 	, A.PROB
 	,A.REGUSER, B.USERNAME  
 	 
-	FROM sa210020 A
+	FROM sa210020 A ,(SELECT @RNUM := 0) R
 	LEFT OUTER JOIN me800010 B ON A.REGUSER = B.USERNO
 	
 	WHERE
@@ -584,6 +591,8 @@
 		<if test="state != null and state != 0">
 		AND A.STATE = #{state}
 		</if>
+		
+	ORDER BY A.SALESTATENO DESC
 	) AS T 
 	<if test="endRowNum != null">	
 	WHERE 
@@ -615,11 +624,11 @@
 	#{siteid}
 	,#{userno}
 	,#{userno}
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	,#{salesno}
 	
-	,getdate()
+	,now()
 	,#{state}
 	,#{modreason}
 	,#{ssdesc}
@@ -630,9 +639,9 @@
 	UPDATE sa210010 
 	SET
 		SALESTATE = #{state}
-		,STATEDATE = getdate()
+		,STATEDATE = now()
 		,EDITUSER = #{userno} 
-		,EDITDATE = getdate()
+		,EDITDATE = now()
 	WHERE
 		SALESNO = #{salesno}
 		
@@ -688,8 +697,8 @@
 	#{siteid}
 	,#{userno}
 	,#{userno}
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	,0
 	
 	,#{schname}
@@ -713,7 +722,7 @@
 	UPDATE
 	sa210080 SET
 	EDTUSER = #{userno}
-	,EDTDATE = getdate()
+	,EDTDATE = now()
 	
 	<if test="schname != null">
 	,SCHNAME = #{schname}
@@ -832,9 +841,9 @@
 
 	VALUES
 	(
-	getdate()
+	now()
 	,#{userno}
-	,getdate()
+	,now()
 	,#{userno}
 	,0
 	,#{siteid}
@@ -848,7 +857,7 @@
 	
 	<!-- 스케쥴추가 -  -->
 	<insert id="salesSchInsertFromCom" parameterType="hashMap">
-	<selectKey keyProperty="schno"  resultType="integer" order="AFTER">
+	
 	INSERT INTO sa210080 
 	(
 	SITEID
@@ -876,8 +885,8 @@
 	#{siteid}
 	,#{userno}
 	,#{userno}
-	,getdate()
-	,getdate()
+	,now()
+	,now()
 	,0
 	
 	,SCHNAME
@@ -896,8 +905,8 @@
 	WHERE 
 		SITEID = #{siteid}
 		AND COMSCHNO = #{comschno}
-	
-	SELECT SCOPE_IDENTITY()
+	<selectKey keyProperty="schno"  resultType="integer" order="AFTER">
+	SELECT LAST_INSERT_ID()
 	</selectKey>
 	</insert>
 	
@@ -905,7 +914,7 @@
 	<update id="salesComSchUpdate" parameterType="hashMap">
 	UPDATE sa210120 SET
 	
-	EDTDATE = getdate()
+	EDTDATE = now()
 	,EDTUSER = #{userno}
 	,SCHNAME = #{schname}
 	,SALESNO = #{salesno}
@@ -942,9 +951,9 @@
 	FROM
 		(
 		SELECT
-		(ROW_NUMBER() OVER(ORDER BY A.SALESNO DESC)) AS ROWNUM	
+		@RNUM:=@RNUM + 1 AS ROWNUM
 		,A.SALESNO , A.SALENAME 
-		,CONVERT(VARCHAR,A.FORDDATE,112) AS FORDDATE
+		,DATE_FORMAT(A.FORDDATE,'%Y%m%d') AS FORDDATE
 		,A.OWNER
 		,CASE WHEN A.SALESTATE = 1 THEN '계약성공종료' 
 	  	  	WHEN A.SALESTATE = 2 THEN '계약중' 
@@ -955,10 +964,10 @@
 	  	  	WHEN A.SALESTATE = 7 THEN '경쟁실패' 
 	  	  	ELSE '' 
 	  	 	 END AS SALESTATE
-		,CONVERT(VARCHAR,A.STATEDATE,112) AS STATEDATE
+		,DATE_FORMAT(A.STATEDATE,'%Y%m%d') AS STATEDATE
 		,C.USERNAME
 	
-		FROM sa210010 A
+		FROM sa210010 A ,(SELECT @RNUM := 0) R
 		LEFT OUTER JOIN sa250010 B ON A.SALESNO = B.SALESNO
 		INNER JOIN me800010 C ON A.OWNER = C.USERNO
 	
@@ -968,7 +977,9 @@
 			AND CUSTNO = #{custno}
 			<if test="salename != null">
 			AND A.SALENAME like '%'+#{salename}+'%' 
-			</if>	 
+			</if>
+			
+		ORDER BY A.SALESNO DESC	 
 		) AS T
 	WHERE
 		<if test="endRowNum != null">	 

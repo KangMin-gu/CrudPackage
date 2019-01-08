@@ -6,7 +6,7 @@
 			INSERT INTO sys990030
 			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID, IMGPATH )
 			VALUES
-			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, GETDATE(), #{siteid}, #{imgpath})			
+			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, now()(), #{siteid}, #{imgpath})			
 	</insert>
 	
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->
@@ -26,15 +26,17 @@
 		FROM  
 			(
 			SELECT 
-			ROW_NUMBER() OVER(ORDER BY USERNAME) AS ROWNUM
+			
+			@RNUM:=@RNUM + 1 AS ROWNUM
 			,USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
-			FROM me800010
+			FROM me800010 ,(SELECT @RNUM := 0) R
 			WHERE 
 				SITEID= #{siteid}
 				AND ISDELETE = 0
 				<if test="username != null">
 				AND USERNAME like '%'+#{username}+'%'
 				</if>
+			ORDER BY USERNAME
 			) T
 		WHERE 
 			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}
@@ -57,11 +59,11 @@
 	SELECT * 
 	FROM  
 		(
-		SELECT 
-		ROW_NUMBER() OVER(ORDER BY A.CLINAME) AS ROWNUM
+		SELECT 		
+		@RNUM:=@RNUM + 1 AS ROWNUM
 		,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
 		,B.USERNAME 
-		FROM sa200010 A
+		FROM sa200010 A ,(SELECT @RNUM := 0) R
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		WHERE 
 			A.SITEID= #{siteid}
@@ -69,6 +71,7 @@
 			<if test="cliname != null">
 			AND CLINAME like '%'+#{cliname}+'%'
 			</if>
+		ORDER BY A.CLINAME
 		) T
 	WHERE 
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
@@ -91,9 +94,9 @@
 	FROM  
 		(
 		SELECT 
-		ROW_NUMBER() OVER(ORDER BY A.CUSTNO) AS ROWNUM
+		@RNUM:=@RNUM + 1 AS ROWNUM
 		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME,A.MOBILE1+A.MOBILE2+A.MOBILE3 AS MOBILE, A.EMAIL
-		FROM CU100010 A
+		FROM CU100010 A ,(SELECT @RNUM := 0) R
 		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
 		WHERE 
 			A.SITEID= #{siteid}
@@ -101,6 +104,7 @@
 			<if test="cstname != null">
 			AND A.CUSTNAME like '%'+#{cstname}+'%'
 			</if>
+		ORDER BY A.CUSTNO
 		) T
 	WHERE 
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
@@ -127,12 +131,12 @@
 	SELECT * 
 	FROM  
 		(
-		SELECT 
-		ROW_NUMBER() OVER(ORDER BY A.SALENAME) AS ROWNUM
+		SELECT 		
+		@RNUM:=@RNUM + 1 AS ROWNUM
 		,A.SALESNO, A.SALENAME, A.CLINO, A.OWNER
 		,B.USERNAME
 		,C.CLINAME 
-		FROM sa210010 A
+		FROM sa210010 A ,(SELECT @RNUM := 0) R
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
 		WHERE 
@@ -141,6 +145,7 @@
 			<if test="salename != null">
 			AND SALENAME like '%'+#{salename}+'%'
 			</if>
+		ORDER BY A.SALENAME
 		) T
 	WHERE 
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		

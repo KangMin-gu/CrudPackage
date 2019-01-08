@@ -18,13 +18,13 @@
 			  	, A.STARTDATE,A.ENDDATE
 				, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 				, A.CAMPDESC
-				, CONVERT(nvarchar,A.STARTDATE,23) + '-' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
-
+				, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') + '-' + DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS CAMPDATE_
+				
 				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
-				,ISNULL(B.CNT,0) AS CNT
-				,ISNULL(C.CNT,0) AS CLICKCNT
-				, CONVERT(nvarchar,ISNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS CLICKTOTAL
-				, CONVERT(nvarchar,ISNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS SENDTOTAL
+				,IFNULL(B.CNT,0) AS CNT
+				,IFNULL(C.CNT,0) AS CLICKCNT
+				, CONVERT(nvarchar,IFNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS CLICKTOTAL
+				, CONVERT(nvarchar,IFNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS SENDTOTAL
 				, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
 					   WHEN E.SENDFORM = 2 THEN 'SMS'
 					   WHEN E.SENDFORM = 3 THEN 'LMS'
@@ -77,9 +77,10 @@
 			   WHEN A.SENDTYPE = 2 THEN '예약발송'
 			   WHEN A.SENDTYPE = 3 THEN '요일반복발송'
 			   WHEN A.SENDTYPE = 4 THEN '기간반복발송' END AS SENDTYPE_ 
-		, CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE
-		, CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE
-		, CONVERT(nvarchar,A.STARTDATE,23) + '~' + CONVERT(nvarchar,A.ENDDATE,23) AS CAMPDATE_
+		, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') AS STARTDATE
+		
+		, DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS ENDDATE
+		, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') + '~' + DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS CAMPDATE_
 		,A.OWNER
 		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 		,A.CAMPDESC
@@ -116,7 +117,6 @@
 	</select>
 	
 	<insert id="insert" parameterType="campaignDto">
-		<selectKey keyProperty="campno"  resultType="integer" order="AFTER">
 		
 			INSERT INTO cp400010
 			(
@@ -144,12 +144,13 @@
 			,#{campdesc}
 			,#{siteid}
 			,0
-			,getDate()
+			,now()
 			,#{reguser}
-			,getDate()
+			,now()
 			,#{edtuser}
 			,#{filesearchkey}
 			)
+		<selectKey keyProperty="campno"  resultType="integer" order="AFTER">
 			SELECT SCOPE_IDENTITY()
 		</selectKey>
 	</insert>
@@ -163,7 +164,7 @@
 				,ENDDATE = #{enddate}
 				,OWNER = #{owner}
 				,CAMPDESC = #{campdesc}
-				,EDTDATE = getDate()
+				,EDTDATE = now()
 				,EDTUSER = #{edtuser}
 			WHERE SITEID = #{siteid}
 			AND CAMPNO = #{campno}
@@ -203,9 +204,9 @@
 			,MOBILE1 + MOBILE2 + MOBILE3 AS MOBILE
 			,EMAIL
 			,#{campno}
-			,getDate()
+			,now()
 			,#{userno}
-			,getDate()
+			,now()
 			,#{userno}
 		FROM cu100010
 		WHERE SITEID = #{siteid}
@@ -232,10 +233,10 @@
 		AND REGDATE <![CDATA[<]]>= #{regdate2}
 	</if>
 	<if test="age1 != null">
-		AND Year(getDate())-Year(BIRTH) <![CDATA[>]]>= #{age1}
+		AND Year(now())-Year(BIRTH) <![CDATA[>]]>= #{age1}
 	</if>
 	<if test="age2 != null">
-		AND Year(getDate())-Year(BIRTH) <![CDATA[<]]>= #{age2}
+		AND Year(now())-Year(BIRTH) <![CDATA[<]]>= #{age2}
 	</if>
 	
 	</insert>
@@ -256,9 +257,9 @@
 		,#{value}
 		,#{campno}
 		,#{siteid}
-		,getDate()
+		,now()
 		,#{userno}
-		,getDate()
+		,now()
 		,#{userno}
 		)
 	</insert>
@@ -287,9 +288,9 @@
 		,#{campno}
 		,#{siteid}
 		,#{order}
-		,getDate()
+		,now()
 		,#{userno}
-		,getDate()
+		,now()
 		,#{userno}
 		)
 	</insert>
@@ -328,14 +329,15 @@
 				  WHEN B.CUSTGRADE = 2 THEN 'VIP'
 				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
 			,B.HOMADDR1 +' '+ B.HOMADDR2 + B.HOMADDR3 AS ADDR_
-			,ROW_NUMBER() OVER(ORDER BY A.CUSTNO DESC) AS ROWNUM
-		FROM cp400021 A 
+			,@RNUM:=@RNUM + 1 AS ROWNUM
+		FROM cp400021 A  ,(SELECT @RNUM := 0) R
 		INNER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
 		WHERE A.SITEID = #{siteid}
 		AND A.CAMPNO = #{campno}
 		<if test="custname != null">
 			AND  A.CUSTNAME LIKE '%'+ #{custname} +'%'
 		</if>
+		ORDER BY A.CUSTNO DESC
 		) X
 		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
@@ -379,9 +381,9 @@
 				,#{senddesc}
 				,#{contentsno}
 				,#{testmail}
-				,getDate()
+				,now()
 				,#{reguser}
-				,getDate()
+				,now()
 				,#{edtuser}
 				,#{sendform}
 				)
@@ -402,7 +404,7 @@
 			, SENDDESC = #{senddesc}
 			, TESTMAIL = #{testmail}
 			, CONTENTSNO = #{contentsno}
-			, EDTDATE = getDate()
+			, EDTDATE = now()
 			, EDTUSER = #{edtuser}
 			, SENDFORM = #{sendform}
 		WHERE NO = #{no}
@@ -420,7 +422,7 @@
 					  WHEN A.SENDTYPE = 2 THEN '예약발송'
 					  WHEN A.SENDTYPE = 3 THEN '요일발송'
 					  WHEN A.SENDTYPE = 4 THEN '기간발송' END AS SENDTYPE_
-				,CONVERT(nvarchar,A.SENDDATE,23) AS SENDDATE_
+				,DATE_FORMAT(A.SENDDATE,'%Y-%m-%d') AS SENDDATE_				
 				,A.WEEK
 				,CASE WHEN A.WEEK = 1 THEN '1주차'
 					  WHEN A.WEEK = 2 THEN '2주차'
@@ -435,8 +437,9 @@
 					  WHEN A.DAY = 5 THEN '목요일'
 					  WHEN A.DAY = 6 THEN '금요일'
 					  WHEN A.DAY = 7 THEN '토요일' END DAY_  
-				,CONVERT(nvarchar,A.STARTDATE,23) AS STARTDATE_
-				,CONVERT(nvarchar,A.ENDDATE,23) AS ENDDATE_
+				,DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') AS STARTDATE_
+				
+				,DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS ENDDATE_
 				,A.SENDHOUR
 				,A.SENDMINUTE
 				,A.TITLE
@@ -467,10 +470,10 @@
 		,#{testmail}
 		,#{title}
 		,#{senddesc}
-		,getDate()
-		,getDate()
+		,now()
+		,now()
 		,#{userno}
-		,getDate()
+		,now()
 		,#{userno}
 		)
 
@@ -487,9 +490,9 @@
 				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
 			, A.TITLE, A.CONTENT, A.PURP
 			, A.SITEID, A.ISDELETE
-			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
 			, USECNT
 			,ROW_NUMBER() OVER(ORDER BY A.NO DESC) AS ROWNUM
@@ -516,9 +519,9 @@
 				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
 			, A.TITLE, A.CONTENT, A.PURP
 			, A.SITEID, A.ISDELETE
-			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
 			, USECNT
 			FROM cp410010 A
@@ -542,8 +545,7 @@
 	</select>
 	
 	<insert id="contentsInsert" parameterType="campaignContentsDto">
-		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
-		
+				
 		INSERT INTO cp410010(
 			FORMTYPE
 			,TITLE
@@ -562,12 +564,12 @@
 		,#{purp}
 		,#{siteid}
 		,0
-		,getDate()
+		,now()
 		,#{reguser}
-		,getDate()
+		,now()
 		,#{edtuser}
 		)
-		
+		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
 		SELECT SCOPE_IDENTITY()
 		</selectKey>
 	</insert>
@@ -580,9 +582,9 @@
 				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
 			, A.TITLE, A.CONTENT, A.PURP
 			, A.SITEID, A.ISDELETE
-			, CONVERT(nvarchar,A.REGDATE,23) AS REGDATE_
+			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, CONVERT(nvarchar,A.EDTDATE,23) AS EDTDATE_
+			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
 		FROM cp410010 A
 		WHERE A.SITEID = #{siteid}
@@ -595,7 +597,7 @@
 			,TITLE = #{title}
 			,CONTENT = #{content}
 			,PURP = #{purp}
-			,EDTDATE = getDate()
+			,EDTDATE = now()
 			,EDTUSER = #{edtuser}
 		WHERE NO = #{no}
 		AND SITEID = #{siteid} 
@@ -603,7 +605,7 @@
 	
 	<update id="contentsDelete" parameterType="campaignContentsDto">
 		UPDATE cp410010
-			SET EDTDATE = getDate()
+			SET EDTDATE = now()
 			,EDTUSER= #{edtuser}
 			,ISDELETE = 1
 		WHERE NO = #{no}
@@ -616,7 +618,7 @@
 	
 	<select id="tabHistory" parameterType="hashMap" resultType="hashMap">
 		SELECT B.CODENAME
-			, ISNULL(C.CODENAME,A.VALUE) AS VALUE
+			, IFNULL(C.CODENAME,A.VALUE) AS VALUE
 			, A.CAMPORDER
 			, A.REGDATE
 		FROM cp400022 A
@@ -627,7 +629,7 @@
 	</select>
 	
 	<select id="targetOrderMax" parameterType="hashMap" resultType="int">
-		SELECT ISNULL(MAX(CAMPORDER),0) FROM cp400022
+		SELECT IFNULL(MAX(CAMPORDER),0) FROM cp400022
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 	</select>
@@ -645,7 +647,7 @@
 		UPDATE cp400010
 			SET CAMPSTEP = #{campstep}
 				,EDTUSER = #{edtuser}
-				,EDTDATE = getDate()
+				,EDTDATE = now()
 			WHERE SITEID = #{siteid}
 			AND CAMPNO = #{campno}
 	</update>
@@ -654,8 +656,8 @@
 
 		SELECT A.CAMPNO AS id
 			, A.CAMPNAME AS title
-			, CONVERT(nvarchar,A.STARTDATE,23) AS 'start'
-			, CONVERT(nvarchar,A.ENDDATE,23) AS 'end'
+			, DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') AS 'start'
+			, DATE_FORMAT(A.ENDDATE,'%Y-%m-%d') AS 'end'
 			, CASE WHEN E.SENDFORM = 1 THEN '#FF0000'
 			 	   WHEN E.SENDFORM = 2 THEN '#0040FF'
 				   WHEN E.SENDFORM = 3 THEN '#FF00FF' 
@@ -668,10 +670,10 @@
 				   
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 			
-			, ISNULL(B.CNT,0) AS CNT
-			, ISNULL(C.CNT,0) AS CLICKCNT
-			, CONVERT(nvarchar,ISNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS CLICKTOTAL
-			, CONVERT(nvarchar,ISNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,ISNULL(B.CNT,0))  AS SENDTOTAL
+			, IFNULL(B.CNT,0) AS CNT
+			, IFNULL(C.CNT,0) AS CLICKCNT
+			, CONVERT(nvarchar,IFNULL(C.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS CLICKTOTAL
+			, CONVERT(nvarchar,IFNULL(D.CNT,0)) + ' / ' +CONVERT(nvarchar,IFNULL(B.CNT,0))  AS SENDTOTAL
 			
 			, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
 				   WHEN E.SENDFORM = 2 THEN 'SMS'
@@ -690,7 +692,7 @@
 	
 	<!-- 캠페인 자체 첨부파일 -->
 	<select id="campaignFile" parameterType="campaignDto" resultType="hashMap">
-		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, DATE_FORMAT(REGDATE,'%Y-%m-%d') AS REGDATE 
 		FROM sys990030
 		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
 	</select>

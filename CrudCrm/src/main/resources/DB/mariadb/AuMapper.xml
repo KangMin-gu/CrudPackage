@@ -8,14 +8,14 @@
 		,A.EMAIL,A.USERDUTY
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-		,CASE WHEN CONVERT(nvarchar,A.REGDATE,23) = '1900-01-01' THEN ''
-				ELSE CONVERT(nvarchar,A.REGDATE,23) END AS REGDATE
+		,CASE WHEN DATE_FORMAT(A.REGDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+				ELSE DATE_FORMAT(A.REGDATE,'%Y-%m-%d') END AS REGDATE
 		,A.MOBILE1,A.MOBILE2,A.MOBILE3
-		,CASE WHEN CONVERT(nvarchar,A.ENTERDATE,23) = '1900-01-01' THEN ''
-				ELSE CONVERT(nvarchar,A.ENTERDATE,23) END AS ENTERDATE
+		,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+				ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
 		, A.MOBILE1 + A.MOBILE2 + A.MOBILE3 AS MOBILE
-		,ROW_NUMBER() OVER(ORDER BY A.USERNO DESC) AS ROWNUM
-			FROM me800010 A
+		,@RNUM:=@RNUM + 1 AS ROWNUM
+			FROM me800010 A ,(SELECT @RNUM := 0) R
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="username != null">
@@ -31,11 +31,13 @@
 				AND ISDELETE = #{isdelete}
 			</if>
 			<if test="strdate != null">
-				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[>=]]> #{strdate}
+				AND DATE_FORMAT(REGDATE,'%Y-%m-%d') <![CDATA[>=]]> #{strdate}
 			</if>
 			<if test="enddate != null">
-				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[<=]]> #{enddate}
+				AND DATE_FORMAT(REGDATE,'%Y-%m-%d') <![CDATA[<=]]> #{enddate}
 			</if>
+			
+			ORDER BY A.USERNO DESC
 			) X 
 			<if test="endRowNum != null">
 				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
@@ -56,8 +58,8 @@
 		,CASE WHEN A.CHKAUTH = 10 THEN '일반사용자'
 			  WHEN A.CHKAUTH = 20 THEN '관리자사용자' END AS CHKAUTH_
 		,CHKAUTH
-		,CASE WHEN CONVERT(nvarchar,A.ENTERDATE,23) = '1900-01-01' THEN ''
-				ELSE CONVERT(nvarchar,A.ENTERDATE,23) END AS ENTERDATE
+		,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+				ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
 		,A.MOBILE1
 		,A.MOBILE2
 		,A.MOBILE3
@@ -106,8 +108,7 @@
 	</select>
 	
 	<insert id="insert" parameterType="userDto">
-		<selectKey keyProperty="userno"  resultType="integer" order="AFTER">
-		
+				
 			INSERT INTO me800010
 			(
 				SITEID
@@ -147,12 +148,13 @@
 			,#{telno3}
 			,#{chkauth}
 			,0
-			,getDate()
+			,now()
 			,#{reguser}
-			,getDate()
+			,now()
 			,#{edtuser}
 			)
-			SELECT SCOPE_IDENTITY()
+		<selectKey keyProperty="userno"  resultType="integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 		
@@ -178,7 +180,7 @@
 				,CHKAUTH = #{chkauth}
 				</if>
 				
-				,EDTDATE = getDate()
+				,EDTDATE = now()
 				,EDTUSER = #{edtuser}
 			WHERE USERNO = #{userno}
 	</update>
@@ -199,7 +201,7 @@
 		,A.USERDUTY
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-		,CONVERT(nvarchar,A.REGDATE,23) AS REGDATE
+		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
 		,A.EMAIL
 		,A.MOBILE1
 		,A.MOBILE2
@@ -213,7 +215,7 @@
 		SELECT X.MENUNO,X.MENUNAME
 		,CASE WHEN X.CNT >= X.BUYCNT THEN 0 ELSE 1 END AS TOTAL
 		,X.CNT,X.BUYCNT 
-		FROM (SELECT B.MENUNO, B.MENUNAME, ISNULL(C.CNT, 0) AS CNT, A.BUYCNT
+		FROM (SELECT B.MENUNO, B.MENUNAME, IFNULL(C.CNT, 0) AS CNT, A.BUYCNT
 				FROM me810010 A
 				INNER JOIN T_MENU B ON B.LICENSENO = A.LICENSENO
 				LEFT OUTER JOIN (SELECT SITEID, COUNT(MENUNO) AS CNT, MENUNO
@@ -235,12 +237,12 @@
 	<insert id="menuMerge" parameterType="userMenuDto">
 		
 		MERGE INTO me810011 AS A
-			USING (select '1' AS DUAL ) B ON (A.USERNO = #{userno} AND A.MENUNO = #{menuno})
+			USING (select '1' AS 'DUAL' ) B ON (A.USERNO = #{userno} AND A.MENUNO = #{menuno})
 		WHEN MATCHED THEN
 			UPDATE SET A.ISDELETE = 0
 		WHEN NOT MATCHED THEN
 			INSERT (SITEID,USERNO,MENUNO,REGDATE,REGUSER,EDTDATE,EDTUSER,ISDELETE)
-			VALUES(#{siteid},#{userno},#{menuno},getDate(),#{reguser},getDate(),#{edtuser},0);
+			VALUES(#{siteid},#{userno},#{menuno},now(),#{reguser},now(),#{edtuser},0);
 	</insert>
 	
 	<select id="userMenu" parameterType="userMenuDto" resultType="hashMap">

@@ -9,11 +9,11 @@
      		,(SELECT LICENSENAME FROM ma900020 WHERE LICENSENO = A.LICENSENO) AS LICENSENO_
      		
      		,A.MENUDESC,A.MENUVAL
-     		,CONVERT(varchar,A.REGDATE,23) AS REGDATE
+     		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
      		,A.ISDELETE
      		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-     	,ROW_NUMBER() OVER(ORDER BY A.MENUNO DESC) AS ROWNUM
-     	FROM ma900030 A
+     	,@RNUM:=@RNUM + 1 AS ROWNUM
+     	FROM ma900030 A  ,(SELECT @RNUM := 0) R
      	WHERE A.ISDELETE = 0
      	<if test ="menuName != null">
      		AND A.MENUNAME LIKE '%'+#{menuName} +'%'
@@ -21,6 +21,7 @@
      	<if test ="menuVal != null">
      		AND A.MENUVAL LIKE '%'+#{menuVal} +'%'
      	</if>
+    	 ORDER BY A.MENUNO DESC
      	) X 
      	WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
     </select>
@@ -62,13 +63,13 @@
     ,MENUDESC = #{menudesc}
     ,MENUVAL = #{menuval}
     ,ISDELETE = #{isdelete}
-    ,EDTDATE = getDate()
+    ,EDTDATE = now()
     ,EDTUSER = #{edtuser}
     WHERE MENUNO = #{menuno}
     
     </update>
     <insert id="insert" parameterType="menuDto">
-    <selectKey keyProperty="menuno"  resultType="integer" order="AFTER">
+    
     INSERT INTO ma900030
     (
      MENUNAME
@@ -86,11 +87,12 @@
     ,#{menudesc}
     ,#{menuval}
     ,#{isdelete}
-    ,getdate()
+    ,now()
     ,#{reguser}
-    ,getdate()
+    ,now()
     ,#{edtuser}
     )
+    <selectKey keyProperty="menuno"  resultType="integer" order="AFTER">
     SELECT SCOPE_IDENTITY()
     </selectKey>
     </insert>
@@ -99,7 +101,7 @@
     
     UPDATE ma900030
     SET ISDELETE = 1
-    ,EDTDATE = getDate()
+    ,EDTDATE = now()
     ,EDTUSER = #{edtuser}
     WHERE MENUNO = #{menuno}
     

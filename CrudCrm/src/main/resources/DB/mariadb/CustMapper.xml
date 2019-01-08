@@ -6,7 +6,7 @@
 	<select id="totalcnt" parameterType="hashMap" resultType="int">
 		SELECT
 		COUNT(*)
-		FROM CU100010 A with (nolock)
+		FROM CU100010 A 
 		WHERE
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0 
@@ -26,10 +26,10 @@
 			AND A.CUSTGRADE = #{custgrade}
 			</if>
 			<if test="fromregdt != null">
-			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
+			AND DATE_FORMAT(A.REGDATE,'%Y%m%d') <![CDATA[>=]]> #{fromregdt}
 			</if>
 			<if test="toregdt != null">
-			AND CONVERT(VARCHAR, A.REGDATE, 112) <![CDATA[<=]]> #{toregdt}
+			AND DATE_FORMAT(A.REGDATE,'%Y%m%d') <![CDATA[<=]]> #{toregdt}
 			</if>	
 			<if test="infoagree == 0 or infoagree == 1">
 			AND A.INFOAGREE = #{infoagree}
@@ -47,16 +47,18 @@
 		SELECT
 		 *
 		FROM (
-			SELECT (ROW_NUMBER() OVER(ORDER BY CUSTNAME)) AS ROWNUM
+			SELECT 
+			@RNUM:=@RNUM + 1 AS ROWNUM
 			, CU.CUSTNO, CU.CUSTNAME, CU.DEPTNAME, CU.DUTY
 			, CU.MOBILE1+'-'+CU.MOBILE2+'-'+CU.MOBILE3 AS MOBILE
 			, CU.EMAIL, CU.SEX
 			, CU.OWNER, B.USERNAME AS OWNER_
-			, CU.CUSTGUBUN, CU.CUSTGRADE, CU.INFOAGREE, CONVERT(VARCHAR,CU.REGDATE,23) AS REGDATE
+			, CU.CUSTGUBUN, CU.CUSTGRADE, CU.INFOAGREE
+			, DATE_FORMAT(CU.REGDATE,'%Y-%m-%d') AS REGDATE
 			, CU.CLINO, C.CLINAME 
-			FROM CU100010 CU  with (nolock)
-			LEFT OUTER JOIN me800010 AS B with (nolock) ON CU.OWNER = B.USERNO 
-			LEFT OUTER JOIN sa200010 AS C with (nolock) ON CU.CLINO = C.CLINO	
+			FROM CU100010 CU ,(SELECT @RNUM := 0) R 
+			LEFT OUTER JOIN me800010 AS B ON CU.OWNER = B.USERNO 
+			LEFT OUTER JOIN sa200010 AS C ON CU.CLINO = C.CLINO	
 			WHERE
 				CU.SITEID = #{siteid}
 				AND CU.ISDELETE = 0 
@@ -76,10 +78,10 @@
 				AND CUSTGRADE = #{custgrade}
 				</if>
 				<if test="fromregdt != null">
-				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[>=]]> #{fromregdt}
+				AND DATE_FORMAT(CU.REGDATE,'%Y%m%d') <![CDATA[>=]]> #{fromregdt}
 				</if>
 				<if test="toregdt != null">
-				AND CONVERT(VARCHAR, CU.REGDATE, 112) <![CDATA[<=]]> #{toregdt}
+				AND DATE_FORMAT(CU.REGDATE,'%Y%m%d') <![CDATA[<=]]> #{toregdt}
 				</if>
 				<if test="infoagree == 0 or infoagree == 1">
 				AND CU.INFOAGREE = #{infoagree}
@@ -90,7 +92,8 @@
 				</if>	
 				<if test="clino != null and clino != 0 ">
 				AND CU.CLINO = #{clino}
-				</if>	
+				</if>
+			ORDER BY CU.CUSTNAME	
 			) T
 		<if test="endRowNum != null">
 		WHERE ROWNUM between #{startRowNum} and #{endRowNum}
@@ -99,7 +102,7 @@
 	
 	<!-- 고객 삭제 -->
 	<update id="custDelete" parameterType="saas.crud.crm.cu.dto.CustDto" >
-		UPDATE CU100010 SET ISDELETE = 1 , EDITDATE = GETDATE() , EDITUSER = #{userno}
+		UPDATE CU100010 SET ISDELETE = 1 , EDITDATE = NOW() , EDITUSER = #{userno}
 		WHERE SITEID = #{siteid} AND CUSTNO = #{custno}
 	</update>
 
@@ -195,7 +198,7 @@
 	
 	<!-- 고객 추가  -->
 	<insert id="custformInsert" parameterType="saas.crud.crm.cu.dto.CustDto">
-		<selectKey keyProperty="custno"  resultType="integer" order="AFTER">
+		
 		INSERT INTO CU100010
 		(		
 		CUSTNAME
@@ -235,9 +238,9 @@
 		(	
 		#{custname}
 		,#{owner}
-		,GETDATE()
+		,NOW()
 		,#{reguser}
-		,GETDATE()
+		,NOW()
 		,#{edituser}
 		,#{siteid}
 		,0
@@ -266,7 +269,8 @@
 		,#{infoagree}	
 		,#{clino}
 		)
-		SELECT SCOPE_IDENTITY()
+		<selectKey keyProperty="custno"  resultType="integer" order="AFTER">
+		SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	<!-- 고객, 수신거부 정보 추가 -->
@@ -298,9 +302,9 @@
 		VALUES
 		(
 		#{custno}
-		,GETDATE()
+		,NOW()
 		,#{reguser}
-		,GETDATE()
+		,NOW()
 		,#{edituser}
 		,0	
 		
@@ -322,18 +326,33 @@
 	<!-- 거래처관련고객 추가,수정 -->
 	<insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
 	MERGE INTO sa280010 A
+		USING (SELECT '1' AS 'DUAL' ) B ON (A.SITEID = #{siteid} AND A.CUSTNO = #{custno}  ) 
+		
+		WHEN MATCHED THEN
+			UPDATE SET 
+			CLINO = #{clino}
+			,EDTUSER = #{edituser}, EDTDATE = now()	
+		
+		WHEN NOT MATCHED THEN
+			INSERT (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
+			VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 );
+			
+	</insert>
+	<!-- <insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
+	MERGE INTO sa280010 A
 		USING (select '1' AS DUAL ) B ON (A.SITEID = #{siteid} AND A.CUSTNO = #{custno}  ) 
 		
 		WHEN MATCHED THEN
 			UPDATE SET 
 			CLINO = #{clino}
-			,EDTUSER = #{edituser}, EDTDATE = getdate()	
+			,EDTUSER = #{edituser}, EDTDATE = now()	
 		
 		WHEN NOT MATCHED THEN
 			INSERT (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
-			VALUES (#{siteid}, #{custno}, #{clino}, getdate(), getdate(), #{reguser}, #{reguser}, 0 );
+			VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 );
 			
-	</insert>
+	</insert> -->
+	
 	
 	<!-- 고객 정보 수정 -->
 	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >
@@ -341,7 +360,7 @@
 		SET
 		CUSTNAME = #{custname}
 		,OWNER = #{owner}
-		,EDITDATE = GETDATE()
+		,EDITDATE = now()
 		,EDITUSER = #{edituser}	
 		,DEPTNAME = #{deptname}
 		,DUTY = #{duty}
@@ -389,7 +408,7 @@
 	<update id="custformUpdateDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
 		UPDATE CU100080
 		SET
-		EDITDATE = GETDATE()
+		EDITDATE = now()
 		,EDITUSER = #{edituser}	
 		,DENYMAILAD = #{denymailad}
 		,DENYMAILNEWS = #{denymailnews}	
@@ -434,15 +453,15 @@
 	FROM
 		(
 		SELECT
-  		(ROW_NUMBER() OVER(ORDER BY B.CAMPNO DESC)) AS ROWNUM
+  		@RNUM:=@RNUM + 1 AS ROWNUM
 		,B.CAMPNO, B.CAMPNAME
 		,B.CAMPTYPE, B.CAMPSTEP
-		,CONVERT(VARCHAR,B.STARTDATE,120) AS STARTDATE
-		,CONVERT(VARCHAR,B.ENDDATE,120) AS ENDDATE
+		,DATE_FORMAT(B.STARTDATE,'%Y%m%d %T') AS STARTDATE
+		,DATE_FORMAT(B.ENDDATE,'%Y%m%d %T') AS ENDDATE
 		,B.OWNER
 		,C.USERNAME 
 	
-		FROM cp400021 A
+		FROM cp400021 A ,(SELECT @RNUM := 0) R 
 		INNER JOIN cp400010 B ON A.CAMPNO = B.CAMPNO  
 		LEFT OUTER JOIN me800010 C ON B.OWNER = C.USERNO 
 	
@@ -453,6 +472,8 @@
 			<if test="campname != null">
 			AND B.CAMPNAME LIKE '%'+#{campname}+'%'
 			</if>
+			
+		ORDER BY B.CAMPNO DESC
 		) T
 		<if test="endRowNum != null">
 		WHERE ROWNUM between #{startRowNum} and #{endRowNum}

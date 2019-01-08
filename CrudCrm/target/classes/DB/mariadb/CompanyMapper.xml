@@ -6,22 +6,23 @@
      	SELECT * FROM (
      	SELECT 
      	A.SITENAME,A.SITEID,A.PRSDNAME,A.BSNO,A.MOBILE1+'-'+A.MOBILE2+'-'+A.MOBILE3 AS MOBILE
-     	,A.BSTYPE,CONVERT(varchar,A.FREGDATE,23) AS FREGDATE
+     	,A.BSTYPE,DATE_FORMAT(A.FREGDATE,'%Y-%m-%d') AS FREGDATE
+     	
      	,CASE WHEN A.SITESIZE = '1' THEN '대기업'
      		  WHEN A.SITESIZE = '2' THEN '중견기업'
      		  WHEN A.SITESIZE = '3' THEN '중소기업'
      		  WHEN A.SITESIZE = '4' THEN '소기업' END AS SITESIZE
      	,CASE WHEN A.ISDELETE = '0' THEN '사용'
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE
-     	,ROW_NUMBER() OVER(ORDER BY A.SITEID DESC) AS ROWNUM
+     	,@RNUM:=@RNUM + 1 AS ROWNUM
      	,(SELECT SUM(BUYCNT) AS BUYCNT FROM me810010 WHERE SITEID = A.SITEID) AS BUYCNT
-     	FROM ma900010 A
+     	FROM ma900010 A ,(SELECT @RNUM := 0) R
      	WHERE A.ISDELETE = 0
      	<if test ="strDate != null">
-     		AND ISNULL(A.FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
+     		AND IFNULL(A.FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
      	</if>
      	<if test ="endDate != null">
-     		AND ISNULL(A.FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
+     		AND IFNULL(A.FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
      	</if>
      	<if test ="sitename != null">
      		AND A.SITENAME LIKE '%'+#{sitename} +'%'
@@ -29,6 +30,7 @@
      	<if test ="sitesize != null">
      		AND A.SITESIZE = #{sitesize}
      	</if>
+     	ORDER BY A.SITEID DESC
      	) X 
      	<if test ="endRowNum != null">
      		WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
@@ -42,10 +44,10 @@
      	FROM ma900010
      	WHERE ISDELETE = 0
      	<if test ="strDate != null">
-     		AND ISNULL(FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
+     		AND IFNULL(FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
      	</if>
      	<if test ="endDate != null">
-     		AND ISNULL(FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
+     		AND IFNULL(FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
      	</if>
      	<if test ="sitename != null">
      		AND SITENAME LIKE '%'+#{sitename} +'%'
@@ -73,7 +75,7 @@
      	,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
      	,A.OWNER 
      	,A.COTYPE,A.BSCOND,A.BSTYPE
-     	,CONVERT(varchar,A.FREGDATE,23) AS FREGDATE_ ,A.SITELOGO
+     	,DATE_FORMAT(A.FREGDATE,23,'%Y-%m-%d') AS FREGDATE_ ,A.SITELOGO
      	,CASE WHEN A.ISDELETE = '0' THEN '사용'
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE_
      	,A.ISDELETE
@@ -121,14 +123,14 @@
     ,ISDELETE = #{isdelete}
     
     ,SITEMEMO = #{sitememo}
-    ,EDTDATE = getDate()
+    ,EDTDATE = now()
     ,EDTUSER = #{edtuser}
     ,SITELOGO = #{sitelogo}
     WHERE SITEID = #{siteid}
     
     </update>
     <insert id="insert" parameterType="companyDto">
-    <selectKey keyProperty="siteid"  resultType="integer" order="AFTER">
+    
     INSERT INTO ma900010
     (
      SITENAME 
@@ -185,12 +187,13 @@
     ,#{bstype}
     ,#{isdelete}
     ,#{sitememo}
-    ,getdate()
+    ,now()
     ,#{reguser}
-    ,getdate()
+    ,now()
     ,#{edtuser}
     ,#{sitelogo}
     )
+    <selectKey keyProperty="siteid"  resultType="integer" order="AFTER">
     SELECT SCOPE_IDENTITY()
     </selectKey>
     </insert>
@@ -199,21 +202,21 @@
     
     	UPDATE ma900010
     		SET ISDELETE = 1
-    		,EDTDATE = getDate()
+    		,EDTDATE = now()
     		,EDTUSER = #{edtuser}
     	WHERE SITEID = #{siteid}
     </update>
     
     <insert id="siteLicenseInsert" parameterType="HashMap">
 		MERGE INTO me810010 AS A
-			USING (select '1' AS DUAL ) B ON (A.SITEID = #{siteid} AND A.LICENSENO = #{licenseno})
+			USING (select '1' AS 'DUAL' ) B ON (A.SITEID = #{siteid} AND A.LICENSENO = #{licenseno})
 		WHEN MATCHED THEN
 			UPDATE SET A.BUYCNT = #{buycnt}
-					, A.EDTDATE = getDate()
+					, A.EDTDATE = now()
 					, A.EDTUSER = #{edtuser}
 		WHEN NOT MATCHED THEN
 			INSERT (SITEID,LICENSENO,BUYCNT,REGDATE,REGUSER,EDTDATE,EDTUSER)
-			VALUES(#{siteid},#{licenseno},#{buycnt},getDate(),#{reguser},getDate(),#{edtuser});
+			VALUES(#{siteid},#{licenseno},#{buycnt},now(),#{reguser},now(),#{edtuser});
     </insert>
 
 </mapper>

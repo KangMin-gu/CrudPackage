@@ -19,7 +19,7 @@
 					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>	
 			</where>
 	</select>
@@ -27,9 +27,10 @@
 	<select id="inbox" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
 			SELECT A.NOTICEID, A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME,
-				A.IMPORTANT, A.FILESEARCHKEY, CONVERT(VARCHAR(10), A.REGDATE, 120) AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
-				B.READCHEK, ROW_NUMBER() OVER(order by A.NOTICEID DESC) AS ROWNUM
-			FROM sys970010 AS A
+				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
+				B.READCHEK
+				, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM sys970010 AS A ,(SELECT @RNUM := 0) R
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
@@ -41,8 +42,9 @@
 					AND C.USERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND A.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>
+			order by A.NOTICEID DESC
 			) AS result
 		<if test="startRowNum != null">
 		WHERE result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.NOTICEID DESC
@@ -67,7 +69,7 @@
 					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>				
 			</where>
 	</select>
@@ -90,7 +92,7 @@
 					AND E.TOUSERNAME LIKE '%'+#{recipient}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>	
 			</where>	
 	</select>
@@ -99,9 +101,10 @@
 	<select id="outbox" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
 			SELECT A.NOTICEID, A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME,
-				A.IMPORTANT, A.FILESEARCHKEY, CONVERT(VARCHAR(10), A.REGDATE, 120) AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
-				B.READCHEK, ROW_NUMBER() OVER(order by A.NOTICEID DESC) AS ROWNUM
-			FROM sys970010 AS A
+				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
+				B.READCHEK
+				, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM sys970010 AS A  ,(SELECT @RNUM := 0) R
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
@@ -113,8 +116,9 @@
 					AND E.TOUSERNAME LIKE '%'+#{recipient}+'%'
 				</if>
 				<if test="enddate != null">
-					AND A.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>
+			order by A.NOTICEID DESC
 			) AS result
 		WHERE result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.NOTICEID DESC
 	</select>
@@ -137,7 +141,7 @@
 					AND E.TOUSERNAME LIKE '%'+#{recipient}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>				
 			</where>
 	</select>
@@ -160,7 +164,7 @@
 					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>	
 			</where>
 	</select>
@@ -168,9 +172,10 @@
 	<select id="importbox" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
 			SELECT A.NOTICEID, A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME, 
-				A.IMPORTANT, A.FILESEARCHKEY, CONVERT(VARCHAR(10), A.REGDATE, 120) AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
-				B.READCHEK, ROW_NUMBER() OVER(order by A.NOTICEID DESC) AS ROWNUM
-			FROM sys970010 AS A
+				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT( A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
+				B.READCHEK
+				, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM sys970010 AS A ,(SELECT @RNUM := 0) R
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
@@ -182,8 +187,9 @@
 					AND C.USERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND A.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>
+			order by A.NOTICEID DESC
 			) AS result
 		WHERE result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.NOTICEID DESC
 	</select>
@@ -206,7 +212,7 @@
 					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>				
 			</where>
 	</select>
@@ -229,7 +235,7 @@
 					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>	
 			</where>
 	</select>
@@ -237,9 +243,10 @@
 	<select id="trashbox" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
 			SELECT A.NOTICEID, A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME,
-				A.IMPORTANT, A.FILESEARCHKEY, CONVERT(VARCHAR(10), A.REGDATE, 120) AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
-				B.READCHEK, ROW_NUMBER() OVER(order by A.NOTICEID DESC) AS ROWNUM
-			FROM sys970010 AS A
+				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT( A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
+				B.READCHEK
+				, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM sys970010 AS A ,(SELECT @RNUM := 0) R
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
@@ -251,8 +258,9 @@
 					AND C.USERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND A.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>
+			order by A.NOTICEID DESC
 			) AS result
 		WHERE result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.NOTICEID DESC
 	</select>
@@ -275,7 +283,7 @@
 					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
 				</if>
 				<if test="enddate != null">
-					AND E.REGDATE BETWEEN #{startdate} AND DATEADD(DAY,1,#{enddate})
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
 				</if>				
 			</where>
 	</select>
@@ -290,7 +298,7 @@
 	
 	<!-- 첨부파일리스트 -->
 	<select id="noteFile" parameterType="hashMap" resultType="hashMap">
-		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE 
+		SELECT FILEID, SAVEFILENAME, FILESIZE, ORGFILENAME, DATE_FORMAT( REGDATE,'%Y-%m-%d') AS REGDATE 
 		FROM sys990030 
 		WHERE FILESEARCHKEY = #{filesearchkey} AND SITEID = #{siteid} 
 	</select>
@@ -310,47 +318,47 @@
 	
 	<!-- 읽음으로 표시 -->
 	<update id="noteEyeChk" parameterType="hashMap">
-		UPDATE sys970011 SET READCHEK = 1, READDATE = GETDATE(), EDTUSER = #{userno}, EDTDATE = GETDATE()
+		UPDATE sys970011 SET READCHEK = 1, READDATE = now(), EDTUSER = #{userno}, EDTDATE = now()
 		 WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 0
 	</update>
 	
 	<!-- 중요로 표시 -->
 	<update id="noteImportChk" parameterType="noteDto">
-		UPDATE sys970010 SET IMPORTANT = 1, EDTUSER = #{userno}, EDTDATE = GETDATE()
+		UPDATE sys970010 SET IMPORTANT = 1, EDTUSER = #{userno}, EDTDATE = now()
 		 WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 0
 	</update>
 	
 	<!-- 휴지통 이동 -->
 	<update id="noteTrashChk" parameterType="noteDto">
-		UPDATE sys970010 SET ISDELETE = 2, EDTUSER = #{userno}, EDTDATE = GETDATE()
+		UPDATE sys970010 SET ISDELETE = 2, EDTUSER = #{userno}, EDTDATE = now()
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 0
 	</update>
 	
 	<!-- 통지 삭제-->
 	<update id="noteDeleteChk" parameterType="noteDto">
-		UPDATE sys970010 SET ISDELETE = 1, EDTUSER = #{userno}, EDTDATE = GETDATE() 
+		UPDATE sys970010 SET ISDELETE = 1, EDTUSER = #{userno}, EDTDATE = now() 
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 2
 	</update>
 	
 	<!-- 보관함으로 이동-->
 	<update id="noteReturnChk" parameterType="noteDto">
-		UPDATE sys970010 SET ISDELETE = 0, EDTUSER = #{userno}, EDTDATE = GETDATE() 
+		UPDATE sys970010 SET ISDELETE = 0, EDTUSER = #{userno}, EDTDATE = now() 
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 1
 	</update>
 	
 	<!-- 카테고리 화면 -->
 	<select id="noteCategory" parameterType="noteCategoryDto" resultType="hashMap">
-		SELECT CATEGORY, CONVERT(VARCHAR(10), REGDATE, 120) AS REGDATE FROM sys970020 WHERE USERNO = #{userno} AND SITEID = #{siteid}
+		SELECT CATEGORY, DATE_FORMAT( REGDATE,'%Y-%m-%d') AS REGDATE FROM sys970020 WHERE USERNO = #{userno} AND SITEID = #{siteid}
 	</select>
 	
 	<!-- 통지등록 -->
 	<insert id="noteSend" parameterType="noteDto">
-		<selectKey resultType="int" keyProperty="noticeid" order="AFTER">
+		
 			INSERT INTO sys970010 
 			(USERNO, NTCWAYEMAIL, TITLE, CONTENT, LNKURL, REGUSER, REGDATE, SITEID, IMPORTANT, EDTUSER, EDTDATE, FILESEARCHKEY) 
 			VALUES 
-			(#{userno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, GETDATE(), #{siteid}, #{important}, #{userno}, GETDATE(), #{filesearchkey} )
-			
+			(#{userno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, now(), #{siteid}, #{important}, #{userno}, now(), #{filesearchkey} )
+		<selectKey resultType="int" keyProperty="noticeid" order="AFTER">	
 			SELECT SCOPE_IDENTITY() 
 		</selectKey>	
 	</insert>
@@ -360,7 +368,7 @@
 		INSERT INTO sys970011
 		(NOTICEID, USERNO, CHKCC, SITEID, EDTUSER, EDTDATE )
 		VALUES
-		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, GETDATE() )
+		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, now() )
 	</insert>
 	
 		<!-- USERNO를 받아와서 EMAIL과 USERNAME를 받아옴   -->
@@ -375,7 +383,7 @@
 		(SITEID,CSTNAME,USERNAME,FROMEMAIL,TOEMAIL,SUBJECT,CONTENT,FILESEARCHKEY,REGUSER,EDTUSER,RLTDATE,EDTDATE,REGDATE,RLTCODE,USERNO,NOTICENO) VALUES
 		(
 		#{siteId},REPLACE(RTRIM(LTRIM(#{cstName})),char(13),''),#{userName},#{fromEmail},#{toEmail},#{subject},#{content},#{fileSearchkey},
-		#{userNo},#{userNo},GETDATE(),GETDATE(),GETDATE(),0,#{toUserNo},#{noticeNo}
+		#{userNo},#{userNo},now(),now(),now(),0,#{toUserNo},#{noticeNo}
 		)
 	</insert>
 	<!-- 메세지버튼 팝업 -->

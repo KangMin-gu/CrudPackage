@@ -9,7 +9,7 @@
 
     <!--예약 / 다이렉트 전부가져오기 -->
     <select id="allTarget" parameterType="saas.crud.crm.ce.MailDto" resultType="hashMap">
-      	SELECT TOP 100 * FROM sys980010 WHERE RLTCODE = 0 AND getDate() <![CDATA[>=]]> RLTDATE;
+      	SELECT TOP 100 * FROM sys980010 WHERE RLTCODE = 0 AND now() <![CDATA[>=]]> RLTDATE;
     </select>
     
     <update id="clickCnt" parameterType="hashMap">
@@ -43,11 +43,11 @@
 		,#{useros}
 		,#{userdevice}
 		,#{userbrowser}
-		,YEAR(getDate())
-		,MONTH(getDate())
-		,DAY(getDate())
-		,DATEPART(hh,getDate())
-		,getDate()
+		,YEAR(now())
+		,MONTH(now())
+		,DAY(now())
+		,DATEPART(hh,now())
+		,now()
 		,#{siteid}
 		)
 	</insert>

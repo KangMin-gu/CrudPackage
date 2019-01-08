@@ -223,6 +223,12 @@ public class SalesDaoImpl implements SalesDao {
 		salesList = session.selectList("sales.custTabSalesList",searchVal);
 		return salesList;
 	}
+	//영업-스케쥴-팝업 상세- 접촉추가 실행
+	@Override
+	public int salesContInsert(Map<String, Object> contVal) {
+		int res = session.insert("sales.salesContInsert",contVal);
+		return res;
+	}
 	
 	
 

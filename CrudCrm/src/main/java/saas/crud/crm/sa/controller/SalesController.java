@@ -543,5 +543,15 @@ public class SalesController {
 		
 		return mView;
 	}
-
+	
+	@RequestMapping(value="/sales/cont/post",method=RequestMethod.POST)
+	@ResponseBody
+	public int authsalesContInsert(HttpServletRequest request) {
+		
+		Map<String,Object> contVal = crud.searchParam(request);
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		contVal.put("userno",userNo);
+		int res = salesService.svcSalesContInsert(contVal);
+		return res;
+	}
 }

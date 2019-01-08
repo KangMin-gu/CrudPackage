@@ -72,4 +72,6 @@ public interface SalesDao {
 	public int custTabSalesListCnt(Map<String,Object> searchVal);
 
 	public List<Map<String,Object>> custTabSalesList(Map<String,Object> searchVal);
+	
+	public int salesContInsert(Map<String, Object> contVal);
 }

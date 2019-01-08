@@ -427,5 +427,12 @@ public class SalesServiceImpl implements SalesService {
 							
 		return resMap;
 	}
+	
+	//접촉 추가(영업- 스케줄 - 팝업 상세)
+	@Override
+	public int svcSalesContInsert(Map<String, Object> contVal) {
+		int res = salesDao.salesContInsert(contVal);
+		return res;
+	}
 
 }

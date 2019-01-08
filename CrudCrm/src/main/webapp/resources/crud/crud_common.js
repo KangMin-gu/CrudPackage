@@ -64,7 +64,7 @@
 		openNewWindow('거래처','/popclient',e.currentTarget.id,650,750);
 	});
 	// 고객 팝업
-	$('.cust').click(function(e){
+	$('.cust').click(function(e){debugger;
 		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
 	});
 	//영업팝업
@@ -214,7 +214,7 @@
 		var parentid = $('#parentid').val();	
 		var id = tr.getAttribute("value");
 		opener.$('[name="'+parentid+'"]').next().val(id);		
-		opener.$('[name="'+parentid+'"]').val(tr.children.cstname.textContent);
+		opener.$('[name="'+parentid+'"]').val(tr.children.custname.textContent).trigger('keyup');
 		popCustClick(id);
 		
 		setTimeout(function(){

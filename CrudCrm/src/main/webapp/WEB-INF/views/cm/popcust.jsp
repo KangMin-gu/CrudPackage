@@ -53,7 +53,7 @@ body {
 						<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
 						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >담당자명</label>
                             <div class="col-sm-7">
-                                <input type="text" name="cstname" id="cstname" class="form-control" value="${searchVal.cstname}"> 
+                                <input type="text" name="custname" id="custname" class="form-control" value="${searchVal.custname}"> 
                             </div>                                
 							<div class="col-sm-3 w-100" style="padding-left: 0px;">
 								<button type="submit" class="btn btn-primary" data-style="zoom-in" style="height: 22px;padding-top: 0px;padding-bottom: 0px;" >검색</button>
@@ -75,7 +75,7 @@ body {
 							<tbody>
 								<c:forEach var="list" items="${custList }">
 									<tr style="cursor: pointer;" onClick="javascript:parentCustname(this);" value="${list.CUSTNO }"> 
-										<td id="cstname">${list.CUSTNAME}</td>
+										<td id="custname">${list.CUSTNAME}</td>
 										<td>${list.CLINAME}</td>
 										<td>${list.MOBILE}</td>
 										<td>${list.EMAIL}</td>

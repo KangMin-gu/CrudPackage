@@ -7,7 +7,6 @@
      	SELECT 
      	A.SITENAME,A.SITEID,A.PRSDNAME,A.BSNO,A.MOBILE1+'-'+A.MOBILE2+'-'+A.MOBILE3 AS MOBILE
      	,A.BSTYPE,DATE_FORMAT(A.FREGDATE,'%Y-%m-%d') AS FREGDATE
-     	
      	,CASE WHEN A.SITESIZE = '1' THEN '대기업'
      		  WHEN A.SITESIZE = '2' THEN '중견기업'
      		  WHEN A.SITESIZE = '3' THEN '중소기업'
@@ -16,7 +15,7 @@
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE
      	,@RNUM:=@RNUM + 1 AS ROWNUM
      	,(SELECT SUM(BUYCNT) AS BUYCNT FROM me810010 WHERE SITEID = A.SITEID) AS BUYCNT
-     	FROM ma900010 A ,(SELECT @RNUM := 0) R
+     	FROM ma900010 A,(SELECT @RNUM := 0) R
      	WHERE A.ISDELETE = 0
      	<if test ="strDate != null">
      		AND IFNULL(A.FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
@@ -33,7 +32,7 @@
      	ORDER BY A.SITEID DESC
      	) X 
      	<if test ="endRowNum != null">
-     		WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
+     		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
      	</if>
      	
     </select>
@@ -75,12 +74,12 @@
      	,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
      	,A.OWNER 
      	,A.COTYPE,A.BSCOND,A.BSTYPE
-     	,DATE_FORMAT(A.FREGDATE,23,'%Y-%m-%d') AS FREGDATE_ ,A.SITELOGO
+     	,DATE_FORMAT(A.FREGDATE,'%Y-%m-%d') AS FREGDATE_ ,A.SITELOGO
      	,CASE WHEN A.ISDELETE = '0' THEN '사용'
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE_
      	,A.ISDELETE
      	,A.SITEMEMO
-     	,(SELECT COUNT(*) FROM T_SITE_LICENSE WHERE SITEID = A.SITEID) AS TOTALCNT
+     	,(SELECT COUNT(*) FROM me810010 WHERE SITEID = A.SITEID) AS TOTALCNT
      	FROM ma900010 A
      	WHERE A.SITEID = #{siteid}
     </select>
@@ -123,7 +122,7 @@
     ,ISDELETE = #{isdelete}
     
     ,SITEMEMO = #{sitememo}
-    ,EDTDATE = now()
+    ,EDTDATE = NOW()
     ,EDTUSER = #{edtuser}
     ,SITELOGO = #{sitelogo}
     WHERE SITEID = #{siteid}
@@ -187,9 +186,9 @@
     ,#{bstype}
     ,#{isdelete}
     ,#{sitememo}
-    ,now()
+    ,NOW()
     ,#{reguser}
-    ,now()
+    ,NOW()
     ,#{edtuser}
     ,#{sitelogo}
     )
@@ -202,21 +201,15 @@
     
     	UPDATE ma900010
     		SET ISDELETE = 1
-    		,EDTDATE = now()
+    		,EDTDATE = NOW()
     		,EDTUSER = #{edtuser}
     	WHERE SITEID = #{siteid}
     </update>
     
     <insert id="siteLicenseInsert" parameterType="HashMap">
-		MERGE INTO me810010 AS A
-			USING (select '1' AS 'DUAL' ) B ON (A.SITEID = #{siteid} AND A.LICENSENO = #{licenseno})
-		WHEN MATCHED THEN
-			UPDATE SET A.BUYCNT = #{buycnt}
-					, A.EDTDATE = now()
-					, A.EDTUSER = #{edtuser}
-		WHEN NOT MATCHED THEN
-			INSERT (SITEID,LICENSENO,BUYCNT,REGDATE,REGUSER,EDTDATE,EDTUSER)
-			VALUES(#{siteid},#{licenseno},#{buycnt},now(),#{reguser},now(),#{edtuser});
+			INSERT INTO ME810010	(SITEID,LICENSENO,BUYCNT,REGDATE,REGUSER,EDTDATE,EDTUSER)
+							VALUES(#{siteid},#{licenseno},#{buycnt},NOW(),#{reguser},NOW(),#{edtuser})
+			ON DUPLICATE KEY UPDATE BUYCNT = #{buycnt},EDTDATE = NOW(),EDTUSER = #{edtuser};
     </insert>
 
 </mapper>

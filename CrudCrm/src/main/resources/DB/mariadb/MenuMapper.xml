@@ -7,13 +7,12 @@
      	SELECT 
      		A.MENUNO,A.MENUNAME
      		,(SELECT LICENSENAME FROM ma900020 WHERE LICENSENO = A.LICENSENO) AS LICENSENO_
-     		
      		,A.MENUDESC,A.MENUVAL
      		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
      		,A.ISDELETE
      		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
      	,@RNUM:=@RNUM + 1 AS ROWNUM
-     	FROM ma900030 A  ,(SELECT @RNUM := 0) R
+     	FROM ma900030 A ,(SELECT @RNUM := 0) R
      	WHERE A.ISDELETE = 0
      	<if test ="menuName != null">
      		AND A.MENUNAME LIKE '%'+#{menuName} +'%'
@@ -87,13 +86,13 @@
     ,#{menudesc}
     ,#{menuval}
     ,#{isdelete}
-    ,now()
+    ,NOW()
     ,#{reguser}
-    ,now()
+    ,NOW()
     ,#{edtuser}
     )
     <selectKey keyProperty="menuno"  resultType="integer" order="AFTER">
-    SELECT SCOPE_IDENTITY()
+    SELECT LAST_INSERT_ID()
     </selectKey>
     </insert>
     
@@ -101,7 +100,7 @@
     
     UPDATE ma900030
     SET ISDELETE = 1
-    ,EDTDATE = now()
+    ,EDTDATE = NOW()
     ,EDTUSER = #{edtuser}
     WHERE MENUNO = #{menuno}
     

@@ -186,7 +186,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="menuname">메뉴명</label></th>
-                                            <td><input type="text" class="form-control required error validate simple" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
+                                            <td><input type="text" class="form-control required error validate stringV" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -202,7 +202,7 @@
                                             <th><label for="menuval">메뉴 값</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required error validate longnumber" name="menuval" id="menuval" value="${menu.MENUVAL}">
+                                                    <input type="text" class="form-control required error validate numberV" name="menuval" id="menuval" value="${menu.MENUVAL}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -220,7 +220,7 @@
                                             <th><label for="licenseno">라이센스명</label></th>
                                             <td>
                                             
-                                            	<select class="form-control col-12 float-left mr-12 required error validate check" name="licenseno" id="licenseno" value="${menu.LICENSENO }">
+                                            	<select class="form-control col-12 float-left mr-12 required error validate checkV" name="licenseno" id="licenseno" value="${menu.LICENSENO }">
                                             		<option value="">선택</option>
                                             </select>
                                             </td>

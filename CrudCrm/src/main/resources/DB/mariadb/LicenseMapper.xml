@@ -10,10 +10,9 @@
 		,A.LICENSECOST
 		,(SELECT COUNT(*) FROM me810010 WHERE LICENSENO = A.LICENSENO GROUP BY LICENSENO) AS TOTALCNT
 		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
-		
 		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-		,@RNUM:=@RNUM + 1 AS ROWNUM
-			FROM ma900020 A ,(SELECT @RNUM := 0) R
+		 ,@RNUM:=@RNUM + 1 AS ROWNUM
+			FROM ma900020 A,(SELECT @RNUM := 0) R
 			WHERE ISDELETE = '0'
 			<if test="licensename != null">
 				AND LICENSENAME LIKE '%'+#{licensename}+'%'
@@ -49,7 +48,7 @@
 				,LICENSECOST = #{licensecost}
 				,ISDELETE = #{isdelete}
 				,EDTUSER = #{edtuser}
-				,EDTDATE = getDate()
+				,EDTDATE = NOW()
 			WHERE LICENSENO = #{licenseno} 
 	</update>
 	
@@ -57,13 +56,12 @@
 		UPDATE ma900020
 			SET ISDELETE = '1'
 				,EDTUSER = #{edtuser}
-				,EDTDATE = getDate()
+				,EDTDATE = NOW()
 			WHERE LICENSENO = #{licenseno}
 	</update>
 	
 	<insert id="insert" parameterType="licenseDto">
-		<selectKey keyProperty="licenseno"  resultType="integer" order="AFTER">
-			INSERT INTO ma900020
+		INSERT INTO ma900020
 			(
 			LICENSENAME
 			,LICENSECOST
@@ -76,28 +74,27 @@
 			#{licensename}
 			,#{licensecost}
 			,'0'
-			,getDate()
+			,NOW()
 			,#{reguser}
-			,getDate()
+			,NOW()
 			,#{edtuser}
 			)
-			
-			SELECT SCOPE_IDENTITY()
+		<selectKey keyProperty="licenseno"  resultType="integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	
 	<select id="topList" parameterType="int" resultType="HashMap">
-	SELECT TOP 20
+	SELECT
 		A.LICENSENAME
 		,A.LICENSECOST
 		,B.BUYCNT
-		
-		
 		,DATE_FORMAT(DATE_ADD(C.FREGDATE, INTERVAL 1 YEAR),'%Y-%m-%d') AS LASTDATE	
 			FROM ma900020 A
 			INNER JOIN me810010 B ON B.LICENSENO = A.LICENSENO
 			INNER JOIN ma900010 C ON C.SITEID = B.SITEID
 			WHERE B.SITEID = #{siteid}
+			limit 20
 	</select>
 	
 	<select id="licenselist" parameterType="hashMap" resultType="hashMap">

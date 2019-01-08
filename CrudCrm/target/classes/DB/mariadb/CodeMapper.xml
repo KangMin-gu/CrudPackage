@@ -162,7 +162,7 @@
     </select>
     
     <select id="grpCodeList" resultType="codeDto">
-    	select CODEGRP from t_code
+    	select CODEGRP from sys990020
 			WHERE SITEID = 1
 		GROUP BY CODEGRP
     </select>

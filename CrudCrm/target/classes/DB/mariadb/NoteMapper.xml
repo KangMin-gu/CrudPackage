@@ -13,10 +13,10 @@
 			) AS E 
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
+					AND E.FROMUSERNAME LIKE CONCAT('%',#{sender},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -30,16 +30,17 @@
 				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
 				B.READCHEK
 				, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM sys970010 AS A ,(SELECT @RNUM := 0) R
+			FROM sys970010 AS A 
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
-			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
+			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO
+			,(SELECT @RNUM := 0) R			
 			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND A.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
 				<if test="title != null">
-					AND A.TITLE LIKE '%'+#{title}+'%'
+					AND A.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND C.USERNAME LIKE '%'+#{sender}+'%'
+					AND C.USERNAME LIKE CONCAT('%',#{sender},'%')
 				</if>
 				<if test="enddate != null">
 					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -63,10 +64,10 @@
 			) AS E
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
+					AND E.FROMUSERNAME LIKE CONCAT('%',#{sender},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -86,10 +87,10 @@
 			) AS E 
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.TOUSERNAME LIKE '%'+#{recipient}+'%'
+					AND E.TOUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -104,16 +105,17 @@
 				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
 				B.READCHEK
 				, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM sys970010 AS A  ,(SELECT @RNUM := 0) R
+			FROM sys970010 AS A  
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
-			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
+			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO	
+			,(SELECT @RNUM := 0) R		
 			WHERE A.SITEID = #{siteid} AND A.USERNO = #{userno} AND B.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
 				<if test="title != null">
-					AND A.TITLE LIKE '%'+#{title}+'%'
+					AND A.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.TOUSERNAME LIKE '%'+#{recipient}+'%'
+					AND E.TOUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -135,10 +137,10 @@
 			) AS E
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.TOUSERNAME LIKE '%'+#{recipient}+'%'
+					AND E.TOUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -158,10 +160,10 @@
 			) AS E 
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
+					AND E.FROMUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -175,16 +177,17 @@
 				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT( A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
 				B.READCHEK
 				, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM sys970010 AS A ,(SELECT @RNUM := 0) R
+			FROM sys970010 AS A 
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
-			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
+			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO	
+			,(SELECT @RNUM := 0) R		
 			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND B.ISDELETE = 0 AND A.NTCWAYEMAIL = 1 AND IMPORTANT = 1
 				<if test="title != null">
-					AND A.TITLE LIKE '%'+#{title}+'%'
+					AND A.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND C.USERNAME LIKE '%'+#{sender}+'%'
+					AND C.USERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -206,10 +209,10 @@
 			) AS E
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
+					AND E.FROMUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -229,10 +232,10 @@
 			) AS E 
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
+					AND E.FROMUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -246,16 +249,17 @@
 				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT( A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
 				B.READCHEK
 				, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM sys970010 AS A ,(SELECT @RNUM := 0) R
+			FROM sys970010 AS A 
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
-			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO			
+			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO		
+			,(SELECT @RNUM := 0) R	
 			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND B.ISDELETE = 2 AND A.NTCWAYEMAIL = 1
 				<if test="title != null">
-					AND A.TITLE LIKE '%'+#{title}+'%'
+					AND A.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND C.USERNAME LIKE '%'+#{sender}+'%'
+					AND C.USERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND A.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -277,10 +281,10 @@
 			) AS E
 			<where>
 				<if test="title != null">
-					AND E.TITLE LIKE '%'+#{title}+'%'
+					AND E.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
 				<if test="sender != null">
-					AND E.FROMUSERNAME LIKE '%'+#{sender}+'%'
+					AND E.FROMUSERNAME LIKE CONCAT('%',#{recipient},'%')
 				</if>
 				<if test="enddate != null">
 					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
@@ -359,7 +363,7 @@
 			VALUES 
 			(#{userno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, now(), #{siteid}, #{important}, #{userno}, now(), #{filesearchkey} )
 		<selectKey resultType="int" keyProperty="noticeid" order="AFTER">	
-			SELECT SCOPE_IDENTITY() 
+			SELECT LAST_INSERT_ID() 
 		</selectKey>	
 	</insert>
 	
@@ -388,7 +392,7 @@
 	</insert>
 	<!-- 메세지버튼 팝업 -->
 	<select id="noteSummary" resultType="hashMap" parameterType="int">
-		SELECT TOP(4)* FROM 
+		SELECT * FROM 
 		(
 		SELECT 
 		A.SUBJECT,
@@ -402,6 +406,7 @@
 		)C
 		WHERE C.USERNO=#{USERNO} 
 		AND C.ISDELETE NOT IN(1,2)
-		ORDER BY C.RLTDATE DESC;
+		ORDER BY C.RLTDATE DESC
+		limit 4
 	</select>
 </mapper>

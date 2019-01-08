@@ -13,9 +13,9 @@
    	,A.ISDELETE
    	,B.CODENAME AS UPPERCODENAME
    	,A.UPPERCODEGRP
-   	,ROW_NUMBER() OVER(ORDER BY A.CODENO DESC) AS ROWNUM
     FROM sys990020 A 
     LEFT OUTER JOIN sys990020 B ON B.CODENO = A.UPPERCODEGRP
+    ,(SELECT @RNUM := 0) R
     WHERE A.ISDELETE = 0
     <if test ="siteid == 1">
     	AND A.SITEID = 1
@@ -24,10 +24,10 @@
     	AND A.SITEID = #{siteid}
     </if>
     <if test ="codename != null">
-    	AND A.CODENAME LIKE '%'+#{codename}+'%'
+    	AND A.CODENAME LIKE CONCAT('%',#{codename},'%')
     </if>
     <if test ="codegrp != null">
-    	AND A.CODEGRP LIKE '%'+#{codegrp}+'%'
+    	AND A.CODEGRP LIKE CONCAT('%',#{codegrp},'%')
     </if>
     ) X 
     
@@ -46,11 +46,11 @@
 	    	AND SITEID = #{siteid}
     	</if>
     	<if test ="codename != null">
-    		AND CODENAME LIKE '%'+#{codename}+'%'
+    		AND A.CODENAME LIKE CONCAT('%',#{codename},'%')
     	</if>
     	<if test ="codegrp != null">
-	    	AND CODEGRP LIKE '%'+#{codegrp}+'%'
-	    </if>
+    		AND A.CODEGRP LIKE CONCAT('%',#{codegrp},'%')
+    	</if>
     </select>
     
     <select id="detail" parameterType="codeDto" resultType="hashMap">
@@ -143,10 +143,10 @@
     	AND A.UPPERCODEGRP IS NULL
     </if>
     <if test ="codename != null">
-    	AND A.CODENAME LIKE '%'+#{codename}+'%'
+    	AND A.CODENAME LIKE CONCAT('%',#{codename},'%')
     </if>
     <if test ="codegrp != null">
-    	AND A.CODEGRP LIKE '%'+#{codegrp}+'%'
+    	AND A.CODEGRP LIKE CONCAT('%',#{codegrp},'%')
     </if>
     </select>
     

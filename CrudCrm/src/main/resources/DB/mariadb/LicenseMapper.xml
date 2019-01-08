@@ -15,7 +15,7 @@
 			FROM ma900020 A,(SELECT @RNUM := 0) R
 			WHERE ISDELETE = '0'
 			<if test="licensename != null">
-				AND LICENSENAME LIKE '%'+#{licensename}+'%'
+				AND LICENSENAME LIKE CONCAT('%',#{licensename},'%')
 			</if>
 			ORDER BY A.LICENSENO DESC
 			) X
@@ -27,7 +27,7 @@
 			FROM ma900020
 			WHERE ISDELETE = '0'
 			<if test="licensename != null">
-				AND LICENSENAME LIKE '%'+#{licensename}+'%'
+				AND LICENSENAME LIKE CONCAT('%',#{licensename},'%')
 			</if>
 	</select>
 	

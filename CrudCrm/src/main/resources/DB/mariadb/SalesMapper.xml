@@ -12,7 +12,7 @@
 		SITEID = #{siteid}
 		AND ISDELETE = 0
 		<if test="salename != null">
-		AND SALENAME LIKE '%'+#{salename}+'%'
+		AND SALENAME LIKE CONCAT('%',#{salename},'%')
 		</if>
 		<if test="owner != null and owner != 0">
 		AND OWNER = #{owner}
@@ -53,15 +53,16 @@
 			,A.FORDDATE, A.RORDDATE
 			,A.SALESTATE, A.STATEDATE
 			,A.OWNER, C.USERNAME
-		FROM sa210010 A ,(SELECT @RNUM := 0) R
+		FROM sa210010 A 
 		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
 		LEFT OUTER JOIN me800010 C ON A.OWNER = C.USERNO   
+		,(SELECT @RNUM := 0) R
 		
 		WHERE 
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="salename != null">
-			AND A.SALENAME LIKE '%'+#{salename}+'%'
+			AND SALENAME LIKE CONCAT('%',#{salename},'%')
 			</if>
 			<if test="owner != null and owner != 0">
 			AND A.OWNER = #{owner}
@@ -228,6 +229,7 @@
 	<!-- 영업 스케쥴 추가,수정 . 시행일,예정일 영업 스케쥴은 sort (1,2) 로 구분 -->
 	<insert id="mergeSalesSch" parameterType="saas.crud.crm.sa.dto.SalesDto">
 	<if test="rorddate != null and rorddate != '' ">
+	<!-- 
 	MERGE INTO sa210080 A
 		USING (select '1' AS 'DUAL' ) B 
 		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 1  ) 
@@ -242,9 +244,18 @@
 			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
 			VALUES (#{siteid}, '[영업 실수주일]'+#{salename} ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0
 			,#{rorddate},#{owner},#{salesno}, 1 );
+		 -->	
+			INSERT INTO sa210080   (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
+							VALUES (#{siteid}, CONCAT('[영업 실수주일]',#{salename}) ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0,#{rorddate},#{owner},#{salesno}, 1 )
+         ON DUPLICATE KEY UPDATE STARTDATE = #{rorddate},EDTUSER = #{edituser}, EDTDATE = now() 
+			
+			
+			
+			
 	</if>
 	
 	<if test="forddate != null and forddate != '' ">
+	<!-- 
 	MERGE INTO sa210080 A
 		USING (select '1' AS 'DUAL' ) B 
 		ON (A.SITEID = #{siteid} AND A.SALESNO = #{salesno} AND A.SORT = 2 ) 
@@ -259,6 +270,13 @@
 			INSERT (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
 			VALUES (#{siteid}, '[영업 예상수주일]'+#{salename} ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0
 			,#{forddate},#{owner},#{salesno}, 2 );
+			
+		 -->		
+			INSERT INTO sa210080   (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
+							VALUES (#{siteid}, CONCAT('[영업 예상수주일]',#{salename}) ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0,#{forddate},#{owner},#{salesno}, 2 );
+         ON DUPLICATE KEY UPDATE STARTDATE = #{rorddate},EDTUSER = #{edituser}, EDTDATE = now() 
+			
+			
 		</if>		
 	</insert>
 	
@@ -285,7 +303,7 @@
 	<!-- 거래처-영업 리스트 최근 20건 조회-->
 	<select id="cliSalesList" parameterType="hashMap" resultType="hashMap">
 	SELECT
-	TOP 20 
+	
 	A.SALESNO, A.SALENAME
 	,A.OWNER, B.CUSTNAME
 	,A.FORDDATE, A.SALESTATE, A.STATEDATE
@@ -299,6 +317,7 @@
 		AND A.CLINO = #{clino}
 	
 	ORDER BY A.SALESNO DESC 
+	limit 20
 	</select>
 
 	
@@ -317,7 +336,7 @@
 		AND A.SALESNO = #{salesno}
 
 		<if test="custname != null">
-		AND B.CUSTNAME like '%'+#{custname} +'%'
+		AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
 		</if>
 			  		
 	</select>
@@ -341,17 +360,17 @@
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.SALESNO, C.SALENAME
 			,D.CLINO, D.CLINAME
-		FROM sa250010 A ,(SELECT @RNUM := 0) R
+		FROM sa250010 A 
 		INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 		INNER JOIN sa210010 C ON A.SALESNO = C.SALESNO
 		LEFT OUTER JOIN sa200010 D ON B.CLINO = D.CLINO
-		
+		,(SELECT @RNUM := 0) R
 		WHERE 
 			A.SITEID = #{siteid}			
 			AND A.SALESNO = #{salesno}							
 			AND A.ISDELETE = 0
 			<if test="custname != null">
-			AND B.CUSTNAME like '%'+#{custname} +'%'
+			AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
 			</if>
 			
 		ORDER BY B.CUSTNAME
@@ -377,10 +396,10 @@
 		AND A.CLINO = #{clino}
 		</if>
 		<if test="contcustname != null">
-		AND B.CUSTNAME like '%'+ #{contcustname} +'%'
+		AND B.CUSTNAME like CONCAT('%', #{contcustname} ,'%')
 		</if>
 		<if test="custno != null">
-		AND B.CUSTNO like '%'+ #{custno} +'%'
+		AND B.CUSTNO like CONCAT('%', #{custno} ,'%')
 		</if>
 	</select>
 
@@ -395,7 +414,7 @@
 	,A.CONTNO
 	,A.CTTUSER
 	,A.CUSTNO
-	,DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y%m%d') + IFNULL(A.CTTTIME,'')  AS CTTDATE 	
+	,CONCAT(DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y%m%d') , IFNULL(A.CTTTIME,''))  AS CTTDATE 	
 	,A.DURATION
 	,IFNULL(A.MEMO,'') AS MEMO
 	,A.CTTLOCATION
@@ -409,9 +428,10 @@
 	,A.RESPONSECODE
 	,A.LOGID
 	, B.CUSTNAME, C.USERNAME
-	FROM cu110010 A ,(SELECT @RNUM := 0) R
+	FROM cu110010 A 
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
 	INNER JOIN me800010 C ON A.CTTUSER = C.USERNO
+	,(SELECT @RNUM := 0) R
 	WHERE 
 		A.SITEID = #{siteid}
 		AND A.ISDELETE = 0 
@@ -422,10 +442,10 @@
 		AND A.CLINO = #{clino}
 		</if>
 		<if test="contcustname != null">
-		AND B.CUSTNAME like '%'+ #{contcustname} +'%'
+		AND B.CUSTNAME like CONCAT('%', #{contcustname} ,'%')
 		</if>
 		<if test="custno != null">
-		AND B.CUSTNO like '%'+ #{custno} +'%'
+		AND B.CUSTNO like CONCAT('%', #{custno} ,'%')
 		</if>
 		
 	ORDER BY A.CONTNO DESC
@@ -582,8 +602,9 @@
 	, A.PROB
 	,A.REGUSER, B.USERNAME  
 	 
-	FROM sa210020 A ,(SELECT @RNUM := 0) R
+	FROM sa210020 A 
 	LEFT OUTER JOIN me800010 B ON A.REGUSER = B.USERNO
+	,(SELECT @RNUM := 0) R
 	
 	WHERE
 		A.SALESNO = #{salesno}
@@ -940,7 +961,7 @@
 		AND A.SITEID = #{siteid}
 		AND CUSTNO = #{custno}
 		<if test="salename != null">
-		AND A.SALENAME like '%'+#{salename}+'%' 
+		AND A.SALENAME like CONCAT('%',#{salename},'%') 
 		</if>	   		
 	</select>
 	
@@ -967,16 +988,16 @@
 		,DATE_FORMAT(A.STATEDATE,'%Y%m%d') AS STATEDATE
 		,C.USERNAME
 	
-		FROM sa210010 A ,(SELECT @RNUM := 0) R
+		FROM sa210010 A 
 		LEFT OUTER JOIN sa250010 B ON A.SALESNO = B.SALESNO
 		INNER JOIN me800010 C ON A.OWNER = C.USERNO
+		,(SELECT @RNUM := 0) R
 	
 		WHERE
 			B.ISDELETE = 0 AND A.ISDELETE =0
 			AND A.SITEID = #{siteid}
 			AND CUSTNO = #{custno}
 			<if test="salename != null">
-			AND A.SALENAME like '%'+#{salename}+'%' 
 			</if>
 			
 		ORDER BY A.SALESNO DESC	 

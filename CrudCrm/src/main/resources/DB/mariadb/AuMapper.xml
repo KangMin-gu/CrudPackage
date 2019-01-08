@@ -19,13 +19,13 @@
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="username != null">
-				AND A.USERNAME LIKE '%'+#{username}+'%'
+				AND A.USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>
 			<if test="mobile != null">
-				AND A.MOBILE LIKE '%'+#{mobile}+'%'
+				AND A.MOBILE LIKE CONCAT('%',#{mobile},'%')
 			</if>
 			<if test="userid != null">
-				AND A.USERID LIKE '%'+#{userid}+'%'
+				AND A.USERID LIKE CONCAT('%',#{userid},'%')
 			</if>
 			<if test="isdelete != null">
 				AND A.ISDELETE = #{isdelete}
@@ -82,13 +82,13 @@
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="username != null">
-				AND USERNAME LIKE '%'+#{username}+'%'
+				AND USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>
 			<if test="mobile != null">
-				AND MOBILE LIKE '%'+#{mobile}+'%'
+				AND MOBILE LIKE CONCAT('%',#{mobile},'%')
 			</if>
 			<if test="userid != null">
-				AND USERID LIKE '%'+#{userid}+'%'
+				AND USERID LIKE CONCAT('%',#{userid},'%')
 			</if>
 			<if test="isdelete != null">
 				AND ISDELETE = #{isdelete}

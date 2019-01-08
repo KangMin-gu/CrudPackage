@@ -28,7 +28,7 @@
 				AND A.CUSTNO = #{custno}
 			</if>
 			<if test="servicename != null">
-				AND A.SERVICENAME LIKE '%' + #{servicename} + '%'
+				AND A.SERVICENAME LIKE CONCAT('%', #{servicename} , '%')
 			</if>
 			<if test="servicetype != null">
 				AND A.SERVICETYPE = #{servicetype}
@@ -71,7 +71,7 @@
 				AND A.CUSTNO = #{custno}
 			</if>
 			<if test="servicename != null">
-				AND A.SERVICENAME = #{servicename}
+				AND A.SERVICENAME LIKE CONCAT('%', #{servicename} , '%')
 			</if>
 			<if test="servicetype != null">
 				AND A.SERVICETYPE = #{servicetype}
@@ -112,10 +112,10 @@
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 			, (SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'SERVICESTEP' AND SITEID = #{siteid} AND CODEVAL = A.SERVICESTEP) AS SERVICESTEP_
 			, B.CUSTNAME, B.EMAIL, B.DUTY
-			, B.HOMADDR1 + B.HOMADDR2 + B.HOMADDR3 AS CUSTADDRESS
-			, B.MOBILE1 + '-' + B.MOBILE2 + '-' + B.MOBILE3 AS MOBILE
+			, CONCAT(B.HOMADDR1 , B.HOMADDR2 , B.HOMADDR3) AS CUSTADDRESS
+			, CONCAT(B.MOBILE1 , '-' , B.MOBILE2 , '-' , B.MOBILE3) AS MOBILE
 			, C.BSNO, C.CORP_SN AS INCNO
-			, C.MOBILE1 + '-' + C.MOBILE2 + '-' + C.MOBILE3 AS CLIMOBILE
+			, CONCAT(C.MOBILE1 , '-' , C.MOBILE2 , '-' , C.MOBILE3) AS CLIMOBILE
 			, C.PRSDNAME, C.HOMEPAGE, C.CLINO, C.CLINAME
 			
 		FROM sv300010 A
@@ -194,7 +194,7 @@
 		,#{isdelete}
 		)
 		<selectKey keyProperty="serviceno"  resultType="integer" order="AFTER">
-		SELECT SCOPE_IDENTITY()
+		SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	

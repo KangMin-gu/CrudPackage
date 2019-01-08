@@ -6,7 +6,7 @@
 			INSERT INTO sys990030
 			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID, IMGPATH )
 			VALUES
-			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, now()(), #{siteid}, #{imgpath})			
+			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, now(), #{siteid}, #{imgpath})			
 	</insert>
 	
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->
@@ -17,7 +17,7 @@
 			SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="username != null">
-			AND USERNAME like '%'+#{username}+'%'
+			AND USERNAME like CONCAT('%',#{username},'%')
 			</if>
 	</select>
 	<!-- 담당자로 설정 할 수 있는 회원 목록 출력  -->
@@ -34,7 +34,7 @@
 				SITEID= #{siteid}
 				AND ISDELETE = 0
 				<if test="username != null">
-				AND USERNAME like '%'+#{username}+'%'
+					AND USERNAME like CONCAT('%',#{username},'%')
 				</if>
 			ORDER BY USERNAME
 			) T
@@ -51,7 +51,7 @@
 			SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="cliname != null">
-			AND CLINAME like '%'+#{cliname}+'%'
+				AND CLINAME like CONCAT('%',#{cliname},'%')
 			</if>
 	</select>
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
@@ -63,13 +63,14 @@
 		@RNUM:=@RNUM + 1 AS ROWNUM
 		,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
 		,B.USERNAME 
-		FROM sa200010 A ,(SELECT @RNUM := 0) R
+		FROM sa200010 A 
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
+		,(SELECT @RNUM := 0) R
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="cliname != null">
-			AND CLINAME like '%'+#{cliname}+'%'
+				AND CLINAME like CONCAT('%',#{cliname},'%')
 			</if>
 		ORDER BY A.CLINAME
 		) T
@@ -85,7 +86,7 @@
 			SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="cstname != null">
-			AND CUSTNAME like '%'+#{cstname}+'%'
+				AND CUSTNAME like CONCAT('%',#{cstname},'%')
 			</if>
 	</select>
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
@@ -95,14 +96,14 @@
 		(
 		SELECT 
 		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME,A.MOBILE1+A.MOBILE2+A.MOBILE3 AS MOBILE, A.EMAIL
+		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME,CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3) AS MOBILE, A.EMAIL
 		FROM CU100010 A ,(SELECT @RNUM := 0) R
 		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="cstname != null">
-			AND A.CUSTNAME like '%'+#{cstname}+'%'
+				AND CUSTNAME like CONCAT('%',#{cstname},'%')
 			</if>
 		ORDER BY A.CUSTNO
 		) T
@@ -123,7 +124,7 @@
 			SITEID = #{siteid}
 			AND ISDELETE = 0
 			<if test="salename != null">
-			AND SALENAME like '%'+#{salename}+'%'
+				AND SALENAME like CONCAT('%',#{salename},'%')
 			</if>
 	</select>
 	<!-- 선택할 수 있는 영업 목록 출력  -->
@@ -136,14 +137,15 @@
 		,A.SALESNO, A.SALENAME, A.CLINO, A.OWNER
 		,B.USERNAME
 		,C.CLINAME 
-		FROM sa210010 A ,(SELECT @RNUM := 0) R
+		FROM sa210010 A 
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
+		,(SELECT @RNUM := 0) R
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="salename != null">
-			AND SALENAME like '%'+#{salename}+'%'
+				AND SALENAME like CONCAT('%',#{salename},'%')
 			</if>
 		ORDER BY A.SALENAME
 		) T

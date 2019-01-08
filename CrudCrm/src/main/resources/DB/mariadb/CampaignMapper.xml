@@ -37,7 +37,7 @@
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
-				AND  A.CAMPNAME LIKE '%' + #{campname} + '%'
+				AND  A.CAMPNAME LIKE CONCAT('%',#{campname},'%')
 			</if>
 			<if test="campstep != null">
 				AND  A.CAMPSTEP = #{campstep}
@@ -97,7 +97,7 @@
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
-				AND  A.CAMPNAME LIKE '%' + #{campname} + '%'
+				AND  A.CAMPNAME LIKE CONCAT('%', #{campname},'%')
 			</if>
 			<if test="campstep != null">
 				AND  A.CAMPSTEP = #{campstep}
@@ -330,12 +330,13 @@
 				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
 			,CONCAT(B.HOMADDR1,' ', B.HOMADDR2, B.HOMADDR3) AS ADDR_
 			,@RNUM:=@RNUM + 1 AS ROWNUM
-		FROM cp400021 A  ,(SELECT @RNUM := 0) R
+		FROM cp400021 A  
 		INNER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
+		,(SELECT @RNUM := 0) R
 		WHERE A.SITEID = #{siteid}
 		AND A.CAMPNO = #{campno}
 		<if test="custname != null">
-			AND  A.CUSTNAME LIKE '%'+ #{custname} +'%'
+			AND  A.CUSTNAME LIKE CONCAT('%', #{custname} ,'%')
 		</if>
 		ORDER BY A.CUSTNO DESC
 		) X
@@ -496,7 +497,7 @@
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="title != null">
-				AND  TITLE LIKE '%'+#{title} +'%'
+				AND  TITLE LIKE CONCAT('%',#{title},'%')
 			</if>
 			<if test="formtype != null">
 				AND  FORMTYPE = #{formtype}
@@ -533,7 +534,7 @@
 		WHERE SITEID = #{siteid}
 		AND ISDELETE = 0
 		<if test="title != null">
-			AND  TITLE LIKE '%' + #{title} + '%'
+			AND  TITLE LIKE CONCAT('%' , #{title} , '%')
 		</if>
 		<if test="formtype != null">
 			AND  FORMTYPE = #{formtype}
@@ -635,7 +636,7 @@
 		WHERE SITEID = #{siteid}
 		AND CAMPNO = #{campno}
 		<if test="custname != null">
-			AND  CUSTNAME LIKE '%'+ #{custname} +'%'
+			AND  CUSTNAME LIKE CONCAT('%', #{custname} ,'%')
 		</if>
 	</select>
 	

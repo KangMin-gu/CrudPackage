@@ -5,7 +5,7 @@
     <select id="list" parameterType="hashMap" resultType="hashMap">
      	SELECT * FROM (
      	SELECT 
-     	A.SITENAME,A.SITEID,A.PRSDNAME,A.BSNO,A.MOBILE1+'-'+A.MOBILE2+'-'+A.MOBILE3 AS MOBILE
+     	A.SITENAME,A.SITEID,A.PRSDNAME,A.BSNO,CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) AS MOBILE
      	,A.BSTYPE,DATE_FORMAT(A.FREGDATE,'%Y-%m-%d') AS FREGDATE
      	,CASE WHEN A.SITESIZE = '1' THEN '대기업'
      		  WHEN A.SITESIZE = '2' THEN '중견기업'
@@ -24,7 +24,7 @@
      		AND IFNULL(A.FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
      	</if>
      	<if test ="sitename != null">
-     		AND A.SITENAME LIKE '%'+#{sitename} +'%'
+     		AND A.SITENAME LIKE CONCAT('%',#{sitename},'%')
      	</if>
      	<if test ="sitesize != null">
      		AND A.SITESIZE = #{sitesize}
@@ -49,7 +49,7 @@
      		AND IFNULL(FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
      	</if>
      	<if test ="sitename != null">
-     		AND SITENAME LIKE '%'+#{sitename} +'%'
+     		AND SITENAME LIKE CONCAT('%',#{sitename},'%')
      	</if>
      	<if test ="sitesize != null">
      		AND SITESIZE = #{sitesize}
@@ -193,7 +193,7 @@
     ,#{sitelogo}
     )
     <selectKey keyProperty="siteid"  resultType="integer" order="AFTER">
-    SELECT SCOPE_IDENTITY()
+    SELECT LAST_INSERT_ID()
     </selectKey>
     </insert>
     
@@ -209,7 +209,7 @@
     <insert id="siteLicenseInsert" parameterType="HashMap">
 			INSERT INTO ME810010	(SITEID,LICENSENO,BUYCNT,REGDATE,REGUSER,EDTDATE,EDTUSER)
 							VALUES(#{siteid},#{licenseno},#{buycnt},NOW(),#{reguser},NOW(),#{edtuser})
-			ON DUPLICATE KEY UPDATE BUYCNT = #{buycnt},EDTDATE = NOW(),EDTUSER = #{edtuser};
+			ON DUPLICATE KEY UPDATE BUYCNT = #{buycnt},EDTDATE = NOW(),EDTUSER = #{edtuser}
     </insert>
 
 </mapper>

@@ -64,13 +64,13 @@
 				CU.SITEID = #{siteid}
 				AND CU.ISDELETE = 0 
 				<if test="custname != null">
-				AND CU.CUSTNAME like '%'+#{custname}+'%'
+				AND CU.CUSTNAME like CONCAT('%',#{custname},'%')
 				</if>
 				<if test="mobile != null">
-				AND CU.MOBILE1+CU.MOBILE2+CU.MOBILE3 like '%'+#{mobile}+'%'
+				AND CONCAT(CU.MOBILE1,CU.MOBILE2,CU.MOBILE3) like CONCAT('%',#{mobile},'%')
 				</if>
 				<if test="email != null">
-				AND CU.EMAIL like '%'+#{email}+'%'
+				AND CU.EMAIL like CONCAT('%',#{email},'%')
 				</if>
 				<if test="custgubun != null and custgubun != 0">
 				AND CUSTGUBUN = #{custgubun}
@@ -114,14 +114,14 @@
 		A.CUSTNO
 		,A.CUSTNAME, A.DEPTNAME
 		,A.DUTY
-		,(A.MOBILE1+'-'+A.MOBILE2+'-'+A.MOBILE3) AS MOBILE
+		,CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) AS MOBILE
 		,A.EMAIL
-		,(A.WRKTEL1+'-'+A.WRKTEL2+'-'+A.WRKTEL3) AS WRKTEL
-		,(A.WRKFAX1+'-'+A.WRKFAX2+'-'+A.WRKFAX3) AS WRKFAX
+		,CONCAT(A.WRKTEL1,'-',A.WRKTEL2,'-',A.WRKTEL3) AS WRKTEL
+		,CONCAT(A.WRKFAX1,'-',A.WRKFAX2,'-',A.WRKFAX3) AS WRKFAX
 		,A.WRKURL
 		,A.WRKADDR1, A.WRKADDR2, A.WRKADDR3
 		,A.OWNER, B.USERNAME AS OWNERNAME
-		,(A.HOMTEL1+'-'+A.HOMTEL2+'-'+A.HOMTEL3) AS HOMTEL
+		,CONCAT(A.HOMTEL1,'-',A.HOMTEL2,'-',A.HOMTEL3) AS HOMTEL
 		,A.SEX
 		,A.BIRTH
 		,A.MARRIED
@@ -134,7 +134,7 @@
 		,A.CUSTGUBUN
 		,A.ACTGRADE
 		,A.HOMADDR1, A.HOMADDR2, A.HOMADDR3
-		,(A.HOMADDR1 + A.HOMADDR2 + A.HOMADDR3) AS HOMADDR
+		,CONCAT(A.HOMADDR1 , A.HOMADDR2 , A.HOMADDR3) AS HOMADDR
 		,A.MEMO
 		,A.INFOAGREE
 		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR 
@@ -326,18 +326,10 @@
 	</insert>
 	<!-- 거래처관련고객 추가,수정 -->
 	<insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
-	MERGE INTO sa280010 A
-		USING (SELECT '1' AS 'DUAL' ) B ON (A.SITEID = #{siteid} AND A.CUSTNO = #{custno}  ) 
-		
-		WHEN MATCHED THEN
-			UPDATE SET 
-			CLINO = #{clino}
-			,EDTUSER = #{edituser}, EDTDATE = now()	
-		
-		WHEN NOT MATCHED THEN
-			INSERT (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
-			VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 );
-			
+	INSERT INTO sa280010   INSERT (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
+							VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 )
+         ON DUPLICATE KEY UPDATE CLINO = #{clino},EDTUSER = #{edituser}, EDTDATE = now()		
+
 	</insert>
 	<!-- <insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
 	MERGE INTO sa280010 A
@@ -442,7 +434,7 @@
 			AND B.SITEID = #{siteid} 
 			AND A.CUSTNO = #{custno}
 			<if test="campname != null">
-			AND B.CAMPNAME LIKE '%'+#{campname}+'%'
+			AND B.CAMPNAME LIKE CONCAT('%',#{campname},'%')
 			</if>
 	</select>
 	
@@ -462,16 +454,16 @@
 		,B.OWNER
 		,C.USERNAME 
 	
-		FROM cp400021 A ,(SELECT @RNUM := 0) R 
+		FROM cp400021 A  
 		INNER JOIN cp400010 B ON A.CAMPNO = B.CAMPNO  
 		LEFT OUTER JOIN me800010 C ON B.OWNER = C.USERNO 
-	
+		,(SELECT @RNUM := 0) R
 		WHERE 
 			B.ISDELETE = 0  
 			AND B.SITEID = #{siteid} 
 			AND A.CUSTNO = #{custno}
 			<if test="campname != null">
-			AND B.CAMPNAME LIKE '%'+#{campname}+'%'
+			AND B.CAMPNAME LIKE CONCAT('%',#{campname},'%')
 			</if>
 			
 		ORDER BY B.CAMPNO DESC

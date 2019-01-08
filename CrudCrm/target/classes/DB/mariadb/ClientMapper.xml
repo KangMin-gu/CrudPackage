@@ -12,16 +12,16 @@
 		SITEID = #{siteid}
 		AND ISDELETE = 0
 		<if test="cliname != null">
-		AND CLINAME LIKE '%'+#{cliname}+'%'
+		AND CLINAME LIKE CONCAT('%',#{cliname},'%')
 		</if>
 		<if test="callname != null">
-		AND CALLNAME LIKE '%'+#{callname}+'%'
+		AND CALLNAME LIKE CONCAT('%',#{callname},'%')
 		</if>
 		<if test="owner != null and owner != 0">
 		AND OWNER = #{owner}
 		</if>	
 		<if test="bstype != null">
-		AND BSTYPE LIKE '%'+#{bstype}+'%'
+		AND BSTYPE LIKE CONCAT('%',#{bstype},'%')
 		</if>	
 		<if test="importance != null and importance != 0">
 		AND IMPORTANCE = #{importance}
@@ -42,26 +42,27 @@
 		SELECT
 			@RNUM:=@RNUM + 1 AS ROWNUM
 			,CLINO, CLINAME, CALLNAME
-			,(CLIADDR1+' '+CLIADDR2+' '+CLIADDR3) AS ADDR 
+			,CONCAT(CLIADDR1,' ',CLIADDR2,' ',CLIADDR3) AS ADDR 
 			,BSTYPE,MEMO
 			,IMPORTANCE, FRIENDLY
 			,A.OWNER, B.USERNAME 
-		FROM sa200010 A ,(SELECT @RNUM := 0) R
+		FROM sa200010 A 
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO	
+		,(SELECT @RNUM := 0) R
 		WHERE 
 			A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="cliname != null">
-			AND A.CLINAME LIKE '%'+#{cliname}+'%'
+			AND A.CLINAME LIKE CONCAT('%',#{cliname},'%')
 			</if>
 			<if test="callname != null">
-			AND A.CALLNAME LIKE '%'+#{callname}+'%'
+			AND A.CALLNAME LIKE CONCAT('%',#{callname},'%')
 			</if>
 			<if test="owner != null and owner != 0">
 			AND A.OWNER = #{owner}
 			</if>	
 			<if test="bstype != null">
-			AND A.BSTYPE LIKE '%'+#{bstype}+'%'
+			AND A.BSTYPE LIKE CONCAT('%',#{bstype},'%')
 			</if>	
 			<if test="importance != null and importance != 0">
 			AND IMPORTANCE = #{importance}
@@ -83,8 +84,8 @@
 		CLINO, CLINAME, CALLNAME, CLIADDR1,CLIADDR2,CLIADDR3,BSTYPE,MEMO
 		,IMPORTANCE, FRIENDLY
 		,A.OWNER, B.USERNAME
-		,IFNULL( CASE WHEN LEN(A.CORP_SN) = 12 THEN SUBSTRING(A.CORP_SN,1,6)+'-'+SUBSTRING(A.CORP_SN,7,6) ELSE '' END,'')   AS CORP_SN
-		,IFNULL( CASE WHEN LEN(A.BSNO) = 10 THEN SUBSTRING(A.BSNO,1,3)+'-'+SUBSTRING(A.BSNO,4,2)+'-'+SUBSTRING(A.BSNO,6,5) ELSE '' END,'')   AS BSNO
+		,IFNULL( CASE WHEN LEN(A.CORP_SN) = 12 THEN CONCAT(SUBSTRING(A.CORP_SN,1,6),'-',SUBSTRING(A.CORP_SN,7,6)) ELSE '' END,'')   AS CORP_SN
+		,IFNULL( CASE WHEN LEN(A.BSNO) = 10 THEN CONCAT(SUBSTRING(A.BSNO,1,3),'-',SUBSTRING(A.BSNO,4,2),'-',SUBSTRING(A.BSNO,6,5)) ELSE '' END,'')   AS BSNO
 		,A.PRSDNAME
 		,A.CLIADDR1, A.CLIADDR2, CLIADDR3
 		,A.TELNO1, A.TELNO2, A.TELNO3
@@ -258,7 +259,7 @@
 		AND A.CLINO = #{clino}
 
 		<if test="custname != null">
-		AND B.CUSTNAME like '%'+#{custname} +'%'
+		AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
 		</if>
 			  		
 	</select>
@@ -279,16 +280,17 @@
 			,A.KEYMAN, A.ROLENAME, A.MEMO
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.CLINO, C.CLINAME
-		FROM sa280010 A  ,(SELECT @RNUM := 0) R
+		FROM sa280010 A  
 		INNER JOIN CU100010 B  ON A.CUSTNO = B.CUSTNO
 		INNER JOIN sa200010 C  ON A.CLINO = C.CLINO
+		,(SELECT @RNUM := 0) R
 	
 		WHERE 
 			A.SITEID = #{siteid}			
 			AND A.CLINO = #{clino}							
 			AND A.ISDELETE = 0
 			<if test="custname != null">
-			AND B.CUSTNAME like '%'+#{custname} +'%'
+			AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
 			</if>
 			
 		ORDER BY B.CUSTNAME

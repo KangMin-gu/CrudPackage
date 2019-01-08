@@ -35,4 +35,10 @@ public interface NoteService {
 	public List<Map<String,Object>> noteSummary(HttpServletRequest request);
 	//이메일 자르기 
 	public List<String> emailQuarter(String mailAdress);
+	
+	//받은 통지 총 갯수(안읽은것), 중요통지 총 갯수(읽은 것,안읽은것 전부)  
+	public Map<String,Integer> noteCommonRows(HttpServletRequest request);
+	
+	//답장
+	public ModelAndView noteReply(HttpServletRequest request,int noticeId);
 }

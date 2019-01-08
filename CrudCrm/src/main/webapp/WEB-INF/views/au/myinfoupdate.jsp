@@ -56,7 +56,7 @@
 								<!-- conten-row -->
 								<div class="ibox-content row">
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;display:none" >
+										<div class="col-xl-8 col-lg-12 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
 											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요.">
 												<strong>필수 입력값을 확인해 주세요. </strong>
 											</span>
@@ -70,14 +70,15 @@
 									
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<Button type="submit" class="btn btn-primary submit" id="submit" >저 장</Button>
-											<a href="/myinfo" class="btn btn-primary">취소</a>																			
+											<Button type="submit" class="btn btn-primary submit" disabled id="submit" >저 장</Button>
+											<a href="/myinfo/${user.USERNO}" class="btn btn-primary">취소</a>																			
 										</div>										
 									</div>
 									
 								<!--  -->
 									<div class="box1 col-lg-4 p-0">
 										<table class="table table-bordered mb-0">
+											
 											<colgroup>
 												<col style="width: 100px; background: #fafafa;">
 												<col style="width: auto;">
@@ -103,7 +104,15 @@
 													<td>
 														<input type="text" class="form-control float-left mr-2" disabled id='userid' name='userid' value="${user.USERID}"/>
 													</td>
-												</tr>											
+												</tr>	
+												
+												<tr>
+													<th>현재 비밀번호</th>
+													<td>
+														<input type="hidden" id="existPassword" value="${user.USERPASSWORD}"/>
+														<input type="password" class="form-control float-left mr-2 error" name="curPassword" id="curPassword" />														
+													</td>
+												</tr>										
 											</tbody>								
 										</table>
 									</div>
@@ -118,14 +127,14 @@
 													
 													<th>휴대전화</th>
 													<td>	
-													<select class="form-control col-4 float-left mr-3 validate phone1 required" style="height: 1.45rem" name="mobile1" id="mobile1">
+													<select class="form-control col-4 float-left mr-3 validate phone1V required" style="height: 1.45rem" name="mobile1" id="mobile1">
 															<option value="" ${user.MOBILE1 eq "" ? "selected" :""}>선택</option>
 															<option value="010" ${user.MOBILE1 eq "010" ? "selected" :""}>010</option>
 															<option value="011" ${user.MOBILE1 eq "011" ? "selected" :""}>011</option>
 															<option value="017" ${user.MOBILE1 eq "017" ? "selected" :""}>017</option>
 													</select>
-													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="mobile2" id="mobile2" value="${user.MOBILE2}">
-													<input type="text" class="form-control col-3 float-left mr-2 validate phone3 required" name="mobile3" id="mobile3" value="${user.MOBILE3}">
+													<input type="text" class="form-control col-3 float-left mr-2 validate phone2V required" name="mobile2" id="mobile2" value="${user.MOBILE2}">
+													<input type="text" class="form-control col-3 float-left mr-2 validate phone3V required" name="mobile3" id="mobile3" value="${user.MOBILE3}">
 													</td>
 												</tr>												
 												<tr>
@@ -141,7 +150,13 @@
 														<input type="text" class="form-control float-left mr-2" disabled id='enterdate' name='enterdate' value="${user.ENTERDATE}"/>
 													</td>
 												</tr>	
-																						
+														
+												<tr>
+													<th>새 비밀번호</th>
+													<td>
+														<input type="password" class="form-control float-left mr-2 error required validate passwordV" name="userpassword" id="userpassword" />														
+													</td>
+												</tr>								
 											</tbody>								
 										</table>
 									</div>
@@ -156,53 +171,44 @@
 													
 													<th>직장전화</th>
 													<td>
-													<select class="form-control col-4 float-left mr-3 validate phone2 required" style="height: 1.45rem" name="telno1" id="telno1">
+													<select class="form-control col-4 float-left mr-3 validate phone1V required" style="height: 1.45rem" name="telno1" id="telno1">
 														<option value="" ${user.TELNO1 eq "" ? "selected" :""}>선택</option>
 														<option value="02" ${user.TELNO1 eq "02" ? "selected" :""}>02</option>
 														<option value="070" ${user.TELNO1 eq "070" ? "selected" :""}>070</option>
 														<option value="010" ${user.TELNO1 eq "010" ? "selected" :""}>010</option>
 													</select>
-													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="telno2" id="telno2" value="${user.TELNO2}">
-													<input type="text" class="form-control col-3 float-left mr-2 validate phone2 required" name="telno3" id="telno3" value="${user.TELNO3}">
+													<input type="text" class="form-control col-3 float-left mr-2 validate phone2V required" name="telno2" id="telno2" value="${user.TELNO2}">
+													<input type="text" class="form-control col-3 float-left mr-2 validate phone3V required" name="telno3" id="telno3" value="${user.TELNO3}">
 													</td>
 												</tr>
 												
 												<tr>
 													<th>이메일</th>
 													<td>
-														<input type="text" class="form-control float-left mr-2 validate email required" id='email' name='email' value="${user.EMAIL}"/>
+														<input type="text" class="form-control float-left mr-2 validate emailV required" id='email' name='email' value="${user.EMAIL}"/>
 													</td>
 												</tr>
-												<tr>
-													
-													<th>비밀번호 변경</th>
+												<tr>													
+													<th>CTI</th>
 													<td>													
-														<input type="password" class="form-control float-left mr-2 validate userpassword required" name="userpassword" id="userpassword" />
+														<input type="text" class="form-control"/>
 													</td>
 												</tr>	
-												
+												<tr>
+													<th>비밀번호 확인</th>
+													<td>
+														<input type="password" class="form-control float-left mr-2 error" name="newPasswordTwo" id="newPasswordTwo" placeholder="새 비밀번호 확인"/>														
+													</td>
+												</tr>
 																							
 											</tbody>								
 										</table>
 									</div>
+								<!--  validate passwordV error required -->
 									
-									<div class="box1 col-lg-12 p-0">
-										<table class="table table-bordered mb-0">
-											<colgroup>
-												<col style="width: 100px; background: #fafafa;">
-												<col style="width: auto;">
-											</colgroup>		
-											<tbody>
-												<tr>
-													<th>CTI</th>
-													<td>
-														<input type="text" class="form-control"/>
-													</td>
-												</tr>
-																					
-											</tbody>								
-										</table>
-									</div>
+									
+									
+									
 																
 									<div class="box1 col-lg-12 p-0">
                                			 <table class="table table-bordered mb-0">
@@ -247,6 +253,79 @@
 	
 	<script>
 	 $(document).ready(function () {
+		 $("#reqDefaultMsg").html("<strong style='color:red'>기존 패스워드를 입력해주세요.</strong>");	
+		 
+		 $("#curPassword").focus();
+		 
+		 
+		 //현재 비밀번호 
+		 $("#curPassword").keyup(function(){
+			 if($("#curPassword").val() != $("#existPassword").val()){
+				 $("#reqMsgDiv").addClass("alert-info");
+				 $("#reqDefaultMsg").html("<strong style='color:red'>기존 패스워드와 일치하지 않습니다.</strong>");				
+				 $("#reqSuccessMsg").css("display","none");
+				 $("#reqDefaultMsg").css("display","");	 
+				 $("#curPassword").addClass('error');
+				 $("#submit").attr("disabled","disabled");
+			 }else{
+				 $("#curPassword").removeClass('error');				 
+				 $("#reqDefaultMsg").html("<strong>패스워드가 정상적으로 입력되었습니다.</strong>");
+				 //.alert-success
+				 if(!$('input').hasClass('error')){
+					 $("#submit").removeAttr("disabled");
+				 }
+			 } 
+		 })
+		
+		 
+		 $("input").blur(function(){
+			 if($("#newPasswordTwo").val() != $("#userpassword").val()){
+				 $("#submit").attr("disabled","disabled");
+				 $("#reqMsgDiv").addClass("alert-info");
+				 $("#reqDefaultMsg").html("<strong style='color:red'>새 비밀번호가 일치하지 않습니다.</strong>");				
+				 $("#reqSuccessMsg").css("display","none");
+				 $("#reqDefaultMsg").css("display","");	 
+				 $("#userpassword").addClass('error');
+				 $("#newPasswordTwo").addClass('error');
+				 $("#submit").attr("disabled","disabled");
+				 
+			 }else if($("#curPassword").val() == ""){
+				 $("#submit").attr("disabled","disabled");
+				 $("#reqMsgDiv").addClass("alert-info");
+				 $("#reqDefaultMsg").html("<strong style='color:red'>기존 패스워드를 확인해주세요.</strong>");				
+				 $("#reqSuccessMsg").css("display","none");
+				 $("#reqDefaultMsg").css("display","");	 
+				 $("#curpassword").addClass('error');
+				 $("#submit").attr("disabled","disabled");
+			 }
+		 })
+		 
+		 
+		 
+		 
+		 //비밀번호 확인 
+		 $("#newPasswordTwo").keyup(function(){
+			 if($("#newPasswordTwo").val() != $("#userpassword").val()){
+				 $("#reqMsgDiv").addClass("alert-info");
+				 $("#reqDefaultMsg").html("<strong style='color:red'>새 비밀번호가 일치하지 않습니다.</strong>");				
+				 $("#reqSuccessMsg").css("display","none");
+				 $("#reqDefaultMsg").css("display","");	 
+				 $("#userpassword").addClass('error');
+				 $("#submit").attr("disabled","disabled");
+			 }else{
+				 $("#userpassword").removeClass('error');
+				 $("#newPasswordTwo").removeClass('error');
+				
+				 $("#reqDefaultMsg").html("<strong>패스워드가 정상적으로 입력되었습니다.</strong>");
+				 //.alert-success
+				 
+				 //모든 input값에 error가 없다면
+				 if(!$('input').hasClass('error')){
+					 $("#submit").removeAttr("disabled");
+				 }
+			 } 
+		 })
+		 
          // datePicker
          $('.input-group.date').datepicker({
              todayBtn: "linked",

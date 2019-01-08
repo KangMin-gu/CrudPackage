@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +31,7 @@ public interface CampaignService {
 	
 	public void campTargetInsert(HttpServletRequest request,int campNo);
 	
-	public int campFormInsertUpdate(HttpServletRequest request, CampaignFormDto campaignFormDto);
+	public void campFormInsertUpdate(HttpServletResponse response, MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request,@ModelAttribute CampaignFormDto campaignFormDto,@PathVariable int campNo);
 	
 	public void campTestSend(HttpServletRequest request, int campNo);
 	

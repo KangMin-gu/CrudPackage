@@ -133,20 +133,36 @@
                                         <tr>
                                             <th>성별</th>
                                             <td>
-                                                <select name="sex" id="sex" class="form-control">
-                                                    <option value="">선택</option>
-                                                    <option value="1">남자</option>
-                                                    <option value="2">여자</option>
+                                               <select class="form-control" name="sex" id="sex">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="sex" items="${SEX }">
+                                                		<c:choose>
+                                                			<c:when test="${campTarget.SEX eq sex.codeval}">
+                                                				<option selected label="${sex.codename }" value="${sex.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${sex.codename }" value="${sex.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>고객구분</th>
                                             <td>
-                                                <select name="custgubun" id="custgubun" class="form-control">
-                                                    <option value="">선택</option>
-                                                    <option value="1">회원</option>
-                                                    <option value="2">비회원</option>
+                                                <select class="form-control" name="custgubun" id="custgubun">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="custGubun" items="${CUSTGUBUN }">
+                                                		<c:choose>
+                                                			<c:when test="${campTarget.CUSTGUBUN eq custGubun.codeval}">
+                                                				<option selected label="${custGubun.codename }" value="${custGubun.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${custGubun.codename }" value="${custGubun.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
@@ -163,19 +179,26 @@
                                         <tr>
                                             <th>나이</th>
                                             <td>
-                                                <input type="text" name="age1" id="age1" class="form-control float-left col-5">
+                                                <input type="text" name="age1" id="age1" class="form-control float-left col-5" value="${campInfo.AGE1 }">
                                                 <h3 class="text-center col-lg-1 col-1 p-0 m-0 float-left">~</h3>
-                                                <input type="text" name="age2" id="age2" class="form-control float-left col-5">
+                                                <input type="text" name="age2" id="age2" class="form-control float-left col-5" value="${campInfo.AGE2 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>고객등급</th>
                                             <td>
-                                                <select name="custgrade" id="custgrade" class="form-control" style="height: 24px !important; max-height: 24px !important;">
-                                                    <option value="">선택</option>
-                                                    <option value="1">일반</option>
-                                                    <option value="2">VIP</option>
-                                                    <option value="3">VVIP</option>
+                                                <select class="form-control" name="custgrade" id="custgrade">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="custGrade" items="${CUSTGRADE }">
+                                                		<c:choose>
+                                                			<c:when test="${campTarget.CUSTGRADE eq custGrade.codeval}">
+                                                				<option selected label="${custGrade.codename }" value="${custGrade.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${custGrade.codename }" value="${custGrade.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
@@ -192,29 +215,36 @@
                                         <tr>
                                             <th>생일(월)</th>
                                             <td>
-                                                <select name="birth" id="birth" class="form-control">
-                                                    <option value="">선택</option>
-                                                    <option value="01">1월</option>
-                                                    <option value="02">2월</option>
-                                                    <option value="03">3월</option>
-                                                    <option value="04">4월</option>
-                                                    <option value="05">5월</option>
-                                                    <option value="06">6월</option>
-                                                    <option value="07">7월</option>
-                                                    <option value="08">8월</option>
-                                                    <option value="09">9월</option>
-                                                    <option value="10">10월</option>
-                                                    <option value="11">11월</option>
-                                                    <option value="12">12월</option>
+                                                <select class="form-control" name="birth" id="birth">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="birth" items="${BIRTH }">
+                                                		<c:choose>
+                                                			<c:when test="${campTarget.BIRTH eq birth.codeval}">
+                                                				<option selected label="${birth.codename }" value="${birth.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${birth.codename }" value="${birth.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>활동등급</th>
                                             <td>
-                                                <select name="actgrade" id="actgrade" class="form-control">
-                                                    <option value="">선택</option>
-                                                    <option value="1">우수</option>
+                                                <select class="form-control" name="actgrade" id="actgrade">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="actGrade" items="${ACTGRADE }">
+                                                		<c:choose>
+                                                			<c:when test="${campInfo.ACTGRADE eq actGrade.codeval}">
+                                                				<option selected label="${actGrade.codename }" value="${actGrade.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${actGrade.codename }" value="${actGrade.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
@@ -233,11 +263,11 @@
                                             <td class="border-top-0">
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="regdate1" id="regdate1" class="form-control" value="">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="regdate1" id="regdate1" class="form-control" value="${campInfo.REGDATE1 }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="regdate2" id="regdate2" class="form-control" value="">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="regdate2" id="regdate2" class="form-control" value="${campInfo.REGDATE2 }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -267,7 +297,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box1 col-lg-12 col-xl-6 p-0 addr">
+                            <div class="box1 col-lg-12 col-xl-6 p-0 addr" style="display:block">
                                     <table class="table table-bordered mb-0 border-top-0">
                                         <colgroup>
                                             <col style="width: 110px; background: #fafafa;">
@@ -277,12 +307,19 @@
                                             <tr>
                                                 <th class="border-top-0">주소지 1</th>
                                                 <td class="border-top-0">
-                                                    <select name="addr11" id="addr11" class="form-control col-3 float-left mr-2">
-                                                        <option>경기도 부천시</option>
-                                                        <option>경기도 부천시</option>
-                                                        <option>경기도 부천시</option>
-                                                        <option>경기도 부천시</option>
-                                                    </select>
+                                                    <select class="form-control col-3 float-left mr-2" name="addr11" id="addr11">
+                                            			<option label="선택" value=""/>
+                                                		<c:forEach var="sido" items="${SIDO }">
+                                                			<c:choose>
+                                                				<c:when test="${campInfo.ADDR11 eq sido.codeval}">
+                                                					<option selected label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:when>
+                                                				<c:otherwise>
+                                                					<option label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:otherwise>
+                                                			</c:choose>
+                                                		</c:forEach>
+                                                	</select>
                                                     <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2">
                                                         <option>소사구</option>
                                                         <option>소사구</option>
@@ -301,9 +338,131 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            <input type="hidden" name="campno" id="campno" value="${campInfo.CAMPNO }">
-                        </div>
-                    </div>
+                                <div class="box1 col-lg-12 col-xl-6 p-0 addr" style="display:none">
+                                    <table class="table table-bordered mb-0 border-top-0">
+                                        <colgroup>
+                                            <col style="width: 110px; background: #fafafa;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">주소지 2</th>
+                                                <td class="border-top-0">
+                                                    <select class="form-control col-3 float-left mr-2" name="addr21" id="addr21">
+                                            			<option label="선택" value=""/>
+                                                		<c:forEach var="sido" items="${SIDO }">
+                                                			<c:choose>
+                                                				<c:when test="${campInfo.ADDR21 eq sido.codeval}">
+                                                					<option selected label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:when>
+                                                				<c:otherwise>
+                                                					<option label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:otherwise>
+                                                			</c:choose>
+                                                		</c:forEach>
+                                                	</select>
+                                                    <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2">
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                    </select>
+                                                    <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2">
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                    </select>
+                                                    <a onclick="javascript:addAddr($(this))" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="box1 col-lg-12 col-xl-6 p-0 addr" style="display:none">
+                                    <table class="table table-bordered mb-0 border-top-0">
+                                        <colgroup>
+                                            <col style="width: 110px; background: #fafafa;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">주소지 3</th>
+                                                <td class="border-top-0">
+                                                    <select class="form-control col-3 float-left mr-2" name="addr31" id="addr31">
+                                            			<option label="선택" value=""/>
+                                                		<c:forEach var="sido" items="${SIDO }">
+                                                			<c:choose>
+                                                				<c:when test="${campInfo.ADDR31 eq sido.codeval}">
+                                                					<option selected label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:when>
+                                                				<c:otherwise>
+                                                					<option label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:otherwise>
+                                                			</c:choose>
+                                                		</c:forEach>
+                                                	</select>
+                                                    <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2">
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                    </select>
+                                                    <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2">
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                    </select>
+                                                    <a onclick="javascript:addAddr($(this))" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="box1 col-lg-12 col-xl-6 p-0 addr" style="display:none">
+                                    <table class="table table-bordered mb-0 border-top-0">
+                                        <colgroup>
+                                            <col style="width: 110px; background: #fafafa;">
+                                            <col style="width: auto;">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th class="border-top-0">주소지 4</th>
+                                                <td class="border-top-0">
+                                                    <select class="form-control col-3 float-left mr-2" name="addr41" id="addr41">
+                                            			<option label="선택" value=""/>
+                                                		<c:forEach var="sido" items="${SIDO }">
+                                                			<c:choose>
+                                                				<c:when test="${campInfo.ADDR41 eq sido.codeval}">
+                                                					<option selected label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:when>
+                                                				<c:otherwise>
+                                                					<option label="${sido.codename }" value="${sido.codeval }"/>
+                                                				</c:otherwise>
+                                                			</c:choose>
+                                                		</c:forEach>
+                                                	</select>
+                                                    <select name="addr12" id="addr12" class="form-control col-3 float-left mr-2">
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                        <option>소사구</option>
+                                                    </select>
+                                                    <select name="addr13" id="addr13" class="form-control col-3 float-left mr-2">
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                        <option>괴안동</option>
+                                                    </select>
+                                                    <a onclick="javascript:addAddr($(this))" style="height: 23px; font-size: 13px; padding: 0 0.75rem;">추가</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        	</div>
+                    	</div>
                     </form:form>
                 </div>
             </div>
@@ -329,7 +488,7 @@
 	<script>
 	
 	window.onload = function () {
-		enableSubmit();
+		
 	}
 	
 	$(document).ready(function () {
@@ -340,7 +499,16 @@
 			forceParse:false,
 			autoclose:true
 		});
-		
+		enableSubmit();
+		debugger;
+		var length = $('.addr').length
+		for (i = 2; i <= length; i++){
+			if($('#addr'+i+'1').val().trim() == ''){
+				$('#addr'+i+'1').parents('table').parent().css('display','none');
+			}else{
+				$('#addr'+i+'1').parents('table').parent().css('display','block');
+			}
+		}
 	});
 
 	</script>		

@@ -64,7 +64,7 @@
                                         <tr>
                                             <th><label for="sitename">라이센스제품</label></th>
                                             <td>
-                                            	<select class="form-control col-12 float-left mr-12 required validate error check" name="licenseno" id="licenseno" value="">
+                                            	<select class="form-control col-12 float-left mr-12 required validate error percentV" name="licenseno" id="licenseno" value="">
                                             		<option value="">선택</option>
                                             	</select>
                                             </td>
@@ -89,7 +89,7 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스수량</label></th>
-                                            <td><input type="text" class="form-control required validation error phone1" maxlength="3" name="buycnt" id="buycnt" value=""></td>
+                                            <td><input type="text" class="form-control required validation error numberV" maxlength="3" name="buycnt" id="buycnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>

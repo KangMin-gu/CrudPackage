@@ -24,8 +24,6 @@
 <link href="/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <!--datePicker-->
 <link href="/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<!-- colorPicker -->
-<link href="/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <!-- clockPicker -->
 <link href="/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 
@@ -42,23 +40,23 @@ body {
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
-				<h2>일정추가</h2>
+				<h2>접촉추가</h2>
 
 			</div>
 
 		</div>
-
-		<!-- S: 고객 목록 ppt p01-->
+	
 		<div class="wrapper wrapper-content  animated fadeInRight article">
 
 			<div class="col-lg-12">
 				<div class="ibox">
 
 					<div class="ibox-content row">
-					<form:form action="/popsalescust/post" method="post" id="command" onsubmit="return false;">
+					<form:form action="/sales/cont/post" method="post" id="command" onsubmit="return false;">
 						
 						<div class="w-100 text-right mb-3">
-							<Button class="btn btn-primary" onclick="addContect();">고객접촉</Button>
+							<Button class="btn btn-primary" onclick="addContect();">추가</Button>
+							<input type="hidden" id="schno" name="schno" value="${schDetail.SCHNO }">
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -69,85 +67,65 @@ body {
 								<tbody>
 									
 									<tr>
-										<th>스케쥴명</th>
-										<td><input type="text" class="form-control" id="schname" name="schname"></td>
+										<th>영업명</th>
+										<td>
+											<input type="text" class="form-control" id="salename" name="salename" value="${schDetail.SALENAME }" readonly>
+											<input type="hidden" id="salesno" name="salesno" value="${schDetail.SALESNO }">
+										</td>
 									</tr>
 									
 									<tr>
-										<th>영업명</th>
+										<th>접촉자명</th>
 										<td>
-											<div class="input-group sales" id="salename">
-												<input type="text" class="form-control" autocomplete="off" name="salename" readonly>
-                                                <input type="hidden" name="salesno" id="salesno" value="0">
+											<div class="input-group owner" id="ownername">
+												<input type="text" class="form-control" autocomplete="off" name="ownername"  value="${schDetail.USERNAME }"readonly>
+                                                <input type="hidden" name="cttuser" id="cttuser" value="${schDetail.OWNER }">
+                                                <span class="input-group-addon">
+                                                    <a><i class="fa fa-search"></i></a>
+                                                </span>
+											</div>
+										</td>
+									</tr>
+									
+									<tr>
+										<th>고객명</th>
+										<td>
+											<div class="input-group cust" id="custname">
+												<input type="text" class="form-control" autocomplete="off" name="custname" readonly>
+                                                <input type="hidden" name="custno" id="custno" value="0">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
                                                 </span>
 											</div>
 										</td>
 									</tr>								
-																	
-									<tr>
-										<th>사용자명</th>
-										<td>
-											<div class="input-group owner" id="ownername">
-												<input type="text" class="form-control" autocomplete="off" name="ownername"  value="${username }"readonly>
-                                                <input type="hidden" name="owner" id="owner" value="${userno }">
-                                                <span class="input-group-addon">
-                                                    <a><i class="fa fa-search"></i></a>
-                                                </span>
-											</div>
-										</td>
-									</tr>
 																		
 									<tr>
-										<th>시작일정</th>
+										<th>접촉일정</th>
 										<td>
 											<div class="input-group">
                                     			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    			<input type="text" class="form-control" id="startdate" name="startdate" value="${startdate }" readonly >
+                                    			<input type="text" class="form-control" id="cttdate" name="cttdate" value="${schDetail.STARTDATE }" readonly >
                                 			</div>
                                 				
                                 			<div class="input-group clockpicker" data-autoclose="true">
                                 				<span class="input-group-addon" style="width: 39px;"><i class="fa fa-clock-o"></i></span>
-                                				<input type="text" class="form-control" id="starttime" name="starttime" value="10:00" >
-                            				</div>
-                            
-										</td>
-									</tr>
-									
-									<tr>
-										<th>종료일정</th>
-										<td>
-											<div class="input-group date">
-                                    			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    			<input type="text" class="form-control" id="enddate" name="enddate" >
-                                			</div>
-                                				
-                                			<div class="input-group clockpicker" data-autoclose="true">
-                                				<span class="input-group-addon" style="width: 42px;"><i class="fa fa-clock-o"></i></span>
-                                				<input type="text" class="form-control" id="endtime" name="endtime" value="" >
+                                				<input type="text" class="form-control" id="ctttime" name="ctttime" value="${schDetail.STARTTIME }" >
                             				</div>
 										</td>
 									</tr>
-									
+																	
 									<tr>
-										<th>스케쥴보안</th>
+										<th>접촉장소</th>
 										<td>
-											<select class="form-control" name="private" id="private">
-												<option value="0">공유</option>
-												<option value="1">혼자보기</option>
-											</select>
+											<input type="text" class="form-control" id="cttlocation" name="cttlocation">
+											<input type="hidden" id="cttchannel" name="cttchannel" value="1"><!--영업스케쥴접촉 -->
 										</td>
-									</tr>
-									
-									<tr>
-										<th>색상</th>
-										<td><input type="text" class="form-control colorPicker" id="color" name="color" autocomplete="off"/></td>
 									</tr>
 									
 									<tr>
 										<th>메모</th>
-										 <td><textarea name="memo" id="memo"  class="form-control" style="resize:none;" rows="4"></textarea></td>
+										 <td><textarea name="memo" id="memo"  class="form-control" style="resize:none;" rows="4">${schDetail.memo }</textarea></td>
 									</tr>
 									
 								</tbody>
@@ -170,15 +148,12 @@ body {
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<!-- Data picker -->
     <script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	 <!-- Color picker -->
-    <script src="/resources/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
     <!-- Clock picker -->
     <script src="/resources/js/plugins/clockpicker/clockpicker.js"></script>
 
 	<script>			
 	
 	$(document).ready(function () {
-		$('.colorPicker').colorpicker();
 		
 		$('.clockpicker').clockpicker();
 		
@@ -189,12 +164,12 @@ body {
 		});
 	});
 	
-	function formSubmit(fromUrl,toUrl){
+	function addContect(){
 		
 		var form = new FormData(document.getElementById('command'));
 				
 		$.ajax({
-		    url: '/sales/cal/post',
+		    url: '/sales/cont/post',
 		    data: form,
 		    dataType: 'json', 
 		    processData: false, 

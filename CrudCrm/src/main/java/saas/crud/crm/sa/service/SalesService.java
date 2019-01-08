@@ -61,4 +61,6 @@ public interface SalesService {
 	public int scvSalesComSchUpdate(Map<String,Object> schVal);
 
 	public Map<String,Object> svcCustTabSalesList(HttpServletRequest request);
+	
+	public int svcSalesContInsert(Map<String,Object> contVal);
 }

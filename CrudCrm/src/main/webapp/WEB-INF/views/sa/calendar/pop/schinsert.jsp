@@ -57,9 +57,27 @@ body {
 					<div class="ibox-content row">
 					<form:form action="/popsalescust/post" method="post" id="command" onsubmit="return false;">
 						
-						<div class="w-100 text-right mb-3">
-							<Button class="btn btn-primary" onclick="addContect();">고객접촉</Button>
+						
+						<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+							<div class="col-xl-8 col-sm-10 float-left alert alert-info w-100" id="reqMsgDiv" style="height:2.00rem;padding-top: 6px;overflow:hidden;" >
+								<span id="reqDefaultMsg" >
+									<strong class='text-danger'>필수 입력값을 확인해 주세요. </strong>
+								</span>
+								<span id="reqSuccessMsg" style="display:none;"><Strong>필수값이 정상적으로 입력 되었습니다.</Strong></span>				
+	                        </div>
+							<div class="col-xl-8 col-sm-10 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
+								<Strong><span id="showMsg"></span></Strong>				
+	                        </div>													
+							<div class="w-100 text-right mb-3">
+								<Button class="btn btn-primary submit" id="submitBtn" onclick="formSubmit();" disabled>추가</Button>
+							</div>
 						</div>
+						
+						
+						
+						<!-- <div class="w-100 text-right mb-3">
+							<Button class="btn btn-primary" id="submitBtn" onclick="formSubmit();">추가</Button>
+						</div> -->
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
 								<colgroup>
@@ -69,15 +87,15 @@ body {
 								<tbody>
 									
 									<tr>
-										<th>스케쥴명</th>
-										<td><input type="text" class="form-control" id="schname" name="schname"></td>
+										<th>스케쥴명&nbsp;<b>&#42;</b></th>
+										<td><input type="text" class="form-control validate required allV error" id="schname" name="schname"></td>
 									</tr>
 									
 									<tr>
-										<th>영업명</th>
+										<th>영업명&nbsp;<b>&#42;</b></th>
 										<td>
 											<div class="input-group sales" id="salename">
-												<input type="text" class="form-control" autocomplete="off" name="salename" readonly>
+												<input type="text" class="form-control validate required allV error" autocomplete="off" name="salename" readonly>
                                                 <input type="hidden" name="salesno" id="salesno" value="0">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
@@ -169,11 +187,13 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<!-- Data picker -->
-    <script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	 <!-- Color picker -->
-    <script src="/resources/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
     <!-- Clock picker -->
-    <script src="/resources/js/plugins/clockpicker/clockpicker.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
+    <!-- 유효성 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 
 	<script>			
 	
@@ -202,7 +222,6 @@ body {
 		    type: 'POST', 
 		    
 		    success: function(response){       	
-		    opener.window.location.reload();
 		    window.close();
 		    }
 		});

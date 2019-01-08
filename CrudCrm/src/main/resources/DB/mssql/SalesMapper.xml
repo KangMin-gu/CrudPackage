@@ -388,22 +388,15 @@
 	(
 	SELECT  
 	(ROW_NUMBER() OVER(ORDER BY A.CONTNO DESC)) AS ROWNUM
-		,A.CONTNO
+	,A.CONTNO
 	,A.CTTUSER
 	,A.CUSTNO
 	,CONVERT(VARCHAR, ISNULL(A.CTTDATE,''), 112) + ISNULL(A.CTTTIME,'')  AS CTTDATE 
-	,A.DURATION
 	,ISNULL(A.MEMO,'') AS MEMO
 	,A.CTTLOCATION
 	,ISNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
-	,A.CTTTYPE
-	,A.SALESSTEP
 	,A.CLINO
 	,A.SALESNO
-	,A.CONTGOALID
-	,A.CTTRESULT
-	,A.RESPONSECODE
-	,A.LOGID
 	, B.CUSTNAME, C.USERNAME
 	FROM TB110010 A
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
@@ -977,4 +970,49 @@
 		 
 	</select>
 	
+	
+	<!-- 접촉추가 (스케줄 상세팝업 - 접촉추가)  -->
+	<insert id="salesContInsert" parameterType="hashMap">
+	INSERT INTO TB110010 
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,REGDATE
+	,EDTDATE
+	,ISDELETE
+	
+	,CTTUSER
+	,CUSTNO
+	,CTTDATE
+	,CTTTIME
+	,MEMO
+	,CTTLOCATION
+	,CTTCHANNEL
+	,CLINO
+	,SALESNO
+	,SCHNO
+	)
+
+	VALUES
+	(
+	#{siteid}
+	,#{userno}
+	,#{userno}
+	,getdate()
+	,getdate()
+	,0
+	
+	,#{cttuser}
+	,#{custno}
+	,#{cttdate}
+	,#{ctttime}
+	,#{memo}
+	,#{cttlocation}
+	,#{cttchannel}
+	,#{clino}
+	,#{salesno}
+	,#{schno}
+	)
+	</insert>
 </mapper>

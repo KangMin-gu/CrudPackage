@@ -68,12 +68,36 @@ public class UserServiceImpl implements UserService{
 				//메뉴 코드 세션 분기처리
 				if(menVal.equals("10000")) {
 					request.getSession().setAttribute("cm", menVal);
+				}else if(menVal.equals("11000")) {
+					request.getSession().setAttribute("cm1", menVal);
 				}else if(menVal.equals("20000")) {
 					request.getSession().setAttribute("sa", menVal);
+				}else if(menVal.equals("21000")) {
+					request.getSession().setAttribute("sa1", menVal);
+				}else if(menVal.equals("22000")) {
+					request.getSession().setAttribute("sa2", menVal);
+				}else if(menVal.equals("23000")) {
+					request.getSession().setAttribute("sa3", menVal);
 				}else if(menVal.equals("30000")) {
 					request.getSession().setAttribute("sv", menVal);
+				}else if(menVal.equals("31000")) {
+					request.getSession().setAttribute("sv1", menVal);
+				}else if(menVal.equals("32000")) {
+					request.getSession().setAttribute("sv2", menVal);
+				}else if(menVal.equals("33000")) {
+					request.getSession().setAttribute("sv3", menVal);
+				}else if(menVal.equals("34000")) {
+					request.getSession().setAttribute("sv4", menVal);
+				}else if(menVal.equals("35000")) {
+					request.getSession().setAttribute("sv5", menVal);
 				}else if(menVal.equals("40000")) {
 					request.getSession().setAttribute("cp", menVal);
+				}else if(menVal.equals("41000")) {
+					request.getSession().setAttribute("cp1", menVal);
+				}else if(menVal.equals("42000")) {
+					request.getSession().setAttribute("cp2", menVal);
+				}else if(menVal.equals("43000")) {
+					request.getSession().setAttribute("cp3", menVal);
 				}else if(menVal.equals("50000")) {
 					request.getSession().setAttribute("vc", menVal);
 				}else if(menVal.equals("60000")) {

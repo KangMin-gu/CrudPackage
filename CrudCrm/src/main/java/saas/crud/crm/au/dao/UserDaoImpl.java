@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao{
 	//공지사항
 	@Override
 	public List<Map<String, Object>> crudNotice() {
-		List<Map<String, Object>> crudNotice = session.selectList("crudNotice");
+		List<Map<String, Object>> crudNotice = session.selectList("user.crudNotice");
 		return crudNotice;
 	}
 	

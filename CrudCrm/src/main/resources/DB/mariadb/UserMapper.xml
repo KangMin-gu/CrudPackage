@@ -10,13 +10,13 @@
     </select>
 	
 	<select id="crudNotice" resultType="hashMap">
-		SELECT TOP 5 ICNUM, SUBJECT, CONVERT(CHAR(8), REGDATE, 2) AS REGDATE FROM ICNOTICE
+		SELECT ICNUM, SUBJECT, DATE_FORMAT(REGDATE,'%Y-%m-%d') AS REGDATE FROM sys990010 LIMIT 5
 	</select>
 	
 	<select id="urMenu" parameterType="String" resultType="hashMap">
-		SELECT A.MENUVAL FROM t_menu AS A
-		INNER JOIN t_roledetail AS B ON B.MENUNO = A.MENUNO
-		INNER JOIN me800010 AS C ON C.CHKROLE = B.ROLENO
+		SELECT A.MENUVAL FROM ma900030 AS A
+		INNER JOIN me810011 AS B ON B.MENUNO = A.MENUNO
+		INNER JOIN me800010 AS C ON C.USERNO = B.USERNO
 		WHERE USERID = #{userid}
 	</select>
 	
@@ -39,11 +39,11 @@
 		,#{useros}
 		,#{userdevice}
 		,#{userbrowser}
-		,YEAR(getDate())
-		,MONTH(getDate())
-		,DAY(getDate())
-		,DATEPART(hh,getDate())
-		,getDate()
+		,YEAR(NOW())
+		,MONTH(NOW())
+		,DAY(NOW())
+		,HOUR(NOW())
+		,NOW()
 		,#{siteid}
 		)
 	</insert>

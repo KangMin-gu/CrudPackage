@@ -8,33 +8,33 @@
 		,A.EMAIL,A.USERDUTY
 		,CASE WHEN A.ISDELETE = 0 THEN '사용'
 			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-		,CASE WHEN CONVERT(nvarchar,A.REGDATE,23) = '1900-01-01' THEN ''
-				ELSE CONVERT(nvarchar,A.REGDATE,23) END AS REGDATE
+		,CASE WHEN DATE_FORMAT(A.REGDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+				ELSE DATE_FORMAT(A.REGDATE,'%Y-%m-%d') END AS REGDATE
 		,A.MOBILE1,A.MOBILE2,A.MOBILE3
-		,CASE WHEN CONVERT(nvarchar,A.ENTERDATE,23) = '1900-01-01' THEN ''
-				ELSE CONVERT(nvarchar,A.ENTERDATE,23) END AS ENTERDATE
-		, A.MOBILE1 + A.MOBILE2 + A.MOBILE3 AS MOBILE
-		,ROW_NUMBER() OVER(ORDER BY A.USERNO DESC) AS ROWNUM
-			FROM me800010 A
-			WHERE SITEID = #{siteid}
-			AND ISDELETE = 0
+		,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+				ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
+		, CONCAT(A.MOBILE1, A.MOBILE2, A.MOBILE3) AS MOBILE
+		,@RNUM:=@RNUM + 1 AS ROWNUM
+			FROM me800010 A, (SELECT @RNUM := 0) R
+			WHERE A.SITEID = #{siteid}
+			AND A.ISDELETE = 0
 			<if test="username != null">
-				AND USERNAME LIKE '%'+#{username}+'%'
+				AND A.USERNAME LIKE '%'+#{username}+'%'
 			</if>
 			<if test="mobile != null">
-				AND MOBILE LIKE '%'+#{mobile}+'%'
+				AND A.MOBILE LIKE '%'+#{mobile}+'%'
 			</if>
 			<if test="userid != null">
-				AND USERID LIKE '%'+#{userid}+'%'
+				AND A.USERID LIKE '%'+#{userid}+'%'
 			</if>
 			<if test="isdelete != null">
-				AND ISDELETE = #{isdelete}
+				AND A.ISDELETE = #{isdelete}
 			</if>
 			<if test="strdate != null">
-				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[>=]]> #{strdate}
+				AND DATE_FORMAT(A.REGDATE,'%Y-%m-%d') <![CDATA[>=]]> #{strdate}
 			</if>
 			<if test="enddate != null">
-				AND CONVERT(nvarchar,REGDATE,23) <![CDATA[<=]]> #{enddate}
+				AND DATE_FORMAT(A.REGDATE,'%Y-%m-%d') <![CDATA[<=]]> #{enddate}
 			</if>
 			) X 
 			<if test="endRowNum != null">
@@ -56,16 +56,16 @@
 		,CASE WHEN A.CHKAUTH = 10 THEN '일반사용자'
 			  WHEN A.CHKAUTH = 20 THEN '관리자사용자' END AS CHKAUTH_
 		,CHKAUTH
-		,CASE WHEN CONVERT(nvarchar,A.ENTERDATE,23) = '1900-01-01' THEN ''
-				ELSE CONVERT(nvarchar,A.ENTERDATE,23) END AS ENTERDATE
+		,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+				ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
 		,A.MOBILE1
 		,A.MOBILE2
 		,A.MOBILE3
-		, A.MOBILE1 + '-' + A.MOBILE2 + '-' + A.MOBILE3 AS MOBILE
+		, CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) AS MOBILE
 		,A.TELNO1
 		,A.TELNO2
 		,A.TELNO3
-		, A.TELNO1 + '-' + A.TELNO2 + '-' + A.TELNO3 AS TELNO
+		, CONCAT(A.TELNO1,'-',A.TELNO2,'-',A.TELNO3) AS TELNO
 		,A.USERDESC
 		,(SELECT SITENAME FROM ma900010 B WHERE B.SITEID = A.SITEID) AS SITENAME
 			FROM me800010 A
@@ -147,9 +147,9 @@
 			,#{telno3}
 			,#{chkauth}
 			,0
-			,getDate()
+			,NOW()
 			,#{reguser}
-			,getDate()
+			,NOW()
 			,#{edtuser}
 			)
 			SELECT SCOPE_IDENTITY()
@@ -178,7 +178,7 @@
 				,CHKAUTH = #{chkauth}
 				</if>
 				
-				,EDTDATE = getDate()
+				,EDTDATE = NOW()
 				,EDTUSER = #{edtuser}
 			WHERE USERNO = #{userno}
 	</update>
@@ -213,14 +213,14 @@
 		SELECT X.MENUNO,X.MENUNAME
 		,CASE WHEN X.CNT >= X.BUYCNT THEN 0 ELSE 1 END AS TOTAL
 		,X.CNT,X.BUYCNT 
-		FROM (SELECT B.MENUNO, B.MENUNAME, ISNULL(C.CNT, 0) AS CNT, A.BUYCNT
+		FROM (SELECT B.MENUNO, B.MENUNAME, IFNULL(C.CNT, 0) AS CNT, A.BUYCNT
 				FROM me810010 A
-				INNER JOIN T_MENU B ON B.LICENSENO = A.LICENSENO
+				INNER JOIN ma900030 B ON B.LICENSENO = A.LICENSENO
 				LEFT OUTER JOIN (SELECT SITEID, COUNT(MENUNO) AS CNT, MENUNO
 									FROM me810011
 								GROUP BY MENUNO, SITEID, MENUNO) C ON C.MENUNO = B.MENUNO
 				WHERE A.SITEID = #{siteid}) X
-		WHERE CASE WHEN X.CNT <![CDATA[>]]>= X.BUYCNT THEN 0
+		WHERE CASE WHEN X.CNT <![CDATA[>=]]> X.BUYCNT THEN 0
 				ELSE 1 END  != 0
 	</select>
 	
@@ -233,14 +233,9 @@
 	</update>
 	
 	<insert id="menuMerge" parameterType="userMenuDto">
-		
-		MERGE INTO me810011 AS A
-			USING (select '1' AS DUAL ) B ON (A.USERNO = #{userno} AND A.MENUNO = #{menuno})
-		WHEN MATCHED THEN
-			UPDATE SET A.ISDELETE = 0
-		WHEN NOT MATCHED THEN
-			INSERT (SITEID,USERNO,MENUNO,REGDATE,REGUSER,EDTDATE,EDTUSER,ISDELETE)
-			VALUES(#{siteid},#{userno},#{menuno},getDate(),#{reguser},getDate(),#{edtuser},0);
+			INSERT INTO me810011   (SITEID,USERNO,MENUNO,REGDATE,REGUSER,EDTDATE,EDTUSER,ISDELETE)
+							VALUES(#{siteid},#{userno},#{menuno},NOW(),#{reguser},NOW(),#{edtuser},0)
+         ON DUPLICATE KEY UPDATE ISDELETE = 0 ;
 	</insert>
 	
 	<select id="userMenu" parameterType="userMenuDto" resultType="hashMap">

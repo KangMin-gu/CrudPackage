@@ -64,7 +64,7 @@ body {
 									<div class="form-group row" id="mysel">
 										<label class="col-md-2 col-form-label" for="touser">받는이:</label>
 										<div class="col-md-10">
-											<select data-placeholder="Mail or Name.." id="touser" name="touser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
+											<select data-placeholder=" " id="touser" name="touser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
 								                <c:forEach var="adminMail" items="${adminMail}" >
 								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
 								                	${adminMail.USERNAME}</option>
@@ -78,7 +78,7 @@ body {
 									<div class="form-group row">
 										<label class="col-md-2 col-form-label" for="ccuser">참조:</label>
 										<div class="col-md-10">
-											<select data-placeholder="Mail or Name.." id="ccuser" name="ccuser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
+											<select data-placeholder=" " id="ccuser" name="ccuser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
 								                <c:forEach var="adminMail" items="${adminMail}" >
 								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
 								                	${adminMail.USERNAME}</option>
@@ -170,8 +170,17 @@ body {
 		var referer = window.opener.location.href;
 		
 		var emailTemplate = "";
-		emailTemplate += ''
-
+		emailTemplate += '<body style="background: #f6f6f6;">'
+		emailTemplate += '<div id="wrap" style="width:100%; max-width: 600px; height: auto; padding: 20px; background: #ffffff; box-sizing: border-box; margin: 50px auto 0; border: 1px solid #f0f0f0;">'
+		emailTemplate += '<div id="header" style="text-align: center;">'
+		emailTemplate += '<img src="../../resources/img/crud/header.jpg" alt=""></div>'
+		emailTemplate += '<div id="section" style="padding: 40px 0 20px;"><h3 style="font-size: 18px; color: #000000; padding-bottom: 20px;">Welcom in basic email template</h3>'
+		emailTemplate += '<p style="font-size: 14px; color: #000000; line-height: 24px;">본문</p>'
+		emailTemplate += '<div style="padding-top: 30px; text-align: center;">'
+		emailTemplate += '<a style="text-decoration: none; color: #FFF; background-color: #1ab394; border: solid #1ab394; border-width: 5px 10px; line-height: 2; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;">Confirm Email Address</a>'
+		emailTemplate += '</div></div></div></body>'
+		
+		
 		$('.summernote').summernote();	
 		
 		$('.summernote').summernote('code',emailTemplate);

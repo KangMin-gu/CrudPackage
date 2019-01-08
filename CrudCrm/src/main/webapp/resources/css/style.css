@@ -9575,12 +9575,10 @@ table{table-layout: fixed; word-wrap: break-word;}
 .date{max-height: 23px !important; height: 23px !important;}
 .i-checks{max-height: 23px !important; height: 23px !important;}
 select.form-control{max-height: 23px !important; height: 23px !important;}
-.sms-form{width: 301px; height: 313px; background: url(../img/crud/phone_bg.jpg) no-repeat; border: 1px solid #e5e6e7; border-radius: 15px; position: relative; margin: 0 auto;}
+.sms-form{width: 350px; height: 338px; background: url(../img/crud/smstemple.png) no-repeat; border: 1px solid #e5e6e7; border-radius: 10px; position: relative; margin: 0 auto;}
 th sup{color: #ff5050;}
-th b{color: #ff5050;}
-.sms-form .num-text{width: 230px; height: 30px; position: absolute; top: 58px; left: 62px;}
-.sms-form .num-text input{width: 230px; height: 30px; background: #f9f9f9; border: none !important; line-height: 30px; border-bottom: 1px solid #e5e6e7 !important;}
-.sms-form .sub-text{position: absolute; top: 100px; left: 10px;}
-.sms-form .sub-text textarea{width: 280px; height: 180px; background: #ffffff; border: 1px solid #e5e6e7; resize: none;}
-.sms-form .limit-text{position: absolute; bottom: 5px; right: 10px;}
-.sms-form .limit-text p{font-size: 13px; color: #1c1c1c;}
+.sms-form h4{width: 350px; text-align: center; font-size: 22px; height: 60px; line-height: 60px; color: #000000; font-weight: bold;}
+.sms-form .sub-text{position: absolute; top: 85px; left: 10px;}
+.sms-form .sub-text textarea{width: 330px; height: 220px; background: #ffffff; border: 1px solid #e5e6e7; resize: none;}
+.sms-form .limit-text{position: absolute; bottom: -20px; right: 10px;}
+.sms-form .limit-text p{font-size: 14px; color: #1c1c1c;}

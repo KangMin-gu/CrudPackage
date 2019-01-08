@@ -40,9 +40,9 @@ public class CampaignDaoImpl implements CampaignDao{
 	}
 	// 캠페인 상세
 	@Override
-	public Map<String, Object> campRead(CampaignDto campaignDto) {
+	public Map<String, Object> campRead(Map<String,Object> param) {
 		// TODO Auto-generated method stub
-		return session.selectOne("cp.detail",campaignDto);
+		return session.selectOne("cp.detail",param);
 	}
 	// 캠페인 수정
 	@Override
@@ -82,9 +82,9 @@ public class CampaignDaoImpl implements CampaignDao{
 	}
 	// 캠페인 추출 화면 Read
 	@Override
-	public List<Map<String, Object>> campTargetRead(CampaignDto campaignDto) {
+	public List<Map<String, Object>> campTargetRead(Map<String,Object> param) {
 		// TODO Auto-generated method stub
-		List<Map<String,Object>> campTargetList = session.selectList("cp.targetList",campaignDto);
+		List<Map<String,Object>> campTargetList = session.selectList("cp.targetList",param);
 		return campTargetList;
 	}
 	// 캠페인 추출 대상  수
@@ -108,12 +108,12 @@ public class CampaignDaoImpl implements CampaignDao{
 		session.insert("cp.formInsert",campaignFormDto);
 		
 	}
-	// 캠페인 발송 Read
 	@Override
-	public Map<String, Object> campFormRead(CampaignDto campaignDto) {
+	public Map<String, Object> campFormRead(Map<String,Object> param) {
 		// TODO Auto-generated method stub
-		return session.selectOne("cp.formRead",campaignDto);
+		return session.selectOne("cp.formRead",param);
 	}
+
 	//캠페인 발송 Update
 	@Override
 	public void campFormUpdate(CampaignFormDto campaignFormDto) {
@@ -224,6 +224,13 @@ public class CampaignDaoImpl implements CampaignDao{
 		// TODO Auto-generated method stub
 		List<Map<String, Object>> campFile = session.selectList("cp.campaignFile", campaignDto);
 		return campFile;
+	}
+	@Override
+	public List<CampaignFormDto> campFormList(CampaignFormDto campaignFormDto) {
+		// TODO Auto-generated method stub
+		List<CampaignFormDto> campFormList = session.selectList("cp.campaignFormList",campaignFormDto);
+		
+		return campFormList;
 	}
 	
 

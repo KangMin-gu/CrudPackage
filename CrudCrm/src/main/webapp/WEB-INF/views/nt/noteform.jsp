@@ -42,36 +42,91 @@
 						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
-						<form:form action="send" method="post"
+						<form:form action="/note/send" method="post"
 							enctype="multipart/form-data">
-							<div class="mail-box-header">
+							<div class="mail-box-header" style="padding-bottom:0px;">
+						
 								<div class="row">
 									<div class="col-md-6 text-left">
 										<h2>통지 발송</h2>
 									</div>
+									
+		
+
+									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+										<div class="col-xl-8 col-lg-12 float-left alert w-100 alert-info" id="reqMsgDiv" style="height: 2rem; padding-top: 6px; overflow: hidden;">
+											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요." style=""><strong class="text-danger"> 필수 입력값을 확인해 주세요.</strong></span>
+											<span id="reqSuccessMsg" style="display: none;"><strong>필수값이 정상적으로 입력 되었습니다.</strong></span>				
+	                          			</div>
+																	
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100"  style="padding-right: 0px;">
+											<button class="btn btn-sm btn-primary submit" disabled id="submit" data-toggle="tooltip">
+												<i class="fa fa-reply"></i> 발송
+											</button>
+											<a href="/note/inbox" class="btn btn-white btn-sm"
+											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>																		
+										</div>										
+									</div>
+									
+									<!-- 
+									
+									
+	                          			
 									<div class="col-md-6 text-right">
-										<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip">
+										<button class="btn btn-sm btn-primary submit" id="sub" data-toggle="tooltip">
 											<i class="fa fa-reply"></i> 발송
 										</button>
 										<a href="mailbox.html" class="btn btn-white btn-sm"
 											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 									</div>
+									  -->							
 								</div>
+								
+								
 							</div>
 							<div class="mail-box">
-
+								        <c:if test="${fn:contains(curUrl,'forward')}">
+								        	<c:set var="toUser" value="${fn:split(toList,',')}"></c:set>
+								        	
+								        	<input type="hidden" id="curUrl" value='${curUrl}' />     
+								       		<input type="hidden" id="subject" value='${note.TITLE}' />
+								       		<input type="hidden" id="content" value='${note.CONTENT}' />
+								       		<input type="hidden" id="fromUser" value='${note.FROMUSERNAME}' />
+								       		<span id="toUser" style="display:none">
+												<c:forEach var="to" items="${toList}" varStatus="comma">																						
+													 ${to.USERNAME}			 					 					
+												<c:if test="${!comma.last }">,</c:if>																																	
+												</c:forEach>								
+											</span>
+											<span id="ccUser">
+												<c:forEach var="cc" items="${ccList }" varStatus="commaTwo">								
+												${cc.USERNAME }										  										
+												<c:if test="${!commaTwo.last }">,</c:if>	
+												</c:forEach>
+									 		</span>
+									 		<input type="hidden" id="date" value="${note.REGDATE }" />
+								       </c:if>
 
 								<div class="mail-body">
 
 									<!-- 받는이 -->
 									<div class="form-group row" id="mysel">
-										<label class="col-md-2 col-form-label" for="touser">받는이:</label>
-										<div class="col-md-10">
-											<select data-placeholder="Mail or Name.." id="touser" name="touser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
+										<label class="col-md-2 col-form-label" for="touser">받는이</label>
+										<div class="col-md-10" id="toto" style="padding-left:0px;padding-right:0px;">
+											<select data-placeholder=" " id="touser" name="touser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">  											              
 								                <c:forEach var="adminMail" items="${adminMail}" >
 								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
 								                	${adminMail.USERNAME}</option>
 								                </c:forEach>
+								                
+								               
+								                <c:choose>								               
+								                	<c:when test="${!fn:contains(curUrl,'forward')}">
+								       				<option value="${replyUser.USERNAME},${replyUser.USERNO},${replyUser.EMAIL}" ${replyUser.USERNO ne "" ? "selected" :""}>
+								       					${replyUser.USERNAME}
+								       				</option>
+								       				</c:when>
+								       			</c:choose>
                 							</select>
 										</div>
 									</div>
@@ -79,12 +134,13 @@
 
 									<!-- 참조 -->
 									<div class="form-group row">
-										<label class="col-md-2 col-form-label" for="ccuser">참조:</label>
-										<div class="col-md-10">
-											<select data-placeholder="Mail or Name.." id="ccuser" name="ccuser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
+										<label class="col-md-2 col-form-label" for="ccuser">참조</label>
+										<div class="col-md-10" style="padding-left:0px;padding-right:0px;">
+											<select data-placeholder=" " id="ccuser" name="ccuser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
 								                <c:forEach var="adminMail" items="${adminMail}" >
 								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
 								                	${adminMail.USERNAME}</option>
+								                	
 								                </c:forEach>
                 							</select>
 										</div>
@@ -92,16 +148,27 @@
 									
 									
 									<div class="form-group row">
-										<label class="col-md-2 col-form-label" for="title">제목:</label>
-										<div class="col-md-8">
-											<input id="title" name="title" type="text"
-												class="form-control" value="">
+										<label class="col-md-2 col-form-label" for="title">제목</label>
+										<div class="col-md-8" style="padding-left:0px;">
+											<c:choose>
+											
+											 <c:when test="${fn:contains(curUrl,'forward')}">
+												<input id="title" name="title" type="text"
+													class="form-control" value="">
+											</c:when>
+											<c:otherwise>
+												<input id="title" name="title" type="text"
+													class="form-control" value="">
+											
+											</c:otherwise>
+											
+											</c:choose>
+											<!--   error validate allV required -->
+											
 										</div>
-										<div class="col-md-2 text-left">
-											<label for="col-form-label" for="important"
-												style="margin-top: 7px;">중요 여부:</label> <input
-												id="important" name="important" type="checkbox"
-												class="i-checks" value="1">
+										<div class="checkbox float-left col-lg-2 p-0">
+																<input type="checkbox" class="i-checks" name="important" id="important" value="1">
+																<label for="important">중요 여부</label>
 										</div>
 									</div>
 								</div>
@@ -110,6 +177,9 @@
 										style="height: 100px;"></textarea>
 									<div class="clearfix"></div>
 								</div>
+								
+								<c:if test="${replyFile eq null}">
+								
 								<div class="mail-body">
 									<div class="form-group row">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
@@ -118,20 +188,21 @@
 												multiple>
 											<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
 										</div>
+										
 									</div>
 								</div>
+								
+								</c:if>								
+								
 								<div class="mail-body text-right tooltip-demo">
 								
-								
-									
-										<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip" >
-											<i class="fa fa-reply"></i> 발송
-										</button>
-									
-									
-									
-									<a href="mailbox.html" class="btn btn-white btn-sm"
-										data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
+								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100"  style="padding-right: 0px;">
+											<button class="btn btn-sm btn-primary submit" disabled id="sub" data-toggle="tooltip">
+												<i class="fa fa-reply"></i> 발송
+											</button>
+											<a href="mailbox.html" class="btn btn-white btn-sm"
+											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>																		
+								</div>	
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -140,7 +211,7 @@
 				</div>
 			</div>
 			<!-- Content End -->
-
+			
 			<!-- foot -->
 			<div class="footer">
 				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
@@ -162,10 +233,84 @@
 		
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script>
+	<!-- radioBox-->
+	
+	
 	
 	$(document).ready(function() {
+		
+		$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+		
+		
+		//처음 진입시 받는이,제목 빨간색 테두리 
+		$('#toto').css('border','1px solid #F5A9A9');
+		$('#title').css('border','1px solid #F5A9A9');
+		
+		//제목 공백체크
+		//var blank = /[\s]/g;
+		
+		
+		//통지발송 본문에 커서 존재시 
+		$('.wrapper').mouseover(function(){
+			//받는이가 있으면 
+			if($('.search-choice').length > 0){
+				//테두리를 없앰 
+				$('#toto').css('border','');
+				
+				//받는이가 있고 제목이 없으면 
+				if($('#title').val() != ""){
+					 $("#submit").removeAttr("disabled");
+					 $("#reqDefaultMsg").css("display","none");
+					 $("#reqSuccessMsg").css("display","");
+					 $("#reqMsgDiv").removeClass("alert-info");		//기존에 있던 success 제거 (녹색창)
+					 $("#reqMsgDiv").addClass("alert-success");	
+				}
+			}else{			//받는이 없으면 테두리 재생성 
+				$('#toto').css('border','1px solid #F5A9A9');
+				 $("#reqSuccessMsg").css("display","none");		    //success 제거 
+				 $("#reqDefaultMsg").css("display","");
+				 $("#reqMsgDiv").removeClass("alert-success");
+				 $("#reqMsgDiv").addClass("alert-info");			
+				 $("#submit").attr("disabled","disabled");
+			}
+			
+			
+			//제목여부 
+			if($('#title').val() != ""){
+				//제목 테두리 제거 
+				$('#title').css('border','');
+				
+				//받는이가 있고 제목이 있으면 
+				if($('.search-choice').length > 0){
+					 $("#submit").removeAttr("disabled");
+					 $("#reqDefaultMsg").css("display","none");
+					 $("#reqSuccessMsg").css("display","");
+					 $("#reqMsgDiv").removeClass("alert-info");		//기존에 있던 success 제거 (녹색창)
+					 $("#reqMsgDiv").addClass("alert-success");	
+					 
+				}
+				
+			}else{			//제목 없으면 
+				 $('#title').css('border','1px solid #F5A9A9');
+				 $("#reqSuccessMsg").css("display","none");		    //success 제거 
+				 $("#reqDefaultMsg").css("display","");
+				 $("#reqMsgDiv").removeClass("alert-success");
+				 $("#reqMsgDiv").addClass("alert-info");			
+				 $("#submit").attr("disabled","disabled");
+				
+			}
+			
+
+		})
+		
+		
+		var replyFile = $('#replyFile').attr('value');
+		var fileName = $('#fileName').attr('value');
 		
 		
 		
@@ -177,17 +322,40 @@
 					search_contains : true
 				}
 				);
-		//없는 유저 
+		
+		$('.summernote').summernote();
+		$('.note-editable').css('height','300px');
+	
+		
+		//summernote에 넣을 내용 
+		var forwardHtml = '';
+		//현재 url값 
+		var curUrl = $('#curUrl').val();
+		debugger;
+		var subject = $('#subject').val();
+		var date = $('#date').val();
+		var from = $('#fromUser').val();
+		var to = $('#toUser')
+		to = to.text().replace(/\n/g, "").replace(/(\s*)/g,"");
+		var cc = $('#ccUser')
+		cc = cc.text().replace(/\n/g, "").replace(/(\s*)/g,"");
+		var content = $('#content').val();
+		
+		forwardHtml += '<br><p style="border-left:2px solid black;padding-left:10px;height:140px">-------------- Original Message -------------- <br>';
+			forwardHtml += '<strong>Subject: </strong>&nbsp;' + subject + '<br>';
+			forwardHtml += '<strong>Date: </strong>&nbsp;' + date + '<br>';
+			forwardHtml += '<strong>From: </strong>&nbsp;' + from + '<br>';
+			forwardHtml += '<strong>To: </strong>&nbsp;' + to + '<br>';
+			forwardHtml += '<strong>Cc: </strong>&nbsp;' + cc + '<br>';
+			forwardHtml += '<h4>' + content + '</h4><br></p><br>';
+			
+		if(curUrl.indexOf('forward') > 0){
+			$('#title').attr('value','FW: '+subject)
+			$('.summernote').summernote('code',forwardHtml);
+		}
 		
 
 		
-		$('.summernote').summernote();	
-		$('.note-editable').css('height','300px');
-		
-		$('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
 		
 		
 	});

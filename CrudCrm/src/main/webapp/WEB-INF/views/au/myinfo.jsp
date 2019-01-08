@@ -139,7 +139,7 @@
 													<th>직장전화</th>
 													<td>
 														<c:if test="${user.TELNO1 ne null}">													
-														${user.TELNO1}-${user.TELNO2}-${user.TELNO3}
+														${user.TELNO}
 														</c:if>
 													</td>
 												</tr>
@@ -151,7 +151,7 @@
 													</td>
 												</tr>													
 												<tr>												
-													<th>비밀번호</th>
+													<th>CTI</th>
 													<td>													
 														
 													</td>
@@ -170,7 +170,7 @@
 											</colgroup>		
 											<tbody>
 												<tr>
-													<th>CTI</th>
+													<th>비밀번호</th>
 													<td>
 														<input type="text" class="form-control"/>
 													</td>

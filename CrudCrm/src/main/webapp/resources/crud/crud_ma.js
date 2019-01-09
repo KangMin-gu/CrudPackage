@@ -48,6 +48,7 @@ if(window.location.pathname == '/ma/license') {
         		url: QueryString+"/"+id,
         		method: "GET",
         		dataType: "json",
+        		cache: false,
         		success: function (data) {
 
         			$('.body input[id="licensename"]').val(data.LICENSENAME);
@@ -132,6 +133,7 @@ if(window.location.pathname == '/ma/license') {
             url: QueryString+"/"+id,
             method: "GET",
             dataType: "json",
+            cache: false,
             success: function (data) {
 
                 $('.body #licensename').val(data.LICENSENAME);
@@ -158,6 +160,7 @@ if(window.location.pathname == '/ma/menu') {
         		url: QueryString+"/"+id,
         		method: "GET",
         		dataType: "json",
+        		cache: false,
         		success: function (data) {
 
         			$('.body #namename').val(data.MENUNAME);
@@ -249,6 +252,7 @@ if(window.location.pathname == '/ma/menu') {
             url: QueryString+"/"+id,
             method: "GET",
             dataType: "json",
+            cache: false,
             success: function (data) {
 
                 $('.body #menuname').val(data.MENUNAME);
@@ -279,6 +283,7 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
         		url: QueryString+"/"+id,
         		method: "GET",
         		dataType: "json",
+        		cache: false,
         		success: function (data) {
 
         			$('.body #codegrp').val(data.CODEGRP);
@@ -371,6 +376,7 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
             url: QueryString+"/"+id,
             method: "GET",
             dataType: "json",
+            cache: false,
             success: function (data) {
 
             	$('.body #codegrp').val(data.CODEGRP);
@@ -395,6 +401,7 @@ if(window.location.pathname.lastIndexOf('/ma/company') == 0) {
             url: "/user/tab/"+id,
             method: "GET",
             dataType: "json",
+            cache: false,
             success: function (data) {
             	var length = data.length;
             	$('#tab3 tbody tr').remove();
@@ -415,6 +422,7 @@ if(window.location.pathname.lastIndexOf('/ma/company') == 0) {
             url: "/ma/license/tab/"+id,
             method: "GET",
             dataType: "json",
+            cache: false,
             success: function (data) {
             	$('#tab1 tbody tr').remove();
             	var length = data.length;

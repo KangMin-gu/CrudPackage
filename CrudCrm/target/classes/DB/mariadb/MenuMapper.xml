@@ -30,10 +30,10 @@
      	FROM ma900030
      	WHERE ISDELETE = 0
      	<if test ="menuName != null">
-     		AND A.MENUNAME LIKE CONCAT('%',#{menuName},'%')
+     		AND MENUNAME LIKE CONCAT('%',#{menuName},'%')
      	</if>
      	<if test ="menuVal != null">
-     		AND A.MENUVAL LIKE CONCAT('%',#{menuVal},'%')
+     		AND MENUVAL LIKE CONCAT('%',#{menuVal},'%')
      	</if>
     </select>
     

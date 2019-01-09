@@ -47,10 +47,10 @@
 	    	AND SITEID = #{siteid}
     	</if>
     	<if test ="codename != null">
-    		AND A.CODENAME LIKE CONCAT('%',#{codename},'%')
+    		AND CODENAME LIKE CONCAT('%',#{codename},'%')
     	</if>
     	<if test ="codegrp != null">
-    		AND A.CODEGRP LIKE CONCAT('%',#{codegrp},'%')
+    		AND CODEGRP LIKE CONCAT('%',#{codegrp},'%')
     	</if>
     </select>
     
@@ -129,7 +129,7 @@
     <select id="upperlist" parameterType="codeDto" resultType="hashMap">
     SELECT 
     A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
-    , DATE_FORMAT(,A.REGDATE,'%Y-%m-%d') AS REGDATE  
+    , DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE  
     ,CASE WHEN A.ISDELETE = 0 THEN '사용'
     	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
    	,A.ISDELETE

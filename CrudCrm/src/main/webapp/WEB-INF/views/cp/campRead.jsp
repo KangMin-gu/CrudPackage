@@ -179,7 +179,6 @@
 	                          			</div>													
 										<div class="float-right" style="padding-right: 0px;">
 											<a href="${pageContext.request.contextPath}/campaign/target/${campInfo.CAMPNO }" class="btn btn-primary">타켓추출</a>									
-											<Button type="submit" class="btn btn-primary">삭 제</Button>	
 										</div>
 									</div>
                                     <div class="ibox">

@@ -46,6 +46,7 @@ $(".tabRact").click(function(e){
         url: "/tab/ract/"+id,
         method: "GET",
         dataType: "json",
+        cache: false,
         success: function (data) {
         	$('#tab1 tbody tr').remove();
         	var length = data.length;
@@ -66,6 +67,7 @@ $(".tabConvey").click(function(e){
         url: "/tab/convey/"+id,
         method: "GET",
         dataType: "json",
+        cache: false,
         success: function (data) {
         	$('#tab2 tbody tr').remove();
         	var length = data.length;

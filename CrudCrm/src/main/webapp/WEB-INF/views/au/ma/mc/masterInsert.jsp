@@ -193,7 +193,7 @@
                                         <tr>
                                             <th><label for="cotype">업태</label></th>
                                             <td>
-                                                <input type="text" class="form-control StringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
+                                                <input type="text" class="form-control validate StringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -203,7 +203,7 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control date dateV" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                            		<input type="text" class="form-control date validate dateV" autocomplete="off" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             	</div>
                                             </td>
                                         </tr>
@@ -293,7 +293,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
                                             <td class="border-top-0">
-                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group">
+                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" name="faxtel1" id="faxtel1">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="fax" items="${FAX }">
                                                 		<c:choose>

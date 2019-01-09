@@ -115,6 +115,16 @@ public class CampaignServiceImpl implements CampaignService{
 		
 		Map<String,Object> campInfo = campaignDao.campRead(param);
 		
+		if(campInfo != null) {
+			if(campInfo.get("FILESEARCHKEY") != null) {
+				String fileSearchKey = (String) campInfo.get("FILESEARCHKEY");
+				campaignDto.setFilesearchkey(fileSearchKey);
+				List<Map<String,Object>> campFile = campaignDao.campFile(campaignDto);
+				mView.addObject("campFile",campFile);
+			}
+		}
+		
+		
 		param.put("sendform", 1);
 		Map<String,Object> campEmailForm = campaignDao.campFormRead(param);
 		param.remove("sendform");
@@ -306,7 +316,7 @@ public class CampaignServiceImpl implements CampaignService{
 		String sendTime = campaignFormDto.getSendtime();
 		
 		if(sendTime.contains(",")) {
-			sendTime = sendTime.replaceAll(","," ");
+			sendTime = sendTime.substring(0, 5);
 			campaignFormDto.setSendtime(sendTime);
 		}
 		

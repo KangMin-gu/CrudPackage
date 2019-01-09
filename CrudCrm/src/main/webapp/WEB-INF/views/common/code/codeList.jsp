@@ -40,7 +40,7 @@
                                             <th>코드명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="codename" id="codename" value="${search.codeName }">
+                                                    <input type="text" class="form-control reset" name="codename" id="codename" value="${search.codename }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -58,7 +58,7 @@
                                             <th>그룹코드</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control reset" name="codegrp" id="codegrp" value="${search.codeGrp }">
+                                                    <input type="text" class="form-control reset" name="codegrp" id="codegrp" value="${search.codegrp }">
                                                 </div>
                                             </td>
                                         </tr>

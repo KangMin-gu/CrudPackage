@@ -60,7 +60,7 @@
 	<select id="svServiceTotalRows" parameterType="hashMap" resultType="int">
 		SELECT 
 			COUNT(*) 
-		FROM T_SERVICE A
+		FROM sv300010 A
 		WHERE A.ISDELETE = 0
 		AND A.SITEID = #{siteid}
 			<if test="strDate != null">

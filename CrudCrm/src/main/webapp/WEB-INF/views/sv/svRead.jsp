@@ -64,20 +64,22 @@
                         	<div class="box col-12 mb-2" style="padding-left: 0px;padding-right: 0px;">
                            		<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
                             		<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
-                            		<a href="#" class="btn btn-primary servicenext">이관</a>
-                                  	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
-                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
-                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
+                            		<c:if test="${serviceInfo.SERVICESTEP le 4 }">
+                            			<a href="#" class="btn btn-primary servicenext">이관</a>
+                            		</c:if>
+                            		<c:if test="${serviceInfo.SERVICESTEP eq 4 }">
+                            			<a href="#" class="btn btn-primary complete">종결</a>
+                            		</c:if>
                                 </div>
                            		<div class="float-right text-right" style="padding-right: 0px;">
                               		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                              		<c:if test="${serviceInfo.SERVICESTEP ne 5 }">
                                 		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+									</c:if>
 									</form:form> 
                            		</div>
                            	</div>
-								
-                            
                             <div class="box1 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -271,7 +273,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
+                                                <textarea class="summernote" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -377,7 +379,7 @@
                                         <tr>
                                             <th>상세내역</th>
                                             <td>
-                                                <textarea id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+                                                <textarea class="summernote" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
                                             </td>
                                             <input type="hidden" id="serviceno" value="${serviceInfo.SERVICENO }" /> 
                                         </tr>
@@ -505,7 +507,7 @@
                                         <tr>
                                             <th>처리내용</th>
                                             <td>
-                                                <textarea id="ractdesc">${ractInfo.RACTDESC }</textarea>
+                                                <textarea class="summernote" id="ractdesc">${ractInfo.RACTDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -537,15 +539,19 @@
                 <div class="box col-12 mb-2 mt-3" style="padding-left: 0px;padding-right: 0px;">
                 	<div class=" float-left" style="height:2.00rem;padding-lㄹeft: 0px;" >
                     	<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
-                        <a href="#" class="btn btn-primary servicenext">이관</a>
-                        <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
-                        <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
-                        <a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
+                        <c:if test="${serviceInfo.SERVICESTEP le 4 }">
+                        	<a href="#" class="btn btn-primary servicenext">이관</a>
+                        </c:if>
+                        <c:if test="${serviceInfo.SERVICESTEP eq 4 }">
+                        	<a href="#" class="btn btn-primary complete">종결</a>
+                        </c:if>
                     </div>
                     <div class="float-right" style="padding-right: 0px;">
                     	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
-                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
-							<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+                        	<c:if test="${serviceInfo.SERVICESTEP ne 5 }">
+                        		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
+								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+							</c:if>
 						</form:form> 
                     </div>
                 </div>
@@ -573,10 +579,10 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>처리일</th>
-                                                                <th>처리시간</th>
                                                                 <th>처리유형</th>
                                                                 <th>담당자</th>
                                                                 <th>처리내용</th>
+                                                                <th>발송여부</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -634,19 +640,7 @@
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script><!-- summernote-->
 	<script>
 		$(document).ready(function () {
-			
-			
-			$('#servicedesc').summernote({
-				height:200
-			});
-			$('#rewarddesc').summernote({
-				height:200
-			});
-			$('#ractdesc').summernote({
-				height:200
-			});
-			
-			$('.note-editable').attr('contenteditable',false)
+			$('.note-editable').attr('contenteditable',false);
 		});
 		
 		

@@ -26,6 +26,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-lg-12" style="background: #ffffff;">
                     <div class="ibox">
+                    <form:form action="/convey" method="POST">
                         <div class="ibox-content row body">
                             <div class="w-100 text-right mb-2">
                             	<button class="btn btn-primary submit" id="svSave">저장</button>
@@ -134,6 +135,7 @@
                                 </table>
                             </div>
                         </div>
+                        </form:form>
                     </div>
 <!-- Content End -->
 

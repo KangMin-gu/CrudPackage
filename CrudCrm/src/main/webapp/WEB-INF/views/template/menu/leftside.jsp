@@ -77,7 +77,7 @@
 	                        	<li><a href="${pageContext.request.contextPath}/service/convey">서비스 이관</a></li>
 	                        </c:if>
 	                        <c:if test="${sv3 eq '33000'}">
-	                        	<li><a href="form_basic.html">서비스 일정</a></li>
+	                        	<li><a href="${pageContext.request.contextPath}/service/cal">서비스 일정</a></li>
 	                        </c:if>
 	                    </ul>
 	                </li>

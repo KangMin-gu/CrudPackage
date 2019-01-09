@@ -52,7 +52,7 @@ body {
 					
 						
 						<div class="w-100 text-right mb-3">
-							<a class="btn btn-primary" id="submitBtn" onclick="javascript:moveDetail();">캠페인 상세로 이동</a>
+							<a class="btn btn-primary" id="submitBtn" onclick="javascript:moveDetail();">서비스 상세로 이동</a>
 						</div>
 						<div class="box1 col-lg-12 col-xl-4 p-0">
 							<table class="table table-bordered mb-0">
@@ -61,49 +61,40 @@ body {
 									<col style="width: auto;">
 								</colgroup>
 								<tbody>
-									
 									<tr>
-										<th>캠페인명</th>
-										<td>${campInfo.CAMPNAME }</td>
+										<th>서비스명</th>
+										<td>${serviceInfo.SERVICENAME }</td>
 									</tr>
 									
 									<tr>
-										<th>발송매체</th>
-										<td>${campInfo.SENDTYPE_ }</td>
+										<th>진행 단계</th>
+										<td>${serviceInfo.SERVICESTEP_ }</td>
 									</tr>								
 									<tr>
-										<th>담당자</th>
-										<td>${campInfo.OWNER_ }</td>
+										<th>접수자</th>
+										<td>${serviceInfo.SERVICEOWNER_ }</td>
 									</tr>							
 									<tr>
-										<th>시작일정</th>
-										<td>${campInfo.STARTDATE }</td>
-									</tr>
-									
-									<tr>
-										<th>종료일정</th>
-										<td>${campInfo.ENDDATE }</td>
+										<th>담당자</th>
+										<td>${serviceInfo.OWNER_ }</td>
 									</tr>
 									<tr>
 										<th>비고</th>
-										 <td><textarea name="memo" id="memo"  class="form-control" style="resize:none;" rows="4" readonly>${campInfo.CAMPDESC }</textarea></td>
+										 <td><textarea name="servicedesc" id="servicedesc"  class="form-control" style="resize:none;" rows="4" readonly>${serviceInfo.SERVICEDESC }</textarea></td>
+										 <input type="hidden" name="no" id="no" value="${serviceInfo.SERVICENO }"/>
 									</tr>
-									<input type="hidden" id="no" name="no" value="${campInfo.CAMPNO }"/>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 
 </body>
 </html>

@@ -139,7 +139,7 @@
 													<td >
 														<div class="input-group cli" id="cliname" >
 															<input type="text" class="form-control"  name="cliname"  value="${custUpdate.CLINAME }" readonly>
-                                                    		<input type="hidden" name="clino" id="clino" value="${searchVal.CLINO eq null ? 0 :searchVal.CLINO}">
+                                                    		<input type="hidden" name="clino" id="clino" value="${custUpdate.CLINO eq null ? 0 :custUpdate.CLINO}">
                                                     		<span class="input-group-addon">
                                                        			<a><i class="fa fa-search"></i></a>
                                                     		</span>

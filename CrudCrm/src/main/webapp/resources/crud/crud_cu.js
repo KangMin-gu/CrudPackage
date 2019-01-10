@@ -16,6 +16,7 @@
     	        url: urlStr,
     	        method: "GET",
     	        dataType: "json",
+    	        cache: false,
     	        success: function (data) {
     	        	debugger;
     	        	$('#tab2 tbody tr').remove();
@@ -68,6 +69,7 @@
     	        url: urlStr,
     	        method: "GET",
     	        dataType: "json",
+    	        cache: false,
     	        success: function (data) {
     	        	debugger;
     	        	$('#tab4 tbody tr').remove();

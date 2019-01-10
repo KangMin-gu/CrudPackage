@@ -271,6 +271,7 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public int svcSalesStateInsert(Map<String,Object> insVal) {
 		int res = salesDao.salesStateInsert(insVal);
+		salesDao.salesStateUpdate(insVal);
 		return res;
 	}
 	

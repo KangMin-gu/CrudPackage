@@ -151,6 +151,12 @@ public class SalesDaoImpl implements SalesDao {
 		int res = session.insert("sales.salesStateInsert",insVal);
 		return res;
 	}
+	//영업단계 추가시 - 영업->단계변경
+	@Override
+	public int salesStateUpdate(Map<String, Object> insVal) {
+		int res = session.insert("sales.salesStateUpdate",insVal);
+		return res;
+	}
 	
 	//스케쥴리스트
 	@Override
@@ -229,6 +235,7 @@ public class SalesDaoImpl implements SalesDao {
 		int res = session.insert("sales.salesContInsert",contVal);
 		return res;
 	}
+	
 	
 	
 

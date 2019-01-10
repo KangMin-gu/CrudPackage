@@ -127,7 +127,7 @@ public class CustServiceImpl implements CustService {
 	}
 
 
-	//고객 추가 dao실행
+	//고객 추가 실행
 	@Override
 	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
 		//세션 정보 값 DTO셋팅  
@@ -167,8 +167,10 @@ public class CustServiceImpl implements CustService {
 	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
 			//세션 정보 값 DTO셋팅  
 			int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+			int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 			
 			custDto.setEdituser(userno); //수정자는 로그인한 본인
+			custDto.setSiteid(siteid);
 			custDao.custformUpdate(custDto);//업데이트 dao호출
 			
 			//업데이트한 pk값 수신거부 dto에 설정

@@ -139,10 +139,10 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>영업담당자<sup>*</sup></th>
+													<th>영업담당자<b>&#42;</b></th>
 													<td>
-														<div class="input-group owner">
-															<input type="text" class="form-control required validate nameV" autocomplete="off" name="username" id="username" value="${salesUpdate.USERNAME }" readonly> 
+														<div class="input-group owner" id="username">
+															<input type="text" class="form-control required validate nameV" autocomplete="off" name="username"  value="${salesUpdate.USERNAME }" readonly> 
 															<input type="hidden" name="owner" id="owner" value="${salesUpdate.OWNER }"> 
 															<span class="input-group-addon"> 
 																<a><i class="fa fa-search"></i></a>

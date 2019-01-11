@@ -434,6 +434,7 @@
 		LEFT OUTER JOIN (SELECT * FROM sv300050 WHERE CONVEYNO IN (SELECT max(conveyno) AS conveyno FROM sv300050 group by serviceno )) D ON D.SERVICENO = A.SERVICENO
 		WHERE A.SITEID = #{siteid}
 		AND A.SERVICESTEP != 1
+		AND A.ISDELETE = 0
 	</select>
 	
 </mapper>

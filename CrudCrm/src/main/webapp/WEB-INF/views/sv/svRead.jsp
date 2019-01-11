@@ -412,7 +412,7 @@
                                         <tr>
                                             <th>지연내용</th>
                                             <td>
-                                                <textarea disabled id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
+                                                <textarea class="form-control" disabled id="delaydesc" cols="80">${rewardInfo.DELAYDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>

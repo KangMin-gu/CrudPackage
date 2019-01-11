@@ -532,7 +532,7 @@
                                         <tr>
                                             <th class="border-top-0">지연사유</th>
                                             <td class="border-top-0">
-                                                <textarea name="delaydesc" class="form-control" id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
+                                                <textarea name="delaydesc" class="form-control" cols="60" id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>

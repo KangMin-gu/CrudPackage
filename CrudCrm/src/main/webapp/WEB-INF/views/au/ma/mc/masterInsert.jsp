@@ -69,7 +69,7 @@
 	                        	</div>
                             	<div class="w-100 text-right mb-2">
                                 	<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">취소</a>
-                                	<button class="btn btn-primary submit">저장</button>
+                                	<button class="btn btn-primary submit" disabled>저장</button>
                             	</div>
                             </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">

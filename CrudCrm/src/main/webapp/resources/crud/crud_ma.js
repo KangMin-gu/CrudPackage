@@ -8,6 +8,7 @@ function btnFirst(){
 	$('#save').hide();
 	$('#cancel').hide();
 	$('#reset').hide();
+	$('.error').addClass('errors').removeClass('error');
 }
 function btnRead(){
 	$(".body input").attr("readonly",true);
@@ -18,6 +19,7 @@ function btnRead(){
 	$('#save').hide();
 	$('#cancel').hide();
 	$('#reset').hide();
+	$('.error').addClass('errors').removeClass('error');
 }
 function btnCreate(){
 	$(".body input").attr("readonly",false);
@@ -29,10 +31,12 @@ function btnCreate(){
 	$('#save').show();
 	$('#cancel').show();
 	$('#reset').show();
+	$('.errors').addClass('error').removeClass('errors');
 }
 
 function bodyReset(){
 	$('.body input').val('');
+	$('.errors').addClass('error').removeClass('errors');
 }
 
 if(window.location.pathname == '/ma/license') {

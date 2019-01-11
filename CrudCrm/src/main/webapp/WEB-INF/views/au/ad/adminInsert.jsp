@@ -88,7 +88,7 @@
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
                                             <td>
-                                                <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" name="mobile1" id="mobile1">
+                                                <select class="form-control col-3 float-left mr-3 error required validate phone1V phone-group" name="mobile1" id="mobile1">
                                             		<option label="선택" value=""/>
                                                 	<c:forEach var="mobile" items="${MOBILE }">
                                                 		<c:choose>
@@ -101,8 +101,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 error required validate phone2V phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left error required validate phone3V phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -158,7 +158,7 @@
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate emailV" name="email" id="email" value="${user.EMAIL }">
+                                                <input type="text" class="form-control error required validate emailV" name="email" id="email" value="${user.EMAIL }">
                                             </td>
                                         </tr>
                                     </tbody>

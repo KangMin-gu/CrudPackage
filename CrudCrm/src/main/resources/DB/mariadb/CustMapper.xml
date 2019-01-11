@@ -326,9 +326,9 @@
 	</insert>
 	<!-- 거래처관련고객 추가,수정 -->
 	<insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
-	INSERT INTO sa280010   INSERT (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
+	INSERT INTO sa280010  (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
 							VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 )
-         ON DUPLICATE KEY UPDATE CLINO = #{clino},EDTUSER = #{edituser}, EDTDATE = now()		
+         ON DUPLICATE KEY UPDATE CLINO = #{clino}, SITEID = #{siteid}, CUSTNO = #{custno}, EDTUSER = #{edituser}, EDTDATE = now()		
 
 	</insert>
 	<!-- <insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">

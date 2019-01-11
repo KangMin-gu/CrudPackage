@@ -303,7 +303,7 @@
 					</div>
 				</div>
 			</div>
-		
+		</div>
 		<!-- E: 거래처관리 리스트 -->
 
 
@@ -316,7 +316,7 @@
 	<div id="right-sidebar">
 		<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 	</div>
-	</div>
+	
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script> 

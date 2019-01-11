@@ -398,9 +398,7 @@
 		<if test="contcustname != null">
 		AND B.CUSTNAME like CONCAT('%', #{contcustname} ,'%')
 		</if>
-		<if test="custno != null">
-		AND B.CUSTNO like CONCAT('%', #{custno} ,'%')
-		</if>
+
 	</select>
 
 
@@ -415,18 +413,11 @@
 	,A.CTTUSER
 	,A.CUSTNO
 	,CONCAT(DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y%m%d') , IFNULL(A.CTTTIME,''))  AS CTTDATE 	
-	,A.DURATION
 	,IFNULL(A.MEMO,'') AS MEMO
 	,A.CTTLOCATION
 	,IFNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
-	,A.CTTTYPE
-	,A.SALESSTEP
 	,A.CLINO
 	,A.SALESNO
-	,A.CONTGOALID
-	,A.CTTRESULT
-	,A.RESPONSECODE
-	,A.LOGID
 	, B.CUSTNAME, C.USERNAME
 	FROM cu110010 A 
 	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
@@ -444,9 +435,7 @@
 		<if test="contcustname != null">
 		AND B.CUSTNAME like CONCAT('%', #{contcustname} ,'%')
 		</if>
-		<if test="custno != null">
-		AND B.CUSTNO like CONCAT('%', #{custno} ,'%')
-		</if>
+
 		
 	ORDER BY A.CONTNO DESC
 	) T
@@ -657,6 +646,10 @@
 	,#{prob}
 	)
 	
+	</insert>
+	
+	<!-- 영업수정 (영업단계수정) -->
+	<update id="salesStateUpdate" parameterType="hashMap">
 	UPDATE sa210010 
 	SET
 		SALESTATE = #{state}
@@ -665,11 +658,7 @@
 		,EDITDATE = now()
 	WHERE
 		SALESNO = #{salesno}
-		
-	</insert>
-	
-	
-	
+	</update>
 	<!-- 캘린더 리스트 -->
 	<select id="salesSchList" parameterType="hashMap" resultType="hashMap">
 		

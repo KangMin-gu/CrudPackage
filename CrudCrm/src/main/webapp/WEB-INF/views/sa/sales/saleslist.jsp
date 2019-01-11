@@ -180,9 +180,9 @@
 
 								<div class="box col-12 tooltip-demo" style="padding-left: 0px; padding-right: 0px;"> <br>
 									<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height: 2.00rem; padding-left: 0px;">
-										<!-- <a href="/salesexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o"></i></a> -->
 										<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
                              			<input type="hidden" id="excelUrl" name="excelUrl" value="/salesexcel">
+                             			<input type="hidden" id="searchFormId" name="searchFormId" value="command"> 
 									</div>
 									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 										<a href="/sales/post" class="btn btn-primary">추가</a>

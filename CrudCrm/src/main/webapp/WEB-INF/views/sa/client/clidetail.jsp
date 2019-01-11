@@ -289,14 +289,13 @@
 																<a href="#" onClick="cliCustSearch(${cliDetail.CLINO });" class="btn btn-primary" style="padding-top: 2px;">검색 </a> 
 															</div>			
 														</div>		
-                                						
 													</div>
 													<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 										 				<Button class="btn btn-primary cliCustBtn" id="clino" value= "${cliDetail.CLINO }">추가</Button>
 													</div>
 												</div>
 																					
-												<table class="table table-bordered">
+												<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 													<colgroup>
 														<col style="width: 150px;" />
 														<col style="width: 200px;" />
@@ -395,7 +394,7 @@
 													</div>
 												</div>
 							
-												<table class="table table-bordered">
+												<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 													<colgroup>
 														<col style="width: 200px;" />
 														<col style="width: 200px;" />
@@ -436,7 +435,7 @@
 													</div>
 												</div>
 											
-												<table class="table table-bordered">
+												<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 													<colgroup>
 														<col style="width: 200px;" />
 														<col style="width: 150px;" />

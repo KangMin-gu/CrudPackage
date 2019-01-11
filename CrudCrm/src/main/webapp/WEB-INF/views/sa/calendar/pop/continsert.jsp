@@ -88,10 +88,10 @@ body {
 									</tr>
 									
 									<tr>
-										<th>고객명</th>
+										<th>고객명<b>&#42;</b></th>
 										<td>
 											<div class="input-group cust" id="custname">
-												<input type="text" class="form-control" autocomplete="off" name="custname" readonly>
+												<input type="text" class="form-control validate error required nameV" autocomplete="off" name="custname" readonly>
                                                 <input type="hidden" name="custno" id="custno" value="0">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>
@@ -150,6 +150,8 @@ body {
     <script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
     <!-- Clock picker -->
     <script src="/resources/js/plugins/clockpicker/clockpicker.js"></script>
+    <!-- 유효성 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 
 	<script>			
 	
@@ -165,7 +167,7 @@ body {
 	});
 	
 	function addContect(){
-		
+		debugger;
 		var form = new FormData(document.getElementById('command'));
 				
 		$.ajax({

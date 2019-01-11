@@ -63,12 +63,9 @@ public class CustDto {
 	private int edituser;
 	private int isdelete;
 	private int clino;
-	
-	
-	
+	private int clicustno;
+		
 	public CustDto() {}
-
-
 
 	public CustDto(int custno, int siteid, int userno, String custname, String deptname, String duty, String mobile1,
 			String mobile2, String mobile3, String email, int sex, int custgubun, int custgrade, int infoagree,
@@ -77,7 +74,7 @@ public class CustDto {
 			String wrkaddr1, String wrkaddr2, String wrkaddr3, String wrktel1, String wrktel2, String wrktel3,
 			String wrkurl, String wrkfax1, String wrkfax2, String wrkfax3, int mailto, int denyemail, int denyfax,
 			int denydm, int denytm, int denysms, int denyvisit, int owner, int actgrade, String memo, String regdate,
-			int reguser, String editdate, int edituser, int isdelete, int clino) {
+			int reguser, String editdate, int edituser, int isdelete, int clino, int clicustno) {
 		super();
 		this.custno = custno;
 		this.siteid = siteid;
@@ -132,652 +129,444 @@ public class CustDto {
 		this.edituser = edituser;
 		this.isdelete = isdelete;
 		this.clino = clino;
+		this.clicustno = clicustno;
 	}
-
-
 
 	public int getCustno() {
 		return custno;
 	}
 
-
-
 	public void setCustno(int custno) {
 		this.custno = custno;
 	}
-
-
 
 	public int getSiteid() {
 		return siteid;
 	}
 
-
-
 	public void setSiteid(int siteid) {
 		this.siteid = siteid;
 	}
-
-
 
 	public int getUserno() {
 		return userno;
 	}
 
-
-
 	public void setUserno(int userno) {
 		this.userno = userno;
 	}
-
-
 
 	public String getCustname() {
 		return custname;
 	}
 
-
-
 	public void setCustname(String custname) {
 		this.custname = custname;
 	}
-
-
 
 	public String getDeptname() {
 		return deptname;
 	}
 
-
-
 	public void setDeptname(String deptname) {
 		this.deptname = deptname;
 	}
-
-
 
 	public String getDuty() {
 		return duty;
 	}
 
-
-
 	public void setDuty(String duty) {
 		this.duty = duty;
 	}
-
-
 
 	public String getMobile1() {
 		return mobile1;
 	}
 
-
-
 	public void setMobile1(String mobile1) {
 		this.mobile1 = mobile1;
 	}
-
-
 
 	public String getMobile2() {
 		return mobile2;
 	}
 
-
-
 	public void setMobile2(String mobile2) {
 		this.mobile2 = mobile2;
 	}
-
-
 
 	public String getMobile3() {
 		return mobile3;
 	}
 
-
-
 	public void setMobile3(String mobile3) {
 		this.mobile3 = mobile3;
 	}
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
 
 	public int getSex() {
 		return sex;
 	}
 
-
-
 	public void setSex(int sex) {
 		this.sex = sex;
 	}
-
-
 
 	public int getCustgubun() {
 		return custgubun;
 	}
 
-
-
 	public void setCustgubun(int custgubun) {
 		this.custgubun = custgubun;
 	}
-
-
 
 	public int getCustgrade() {
 		return custgrade;
 	}
 
-
-
 	public void setCustgrade(int custgrade) {
 		this.custgrade = custgrade;
 	}
-
-
 
 	public int getInfoagree() {
 		return infoagree;
 	}
 
-
-
 	public void setInfoagree(int infoagree) {
 		this.infoagree = infoagree;
 	}
-
-
 
 	public String getBirth() {
 		return birth;
 	}
 
-
-
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
-
-
 
 	public int getMarried() {
 		return married;
 	}
 
-
-
 	public void setMarried(int married) {
 		this.married = married;
 	}
-
-
 
 	public String getWeddingday() {
 		return weddingday;
 	}
 
-
-
 	public void setWeddingday(String weddingday) {
 		this.weddingday = weddingday;
 	}
-
-
 
 	public int getSolar() {
 		return solar;
 	}
 
-
-
 	public void setSolar(int solar) {
 		this.solar = solar;
 	}
-
-
 
 	public String getJob() {
 		return job;
 	}
 
-
-
 	public void setJob(String job) {
 		this.job = job;
 	}
-
-
 
 	public String getHobby() {
 		return hobby;
 	}
 
-
-
 	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}
-
-
 
 	public int getIsmember() {
 		return ismember;
 	}
 
-
-
 	public void setIsmember(int ismember) {
 		this.ismember = ismember;
 	}
-
-
 
 	public String getHomtel1() {
 		return homtel1;
 	}
 
-
-
 	public void setHomtel1(String homtel1) {
 		this.homtel1 = homtel1;
 	}
-
-
 
 	public String getHomtel2() {
 		return homtel2;
 	}
 
-
-
 	public void setHomtel2(String homtel2) {
 		this.homtel2 = homtel2;
 	}
-
-
 
 	public String getHomtel3() {
 		return homtel3;
 	}
 
-
-
 	public void setHomtel3(String homtel3) {
 		this.homtel3 = homtel3;
 	}
-
-
 
 	public String getHomaddr1() {
 		return homaddr1;
 	}
 
-
-
 	public void setHomaddr1(String homaddr1) {
 		this.homaddr1 = homaddr1;
 	}
-
-
 
 	public String getHomaddr2() {
 		return homaddr2;
 	}
 
-
-
 	public void setHomaddr2(String homaddr2) {
 		this.homaddr2 = homaddr2;
 	}
-
-
 
 	public String getHomaddr3() {
 		return homaddr3;
 	}
 
-
-
 	public void setHomaddr3(String homaddr3) {
 		this.homaddr3 = homaddr3;
 	}
-
-
 
 	public String getWrkaddr1() {
 		return wrkaddr1;
 	}
 
-
-
 	public void setWrkaddr1(String wrkaddr1) {
 		this.wrkaddr1 = wrkaddr1;
 	}
-
-
 
 	public String getWrkaddr2() {
 		return wrkaddr2;
 	}
 
-
-
 	public void setWrkaddr2(String wrkaddr2) {
 		this.wrkaddr2 = wrkaddr2;
 	}
-
-
 
 	public String getWrkaddr3() {
 		return wrkaddr3;
 	}
 
-
-
 	public void setWrkaddr3(String wrkaddr3) {
 		this.wrkaddr3 = wrkaddr3;
 	}
-
-
 
 	public String getWrktel1() {
 		return wrktel1;
 	}
 
-
-
 	public void setWrktel1(String wrktel1) {
 		this.wrktel1 = wrktel1;
 	}
-
-
 
 	public String getWrktel2() {
 		return wrktel2;
 	}
 
-
-
 	public void setWrktel2(String wrktel2) {
 		this.wrktel2 = wrktel2;
 	}
-
-
 
 	public String getWrktel3() {
 		return wrktel3;
 	}
 
-
-
 	public void setWrktel3(String wrktel3) {
 		this.wrktel3 = wrktel3;
 	}
-
-
 
 	public String getWrkurl() {
 		return wrkurl;
 	}
 
-
-
 	public void setWrkurl(String wrkurl) {
 		this.wrkurl = wrkurl;
 	}
-
-
 
 	public String getWrkfax1() {
 		return wrkfax1;
 	}
 
-
-
 	public void setWrkfax1(String wrkfax1) {
 		this.wrkfax1 = wrkfax1;
 	}
-
-
 
 	public String getWrkfax2() {
 		return wrkfax2;
 	}
 
-
-
 	public void setWrkfax2(String wrkfax2) {
 		this.wrkfax2 = wrkfax2;
 	}
-
-
 
 	public String getWrkfax3() {
 		return wrkfax3;
 	}
 
-
-
 	public void setWrkfax3(String wrkfax3) {
 		this.wrkfax3 = wrkfax3;
 	}
-
-
 
 	public int getMailto() {
 		return mailto;
 	}
 
-
-
 	public void setMailto(int mailto) {
 		this.mailto = mailto;
 	}
-
-
 
 	public int getDenyemail() {
 		return denyemail;
 	}
 
-
-
 	public void setDenyemail(int denyemail) {
 		this.denyemail = denyemail;
 	}
-
-
 
 	public int getDenyfax() {
 		return denyfax;
 	}
 
-
-
 	public void setDenyfax(int denyfax) {
 		this.denyfax = denyfax;
 	}
-
-
 
 	public int getDenydm() {
 		return denydm;
 	}
 
-
-
 	public void setDenydm(int denydm) {
 		this.denydm = denydm;
 	}
-
-
 
 	public int getDenytm() {
 		return denytm;
 	}
 
-
-
 	public void setDenytm(int denytm) {
 		this.denytm = denytm;
 	}
-
-
 
 	public int getDenysms() {
 		return denysms;
 	}
 
-
-
 	public void setDenysms(int denysms) {
 		this.denysms = denysms;
 	}
-
-
 
 	public int getDenyvisit() {
 		return denyvisit;
 	}
 
-
-
 	public void setDenyvisit(int denyvisit) {
 		this.denyvisit = denyvisit;
 	}
-
-
 
 	public int getOwner() {
 		return owner;
 	}
 
-
-
 	public void setOwner(int owner) {
 		this.owner = owner;
 	}
-
-
 
 	public int getActgrade() {
 		return actgrade;
 	}
 
-
-
 	public void setActgrade(int actgrade) {
 		this.actgrade = actgrade;
 	}
-
-
 
 	public String getMemo() {
 		return memo;
 	}
 
-
-
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-
-
 
 	public String getRegdate() {
 		return regdate;
 	}
 
-
-
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-
-
 
 	public int getReguser() {
 		return reguser;
 	}
 
-
-
 	public void setReguser(int reguser) {
 		this.reguser = reguser;
 	}
-
-
 
 	public String getEditdate() {
 		return editdate;
 	}
 
-
-
 	public void setEditdate(String editdate) {
 		this.editdate = editdate;
 	}
-
-
 
 	public int getEdituser() {
 		return edituser;
 	}
 
-
-
 	public void setEdituser(int edituser) {
 		this.edituser = edituser;
 	}
-
-
 
 	public int getIsdelete() {
 		return isdelete;
 	}
 
-
-
 	public void setIsdelete(int isdelete) {
 		this.isdelete = isdelete;
 	}
-
-
 
 	public int getClino() {
 		return clino;
 	}
 
-
-
 	public void setClino(int clino) {
 		this.clino = clino;
 	}
+
+	public int getClicustno() {
+		return clicustno;
+	}
+
+	public void setClicustno(int clicustno) {
+		this.clicustno = clicustno;
+	}
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 	
 }

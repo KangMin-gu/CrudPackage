@@ -260,7 +260,7 @@
 													</div>
 												</div>
 																						
-												<table class="table table-bordered">
+												<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 													<colgroup>
 														<col style="width: 150px;" />
 														<col style="width: 200px;" />
@@ -382,7 +382,7 @@
 												</div>
 											
 											
-												<table class="table table-bordered">
+												<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 													<colgroup>
 														<col style="width: 200px;" />
 														<col style="width: 200px;" />
@@ -426,7 +426,7 @@
 												</div>
 
 											
-												<table class="table table-bordered">
+												<table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
 													<colgroup>
 														<col style="width: 200px;" />
 														<col style="width: 150px;" />
@@ -436,9 +436,9 @@
 													</colgroup>
 													<thead>
 														<tr>
+															<th>고객명</th>
 															<th>접촉자</th>
 															<th>접촉일</th>
-															<th>고객명</th>
 															<th>접촉매체</th>
 															<th>접촉메모</th>
 														</tr>
@@ -457,7 +457,7 @@
 					</div>
 				</div>
 			<!-- E: 영업관리 상세 -->
-
+			</div>
 
 
 			<!-- foot -->
@@ -469,8 +469,8 @@
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
+	
 	</div>
-
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script>

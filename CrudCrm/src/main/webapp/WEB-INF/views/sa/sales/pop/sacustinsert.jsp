@@ -68,8 +68,8 @@ body {
 									<tr>
 										<th>고객명&nbsp;<b>&#42;</b></th>
 										<td>
-											<div class="input-group cust validate required nameV error" id="custname">
-												<input type="text" class="form-control" autocomplete="off" name="custname"  readonly>
+											<div class="input-group cust" id="custname">
+												<input type="text" class="form-control  validate required nameV error" autocomplete="off" name="custname"  readonly>
                                                 <input type="hidden" name="custno" id="custno" value="0">
                                                 <span class="input-group-addon">
                                                     <a><i class="fa fa-search"></i></a>

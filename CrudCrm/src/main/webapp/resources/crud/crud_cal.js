@@ -90,8 +90,6 @@
 		},
 		
 		eventReceive: function(event){
-		   debugger;
-		   alert('E.receiver');
 		   tempEvent = event;
 	     },
 		
@@ -134,10 +132,7 @@
 		        tooltip.css('left', e.pageX + 20);
 		    });
 		},
-    	eventMouseout: function(calEvent,jsEvent) {
-    		 $(this).css('z-index', 8);
-    		    $('.tooltipevent').remove();
-    	},
+    	
 		 */
 		/* TODO.마우스 팝오버 이벤트 펑션 
 		eventRender: function(event, element){

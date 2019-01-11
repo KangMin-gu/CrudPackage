@@ -324,28 +324,29 @@
 		,#{denyvisit}		
 		)
 	</insert>
+	
+	<!-- 거래처관련고객 추가 -->
+	<insert id="cliCustInsert" parameterType="saas.crud.crm.cu.dto.CustDto">
+	INSERT INTO sa280010  (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
+							VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 )
+	</insert>
+	
+	<select id="getCliCustNo" parameterType="hashMap" resultType="int">
+	SELECT 
+	CLICUSTNO
+	FROM SA280010
+	WHERE 
+		CUSTNO = #{custno} 
+		AND CLINO = #{clino}
+	</select>
+	
 	<!-- 거래처관련고객 추가,수정 -->
-	<insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
+	<insert id="mergeCliCust" parameterType="saas.crud.crm.cu.dto.CustDto">
 	INSERT INTO sa280010  (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
 							VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 )
          ON DUPLICATE KEY UPDATE CLINO = #{clino}, SITEID = #{siteid}, CUSTNO = #{custno}, EDTUSER = #{edituser}, EDTDATE = now()		
 
 	</insert>
-	<!-- <insert id="mergeRelCli" parameterType="saas.crud.crm.cu.dto.CustDto">
-	MERGE INTO sa280010 A
-		USING (select '1' AS DUAL ) B ON (A.SITEID = #{siteid} AND A.CUSTNO = #{custno}  ) 
-		
-		WHEN MATCHED THEN
-			UPDATE SET 
-			CLINO = #{clino}
-			,EDTUSER = #{edituser}, EDTDATE = now()	
-		
-		WHEN NOT MATCHED THEN
-			INSERT (SITEID, CUSTNO, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE  )
-			VALUES (#{siteid}, #{custno}, #{clino}, now(), now(), #{reguser}, #{reguser}, 0 );
-			
-	</insert> -->
-	
 	
 	<!-- 고객 정보 수정 -->
 	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >

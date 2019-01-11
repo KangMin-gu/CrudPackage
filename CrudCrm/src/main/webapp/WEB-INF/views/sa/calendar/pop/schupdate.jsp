@@ -103,9 +103,9 @@ body {
 									<tr>
 										<th>시작일정</th>
 										<td>
-											<div class="input-group">
+											<div class="input-group date">
                                     			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    			<input type="text" class="form-control" id="startdate" name="startdate" value="${schUpdate.STARTDATE }" readonly >
+                                    			<input type="text" class="form-control" id="startdate" name="startdate" value="${schUpdate.STARTDATE }"  >
                                 			</div>
                                 				
                                 			<div class="input-group clockpicker" data-autoclose="true">

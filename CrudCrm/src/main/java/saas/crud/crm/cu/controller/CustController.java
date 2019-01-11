@@ -111,7 +111,12 @@ public class CustController {
 	//고객 insert 폼 	
 	@RequestMapping(value="/cust/post", method=RequestMethod.GET)
 	public ModelAndView authcustForm(HttpServletRequest request, @ModelAttribute CustDto custDto) {
-		ModelAndView mView = custService.svcCustForm(request);
+		ModelAndView mView = new ModelAndView();
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String username = request.getSession().getAttribute("USERNAME").toString();//담당자는 로그인한 유저명으로 기본설정
+		mView.addObject("SESSIONUSERNO",userno);
+		mView.addObject("SESSIONUSERNAME",username);
+		
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
 		mView.setViewName("cu/custinsert");

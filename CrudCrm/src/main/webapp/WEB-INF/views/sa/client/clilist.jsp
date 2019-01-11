@@ -154,7 +154,8 @@
 							<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                               	<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
                               		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
-                             		<input type="hidden" id="excelUrl" name="excelUrl" value="/cliexcel">               
+                             		<input type="hidden" id="excelUrl" name="excelUrl" value="/cliexcel">
+                             		<input type="hidden" id="searchFormId" name="searchFormId" value="command">                
                              	</div>                                       
                               	<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 	<a href="/sales/client/post" class="btn btn-primary">추가</a>

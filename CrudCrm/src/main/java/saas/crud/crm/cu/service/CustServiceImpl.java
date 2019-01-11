@@ -115,18 +115,6 @@ public class CustServiceImpl implements CustService {
 		return  mView;
 	}
 	
-	//고객 추가 페이지. 기본 정보 셋팅 
-	@Override
-	public ModelAndView svcCustForm(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
-		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		String username = request.getSession().getAttribute("USERNAME").toString();//담당자는 로그인한 유저명으로 기본설정
-		mView.addObject("SESSIONUSERNO",userno);
-		mView.addObject("SESSIONUSERNAME",username);
-		return mView;
-	}
-
-
 	//고객 추가 실행
 	@Override
 	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
@@ -137,10 +125,10 @@ public class CustServiceImpl implements CustService {
 		custDto.setReguser(userno);
 		custDto.setEdituser(userno);
 		custDto.setSiteid(siteid);
-		
+	
 		//고객 추가 dao호출 추가된 고객pk 값 리턴
 		int custno = custDao.custformInsert(custDto);
-		System.out.println("dto custno : "+ custDto.getCustno()+" /  result custno = " + custno);
+		
 		//수신거부 테이블 default 값 + 파라미터 dto 값 전달  
 		custDenyDto.setCustno(custno);
 		custDenyDto.setReguser(userno);
@@ -148,11 +136,10 @@ public class CustServiceImpl implements CustService {
 		//수신거부 테이블에 해당 고객 데이터 생성
 		custDao.custformInsertDeny(custDenyDto);
 		
-		if(custDto.getClino() != 0) {//clino가 존재하면 거래처-관련고객 테이블에 insert 
-		custDao.mergeRelCli(custDto);
+		if(custDto.getClino() != 0) {//clino가 존재하면 거래처-관련고객 테이블에 insert
+			custDao.mergeCliCust(custDto);
 		}
-		
-		
+			
 		return custno;//상세 페이지 이동을 위해 생성된 pk값 리턴 
 	}
 
@@ -182,7 +169,7 @@ public class CustServiceImpl implements CustService {
 			custDao.custformUpdateDeny(custDenyDto);
 			
 			if(custDto.getClino() != 0) {//clino가 존재하면 거래처-관련고객 테이블에 update or insert
-				custDao.mergeRelCli(custDto);
+				custDao.mergeCliCust(custDto);
 			}
 			
 			return custno;

@@ -151,8 +151,20 @@ public class SalesServiceImpl implements SalesService {
 	//영업추가 , 영업스케쥴 추가. sort 컬럼 값으로 rorddate, forddate 구분
 	@Override
 	public int svcSalesInsert(SalesDto salesDto) {
+		
+		if(salesDto.getRorddate() == null || salesDto.getRorddate().equals("") ) {
+			salesDto.setRorddate("1900-01-01");
+		}
+		if(salesDto.getForddate() == null || salesDto.getForddate().equals("") ) {
+			salesDto.setForddate("1900-01-01");
+		}
+		if(salesDto.getStatedate() == null || salesDto.getStatedate().equals("") ) {
+			salesDto.setStatedate("1900-01-01");
+		}
+		
 		int salesNo = salesDao.salesInsert(salesDto);
-		/* 
+		
+		/* 현재 사용 안함. 
 		//rorddate or forddate 가 존재하면 영업 스케쥴 테이블에 insert. (두개다 존재하면 두개 row insert)
 		if( (salesDto.getRorddate() != null &&salesDto.getRorddate() != "")    ) {//rord 데이터 값이 있다면
 			salesDao.mergeSalesSch(salesDto);// merge into 실행 
@@ -172,14 +184,24 @@ public class SalesServiceImpl implements SalesService {
 	//영업수정 실행
 	@Override
 	public int svcSalesDetailUpdate(SalesDto salesDto) {
+		if(salesDto.getRorddate() == null || salesDto.getRorddate().equals("") ) {
+			salesDto.setRorddate("1900-01-01");
+		}
+		if(salesDto.getForddate() == null || salesDto.getForddate().equals("") ) {
+			salesDto.setForddate("1900-01-01");
+		}
+		if(salesDto.getStatedate() == null || salesDto.getStatedate().equals("") ) {
+			salesDto.setStatedate("1900-01-01");
+		}
 		int salesNo = salesDao.salesUpdate(salesDto);
-		//rorddate or forddate 가 존재하면 영업 스케쥴 테이블에 insert. (두개다 존재하면 두개 row insert)
+		/* 현재사용안함
+		 * rorddate or forddate 가 존재하면 영업 스케쥴 테이블에 insert. (두개다 존재하면 두개 row insert)
 		if( (salesDto.getRorddate() != null &&salesDto.getRorddate() != "")    ) {//rord 데이터 값이 있다면
 			salesDao.mergeSalesSch(salesDto);// merge into 실행 
 		}
 		if(salesDto.getForddate() != null &&salesDto.getForddate() != "") {//forddate 값이 있다면
 			salesDao.mergeSalesSch(salesDto);//merge into 실행
-		}
+		}*/
 		return salesNo;
 	}
 

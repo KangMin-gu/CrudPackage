@@ -73,9 +73,9 @@ body {
 											<div class="input-group" id="custname">
 												<input type="text" class="form-control validate required nameV" autocomplete="off" name="custname"  readonly value="${cliCustUpdate.CUSTNAME}">
                                                 <input type="hidden" name="custno" id="custno" value="${cliCustUpdate.CUSTNO}">
-                                                <span class="input-group-addon">
-                                                    <a><i class="fa fa-search"></i></a>
-                                                </span>
+                                                <!-- <span class="input-group-addon">
+                                                   <a><i class="fa fa-search"></i></a> 
+                                                </span>고객명은 수정불가-->
 											</div>
 										</td>
 									</tr>								

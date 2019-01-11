@@ -213,6 +213,7 @@
                               		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
                              			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
                              			<input type="hidden" id="excelUrl" name="excelUrl" value="/custexcel">
+                             			<input type="hidden" id="searchFormId" name="searchFormId" value="command"> 
                              		</div>                                       
                               		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 		<span id="checkVal"></span>
@@ -404,7 +405,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	
 	<!-- file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>
-	<!-- file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script>
 
 	<script>

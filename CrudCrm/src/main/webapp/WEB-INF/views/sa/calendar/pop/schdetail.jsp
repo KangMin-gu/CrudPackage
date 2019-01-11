@@ -95,7 +95,7 @@ body {
 									
 									<tr>
 										<th>종료일정</th>
-										<td>${schDetail.END }</td>
+										<td>${schDetail.END eq 'null' ? '' : schDetail.END  }</td>
 									</tr>
 									
 									<tr>

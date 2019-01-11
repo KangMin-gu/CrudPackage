@@ -24,8 +24,6 @@ public interface CustService {
 	
 	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto);
 	
-	public ModelAndView svcCustForm(HttpServletRequest request);
-	
 	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto);
 	
 	public Map<String,Object> svcCustTabCampList(HttpServletRequest request);

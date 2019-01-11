@@ -45,7 +45,6 @@ public class CustDaoImpl implements CustDao {
 		int res = session.update("customer.custDelete",custDto);
 		return res;
 	}
-
 	//고객추가 - 추가한 pk값 리턴
 	@Override
 	public int custformInsert(CustDto custDto) {
@@ -60,8 +59,21 @@ public class CustDaoImpl implements CustDao {
 	}
 	//고객추가 - 관련고객 테이블 추가
 	@Override
-	public void mergeRelCli(CustDto custDto) {
-		session.insert("customer.mergeRelCli", custDto);
+	public void cliCustInsert(CustDto custDto) {
+		session.insert("customer.cliCustInsert", custDto);
+	}
+	//고객 업데이트 전 - clicustno 얻기
+	@Override
+	public int getCliCustNo(int custno) {
+		int clicustno = session.selectOne("customer.getCliCustNo",custno);
+		return clicustno;
+	}
+	
+	
+	//고객추가 머지 - 관련고객 테이블 추가
+	@Override
+	public void mergeCliCust(CustDto custDto) {
+		session.insert("customer.mergeCliCust", custDto);
 	}
 	
 	//고객 수정 폼(바인딩 정보)
@@ -94,6 +106,8 @@ public class CustDaoImpl implements CustDao {
 		List<Map<String, Object>> campList = session.selectList("customer.custTabCampList",searchVal);
 		return campList;
 	}
+	
+	
 
 
 	

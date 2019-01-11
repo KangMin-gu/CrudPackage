@@ -221,8 +221,9 @@ body {
 		    contentType: false, 
 		    type: 'POST', 
 		    
-		    success: function(response){       	
-		    window.close();
+		    success: function(response){
+		    	opener.window.location.reload();
+		    	window.close();
 		    }
 		});
 	}

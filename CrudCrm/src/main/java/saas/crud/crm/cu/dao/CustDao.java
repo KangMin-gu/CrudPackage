@@ -21,7 +21,9 @@ public interface CustDao {
 	
 	public int custformInsert(CustDto CustDto);
 	public void custformInsertDeny(CustDenyDto custDenyDto);
-	public void mergeRelCli(CustDto custDto);
+	public void cliCustInsert(CustDto custDto);	
+	public int getCliCustNo(int custno);
+	public void mergeCliCust(CustDto custDto);
 	
 	public int custformUpdate(CustDto CustDto);
 	public int custformUpdateDeny(CustDenyDto custDenyDto);

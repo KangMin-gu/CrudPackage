@@ -127,8 +127,7 @@
 
 	<!-- 영업 추가 -->	
 	<insert id="salesInsert" parameterType="saas.crud.crm.sa.dto.SalesDto">
-		
-	
+			
 	INSERT INTO sa210010	
 	(
 	SITEID
@@ -412,7 +411,7 @@
 	,A.CONTNO
 	,A.CTTUSER
 	,A.CUSTNO
-	,CONCAT(DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y%m%d') , IFNULL(A.CTTTIME,''))  AS CTTDATE 	
+	,CONCAT(DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y%m%d') ,' ', IFNULL(A.CTTTIME,''))  AS CTTDATE 	
 	,IFNULL(A.MEMO,'') AS MEMO
 	,A.CTTLOCATION
 	,IFNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
@@ -997,5 +996,50 @@
 		</if>
 		 
 	</select>
+	
+	<!-- 접촉추가 (스케줄 상세팝업 - 접촉추가)  -->
+	<insert id="salesContInsert" parameterType="hashMap">
+	INSERT INTO CU110010 
+	(
+	SITEID
+	,REGUSER
+	,EDTUSER
+	,REGDATE
+	,EDTDATE
+	,ISDELETE
+	
+	,CTTUSER
+	,CUSTNO
+	,CTTDATE
+	,CTTTIME
+	,MEMO
+	,CTTLOCATION
+	,CTTCHANNEL
+	,CLINO
+	,SALESNO
+	,SCHNO
+	)
+
+	VALUES
+	(
+	#{siteid}
+	,#{userno}
+	,#{userno}
+	,now()
+	,now()
+	,0
+	
+	,#{cttuser}
+	,#{custno}
+	,#{cttdate}
+	,#{ctttime}
+	,#{memo}
+	,#{cttlocation}
+	,#{cttchannel}
+	,#{clino}
+	,#{salesno}
+	,#{schno}
+	)
+	</insert>
 	
 </mapper>

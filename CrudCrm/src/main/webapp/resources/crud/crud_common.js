@@ -64,12 +64,15 @@
 	// 고객 팝업
 	$('.cust').click(function(e){debugger;
 		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
-	});
-	
+	});	
 	//내부통지팝업
 	$('.note').click(function(e){
 		 openNewWindow('내부통지','/popnote',e.currentTarget.id,650,1100);	
 	})
+	//영업팝업
+	$('.sales').click(function(e){
+		openNewWindow('영업','/popsales',e.currentTarget.id,650,750);
+	});
 /******************************************************************/	
 	/*fileupload 필수값 싱글 sFile / 멀티 mFile
 	 * 부모창에 fileSearchKey  hidden으로 input 생성
@@ -211,6 +214,20 @@
 		opener.$('[name="'+parentid+'"]').val(tr.children.custname.textContent).trigger('keyup');
 		popCustClick(id);
 		
+		setTimeout(function(){
+			window.close();
+		},300);
+	}
+	
+	//팝업 영업 이름 선택.
+	function parentSalename(tr){	
+		var parentid = $('#parentid').val();
+		var id = tr.getAttribute("value");
+		opener.$('[name="'+parentid+'"]').next().val(id);		
+		opener.$('[name="'+parentid+'"]').val(tr.children.salename.textContent).trigger('keyup');		
+		
+		popClientClick(id);
+
 		setTimeout(function(){
 			window.close();
 		},300);
@@ -472,3 +489,28 @@
 		}
 	});
 /********************************************************************/
+	
+//엑셀-다운로드
+    $("#excelBtn").on("click", function () {
+    	
+    	var $exModal = $("#exModal");
+		var url = $('#excelUrl').val();//해당 페이지의 hidden값에서 url을 얻는다.
+		var formId = $('#searchFormId').val();//해당 페이지의 검색 form id 값을 얻는다.
+    	var searchPrm = $('#'+formId).serialize();//검색값 쿼리스트링 형태로 변환
+    	url = url +'?'+ searchPrm; //url에 쿼리스트링추가
+    	
+        $exModal.dialog({ modal: true });//모달 작동
+      	$('.ui-front').removeAttr('style');//불필요한 css 이미지삭제
+      	
+        $.fileDownload(url, {
+            successCallback: function (url) {
+            	$exModal.dialog('close');
+            	$('#modalCloseBtn').trigger('click');  
+            },
+            failCallback: function (responseHtml, url) {
+            	$exModal.dialog('close');
+            	$('#modalCloseBtn').trigger('click');
+            }
+        });
+    });	 
+	

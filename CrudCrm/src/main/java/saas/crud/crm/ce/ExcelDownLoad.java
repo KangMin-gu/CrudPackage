@@ -670,15 +670,15 @@ public class ExcelDownLoad {
 				//데이터 칼럼에 맞춰 바인딩
 				for (int rowNum = 1; rowNum <= note.size(); rowNum++) {			
 					row = sheet.createRow(rowNum+1);			
-					String rcvName = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVNAME");
-					String rcvType = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVTYPE_");
-					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVCHANNEL_");
+					String rcvName = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICENAME");
+					String rcvType = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICETYPE_");
+					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICECHANNEL_");
 					String custName = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTNO_");
 					String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINO_");
-					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVDATE_");
-					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "RCVOWNER_");
-					String ractOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "RACTOWNER_");
-					String prcState = crud.getMapValueNullCheck(note.get(rowNum-1), "PRCSTATE_");
+					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum-1), "RECEPTIONDATE_");
+					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICEOWNER_");
+					String ractOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "OWNER_");
+					String prcState = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICESTEP_");
 
 					cell = row.createCell(0);
 					cell.setCellValue(rcvName);

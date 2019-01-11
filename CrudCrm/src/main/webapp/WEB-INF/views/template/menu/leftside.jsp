@@ -108,7 +108,10 @@
 	               <li <c:if test="${fn:substring(urls, 0, 3) eq '/vc' }"> class="active"</c:if>>
 	                    <a href="#"><i class="fa fa-phone"></i> <span class="nav-label">VOC</span><span class="fa arrow"></span></a>
 	                    <ul class="nav nav-second-level collapse">
-	                        <li><a href="${pageContext.request.contextPath}/vc/voc">VOC</a></li>
+	                    	<c:if test="${vc1 eq '51000'}">
+	                        	<li><a href="${pageContext.request.contextPath}/vc/voc">VOC</a></li>
+	                        </c:if>
+	                        
 	                        <li><a href="${pageContext.request.contextPath}/vc/satis">고객만족도 관리</a></li>  
 	                        <li><a href="form_basic.html">콜백 관리</a></li>   
 	                    </ul>

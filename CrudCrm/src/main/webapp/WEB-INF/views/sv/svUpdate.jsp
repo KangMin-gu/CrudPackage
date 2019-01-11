@@ -325,10 +325,9 @@
                                     	<tr>
                                             <th class="border-top-0 border-bottom-0">처리담당자</th>
                                             <td class="border-top-0 border-bottom-0">
-                                            	<div class="input-group owner" id="owner_">
+                                            	<div class="input-group" id="owner_">
                                                     <input type="text" class="form-control error required validate nameV service" disabled="${valid }" autocomplete="off" name="owner_" value="${serviceInfo.OWNER_ }">
-                                                    <input type="hidden" name="owner" value="${serviceInfo.OWNER }">
-                                                    <span class="input-group-addon">
+                                                    <input type="hidden" name="owner" value="${serviceInfo.OWNER }">                                                    <span class="input-group-addon">
                                                         <a><i class="fa fa-search"></i></a>
                                                     </span>
                                                     <span class="input-group-addon self">
@@ -522,7 +521,7 @@
                                         <tr>
                                             <th class="border-top-0">지연내용</th>
                                             <td class="border-top-0">
-                                                <textarea name="delaydesc" class="form-control reward" id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
+                                                <textarea name="delaydesc" class="form-control reward" cols="60" id="delaydesc">${rewardInfo.DELAYDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>

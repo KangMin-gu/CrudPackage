@@ -64,15 +64,20 @@ public class UserController {
 	
 	@RequestMapping(value="/reconfirm", method=RequestMethod.GET)
 	public ModelAndView reConfirm(HttpServletRequest request) {
-		/*
 		String url=request.getParameter("url");
 		
 		if(url==null){        
 			url=request.getContextPath()+"/"; 
 		}
-		*/
+		
 		ModelAndView mView = new ModelAndView();
+		mView.addObject("url", url);
 		mView.setViewName("au/reconfirm");
 		return mView;
+	}
+	
+	@RequestMapping(value="/reconfirm", method=RequestMethod.POST)
+	public void reConfirmSend(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {
+		urService.reConfirmSend(response, request, urDto);
 	}
 }

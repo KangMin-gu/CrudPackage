@@ -28,7 +28,7 @@ public class UrReAspect {
 					String userId = (String)request.getSession().getAttribute("USERID");
 					ModelAndView mView=new ModelAndView();
 					
-					if(userId != null) {
+					
 						
 						String query = request.getQueryString();
 						//원래 가야할 요청명 
@@ -42,27 +42,16 @@ public class UrReAspect {
 						mView.setViewName("redirect:/reconfirm?url="+url); 
 						return mView;
 						
-					}else {
-						
-						String query = request.getQueryString();
-						//원래 가야할 요청명 
-						String url=null;
-						if(query==null){
-							url=request.getRequestURI();
-						}else{
-							url=request.getRequestURI()+"?"+query;
-						}
-						
-						mView.setViewName("redirect:/login?url="+url); 
-						return mView;
-						
-					}														
+																	
 				}
 			}
 			
-			return joinPoint.proceed();
-			//after
+			Object result = joinPoint.proceed();
+			//after 	
 			
+			System.out.println("aroundAdvice(): after");
+			
+			return result;			
 		}
 	
 }

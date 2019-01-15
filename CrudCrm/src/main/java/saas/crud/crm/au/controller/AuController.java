@@ -181,8 +181,8 @@ public class AuController {
 	}
 		
 	//내정보 수정(수정실행)
-	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.POST)
-	public String uremyInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto,@PathVariable int userNo) {
+	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.PUT)
+	public String authmyInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto,@PathVariable int userNo) {
 		userDto.setUserno(userNo);
 		auService.userUpdate(request, userDto);
 		return "redirect:/myinfo/"+userNo;

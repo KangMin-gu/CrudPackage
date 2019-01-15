@@ -50,8 +50,7 @@ public class UserController {
 	
 	//로그인 요청
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {
-		
+	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {		
 		System.out.println("controll : "+ request.getParameter("url"));
 		 urService.login(response, request, urDto); 
 	}
@@ -61,5 +60,19 @@ public class UserController {
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/reconfirm", method=RequestMethod.GET)
+	public ModelAndView reConfirm(HttpServletRequest request) {
+		/*
+		String url=request.getParameter("url");
+		
+		if(url==null){        
+			url=request.getContextPath()+"/"; 
+		}
+		*/
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("au/reconfirm");
+		return mView;
 	}
 }

@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService{
 		boolean isValid = false;  
 		
 		if(urInfo != null) {
-			//boolean isMatch=encoder.matches(urDto.getUSERPASSWORD(), urInfo.get("USERPASSWORD"));
-			boolean isMatch = pwd.equals(urInfo.get("USERPASSWORD"));
+			boolean isMatch=encoder.matches(pwd,urInfo.get("USERPASSWORD").toString());			
 			if(isMatch) {
 				isValid = true;
 			}
@@ -177,46 +176,5 @@ public class UserServiceImpl implements UserService{
 		return mView;
 	}
 	
-	//비밀번호 재확인
-	@Override
-	public ModelAndView reConfirmSend(HttpServletResponse response, HttpServletRequest request, UserDto urDto) {
-		
-		Map<String, Object> urInfo = urDao.getData(urDto.getUserid());
-		String pwd = urDto.getUserpassword();
-		String url = request.getParameter("url"); 
-		boolean isValid = false;
-		ModelAndView mView = new ModelAndView();
-		if(urInfo != null) {
-			//boolean isMatch=encoder.matches(urDto.getUSERPASSWORD(), urInfo.get("USERPASSWORD"));
-			boolean isMatch = pwd.equals(urInfo.get("USERPASSWORD"));
-			
-			if(isMatch) {
-				isValid = true;		
-				StringBuffer buf = new StringBuffer();
-				
-				if(url != null) {
-					buf.append("<script>location.href='");
-				 	buf.append(url);
-				 	//buf.append("myinfoupdate");
-				 	buf.append("';</script>");
-				}else {
-					buf.append("<script>location.href='/';</script>");
-				}
-				 		
-				response.setContentType("text/html; charset=UTF-8");
-					 
-				PrintWriter out;
-				try {
-					out = response.getWriter();
-					out.println(buf);					 
-					out.flush();
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}
-			}
-		}		
-		return mView;
-	}
 	
 }

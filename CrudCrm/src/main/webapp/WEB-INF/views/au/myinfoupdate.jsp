@@ -70,7 +70,7 @@
 									
 									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<Button type="submit" class="btn btn-primary submit" disabled id="submit" >저 장</Button>
+											<Button type="submit" class="btn btn-primary submit" id="submit" >저 장</Button>
 											<a href="/myinfo/${user.USERNO}" class="btn btn-primary">취소</a>																			
 										</div>										
 									</div>
@@ -109,8 +109,7 @@
 												<tr>
 													<th>현재 비밀번호</th>
 													<td>
-														<input type="hidden" id="existPassword" value="${user.USERPASSWORD}"/>
-														<input type="password" class="form-control float-left mr-2 error" name="curPassword" id="curPassword" />														
+														<input type="password" class="form-control float-left mr-2" name="userpassword" id="userpassword" />																												
 													</td>
 												</tr>										
 											</tbody>								
@@ -154,7 +153,7 @@
 												<tr>
 													<th>새 비밀번호</th>
 													<td>
-														<input type="password" class="form-control float-left mr-2 error required validate passwordV" name="userpassword" id="userpassword" />														
+														<input type="password" class="form-control float-left mr-2" name="newpwd" id="newpwd" placeholder="새 비밀번호"/>														
 													</td>
 												</tr>								
 											</tbody>								
@@ -197,7 +196,7 @@
 												<tr>
 													<th>비밀번호 확인</th>
 													<td>
-														<input type="password" class="form-control float-left mr-2 error" name="newPasswordTwo" id="newPasswordTwo" placeholder="새 비밀번호 확인"/>														
+														<input type="password" class="form-control float-left mr-2" name="newpwdcofirm" id="newpwdcofirm" placeholder="새 비밀번호 확인"/>														
 													</td>
 												</tr>
 																							
@@ -220,7 +219,7 @@
                                        			 <tr>
                                             		<th><label for="userdesc">사용자메모</label></th>
                                            		 	<td>
-                                                		<textarea type="text" rows="8" class="form-control col-12 float-left mr-12" name="userdesc" id="userdesc" value="${user.USERDESC}">${user.USERDESC}</textarea>                            
+                                                		<textarea rows="8" class="form-control col-12 float-left mr-12" name="userdesc" id="userdesc">${user.USERDESC}</textarea>                            
                                             		</td>
                                        			 </tr>
                                    			 </tbody>
@@ -249,95 +248,9 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	<!-- 유효성 -->
-	<!-- <script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script> -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script> 
 	
 	<script>
-	 $(document).ready(function () {
-		 $("#reqDefaultMsg").html("<strong style='color:red'>기존 패스워드를 입력해주세요.</strong>");	
-		 
-		 $("#curPassword").focus();
-		 
-		 
-		 //현재 비밀번호 
-		 $("#curPassword").keyup(function(){
-			 if($("#curPassword").val() != $("#existPassword").val()){
-				 $("#reqMsgDiv").addClass("alert-info");
-				 $("#reqDefaultMsg").html("<strong style='color:red'>기존 패스워드와 일치하지 않습니다.</strong>");				
-				 $("#reqSuccessMsg").css("display","none");
-				 $("#reqDefaultMsg").css("display","");	 
-				 $("#curPassword").addClass('error');
-				 $("#submit").attr("disabled","disabled");
-			 }else{
-				 $("#curPassword").removeClass('error');				 
-				 $("#reqDefaultMsg").html("<strong>패스워드가 정상적으로 입력되었습니다.</strong>");
-				 //.alert-success
-				 if(!$('input').hasClass('error')){
-					 $("#submit").removeAttr("disabled");
-				 }
-			 } 
-		 })
-		
-		 
-		 $("input").blur(function(){
-			 if($("#newPasswordTwo").val() != $("#userpassword").val()){
-				 $("#submit").attr("disabled","disabled");
-				 $("#reqMsgDiv").addClass("alert-info");
-				 $("#reqDefaultMsg").html("<strong style='color:red'>새 비밀번호가 일치하지 않습니다.</strong>");				
-				 $("#reqSuccessMsg").css("display","none");
-				 $("#reqDefaultMsg").css("display","");	 
-				 $("#userpassword").addClass('error');
-				 $("#newPasswordTwo").addClass('error');
-				 $("#submit").attr("disabled","disabled");
-				 
-			 }else if($("#curPassword").val() == ""){
-				 $("#submit").attr("disabled","disabled");
-				 $("#reqMsgDiv").addClass("alert-info");
-				 $("#reqDefaultMsg").html("<strong style='color:red'>기존 패스워드를 확인해주세요.</strong>");				
-				 $("#reqSuccessMsg").css("display","none");
-				 $("#reqDefaultMsg").css("display","");	 
-				 $("#curpassword").addClass('error');
-				 $("#submit").attr("disabled","disabled");
-			 }
-		 })
-		 
-		 
-		 
-		 
-		 //비밀번호 확인 
-		 $("#newPasswordTwo").keyup(function(){
-			 if($("#newPasswordTwo").val() != $("#userpassword").val()){
-				 $("#reqMsgDiv").addClass("alert-info");
-				 $("#reqDefaultMsg").html("<strong style='color:red'>새 비밀번호가 일치하지 않습니다.</strong>");				
-				 $("#reqSuccessMsg").css("display","none");
-				 $("#reqDefaultMsg").css("display","");	 
-				 $("#userpassword").addClass('error');
-				 $("#submit").attr("disabled","disabled");
-			 }else{
-				 $("#userpassword").removeClass('error');
-				 $("#newPasswordTwo").removeClass('error');
-				
-				 $("#reqDefaultMsg").html("<strong>패스워드가 정상적으로 입력되었습니다.</strong>");
-				 //.alert-success
-				 
-				 //모든 input값에 error가 없다면
-				 if(!$('input').hasClass('error')){
-					 $("#submit").removeAttr("disabled");
-				 }
-			 } 
-		 })
-		 
-         // datePicker
-         $('.input-group.date').datepicker({
-             todayBtn: "linked",
-             keyboardNavigation: false,
-             forceParse: false,
-             calendarWeeks: true,
-             autoclose: true
-         });
-            
-         
-                     
-     });
 	
 	</script>
 	

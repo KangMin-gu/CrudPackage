@@ -1,17 +1,23 @@
 package saas.crud.crm.au.service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.AuDao;
+import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
@@ -23,6 +29,12 @@ public class AuServiceImpl implements AuService{
 	
 	@Autowired
 	private AuDao auDao;
+	
+	@Autowired
+	private UserDao urDao;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	@Autowired
 	private CrudEngine crud;
@@ -105,7 +117,6 @@ public class AuServiceImpl implements AuService{
 		
 		userDto.setSiteid(siteId);
 		userDto.setEdtuser(userNo);
-		
 		auDao.urUpdate(userDto);
 	}
 
@@ -189,6 +200,90 @@ public class AuServiceImpl implements AuService{
 			userMenuDto.setMenuno(Integer.parseInt(menu[i]));
 			auDao.urMenuInsert(userMenuDto);
 		}
+	}
+	
+	//내 정보 수정
+	@Override
+	public ModelAndView myInfoReadSet(HttpServletRequest request, UserDto userDto) {
+		String newPwd = request.getParameter("newpwd");
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String userId = request.getSession().getAttribute("USERID").toString();
+		
+		userDto.setUserno(userNo);
+		userDto.setSiteid(siteId);
+		userDto.setUserid(userId);
+		String beforePwd = userDto.getUserpassword();
+		Map<String, Object> urInfo = urDao.getData(userId);
+		
+		ModelAndView mView = new ModelAndView();
+		
+		boolean isMatch=encoder.matches(userDto.getUserpassword(), urInfo.get("USERPASSWORD").toString());		
+		if(isMatch) {
+			if(newPwd != null) {
+				String hash=encoder.encode(newPwd);
+				userDto.setUserpassword(hash);
+			}
+			auDao.urUpdate(userDto);
+			mView.addObject("msg", "수정되었습니다.");
+			mView.addObject("url","myinfo/"+userNo);
+			System.out.println("myinfo/"+userNo);
+		}else {
+			mView.addObject("msg", "사용자 비밀번호를 확인 해주세요.");
+			mView.addObject("url","myinfo/post/"+userNo);
+		}
+		return mView;
+	}
+	
+	//사용자 비밀번호 초기화
+	@Override
+	public ModelAndView userPwdReset(HttpServletRequest request, int userNo) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int resetUserNo = userNo;
+		
+		//StringBuffer type의 temp에 랜덤 숫자와 문자열을 담는다.
+		StringBuffer temp = new StringBuffer();
+		Random rnd = new Random();
+		
+		for (int i = 0; i < 10; i++) {
+		    int rIndex = rnd.nextInt(3);
+		    switch (rIndex) {
+		    case 0:
+		        // a-z
+		        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+		        break;
+		    case 1:
+		        // A-Z
+		        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+		        break;
+		    case 2:
+		        // 0-9
+		        temp.append((rnd.nextInt(10)));
+		        break;
+		    }
+		}	
+		
+		//String 타입으로 읽을수 있게 형변환한다.
+		String newPwd = temp.toString();
+		String hash = encoder.encode(newPwd);
+		
+		UserDto userDto = new UserDto();
+		userDto.setUserno(resetUserNo);
+		userDto.setUserpassword(hash);
+		userDto.setSiteid(siteId);
+		
+		Map<String, Object> sendResetInfo = auDao.urRead(userDto);
+		//초기화된 비밀번호 업데이트
+		auDao.urUpdate(userDto);
+		//초기화된 비밀번호 이메일테이블 인서트
+		//sendResetInfo.get("");
+		
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");
+		mView.addObject("url","/ad/user/"+resetUserNo);
+		return mView;
 	}
 
 }

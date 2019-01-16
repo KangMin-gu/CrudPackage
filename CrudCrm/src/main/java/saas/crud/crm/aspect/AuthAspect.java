@@ -16,7 +16,8 @@ public class AuthAspect {
 	@Around("execution(* auth*(..))")
 	public Object loginCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 		
-				Object[] args=joinPoint.getArgs();
+
+		Object[] args=joinPoint.getArgs();
 				
 				for(Object tmp:args){
 					

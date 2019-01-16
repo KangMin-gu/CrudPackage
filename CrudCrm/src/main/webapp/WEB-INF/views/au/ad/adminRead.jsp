@@ -92,7 +92,7 @@
 											<th>사용자 ID</th>
 											<td>${user.USERID}</td>		
 											<th>비밀번호</th>
-											<td></td>	
+											<td><a class="btn btn-primary" href="javascript:userPwdConfirm(${user.USERNO })">비밀번호 초기화</a></td>											
 										</tr>
 										<tr>
 											<th>휴대전화번호</th>
@@ -227,7 +227,16 @@
 			$('.dual_select').bootstrapDualListbox('refresh',true);
 
 	});
-
+	
+	function userPwdConfirm(userNo){
+		var isValid = confirm("비밀번호를 정말 초기화 하시겠습니까?");
+		if(isValid){
+			location.href = "/pwdreset/"+userNo;
+			return true;
+		}else{
+			return false;
+		}
+	}
 	</script>		
 
 </body>

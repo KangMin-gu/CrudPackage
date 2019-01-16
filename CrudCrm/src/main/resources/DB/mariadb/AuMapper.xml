@@ -252,4 +252,8 @@
 		]]> 
 	</select>
 	
+	<insert id="userPwdReset" parameterType="userDto">
+		 
+	</insert>
+	
 </mapper>

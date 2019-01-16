@@ -103,4 +103,10 @@ public class AuDaoImpl implements AuDao{
 		// TODO Auto-generated method stub
 		return session.selectList("au.userMenu",userDto);
 	}
+
+	@Override
+	public void userPwdReset(UserDto userDto) {
+		session.insert("au.userPwdReset", userDto);
+		
+	}
 }

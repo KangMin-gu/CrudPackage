@@ -166,7 +166,7 @@ public class AuController {
 	}
 	// 내 정보
 	@RequestMapping(value="/myinfo/{userNo}",method=RequestMethod.GET)
-	public ModelAndView myInfoRead(HttpServletRequest request,@PathVariable int userNo) {
+	public ModelAndView myInfoRead(HttpServletRequest request, @PathVariable int userNo) {
 		ModelAndView mView = auService.userRead(request, userNo);		
 		mView.setViewName("au/myinfo");
 		return mView;
@@ -174,17 +174,28 @@ public class AuController {
 	
 	//내정보 수정 (수정폼)
 	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.GET)
-	public ModelAndView uremyInfoReadSet(HttpServletRequest request,@PathVariable int userNo) {
+	public ModelAndView authmyInfoReadSet(HttpServletRequest request, @PathVariable int userNo) {
 		ModelAndView mView = auService.userRead(request,userNo);
 		mView.setViewName("au/myinfoupdate");
 		return mView;
 	}
 		
 	//내정보 수정(수정실행)
-	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.PUT)
-	public String authmyInfoReadSet(HttpServletRequest request,@ModelAttribute UserDto userDto,@PathVariable int userNo) {
-		userDto.setUserno(userNo);
-		auService.userUpdate(request, userDto);
-		return "redirect:/myinfo/"+userNo;
+	@RequestMapping(value="/myinfo/post/{userNo}",method=RequestMethod.POST)
+	public ModelAndView authmyInfoReadSet(HttpServletRequest request, @ModelAttribute UserDto userDto, @PathVariable int userNo) {
+		ModelAndView mView = auService.myInfoReadSet(request, userDto);
+		mView.setViewName("au/myinforesult");
+		return mView;
 	}
+	
+	//회원 비밀번호 초기화
+	@RequestMapping(value="/pwdreset/{userNo}", method=RequestMethod.GET)
+	public ModelAndView userPwdReset(HttpServletRequest request, @PathVariable int userNo) {
+		System.out.println(userNo);
+		ModelAndView mView = new ModelAndView();
+		return mView;
+	}
+	
+	
+	
 }

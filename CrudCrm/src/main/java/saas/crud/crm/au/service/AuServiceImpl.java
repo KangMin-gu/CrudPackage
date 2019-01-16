@@ -241,7 +241,7 @@ public class AuServiceImpl implements AuService{
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int resetUserNo = userNo;
-		
+		int adminNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		//StringBuffer type의 temp에 랜덤 숫자와 문자열을 담는다.
 		StringBuffer temp = new StringBuffer();
 		Random rnd = new Random();
@@ -268,21 +268,40 @@ public class AuServiceImpl implements AuService{
 		String newPwd = temp.toString();
 		String hash = encoder.encode(newPwd);
 		
-		UserDto userDto = new UserDto();
-		userDto.setUserno(resetUserNo);
-		userDto.setUserpassword(hash);
-		userDto.setSiteid(siteId);
+		UserDto resetUserDto = new UserDto();
+		resetUserDto.setUserno(resetUserNo);
+		resetUserDto.setUserpassword(hash);
+		resetUserDto.setSiteid(siteId);
 		
-		Map<String, Object> sendResetInfo = auDao.urRead(userDto);
+		UserDto adminUserDto = new UserDto();
+		adminUserDto.setUserno(adminNo);
+		adminUserDto.setSiteid(siteId);
+		
+		Map<String, Object> resetUserInfo = auDao.urRead(resetUserDto);
+		Map<String, Object> adminUserInfo = auDao.urRead(adminUserDto);
+		Map<String, Object> sendPwdInfo = new HashMap<>();
+		
+		
+		StringBuffer buf = new StringBuffer();
+		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
 		//초기화된 비밀번호 업데이트
-		auDao.urUpdate(userDto);
+		auDao.urUpdate(resetUserDto);
 		//초기화된 비밀번호 이메일테이블 인서트
-		//sendResetInfo.get("");
+		sendPwdInfo.put("adminid",adminNo);
+		sendPwdInfo.put("userid",resetUserInfo.get("USERID"));
+		sendPwdInfo.put("siteid",siteId);
+		sendPwdInfo.put("toemail",resetUserInfo.get("EMAIL"));
+		sendPwdInfo.put("username",resetUserInfo.get("USERNAME"));
+		sendPwdInfo.put("content", buf.toString());
+		sendPwdInfo.put("subject", "IDEA CRM의 비밀번호가 초기화 되었습니다.");
+		sendPwdInfo.put("cstname",adminUserInfo.get("USERNAME"));
+		sendPwdInfo.put("fromemail",adminUserInfo.get("EMAIL"));
 		
+		auDao.userPwdReset(sendPwdInfo);
 		
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");
-		mView.addObject("url","/ad/user/"+resetUserNo);
+		mView.addObject("url","ad/user/"+resetUserNo);
 		return mView;
 	}
 

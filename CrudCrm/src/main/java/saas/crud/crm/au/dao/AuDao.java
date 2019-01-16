@@ -26,5 +26,5 @@ public interface AuDao {
 	public void urMenuInsert(UserMenuDto userMenuDto);
 	public void urMenuDelete(UserMenuDto userMenuDto);
 	public List<Map<String,Object>> urUserMenuList(UserDto userDto);
-	public void userPwdReset(UserDto userDto);
+	public void userPwdReset(Map<String, Object> sendPwdInfo);
 }

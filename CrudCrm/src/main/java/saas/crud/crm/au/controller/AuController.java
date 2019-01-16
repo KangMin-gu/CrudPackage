@@ -192,7 +192,8 @@ public class AuController {
 	@RequestMapping(value="/pwdreset/{userNo}", method=RequestMethod.GET)
 	public ModelAndView userPwdReset(HttpServletRequest request, @PathVariable int userNo) {
 		System.out.println(userNo);
-		ModelAndView mView = new ModelAndView();
+		ModelAndView mView = auService.userPwdReset(request,userNo);
+		mView.setViewName("au/myinforesult");
 		return mView;
 	}
 	

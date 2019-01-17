@@ -98,7 +98,8 @@ public class AuServiceImpl implements AuService{
 		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
+		String hash = encoder.encode(userDto.getUserpassword());
+		userDto.setUserpassword(hash);
 		userDto.setSiteid(siteId);
 		userDto.setReguser(userNo);
 		userDto.setEdtuser(userNo);

@@ -256,9 +256,9 @@
 	
 	<insert id="urPwdResetsend" parameterType="hashMap">
 		 INSERT INTO sys980010 
-		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER) 
+		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, USERNO) 
 		 VALUES 
-		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{adminid}, NOW(), #{adminid});
+		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{adminid}, NOW(), #{adminid}, #{userno});
 	</insert>
 	
 </mapper>

@@ -209,7 +209,8 @@ public class CompanyServiceImpl implements CompanyService{
 		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
 
 		//초기화된 비밀번호 이메일테이블 인서트
-		sendPwdInfo.put("userno", managerNo);
+		sendPwdInfo.put("managerno", managerNo);
+		sendPwdInfo.put("userno", Integer.parseInt(adminInfo.get("USERNO").toString()));
 		sendPwdInfo.put("userid",adminInfo.get("USERID"));
 		sendPwdInfo.put("siteid",siteId);
 		sendPwdInfo.put("toemail",adminInfo.get("EMAIL"));

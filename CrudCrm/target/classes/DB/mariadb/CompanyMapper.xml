@@ -213,9 +213,9 @@
 	
 	<insert id="adminPwdResetsend" parameterType="HashMap">
 		INSERT INTO sys980010 
-		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER) 
+		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, USERNO) 
 		 VALUES 
-		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{userno}, NOW(), #{userno});
+		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{managerno}, NOW(), #{managerno}, #{userno});
 	</insert>
 	
 	<update id="adminPwdReset" parameterType="userDto">

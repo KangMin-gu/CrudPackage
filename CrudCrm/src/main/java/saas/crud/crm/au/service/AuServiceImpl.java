@@ -297,7 +297,7 @@ public class AuServiceImpl implements AuService{
 		sendPwdInfo.put("subject", "IDEA CRM의 비밀번호가 초기화 되었습니다.");
 		sendPwdInfo.put("cstname",adminUserInfo.get("USERNAME"));
 		sendPwdInfo.put("fromemail",adminUserInfo.get("EMAIL"));
-		
+		sendPwdInfo.put("userno", resetUserInfo.get("USERNO"));
 		auDao.userPwdReset(sendPwdInfo);
 		
 		ModelAndView mView = new ModelAndView();

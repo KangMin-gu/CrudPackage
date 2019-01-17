@@ -34,10 +34,10 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>거래처상세</h2>
+					<h2>거래처 상세</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><a href="/sales/client">목록</a></li>
-						<li class="breadcrumb-item active"><strong>상세정보</strong></li>
+						<li class="breadcrumb-item active"><strong>상세 정보</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -53,15 +53,15 @@
 								
 								<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
 									<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-										<a href="/sales/client" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+										<!-- <a href="/sales/client" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> -->
 	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
-	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
 	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>												
 	                          		</div>													
 									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 										<a href="/sales/client/post/${cliDetail.CLINO }" class="btn btn-primary">수정</a> 
 										<c:if test="${sessionScope.CHKAUTH eq 30 || sessionScope.CHKAUTH eq 20 || sessionScope.USERNO eq cliDetail.OWNER }">  
 											<a href="/sales/client/del/${cliDetail.CLINO }" class="btn btn-primary">삭제</a>
+											<a href="/sales/client" class="btn btn-primary">목록</a>
 										</c:if> 
 									</div>
 								</div>

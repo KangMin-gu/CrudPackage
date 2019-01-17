@@ -45,7 +45,7 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객관리</h2>
+					<h2>고객 관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active" ><strong>목록</strong></li>
 					</ol>
@@ -71,7 +71,7 @@
                         					</a>
                         				</div>
                         				<div class="w-100 text-right">
-											<button type="submit" class="btn btn-primary" data-style="zoom-in" id="submit" name="submit">검 색</button>
+											<button type="submit" class="btn btn-primary" data-style="zoom-in" id="submit" name="submit">검색</button>
 											<button type="button" class="btn btn-primary" id="searchResetBtn" name="searchResetBtn">초기화</button> 
 										</div>
 									</div>
@@ -217,8 +217,8 @@
                              		</div>                                       
                               		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                                 		<span id="checkVal"></span>
-										<a href="/cust/post" class="btn btn-primary">추 가</a> 										
-										<button class="btn btn-primary delete">삭 제</button>				
+										<a href="/cust/post" class="btn btn-primary">추가</a> 										
+										<button class="btn btn-primary delete">삭제</button>				
                               		</div>
                            		</div>
 								
@@ -396,16 +396,11 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script> 
-	
-	<!-- S: 추가 js-->
-	<!-- radioBox-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
-	<!-- datePicker-->
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	
-	<!-- file download -->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script> 		
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script><!-- radioBox-->	
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	<!-- datePicker-->	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script><!-- file download -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- cust js -->
 
 	<script>
 		$(document).ready(function() {	

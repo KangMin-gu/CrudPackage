@@ -32,7 +32,7 @@
 		header: {//캘린더 프레임 헤더설정
 			left: 'prev,next today',//저번달, 다음달, 오늘로이동
 			center: 'title',
-			right: 'month,agendaWeek,agendaDay' //월,주,일별 보기 
+			right: 'month,agendaWeek,agendaDay', //월,주,일별 보기 
 		},
 
 		editable: true, //false - 일정 수정 안됨. 

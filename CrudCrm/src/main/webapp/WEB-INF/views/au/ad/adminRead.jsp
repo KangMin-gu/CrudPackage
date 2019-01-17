@@ -37,7 +37,7 @@
                     <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/ad/user">사용자목록</a>
+                            <a href="/ad/user">사용자 목록</a>
                         </li>
                     </ol>
                 </div>
@@ -53,26 +53,26 @@
 			<div class="col-lg-12" style="background: #ffffff;">
 				<div class="ibox">
 					<div class="ibox-title row">
-						<h4>기본정보</h4>
+						<h4>기본 정보</h4>
 					</div>
 					<div class="ibox-content row tooltip-demo">
                         <div id="wizard" style="height:500px">                        
-                            <h1>회원정보</h1> 
+                            <h1>회원 정보</h1> 
                             <div class="step-content table-responsive">
                             	<div class="w-100 text-right mb-2">
                                 	
                             	</div>
                             	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                            			<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                              			<a href="${pageContext.request.contextPath}/ad/user" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+                              			<%-- <a href="${pageContext.request.contextPath}/ad/user" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> --%>
                                        	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
-                                       	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
                                        	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>                                    
                                    </div>
                            		   <div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
                               			<form:form action="${pageContext.request.contextPath}/ad/user/${user.USERNO}" method="POST">
                                 			<a href="${pageContext.request.contextPath}/ad/user/post/${user.USERNO}" class="btn btn-primary">수정</a>
 											<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+											<a href="${pageContext.request.contextPath}/ad/user" class="btn btn-primary">목록</a>
 										</form:form> 
                            		   </div>
                         		</div>
@@ -122,8 +122,8 @@
                             <h1>메뉴권한부여</h1>
                             <div class="step-content">
                             	<div class="w-100 text-right mb-2">
-                                		<a href="${pageContext.request.contextPath}/ad/user" class="btn btn-primary">목록</a>
-                                		<a href="${pageContext.request.contextPath}/ad/user/menu/${user.USERNO}" class="btn btn-primary">메뉴부여</a>
+                                	<a href="${pageContext.request.contextPath}/ad/user/menu/${user.USERNO}" class="btn btn-primary">메뉴부여</a>
+                                	<a href="${pageContext.request.contextPath}/ad/user" class="btn btn-primary">목록</a>
                             	</div>
 								<table class="table table-bordered">
                                     <colgroup>

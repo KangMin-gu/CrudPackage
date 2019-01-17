@@ -61,9 +61,9 @@
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="w-100 text-right mb-2">
                                 	<form:form action="${pageContext.request.contextPath}/campaign/contents/${contentsInfo.NO }" method="POST">
-                                		<a href="${pageContext.request.contextPath}/campaign/contents" class="btn btn-primary">목록</a>
                                 		<a href="${pageContext.request.contextPath}/campaign/contents/post/${contentsInfo.NO }" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+										<a href="${pageContext.request.contextPath}/campaign/contents" class="btn btn-primary">목록</a>
 									</form:form>
                             	</div>
 							</div>

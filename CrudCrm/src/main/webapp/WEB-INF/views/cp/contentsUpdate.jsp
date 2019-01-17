@@ -69,8 +69,9 @@
 									<Strong><span id="showMsg"></span></Strong>				
 	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
-									<a href="/campaign/contents/${contentsInfo.NO }" class="btn btn-primary">취 소</a>
+									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저장</Button>
+									<a href="/campaign/contents/${contentsInfo.NO }" class="btn btn-primary">취소</a>
+									<a href="/campaign/contents/" class="btn btn-primary">목록</a>
 								</div>
 							</div>
 							<div class="box1 col-lg-12 col-xl-8 p-0">

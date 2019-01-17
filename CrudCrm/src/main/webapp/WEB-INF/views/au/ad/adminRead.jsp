@@ -92,7 +92,7 @@
 											<th>사용자 ID</th>
 											<td>${user.USERID}</td>		
 											<th>비밀번호</th>
-											<td><a class="btn btn-primary" href="javascript:userPwdConfirm(${user.USERNO })">비밀번호 초기화</a></td>											
+											<td><a class="btn btn-xs btn-primary" href="javascript:userPwdConfirm(${user.USERNO })">비밀번호 초기화</a></td>											
 										</tr>
 										<tr>
 											<th>휴대전화번호</th>

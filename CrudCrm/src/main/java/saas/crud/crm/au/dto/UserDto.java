@@ -30,17 +30,16 @@ public class UserDto {
 	private String edtdate; //수정일시
 	private int edtuser; //수정자
 	private String code;
+	private int masteryn;
 
 	public UserDto () {}
-
 
 	public UserDto(int userno, int siteid, String userid, String username, String userpassword, String userdesc,
 			String email, int deptid, int chkauth, String enterdate, String userlang, String mobile1, String mobile2,
 			String mobile3, String telno1, String telno2, String telno3, String userduty, int chkrole, int ctiid,
 			String ctipass, String pwdchangedate, int isdelete, String regdate, int reguser, String edtdate,
-			int edtuser, String code) {
+			int edtuser, String code, int masteryn) {
 		super();
-		this.code = code;
 		this.userno = userno;
 		this.siteid = siteid;
 		this.userid = userid;
@@ -68,16 +67,9 @@ public class UserDto {
 		this.reguser = reguser;
 		this.edtdate = edtdate;
 		this.edtuser = edtuser;
-	}
-	
-	public String getCode() {
-		return code;
-	}
-
-	public void setCdoe(String code) {
 		this.code = code;
+		this.masteryn = masteryn;
 	}
-
 
 	public int getUserno() {
 		return userno;
@@ -294,6 +286,24 @@ public class UserDto {
 	public void setEdtuser(int edtuser) {
 		this.edtuser = edtuser;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public int getMasteryn() {
+		return masteryn;
+	}
+
+	public void setMasteryn(int masteryn) {
+		this.masteryn = masteryn;
+	}
+
+	
 
 	
 }

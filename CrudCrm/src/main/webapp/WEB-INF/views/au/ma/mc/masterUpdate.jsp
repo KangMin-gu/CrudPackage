@@ -90,7 +90,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div>                    
                             <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
@@ -200,6 +200,12 @@
                                                 <input type="text" class="form-control date dateV" data-autoclose="true" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th><label for="adminid">아이디</label></th>
+                                            <td>
+                                                <input type="text" class="form-control" name="adminid" id="adminid" value="${memCompany.ADMINID }" disabled>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -234,6 +240,12 @@
                                             <th><label for="isdelete">서비스상태</label></th>
                                             <td>
                                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="adminpassword">비밀번호</label></th>
+                                            <td>
+                                               <input type="password" class="form-control" name="adminpassword" id="adminpassword" disabled>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -280,6 +292,12 @@
                                             		<button type="button" id="searchKey" class="btn btn-light btn-xs">로고 등록</button>
                                             		<input type="hidden" id="fileSearchKey" name="fileSearchKey" />
                                             	</div>                                                 											
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="adminpasswordchk">비밀번호 확인</label></th>
+                                            <td>
+                                                <input type="password" class="form-control" name="adminpasswordchk" id="adminpasswordchk" disabled>
                                             </td>
                                         </tr>
                                     </tbody>

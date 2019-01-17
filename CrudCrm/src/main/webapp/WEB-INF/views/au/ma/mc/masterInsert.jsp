@@ -207,6 +207,14 @@
                                             	</div>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th><label for="adminid">아이디</label></th>
+                                            <td>
+                                                <div class="input-group">                           
+                                            		<input type="text" class="form-control" id="adminid" name="adminid">
+                                            	</div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -280,6 +288,14 @@
                                                 </select>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th><label for="adminpassword">비밀번호</label></th>
+                                            <td>
+                                                <div class="input-group">                           
+                                            		<input type="text" class="form-control" id="adminpassword" name="adminpassword">
+                                            	</div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -336,6 +352,14 @@
                                             		<button type="button" class="btn btn-light btn-xs">로고 등록</button>
                                             		<input type="hidden" id="sitelogo" name="sitelogo" />
                                             	</div>  
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="adminpasswordchk">비밀번호 확인</label></th>
+                                            <td>
+                                                <div class="input-group">                                         
+                                            		<input type="text" class="form-control" id="adminpasswordchk" name="adminpasswordchk">
+                                            	</div>
                                             </td>
                                         </tr>
                                     </tbody>

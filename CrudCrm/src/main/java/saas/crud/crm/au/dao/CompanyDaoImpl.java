@@ -69,6 +69,17 @@ public class CompanyDaoImpl implements CompanyDao{
 		session.insert("company.siteLicenseInsert",data);
 		
 	}
+
+	@Override
+	public void companyAdminInsert(CompanyDto companyDto) {
+		session.insert("company.adminUserInsert", companyDto);
+	}
+
+	@Override
+	public void adminPwdReset(Map<String, Object> sendPwdInfo) {
+		session.insert("company.adminPwdReset", sendPwdInfo);
+		
+	}
 	
 	
 

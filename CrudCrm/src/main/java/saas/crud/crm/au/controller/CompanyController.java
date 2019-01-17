@@ -132,5 +132,10 @@ public class CompanyController {
 		
 		return 0;
 	}
-	
+	//회원사 관리 admin 비밀번호 초기화
+	@RequestMapping(value="/adminpwdreset/{siteId}", method=RequestMethod.GET)
+	public ModelAndView adminPwdReset (HttpServletRequest request, @PathVariable int siteId) {
+		ModelAndView mView = companyService.adminPwdReset(request, siteId);
+		return mView;
+	}
 }

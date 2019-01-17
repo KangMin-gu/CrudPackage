@@ -134,8 +134,7 @@
 												<col style="width: auto;">
 											</colgroup>		
 											<tbody>
-												<tr>
-													
+												<tr>													
 													<th>직장전화</th>
 													<td>
 														<c:if test="${user.TELNO1 ne null}">													
@@ -159,26 +158,7 @@
 											</tbody>								
 										</table>
 									</div>
-									
-								
-									<!-- CTI -->
-									<div class="box1 col-lg-12 p-0">
-										<table class="table table-bordered mb-0">
-											<colgroup>
-												<col style="width: 100px; background: #fafafa;">
-												<col style="width: auto;">
-											</colgroup>		
-											<tbody>
-												<tr>
-													<th>비밀번호</th>
-													<td>
-														<input type="text" class="form-control"/>
-													</td>
-												</tr>																		
-											</tbody>								
-										</table>
-									</div>
-														
+																																			
 									<div class="box1 col-lg-12 p-0">
                                			 <table class="table table-bordered mb-0">
                                   			  <colgroup>

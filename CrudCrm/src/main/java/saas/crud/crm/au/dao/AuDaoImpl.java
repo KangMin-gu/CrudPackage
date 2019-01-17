@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
@@ -99,8 +100,13 @@ public class AuDaoImpl implements AuDao{
 
 	// 사용자의 list 검색
 	@Override
-	public List<Map<String, Object>> urUserMenuList(UserDto userDto) {
-		// TODO Auto-generated method stub
+	public List<Map<String, Object>> urUserMenuList(UserDto userDto) {		
 		return session.selectList("au.userMenu",userDto);
+	}
+	
+	//회원사 회원 비밀번호 리셋
+	@Override
+	public void userPwdReset(Map<String, Object> sendPwdInfo) {
+		session.insert("au.urPwdReset", sendPwdInfo);	
 	}
 }

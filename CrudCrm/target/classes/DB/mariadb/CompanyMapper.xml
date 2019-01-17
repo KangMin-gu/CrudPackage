@@ -90,37 +90,28 @@
     SET 
     SITENAME = #{sitename}
     ,BSNO = #{bsno}
-    ,INCNO = #{incno}
-    
+    ,INCNO = #{incno}   
     ,ADDR1 = #{addr1}
     ,ADDR2 = #{addr2}
     ,ADDR3 = #{addr3}
-    
     ,PRSDNAME = #{prsdname}
-    
     ,MOBILE1 = #{mobile1}
     ,MOBILE2 = #{mobile2}
     ,MOBILE3 = #{mobile3}
-    
     ,FAXTEL1 = #{faxtel1}
     ,FAXTEL2 = #{faxtel2}
     ,FAXTEL3 = #{faxtel3}
-    
     ,TELNO1 = #{telno1}
     ,TELNO2 = #{telno2}
     ,TELNO3 = #{telno3}
-    
     ,EMAIL = #{email}
     ,SITESIZE = #{sitesize}
     ,OWNER = #{owner}
-    
     ,COTYPE = #{cotype}
     ,BSCOND = #{bscond}
     ,BSTYPE = #{bstype}
-    
     ,FREGDATE = #{fregdate}
-    ,ISDELETE = #{isdelete}
-    
+    ,ISDELETE = #{isdelete}   
     ,SITEMEMO = #{sitememo}
     ,EDTDATE = NOW()
     ,EDTUSER = #{edtuser}
@@ -211,5 +202,18 @@
 							VALUES(#{siteid},#{licenseno},#{buycnt},NOW(),#{reguser},NOW(),#{edtuser})
 			ON DUPLICATE KEY UPDATE BUYCNT = #{buycnt},EDTDATE = NOW(),EDTUSER = #{edtuser}
     </insert>
-
+	
+	<insert id="adminUserInsert" parameterType="companyDto">
+		INSERT INTO me800010 
+		(SITEID, USERID, USERNAME, USERPASSWORD, CHKAUTH, ENTERDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, MASTERYN ) 
+		VALUES 
+		(#{siteid}, #{adminid}, #{sitename}, #{adminpasswrod}, 20, NOW(), NOW(), #{owner}, NOW(), #{owner}, 1);
+	</insert>
+	
+	<insert id="adminPwdReset" parameterType="HashMap">
+		INSERT INTO sys980010 
+		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER) 
+		 VALUES 
+		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{userno}, NOW(), #{userno});
+	</insert>
 </mapper>

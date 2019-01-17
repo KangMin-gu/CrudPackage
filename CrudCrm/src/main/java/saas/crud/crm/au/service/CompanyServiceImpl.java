@@ -3,18 +3,23 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dao.CompanyDao;
+import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.au.dto.CompanyDto;
+import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
 
@@ -26,6 +31,12 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	@Autowired
 	private CrudEngine crud;
+	
+	@Autowired
+	private UserDao urDao;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	// 회원사 List 검색
 	@Override
@@ -90,8 +101,13 @@ public class CompanyServiceImpl implements CompanyService{
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);
+		
 		int siteid = companyDao.companyInsert(companyDto);
 		companyDto.setSiteid(siteid);
+		String hash = encoder.encode(companyDto.getAdminpassword());		
+		companyDto.setAdminpassword(hash);
+		companyDao.companyInsert(companyDto);
+		
 		return siteid;
 	}
 	
@@ -145,5 +161,74 @@ public class CompanyServiceImpl implements CompanyService{
 		companyDao.companyLicenseInsert(data);
 		
 	}
+
+	@Override
+	public ModelAndView adminPwdReset(HttpServletRequest request, int siteId) {
+		
+		//StringBuffer type의 temp에 랜덤 숫자와 문자열을 담는다.
+		StringBuffer temp = new StringBuffer();
+		Random rnd = new Random();
+		
+		for (int i = 0; i < 10; i++) {
+		    int rIndex = rnd.nextInt(3);
+		    switch (rIndex) {
+		    case 0:
+		        // a-z
+		        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+		        break;
+		    case 1:
+		        // A-Z
+		        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+		        break;
+		    case 2:
+		        // 0-9
+		        temp.append((rnd.nextInt(10)));
+		        break;
+		    }
+		}	
+		
+		//String 타입으로 읽을수 있게 형변환한다.
+		String newPwd = temp.toString();
+		String hash = encoder.encode(newPwd);
+		String adminId = request.getParameter("adid");
+		String managerId = request.getParameter("maid");
+		//리셋시킬 admin 계정정보
+		UserDto resetUserDto = new UserDto();
+		resetUserDto.setUserpassword(hash);
+		resetUserDto.setSiteid(siteId);
+		resetUserDto.setUserid(adminId);
+		resetUserDto.setMasteryn(1);
+		
+		//비밀번호 정보 업데이트
+		
+		//admin 계정정보가져오기
+		Map<String, Object> adminInfo = urDao.getData(adminId);
+		Map<String, Object> sendPwdInfo = new HashMap<>();
+		
+		
+		StringBuffer buf = new StringBuffer();
+		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
+
+		//초기화된 비밀번호 이메일테이블 인서트
+		sendPwdInfo.put("userno", managerId);
+		sendPwdInfo.put("userid",adminInfo.get("USERID"));
+		sendPwdInfo.put("siteid",siteId);
+		sendPwdInfo.put("toemail",adminInfo.get("EMAIL"));
+		sendPwdInfo.put("username",adminInfo.get("USERNAME"));
+		sendPwdInfo.put("content", buf.toString());
+		sendPwdInfo.put("subject", "IDEA CRM의 비밀번호가 초기화 되었습니다.");
+		sendPwdInfo.put("cstname",adminInfo.get("USERNAME"));
+		sendPwdInfo.put("fromemail","crudsystem@crudsystem.co.kr");
+		
+		companyDao.adminPwdReset(sendPwdInfo);
+		
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");
+		mView.addObject("url","ma/company/"+siteId);
+		return mView;
+	}
+	
+	
+	
 
 }

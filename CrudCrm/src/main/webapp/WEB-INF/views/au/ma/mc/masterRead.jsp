@@ -175,6 +175,12 @@
                                                 ${memCompany.FREGDATE_ }
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th>아이디</th>
+                                            <td>
+                                                ${memCompany.FREGDATE_ }
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -209,6 +215,12 @@
                                                 ${memCompany.ISDELETE_ }
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th>비밀번호</th>
+                                            <td>
+                                                <a href="javascript:adminPwdConfirm(${SITEID}, ${memCompany.ADMINID }, ${memCompany.OWNER })" class="btn btn-xs btn-primary" >비밀번호 초기화</a>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -228,7 +240,7 @@
                                         <tr>
                                             <th class="border-top-0">영업담당자</th>
                                             <td class="border-top-0">
-                                                ${memCompany.OWNER_ }
+                                                ${memCompany.OWNER_ }                                                
                                             </td>
                                         </tr>
                                         <tr>
@@ -257,7 +269,7 @@
                                             <th class="border-top-0">회원사 메모</th>
                                             <td class="border-top-0">
                                                 <textarea type="text" disabled class="form-control col-12 float-left mr-12">${memCompany.SITEMEMO }</textarea>                            
-                                            </td>
+                                            </td>	
                                             	<input type="hidden" id="siteid" name="siteid" value="${memCompany.SITEID }" />
                                         </tr>
                                     </tbody>
@@ -383,6 +395,16 @@
 			var y = "500"
 			openNewWindow(name,url,e,x,y);
 		});
+		
+		function adminPwdConfirm(siteId, adminId, managerId){
+			var isValid = confirm("비밀번호를 정말 초기화 하시겠습니까?");
+			if(isValid){
+				location.href = "/adminpwdreset/"+siteId+"?adid="+adminId+"?maid="+managerId;
+				return true;
+			}else{
+				return false;
+			}
+		}
 	
 	</script>
 </body>

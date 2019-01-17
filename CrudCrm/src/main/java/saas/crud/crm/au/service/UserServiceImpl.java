@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService{
 		boolean isValid = false;  
 		
 		if(urInfo != null) {
-			//boolean isMatch=encoder.matches(urDto.getUSERPASSWORD(), urInfo.get("USERPASSWORD"));
-			boolean isMatch = pwd.equals(urInfo.get("USERPASSWORD"));
+			boolean isMatch=encoder.matches(pwd,urInfo.get("USERPASSWORD").toString());			
 			if(isMatch) {
 				isValid = true;
 			}
@@ -169,6 +168,7 @@ public class UserServiceImpl implements UserService{
 				
 		return mView;
 	}
+	
 	//공지사항
 	@Override
 	public ModelAndView crudNotice(HttpServletRequest request) {
@@ -177,5 +177,6 @@ public class UserServiceImpl implements UserService{
 		mView.addObject("crudNotice", crudNotice);
 		return mView;
 	}
+	
 	
 }

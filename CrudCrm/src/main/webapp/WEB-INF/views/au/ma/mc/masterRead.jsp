@@ -175,12 +175,14 @@
                                                 ${memCompany.FREGDATE_ }
                                             </td>
                                         </tr>
+                                        <c:if test="${sessionScope.SITEID eq '1' }">
                                         <tr>
                                             <th>아이디</th>
                                             <td>
-                                                ${memCompany.FREGDATE_ }
+                                                ${memCompany.ADMINID }
                                             </td>
                                         </tr>
+                                        </c:if>
                                     </tbody>
                                 </table>
                             </div>
@@ -215,12 +217,14 @@
                                                 ${memCompany.ISDELETE_ }
                                             </td>
                                         </tr>
+                                        <c:if test="${sessionScope.SITEID eq '1' }">
                                         <tr>
                                             <th>비밀번호</th>
                                             <td>
                                                 <a href="javascript:adminPwdConfirm(${SITEID}, ${memCompany.ADMINID }, ${memCompany.OWNER })" class="btn btn-xs btn-primary" >비밀번호 초기화</a>
                                             </td>
                                         </tr>
+                                        </c:if>
                                     </tbody>
                                 </table>
                             </div>

@@ -135,8 +135,8 @@
                                                         <i class="fa fa-search"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control col-lg-3 float-left mr-3 mt-sx-1" name="addr2" id="addr2" value="${memCompany.ADDR2}">
-                                                <input type="text" class="form-control float-left col-lg-5 mt-sx-1" name="addr3" id="addr3" value="${memCompany.ADDR3}">
+                                                <input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="addr2" id="addr2" value="${memCompany.ADDR2}">
+                                                <input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="addr3" id="addr3" value="${memCompany.ADDR3}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -194,7 +194,7 @@
                                         <tr>
                                             <th><label for="cotype">업태</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate StringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
+                                                <input type="text" class="form-control validate stringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>

@@ -18,6 +18,7 @@
 			FROM me800010 A, (SELECT @RNUM := 0) R
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
+			AND A.MASTERYN != 1
 			<if test="username != null">
 				AND A.USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>
@@ -168,7 +169,7 @@
 				,USERDESC = #{userdesc}
 				</if>
 				,EMAIL = #{email}
-				<if test="enterdate != null">
+				<if test="enterdate != ''">
 				,ENTERDATE = #{enterdate}
 				</if>
 				,USERDUTY = #{userduty}

@@ -79,9 +79,6 @@ public class CompanyServiceImpl implements CompanyService{
 		CompanyDto companyDto = new CompanyDto();
 		companyDto.setSiteid(siteId);
 		Map<String,Object> memCompanyInfo = companyDao.companyRead(companyDto);
-		companyDto.setMobile1("011");
-		mView.addObject("mm", companyDto);
-		System.out.println("gkgkgkgkkgkgkkgkgkkgkgkkgkgkkgkgkkgkkgkgkkgkgkkgkgkkgkgkkgkkgkgkkgkgkkgkgkkgk"+memCompanyInfo.get("MOBILE1"));
 		mView.addObject("memCompany",memCompanyInfo);
 		
 		return mView;
@@ -106,7 +103,7 @@ public class CompanyServiceImpl implements CompanyService{
 		companyDto.setSiteid(siteid);
 		String hash = encoder.encode(companyDto.getAdminpassword());		
 		companyDto.setAdminpassword(hash);
-		companyDao.companyInsert(companyDto);
+		companyDao.companyAdminInsert(companyDto);
 		
 		return siteid;
 	}

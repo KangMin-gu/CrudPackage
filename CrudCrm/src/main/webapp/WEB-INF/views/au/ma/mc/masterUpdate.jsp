@@ -173,12 +173,19 @@
                                         <tr>
                                             <th class=" border-top-0"><label for="mobile">휴대전화번호</label></th>
                                             <td class="border-top-0">
-                                            ${mm.mobile1}      
-                                                             
-                                        		        <form:select class="form-control col-3 float-left mr-3 validate phone1V phone-group" path="mm">
-                                       				<option value="asdfsadf">asdfsadf</option>
-                                       				<form:options items="${MOBILE1 }" itemLabel="codename" itemValue="codeval"/>
-                                                </form:select>
+                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="mobile1" id="mobile1">
+													<option value="">선택</option>
+													<c:forEach var="mobile" items="${MOBILE }">
+                                                    	<c:choose>
+                                                        	<c:when test="${memCompany.MOBILE1 eq mobile.codeval}">
+                                                            	<option selected label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                         	</c:when>
+                                                         	<c:otherwise>
+                                                            	<option label="${mobile.codename }" value="${mobile.codeval }"/>
+                                                         	</c:otherwise>
+                                                      	</c:choose>
+                                                   	</c:forEach>
+												</select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
                                             </td>
@@ -198,7 +205,7 @@
                                         <tr>
                                             <th><label for="fregdate">최초가입일</label></th>
                                             <td>
-                                                <input type="text" class="form-control date dateV" data-autoclose="true" name="fregdate" id="fregdate" value="${memCompany.FREGDATE }">
+                                                <input type="text" class="form-control date dateV" disabled data-autoclose="true" name="fregdate" id="fregdate" value="${memCompany.FREGDATE_ }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -220,7 +227,19 @@
                                         <tr>
                                             <th class="border-top-0"><label for="telno">전화번호</label></th>
                                             <td class="border-top-0">
-                                              
+                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="telno1" id="telno1">
+													<option value="">선택</option>
+													<c:forEach var="phone" items="${PHONE }">
+                                                    	<c:choose>
+                                                        	<c:when test="${memCompany.TELNO1 eq phone.codeval}">
+                                                            	<option selected label="${phone.codename }" value="${phone.codeval }"/>
+                                                         	</c:when>
+                                                         	<c:otherwise>
+                                                            	<option label="${phone.codename }" value="${phone.codeval }"/>
+                                                         	</c:otherwise>
+                                                      	</c:choose>
+                                                   	</c:forEach>
+												</select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="telno3" id="telno3" value="${memCompany.TELNO3 } ">
                                             </td>
@@ -228,7 +247,19 @@
                                         <tr>
                                             <th><label for="sitesize">기업규모</label></th>
                                             <td>
-                                                
+                                            	<select class="form-control float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="telno1" id="telno1">
+													<option value="">선택</option>
+													<c:forEach var="companySize" items="${COMPANYSIZE }">
+                                                    	<c:choose>
+                                                        	<c:when test="${memCompany.SITESIZE eq companySize.codeval}">
+                                                            	<option selected label="${companySize.codename }" value="${companySize.codeval }"/>
+                                                         	</c:when>
+                                                         	<c:otherwise>
+                                                            	<option label="${companySize.codename }" value="${companySize.codeval }"/>
+                                                         	</c:otherwise>
+                                                      	</c:choose>
+                                                   	</c:forEach>
+												</select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -240,7 +271,19 @@
                                         <tr>
                                             <th><label for="isdelete">서비스상태</label></th>
                                             <td>
-                                              
+                                            	<select class="form-control float-left mr-3 validate phone1V phone-group" disabled style="height: 1.45rem" name="telno1" id="telno1">
+													<option value="">선택</option>
+													<c:forEach var="isDelete" items="${ISDELETE }">
+                                                    	<c:choose>
+                                                        	<c:when test="${memCompany.ISDELETE eq isDelete.codeval}">
+                                                            	<option selected label="${isDelete.codename }" value="${isDelete.codeval }"/>
+                                                         	</c:when>
+                                                         	<c:otherwise>
+                                                            	<option label="${isDelete.codename }" value="${isDelete.codeval }"/>
+                                                         	</c:otherwise>
+                                                      	</c:choose>
+                                                   	</c:forEach>
+												</select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -262,7 +305,19 @@
                                         <tr>
                                             <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
                                             <td class="border-top-0">
-                                                
+                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="mobile1" id="mobile1">
+													<option value="">선택</option>
+													<c:forEach var="fax" items="${FAX }">
+                                                    	<c:choose>
+                                                        	<c:when test="${memCompany.FAXTEL1 eq fax.codeval}">
+                                                            	<option selected label="${fax.codename }" value="${fax.codeval }"/>
+                                                         	</c:when>
+                                                         	<c:otherwise>
+                                                            	<option label="${fax.codename }" value="${fax.codeval }"/>
+                                                         	</c:otherwise>
+                                                      	</c:choose>
+                                                   	</c:forEach>
+												</select>
                                                 <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
                                                 <input type="text" class="form-control col-3 float-left validate phone3V" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 } ">
                                             </td>
@@ -347,6 +402,7 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script>
 	$(document).ready(function () {
+		
 		$('.date').datepicker({
 			keyboardNavigation:false,
 			forceParse:false,
@@ -366,6 +422,8 @@
 		         }
 		     }).open();
 		 });
+		 
+		 enableSubmit();
 	});
 	
 	</script>		

@@ -141,7 +141,7 @@
                                                 <div class="input-group">
                                                     <input type="text" class="form-control error required validate idV"  name="userid" id="userid" value="${user.USERID}">
                                                 </div>
-                                                <input type="hidden" class="form-control required validate checkV"  name="idcheck" id="idcheck" value="">
+                                                <input type="hidden" class="form-control"  name="idcheck" id="idcheck" value="">
                                             </td>
                                         </tr>
                                         <tr>
@@ -261,7 +261,11 @@
 		var test;
 		if(idcheck.length < 5){
 			if(check.val() != 0){
-				alert('5글자이상 입력해주세요 .');
+				text = '5글자 이상 입력해주세요.';
+            	$('#showMsg').empty();
+            	$('#showMsg').show();
+            	$('#showMsg').append(text);
+            	$('#userid').addClass('error');
 				check.val(0);
 			}
 		}else{

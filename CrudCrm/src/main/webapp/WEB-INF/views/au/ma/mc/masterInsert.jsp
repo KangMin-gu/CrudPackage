@@ -293,7 +293,7 @@
                                             <th><label for="adminpassword">비밀번호</label></th>
                                             <td>
                                                 <div class="input-group">                           
-                                            		<input type="text" class="form-control" id="adminpassword" name="adminpassword">
+                                            		<input type="password" class="form-control" id="adminpassword" name="adminpassword">
                                             	</div>
                                             </td>
                                         </tr>
@@ -359,7 +359,7 @@
                                             <th><label for="adminpasswordchk">비밀번호 확인</label></th>
                                             <td>
                                                 <div class="input-group">                                         
-                                            		<input type="text" class="form-control" id="adminpasswordchk" name="adminpasswordchk">
+                                            		<input type="password" class="form-control" id="adminpasswordchk" name="adminpasswordchk">
                                             	</div>
                                             </td>
                                         </tr>

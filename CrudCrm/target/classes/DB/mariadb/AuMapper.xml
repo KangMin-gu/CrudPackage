@@ -255,6 +255,10 @@
 		]]> 
 	</select>
 	
+	<update id="urPwdReset" parameterType="userDto">
+		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND USERNO=#{userno}
+	</update>
+	
 	<insert id="urPwdResetsend" parameterType="hashMap">
 		 INSERT INTO sys980010 
 		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, USERNO) 

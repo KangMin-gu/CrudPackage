@@ -100,8 +100,10 @@ public class CompanyServiceImpl implements CompanyService{
 		companyDto.setEdtuser(userNo);
 		
 		int siteid = companyDao.companyInsert(companyDto);
+		
 		companyDto.setSiteid(siteid);
 		String hash = encoder.encode(companyDto.getAdminpassword());		
+		
 		companyDto.setAdminpassword(hash);
 		companyDao.companyAdminInsert(companyDto);
 		
@@ -188,18 +190,18 @@ public class CompanyServiceImpl implements CompanyService{
 		String newPwd = temp.toString();
 		String hash = encoder.encode(newPwd);
 		String adminId = request.getParameter("adid");
-		int managerNo = Integer.parseInt(request.getParameter("mano"));
+		String managerNo = request.getParameter("mano");
 		
 		//admin 계정정보가져오기
-		Map<String, Object> adminInfo = urDao.getData(adminId);
+		Map<String, Object> adminInfo = urDao.getData(adminId); //접속자 정보 //크루드테스트 생성시 메일생성안됨.
 		Map<String, Object> sendPwdInfo = new HashMap<>();
-		
+		int adminSiteid = Integer.parseInt(adminInfo.get("SITEID").toString());
 		//리셋시킬 admin 계정정보
 		UserDto resetUserDto = new UserDto();
 		resetUserDto.setUserpassword(hash);
-		resetUserDto.setSiteid(siteId);
-		resetUserDto.setUserid(adminId);
-		
+		resetUserDto.setSiteid(adminSiteid);
+		resetUserDto.setUserno(Integer.parseInt(adminInfo.get("USERNO").toString()));
+		//담당자한테 mano 값으로 메일정보가져오기
 		//비밀번호 정보 업데이트
 		companyDao.adminPwdReset(resetUserDto);
 		
@@ -222,7 +224,7 @@ public class CompanyServiceImpl implements CompanyService{
 		
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");
-		mView.addObject("url","ma/company/"+siteId);
+		mView.addObject("url","ma/company/"+adminSiteid);
 		return mView;
 	}
 	

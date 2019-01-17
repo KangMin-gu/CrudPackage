@@ -286,7 +286,7 @@ public class AuServiceImpl implements AuService{
 		StringBuffer buf = new StringBuffer();
 		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
 		//초기화된 비밀번호 업데이트
-		auDao.urUpdate(resetUserDto);
+		auDao.userPwdReset(resetUserDto);
 		//초기화된 비밀번호 이메일테이블 인서트
 		sendPwdInfo.put("adminid",adminNo);
 		sendPwdInfo.put("userid",resetUserInfo.get("USERID"));
@@ -298,7 +298,7 @@ public class AuServiceImpl implements AuService{
 		sendPwdInfo.put("cstname",adminUserInfo.get("USERNAME"));
 		sendPwdInfo.put("fromemail",adminUserInfo.get("EMAIL"));
 		sendPwdInfo.put("userno", resetUserInfo.get("USERNO"));
-		auDao.userPwdReset(sendPwdInfo);
+		auDao.userPwdResetsend(sendPwdInfo);
 		
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");

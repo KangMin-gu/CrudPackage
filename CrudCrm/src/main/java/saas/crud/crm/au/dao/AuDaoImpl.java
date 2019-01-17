@@ -106,7 +106,13 @@ public class AuDaoImpl implements AuDao{
 	
 	//회원사 회원 비밀번호 리셋
 	@Override
-	public void userPwdReset(Map<String, Object> sendPwdInfo) {
-		session.insert("au.urPwdReset", sendPwdInfo);	
+	public void userPwdResetsend(Map<String, Object> sendPwdInfo) {
+		session.insert("au.urPwdResetsend", sendPwdInfo);	
+	}
+
+	@Override
+	public void userPwdReset(UserDto userDto) {
+		session.update("au.urPwdReset", userDto);
+		
 	}
 }

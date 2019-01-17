@@ -208,9 +208,9 @@
 	
 	<insert id="adminUserInsert" parameterType="companyDto">
 		INSERT INTO me800010 
-		(SITEID, USERID, USERNAME, USERPASSWORD, CHKAUTH, ENTERDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, MASTERYN ) 
+		(SITEID, USERID, USERNAME, USERPASSWORD, EMAIL, CHKAUTH, ENTERDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, MASTERYN ) 
 		VALUES 
-		(#{siteid}, #{adminid}, #{sitename}, #{adminpassword}, 20, NOW(), NOW(), #{owner}, NOW(), #{owner}, 1);
+		(#{siteid}, #{adminid}, #{sitename}, #{adminpassword}, #{email}, 20, NOW(), NOW(), #{owner}, NOW(), #{owner}, 1);
 	</insert>
 	
 	<insert id="adminPwdResetsend" parameterType="HashMap">
@@ -221,6 +221,6 @@
 	</insert>
 	
 	<update id="adminPwdReset" parameterType="userDto">
-		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND MASTERYN=1 AND USERID = #{userid}
+		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND MASTERYN=1 AND USERNO = #{userno}
 	</update>
 </mapper>

@@ -55,7 +55,7 @@
                         			</a>
                         		</div>
                         		<div class="w-100 text-right">
-									<button type="submit" class="btn btn-primary" data-style="zoom-in">검 색</button>
+									<button type="submit" class="btn btn-primary" data-style="zoom-in">검색</button>
 									<a href="javascript:void(0);" class="btn btn-primary resets">초기화</a> 
 								</div>
 							</div>

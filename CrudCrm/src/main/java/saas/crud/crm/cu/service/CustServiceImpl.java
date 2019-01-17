@@ -110,7 +110,7 @@ public class CustServiceImpl implements CustService {
 		int endRowNum = 10;
 		custVal.put("startRowNum",startRowNum);
 		custVal.put("endRowNum",endRowNum);
-//		mView.addObject("custService",svDao.svList(custVal));
+		mView.addObject("custService",svDao.svList(custVal));
 		//*****************************************************
 		return  mView;
 	}

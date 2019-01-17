@@ -39,7 +39,7 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>영업관리</h2>
+					<h2>영업 관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><strong>목록</strong></li>
 					</ol>
@@ -187,7 +187,7 @@
 									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 										<a href="/sales/post" class="btn btn-primary">추가</a>
 										<c:if test="${sessionScope.CHKAUTH eq 30 || sessionScope.CHKAUTH eq 20  }"> 
-										<Button class="btn btn-primary" onClick="goSalesDel()">삭 제</Button> 
+										<Button class="btn btn-primary" onClick="goSalesDel()">삭제</Button> 
 										</c:if>
 									</div>
 								</div>

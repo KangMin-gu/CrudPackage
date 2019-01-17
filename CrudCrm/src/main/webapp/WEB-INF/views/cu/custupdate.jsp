@@ -39,10 +39,10 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객관리</h2>
+					<h2>고객 관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
-						<li class="breadcrumb-item"><a href="/cust/view/${custUpdate.CUSTNO}">상세정보</a></li>
+						<li class="breadcrumb-item"><a href="/cust/view/${custUpdate.CUSTNO}">상세 정보</a></li>
 						<li class="breadcrumb-item active"><strong>수정</strong></li>
 					</ol>
 				</div>
@@ -62,7 +62,7 @@
 							
 							<div class="ibox">
 								<div class="ibox-title row">
-									<h4>기본정보</h4>
+									<h4>기본 정보</h4>
 								</div>
 								<div class="ibox-content row">								
 									
@@ -77,9 +77,9 @@
 											<Strong><span id="showMsg"></span></Strong>				
 	                          			</div>																		
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
-										<a class="btn btn-primary" href="/cust/view/${custUpdate.CUSTNO}">상 세</a>
-										<a href="/cust" class="btn btn-primary">목 록</a>
+											<Button type="submit" class="btn btn-primary submit" id="submit"   >저장</Button>
+										<a class="btn btn-primary" href="/cust/view/${custUpdate.CUSTNO}">상세</a>
+										<a href="/cust" class="btn btn-primary">목록</a>
 										</div>
 									</div>
 									
@@ -375,7 +375,7 @@
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
+															<select class="form-control" style="height: 1.45rem" name="custgrade" id="custgrade">
 																<option value="0" ${custUpdate.CUSTGRADE eq "0" ? "selected" :""}>선택</option>
 																<c:forEach var="custGrade" items="${CUSTGRADE }">
                                                       			<c:choose>
@@ -450,7 +450,7 @@
 													<tr>
 														<th>직업</th>
 														<td>
-															<input type="text" class="form-control validate allV" style="height: 1.52rem;" name="job" id="job"  value="${custUpdate.JOB}">
+															<input type="text" class="form-control validate allV" style="height: 1.45rem;" name="job" id="job"  value="${custUpdate.JOB}">
 														</td>
 													</tr>
 													<tr>
@@ -623,10 +623,10 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="w-100 text-right">
-											<Button type="submit" class="btn btn-primary submit" id="submit"   >저 장</Button>
-											<a href="/cust" class="btn btn-primary">목 록</a> 
-										</div>
+										<!-- <div class="w-100 text-right">
+											<Button type="submit" class="btn btn-primary submit" id="submit"   >저장</Button>
+											<a href="/cust" class="btn btn-primary">목록</a> 
+										</div> -->
 									</div>
 								</div>
 								</form:form>

@@ -34,7 +34,7 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>거래처관리</h2>
+					<h2>거래처 관리</h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><strong>목록</strong></li>
 					</ol>

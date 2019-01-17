@@ -98,7 +98,7 @@ public class CustDaoImpl implements CustDao {
 	@Override
 	public int custTabCampListCnt(Map<String, Object> searchVal) {
 		int res = session.selectOne("customer.custTabCampListCnt",searchVal);
-		return 0;
+		return res;
 	}
 	//고객 상세 탭 - 캠페인 리스트
 	@Override

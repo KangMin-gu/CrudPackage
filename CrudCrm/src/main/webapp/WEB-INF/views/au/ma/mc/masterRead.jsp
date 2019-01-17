@@ -57,10 +57,9 @@
                         
                         <div class="ibox-content row tooltip-demo">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                           		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                              		<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+                           		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" ><%-- 
+                              		<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> --%>
                                    	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
-                                   	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
                                    	<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>                                    
                                 </div>
                                 <div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
@@ -68,8 +67,9 @@
                             			<c:if test="${sessionScope.CHKAUTH eq '30' }">
                             				<a href="${pageContext.request.contextPath}/ma/company/post/${memCompany.SITEID}" class="btn btn-primary">수정</a>
 											<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+											<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">목록</a>
 										</c:if>
-									</form:form> 
+									</form:form>
 								</div>
                         	</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -282,11 +282,11 @@
                                         <div class="tab-content">
                                             <div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
                                                 <div class="panel-body">
+                                                	<div>
+                                                        <button class="btn btn-primary create" value="추가">추가</button>
+                                                    </div><br/>
                                                     <table class="table table-bordered">
                                                         <thead>
-                                                        	<div>
-                                                        		<button class="btn btn-primary create" value="추가">추가</button>
-                                                        	</div>
                                                             <tr>
                                                                 <th>라이센스명</th>
                                                                 <th>단가</th>

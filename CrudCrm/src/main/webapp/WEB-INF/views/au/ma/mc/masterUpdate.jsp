@@ -75,6 +75,7 @@
                             	<div class="w-100 text-right mb-2">
                                 	<a href="${pageContext.request.contextPath}/ma/company/${memCompany.SITEID}" class="btn btn-primary">취소</a>
                                 	<button class="btn btn-primary submit" disabled>저장</button>
+                                	<a href="${pageContext.request.contextPath}/ma/company" class="btn btn-primary">목록</a>
                             	</div>
                             </div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">

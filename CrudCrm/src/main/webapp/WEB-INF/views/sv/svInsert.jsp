@@ -78,6 +78,7 @@
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" disabled class="btn btn-primary submit" >저 장</Button>
 									<a href="/service" class="btn btn-primary">취소</a>
+									<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
 								</div>
 							</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">

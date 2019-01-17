@@ -58,7 +58,7 @@
     	}
       	
       	
-    	//거래처 상세 2탭 - 캠페인리스트
+    	//거래처 상세 4탭 - 캠페인리스트
     	function tabTargetCustCampList(pageNum){
     		debugger;
     		var custNo = $('#custno').val();

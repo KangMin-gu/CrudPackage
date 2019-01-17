@@ -44,10 +44,10 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객관리</h2> 
+					<h2>고객 관리</h2> 
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
-						<li class="breadcrumb-item active"><strong>상세정보</strong></li>
+						<li class="breadcrumb-item active"><strong>상세 정보</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -63,7 +63,7 @@
 							
 							<div class="ibox">
 								<div class="ibox-title row">
-									<h4>기본정보</h4>
+									<h4>기본 정보</h4>
 								</div>
 								
 								<div class="ibox-content row">
@@ -73,15 +73,14 @@
 										<form:form action="/cust/view/${custDetail.CUSTNO}" method="PUT">
 										<input type="hidden" name="custno" id="custno" value="${custDetail.CUSTNO}">
 										<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-
-											<a href="/cust" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
+											<!-- <a href="/cust" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> -->
 	                              			<a href="#" class="note btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
-	                              			<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="이메일"><i class="fa fa-envelope-o"></i></a>
 	                              			<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>
 	                          			</div>													
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>									
-											<Button type="submit" class="btn btn-primary">삭 제</Button>	
+											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수정</a>									
+											<Button type="submit" class="btn btn-primary">삭제</Button>
+											<a href="/cust" class="btn btn-primary">목록</a>	
 										</div>
 										</form:form>
 									</div>
@@ -158,23 +157,24 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;">  ${custDetail.EMAIL} &nbsp; &nbsp; &nbsp;											
+													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;">  ${custDetail.EMAIL} &nbsp; &nbsp;									
 														<c:choose>
 															<c:when test="${fn:trim(custDetail.EMAIL) eq ''}"></c:when>
 															<c:otherwise>
-																<a class="btn btn-primary dim" style="padding-top: 2px;padding-bottom: 2px;padding-left: 6px;padding-right: 6px;border-bottom-width: 0px;border-top-width: 0px;"><i class="fa fa-envelope-o"></a></i>
+																<!-- <a class="btn btn-default" style="padding-top: 2px;padding-bottom: 2px;padding-left: 6px;padding-right: 6px;border-bottom-width: 0px;border-top-width: 0px;"><i class="fa fa-envelope-o"></i></a> -->
+																<a href="#"><i class="fa fa-envelope-o" style="font-size:18px;"></i></a>
 															</c:otherwise>
 														</c:choose>											
 													</td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;">   ${custDetail.WRKURL} &nbsp; &nbsp; &nbsp;
+													<td style="padding-top: 8px;padding-bottom: 2px;height: 34px;">   ${custDetail.WRKURL} &nbsp; &nbsp; 
 														<c:choose>
 															<c:when test="${fn:trim(custDetail.WRKURL) eq ''}"></c:when>
 															<c:otherwise>
-																<a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a>
-																  
+																<%-- <a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a> --%>
+																<a href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" style="font-size:18px;"></i></a>  
 															</c:otherwise>
 														</c:choose>	
 													</td>
@@ -215,7 +215,7 @@
 								</div>
 								<div class="ibox mb-0">
 									<div class="ibox-title row border-0">
-										<h4>부가정보</h4>
+										<h4>부가 정보</h4>
 	                                <div class="ibox-tools">
 	                                    <a class="collapse-link"> <i class="fa fa-chevron-up"></i>  </a>
 	                                </div>
@@ -493,11 +493,11 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="w-100 text-right">
+										<%-- <div class="w-100 text-right">
 											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>
 											<Button type="submit" class="btn btn-primary">삭 제</Button>	
 											<a href="/cust" class="btn btn-primary">목 록</a>
-										</div>
+										</div> --%>
 									</div>
 								</div>
 								
@@ -513,7 +513,6 @@
 													<li><a class="nav-link" onClick="javascript:tabTargetCustSalesList(1);" data-toggle="tab" href="#tab2">영업</a></li>
 													<li><a class="nav-link" onClick="javascript:tabTargetContect(1);" data-toggle="tab" href="#tab3">접촉</a></li>
 													<li><a class="nav-link" onClick="javascript:tabTargetCustCampList(1);" data-toggle="tab" href="#tab4">캠페인</a></li>
-													<!-- <li><a class="nav-link" data-toggle="tab" href="#tab5">출처</a></li> -->
 												</ul>
 												<div class="tab-content">
 													<div role="tabpanel" id="tab1" class="tab-pane active overflow-x">
@@ -537,7 +536,7 @@
 																	<tr>
 																		 <th>서비스명</th>
                                         								 <th>접수유형</th>
-                                         								 <th>처리유형</th>
+                                         								 <th>접수매체</th>
                                         							  	 <th>고객명</th>
                                         								 <th>거래처명</th>
                                         								 <th>접수일</th>
@@ -549,15 +548,15 @@
 																<tbody>			
 																<c:forEach var="svList" items="${custService}"  >
 																	<tr>
-												 						<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.RCVNO }">${svList.RCVNAME}</a></td>
-                                        								<td>${svList.RCVTYPE_ }</td>
-                                        								<td>${svList.RACTCODE_ }</td>
-                                        								<td>${svList.CUSTNO_ }</td>
-                                        								<td>${svList.CLINO_ }</td>
-                                        								<td>${svList.RCVDATE_ }</td>
-                                        								<td>${svList.RCVOWNER_ }</td>
-                                        								<td>${svList.RACTOWNER_ }</td>
-                                        								<td>${svList.PRCSTATE_ }</td>
+												 						<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
+                                        								<td>${svList.SERVICETYPE_ }</td>
+                                        								<td>${svList.SERVICECHANNEL_ }</td>
+                                        								<td>${svList.CUSTNAME_ }</td>
+                                        								<td>${svList.CLINAME_ }</td>
+                                        								<td>${svList.RECEPTIONDATE_ }</td>
+                                        								<td>${svList.SERVICEOWNER_ }</td>
+                                        								<td>${svList.OWNER_ }</td>
+                                        								<td>${svList.SERVICESTEP_ }</td>
                                         							</tr>		
 																</c:forEach>																								
 																</tbody>
@@ -676,29 +675,6 @@
 															</div>
 														</div>
 													</div>
-													<!-- 출처 탭 보류 -->
-													<!-- <div role="tabpanel" id="tab5" class="tab-pane overflow-x">
-														<div class="panel-body">
-															<table class="table table-bordered">
-																<thead>
-																	<tr>
-																		<th>등록일</th>
-																		<th>출처명</th>
-																		<th>출처메모</th>
-																		<th>출처회원번호</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>2018/10/11</td>
-																		<td>출처명입니다</td>
-																		<td>출처메모입니다출처메모입니다출처메모입니다</td>
-																		<td>1568951615</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div> -->
 												</div>
 											</div>
 										</div>

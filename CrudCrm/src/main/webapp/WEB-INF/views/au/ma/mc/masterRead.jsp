@@ -221,7 +221,7 @@
                                         <tr>
                                             <th>비밀번호</th>
                                             <td>
-                                                <a href="javascript:adminPwdConfirm(${SITEID}, ${memCompany.ADMINID }, ${memCompany.OWNER })" class="btn btn-xs btn-primary" >비밀번호 초기화</a>
+                                                <a href="javascript:void(0)" onclick="adminPwdConfirm(${SITEID}, '${memCompany.ADMINID }', ${memCompany.OWNER })" class="btn btn-xs btn-primary" >비밀번호 초기화</a>
                                             </td>
                                         </tr>
                                         </c:if>

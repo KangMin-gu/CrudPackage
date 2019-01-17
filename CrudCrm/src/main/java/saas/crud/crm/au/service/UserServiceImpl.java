@@ -97,6 +97,8 @@ public class UserServiceImpl implements UserService{
 					request.getSession().setAttribute("cp2", menVal);
 				}else if(menVal.equals("43000")) {
 					request.getSession().setAttribute("cp3", menVal);
+				}else if(menVal.equals("44000")) {
+					request.getSession().setAttribute("cp4", menVal);
 				}else if(menVal.equals("50000")) {
 					request.getSession().setAttribute("vc", menVal);
 				}else if(menVal.equals("51000")) {

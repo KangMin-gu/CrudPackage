@@ -136,6 +136,7 @@ public class CompanyController {
 	@RequestMapping(value="/adminpwdreset/{siteId}", method=RequestMethod.GET)
 	public ModelAndView adminPwdReset (HttpServletRequest request, @PathVariable int siteId) {
 		ModelAndView mView = companyService.adminPwdReset(request, siteId);
+		mView.setViewName("au/myinforesult");
 		return mView;
 	}
 }

@@ -254,7 +254,7 @@
 		]]> 
 	</select>
 	
-	<insert id="urPwdReset" parameterType="hashMap">
+	<insert id="urPwdResetsend" parameterType="hashMap">
 		 INSERT INTO sys980010 
 		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER) 
 		 VALUES 

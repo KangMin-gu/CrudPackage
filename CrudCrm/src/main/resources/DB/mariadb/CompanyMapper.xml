@@ -80,6 +80,7 @@
      	,A.ISDELETE
      	,A.SITEMEMO
      	,(SELECT COUNT(*) FROM me810010 WHERE SITEID = A.SITEID) AS TOTALCNT
+     	,(SELECT USERID FROM me800010 WHERE SITEID = #{siteid} AND MASTERYN = 1) AS ADMINID
      	FROM ma900010 A
      	WHERE A.SITEID = #{siteid}
     </select>
@@ -210,10 +211,14 @@
 		(#{siteid}, #{adminid}, #{sitename}, #{adminpasswrod}, 20, NOW(), NOW(), #{owner}, NOW(), #{owner}, 1);
 	</insert>
 	
-	<insert id="adminPwdReset" parameterType="HashMap">
+	<insert id="adminPwdResetsend" parameterType="HashMap">
 		INSERT INTO sys980010 
 		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER) 
 		 VALUES 
 		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{userno}, NOW(), #{userno});
 	</insert>
+	
+	<update id="adminPwdReset" parameterType="userDto">
+		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND MASTERYN=1 AND USERID = #{userid}
+	</update>
 </mapper>

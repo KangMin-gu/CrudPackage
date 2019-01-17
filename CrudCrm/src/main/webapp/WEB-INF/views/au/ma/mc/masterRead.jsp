@@ -178,7 +178,7 @@
                                         <tr>
                                             <th>아이디</th>
                                             <td>
-                                                ${memCompany.FREGDATE_ }
+                                                ${memCompany.ADMINID }
                                             </td>
                                         </tr>
                                     </tbody>
@@ -396,10 +396,10 @@
 			openNewWindow(name,url,e,x,y);
 		});
 		
-		function adminPwdConfirm(siteId, adminId, managerId){
+		function adminPwdConfirm(siteId, adminId, managerNo){
 			var isValid = confirm("비밀번호를 정말 초기화 하시겠습니까?");
 			if(isValid){
-				location.href = "/adminpwdreset/"+siteId+"?adid="+adminId+"?maid="+managerId;
+				location.href = "/adminpwdreset/"+siteId+"?adid="+adminId+"?mano="+managerNo;
 				return true;
 			}else{
 				return false;

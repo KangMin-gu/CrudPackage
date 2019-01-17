@@ -377,7 +377,7 @@ public class SalesController {
 		schVal.put("comschno", comschno);
 				
 		String jsonStr = salesService.svcSalesSchInsertFromCom(schVal);		
-		System.out.println(jsonStr);
+		
 		return jsonStr;
 	}
 	
@@ -394,7 +394,7 @@ public class SalesController {
 		schVal.put("schno", schno);
 		
 		int res = salesService.svcSalesSchUpdate(schVal);
-		System.out.println("update move move move "+res);	
+		
 		return res;
 	}
 	
@@ -444,7 +444,7 @@ public class SalesController {
 		schVal.put("schno", schno);
 			
 		int res = salesService.svcSalesSchUpdate(schVal);
-		System.out.println("update2222222 move move move "+res);			
+			
 		return res;
 	}
 	

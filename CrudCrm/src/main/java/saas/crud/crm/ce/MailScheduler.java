@@ -109,7 +109,7 @@ public class MailScheduler {
 				sb.append(siteId);
 				sb.append("\' target='_blank'>[수신거부]</a> 를 click 해주시기 바랍니다.</p><br>");
 			}
-			if(userNo != null) {
+			else if(userNo != null) {
 				// 내부통지용
 				sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/bootstrap.min.css\" type=\"text/css\"><link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/style.css\" type=\"text/css\"><title>웹페이지 제목</title> </head> <body><img src=\"http://125.129.242.156:8888/mail/check?emaillogid=");
 				sb.append(emailLogId);
@@ -119,7 +119,17 @@ public class MailScheduler {
 				sb.append(userNo);
 				sb.append("\" width=\"0\" height=\"0\" border=\"0\"  />");
 				sb.append(content);
+			}else {
+				sb.append("<html lang='ko'> <!-- 휴먼랭귀지 --> <head> <meta charset='utf-8'> <!-- 문자셋 --> <link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/bootstrap.min.css\" type=\"text/css\"><link rel=\"stylesheet\" href=\"http://125.129.242.156:8888/resources/css/style.css\" type=\"text/css\"><title>웹페이지 제목</title> </head> <body><img src=\"http://125.129.242.156:8888/mail/check?emaillogid=");
+				sb.append(emailLogId);
+				sb.append("&SITEID=");
+				sb.append(siteId);
+				sb.append("&USERNO=");
+				sb.append(userNo);
+				sb.append("\" width=\"0\" height=\"0\" border=\"0\"  />");
+				sb.append(content);
 			}
+			
 			
 			sb.append("</body></html>");
 			

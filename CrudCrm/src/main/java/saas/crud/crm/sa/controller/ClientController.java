@@ -69,7 +69,7 @@ public class ClientController {
 	@RequestMapping(value="/sales/client/view/tab/sales",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String,Object> authcliTabSales(HttpServletRequest request) {
-		System.out.println("@@2TAB");
+		
 		Map<String,Object> salesTab = salesService.svcCliSalesList(request);
 		return salesTab;
 	}	

@@ -188,26 +188,27 @@ public class CompanyServiceImpl implements CompanyService{
 		String newPwd = temp.toString();
 		String hash = encoder.encode(newPwd);
 		String adminId = request.getParameter("adid");
-		String managerId = request.getParameter("maid");
-		//리셋시킬 admin 계정정보
-		UserDto resetUserDto = new UserDto();
-		resetUserDto.setUserpassword(hash);
-		resetUserDto.setSiteid(siteId);
-		resetUserDto.setUserid(adminId);
-		resetUserDto.setMasteryn(1);
-		
-		//비밀번호 정보 업데이트
+		int managerNo = Integer.parseInt(request.getParameter("mano"));
 		
 		//admin 계정정보가져오기
 		Map<String, Object> adminInfo = urDao.getData(adminId);
 		Map<String, Object> sendPwdInfo = new HashMap<>();
 		
+		//리셋시킬 admin 계정정보
+		UserDto resetUserDto = new UserDto();
+		resetUserDto.setUserpassword(hash);
+		resetUserDto.setSiteid(siteId);
+		resetUserDto.setUserid(adminId);
+		
+		//비밀번호 정보 업데이트
+		companyDao.adminPwdReset(resetUserDto);
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
 
 		//초기화된 비밀번호 이메일테이블 인서트
-		sendPwdInfo.put("userno", managerId);
+		sendPwdInfo.put("managerno", managerNo);
+		sendPwdInfo.put("userno", Integer.parseInt(adminInfo.get("USERNO").toString()));
 		sendPwdInfo.put("userid",adminInfo.get("USERID"));
 		sendPwdInfo.put("siteid",siteId);
 		sendPwdInfo.put("toemail",adminInfo.get("EMAIL"));
@@ -217,7 +218,7 @@ public class CompanyServiceImpl implements CompanyService{
 		sendPwdInfo.put("cstname",adminInfo.get("USERNAME"));
 		sendPwdInfo.put("fromemail","crudsystem@crudsystem.co.kr");
 		
-		companyDao.adminPwdReset(sendPwdInfo);
+		companyDao.adminPwdResetsend(sendPwdInfo);
 		
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");

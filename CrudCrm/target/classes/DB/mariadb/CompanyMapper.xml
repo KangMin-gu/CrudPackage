@@ -213,10 +213,14 @@
 		(#{siteid}, #{adminid}, #{sitename}, #{adminpassword}, 20, NOW(), NOW(), #{owner}, NOW(), #{owner}, 1);
 	</insert>
 	
-	<insert id="adminPwdReset" parameterType="HashMap">
+	<insert id="adminPwdResetsend" parameterType="HashMap">
 		INSERT INTO sys980010 
-		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER) 
+		 (SITEID, CSTNAME, USERNAME, FROMEMAIL, TOEMAIL, SUBJECT, CONTENT, RLTDATE, REGDATE, REGUSER, EDTDATE, EDTUSER, USERNO) 
 		 VALUES 
-		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{userno}, NOW(), #{userno});
+		 (#{siteid}, #{cstname}, #{username}, #{fromemail}, #{toemail}, #{subject}, #{content}, NOW(), NOW(), #{managerno}, NOW(), #{managerno}, #{userno});
 	</insert>
+	
+	<update id="adminPwdReset" parameterType="userDto">
+		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND MASTERYN=1 AND USERID = #{userid}
+	</update>
 </mapper>

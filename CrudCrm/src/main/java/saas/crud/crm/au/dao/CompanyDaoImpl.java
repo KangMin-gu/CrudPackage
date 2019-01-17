@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import saas.crud.crm.au.dto.CompanyDto;
+import saas.crud.crm.au.dto.UserDto;
 
 @Repository
 public class CompanyDaoImpl implements CompanyDao{
@@ -76,9 +77,14 @@ public class CompanyDaoImpl implements CompanyDao{
 	}
 
 	@Override
-	public void adminPwdReset(Map<String, Object> sendPwdInfo) {
-		session.insert("company.adminPwdReset", sendPwdInfo);
+	public void adminPwdResetsend(Map<String, Object> sendPwdInfo) {
+		session.insert("company.adminPwdResetsend", sendPwdInfo);
 		
+	}
+
+	@Override
+	public void adminPwdReset(UserDto resetUserDto) {
+		session.update("company.adminPwdReset", resetUserDto);
 	}
 	
 	

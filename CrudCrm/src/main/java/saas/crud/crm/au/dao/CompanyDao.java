@@ -16,5 +16,6 @@ public interface CompanyDao {
 	public void companyDelete(CompanyDto CompanyDto);
 	public void companyLicenseInsert(Map<String,Object> data);
 	public void companyAdminInsert(CompanyDto companyDto);
-	public void adminPwdReset(Map<String, Object> sendPwdInfo);
+	public void adminPwdResetsend(Map<String, Object> sendPwdInfo);
+	public void adminPwdReset(UserDto resetUserDto);
 }

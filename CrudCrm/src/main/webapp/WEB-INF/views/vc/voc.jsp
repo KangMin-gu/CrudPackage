@@ -17,14 +17,14 @@
 
 <body>
 	<div id="wrapper">
-
+	<div class="col-lg-12" style="padding-left: 0px;padding-right: 0px;">
 		<div id="page-wrapper" class="gray-bg">
 			<div class="ibox-top">
 				<div class="ibox">
 					<div class="ibox-content clearfix">
 						<ul class="top-btn">
 							<li>유입경로</li>
-							<li><input type="text" class="form-control"></li>
+							<li><input type="text" class="form-control" id="test" onchange="test(this)"></li>
 							<li class="mr-2"><input type="text" class="form-control"></li>
 							<li class="liBtn"><button class="btn btn-primary btn-sm">
 									걸기 <i class="fa fa-phone"></i>
@@ -119,185 +119,84 @@
 				</div>
 			</div>
 			<!-- S: 고객 등록 ppt p02~p05 -->
-			<div class="wrapper wrapper-content">
-				<div class="ibox-left">
+			<div class="wrapper wrapper-content row">
+				<div class="ibox-left col-lg-6">
 					<div class="ibox clearfix">
-						<div class="ibox-content left-cont pt-0">
+						<div class="ibox-content pt-0 row">
 							<div class="ibox-title">
-								<h4>발신자정보 조회</h4>
+								<h4>고객정보 조회</h4>
 							</div>
-							<table class="table table-bordered mb-2">
-								<colgroup>
-									<col style="width: 70px; background: #fafafa;">
-									<col style="width: auto;">
-									<col style="width: 70px; background: #fafafa;">
-									<col style="width: auto;">
-								</colgroup>
-								<tbody>
-									<tr>
-										<th>회원번호</th>
-										<td><input type="text" class="form-control" disabled></td>
-										<th>회원성명</th>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>주민번호</th>
-										<td><input type="text" class="form-control"></td>
-										<th>이메일</th>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>전화번호</th>
-										<td><input type="text" class="form-control"></td>
-										<th>휴대폰</th>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>회원구분</th>
-										<td><select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select></td>
-										<th>회원성향</th>
-										<td><select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select></td>
-									</tr>
-									<tr>
-										<th>의뢰부서</th>
-										<td><input type="text" class="form-control"></td>
-										<th>담당자</th>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>협력부서</th>
-										<td><input type="text" class="form-control"></td>
-										<th>담당자</th>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>주소</th>
-										<td colspan="3"><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>고객정보</th>
-										<td colspan="3"><textarea name="" id=""
-												class="form-control" style="resize: none; height: 7.6em;"></textarea>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div class="col-lg-12">
+								<table class="table table-bordered mb-2">
+									<colgroup>
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>발신번호</th>
+											<td><input type="text" class="form-control" disabled></td>
+											<th>고객명</th>
+											<td><input type="text" class="form-control"></td>
+											<th>고객구분</th>
+											<td><select class="form-control"></select></td>
+										</tr>
+										<tr>
+											<th>집전화</th>
+											<td><input type="text" class="form-control"></td>
+											<th>관련고객</th>
+											<td><input type="text" class="form-control"></td>
+											<th>고객등급</th>
+											<td><input type="text" class="form-control"></td>
+											
+										</tr>
+									</tbody>
+								</table>
+								<table class="table table-bordered mb-2">
+									<colgroup>
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>이메일</th>
+											<td><input type="text" class="form-control"></td>
+										</tr>
+										<tr>	
+											<th>고객주소</th>
+											<td class="border-top-0">
+												<div class="input-group col-lg-3 pl-0 float-left">
+													<input type="text" class="form-control daumzip" name="homaddr1" id="homaddr1" readonly > 
+													<span class="input-group-addon"> <a href="#" ><i class="fa fa-search daumzip" id="homaddr1" ></i></a></span>
+												</div> 
+												<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="homaddr2" id="homaddr2" readonly>
+												<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="homaddr3" id="homaddr3">
+											</td>
+										</tr>
+										<tr>	
+											<th>배송지주소</th>
+											<td class="border-top-0">
+												<div class="input-group col-lg-3 pl-0 float-left">
+													<input type="text" class="form-control daumzip" name="wrkaddr1" id="wrkaddr1" readonly > 
+													<span class="input-group-addon"> <a href="#" ><i class="fa fa-search daumzip" id="wrkaddr1" ></i></a></span>
+												</div> 
+												<input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="wrkaddr2" id="wrkaddr2" readonly>
+												<input type="text" class="form-control float-left col-lg-4 mt-sx-1 validate allV" name="wrkaddr3" id="wrkaddr3">
+											</td>
+										</tr>
+										<tr>
+											<th>이력 및 메모</th>
+											<td><textarea rows="5" cols="120"></textarea></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 							<div class="btn-area text-right">
 								<button class="btn btn-primary btn-sm">기본정보수정</button>
-							</div>
-						</div>
-						<div class="ibox-content right-cont pt-0">
-							<div class="ibox-title">
-								<h4>고객 상담접수</h4>
-							</div>
-							<table class="table table-bordered mb-2">
-								<colgroup>
-									<col style="width: 70px; background: #fafafa;">
-									<col style="width: auto;">
-									<col style="width: 70px; background: #fafafa;">
-									<col style="width: auto;">
-								</colgroup>
-								<tbody>
-									<tr>
-										<th>회원번호</th>
-										<td><input type="text" class="form-control" disabled></td>
-										<th>연락처</th>
-										<td><input type="text" class="form-control"></td>
-									</tr>
-									<tr>
-										<th>회원성명</th>
-										<td><input type="text" class="form-control"></td>
-										<th>채널구분</th>
-										<td><select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select></td>
-									</tr>
-									<tr>
-										<th>통화구분</th>
-										<td><select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select></td>
-										<th>처리상태</th>
-										<td><select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select></td>
-									</tr>
-									<tr>
-										<th>상담유형</th>
-										<td style="border-right: none;"><select
-											class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select> <select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select> <select class="form-control">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select></td>
-										<td colspan="2"
-											style="background: #ffffff; border-left: none;"><textarea
-												name="" id="" class="form-control"
-												style="resize: none; height: 4.5em;"></textarea></td>
-									</tr>
-									<tr>
-										<th>상담예약</th>
-										<td colspan="3">
-											<div class="input-group date float-left"
-												style="width: 120px; margin-right: 5px;">
-												<span class="input-group-addon"> <i
-													class="fa fa-calendar"></i>
-												</span> <input type="text" class="form-control" value="">
-											</div> <select class="form-control float-left" style="width: 70px;">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select><span class="float-left" style="margin-right: 5px;">시</span> <select
-											class="form-control float-left" style="width: 70px">
-												<option>option 2</option>
-												<option>option 3</option>
-												<option>option 4</option>
-										</select>분
-										</td>
-									</tr>
-									<tr>
-										<th colspan="2" style="text-align: center;">문의내용</th>
-										<th colspan="2" style="text-align: center;">답변내용</th>
-									</tr>
-									<tr>
-										<td colspan="2" style="background: #ffffff;"><textarea
-												name="" id="" class="form-control"
-												style="resize: none; height: 4.5em;"></textarea></td>
-										<td colspan="2" style="background: #ffffff;"><textarea
-												name="" id="" class="form-control"
-												style="resize: none; height: 4.5em;"></textarea></td>
-									</tr>
-									<tr>
-										<th>접수</th>
-										<td colspan="3">2017-03-16 / 18 : 50 : 17</td>
-									</tr>
-								</tbody>
-							</table>
-							<div class="btn-area text-right">
-								<button class="btn btn-primary btn-sm">저장</button>
-								<button class="btn btn-primary btn-sm">초기화</button>
 							</div>
 						</div>
 						<div class="ibox-content bot-cont">
@@ -388,6 +287,29 @@
 														<td>완료</td>
 														<td>주차관리</td>
 													</tr>
+													<tr>
+														<td>5</td>
+														<td>2018/11/11 12:18:15</td>
+														<td>17088694</td>
+														<td>김**</td>
+														<td>032-123-1231</td>
+														<td>일반</td>
+														<td>상담됨 ></td>
+														<td>완료</td>
+														<td>주차관리</td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>2018/11/11 12:18:15</td>
+														<td>17088694</td>
+														<td>김**</td>
+														<td>032-123-1231</td>
+														<td>일반</td>
+														<td>상담됨 ></td>
+														<td>완료</td>
+														<td>주차관리</td>
+													</tr>
+													
 												</tbody>
 											</table>
 										</div>
@@ -620,11 +542,7 @@
 														<td>ㅁㄴㅇㅁㅇㅁㄴㅇㅁㄴㅇ</td>
 														<td>네글자임</td>
 													</tr>
-													<tr>
-														<td>2018/09/12</td>
-														<td>ㅁㄴㅇㅁㅇㅁㄴㅇㅁㄴㅇ</td>
-														<td>네글자임</td>
-													</tr>
+													
 												</tbody>
 											</table>
 										</div>
@@ -633,152 +551,80 @@
 							</div>
 						</div>
 					</div>
+					
 
 				</div>
-				<div class="ibox-right">
-					<div class="ibox clearfixt ml-0">
-						<div class="ibox-title">
-							<h4>고객정보</h4>
-						</div>
-						<div class="ibox-content">
-							<ul class="pl-0 mb-2 right-ul">
-								<li class="mr-2">
-									<div class="i-checks">
-										<label>회원번호 <input type="radio" name=""><i></i></label>
-									</div>
-								</li>
-								<li class="mr-2">
-									<div class="i-checks">
-										<label>회원성명 <input type="radio" name=""><i></i></label>
-									</div>
-								</li>
-								<li class="mr-2">
-									<div class="i-checks">
-										<label>전화번호 <input type="radio" name=""><i></i></label>
-									</div>
-								</li>
-								<li class="mr-2">
-									<div class="i-checks mr-2">
-										<label>주민번호 <input type="radio" name=""><i></i></label>
-									</div>
-								</li>
-								<li><input type="text" class="form-control"></li>
-							</ul>
-							<div class="table-area">
-								<div class="table-box">
-									<table class="table table-bordered">
-										<colgroup>
-											<col style="width: 50px;" />
-											<col style="width: 100px;" />
-											<col style="width: 100px;" />
-											<col style="width: 150px;" />
-											<col style="width: auto;" />
-										</colgroup>
-										<thead>
-											<tr>
-												<th width="50px">No.</th>
-												<th width="100px">회원번호</th>
-												<th width="100px">이름</th>
-												<th width="150px">주민번호</th>
-												<th width="auto">주소</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-											<tr>
-												<td>1</td>
-												<td>15654654</td>
-												<td>이름입니다</td>
-												<td>123456-7894561</td>
-												<td>주소입니다주소입니다주소입니다주소입니다주소입니다주소입니다</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+				<div class="ibox-left col-lg-6">
+					<div class="ibox clearfix">
+						<div class="ibox-content pt-0 row">
+							<div class="ibox-title">
+								<h4>고객정보 조회</h4>
 							</div>
-						</div>
-					</div>
-					<div class="ibox-content bot-cont">
-						<div class="tabs-container">
-							<ul class="nav nav-tabs clearfix d-inline-block w-100"
-								role="tablist">
-								<li><a class="nav-link active" data-toggle="tab"
-									href="#rightTab1">통합 검색</a></li>
-								<li><a class="nav-link" data-toggle="tab" href="#rightTab2">고객
-										상세정보</a></li>
-								<li><a class="nav-link" data-toggle="tab" href="#rightTab3">상담
-										상세정보</a></li>
-								<div class="btn-area float-right">
-									<button class="btn btn-primary btn-sm">정보수정</button>
-								</div>
-							</ul>
-							<div class="tab-content">
-								<div role="tabpanel" id="rightTab1" class="tab-pane active">
-									<div class="panel-body clearfix">
-										<!-- <div class="panel-left">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-addon">
-                                                <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                            </span>
-                                        </div>
-                                    </div> -->
-									</div>
-								</div>
-								<div role="tabpanel" id="rightTab2" class="tab-pane">
-									<div class="panel-body"></div>
-								</div>
-								<div role="tabpanel" id="rightTab3" class="tab-pane">
-									<div class="panel-body"></div>
-								</div>
+							<div class="col-lg-12">
+							
+								<table class="table table-bordered mb-2">
+									<colgroup>
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+									<tr>
+										<th>상담구분</th>
+										<td><input type="radio" /></td>
+										<th>상담템플릿</th>
+										<td><select></select></td>
+									</tr>
+									</tbody>
+								</table>
+								<table class="table table-bordered mb-2">
+									<colgroup>
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>상담유형</th>
+											<td><select></select></td>
+											<td><select></select></td>
+											<td><select></select></td>
+										</tr>
+										<tr>
+											<th>접수제품</th>
+											<td><input type="text" class="form-control"></td>
+											<td><input type="text" class="form-control"></td>
+											<td><input type="text" class="form-control"><button></button></td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="table table-bordered mb-2">
+									<colgroup>
+										<col style="width: 100px; background: #fafafa;">
+										<col style="width: auto;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th>접수내용</th>
+											<td><textarea rows="5" cols="120"></textarea></td>
+										</tr>
+										<tr>
+											<th>상담내용</th>
+											<td><textarea rows="15" cols="120"></textarea></td>
+										</tr>
+										<tr>
+											<th>상담결과</th>
+											<td><input type="radio" /></td>
+										</tr>
+										<tr>
+											<th>이력 및 메모</th>
+											<td><textarea rows="5" cols="120"></textarea></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="btn-area text-right">
+								<button class="btn btn-primary btn-sm">저장</button>
 							</div>
 						</div>
 					</div>
@@ -827,22 +673,15 @@
 
 		</div>
 	</div>
+	</div>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
+<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-        $(document).ready(function () {
-            // radioBox
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-            // datePicker
-            $('.input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
+
+        
+        $('#test').change(function(){
+        	alert("test");
         });
 </script>
 	<!-- E: 추가 js -->

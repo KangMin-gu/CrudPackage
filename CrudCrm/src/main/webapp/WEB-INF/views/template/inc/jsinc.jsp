@@ -44,3 +44,8 @@
 	<!--  crud 유효성 js -->
 <script
 	src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+<!-- socket js -->
+<script
+	src="${pageContext.request.contextPath}/resources/crud/crud_socket.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/sockjs.js"></script>	

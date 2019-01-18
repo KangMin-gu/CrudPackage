@@ -32,40 +32,42 @@ public class NoteCountHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("Notice Alarm 접속 ID : "+ session.getId());
+		System.out.println("Notice Alarm 접속 ID : "+ session.getId());
 		list.add(session);
 
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	/*	String ntCountKey = message.getPayload();
+		String ntCountKey = message.getPayload();
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> maps = mapper.readValue(ntCountKey, new TypeReference<Map<String, Object>>() {});
 
 		if(maps.size() != 0){
 
-			int receiver =  Integer.parseInt((String) maps.get("userid"));
-			int siteid =  Integer.parseInt((String) maps.get("siteid"));
+			int userNo =  Integer.parseInt(maps.get("userNo").toString());
+			int siteId =  Integer.parseInt(maps.get("siteId").toString());
 
 			NoteDto ntdto = new NoteDto();
-			ntdto.setSiteid(siteid);
-			//ntdto.setReceiver(receiver);
-
+			ntdto.setSiteid(siteId);
+			ntdto.setUserno(userNo);
+			
 			//int count = ntService.aram(ntdto);
 			//String aram = String.valueOf(count);
-
+			String aram = "5";
 			for(WebSocketSession s : list){
 
 				if(s.getId().equals(session.getId())){
-				//	s.sendMessage(new TextMessage(aram));
+					s.sendMessage(new TextMessage(aram));
 				}
 			}
-		}*/
+		}
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		logger.info("Notice Alarm Disconnected ID : "+ session.getId());
+		System.out.println("Notice Alarm Disconnected ID : "+ session.getId());
 		list.remove(session);
 	}
 }

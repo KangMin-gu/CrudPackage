@@ -21,18 +21,20 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import saas.crud.crm.nt.dto.NoteDto;
+import saas.crud.crm.nt.service.NoteService;
 
 
 @Component
 public class NoteCountHandler extends TextWebSocketHandler{
+	
+	@Autowired
+	private NoteService ntService;
 	
 	private static List<WebSocketSession> list = new ArrayList<WebSocketSession>();
 	private static final Logger logger = LoggerFactory.getLogger(NoteCountHandler.class);
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("Notice Alarm 접속 ID : "+ session.getId());
-		System.out.println("Notice Alarm 접속 ID : "+ session.getId());
 		list.add(session);
 
 	}
@@ -48,13 +50,12 @@ public class NoteCountHandler extends TextWebSocketHandler{
 			int userNo =  Integer.parseInt(maps.get("userNo").toString());
 			int siteId =  Integer.parseInt(maps.get("siteId").toString());
 
-			NoteDto ntdto = new NoteDto();
-			ntdto.setSiteid(siteId);
-			ntdto.setUserno(userNo);
+			NoteDto ntDto = new NoteDto();
+			ntDto.setSiteid(siteId);
+			ntDto.setUserno(userNo);
 			
-			//int count = ntService.aram(ntdto);
-			//String aram = String.valueOf(count);
-			String aram = "5";
+			int count = ntService.noteCount(ntDto);
+			String aram = String.valueOf(count);
 			for(WebSocketSession s : list){
 
 				if(s.getId().equals(session.getId())){
@@ -66,8 +67,6 @@ public class NoteCountHandler extends TextWebSocketHandler{
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		logger.info("Notice Alarm Disconnected ID : "+ session.getId());
-		System.out.println("Notice Alarm Disconnected ID : "+ session.getId());
 		list.remove(session);
 	}
 }

@@ -1,44 +1,40 @@
 //내부통지 알람
 function send_message(){
 
-    var sock = new SockJS("http://localhost/noteCount");
+    var sock = new SockJS("http://211.233.81.190/noteCount");
     sock.onopen = function(evt) {
-        console.log("open");
         timerNote();
     };
 
     sock.onmessage = function(evt) {
-        var alarmNum = evt.data;
-        console.log("alarmNum"+evt.data	);
-     /*   if(alarmNum != 0){
+        var alarmNum = evt.data;   
+      
+        if(alarmNum != 0){        	
             $("#alarm").text(evt.data);
+            $('#dropClick span').show();
         }else {
-            $("#alarm").text("");
-        }*/
+        	$('#dropClick span').hide();
+        }
     };
 
     sock.onclose = function(evt) {
-        console.log("close");
         sock.close;
     };
 
     sock.onerror = function(evt) {
-        console.log("error");
         sock.close
     };
 
     function timerNote(){
         var wsSiteid = $("#hiddenSiteId").val();
         var wsUserNo = $("#hiddenUserNo").val();
-        var countVal = {userNo:	wsUserNo,siteId: wsSiteid};
-        console.log(JSON.stringify(countVal));
+        var countVal = {userNo:	wsUserNo,siteId: wsSiteid};        
         sock.send(JSON.stringify(countVal));
     }
     
     //내부통지 알림 1분마다 실행
     setInterval(function(){
-        timerNote();
-        console.log("siteid" + $("#hiddenSiteId").val());
+        timerNote();        
     }, 10000);
 }
     //내부통지 알람 MG

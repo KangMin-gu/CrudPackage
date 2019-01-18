@@ -216,6 +216,12 @@ public class NoteDaoImpl implements NoteDao{
 		Map<String,Object> trash = session.selectOne("note.trashDetail",noteVal);
 		return trash;
 	}
+	//통지안읽은갯수
+	@Override
+	public int noteCount(NoteDto ntDto) {
+		int aram = session.selectOne("note.count", ntDto);
+		return aram;
+	}
 	
 	
 	

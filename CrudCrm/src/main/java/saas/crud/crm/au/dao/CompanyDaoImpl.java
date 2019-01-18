@@ -86,6 +86,12 @@ public class CompanyDaoImpl implements CompanyDao{
 	public void adminPwdReset(UserDto resetUserDto) {
 		session.update("company.adminPwdReset", resetUserDto);
 	}
+
+	@Override
+	public Map<String,Object> licenseCnt(Map<String, Object> param) {
+
+		return session.selectOne("company.licenseCnt",param);
+	}
 	
 	
 

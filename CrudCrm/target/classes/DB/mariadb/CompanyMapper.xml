@@ -5,8 +5,11 @@
     <select id="list" parameterType="hashMap" resultType="hashMap">
      	SELECT * FROM (
      	SELECT 
-     	A.SITENAME,A.SITEID,A.PRSDNAME,A.BSNO,CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) AS MOBILE
-     	,A.BSTYPE,DATE_FORMAT(A.FREGDATE,'%Y-%m-%d') AS FREGDATE
+     	A.SITENAME,A.SITEID,A.PRSDNAME
+     	,REPLACE(CONCAT(A.BSNO1,'-',A.BSNO2,'-',A.BSNO3),'--','') AS BSNO
+     	,REPLACE(CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3),'--','') AS MOBILE
+     	,A.BSTYPE
+     	,IF(DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')='1900-01-01','',DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')) AS FREGDATE 
      	,CASE WHEN A.SITESIZE = '1' THEN '대기업'
      		  WHEN A.SITESIZE = '2' THEN '중견기업'
      		  WHEN A.SITESIZE = '3' THEN '중소기업'
@@ -18,10 +21,10 @@
      	FROM ma900010 A,(SELECT @RNUM := 0) R
      	WHERE A.ISDELETE = 0
      	<if test ="strDate != null">
-     		AND IFNULL(A.FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
+     		AND IFNULL(A.FREGDATE,'1900-01-01')<![CDATA[>=]]> #{strDate}
      	</if>
      	<if test ="endDate != null">
-     		AND IFNULL(A.FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
+     		AND IFNULL(A.FREGDATE,'1900-01-01') <![CDATA[<=]]> #{endDate}
      	</if>
      	<if test ="sitename != null">
      		AND A.SITENAME LIKE CONCAT('%',#{sitename},'%')
@@ -59,12 +62,19 @@
     
     <select id="detail" parameterType="companyDto" resultType="hashMap">
      	SELECT 
-     	A.SITEID,A.SITENAME,A.BSNO,A.INCNO
+     	A.SITEID,A.SITENAME
+     	,A.BSNO1,A.BSNO2,A.BSNO3
+     	,REPLACE(CONCAT(A.BSNO1,'-',A.BSNO2,'-',A.BSNO3),'--','') AS BSNO
+     	,REPLACE(CONCAT(IFNULL(A.INCNO1,1),'-',A.INCNO2),'1-','') AS INCNO
+     	,A.INCNO1,A.INCNO2
      	,A.ADDR1,A.ADDR2,A.ADDR3
      	,A.PRSDNAME
      	,A.MOBILE1,A.MOBILE2,A.MOBILE3
+     	,REPLACE(CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3),'--','') AS MOBILE
      	,A.FAXTEL1,A.FAXTEL2,A.FAXTEL3
+     	,REPLACE(CONCAT(A.FAXTEL1,'-',A.FAXTEL2,'-',A.FAXTEL3),'--','') AS FAXTEL
      	,A.TELNO1,A.TELNO2,A.TELNO3
+     	,REPLACE(CONCAT(A.TELNO1,'-',A.TELNO2,'-',A.TELNO3),'--','') AS TELNO
      	,A.EMAIL
      	,CASE WHEN A.SITESIZE = '1' THEN '대기업'
      		  WHEN A.SITESIZE = '2' THEN '중견기업'
@@ -74,7 +84,8 @@
      	,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
      	,A.OWNER 
      	,A.COTYPE,A.BSCOND,A.BSTYPE
-     	,DATE_FORMAT(A.FREGDATE,'%Y-%m-%d') AS FREGDATE_ ,A.SITELOGO
+     	,IF(DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')='1900-01-01','',DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')) AS FREGDATE_ 
+     	,A.SITELOGO
      	,CASE WHEN A.ISDELETE = '0' THEN '사용'
      		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE_
      	,A.ISDELETE
@@ -90,8 +101,11 @@
     UPDATE ma900010
     SET 
     SITENAME = #{sitename}
-    ,BSNO = #{bsno}
-    ,INCNO = #{incno}   
+    ,BSNO1 = #{bsno1}
+    ,BSNO2 = #{bsno2}
+    ,BSNO3 = #{bsno3}
+    ,INCNO1 = #{incno1}
+    ,INCNO2 = #{incno2}   
     ,ADDR1 = #{addr1}
     ,ADDR2 = #{addr2}
     ,ADDR3 = #{addr3}
@@ -125,8 +139,11 @@
     INSERT INTO ma900010
     (
      SITENAME 
-    ,BSNO
-    ,INCNO
+    ,BSNO1
+    ,BSNO2
+    ,BSNO3
+    ,INCNO1
+    ,INCNO2
     ,ADDR1
     ,ADDR2
     ,ADDR3
@@ -156,12 +173,15 @@
     ,SITELOGO
     )VALUES(
     #{sitename}
-    ,#{bsno}
-    ,#{incno}
+    ,#{bsno1}
+    ,#{bsno2}
+    ,#{bsno3}
+    ,#{incno1}
+    ,#{incno2}
     ,#{addr1}
     ,#{addr2}
     ,#{addr3}
-    ,#{fregdate}
+    ,IF(#{fregdate}='','1900-01-01',#{fregdate})
     ,#{prsdname}
     ,#{mobile1}
     ,#{mobile2}
@@ -223,4 +243,8 @@
 	<update id="adminPwdReset" parameterType="userDto">
 		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND MASTERYN=1 AND USERID = #{userid}
 	</update>
+	
+	<select id="licenseCnt" parameterType="HashMap" resultType="hashMap">
+		SELECT IFNULL(BUYCNT,0) AS BUYCNT, count(BUYCNT) AS CNT FROM ME810010 WHERE SITEID = #{siteid} AND LICENSENO = #{licenseno} 
+	</select>
 </mapper>

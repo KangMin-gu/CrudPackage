@@ -255,6 +255,7 @@
 	});
 	
 	function id_check(){
+		debugger;
 		var idcheck = $('#userid').val();
 		var check = $("#idcheck");
 		var text ="";
@@ -280,6 +281,7 @@
 	                	$('#showMsg').show();
 	                	$('#showMsg').append(text);
 	                	$('#userid').removeClass('error');
+	                	enableSubmit();
 	                	check.val(1);
 	                	test = true;
 	                	return test;
@@ -289,6 +291,7 @@
 	                	$('#showMsg').show();
 	                	$('#showMsg').append(text);
 	                	$('#userid').addClass('error');
+	                	enableSubmit();
 	                		check.val(0);
 	                		test = false
 	                		return test;

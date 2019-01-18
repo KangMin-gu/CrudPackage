@@ -6,8 +6,11 @@ public class MemCompanyDto {
 	
 	private int siteid; //사이트 ID PK
 	private String sitename; //회원사명
-	private String bsno; //사업자번호
-	private String incno; //법인번호
+	private String bsno1; //사업자번호1
+	private String bsno2; //사업자번호2
+	private String bsno3; //사업자번호3
+	private String incno1; //법인번호1
+	private String incno2; //법인번호2
 	private int zipcode; //우편번호
 	private String upraddress; //주소1
 	private String lwraddress; //주소2
@@ -39,17 +42,20 @@ public class MemCompanyDto {
 	
 	public MemCompanyDto() {}
 
-	public MemCompanyDto(int siteid, String sitename, String bsno, String incno, int zipcode, String upraddress,
-			String lwraddress, String fregdate, String expirdate, String telno1, String telno2, String telno3,
-			String faxtel1, String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3,
-			String email, String stiememo, MultipartFile sitelogo, String bscond, String cotype, String bstype,
-			String ctiaddress, String switchtel, String regdate, String reguser, String edtdate, String edtuser,
-			String callname, String sitesize) {
+	public MemCompanyDto(int siteid, String sitename, String bsno1, String bsno2, String bsno3, String incno1,
+			String incno2, int zipcode, String upraddress, String lwraddress, String fregdate, String expirdate,
+			String telno1, String telno2, String telno3, String faxtel1, String faxtel2, String faxtel3, String mobile1,
+			String mobile2, String mobile3, String email, String stiememo, MultipartFile sitelogo, String bscond,
+			String cotype, String bstype, String ctiaddress, String switchtel, String regdate, String reguser,
+			String edtdate, String edtuser, String callname, String sitesize) {
 		super();
 		this.siteid = siteid;
 		this.sitename = sitename;
-		this.bsno = bsno;
-		this.incno = incno;
+		this.bsno1 = bsno1;
+		this.bsno2 = bsno2;
+		this.bsno3 = bsno3;
+		this.incno1 = incno1;
+		this.incno2 = incno2;
 		this.zipcode = zipcode;
 		this.upraddress = upraddress;
 		this.lwraddress = lwraddress;
@@ -96,20 +102,44 @@ public class MemCompanyDto {
 		this.sitename = sitename;
 	}
 
-	public String getBsno() {
-		return bsno;
+	public String getBsno1() {
+		return bsno1;
 	}
 
-	public void setBsno(String bsno) {
-		this.bsno = bsno;
+	public void setBsno1(String bsno1) {
+		this.bsno1 = bsno1;
 	}
 
-	public String getIncno() {
-		return incno;
+	public String getBsno2() {
+		return bsno2;
 	}
 
-	public void setIncno(String incno) {
-		this.incno = incno;
+	public void setBsno2(String bsno2) {
+		this.bsno2 = bsno2;
+	}
+
+	public String getBsno3() {
+		return bsno3;
+	}
+
+	public void setBsno3(String bsno3) {
+		this.bsno3 = bsno3;
+	}
+
+	public String getIncno1() {
+		return incno1;
+	}
+
+	public void setIncno1(String incno1) {
+		this.incno1 = incno1;
+	}
+
+	public String getIncno2() {
+		return incno2;
+	}
+
+	public void setIncno2(String incno2) {
+		this.incno2 = incno2;
 	}
 
 	public int getZipcode() {
@@ -335,5 +365,7 @@ public class MemCompanyDto {
 	public void setSitesize(String sitesize) {
 		this.sitesize = sitesize;
 	}
+
+	
 
 }

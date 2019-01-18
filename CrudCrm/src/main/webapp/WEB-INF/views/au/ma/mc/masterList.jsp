@@ -135,7 +135,7 @@
 	                          	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<a href="${pageContext.request.contextPath}/ma/company/post" class="btn btn-primary">추가</a>
-									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+									<button class="btn btn-primary" >삭제</button>
 								</div>
 							</div>
                             <div class="overflow-x w-100">

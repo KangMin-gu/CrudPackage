@@ -18,4 +18,5 @@ public interface CompanyService {
 	public void companyMultiDelete(HttpServletRequest request);
 	public void companyLicenseInsert(HttpServletRequest request, int siteid);
 	public ModelAndView adminPwdReset (HttpServletRequest request, int siteId);
+	public int licenseCnt(HttpServletRequest request);
 }

@@ -225,8 +225,20 @@ public class CompanyServiceImpl implements CompanyService{
 		mView.addObject("url","ma/company/"+siteId);
 		return mView;
 	}
-	
-	
-	
 
+	@Override
+	public int licenseCnt(HttpServletRequest request) {
+		
+		int licenseNo = Integer.parseInt(request.getParameter("licenseno").toString());
+		int siteId = Integer.parseInt(request.getParameter("siteid").toString());
+		Map<String,Object> param = new HashMap<>();
+		param.put("siteid", siteId);
+		param.put("licenseno", licenseNo);
+		
+		Map<String,Object> map =  companyDao.licenseCnt(param);
+		int buyCnt = Integer.parseInt(map.get("BUYCNT").toString());
+
+		return buyCnt;
+	}
+	
 }

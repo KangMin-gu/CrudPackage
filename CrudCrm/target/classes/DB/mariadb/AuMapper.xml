@@ -84,6 +84,7 @@
 			FROM me800010
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
+			AND MASTERYN != 1
 			<if test="username != null">
 				AND USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>

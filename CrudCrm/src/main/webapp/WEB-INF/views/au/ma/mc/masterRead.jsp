@@ -109,7 +109,8 @@
                                     <tbody>
                                         <tr>
                                             <th>법인번호</th>
-                                            <td>${memCompany.INCNO }</td>
+                                            <td><c:if test="${memCompany.INCNO !='-'}">
+                                            ${memCompany.INCNO }</c:if></td>
                                         </tr>
                                     </tbody>
                                 </table>

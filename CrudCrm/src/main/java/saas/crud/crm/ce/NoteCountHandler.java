@@ -38,7 +38,7 @@ public class NoteCountHandler extends TextWebSocketHandler{
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String ntCountKey = message.getPayload();
+	/*	String ntCountKey = message.getPayload();
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> maps = mapper.readValue(ntCountKey, new TypeReference<Map<String, Object>>() {});
 
@@ -60,7 +60,7 @@ public class NoteCountHandler extends TextWebSocketHandler{
 				//	s.sendMessage(new TextMessage(aram));
 				}
 			}
-		}
+		}*/
 	}
 
 	@Override

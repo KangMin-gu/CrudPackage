@@ -16,12 +16,18 @@
 		var allPattern = /^[가-힣a-zA-Z0-9!@#$%*\&()~{}'"\[\]-_=+,.?\s]{1,}$/;    // -> 문자 + 숫자 + 특문 + 띄어쓰기 자릿수 X
 		var bsnoPattern = /^[\d]{10}$/;  //사업자번호
 		var incnoPattern =  /^[\d]{12}$/;  //법인번호
-		var emailPattern  = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;  // 이메일
+		var emailPattern  = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i; // 이메일
+							
 		var stringPattern = /^[가-힣a-zA-Z0-9\s]{1,}$/;    //-> 문자 + 숫자 + 띄어쓰기 
 		var varcharPattern = /^[가-힣a-zA-Z0-9]{1,}$/; //공백 미허용 문자열-> 문자만
 		var phone1Pattern = /^[\d]{2,4}$/; ///2~4자리
 		var phone2Pattern = /^[\d]{3,4}$/; ///3~4자리
 		var phone3Pattern = /^[\d]{4}$/; ///4자리
+		var bsno1Pattern = /^[\d]{3}$/; ///3자리
+		var bsno2Pattern = /^[\d]{2}$/; ///2자리
+		var bsno3Pattern = /^[\d]{5}$/; ///5자리
+		var incno1Pattern = /^[\d]{5}$/; ///5자리
+		var incno2Pattern = /^[\d]{5}$/; ///5자리
 		var checkPattern = /^[1-9]{1}[0-9]{0,}$/; //CheckBox용 0을 제외한 1자리 숫자
 		var numberPattern = /^[0-9]+$/; // 숫자만 자릿수 X
 		var datePattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;  //-> YYYY-MM-DD형식
@@ -89,6 +95,26 @@
 		}else if( $('[name="'+id+'"]').hasClass('phone3V') ){ 
 			res = phone3Pattern.test(value); 
 			msg = '4자리의 숫자를 입력해 주세요';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('bsno1V') ){ 
+			res = bsno1Pattern.test(value); 
+			msg = '3자리의 숫자를 입력해 주세요';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('bsno2V') ){ 
+			res = bsno2Pattern.test(value); 
+			msg = '2자리의 숫자를 입력해 주세요';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('bsno3V') ){ 
+			res = bsno3Pattern.test(value); 
+			msg = '5자리의 숫자를 입력해 주세요';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('incno1V') ){ 
+			res = incno1Pattern.test(value); 
+			msg = '5자리의 숫자를 입력해 주세요';		
+		
+		}else if( $('[name="'+id+'"]').hasClass('incno2V') ){ 
+			res = incno2Pattern.test(value); 
+			msg = '5자리의 숫자를 입력해 주세요';		
 		
 		}else if( $('[name="'+id+'"]').hasClass('checkV') ){ 
 			res = checkPattern.test(value); 
@@ -259,6 +285,38 @@
 					var temp = id.substr(0,id.length-1);// ex) mobile1 -> mobile 
 					
 					for(var j=1;j<=3;j++){// phone-group 으로 묶인 필드 모두검사
+						if(!checkVal(temp+j)){
+							$('#reqMsgDiv').hide();//필수값 성공 div 비활성화
+							$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+							$('#'+temp+j).focus();//에러난 위치로 마우스 포인터 이동
+							return false;//메서드 종료
+						}
+					}
+				}	
+			}else if( $('[name="'+id+'"]').hasClass('bsno-group') ){//사업자번호유효성 			
+				
+				if( value == ''){
+					$('[name="'+id+'"]').removeClass('error');
+				}else{//값이 존재하면 아래 행 실행
+					var temp = id.substr(0,id.length-1);// ex) mobile1 -> mobile 
+					
+					for(var j=1;j<=3;j++){// phone-group 으로 묶인 필드 모두검사
+						if(!checkVal(temp+j)){
+							$('#reqMsgDiv').hide();//필수값 성공 div 비활성화
+							$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화
+							$('#'+temp+j).focus();//에러난 위치로 마우스 포인터 이동
+							return false;//메서드 종료
+						}
+					}
+				}	
+			}else if( $('[name="'+id+'"]').hasClass('incno-group') ){//법인번호유효성 			
+				
+				if( value == ''){
+					$('[name="'+id+'"]').removeClass('error');
+				}else{//값이 존재하면 아래 행 실행
+					var temp = id.substr(0,id.length-1);// ex) mobile1 -> mobile 
+					
+					for(var j=1;j<=2;j++){// phone-group 으로 묶인 필드 모두검사
 						if(!checkVal(temp+j)){
 							$('#reqMsgDiv').hide();//필수값 성공 div 비활성화
 							$('#msgDiv').show();//숨김 처리 되었던 에러 div 활성화

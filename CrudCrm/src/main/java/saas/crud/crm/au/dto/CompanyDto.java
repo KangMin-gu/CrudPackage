@@ -6,8 +6,11 @@ public class CompanyDto {
 	
 	private int siteid; //사이트 ID PK
 	private String sitename; //회원사명
-	private String bsno; //사업자번호
-	private String incno; //법인번호
+	private String bsno1; //사업자번호1
+	private String bsno2; //사업자번호2
+	private String bsno3; //사업자번호3
+	private String incno1; //법인번호1
+	private String incno2; //법인번호2
 	private String addr1; //우편번호
 	private String addr2; //주소1
 	private String addr3; //주소2
@@ -47,17 +50,21 @@ public class CompanyDto {
 	public CompanyDto() {}
 
 
-	public CompanyDto(int siteid, String sitename, String bsno, String incno, String addr1, String addr2, String addr3,
-			String fregdate, String expirdate, String telno1, String telno2, String telno3, String faxtel1,
-			String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3, String email,
-			String sitememo, String sitelogo, String bscond, String cotype, String bstype, String ctiaddress,
-			String switchtel, String regdate, int reguser, String edtdate, int edtuser, String callname,
-			String sitesize, String prsdname, String adminid, String adminpassword, int isdelete, int owner) {
+	public CompanyDto(int siteid, String sitename, String bsno1, String bsno2, String bsno3, String incno1,
+			String incno2, String addr1, String addr2, String addr3, String fregdate, String expirdate, String telno1,
+			String telno2, String telno3, String faxtel1, String faxtel2, String faxtel3, String mobile1,
+			String mobile2, String mobile3, String email, String sitememo, String sitelogo, String bscond,
+			String cotype, String bstype, String ctiaddress, String switchtel, String regdate, int reguser,
+			String edtdate, int edtuser, String callname, String sitesize, String prsdname, String adminid,
+			String adminpassword, int isdelete, int owner) {
 		super();
 		this.siteid = siteid;
 		this.sitename = sitename;
-		this.bsno = bsno;
-		this.incno = incno;
+		this.bsno1 = bsno1;
+		this.bsno2 = bsno2;
+		this.bsno3 = bsno3;
+		this.incno1 = incno1;
+		this.incno2 = incno2;
 		this.addr1 = addr1;
 		this.addr2 = addr2;
 		this.addr3 = addr3;
@@ -114,23 +121,53 @@ public class CompanyDto {
 	}
 
 
-	public String getBsno() {
-		return bsno;
+	public String getBsno1() {
+		return bsno1;
 	}
 
 
-	public void setBsno(String bsno) {
-		this.bsno = bsno;
+	public void setBsno1(String bsno1) {
+		this.bsno1 = bsno1;
 	}
 
 
-	public String getIncno() {
-		return incno;
+	public String getBsno2() {
+		return bsno2;
 	}
 
 
-	public void setIncno(String incno) {
-		this.incno = incno;
+	public void setBsno2(String bsno2) {
+		this.bsno2 = bsno2;
+	}
+
+
+	public String getBsno3() {
+		return bsno3;
+	}
+
+
+	public void setBsno3(String bsno3) {
+		this.bsno3 = bsno3;
+	}
+
+
+	public String getIncno1() {
+		return incno1;
+	}
+
+
+	public void setIncno1(String incno1) {
+		this.incno1 = incno1;
+	}
+
+
+	public String getIncno2() {
+		return incno2;
+	}
+
+
+	public void setIncno2(String incno2) {
+		this.incno2 = incno2;
 	}
 
 
@@ -462,11 +499,8 @@ public class CompanyDto {
 	public void setOwner(int owner) {
 		this.owner = owner;
 	}
+	
+	
 
 
-	
-	
-	
-	
-	
 }

@@ -89,7 +89,7 @@
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">라이센스수량</label></th>
-                                            <td><input type="text" class="form-control required validation error numberV" maxlength="3" name="buycnt" id="buycnt" value=""></td>
+                                            <td><input type="text" class="form-control required validate error numberV" maxlength="3" name="buycnt" id="buycnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -102,12 +102,12 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="incno">총 구매량</label></th>
-                                            <td><input type="text" class="form-control" disabled name="totalcnt" id="totalcnt" value="${memCompany.TOTALCNT}"></td>
+                                            <th><label for="incno">사업자번호</label></th>
+                                            <td><input type="text" class="form-control" disabled name="bsno" id="bsno" value="${memCompany.BSNO}"></td>
                                         </tr>
                                         <tr>
-                                            <th><label for="sitename">현재 사용량</label></th>
-                                            <td><input type="text" class="form-control" disabled name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <th><label for="sitename">구매량</label></th>
+                                            <td><input type="text" class="form-control" disabled name="totalcnt" id="totalcnt" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -119,12 +119,7 @@
             </div>
         </div>
 <!-- Content End -->
-			
-<!-- foot -->
-			<div class="footer">
-				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
-			</div>
-		</div>
+	</div>
 <!-- right side -->
 		<div id="right-sidebar">
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
@@ -157,26 +152,43 @@
     	});
 	});
 	
-	$('.submit').click(function(e){
-		var id = $('#siteid').val();
-		var licenseno = $('#licenseno').val();
-		var buycnt = $('#buycnt').val();
-		var param = {"siteid":id,"licenseno":licenseno,"buycnt":buycnt};
+	$('#licenseno').change(function(e){
+		var id = $('#licenseno').val();
+		var siteid =$('#siteid').val();
 		$.ajax({
-        	url: "/ma/company/license/" + id,
-        	method: "POST",
-        	data : param,
+			
+        	url: "/ma/company/licensecnt?siteid="+siteid+"&licenseno="+id,
+        	method: "GET",
         	dataType: "json",
         	success: function (data) {
-        		opener.$('.li').click();
-        		window.close();
+        		debugger;
+        		$('#totalcnt').val(data);
         	},
         	error: function (request, status, error) {
             	alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         	}
     	});
-		
-		
+	});
+	
+	
+	$('.submit').click(function(e){
+		var id = $('#siteid').val();
+		var licenseno = $('#licenseno').val();
+		var buycnt = $('#buycnt').val();
+		var param = {"siteid":id,"licenseno":licenseno,"buycnt":buycnt};
+			$.ajax({
+        		url: "/ma/company/license/" + id,
+        		method: "POST",
+        		data : param,
+        		dataType: "json",
+        		success: function (data) {
+	        		opener.$('.li').click();
+        			window.close();
+        		},
+        		error: function (request, status, error) {
+	            	alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        		}
+    		});
 	});
 	
 	

@@ -103,7 +103,9 @@
                                             <th><label for="bsno">사업자번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control validate bsnoV" name="bsno" id="bsno" value="${memCompany.BSNO}">
+                                                    <input type="text" class="form-control validate bsno1V bsno-group" maxlength="3" name="bsno1" id="bsno1" value="${memCompany.BSNO1}"> -
+                                                    <input type="text" class="form-control validate bsno2V" maxlength="2" name="bsno2" id="bsno2" value="${memCompany.BSNO2}"> -
+                                                    <input type="text" class="form-control validate bsno3V" maxlength="5" name="bsno3" id="bsno3" value="${memCompany.BSNO3}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -119,7 +121,12 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">법인번호</label></th>
-                                            <td><input type="text" class="form-control validate incnoV" name="incno" id="incno" value="${memCompany.INCNO}"></td>
+                                            <td>
+                                            	<div class="input-group">
+                                            		<input type="text" class="form-control validate incno1V incno-group" maxlength="5" name="incno1" id="incno1" value="${memCompany.INCNO1}"> -
+                                            		<input type="text" class="form-control validate incno2V" maxlength="5" name="incno2" id="incno2" value="${memCompany.INCNO2}">
+                                            	</div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -186,8 +193,8 @@
                                                       	</c:choose>
                                                    	</c:forEach>
 												</select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" maxlength="4" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" maxlength="4" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -240,15 +247,15 @@
                                                       	</c:choose>
                                                    	</c:forEach>
 												</select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="telno3" id="telno3" value="${memCompany.TELNO3 } ">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V"  maxlength="4" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" maxlength="4" name="telno3" id="telno3" value="${memCompany.TELNO3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitesize">기업규모</label></th>
                                             <td>
-                                            	<select class="form-control float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="telno1" id="telno1">
-													<option value="">선택</option>
+                                            	<select class="form-control float-left mr-3" style="height: 1.45rem" name="sitesize" id="sitesize">
+													<option value="0">선택</option>
 													<c:forEach var="companySize" items="${COMPANYSIZE }">
                                                     	<c:choose>
                                                         	<c:when test="${memCompany.SITESIZE eq companySize.codeval}">
@@ -271,7 +278,7 @@
                                         <tr>
                                             <th><label for="isdelete">서비스상태</label></th>
                                             <td>
-                                            	<select class="form-control float-left mr-3 validate phone1V phone-group" disabled style="height: 1.45rem" name="telno1" id="telno1">
+                                            	<select class="form-control float-left mr-3" disabled style="height: 1.45rem" name="isdelete" id="isdelete">
 													<option value="">선택</option>
 													<c:forEach var="isDelete" items="${ISDELETE }">
                                                     	<c:choose>
@@ -305,7 +312,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="faxtel">팩스번호</label></th>
                                             <td class="border-top-0">
-                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="mobile1" id="mobile1">
+                                            	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="faxtel1" id="faxtel1">
 													<option value="">선택</option>
 													<c:forEach var="fax" items="${FAX }">
                                                     	<c:choose>
@@ -318,8 +325,8 @@
                                                       	</c:choose>
                                                    	</c:forEach>
 												</select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 } ">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" maxlength="4" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" maxlength="4" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -409,20 +416,7 @@
 			autoclose:true
 			
 		});
-		 $('.daumzip').click(function(e){
-		     //obj => button 정보
-		     new daum.Postcode({
-		         oncomplete: function(data) {
-		        	 debugger;
-		        	 $('#'+e.currentTarget.id).val(data.zonecode);
-		        	 $('#'+e.currentTarget.id).parent().parent().find('[id*="upraddress"]').val(data.roadAddress);
-		        	 $('#'+e.currentTarget.id).parent().parent().find('[id*="lwraddress"]').val(data.buildingName);
-		             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-		             // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-		         }
-		     }).open();
-		 });
-		 
+
 		 enableSubmit();
 	});
 	

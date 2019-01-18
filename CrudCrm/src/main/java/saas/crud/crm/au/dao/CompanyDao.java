@@ -18,4 +18,6 @@ public interface CompanyDao {
 	public void companyAdminInsert(CompanyDto companyDto);
 	public void adminPwdResetsend(Map<String, Object> sendPwdInfo);
 	public void adminPwdReset(UserDto resetUserDto);
+	
+	public Map<String,Object> licenseCnt(Map<String,Object> param);
 }

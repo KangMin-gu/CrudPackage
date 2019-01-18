@@ -109,7 +109,8 @@
                                     <tbody>
                                         <tr>
                                             <th>법인번호</th>
-                                            <td>${memCompany.INCNO }</td>
+                                            <td><c:if test="${memCompany.INCNO !='-'}">
+                                            ${memCompany.INCNO }</c:if></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -154,7 +155,7 @@
                                         <tr>
                                             <th class="border-top-0">휴대전화번호</th>
                                             <td class="border-top-0">
-                                                ${memCompany.MOBILE1 }-${memCompany.MOBILE2 }-${memCompany.MOBILE3 }
+                                                ${memCompany.MOBILE }
                                             </td>
                                         </tr>
                                         <tr>
@@ -196,7 +197,7 @@
                                         <tr>
                                             <th class="border-top-0">전화번호</th>
                                             <td class="border-top-0">
-                                                ${memCompany.TELNO1 }-${memCompany.TELNO2 }-${memCompany.TELNO3 }
+                                                ${memCompany.TELNO }
                                             </td>
                                         </tr>
                                         <tr>
@@ -238,7 +239,7 @@
                                         <tr>
                                             <th class="border-top-0">팩스번호</th> 
                                             <td class="border-top-0">
-                                                ${memCompany.FAXTEL1 }-${memCompany.FAXTEL2 }-${memCompany.FAXTEL3 }
+                                                ${memCompany.FAXTEL }
                                             </td>
                                         </tr>
                                         <tr>

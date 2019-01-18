@@ -21,7 +21,6 @@
 		        data: param,
 		        cache: false,
 	            success: function(data) {
-	            	debugger;
 	            	if(data == "" || data == 0){
 	            		 alert("이메일 수신거부 등록 중 오류가 발생했습니다.\n잠시후 다시 이용해 주세요.");
 			        	 return;
@@ -48,13 +47,13 @@
 		<div id="pop_bodyWrap" class="agr_easy_wrap">
 			<div class="biwrap">
 				<h1>
-					<span>11번가</span>
+					<span>IDEA CRM</span>
 				</h1>
 			</div>
 			<div id="popLayWrap">
 				<div id="popHead">
 					<div class="popHeadEnd">
-						<h2>11번가 이메일 수신거부</h2>
+						<h2>IDEA CRM 이메일 수신거부</h2>
 					</div>
 				</div>
 				<div class="popbody_con">
@@ -62,18 +61,14 @@
 					<!-- 수신거부 전 -->
 					<div class="mail_agree_wrap">
 						<div class="infotop_center borderboxtype1">
-							<span>11번가 이메일을 <em class="bold">수신거부</em>하시겠습니까?
+							<span>IDEA CRM 이메일을 <em class="bold">수신거부</em>하시겠습니까?
 							</span>
 						</div>
 						<ul class="bul_squ_gray">
-							<li>이메일을 수신거부하시면 CrudSystem의 정보를 받아보실 수
-								없습니다.</li>
-							<li>수신거부 후, 다시 메일을 수신하고 싶으실 때에는 11번가 사이트에 접속하여 로그인 후, <em>나의 11번가 &gt; 회원정보
-									변경</em> 에서 이메일 수신여부를 [수신동의] 로 변경하여 주시기 바랍니다.
-							</li>
+							<li>이메일을 수신거부하시면 CrudSystem의 정보를 받아보실 수 없습니다.</li>
 						</ul>
 						<div class="infotop_center borderboxtype0">
-							<span><strong>이메일주소</strong> : agdwlsduf@naver.com</span>
+							<span><strong>이메일주소</strong> : crudsystem@crudsystem.co.kr</span>
 						</div>
 						<div class="btn_wrap">
 							<a href="javascript:emailrefusal('Y');" class="defbtn_lar ladtype5"><span>예</span></a> 

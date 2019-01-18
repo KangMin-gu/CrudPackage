@@ -39,9 +39,6 @@
                         </li>
                     </ol>
                 </div>
-                <div class="col-lg-2">
-
-                </div>
             </div>		
 		
 		
@@ -98,7 +95,9 @@
                                             <th><label for="bsno">사업자번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control validate bsnoV" name="bsno" id="bsno" value="${memCompany.BSNO}">
+                                                    <input type="text" class="form-control validate bsno1V bsno-group" maxlength="3" name="bsno1" id="bsno1" value="${memCompany.BSNO1}"> -
+                                                    <input type="text" class="form-control validate bsno2V" maxlength="2" name="bsno2" id="bsno2" value="${memCompany.BSNO2}"> -
+                                                    <input type="text" class="form-control validate bsno3V" maxlength="5" name="bsno3" id="bsno3" value="${memCompany.BSNO3}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -114,7 +113,12 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">법인번호</label></th>
-                                            <td><input type="text" class="form-control validate incnoV" name="incno" id="incno" value="${memCompany.INCNO}"></td>
+                                            <td>
+                                            	<div class="input-group">
+                                            		<input type="text" class="form-control validate incno1V incno-group" maxlength="5" name="incno1" id="incno1" value="${memCompany.INCNO1}"> -
+                                            		<input type="text" class="form-control validate incno2V" maxlength="5" name="incno2" id="incno2" value="${memCompany.INCNO2}">
+                                            	</div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -249,7 +253,7 @@
                                         <tr>
                                             <th><label for="sitesize">기업규모</label></th>
                                             <td>
-                                                <select class="form-control validate checkV" id="sitesize" name="sitesize">
+                                                <select class="form-control" id="sitesize" name="sitesize">
                                             		<option label="선택" value="0"/>
                                                 	<c:forEach var="companySize" items="${COMPANYSIZE }">
                                                 		<c:choose>

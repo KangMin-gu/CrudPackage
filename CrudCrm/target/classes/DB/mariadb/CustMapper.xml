@@ -26,10 +26,10 @@
 			AND A.CUSTGRADE = #{custgrade}
 			</if>
 			<if test="fromregdt != null">
-			AND DATE_FORMAT(A.REGDATE,'%Y%m%d') <![CDATA[>=]]> #{fromregdt}
+			AND A.REGDATE <![CDATA[>=]]> #{fromregdt}
 			</if>
 			<if test="toregdt != null">
-			AND DATE_FORMAT(A.REGDATE,'%Y%m%d') <![CDATA[<=]]> #{toregdt}
+			AND A.REGDATE <![CDATA[<=]]> #{toregdt}
 			</if>	
 			<if test="infoagree == 0 or infoagree == 1">
 			AND A.INFOAGREE = #{infoagree}
@@ -79,10 +79,10 @@
 				AND CUSTGRADE = #{custgrade}
 				</if>
 				<if test="fromregdt != null">
-				AND DATE_FORMAT(CU.REGDATE,'%Y%m%d') <![CDATA[>=]]> #{fromregdt}
+				AND CU.REGDATE <![CDATA[>=]]> #{fromregdt}
 				</if>
 				<if test="toregdt != null">
-				AND DATE_FORMAT(CU.REGDATE,'%Y%m%d') <![CDATA[<=]]> #{toregdt}
+				AND CU.REGDATE <![CDATA[<=]]> #{toregdt}
 				</if>
 				<if test="infoagree == 0 or infoagree == 1">
 				AND CU.INFOAGREE = #{infoagree}

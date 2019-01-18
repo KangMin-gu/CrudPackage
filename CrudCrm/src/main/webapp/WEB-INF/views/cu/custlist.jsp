@@ -148,7 +148,7 @@
 											</colgroup>
 											<tbody>
 												<tr>
-													<th>고객구분</th>
+													<th>회원구분</th>
 													<td>
 														<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
 															<option value="0" ${searchVal.custgubun eq "0" ? "selected" :""}>선택</option>
@@ -271,7 +271,7 @@
 												<th>이메일</th>
 												
 												<th>담당자</th>
-												<th>고객구분</th>
+												<th>회원구분</th>
 												<th>고객등급</th>
 												<th>정보활용</th>
 												<th>등록일</th>

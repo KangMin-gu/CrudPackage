@@ -395,6 +395,13 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
             }
         });
     });
+    
+    $('.button').click(function(e){
+    	debugger;
+    	var id = e.target.id;
+    	$('#codegrp').val(id);
+    	$('.search').click();
+    });
 }
 // /ma/mc가 포함되어있는 경로
 if(window.location.pathname.lastIndexOf('/ma/company') == 0) {

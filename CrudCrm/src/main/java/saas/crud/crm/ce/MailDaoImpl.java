@@ -29,8 +29,6 @@ public class MailDaoImpl implements MailDao {
     // 메일 클릭
 	@Override
 	public void mailClick(MailDto emailDto) {
-		// TODO Auto-generated method stub
-		
 		session.update("email.clickCnt",emailDto);
 		
 	}
@@ -38,14 +36,12 @@ public class MailDaoImpl implements MailDao {
 	// 메일 수신거부
 	@Override
 	public void mailDeny(MailDto emailDto) {
-		// TODO Auto-generated method stub
 		session.update("email.denyEmail",emailDto);
 	}
 
 	// 메일 클릭 이력
 	@Override
 	public void clickHistory(Map<String, Object> param) {
-		// TODO Auto-generated method stub
 		session.insert("email.clickHistory",param);
 	}
 	

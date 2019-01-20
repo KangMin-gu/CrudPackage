@@ -90,25 +90,25 @@ public class SvDaoImpl implements SvDao{
 	// 서비스 처리이력 탭
 	@Override
 	public List<Map<String, Object>> svTabRact(RactDto ractDto) {
-		// TODO Auto-generated method stub
+		
 		
 		return session.selectList("sv.tabRact",ractDto);
 	}
 	// 서비스 이관 이력
 	@Override
 	public List<Map<String, Object>> conveyTabList(ConveyDto conveyDto) {
-		// TODO Auto-generated method stub
+		
 		return session.selectList("sv.tabConvey",conveyDto);
 	}
 	// 이관 추가
 	@Override
 	public void conveyInsert(ConveyDto conveyDto) {
-		// TODO Auto-generated method stub
+		
 		session.insert("sv.conveyInsert",conveyDto);
 	}
 	@Override
 	public List<Map<String, Object>> svCalList(RewardDto rewardDto) {
-		// TODO Auto-generated method stub
+		
 		
 		List<Map<String,Object>> svCalList = session.selectList("sv.calList",rewardDto);
 		return svCalList;

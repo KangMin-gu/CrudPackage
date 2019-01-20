@@ -30,10 +30,10 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>사용자 관리</h2>
+                    <h2>회원 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
-                            <strong>사용자 목록</strong>
+                            <strong>회원 목록</strong>
                         </li>
                     </ol>
                 </div>

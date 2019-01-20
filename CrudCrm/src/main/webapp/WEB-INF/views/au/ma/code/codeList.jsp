@@ -203,7 +203,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="codegrp">코드그룹명</label></th>
-                                            <td><input type="text" class="form-control required" name="codegrp" id="codegrp" value="${code.CODEGRP}"></td>
+                                            <td><input type="text" class="form-control required"  name="codegrp" id="codegrp" value="${code.CODEGRP}"></td>
                                         </tr>
                                     </tbody>
                                 </table>

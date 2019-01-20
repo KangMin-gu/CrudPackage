@@ -26,8 +26,6 @@ public class LicenseServiceImpl implements LicenseService{
 	//라이센스 List 검색
 	@Override
 	public ModelAndView licenseList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> search = crud.searchParam(request);
@@ -58,15 +56,12 @@ public class LicenseServiceImpl implements LicenseService{
 	// 라이센스 상세 정보
 	@Override
 	public Map<String,Object> licenseDetail(HttpServletRequest request, int licenseno) {
-		// TODO Auto-generated method stub
 		Map<String,Object> licenseInfo = licenseDao.licenseDetail(licenseno);
 		return licenseInfo;
 	}
 
 	@Override
 	public int licenseInsert(HttpServletRequest request, LicenseDto licenseDto) {
-		// TODO Auto-generated method stub
-		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		licenseDto.setEdtuser(userNo);
 		licenseDto.setReguser(userNo);
@@ -78,7 +73,6 @@ public class LicenseServiceImpl implements LicenseService{
 	// 라이센스 수정
 	@Override
 	public void licenseUpdate(HttpServletRequest request, LicenseDto licenseDto) {
-		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		licenseDto.setEdtuser(userNo);
 		licenseDao.licenseUpdate(licenseDto);
@@ -87,7 +81,6 @@ public class LicenseServiceImpl implements LicenseService{
 	// 라이센스 단일 삭제
 	@Override
 	public void licenseDelete(HttpServletRequest request, int licenseno) {
-		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		LicenseDto licenseDto = new LicenseDto();
 		licenseDto.setEdtuser(userNo);
@@ -99,8 +92,6 @@ public class LicenseServiceImpl implements LicenseService{
 	// 라이센스 멀티 삭제
 	@Override
 	public void licenseMultiDelete(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		LicenseDto licenseDto = new LicenseDto();
 		licenseDto.setEdtuser(userNo);
@@ -123,8 +114,6 @@ public class LicenseServiceImpl implements LicenseService{
 	// 메뉴 입력할 때 라이센스 Selectbox 부분
 	@Override
 	public List<Map<String, Object>> licenseAjaxList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		List<Map<String,Object>> licenseInfo = licenseDao.licenseMenuList();
 		return licenseInfo;
 	}
@@ -132,7 +121,6 @@ public class LicenseServiceImpl implements LicenseService{
 	// 회원사 라이센스 탭
 	@Override
 	public List<Map<String, Object>> licenseTopList(int siteid) {
-		// TODO Auto-generated method stub
 		List<Map<String,Object>> licenseList = licenseDao.licenseTopList(siteid);
 		return licenseList;
 	}

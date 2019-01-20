@@ -29,9 +29,6 @@ public class CodeServiceImpl implements CodeService{
 	// 코드 List 검색
 	@Override
 	public ModelAndView codeList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
-		
 		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = codeDao.codeTotalRow(search);
@@ -59,7 +56,6 @@ public class CodeServiceImpl implements CodeService{
 	// 코드 상제 정보
 	@Override
 	public Map<String, Object> codeRead(HttpServletRequest request, int codeNo) {
-		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		CodeDto codeDto = new CodeDto();
@@ -75,7 +71,6 @@ public class CodeServiceImpl implements CodeService{
 	// 코드 수정
 	@Override
 	public void codeUpdate(HttpServletRequest request, CodeDto codeDto) {
-		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -88,7 +83,6 @@ public class CodeServiceImpl implements CodeService{
 	// 코드 단일 삭제
 	@Override
 	public void codeDelete(HttpServletRequest request, int codeNo) {
-		// TODO Auto-generated method stub
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -103,8 +97,6 @@ public class CodeServiceImpl implements CodeService{
 	// 코드 추가
 	@Override
 	public int codeInsert(HttpServletRequest request, CodeDto codeDto) {
-		// TODO Auto-generated method stub
-		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -119,8 +111,6 @@ public class CodeServiceImpl implements CodeService{
 	// 상위 코드 검색
 	@Override
 	public ModelAndView codeUpperList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		Map<String, Object> search = crud.searchParam(request);
 		
 		int totalRows = codeDao.codeTotalRow(search);
@@ -148,10 +138,8 @@ public class CodeServiceImpl implements CodeService{
 	@Cacheable("code")
 	@Override
 	public Map<String, Object> getCode() {
-		// TODO Auto-generated method stub
-
 		Map<String,Object> map = new HashMap<String,Object>(); 
-				List<CodeDto> grpCodeList = codeDao.grpCodeList();
+		List<CodeDto> grpCodeList = codeDao.grpCodeList();
 		
 		int grpCodeSize = grpCodeList.size();
 		String grpCode ="";

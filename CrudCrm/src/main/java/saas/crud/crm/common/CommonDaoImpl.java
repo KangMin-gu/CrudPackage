@@ -64,15 +64,12 @@ public class CommonDaoImpl implements CommonDao{
 
 	@Override
 	public int totalCntCust(Map<String, Object> searchVal) {
-		// TODO Auto-generated method stub
 		int totalCnt = session.selectOne("common.totalCntCust", searchVal);
 		return totalCnt;
 	}
 
 	@Override
 	public List<Map<String, Object>> popCustList(Map<String, Object> searchVal) {
-		// TODO Auto-generated method stub
-		
 		List<Map<String, Object>> custList = session.selectList("common.popCustList",searchVal);
 		return custList;
 	}

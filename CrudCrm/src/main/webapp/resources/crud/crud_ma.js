@@ -330,11 +330,13 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
     $('#create').click(function(e){
     	bodyReset();
     	btnCreate();
+    	$(".required[id='codegrp']").prop('disabled', false );
 
     });
     $('#update').click(function(e){
     	
     	btnCreate();
+    	$(".required[id='codegrp']").prop('disabled', true );
     });
     $('#save').click(function(e){
     	var no = $('#no').val();
@@ -397,7 +399,6 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
     });
     
     $('.button').click(function(e){
-    	debugger;
     	var id = e.target.id;
     	$('#codegrp').val(id);
     	$('.search').click();

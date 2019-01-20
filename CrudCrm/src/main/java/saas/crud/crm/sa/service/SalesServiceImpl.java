@@ -306,7 +306,6 @@ public class SalesServiceImpl implements SalesService {
 		try {
 			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(schList);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsonStr;

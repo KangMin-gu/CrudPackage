@@ -12,8 +12,6 @@ public class CrudRemoteImpl implements CrudRemote {
 
 	@Override
 	public Map<String,Object> getRemote(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		Map<String,Object> userRemote = new HashMap<String,Object>();
 		String ip = request.getHeader("X-Forwarded-For");
 		String header = request.getHeader("User-Agent");

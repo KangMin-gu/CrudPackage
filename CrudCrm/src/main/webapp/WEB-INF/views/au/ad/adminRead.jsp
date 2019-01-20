@@ -23,6 +23,7 @@
 <body>
 <style>
 	.wizard > .content > .body{width: 100%; height: auto; background: #ffffff; padding: 2.5%; float: left; position: initial;}
+	select > .form-control {display: inline-block;}
 </style>
 	<div id="wrapper">
 <!-- leftside -->	

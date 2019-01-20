@@ -126,15 +126,15 @@ public class AuController {
 		return mView;
 	}
 	// 회원 중복ID 체크
-	@ResponseBody
 	@RequestMapping(value="/user/idcheck/{userid}",method=RequestMethod.GET)
+	@ResponseBody
 	public int authAdminUserIdCheck(@PathVariable String userid) {
 		int userId = auService.userIdCheck(userid);
 		return userId;
 	}
 	// 사용자 탭
-	@ResponseBody
 	@RequestMapping(value="/user/tab/{siteid}", method=RequestMethod.GET)
+	@ResponseBody
 	public List<Map<String,Object>> authTabTopList(HttpServletRequest request,@PathVariable int siteid){
 		
 		List<Map<String,Object>> userTopList = auService.userTopList(siteid);

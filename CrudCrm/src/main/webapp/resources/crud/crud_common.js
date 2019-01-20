@@ -513,4 +513,31 @@
             }
         });
     });	 
+    
+    
+    //좌측 사이드바 접기상태 변경
+    $("#sideBarStatus").click(function(){
+    	var userId = $('#hiddenUserId').val();	   	
+    	$.ajax({
+			url:"/sidestate/"+userId,
+			type:"GET",			
+			success:function(data){
+				var result =JSON.parse(data);
+				$('hiddenSideStates').val(result);				
+			}	
+    	});    
+    });
+    //좌측사이드바 상태별 접기펴기
+    $(document).ready(function(){   	
+    	var sideState = $('#hiddenSideStates').val();
+        if(sideState != 0){
+    		$('body').removeClass('mini-navbar');
+    		$('body').removeClass('pace-done');
+    		$('body').addClass('pace-done');
+    	}else{
+    		$('body').removeClass('pace-done');
+    		$('body').removeClass('mini-navbar');
+    		$('body').addClass('mini-navbar');
+    	}   	
+    });
 	

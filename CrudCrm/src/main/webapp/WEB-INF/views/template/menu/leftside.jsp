@@ -151,6 +151,7 @@
 						<li><a href="${pageContext.request.contextPath}/ma/code">공통코드</a></li>
 						<li><a href="${pageContext.request.contextPath}/ma/license">라이센스 관리</a></li>
 						<li><a href="${pageContext.request.contextPath}/ma/menu">메뉴 관리</a></li>
+						<li><a href="${pageContext.request.contextPath}/ma/menu">사용자 확인</a></li>
 					</ul>
 			        </li>
 		      	</c:if>

@@ -835,7 +835,7 @@ public class NoteServiceImpl implements NoteService{
 					if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
 						ntDao.noteSendMail(map);
 					}
-					
+
 					//참조 유저가 있다면, 
 					if(ccUserEmail != null) {
 						if(cutterCcAdress.size()>0) {

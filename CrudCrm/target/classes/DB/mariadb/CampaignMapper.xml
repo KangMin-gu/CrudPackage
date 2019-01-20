@@ -18,9 +18,7 @@
 			  	, A.STARTDATE,A.ENDDATE
 				, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
 				, A.CAMPDESC
-				, CONCAT(DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') , '-' , DATE_FORMAT(A.ENDDATE,'%Y-%m-%d')) AS CAMPDATE_
-
-				,ROW_NUMBER() OVER(ORDER BY A.CAMPNO DESC) AS ROWNUM
+				, CONCAT(DATE_FORMAT(A.STARTDATE,'%Y-%m-%d') , ' ~ ' , DATE_FORMAT(A.ENDDATE,'%Y-%m-%d')) AS CAMPDATE_
 				,IFNULL(B.CNT,0) AS CNT
 				,IFNULL(C.CNT,0) AS CLICKCNT
 				, CONCAT(IFNULL(C.CNT,0) , ' / ' ,IFNULL(B.CNT,0))  AS CLICKTOTAL
@@ -28,11 +26,13 @@
 				, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
 					   WHEN E.SENDFORM = 2 THEN 'SMS/LMS'
 					   WHEN E.SENDFORM = 4 THEN 'MMS' END AS CAMPFORM_
+				,@RNUM:=@RNUM + 1 AS ROWNUM
 			FROM cp400010 A
 			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
 			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE CLICKYN = 0 GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
 			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE RLTCODE = 20 GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
 			LEFT OUTER JOIN cp400030 E ON E.CAMPNO = A.CAMPNO
+			,(SELECT @RNUM := 0) R
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
@@ -56,6 +56,7 @@
 			<if test="sendform != null">
 				AND E.SENDFORM = #{sendform}
 			</if>
+			ORDER BY A.CAMPNO DESC
 			) X 
 		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
@@ -227,10 +228,10 @@
 		AND REGDATE <![CDATA[<=]]> #{regdate2}
 	</if>
 	<if test="age1 != null">
-		AND Year(NOW())-Year(BIRTH) <![CDATA[>]]>= #{age1}
+		AND Year(NOW())-Year(BIRTH) <![CDATA[>=]]> #{age1}
 	</if>
 	<if test="age2 != null">
-		AND Year(NOW())-Year(BIRTH) <![CDATA[<]]>= #{age2}
+		AND Year(NOW())-Year(BIRTH) <![CDATA[<=]]> #{age2}
 	</if>
 	<if test="addr11 != null">
 		AND LEFT(HOMADDR2,2) = #{addr11}

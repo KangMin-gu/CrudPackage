@@ -420,7 +420,6 @@ public class NoteServiceImpl implements NoteService{
 		}else {
 			note = ntDao.noteDetail(noteVal);
 		}
-		System.out.println("note :" +  note);
 		
 		
 		//파일업로드
@@ -570,7 +569,6 @@ public class NoteServiceImpl implements NoteService{
 			String[] mailAdresses = mailAdress.split(";");
 			
 			for(int i=0; i<mailAdresses.length; i++) {
-			    System.out.println("mailAdresses : " + mailAdresses[i]);
 			    
 			    String target = mailAdresses[i];
 			   
@@ -769,7 +767,6 @@ public class NoteServiceImpl implements NoteService{
 			
 			
 			String fileSearchKey = crudEngine.fileSearchKey(request);
-			System.out.println("fileSearchKey : " + fileSearchKey);
 			crudEngine.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
 			//crudEngine.fileUpload(response, multipartHttpServletRequest, mFile, sFile, fileSearchKey);
 			

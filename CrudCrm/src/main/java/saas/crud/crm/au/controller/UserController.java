@@ -51,7 +51,6 @@ public class UserController {
 	//로그인 요청
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {		
-		System.out.println("controll : "+ request.getParameter("url"));
 		 urService.login(response, request, urDto); 
 	}
 	

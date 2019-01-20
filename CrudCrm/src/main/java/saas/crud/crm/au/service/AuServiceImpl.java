@@ -228,7 +228,6 @@ public class AuServiceImpl implements AuService{
 			auDao.urUpdate(userDto);
 			mView.addObject("msg", "수정되었습니다.");
 			mView.addObject("url","myinfo/"+userNo);
-			System.out.println("myinfo/"+userNo);
 		}else {
 			mView.addObject("msg", "사용자 비밀번호를 확인 해주세요.");
 			mView.addObject("url","myinfo/post/"+userNo);

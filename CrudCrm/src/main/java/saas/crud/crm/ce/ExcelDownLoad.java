@@ -1084,7 +1084,6 @@ public class ExcelDownLoad {
 				@RequestMapping(value = "/ajaxCliexcel", method = RequestMethod.GET)
 				@ResponseBody
 				public void ajaxClientExcel(HttpServletRequest request, HttpServletResponse response) {
-					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@excel");
 					
 					int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 					Map<String, Object> searchVal = crud.searchParam(request);

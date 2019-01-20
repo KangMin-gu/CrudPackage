@@ -216,7 +216,7 @@
                                             <th><label for="adminid">아이디</label></th>
                                             <td>
                                                 <div class="input-group">                           
-                                            		<input type="text" class="form-control" id="adminid" name="adminid">
+                                            		<input type="text" class="form-control error required validate idV" id="adminid" name="adminid">
                                             	</div>
                                             </td>
                                         </tr>
@@ -297,7 +297,7 @@
                                             <th><label for="adminpassword">비밀번호</label></th>
                                             <td>
                                                 <div class="input-group">                           
-                                            		<input type="password" class="form-control" id="adminpassword" name="adminpassword">
+                                            		<input type="password" class="form-control required error validate passwordV" id="adminpassword" name="adminpassword">
                                             	</div>
                                             </td>
                                         </tr>
@@ -417,9 +417,29 @@
 			keyboardNavigation:false,
 			forceParse:false,
 			autoclose:true
-			
 		});
 
+	});
+	
+	$('.submit').click(function(e){
+		var adminpassword = $('#adminpassword').val();
+		var passwordchk = $('#adminpasswordchk').val();
+		if(adminpassword != passwordchk){
+			
+			var text = '비밀번호가 일치하지 않습니다.';
+			$('#adminpasswordchk').removeClass('error').addClass('error');
+			$('#adminpasswordchk').focus();
+			$('#reqSuccessMsg').parent().hide();
+			$('#showMsg').text(text);
+			$('#showMsg').parent().parent().show();
+			return false;
+			
+		}else{
+			$('#adminpasswordchk').removeClass('error');
+			return true;
+		}
+		
+		
 	});
 
 	</script>		

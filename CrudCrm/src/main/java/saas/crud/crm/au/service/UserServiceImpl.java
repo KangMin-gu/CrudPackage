@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService{
 		ModelAndView mView = new ModelAndView();
 		String url = request.getParameter("url"); 
 		StringBuffer buf = new StringBuffer();
-		System.out.println("url : "+url);
 		if(isValid){
 			
 			Map<String,Object> param = crudRemote.getRemote(request);

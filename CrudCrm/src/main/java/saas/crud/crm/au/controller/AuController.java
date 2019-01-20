@@ -191,7 +191,6 @@ public class AuController {
 	//회원 비밀번호 초기화
 	@RequestMapping(value="/pwdreset/{userNo}", method=RequestMethod.GET)
 	public ModelAndView userPwdReset(HttpServletRequest request, @PathVariable int userNo) {
-		System.out.println(userNo);
 		ModelAndView mView = auService.userPwdReset(request,userNo);
 		mView.setViewName("au/myinforesult");
 		return mView;

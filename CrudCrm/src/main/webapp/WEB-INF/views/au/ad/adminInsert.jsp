@@ -82,7 +82,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="username">사용자명*</label></th>
+                                            <th><label for="username">사용자명</label></th>
                                             <td><input type="text" class="form-control error required validate nameV"  name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
@@ -173,7 +173,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control error required validate passwordV"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>

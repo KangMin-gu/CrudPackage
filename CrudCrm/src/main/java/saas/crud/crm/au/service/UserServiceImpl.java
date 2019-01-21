@@ -73,8 +73,6 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		ModelAndView mView = new ModelAndView();
-		String url = request.getParameter("url"); 
-		StringBuffer buf = new StringBuffer();
 
 		if(isValid){
 			
@@ -148,7 +146,7 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
 			request.getSession().setAttribute("SITELOGO", urInfo.get("SITELOGO")); //회사 로고
-			request.getSession().setAttribute("SIDESTATES","0");
+			request.getSession().setAttribute("SIDESTATES","1");
 			
 			if(url != null) {
 				buf.append("<script>location.href='");

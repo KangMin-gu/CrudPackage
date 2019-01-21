@@ -45,5 +45,11 @@ public class UserDaoImpl implements UserDao{
 		List<Map<String, Object>> crudNotice = session.selectList("user.crudNotice");
 		return crudNotice;
 	}
+
+	@Override
+	public Map<String, Object> useInfo(String userId) {
+		Map<String, Object> useInfo = session.selectOne("user.useCheck", userId);
+		return useInfo;
+	}
 	
 }

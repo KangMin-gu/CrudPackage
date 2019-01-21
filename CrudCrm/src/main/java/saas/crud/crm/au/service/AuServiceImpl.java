@@ -2,15 +2,20 @@ package saas.crud.crm.au.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,7 @@ import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.ce.CrudEngine;
+import saas.crud.crm.ce.LoginManager;
 
 
 @Service
@@ -289,6 +295,29 @@ public class AuServiceImpl implements AuService{
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("msg","비밀번호 초기화 되었습니다. 사용자의 메일로 초기화된 비밀번호가 발송됩니다.");
 		mView.addObject("url","ad/user/"+resetUserNo);
+		return mView;
+	}
+	
+	//사용중인 유저 확인
+	@Override
+	public ModelAndView useSessionList(HttpServletRequest reuqest, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("in");
+		LoginManager loginManager = LoginManager.getInstance();
+		List<Map<String, String>> loginUserss = loginManager.allSession();		
+		
+		List<Map<String, Object>> listSender = new ArrayList<Map<String, Object>>();
+		Map<String, Object> mapSender = new HashMap<>();
+		
+		for(int i = 0; i< loginUserss.size(); i++) {
+			loginUserss.get(i);
+			System.out.println(loginUserss.get(i));
+			
+		}
+		 
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("sessionList", listSender);
 		return mView;
 	}
 

@@ -45,7 +45,11 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>고객 관리</h2>
+														<c:forEach var="tmp" items="${sessionList }">
+                                                      			aaa : ${tmp.USERNAME }
+                                                         			
+                                                   		</c:forEach>
+                                                   			a
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active" ><strong>목록</strong></li>
 					</ol>
@@ -53,7 +57,7 @@
 				<div class="col-lg-2"></div>
 			</div>
 
-
+			
 			<!-- Content -->
 			<!-- S: 고객 목록 ppt p01-->
 			<div class="wrapper wrapper-content  animated fadeInRight article">
@@ -152,15 +156,9 @@
 													<td>
 														<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
 															<option value="0" ${searchVal.custgubun eq "0" ? "selected" :""}>선택</option>
-															<c:forEach var="custGubun" items="${CUSTGUBUN }">
-                                                      			<c:choose>
-                                                         			<c:when test="${searchVal.custgubun eq custGubun.codeval}">
-                                                            			<option selected label="${custGubun.codename }" value="${custGubun.codeval }"/>
-                                                         			</c:when>
-                                                         			<c:otherwise>
-                                                            			<option label="${custGubun.codename }" value="${custGubun.codeval }"/>
-                                                         			</c:otherwise>
-                                                      			</c:choose>
+															<c:forEach var="tmp" items="${sessionList }">
+                                                      			${tmp.USERID }
+                                                         			
                                                    			</c:forEach>
 														</select>
 													</td>	 	

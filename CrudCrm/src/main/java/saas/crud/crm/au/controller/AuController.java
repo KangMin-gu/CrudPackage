@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -196,6 +197,12 @@ public class AuController {
 		return mView;
 	}
 	
-	
+	//이용 중인 유저 확인
+	@RequestMapping(value="/ma/sitechk",method=RequestMethod.GET)
+	public ModelAndView useSessionList(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mView = auService.useSessionList(request, response);
+		mView.setViewName("au/ma/check/sitecheck");
+		return mView;
+	}
 	
 }

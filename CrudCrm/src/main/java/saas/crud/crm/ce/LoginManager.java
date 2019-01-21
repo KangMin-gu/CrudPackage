@@ -1,7 +1,13 @@
 package saas.crud.crm.ce;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
@@ -60,7 +66,24 @@ public class LoginManager implements HttpSessionBindingListener {
 
 		return isUsing;
 	}
-
+	
+	//로그인한 사용자와session 을 리턴 
+	public List<Map<String, String>> allSession() {
+		 List<Map<String, String>> loginUserss = new ArrayList<>();
+		 Map<String, String> loginuser = new HashMap<>();
+		 
+		 Set key = loginUsers.keySet();
+		 for (Iterator iterator = key.iterator(); iterator.hasNext();) {
+			   String keyName = (String) iterator.next();
+			   String valueName = (String) loginUsers.get(keyName);
+			   loginuser.put("ID", valueName);
+			   loginuser.put("session", keyName);
+			   loginUserss.add(loginuser);
+			   System.out.println(keyName +" = " +valueName);
+		 }
+		 return loginUserss;
+	}
+	
 	// ID 저장, Sessiong Binding
 	public void setSession(HttpSession session, String userID) {
 		loginUsers.put(session.getId(), userID);

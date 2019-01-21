@@ -50,7 +50,5 @@
   <session-config>
   	<tracking-mode>COOKIE</tracking-mode>
   </session-config>
-  <session-config>
-  	<session-timeout>30</session-timeout>
-  </session-config>
+
 </web-app>

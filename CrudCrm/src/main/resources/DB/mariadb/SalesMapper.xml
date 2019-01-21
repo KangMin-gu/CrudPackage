@@ -986,6 +986,7 @@
 			AND A.SITEID = #{siteid}
 			AND CUSTNO = #{custno}
 			<if test="salename != null">
+			AND A.SALENAME like CONCAT('%',#{salename},'%') 
 			</if>
 			
 		ORDER BY A.SALESNO DESC	 

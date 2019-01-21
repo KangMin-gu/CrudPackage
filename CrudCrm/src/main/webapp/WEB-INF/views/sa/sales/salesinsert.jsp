@@ -149,7 +149,7 @@
 													<th>예상수주액 (&#8361;)</th>
 													<td>
 													<input type="text" class="form-control validate costV" id="fordamount_" name="fordamount_" placeholder="0 ~ 10,000,000,000">
-													<input type="hidden" id="fordamount" name="fordamount">
+													<input type="hidden" id="fordamount" name="fordamount" value="0">
 													</td>
 												</tr>
 												<tr>
@@ -206,7 +206,7 @@
 													<th>실수주액 (&#8361;)</th>
 													<td>
 														<input type="text" class="form-control validate costV" id="rordamount_" name="rordamount_" placeholder="0 ~ 10,000,000,000">
-														<input type="hidden" id="rordamount" name="rordamount">
+														<input type="hidden" id="rordamount" name="rordamount" value="0">
 													</td>
 												</tr>
 												

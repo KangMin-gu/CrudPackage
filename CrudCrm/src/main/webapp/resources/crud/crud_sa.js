@@ -135,8 +135,14 @@
 	        	
 	        	var length = data.contList.length;
 	        	var html ="";
-	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td>' + data.contList[i].CUSTNAME + '</td><td>' + data.contList[i].CTTDATE + '</td><td>' + data.contList[i].USERNAME + '</td><td>' + data.contList[i].CTTCHANNEL + '</td><td>' + data.contList[i].MEMO + '</td></tr>';
+	        	var channelName;
+	        	for (var i = 0; i < length; i++) {	
+	        		if(data.contList[i].CTTCHANNEL == 1){
+	        			channelName = "영업일정";
+	        		}else{
+	        			channelName = data.contList[i].CTTCHANNEL;
+	        		}
+	        		html = '<tr><td>' + data.contList[i].CUSTNAME + '</td><td>' + data.contList[i].CTTDATE + '</td><td>' + data.contList[i].USERNAME + '</td><td>' + channelName + '</td><td>' + data.contList[i].MEMO + '</td></tr>';
 	        		$('#tab3 tbody').append(html);
 	        	}
 	        	var html2= "";

@@ -21,51 +21,52 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import saas.crud.crm.nt.dto.NoteDto;
+import saas.crud.crm.nt.service.NoteService;
 
 
 @Component
 public class NoteCountHandler extends TextWebSocketHandler{
+	
+	@Autowired
+	private NoteService ntService;
 	
 	private static List<WebSocketSession> list = new ArrayList<WebSocketSession>();
 	private static final Logger logger = LoggerFactory.getLogger(NoteCountHandler.class);
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("Notice Alarm 접속 ID : "+ session.getId());
 		list.add(session);
 
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	/*	String ntCountKey = message.getPayload();
+		String ntCountKey = message.getPayload();
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> maps = mapper.readValue(ntCountKey, new TypeReference<Map<String, Object>>() {});
 
 		if(maps.size() != 0){
 
-			int receiver =  Integer.parseInt((String) maps.get("userid"));
-			int siteid =  Integer.parseInt((String) maps.get("siteid"));
+			int userNo =  Integer.parseInt(maps.get("userNo").toString());
+			int siteId =  Integer.parseInt(maps.get("siteId").toString());
 
-			NoteDto ntdto = new NoteDto();
-			ntdto.setSiteid(siteid);
-			//ntdto.setReceiver(receiver);
-
-			//int count = ntService.aram(ntdto);
-			//String aram = String.valueOf(count);
-
+			NoteDto ntDto = new NoteDto();
+			ntDto.setSiteid(siteId);
+			ntDto.setUserno(userNo);
+			
+			int count = ntService.noteCount(ntDto);
+			String aram = String.valueOf(count);
 			for(WebSocketSession s : list){
 
 				if(s.getId().equals(session.getId())){
-				//	s.sendMessage(new TextMessage(aram));
+					s.sendMessage(new TextMessage(aram));
 				}
 			}
-		}*/
+		}
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		logger.info("Notice Alarm Disconnected ID : "+ session.getId());
 		list.remove(session);
 	}
 }

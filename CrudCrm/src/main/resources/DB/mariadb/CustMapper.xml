@@ -5,40 +5,40 @@
 	<!--고객 리스트 페이지- 페이징용 카운터 -->
 	<select id="totalcnt" parameterType="hashMap" resultType="int">
 		SELECT
-		COUNT(*)
-		FROM CU100010 A 
+		COUNT(*) 
+		FROM cu100010  
 		WHERE
-			A.SITEID = #{siteid}
-			AND A.ISDELETE = 0 
+			SITEID = #{siteid}
+			AND ISDELETE = 0 
 			<if test="custname != null">
-			AND A.CUSTNAME like '%'+#{custname}+'%'
+			AND CUSTNAME like '%'+#{custname}+'%'
 			</if>
 			<if test="mobile != null">
-			AND A.MOBILE1+A.MOBILE2+A.MOBILE3 like '%'+#{mobile}+'%'
+			AND MOBILE1+MOBILE2+MOBILE3 like '%'+#{mobile}+'%'
 			</if>
 			<if test="email != null">
-			AND A.EMAIL like '%'+#{email}+'%'
+			AND EMAIL like '%'+#{email}+'%'
 			</if>
 			<if test="custgubun != null and custgubun != 0">
-			AND A.CUSTGUBUN = #{custgubun}
+			AND CUSTGUBUN = #{custgubun}
 			</if>
 			<if test="custgrade != null and custgrade != 0 ">
-			AND A.CUSTGRADE = #{custgrade}
+			AND CUSTGRADE = #{custgrade}
 			</if>
 			<if test="fromregdt != null">
-			AND A.REGDATE <![CDATA[>=]]> #{fromregdt}
+			AND REGDATE <![CDATA[>=]]> #{fromregdt}
 			</if>
 			<if test="toregdt != null">
-			AND A.REGDATE <![CDATA[<=]]> #{toregdt}
+			AND REGDATE <![CDATA[<=]]> #{toregdt}
 			</if>	
 			<if test="infoagree == 0 or infoagree == 1">
-			AND A.INFOAGREE = #{infoagree}
+			AND INFOAGREE = #{infoagree}
 			</if>
 			<if test="owner != null and owner != 0 ">
-			AND A.OWNER = #{owner}
+			AND OWNER = #{owner}
 			</if>
 			<if test="clino != null and clino != 0 ">
-			AND A.CLINO = #{clino}
+			AND CLINO = #{clino}
 			</if>
 	</select>
 	
@@ -103,7 +103,7 @@
 	
 	<!-- 고객 삭제 -->
 	<update id="custDelete" parameterType="saas.crud.crm.cu.dto.CustDto" >
-		UPDATE CU100010 SET ISDELETE = 1 , EDITDATE = NOW() , EDITUSER = #{userno}
+		UPDATE cu100010 SET ISDELETE = 1 , EDITDATE = NOW() , EDITUSER = #{userno}
 		WHERE SITEID = #{siteid} AND CUSTNO = #{custno}
 	</update>
 
@@ -143,7 +143,7 @@
 		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
 		,C.DENYFAX ,C.DENYVISIT  
 		,A.CLINO,D.CLINAME
-		FROM CU100010 A		
+		FROM cu100010 A		
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
 		LEFT OUTER JOIN sa200010 D ON A.CLINO = D.CLINO  
@@ -189,7 +189,7 @@
 		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD  
 		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
 		,C.DENYFAX ,C.DENYVISIT  
-		FROM CU100010 A		
+		FROM cu100010 A		
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
 		LEFT OUTER JOIN sa200010 D ON A.CLINO = D.CLINO 
@@ -200,7 +200,7 @@
 	<!-- 고객 추가  -->
 	<insert id="custformInsert" parameterType="saas.crud.crm.cu.dto.CustDto">
 		
-		INSERT INTO CU100010
+		INSERT INTO cu100010
 		(		
 		CUSTNAME
 		,OWNER
@@ -276,7 +276,7 @@
 	</insert>
 	<!-- 고객, 수신거부 정보 추가 -->
 	<insert id="custformInsertDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
-		INSERT INTO CU100080
+		INSERT INTO cu100080
 		(
 		CUSTNO
 		,REGDATE
@@ -334,7 +334,7 @@
 	<select id="getCliCustNo" parameterType="hashMap" resultType="int">
 	SELECT 
 	CLICUSTNO
-	FROM SA280010
+	FROM sa280010
 	WHERE 
 		CUSTNO = #{custno} 
 		AND CLINO = #{clino}
@@ -350,7 +350,7 @@
 	
 	<!-- 고객 정보 수정 -->
 	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >
-		UPDATE CU100010
+		UPDATE cu100010
 		SET
 		CUSTNAME = #{custname}
 		,OWNER = #{owner}
@@ -400,7 +400,7 @@
 	
 	<!-- 고객 수신거부 정보 수정 -->
 	<update id="custformUpdateDeny" parameterType="saas.crud.crm.cu.dto.CustDenyDto">
-		UPDATE CU100080
+		UPDATE cu100080
 		SET
 		EDITDATE = now()
 		,EDITUSER = #{edituser}	

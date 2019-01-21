@@ -46,6 +46,14 @@
 	<!--  crud 유효성 js -->
 <script
 	src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+
 	<!-- file download -->
 <script 
 	src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>
+
+<!-- socket js -->
+<script
+	src="${pageContext.request.contextPath}/resources/crud/crud_socket.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/sockjs.js"></script>	
+

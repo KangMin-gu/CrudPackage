@@ -70,7 +70,6 @@ public class NoteServiceImpl implements NoteService{
 	}
 
 	//inbox
-	//@Cacheable("test")
 	@Override
 	public ModelAndView noteInbox(HttpServletRequest request) {
 		//세션에서 사용자정보를 가져온다.
@@ -833,7 +832,7 @@ public class NoteServiceImpl implements NoteService{
 					if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
 						ntDao.noteSendMail(map);
 					}
-					
+
 					//참조 유저가 있다면, 
 					if(ccUserEmail != null) {
 						if(cutterCcAdress.size()>0) {
@@ -908,6 +907,13 @@ public class NoteServiceImpl implements NoteService{
 		}
 		
 		return noticeId;
+	}
+	
+	//안읽은 내부통지 갯수
+	@Override
+	public int noteCount(NoteDto ntDto) {
+		int noteCount = ntDao.noteCount(ntDto);	
+		return noteCount;
 	}
 
 }

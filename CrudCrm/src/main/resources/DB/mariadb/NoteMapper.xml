@@ -409,4 +409,14 @@
 		ORDER BY C.RLTDATE DESC
 		limit 4
 	</select>
+	
+	<!-- 안읽은 통지갯수 -->
+	<select id="count" parameterType="noteDto" resultType="int">	
+		SELECT COUNT(B.READCHEK) AS NOREAD
+		FROM sys970010 A
+		LEFT JOIN sys970011 B
+		  ON A.NOTICEID = B.NOTICEID
+		WHERE A.USERNO = #{userno} AND B.READCHEK = 0 AND A.SITEID = #{siteid}
+	</select>
+	
 </mapper>

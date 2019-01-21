@@ -97,7 +97,7 @@
                                     	<tr>
                                         	<th>캠페인유형</th>
                                             <td>
-                                                <form:select class="form-control validate checkV" path="camptype">
+                                                <form:select class="form-control" path="camptype">
                                             		<option label="선택" value="0"/>
                                                 	<c:forEach var="campType" items="${CAMPTYPE }">
                                                 		<c:choose>
@@ -144,11 +144,11 @@
                                             <td class="border-top-0" style="padding: 7px 8px">
                                             	<div class="input-group p-0">
                                                 	<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control validate date dateV" value="">
+                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control error validate date dateV" value="">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="form-control validate date dateV" value="">
+                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="form-control error validate date dateV" value="">
                                                     </div>
                                                 </div>
                                             </td>

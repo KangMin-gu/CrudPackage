@@ -242,9 +242,12 @@
 			$('#reqMsgDiv').removeClass("alert-success");
 			$('#reqMsgDiv').addClass("alert-info");
 		}
-		var userId = $('#userid');
-		if(userId != undefined){
-			id_check();
+		var pathName = window.location.pathname;
+		if(pathName == "/ad/user/post"){
+			var userId = $('#userid');
+			if(userId != undefined){
+				id_check();
+			}
 		}
 	}
 	

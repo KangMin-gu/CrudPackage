@@ -206,12 +206,22 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignDto.setEdtuser(userNo);
 		campaignDto.setSiteid(siteId);
 		
-		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		int fileUploadSize = multipartHttpServletRequest.getFiles("file").size();
 		List<MultipartFile> mFile = null;
 		MultipartFile sFile = null;
 		
-		String fileSearchKey = campaignDto.getFilesearchkey();
-		crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+		if(fileUploadSize > 0) {
+			List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+			int serviceFileUploadLength = fileUpload.get(0).getOriginalFilename().length();
+			if(serviceFileUploadLength > 0) {
+				String fileSearchKey = campaignDto.getFilesearchkey();
+				if(fileSearchKey == null) {
+					fileSearchKey = crud.fileSearchKey(request);
+				}
+				crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+				campaignDto.setFilesearchkey(fileSearchKey);
+			}
+		}
 		
 		campaignDao.campUpdate(campaignDto);
 		

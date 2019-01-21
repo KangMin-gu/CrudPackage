@@ -115,7 +115,7 @@
                                 <c:forEach var="menu" items="${menuList }">
                                     <tr value="${menu.MENUNO}">
                                         <td><input type="checkbox" class="i-checks" name="menuno" id="menuno" value="${menu.MENUNO }"></td>
-                                        <td>${menu.MENUNAME}</td>
+                                        <td><a>${menu.MENUNAME}</a></td>
                                         <td>${menu.MENUVAL }</td>
                                         <td>${menu.LICENSENO_ }</td>
                                         <td>${menu.REGDATE }</td>

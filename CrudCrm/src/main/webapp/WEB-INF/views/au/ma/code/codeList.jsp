@@ -132,7 +132,7 @@
                                 <c:forEach var="code" items="${codeList }">
                                     <tr value="${code.CODENO}">
                                         <td><input type="checkbox" class="i-checks" name="codeno" id="codeno" value="${code.CODENO }"></td>
-                                        <td>${code.CODEGRP}</td>
+                                        <td><a>${code.CODEGRP}</a></td>
                                         <td>${code.CODENAME }</td>
                                         <td>${code.CODEVAL }</td>
                                         <td>${code.UPPERCODENAME }</td>

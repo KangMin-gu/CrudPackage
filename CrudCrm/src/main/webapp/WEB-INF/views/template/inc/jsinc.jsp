@@ -3,6 +3,8 @@
 <!-- Mainly scripts -->
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.1.1.min.js"></script>
+<script 
+	src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
 <script
@@ -44,3 +46,6 @@
 	<!--  crud 유효성 js -->
 <script
 	src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+	<!-- file download -->
+<script 
+	src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>

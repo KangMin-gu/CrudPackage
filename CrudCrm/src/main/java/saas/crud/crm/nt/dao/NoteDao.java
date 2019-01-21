@@ -35,7 +35,6 @@ public interface NoteDao {
 	public int noteSend(NoteDto ntDto);
 	public void notetoAndCc(NoteDto ntDto);
 	public List<Map<String, Object>> noteFile(Map<String, Object> noteVal);
-	
 	public List<Map<String,String>> noteEmail(int fromUser);
 	public List<Map<String,String>> adminMail();
 	public void noteSendMail(Map<String,Object> map);
@@ -45,4 +44,5 @@ public interface NoteDao {
 	public Map<String,Object> noteReply(int noticeId);
 	//휴지통 상세 
 	public Map<String, Object> trashDetail(Map<String, Object> noteVal); 
+	public int noteCount(NoteDto ntDto);
 }

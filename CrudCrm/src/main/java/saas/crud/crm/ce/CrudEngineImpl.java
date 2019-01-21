@@ -342,7 +342,6 @@ public class CrudEngineImpl implements CrudEngine{
 			String[] mailAdresses = mailAdress.split(";");
 			
 			for(int i=0; i<mailAdresses.length; i++) {
-			    System.out.println(mailAdresses[i]);
 			    int target = Integer.parseInt(mailAdresses[i]);
 			    mailTarget.add(target);
 			}

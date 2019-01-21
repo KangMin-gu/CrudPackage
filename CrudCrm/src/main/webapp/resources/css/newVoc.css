@@ -1,5 +1,9 @@
-body{overflow-x: auto;}
-#wrapper{overflow-x: auto;}
+
+
+.clearfix:after{content: ''; display: block; clear: both;}
+html{height: auto;}
+body{overflow-x: auto; background-color: #ffffff;}
+#wrap{width: 100%; height: auto; margin: 100px 0;}
 .wrapper-content{padding: 0;}
 #page-wrapper{margin-left: 0 !important; padding: 0 !important; min-width: 1650px;}
 .ibox{margin: 0 5px 5px 5px;}
@@ -32,27 +36,18 @@ table{margin-bottom: 0 !important;}
 .ibox-top ul li ul.top-ul03 li{margin-left: 20px; cursor: pointer;}
 .ibox-top ul li ul.top-ul03 li i{font-size: 23px;}
 
-.ibox-content.left-cont, .ibox-content.right-cont{clear: none;}
-.ibox-left{width: 800px; float: left; height: auto; margin-top: 70px;}
-.ibox-left .left-cont{width: 355px; height: 460px; float: left; margin-bottom: 10px;}
-.ibox-left .right-cont{width: 430px; height: 460px; float: right; margin-bottom: 10px;}
-.ibox-right{width: 850px; float: right; height: auto; margin-top: 70px;}
+.ibox-content{border: none;}
 
-ul.right-ul{}
-ul.right-ul li{display: inline-block;}
-ul.right-ul li{display: inline-block;}
+.ibox-left{width: 880px; height: auto; float: left;}
 
-.table-area{width: 100%; height: 100%; padding: 40px 20px 20px 20px; border: 1px solid #e7eaec; position: relative;}
-.table-area .table-box{max-height: 160px; overflow: auto; overflow-x: hidden;}
-.table-area .table-box table{width: 100%; table-layout: fixed; border-spacing: 0; border-collapse: collapse; border-top: 1px solid #e7aeec;}
-.table-area .table-box table thead tr{position: absolute; top: 15px; left: 20px; width: 762px;}
-.table-area .table-box table tr{display: inline-table; table-layout: fixed; width: 100%;}
-.table-area .table-box table tbody tr{display: table-row;}
 
-.panel-left{width: 300px; height: auto; float: left;}
+.ibox-right{width: 950px; height: auto; float: right;}
+.select-area{width: 100%; max-height: 95px; overflow-y: auto;}
+.select-area .select-box{}
+.select-area .select-box select{width: 180px;}
 
 .ibox-bottom{width: 100%; height: auto; position: fixed; bottom: 0; z-index: 999; min-width: 1650px;}
-.ibox-bottom .ibox-content{background: #258368; padding: 8px 0;}
+.ibox-bottom .ibox-content{background: #258368; padding: 8px 0; }
 .ibox-bottom .ibox{margin: 0;}
 
 .ibox-bottom h3{font-size: 16px; color: #fafafa; padding: 5px 0 0 20px; margin: 0;}
@@ -69,3 +64,9 @@ ul.right-ul li{display: inline-block;}
 .paging-area{width: 100%; height: auto; text-align: center;}
 ul.pagination{display: inline-block; text-align: center;}
 ul.pagination li{display: inline-block; margin-left: -3px;}
+
+.ibox{
+    width: 1900px;
+    max-width: none !important;
+}
+.i-checks label{vertical-align: middle;}

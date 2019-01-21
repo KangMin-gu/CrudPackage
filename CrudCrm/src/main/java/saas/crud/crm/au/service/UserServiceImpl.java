@@ -17,6 +17,7 @@ import saas.crud.crm.au.dao.CodeDao;
 import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudRemote;
+import saas.crud.crm.ce.LoginManager;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -34,21 +35,47 @@ public class UserServiceImpl implements UserService{
 	public ModelAndView login(HttpServletResponse response, HttpServletRequest request, UserDto urDto) {
 		
 		Map<String, Object> urInfo = urDao.getData(urDto.getUserid());
+		String userId = urInfo.get("USERID").toString();
 		String pwd = urDto.getUserpassword();
+		LoginManager loginManager = LoginManager.getInstance();
+		StringBuffer buf = new StringBuffer();
+		String location=request.getRequestURI();
+		String url = request.getParameter("url"); 
 		
-		boolean isValid = false;  
-		
+		boolean isValid = false;  		
 		if(urInfo != null) {
 			boolean isMatch=encoder.matches(pwd,urInfo.get("USERPASSWORD").toString());			
 			if(isMatch) {
 				isValid = true;
+				
+				if(!loginManager.isUsing(userId)) {
+					
+					loginManager.setSession(request.getSession(),urInfo.get("USERID").toString()); // 로그인정보 로그인매니저등록
+				
+				}else {			
+
+					buf.append("<script>alert('이미 로그인 되었습니다.'); location.href='");
+				 	buf.append(location);
+				 	buf.append("';</script>");							 		
+					response.setContentType("text/html; charset=UTF-8");
+					 
+					PrintWriter out;
+					try {
+						out = response.getWriter();
+						out.println(buf);					 
+						out.flush();
+					} catch (IOException e) {
+					
+						e.printStackTrace();
+					}
+				}										
 			}
 		}
 		
 		ModelAndView mView = new ModelAndView();
 		String url = request.getParameter("url"); 
 		StringBuffer buf = new StringBuffer();
-		System.out.println("url : "+url);
+
 		if(isValid){
 			
 			Map<String,Object> param = crudRemote.getRemote(request);
@@ -121,6 +148,7 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
 			request.getSession().setAttribute("SITELOGO", urInfo.get("SITELOGO")); //회사 로고
+			request.getSession().setAttribute("SIDESTATES","0");
 			
 			if(url != null) {
 				buf.append("<script>location.href='");
@@ -145,12 +173,14 @@ public class UserServiceImpl implements UserService{
 		}else{
 			
 			if(url != null) {
+				
 				buf.append("<script>alert('아이디 혹은 비밀번호가 틀립니다.');");
 				buf.append("location.href='/login?url=");
 				buf.append(url);
 				buf.append("';</script>");
+				
 			}else {
-				String location=request.getRequestURI();
+				
 				buf.append("<script>alert('아이디 혹은 비밀번호가 틀립니다.'); location.href='");
 			 	buf.append(location);
 			 	buf.append("';</script>");
@@ -178,6 +208,19 @@ public class UserServiceImpl implements UserService{
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("crudNotice", crudNotice);
 		return mView;
+	}
+	
+	//사이드바 상태 업데이트
+	@Override
+	public String sideStatus(HttpServletRequest request, String userId) {
+		String sidestates = request.getSession().getAttribute("SIDESTATES").toString();
+		if(sidestates.equals("1")) {
+			request.getSession().setAttribute("SIDESTATES","0");
+		}else {
+			request.getSession().setAttribute("SIDESTATES","1");	
+		}	
+		String states = request.getSession().getAttribute("SIDESTATES").toString();
+		return states;
 	}
 	
 	

@@ -13,7 +13,7 @@
 	<!-- //날짜별 로그 파일 생성 하기 -->
 	<appender name="dailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="Threshold" value="ERROR" /> 
-		<param name="File" value="C:\log\error.log" /> 
+		<param name="File" value="C:/log/error.log" /> 
 		<param name="Append" value="true" /> 
 		<!-- param name="MaxFileSize" value="100MB"/ --> 
 		<!-- param name="MaxBackupIndex" value="2"></param --> 

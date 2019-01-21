@@ -1,7 +1,13 @@
 package saas.crud.crm.au.dto;
 
-public class CodeDto {
+import java.io.Serializable;
+
+public class CodeDto implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int codeno;
 	private String codegrp;
 	private String codename;

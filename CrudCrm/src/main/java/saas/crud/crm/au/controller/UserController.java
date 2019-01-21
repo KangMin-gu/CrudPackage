@@ -10,13 +10,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.au.service.UserService;
+import saas.crud.crm.ce.LoginManager;
 
 @Controller
 public class UserController {
@@ -50,8 +53,7 @@ public class UserController {
 	
 	//로그인 요청
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {		
-		System.out.println("controll : "+ request.getParameter("url"));
+	public void login(HttpServletResponse response, HttpServletRequest request, @ModelAttribute UserDto urDto) {
 		 urService.login(response, request, urDto); 
 	}
 	
@@ -62,5 +64,11 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	
+	//유저 사이드바 상태
+	@RequestMapping(value="/sidestate/{userId}", method=RequestMethod.GET)
+	@ResponseBody
+	public String sideStatus(HttpServletRequest request, @PathVariable String userId) {
+		String a = urService.sideStatus(request, userId);
+		return a;
+	}	
 }

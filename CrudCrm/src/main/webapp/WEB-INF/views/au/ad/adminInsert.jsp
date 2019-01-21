@@ -68,7 +68,8 @@
 	                        	</div>
 								<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
 									<Strong><span id="showMsg"> </span></Strong>
-	                        	</div>													
+	                        	</div>
+	                        														
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" class="btn btn-primary submit" id="submit" disabled >저 장</Button>
 									<a href="/ad/user" class="btn btn-primary">목 록</a>
@@ -82,7 +83,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="username">사용자명*</label></th>
+                                            <th><label for="username">사용자명</label></th>
                                             <td><input type="text" class="form-control error required validate nameV"  name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
@@ -139,9 +140,8 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control error required validate idV"  name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control"  name="userid" id="userid" value="${user.USERID}">
                                                 </div>
-                                                <input type="hidden" class="form-control"  name="idcheck" id="idcheck" value="">
                                             </td>
                                         </tr>
                                         <tr>
@@ -173,7 +173,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control error required validate passwordV"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
@@ -249,6 +249,8 @@
 			autoclose:true
 		});
 		
+		$('#userid').addClass('error');
+		
 	});
 	$('#userid').keyup(function(e){
 		id_check();
@@ -261,19 +263,18 @@
 		var text ="";
 		var test;
 		if(idcheck.length < 5){
-			if(check.val() != 0){
-				text = '5글자 이상 입력해주세요.';
+				text = 'ID는 5글자 이상 입력되어야 합니다.';
             	$('#showMsg').empty();
             	$('#showMsg').show();
             	$('#showMsg').append(text);
             	$('#userid').addClass('error');
 				check.val(0);
-			}
 		}else{
 	        $.ajax({
 	            url:"/user/idcheck/"+idcheck ,
 	            method: "GET",
 	            dataType: "json",
+	            cache: false,
 	            success:function(data){
 	                if(data == 0){
 	                	text = '사용 가능한 ID 입니다.';
@@ -281,18 +282,18 @@
 	                	$('#showMsg').show();
 	                	$('#showMsg').append(text);
 	                	$('#userid').removeClass('error');
-	                	enableSubmit();
-	                	check.val(1);
+	                	$('#showMsg').parent().parent().removeClass('alert-danger').addClass('alert-info');
+	                	$('.submit').prop('disabled',false);
 	                	test = true;
 	                	return test;
 	                }else{
-	                	text = '이미 존재하고 있는 ID 입니다.';
+	                	text = '이미 존재하고 있는 ID 이거나 입력되지 않았습니다.';
 	                	$('#showMsg').empty();
 	                	$('#showMsg').show();
 	                	$('#showMsg').append(text);
-	                	$('#userid').addClass('error');
-	                	enableSubmit();
-	                		check.val(0);
+	                	$('#showMsg').parent().parent().show();             
+	                	$('#showMsg').parent().parent().removeClass('alert-info').addClass('alert-danger');
+	                	$('.submit').prop('disabled',true);
 	                		test = false
 	                		return test;
 	                }

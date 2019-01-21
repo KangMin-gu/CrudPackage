@@ -52,20 +52,20 @@
                                     <tbody>
                                         <tr>
                                             <td class="border-0">
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">이관목록</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">회원구분</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">고객등급</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">친밀도</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">캠페인유형</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">서비스채널</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">중요도</a>
-												<a href="javascript:void(0);" class="btn btn-primary mb-1">영업단계</a>												
+												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">이관목록</a>
+												<a href="javascript:void(0);" id="CUSTGUBUN" class="btn btn-primary mb-1 button">회원구분</a>
+												<a href="javascript:void(0);" id="CUSTGRADE" class="btn btn-primary mb-1 button">고객등급</a>
+												<a href="javascript:void(0);" id="FRIENDLY" class="btn btn-primary mb-1 button">친밀도</a>
+												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">캠페인유형</a>
+												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">서비스채널</a>
+												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">중요도</a>
+												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">영업단계</a>												
                                             </td>
                                         </tr>                                   
                                     </tbody>
                                 </table> 
                             </div>                                            
-                            <div class="box1 col-lg-6 p-0">
+                            <div class="box1 col-lg-4 p-0">
                                 <table class="table table-bordered mb-0">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
@@ -76,14 +76,15 @@
                                             <th>코드명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="codename" id="codename" value="${search.codeName }">
+                                                    <input type="text" class="form-control" name="codename" id="codename" value="${search.codename }">
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-6 p-0">
+                            
+                            <div class="box2 col-lg-4 p-0">
                                 <table class="table table-bordered">
                                     <colgroup>
                                         <col style="width: 30%; background: #fafafa;">
@@ -94,7 +95,7 @@
                                             <th>그룹코드</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="codegrp" id="codegrp" value="${search.codeGrp }">
+                                                    <input type="text" class="form-control" name="codegrp" id="codegrp" value="${search.codegrp }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -102,7 +103,7 @@
                                 </table>
                             </div>
                             <div>
-                            	<button class="btn btn-primary" style="height:38.61px">검색</button>
+                            	<button class="search btn btn-primary" style="height:38.61px">검색</button>
                             </div>
                         </div>
                         </form:form>
@@ -131,7 +132,7 @@
                                 <c:forEach var="code" items="${codeList }">
                                     <tr value="${code.CODENO}">
                                         <td><input type="checkbox" class="i-checks" name="codeno" id="codeno" value="${code.CODENO }"></td>
-                                        <td>${code.CODEGRP}</td>
+                                        <td><a>${code.CODEGRP}</a></td>
                                         <td>${code.CODENAME }</td>
                                         <td>${code.CODEVAL }</td>
                                         <td>${code.UPPERCODENAME }</td>
@@ -202,7 +203,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="codegrp">코드그룹명</label></th>
-                                            <td><input type="text" class="form-control required" name="codegrp" id="codegrp" value="${code.CODEGRP}"></td>
+                                            <td><input type="text" class="form-control required"  name="codegrp" id="codegrp" value="${code.CODEGRP}"></td>
                                         </tr>
                                     </tbody>
                                 </table>

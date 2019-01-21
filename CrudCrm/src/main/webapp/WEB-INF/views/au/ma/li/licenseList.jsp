@@ -91,7 +91,7 @@
                                 <tbody>
                                 <c:forEach var="license" items="${license }">
                                     <tr name="licenseno" id="licenseno" value="${license.LICENSENO}">
-                                        <td>${license.LICENSENAME}</td>
+                                        <td><a>${license.LICENSENAME}</a></td>
                                         <td>${license.LICENSECOST }</td>
                                         <td>${license.TOTALCNT }</td>
                                         <td>${license.REGDATE }</td>

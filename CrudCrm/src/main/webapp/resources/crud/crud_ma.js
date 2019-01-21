@@ -330,11 +330,13 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
     $('#create').click(function(e){
     	bodyReset();
     	btnCreate();
+    	$(".required[id='codegrp']").prop('disabled', false );
 
     });
     $('#update').click(function(e){
     	
     	btnCreate();
+    	$(".required[id='codegrp']").prop('disabled', true );
     });
     $('#save').click(function(e){
     	var no = $('#no').val();
@@ -394,6 +396,12 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             }
         });
+    });
+    
+    $('.button').click(function(e){
+    	var id = e.target.id;
+    	$('#codegrp').val(id);
+    	$('.search').click();
     });
 }
 // /ma/mc가 포함되어있는 경로

@@ -41,9 +41,6 @@ public class CompanyServiceImpl implements CompanyService{
 	// 회원사 List 검색
 	@Override
 	public ModelAndView companyList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
-		//int SITEID = Integer.parseInt((String)request.getSession().getAttribute("SITEID"));
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> search = crud.searchParam(request);
@@ -73,8 +70,6 @@ public class CompanyServiceImpl implements CompanyService{
 	//회원사 상세 정보
 	@Override
 	public ModelAndView companyRead(HttpServletRequest request, int siteId) {
-		// TODO Auto-generated method stub
-		
 		ModelAndView mView = new ModelAndView();
 		CompanyDto companyDto = new CompanyDto();
 		companyDto.setSiteid(siteId);
@@ -113,8 +108,6 @@ public class CompanyServiceImpl implements CompanyService{
 	// 회원사 단일 삭제
 	@Override
 	public void companyDelete(HttpServletRequest request, int siteid) {
-		// TODO Auto-generated method stub
-		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		CompanyDto companyDto = new CompanyDto();
@@ -127,7 +120,6 @@ public class CompanyServiceImpl implements CompanyService{
 	// 회원사 멀티 삭제
 	@Override
 	public void companyMultiDelete(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		String sCheck[] = request.getParameterValues("siteid");
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		CompanyDto companyDto = new CompanyDto();
@@ -146,10 +138,7 @@ public class CompanyServiceImpl implements CompanyService{
 	// 회원사 라이센스 추가
 	@Override
 	public void companyLicenseInsert(HttpServletRequest request, int siteid) {
-		// TODO Auto-generated method stub
-
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
 		
 		Map<String, Object> data = crud.searchParam(request);
 		

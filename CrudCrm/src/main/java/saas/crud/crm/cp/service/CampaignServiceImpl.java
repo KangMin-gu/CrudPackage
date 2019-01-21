@@ -38,7 +38,7 @@ public class CampaignServiceImpl implements CampaignService{
 	//캠페인 List
 	@Override
 	public ModelAndView campList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> search = crud.searchParam(request);
@@ -68,7 +68,7 @@ public class CampaignServiceImpl implements CampaignService{
 	//캠페인 Insert
 	@Override
 	public int campInsert(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest, CampaignDto campaignDto) {
-		// TODO Auto-generated method stub
+		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
@@ -100,7 +100,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 Read
 	@Override
 	public ModelAndView campRead(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		ModelAndView mView = new ModelAndView();
@@ -200,18 +200,28 @@ public class CampaignServiceImpl implements CampaignService{
 	//캠페인 수정
 	@Override
 	public void campUpdate(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest multipartHttpServletRequest, CampaignDto campaignDto) {
-		// TODO Auto-generated method stub
+		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		campaignDto.setEdtuser(userNo);
 		campaignDto.setSiteid(siteId);
 		
-		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		int fileUploadSize = multipartHttpServletRequest.getFiles("file").size();
 		List<MultipartFile> mFile = null;
 		MultipartFile sFile = null;
 		
-		String fileSearchKey = campaignDto.getFilesearchkey();
-		crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+		if(fileUploadSize > 0) {
+			List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+			int serviceFileUploadLength = fileUpload.get(0).getOriginalFilename().length();
+			if(serviceFileUploadLength > 0) {
+				String fileSearchKey = campaignDto.getFilesearchkey();
+				if(fileSearchKey == null) {
+					fileSearchKey = crud.fileSearchKey(request);
+				}
+				crud.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
+				campaignDto.setFilesearchkey(fileSearchKey);
+			}
+		}
 		
 		campaignDao.campUpdate(campaignDto);
 		
@@ -219,7 +229,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 단일 삭제
 	@Override
 	public void campDelete(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -235,7 +245,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 멀티삭제
 	@Override
 	public void campMultiDelete(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		String sCheck[] = request.getParameterValues("campno");
@@ -259,7 +269,7 @@ public class CampaignServiceImpl implements CampaignService{
 	//캠페인 타겟 추출
 	@Override
 	public void campTargetInsert(HttpServletRequest request,int campNo) {
-		// TODO Auto-generated method stub
+		
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -304,7 +314,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 발송 Insert 및 Update
 	@Override
 	public void campFormInsertUpdate(HttpServletResponse response, MultipartHttpServletRequest multipartHttpServletRequest, HttpServletRequest request,@ModelAttribute CampaignFormDto campaignFormDto,@PathVariable int campNo) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -392,7 +402,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 테스트 발송
 	@Override
 	public void campTestSend(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -406,7 +416,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 양식 list
 	@Override
 	public ModelAndView campContentsList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> search = crud.searchParam(request);
@@ -436,7 +446,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 양식 Insert
 	@Override
 	public int campContentsInsert(HttpServletRequest request,CampaignContentsDto campaignContentsDto) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -452,7 +462,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 양식 Read
 	@Override
 	public ModelAndView campContentsRead(HttpServletRequest request, int no) {
-		// TODO Auto-generated method stub
+		
 		
 		ModelAndView mView = new ModelAndView();
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -470,7 +480,7 @@ public class CampaignServiceImpl implements CampaignService{
 	//캠페인 양식 Update
 	@Override
 	public void campContentsUpdate(HttpServletRequest request, CampaignContentsDto campaignContentsDto) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -484,7 +494,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 양식 삭제
 	@Override
 	public void campContentsDelete(HttpServletRequest request, int no) {
-		// TODO Auto-generated method stub
+		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
@@ -501,7 +511,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 양식 멀티 삭제
 	@Override
 	public void campContentesMultiDelete(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		String sCheck[] = request.getParameterValues("no");
@@ -522,7 +532,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 발송
 	@Override
 	public void campSend(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int sendForm = Integer.parseInt(request.getParameter("sendform").toString());
@@ -540,7 +550,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 추출 이력탭
 	@Override
 	public List<Map<String, Object>> campTabTargetHistory(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		Map<String,Object> param = new HashMap<>();
@@ -597,7 +607,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 추출 대상 고객 탭
 	@Override
 	public Map<String, Object> campTabTargetCustList(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		Map<String, Object> search = crud.searchParam(request);
 		search.put("campno",campNo);
 		int totalTargetCustRows = campaignDao.campTargetCustRows(search);
@@ -625,7 +635,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 대상추출 Read
 	@Override
 	public List<Map<String, Object>> campTargetRead(HttpServletRequest request, int campNo) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		Map<String,Object> param = new HashMap<>();
@@ -638,7 +648,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 일정 List(캘린더)
 	@Override
 	public ModelAndView campCalList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
@@ -654,7 +664,7 @@ public class CampaignServiceImpl implements CampaignService{
 		try {
 			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(campCalList);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -667,7 +677,7 @@ public class CampaignServiceImpl implements CampaignService{
 	// 캠페인 양식 사용 List ( TOP 5)
 	@Override
 	public List<Map<String, Object>> campContentsUseDescList(HttpServletRequest request, int id) {
-		// TODO Auto-generated method stub
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		Map<String,Object> param = new HashMap<>();

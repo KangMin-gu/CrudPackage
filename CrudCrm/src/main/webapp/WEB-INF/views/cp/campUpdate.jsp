@@ -100,7 +100,7 @@
                                     	<tr>
                                         	<th>캠페인유형</th>
                                             <td>
-                                            	<form:select class="form-control validate checkV" path="camptype" style="height: 22px !important">
+                                            	<form:select class="form-control" path="camptype" style="height: 22px !important">
                                             		<option label="선택" value="0"/>
                                                 	<c:forEach var="campType" items="${CAMPTYPE }">
                                                 		<c:choose>
@@ -147,11 +147,11 @@
                                             <td class="border-top-0">
                                             	<div class="input-group p-0">
                                                 	<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="form-control" value="${campInfo.STARTDATE }">
+                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="startdate" id="startdate" class="error required validate dateV form-control" value="${campInfo.STARTDATE }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="form-control" value="${campInfo.ENDDATE }">
+                                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" autocomplete="off" name="enddate" id="enddate" class="error required validate dateV form-control" value="${campInfo.ENDDATE }">
                                                     </div>
                                                 </div>
                                             </td>

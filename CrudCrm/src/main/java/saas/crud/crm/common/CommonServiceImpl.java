@@ -158,8 +158,6 @@ public class CommonServiceImpl implements CommonService {
 	// 고객 팝업 
 	@Override
 	public ModelAndView svcPopGetCustName(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		Map<String, Object> searchVal = crud.searchParam(request);
 		
 		int totalRows = commonDao.totalCntCust(searchVal);
@@ -188,7 +186,6 @@ public class CommonServiceImpl implements CommonService {
 	// custpopup에서 클릭했을때 ajax 처리해서 sv 화면에 데이터를 넣어줌
 	@Override
 	public Map<String, Object> svcPopGetCustDetail(HttpServletRequest request, int custNo) {
-		// TODO Auto-generated method stub
 		Map<String,Object> cstVal = new HashMap<>();
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -201,7 +198,6 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public Map<String, Object> svcPopGetClientDetail(HttpServletRequest request, int cliNo) {
-		// TODO Auto-generated method stub
 		Map<String,Object> cliVal = new HashMap<>();
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
@@ -214,8 +210,6 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public void mailClick(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 		Map<String,Object> remote = crudRemote.getRemote(request);
 		int emailLogId = Integer.parseInt(request.getParameter("emaillogid"));
 		int custNo = 0;
@@ -267,7 +261,6 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public void mailDeny(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		int emaillogid = Integer.parseInt(request.getParameter("emaillogid"));
 		
 		MailDto mailDto = new MailDto();

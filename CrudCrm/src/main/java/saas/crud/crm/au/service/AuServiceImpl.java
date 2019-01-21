@@ -42,7 +42,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 List 검색 
 	@Override
 	public ModelAndView userList(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		ModelAndView mView = new ModelAndView();
 		
 		Map<String, Object> search = crud.searchParam(request);
@@ -72,8 +71,6 @@ public class AuServiceImpl implements AuService{
 	//사용자 상세 정보
 	@Override
 	public ModelAndView userRead(HttpServletRequest request, int userNo) {
-		// TODO Auto-generated method stub
-		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		UserDto userDto = new UserDto();
@@ -95,7 +92,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 추가
 	@Override
 	public int userInsert(HttpServletRequest request, UserDto userDto) {
-		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		String hash = encoder.encode(userDto.getUserpassword());
@@ -112,7 +108,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 수정
 	@Override
 	public void userUpdate(HttpServletRequest request, UserDto userDto) {
-		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -124,8 +119,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 삭제
 	@Override
 	public void userDelete(HttpServletRequest request, int userNo) {
-		// TODO Auto-generated method stub
-		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int loginUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -141,7 +134,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 멀티 삭제
 	@Override
 	public void userMultiDelete(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int loginUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -164,7 +156,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 Id 중복 체크
 	@Override
 	public int userIdCheck(String userId) {
-		// TODO Auto-generated method stub
 		int idCheck = auDao.urIdCheck(userId);
 		return idCheck;
 	}
@@ -172,8 +163,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자 탭
 	@Override
 	public List<Map<String, Object>> userTopList(int siteid) {
-		// TODO Auto-generated method stub
-		
 		List<Map<String,Object>> userList = auDao.urTopList(siteid);
 		return userList;
 	}
@@ -181,8 +170,6 @@ public class AuServiceImpl implements AuService{
 	// 사용자에게 메뉴 추가
 	@Override
 	public void userMenuInsert(HttpServletRequest request, UserMenuDto userMenuDto) {
-		// TODO Auto-generated method stub
-		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int loginUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
@@ -228,7 +215,6 @@ public class AuServiceImpl implements AuService{
 			auDao.urUpdate(userDto);
 			mView.addObject("msg", "수정되었습니다.");
 			mView.addObject("url","myinfo/"+userNo);
-			System.out.println("myinfo/"+userNo);
 		}else {
 			mView.addObject("msg", "사용자 비밀번호를 확인 해주세요.");
 			mView.addObject("url","myinfo/post/"+userNo);

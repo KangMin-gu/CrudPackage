@@ -36,7 +36,6 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public void userHistory(Map<String,Object> param) {
-		// TODO Auto-generated method stub
 		session.insert("user.loginHistory",param);
 	}
 	

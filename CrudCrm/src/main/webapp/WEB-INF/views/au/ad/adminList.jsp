@@ -30,10 +30,10 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>사용자 관리</h2>
+                    <h2>회원 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
-                            <strong>사용자 목록</strong>
+                            <strong>회원 목록</strong>
                         </li>
                     </ol>
                 </div>
@@ -128,13 +128,33 @@
                         <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-	                            	 <a href="${pageContext.request.contextPath}/userexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
-	                          	</div>													
+                             		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
+                             		<input type="hidden" id="excelUrl" name="excelUrl" value="/userexcel">
+                             		<input type="hidden" id="searchFormId" name="searchFormId" value="command"> 
+                             	</div> 												
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
 									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
 								</div>
 							</div>
+							
+							<div class="modal inmodal" id="exModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+                                <div class="modal-dialog" >
+                                   	<div class="modal-content animated fadeIn">
+                                       	<div class="modal-header">
+                                           	<div class="h1 m-t-xs text-navy">
+                                				<span class="loading hamburger"></span>
+                            				</div>
+                                       	</div>
+                                       	<div class="modal-body" style="text-align:center">
+                                       		<p><strong>엑셀 다운로드 중 입니다.</strong></p>
+                                       	</div>
+                                       	<div class="modal-footer">
+                                           	<button type="button" class="btn btn-white" data-dismiss="modal" id="modalCloseBtn" style="display: none;">확인</button>
+                                       	</div>
+                                   	</div>
+                                </div>
+                            </div> 
                             <div class="overflow-x w-100">
                             <table class="table table-bordered table-hover">
                                 <colgroup>

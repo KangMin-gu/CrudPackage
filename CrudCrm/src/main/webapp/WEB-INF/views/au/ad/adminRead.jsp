@@ -23,6 +23,7 @@
 <body>
 <style>
 	.wizard > .content > .body{width: 100%; height: auto; background: #ffffff; padding: 2.5%; float: left; position: initial;}
+	select > .form-control {display: inline-block;}
 </style>
 	<div id="wrapper">
 <!-- leftside -->	
@@ -36,6 +37,9 @@
                 <div class="col-lg-10">
                     <h2>사용자 관리</h2>
                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/ad/user">사용자 목록</a>
+                        </li>
                         <li class="breadcrumb-item">
                             <a href="/ad/user">사용자 목록</a>
                         </li>

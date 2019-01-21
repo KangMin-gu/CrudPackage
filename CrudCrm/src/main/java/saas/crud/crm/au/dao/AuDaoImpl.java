@@ -21,28 +21,24 @@ public class AuDaoImpl implements AuDao{
 	// 사용자 List 검색
 	@Override
 	public List<Map<String, Object>> urList(Map<String, Object> search) {
-		// TODO Auto-generated method stub
 		return session.selectList("au.list",search);
 	}
 
 	// 사용자 통합 수
 	@Override
 	public int urTotalRows(Map<String, Object> search) {
-		// TODO Auto-generated method stub
 		return session.selectOne("au.totalRows",search);
 	}
 
 	// 사용자 상세
 	@Override
 	public Map<String, Object> urRead(UserDto userDto) {
-		// TODO Auto-generated method stub
 		return session.selectOne("au.detail",userDto);
 	}
 
 	// 사용자 추가
 	@Override
 	public int urInsert(UserDto userDto) {
-		// TODO Auto-generated method stub
 		session.insert("au.insert",userDto);
 		int userNo = userDto.getUserno();
 		
@@ -52,28 +48,24 @@ public class AuDaoImpl implements AuDao{
 	// 사용자 수정
 	@Override
 	public void urUpdate(UserDto userDto) {
-		// TODO Auto-generated method stub
 		session.update("au.update",userDto);
 	}
 
 	// 사용자 단일 삭제
 	@Override
 	public void urDelete(UserDto userDto) {
-		// TODO Auto-generated method stub
 		session.update("au.delete",userDto);
 	}
 
 	// 사용자 ID 체크
 	@Override
 	public int urIdCheck(String userId) {
-		// TODO Auto-generated method stub
 		return session.selectOne("au.idcheck",userId);
 	}
 	
 	// 사용자 탭
 	@Override
 	public List<Map<String,Object>> urTopList(int siteid){
-		
 		return session.selectList("au.topList",siteid);
 	}
 
@@ -87,14 +79,12 @@ public class AuDaoImpl implements AuDao{
 	// 사용자에게 메뉴 추가
 	@Override
 	public void urMenuInsert(UserMenuDto userMenuDto) {
-		// TODO Auto-generated method stub
 		session.insert("au.menuMerge",userMenuDto);
 	}
 
 	// 사용자 메뉴 제거
 	@Override
 	public void urMenuDelete(UserMenuDto userMenuDto) {
-		// TODO Auto-generated method stub
 		session.update("au.menuDelete",userMenuDto);
 	}
 

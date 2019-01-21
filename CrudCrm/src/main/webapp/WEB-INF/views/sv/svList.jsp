@@ -216,14 +216,18 @@
                         <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-									<c:choose>
-                    					<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
-                    						<a href="${pageContext.request.contextPath}/serviceexcel?servicestep=3" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
-                    					</c:when>
-                    					<c:otherwise>
-                    						<a href="${pageContext.request.contextPath}/serviceexcel" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="엑셀다운로드"><i class="fa fa-file-excel-o" ></i></a>
-                    					</c:otherwise>
-                    				</c:choose>
+									<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                             			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
+										<c:choose>
+                    						<c:when test="${fn:substring(urls, 0, 15)  eq '/service/convey' }">
+                    							<input type="hidden" id="excelUrl" name="excelUrl" value="/serviceexcel?servicestep=3">
+                    						</c:when>
+                    						<c:otherwise>
+	                    						<input type="hidden" id="excelUrl" name="excelUrl" value="/serviceexcel">
+                    						</c:otherwise>                    					
+                    					</c:choose>
+                             			<input type="hidden" id="searchFormId" name="searchFormId" value="command"> 
+                             		</div> 	
 	                          	</div>	
 	                          	
 	                          													
@@ -232,6 +236,26 @@
 									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
 								</div>
 							</div>
+							
+							<div class="modal inmodal" id="exModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+                                <div class="modal-dialog" >
+                                   	<div class="modal-content animated fadeIn">
+                                       	<div class="modal-header">
+                                           	<div class="h1 m-t-xs text-navy">
+                                				<span class="loading hamburger"></span>
+                            				</div>
+                                       	</div>
+                                       	<div class="modal-body" style="text-align:center">
+                                       		<p><strong>엑셀 다운로드 중 입니다.</strong></p>
+                                       	</div>
+                                       	<div class="modal-footer">
+                                           	<button type="button" class="btn btn-white" data-dismiss="modal" id="modalCloseBtn" style="display: none;">확인</button>
+                                       	</div>
+                                   	</div>
+                                </div>
+                            </div> 
+							
+							
                             <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                             	<colgroup>

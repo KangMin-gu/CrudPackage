@@ -30,16 +30,16 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>사용자 관리</h2>
+                    <h2>회원 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/ad/user">사용자목록</a>
+                            <a href="/ad/user">회원 목록</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/ad/user/${user.USERNO }">사용자정보</a>
+                            <a href="/ad/user/${user.USERNO }">회원 정보</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <strong>사용자수정</strong>
+                            <strong>회원 수정</strong>
                         </li>
                     </ol>
                 </div>

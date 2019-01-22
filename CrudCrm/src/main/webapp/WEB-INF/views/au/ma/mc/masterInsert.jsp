@@ -79,7 +79,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control error required validate allV" maxlength ="30" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control error required validate allV" maxlength ="20" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -92,7 +92,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="bsno">사업자번호</label></th>
+                                            <th><label for="bsno">사업자 번호</label></th>
                                             <td height="40">
                                                 <div class="input-group">
                                                     <input type="text" class="form-control validate bsno1V bsno-group" maxlength="3" name="bsno1" id="bsno1" value="${memCompany.BSNO1}"> -
@@ -112,11 +112,11 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th><label for="incno">법인번호</label></th>
+                                            <th><label for="incno">법인 번호</label></th>
                                             <td>
                                             	<div class="input-group">
-                                            		<input type="text" class="form-control validate incno1V incno-group" maxlength="5" name="incno1" id="incno1" value="${memCompany.INCNO1}"> -
-                                            		<input type="text" class="form-control validate incno2V" maxlength="5" name="incno2" id="incno2" value="${memCompany.INCNO2}">
+                                            		<input type="text" class="form-control validate incno1V incno-group" maxlength="6" name="incno1" id="incno1" value="${memCompany.INCNO1}"> -
+                                            		<input type="text" class="form-control validate incno2V" maxlength="7" name="incno2" id="incno2" value="${memCompany.INCNO2}">
                                             	</div>
                                             </td>
                                         </tr>
@@ -131,16 +131,16 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0"><label for="zipcode">직장주소</label></th>
+                                            <th class="border-top-0"><label for="zipcode">직장 주소</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group col-lg-3 pl-0 float-left">
-                                                    <input type="text" class="form-control daumzip" autocomplete="off" name="addr1" id="addr1" value="${memCompany.ADDR1}">
+                                                    <input type="text" class="form-control daumzip" autocomplete="off" readonly name="addr1" id="addr1" value="${memCompany.ADDR1}">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-search"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" name="addr2" id="addr2" value="${memCompany.ADDR2}">
-                                                <input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="addr3" id="addr3" value="${memCompany.ADDR3}">
+                                                <input type="text" class="form-control col-lg-4 float-left mr-3 mt-sx-1" readonly name="addr2" id="addr2" value="${memCompany.ADDR2}">
+                                                <input type="text" class="form-control float-left col-lg-4 mt-sx-1" name="addr3" id="addr3" maxlength="50" value="${memCompany.ADDR3}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -156,7 +156,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="prsdname">대표자</label></th>
                                             <td class="border-top-0">
-                                               <input type="text" class="form-control validate nameV" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
+                                               <input type="text" class="form-control validate nameV" name="prsdname" id="prsdname" maxlength="20" value="${memCompany.PRSDNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -170,7 +170,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class="border-top-0"><label for="mobile">휴대전화번호</label></th>
+                                            <th class="border-top-0"><label for="mobile">휴대번호</label></th>
                                             <td class="border-top-0">
                                                 <select class="form-control col-3 float-left mr-3 validate phone1V phone-group" id="mobile1" name="mobile1">
                                             		<option label="선택" value=""/>
@@ -185,24 +185,24 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" maxlength="4" name="mobile2" id="mobile2" value="${memCompany.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" maxlength="4" name="mobile3" id="mobile3" value="${memCompany.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate emailV" name="email" id="email" value="${memCompany.EMAIL }">
+                                                <input type="text" class="form-control validate emailV" maxlength="50" name="email" id="email" value="${memCompany.EMAIL }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="cotype">업태</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate stringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
+                                                <input type="text" class="form-control validate stringV" maxlength="20" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><label for="fregdate">최초가입일</label></th>
+                                            <th><label for="fregdate">최초 가입일</label></th>
                                             <td>
                                                 <div class="input-group">
                                             		<span class="input-group-addon">
@@ -216,7 +216,7 @@
                                             <th><label for="adminid">아이디</label></th>
                                             <td>
                                                 <div class="input-group">                           
-                                            		<input type="text" class="form-control error required validate idV" id="adminid" name="adminid">
+                                            		<input type="text" class="form-control error required validate idV" maxlength="20" id="adminid" name="adminid">
                                             	</div>
                                             </td>
                                         </tr>
@@ -246,8 +246,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="telno3" id="telno3" value="${memCompany.TELNO3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" maxlength="4" name="telno2" id="telno2" value="${memCompany.TELNO2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" maxlength="4" name="telno3" id="telno3" value="${memCompany.TELNO3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -271,7 +271,7 @@
                                         <tr>
                                             <th><label for="bscond">업종</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate stringV" name="bscond" id="bscond" value="${memCompany.BSCOND }">
+                                                <input type="text" class="form-control validate stringV" maxlength="20" name="bscond" id="bscond" value="${memCompany.BSCOND }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -297,7 +297,7 @@
                                             <th><label for="adminpassword">비밀번호</label></th>
                                             <td>
                                                 <div class="input-group">                           
-                                            		<input type="password" class="form-control required error validate passwordV" id="adminpassword" name="adminpassword">
+                                            		<input type="password" class="form-control required error validate passwordV" maxlength="20" id="adminpassword" name="adminpassword">
                                             	</div>
                                             </td>
                                         </tr>
@@ -327,8 +327,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V" maxlength="4" name="faxtel2" id="faxtel2" value="${memCompany.FAXTEL2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V" maxlength="4" name="faxtel3" id="faxtel3" value="${memCompany.FAXTEL3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -346,7 +346,7 @@
                                         <tr>
                                             <th><label for="bstype">종목</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate stringV" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
+                                                <input type="text" class="form-control validate stringV" maxlength="20" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
                                             </td>
                                         </tr>
                                         <tr>

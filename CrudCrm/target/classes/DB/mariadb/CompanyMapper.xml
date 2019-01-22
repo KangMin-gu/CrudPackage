@@ -46,10 +46,10 @@
      	FROM ma900010
      	WHERE ISDELETE = 0
      	<if test ="strDate != null">
-     		AND IFNULL(FREGDATE,'1900-01-01')<![CDATA[ > ]]>= #{strDate}
+     		AND IFNULL(FREGDATE,'1900-01-01')<![CDATA[ >= ]]> #{strDate}
      	</if>
      	<if test ="endDate != null">
-     		AND IFNULL(FREGDATE,'1900-01-01') <![CDATA[ < ]]>= #{endDate}
+     		AND IFNULL(FREGDATE,'1900-01-01') <![CDATA[ <= ]]> #{endDate}
      	</if>
      	<if test ="sitename != null">
      		AND SITENAME LIKE CONCAT('%',#{sitename},'%')

@@ -87,7 +87,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="sitename">회원사명*</label></th>
-                                            <td><input type="text" class="form-control error required validate allV" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
+                                            <td><input type="text" class="form-control error required validate allV" maxlength="20" name="sitename" id="sitename" value="${memCompany.SITENAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -123,8 +123,8 @@
                                             <th><label for="incno">법인번호</label></th>
                                             <td>
                                             	<div class="input-group">
-                                            		<input type="text" class="form-control validate incno1V incno-group" maxlength="5" name="incno1" id="incno1" value="${memCompany.INCNO1}"> -
-                                            		<input type="text" class="form-control validate incno2V" maxlength="5" name="incno2" id="incno2" value="${memCompany.INCNO2}">
+                                            		<input type="text" class="form-control validate incno1V incno-group" maxlength="6" name="incno1" id="incno1" value="${memCompany.INCNO1}"> -
+                                            		<input type="text" class="form-control validate incno2V" maxlength="7" name="incno2" id="incno2" value="${memCompany.INCNO2}">
                                             	</div>
                                             </td>
                                         </tr>
@@ -142,13 +142,13 @@
                                             <th class="border-top-0"><label for="zipcode">직장주소</label></th>
                                             <td class="border-top-0">
                                                 <div class="input-group col-lg-3 pl-0 float-left">
-                                                    <input type="text" class="form-control daumzip" autocomplete="off" name="addr1" id="addr1" value="${memCompany.ADDR1}">
+                                                    <input type="text" class="form-control daumzip" readonly autocomplete="off" name="addr1" id="addr1" value="${memCompany.ADDR1}">
                                                     <span class="input-group-addon">
                                                         <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
                                                     </span>
                                                 </div>
-                                                <input type="text" class="form-control col-lg-3 float-left mr-3 mt-sx-1" name="addr2" id="addr2" value="${memCompany.ADDR2}">
-                                                <input type="text" class="form-control float-left col-lg-5 mt-sx-1" name="addr3" id="addr3" value="${memCompany.ADDR3}">
+                                                <input type="text" class="form-control col-lg-3 float-left mr-3 mt-sx-1" readonly name="addr2" id="addr2" value="${memCompany.ADDR2}">
+                                                <input type="text" class="form-control float-left col-lg-5 mt-sx-1" maxlength="50" name="addr3" id="addr3" value="${memCompany.ADDR3}">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -164,7 +164,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="prsdname">대표자명</label></th>
                                             <td class="border-top-0">
-                                               <input type="text" class="form-control validate nameV" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
+                                               <input type="text" class="form-control validate nameV" maxlength="20" name="prsdname" id="prsdname" value="${memCompany.PRSDNAME }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -178,7 +178,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th class=" border-top-0"><label for="mobile">휴대전화번호</label></th>
+                                            <th class=" border-top-0"><label for="mobile">휴대번호</label></th>
                                             <td class="border-top-0">
                                             	<select class="form-control col-3 float-left mr-3 validate phone1V phone-group" style="height: 1.45rem" name="mobile1" id="mobile1">
 													<option value="">선택</option>
@@ -200,13 +200,13 @@
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate emailV" name="email" id="email" value="${memCompany.EMAIL }">
+                                                <input type="text" class="form-control validate emailV" maxlength="50" name="email" id="email" value="${memCompany.EMAIL }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="sitename">업태</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate stringV" name="cotype" id="cotype" value="${memCompany.COTYPE }">
+                                                <input type="text" class="form-control validate stringV" maxlength="20" name="cotype" id="cotype" value="${memCompany.COTYPE }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -218,7 +218,7 @@
                                         <tr>
                                             <th><label for="adminid">아이디</label></th>
                                             <td>
-                                                <input type="text" class="form-control" name="adminid" id="adminid" value="${memCompany.ADMINID }" disabled>
+                                                <input type="text" class="form-control" maxlength="20" name="adminid" id="adminid" value="${memCompany.ADMINID }" disabled>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -272,7 +272,7 @@
                                         <tr>
                                             <th><label for="bscond">업종</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate stringV" name="bscond" id="bscond" value="${memCompany.BSCOND }">
+                                                <input type="text" class="form-control validate stringV" maxlength="20" name="bscond" id="bscond" value="${memCompany.BSCOND }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -344,7 +344,7 @@
                                         <tr>
                                             <th><label for="bstype">종목</label></th>
                                             <td>
-                                                <input type="text" class="form-control validate stringV" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
+                                                <input type="text" class="form-control validate stringV" maxlength="20" name="bstype" id="bstype" value="${memCompany.BSTYPE }">
                                             </td>
                                         </tr>
                                         <tr>

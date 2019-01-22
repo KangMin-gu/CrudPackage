@@ -22,6 +22,7 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
+		
     
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
@@ -76,7 +77,7 @@
                                             <th>코드명</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="codename" id="codename" value="${search.codename }">
+                                                    <input type="text" class="form-control reset" name="codename" id="codename" value="${search.codename }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -95,7 +96,7 @@
                                             <th>그룹코드</th>
                                             <td>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="codegrp" id="codegrp" value="${search.codegrp }">
+                                                    <input type="text" class="form-control reset" name="codegrp" id="codegrp" value="${search.codegrp }">
                                                 </div>
                                             </td>
                                         </tr>
@@ -104,6 +105,7 @@
                             </div>
                             <div>
                             	<button class="search btn btn-primary" style="height:38.61px">검색</button>
+                            	<button class="search btn btn-primary resets" style="height:38.61px">초기화</button>
                             </div>
                         </div>
                         </form:form>
@@ -203,7 +205,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="codegrp">코드그룹명</label></th>
-                                            <td><input type="text" class="form-control required"  name="codegrp" id="codegrp" value="${code.CODEGRP}"></td>
+                                            <td><input type="text" class="form-control" maxlength="20"  name="codegrp" id="codegrp" value="${code.CODEGRP}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -219,7 +221,7 @@
                                             <th><label for="menuval">코드 명</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required" name="codename" id="codename" value="${code.CODENAME}">
+                                                    <input type="text" class="form-control" maxlength="20" name="codename" id="codename" value="${code.CODENAME}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -236,7 +238,7 @@
                                         <tr>
                                             <th><label for="licenseno">코드 값</label></th>
                                             <td>
-                                            	<input type="text" class="form-control required" name="codeval" id="codeval" value="${code.CODEVAL}">
+                                            	<input type="text" class="form-control" maxlength="20" name="codeval" id="codeval" value="${code.CODEVAL}">
                                             </td>
                                         </tr>
                                     </tbody>

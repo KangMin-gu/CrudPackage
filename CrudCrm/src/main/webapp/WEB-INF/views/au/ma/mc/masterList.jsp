@@ -17,6 +17,7 @@
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
+<link href="${pageContext.request.contextPath}/resources/css/test.css" rel="stylesheet">
 </head>
 
 <body>
@@ -72,11 +73,11 @@
                                             <td>
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strDate" id="strDate" value="${search.strDate }">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset date dateV validate" autocomplete="off" name="strDate" id="strDate" value="${search.strDate }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="endDate" id="endDate" value="${search.endDate }">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset date dateV validate" autocomplete="off" name="endDate" id="endDate" value="${search.endDate }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -288,12 +289,11 @@
             forceParse: false,
             autoclose: true
         });
+        
+        
     });
     
-    $('.resets').click(function(e){
-    	e.preventDefault();
-    	$('.reset').val('');
-    });
+    
 
 	</script>			
 

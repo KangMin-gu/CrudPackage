@@ -401,16 +401,7 @@
                                     </select>
                                     <select class="form-control float-left mr-2 col-sm-5 voc" name="servicecode2" id="servicecode2" upper ="servicecode1">
                                         <option label="선택" value=""/>
-                                        <c:forEach var="serviceCode1" items="${SERVICECODE1 }">
-                                            <c:choose>
-                                                <c:when test="${serviceInfo.SERVICECODE1 eq serviceCode1.codeval}">
-                                                	<option selected label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
-                                                </c:when>
-                                                <c:otherwise>
-                                                	<option label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
-                                            	</c:otherwise>
-                                        	</c:choose>
-                                    	</c:forEach>
+                                        
                                     </select>
                                 </td>
                             </tr>

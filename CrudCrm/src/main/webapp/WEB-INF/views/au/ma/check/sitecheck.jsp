@@ -43,19 +43,11 @@
 
 
 
-			<div class="row wrapper border-bottom white-bg page-heading">
-				<div class="col-lg-10">
-														<c:forEach var="tmp" items="${sessionList }">
-                                                      			aaa : ${tmp.USERNAME }
-                                                         			
-                                                   		</c:forEach>
-                                                   			a
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item active" ><strong>목록</strong></li>
-					</ol>
-				</div>
-				<div class="col-lg-2"></div>
-			</div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>접속중인 사용자</h2>
+                </div>
+            </div>
 
 			
 			<!-- Content -->
@@ -245,15 +237,11 @@
 										<colgroup>
 											<col width="40px;">
 											<col width="100px;">
-											<col width="180px;">
-											<col width="100px;">
 											<col width="120px;">
 											<col width="180px;">
-											<col width="80px;">
-											<col width="80px;">
-											<col width="80px;">
-											<col width="80px;">
-											<col width="100px;">
+											<col width="180px;">
+											<col width="180px;">
+											<col width="100px;">									
 										</colgroup>
 																				
 										<thead>
@@ -262,58 +250,29 @@
 													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
 												</th>
 												<th>고객명</th>
-												<th>직장</th>
-												<th>부서</th>
-												
+												<th>직장</th>											
 												<th>휴대폰</th>
-												<th>이메일</th>
-												
-												<th>담당자</th>
-												<th>회원구분</th>
-												<th>고객등급</th>
-												<th>정보활용</th>
-												<th>등록일</th>
+												<th>전화번호</th>												
+												<th>이메일</th>																					
+												<th>강제종료</th>
 											</tr>
 										</thead>
 										
 										<tbody>
-										<c:forEach var="list" items="${custList}"  > 
+										<c:forEach var="tmp" items="${sessionList }"  > 
 											<tr>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
-												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.DEPTNAME }</td>
-												
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${tmp.USERNO}"></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${tmp.USERNAME }</a></td>												
+												<td>${tmp.SITENAME }</td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${tmp.EMAIL }</td>					
+												<td>${tmp.TELNO }</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
 													<c:choose>
-														<c:when test="${fn:trim(list.MOBILE) eq '--'}"></c:when>
-														<c:otherwise>${list.MOBILE }</c:otherwise>
+														<c:when test="${fn:trim(tmp.MOBILE) eq '--'}"></c:when>
+														<c:otherwise>${tmp.MOBILE }</c:otherwise>
 													</c:choose>
-												</td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.EMAIL }</td>
-												
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.OWNER_}</td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
-												<c:choose>
-													<c:when test="${list.CUSTGUBUN eq 1 }">회원</c:when>
-													<c:when test="${list.CUSTGUBUN eq 2 }">비회원</c:when>
-													<c:when test="${list.CUSTGUBUN eq 3 }">탈퇴회원</c:when>
-												</c:choose>
-												</td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
-												<c:choose>
-													<c:when test="${list.CUSTGRADE eq 1 }">일반</c:when>
-													<c:when test="${list.CUSTGRADE eq 2 }">VIP</c:when>
-													<c:when test="${list.CUSTGRADE eq 3 }">VVIP</c:when>
-												</c:choose>
-												</td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
-												<c:choose>
-													<c:when test="${list.INFOAGREE eq 0 }">동의</c:when>
-													<c:when test="${list.INFOAGREE eq 1 }">거부</c:when>
-												</c:choose>
-												</td>
-												<td>${list.REGDATE }</td>
+												</td>					
+												<td><button class="btn btn-xs btn-primary">강제종료</button></td>
 											</tr> 
 											</c:forEach>
 											<!-- foreach끝 -->

@@ -15,7 +15,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -311,9 +310,10 @@ public class AuServiceImpl implements AuService{
 		Map<String, Object> mapSender = new HashMap<>();
 		
 		for(int i = 0; i< loginUserss.size(); i++) {
-			loginUserss.get(i);
-			System.out.println(loginUserss.get(i));
-			
+			String userId = loginUserss.get(i).get("ID").toString();
+			System.out.println("asd"+loginUserss.get(i).get("ID"));
+			mapSender = urDao.useInfo(userId);
+			listSender.add(mapSender);		
 		}
 		 
 		ModelAndView mView = new ModelAndView();

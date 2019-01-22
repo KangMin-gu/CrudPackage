@@ -79,7 +79,6 @@ public class LoginManager implements HttpSessionBindingListener {
 			   loginuser.put("ID", valueName);
 			   loginuser.put("session", keyName);
 			   loginUserss.add(loginuser);
-			   System.out.println(keyName +" = " +valueName);
 		 }
 		 return loginUserss;
 	}

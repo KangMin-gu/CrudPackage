@@ -69,6 +69,8 @@
         <div class="wrapper wrapper-content">
             <div class="ibox clearfix">
                 <div class="ibox-left">
+                	<div class="ibox-content left-cont" id="regDiv"></div>
+                
                     <div class="ibox-content left-cont pt-0">
                         <table class="table table-bordered mb-2">
                             <colgroup>
@@ -80,59 +82,75 @@
                                 <col style="width: 120PX;">
                             </colgroup>
                             <tbody>
+                            
                                 <tr>
-                                    <th>휴대전화</th>
-                                    <td><input type="text"class="form-control"></td>
+                                    <th>수신번호</th>
+                                    <td>	
+                                        <input type="text" class="form-control" onkeyup="enterkey(this);" id="phone" name="phone">
+                                    </td>
                                     <th>고객명</th>
-                                    <td><input type="text"class="form-control"></td>
+                                    <td>
+                                    	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
+                                    	<input type="text" class="form-control custInput" id="custname" name="custname">
+                                    </td>
                                     <th>고객구분</th>
                                     <td>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
+                                        <select class="form-control custInput" id="custgubun" name="custgubun" >
+                                            <option value="0">선택</option>
+                                            <option value="1">option 1</option>
+                                            <option value="2">option 2</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
+                                	<th>휴대전화</th>
+                                    <td>
+                                    	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile1" id="mobile1"  >        		
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile2" id="mobile2"  > 
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile3" id="mobile3"  >
+                                    </td>
                                     <th>집전화</th>
-                                    <td><input type="text"class="form-control"></td>
+                                    <td>
+                                    	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel1" id="homtel1"  >        		
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel2" id="homtel2"  > 
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel3" id="homtel3"  >
+                                    </td>
                                     <th>관련고객</th>
                                     <td>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-addon">
-                                                <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <th>등급</th>
-                                    <td>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                        </select>
+                                        <div class="input-group cust" id="relcustname">
+                                            <input type="text" class="form-control" name="relcustname" readonly>
+                                            <input class="custInput" type="hidden" id="relcustno" name="relcustno" value="0" />
+                                        </div>    
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>이메일</th>
-                                    <td colspan="5">
-                                        <input type="text"class="form-control">
+                                    <td colspan="3">
+                                        <input type="text" class="form-control custInput" id="email" name="email" >
+                                    </td>
+                                    <th>등급</th>
+                                    <td>
+                                        <select class="form-control custInput" id="custgrade" name="custgrade">
+                                            <option value="0">선택</option>
+                                            <option value="1">option 1</option>
+                                            <option value="2">option 2</option>
+                                            <option value="3">option 2</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>주소</th>
                                     <td colspan="5">
             							<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
-            								<input type="text" class="form-control" name="" id="">
-            								<span class="input-group-addon"><a href="#"><i class="fa fa-search"></i></a>
+            								<input type="text" class="form-control custInput daumzip" name="homaddr1" id="homaddr1" readonly>
+            								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a>
             								</span>
             							</div>
-            							<input type="text" class="form-control float-left mr-2" name="" id="" style="width: 220px;">
-            							<input type="text" class="form-control float-left" name="" id="" style="width: 220px;">
+            							<input type="text" class="form-control float-left mr-2 custInput" name="homaddr2" id="homaddr2" readonly style="width: 220px;">
+            							<input type="text" class="form-control float-left custInput" name="homaddr3" id="homaddr3" style="width: 220px;">
                                     </td>
                                 </tr>
+                            	
                             </tbody>
                         </table>
                     </div>
@@ -495,12 +513,84 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 
-        
-        $('#test').change(function(){
-        	alert("test");
-        });
+function enterkey(event) {
+	debugger;
+	var id = event.id;
+    if (window.event.keyCode == 13) {
+    	if(id == 'phone'){
+    		var searchPhoneNo = document.getElementById(id).value;
+    		openNewWindow('voc','/vc/pop/cust?phone='+searchPhoneNo,'voc',900,600);
+    	}
+    }
+}
+
+function goCustInsert(){
+	debugger; 	
+	var urlStr = "/vc/cust/post";
+	var custName = $("#custname").val();
+	if(custName.trim() == ''){
+		$("#custname").val('익명');
+	}	
+	
+	var param={};
+	param = custDataToJson(param);
+	
+	$.ajax({
+        url: urlStr,
+        method: "POST",
+        dataType: "json",
+        data:param,
+        cache: false,
+        contentType : "application/json; charset=UTF-8",
+        success: function (data) {
+        	debugger;
+        	console.log(data.custno);
+        	alert("추가 되었습니다.");
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+	
+}
+
+function goCustUpdate(){
+	debugger;
+	var custNo = $("#custno").val();
+	var urlStr = "/vc/cust/post/"+custNo;			
+	var param={};	
+	param = custDataToJson(param);
+	
+	$.ajax({
+        url: urlStr,
+        method: "POST",
+        dataType: "json",
+        data:param,
+        contentType : "application/json; charset=UTF-8",
+        success: function (data) {
+        	debugger;
+        	console.log(data.custno);
+        	alert("수정 되었습니다.");
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+function custDataToJson(param){//고객 인풋 필드 데이터 	
+	var custData = $('.custInput');
+	var custLength = custData.length;
+    for(i=0; i<custLength;i++){
+       var idVal = custData[i].id;
+       param[idVal] = custData[i].value;
+    }
+    return param;
+}
+
 </script>
-	<!-- E: 추가 js -->
+
+	
 </body>
 
 </html>

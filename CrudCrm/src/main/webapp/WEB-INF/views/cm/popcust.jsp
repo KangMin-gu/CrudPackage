@@ -51,7 +51,7 @@ body {
 					<div class="col-sm-12 col-xs-12 p-0 float-left">
 						<form:form action="/popcust" method="GET">
 						<input type="hidden" id="parentid" name="parentid" value="${searchVal.parentid}">
-						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >담당자명</label>
+						<div class="form-group  row"><label class="col-sm-2 col-form-label" style="padding-top: 0px;" >고객명</label>
                             <div class="col-sm-7">
                                 <input type="text" name="custname" id="custname" class="form-control" value="${searchVal.custname}"> 
                             </div>                                

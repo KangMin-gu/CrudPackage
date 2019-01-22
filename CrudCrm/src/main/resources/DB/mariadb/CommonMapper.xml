@@ -81,12 +81,19 @@
 		<!-- 회원사의 고객 수 카운터  -->
 	<select id="totalCntCust" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*)
-		FROM CU100010
+		FROM CU100010 
 		WHERE 
 			SITEID = #{siteid}
 			AND ISDELETE = 0
-			<if test="cstname != null">
-				AND CUSTNAME like CONCAT('%',#{cstname},'%')
+			<if test="custname != null">
+				AND CUSTNAME like CONCAT('%',#{custname},'%')
+			</if>
+			<if test="phone != null">
+				AND ( 
+					CONCAT(MOBILE1,MOBILE2,MOBILE3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%') 
+					OR CONCAT(HOMTEL1,HOMTEL2,HOMTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')
+					OR CONCAT(WRKTEL1,WRKTEL2,WRKTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')  
+					)	
 			</if>
 	</select>
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
@@ -96,7 +103,23 @@
 		(
 		SELECT 
 		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME,CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3) AS MOBILE, A.EMAIL
+		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME
+		,CASE WHEN  
+			REPLACE(CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3),' ','') = ''  THEN ''
+		ELSE 
+			CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) 
+		END AS MOBILE
+		,CASE WHEN  
+			REPLACE(CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3),' ','') = ''  THEN ''
+		ELSE 
+			CONCAT(A.HOMTEL1,'-',A.HOMTEL2,'-',A.HOMTEL3) 
+		END AS HOMTEL
+		,CASE WHEN  
+			REPLACE(CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3),' ','') = ''  THEN ''
+		ELSE 
+			CONCAT(A.WRKTEL1,'-',A.WRKTEL2,'-',A.WRKTEL3) 
+		END AS WRKTEL
+		,A.EMAIL
 		
 		FROM CU100010 A 
 		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
@@ -105,8 +128,15 @@
 		WHERE 
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
-			<if test="cstname != null">
-				AND CUSTNAME like CONCAT('%',#{cstname},'%')
+			<if test="custname != null">
+				AND CUSTNAME like CONCAT('%',#{custname},'%')
+			</if>
+			<if test="phone != null">
+				AND ( 
+					CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%') 
+					OR CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')
+					OR CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')  
+					)			
 			</if>
 		ORDER BY A.CUSTNO
 		) T

@@ -20,11 +20,11 @@ public interface CustService {
 		
 	public ModelAndView svcCustDetail(int custno, int siteid);
 	
-	public Map<String,Object> svcCustUpdateForm(int CUSTNO);
+	public Map<String,Object> svcCustDetailForm(int CUSTNO);
 	
-	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto);
+	public int svcCustformInsert(CustDto custDto, CustDenyDto custDenyDto);
 	
-	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto);
+	public int svcCustformUpdate(CustDto custDto, CustDenyDto custDenyDto);
 	
 	public Map<String,Object> svcCustTabCampList(HttpServletRequest request);
 	

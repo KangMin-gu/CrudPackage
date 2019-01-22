@@ -64,6 +64,7 @@ public class CustDto {
 	private int isdelete;
 	private int clino;
 	private int clicustno;
+	private int relcustno;
 		
 	public CustDto() {}
 
@@ -74,7 +75,7 @@ public class CustDto {
 			String wrkaddr1, String wrkaddr2, String wrkaddr3, String wrktel1, String wrktel2, String wrktel3,
 			String wrkurl, String wrkfax1, String wrkfax2, String wrkfax3, int mailto, int denyemail, int denyfax,
 			int denydm, int denytm, int denysms, int denyvisit, int owner, int actgrade, String memo, String regdate,
-			int reguser, String editdate, int edituser, int isdelete, int clino, int clicustno) {
+			int reguser, String editdate, int edituser, int isdelete, int clino, int clicustno, int relcustno) {
 		super();
 		this.custno = custno;
 		this.siteid = siteid;
@@ -130,6 +131,7 @@ public class CustDto {
 		this.isdelete = isdelete;
 		this.clino = clino;
 		this.clicustno = clicustno;
+		this.relcustno = relcustno;
 	}
 
 	public int getCustno() {
@@ -564,8 +566,13 @@ public class CustDto {
 		this.clicustno = clicustno;
 	}
 
-	
+	public int getRelcustno() {
+		return relcustno;
+	}
 
+	public void setRelcustno(int relcustno) {
+		this.relcustno = relcustno;
+	}
 
 	
 	

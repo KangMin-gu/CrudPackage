@@ -54,9 +54,6 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
 	private CrudRemote crudRemote;
-	
-	@Autowired
-	private SalesDao salesDao;
 
 	//담당자 검색 팝업 페이지 데이터
 	@Override

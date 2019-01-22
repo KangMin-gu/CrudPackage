@@ -78,8 +78,8 @@ public class CustDaoImpl implements CustDao {
 	
 	//고객 수정 폼(바인딩 정보)
 	@Override
-	public Map<String,Object> custUpdateForm(int custno){
-		Map<String,Object> map = session.selectOne("customer.custUpdateForm",custno);
+	public Map<String,Object> custDetailForm(int custno){
+		Map<String,Object> map = session.selectOne("customer.custDetailForm",custno);
 		return map;
 	}
 	//고객 수정 

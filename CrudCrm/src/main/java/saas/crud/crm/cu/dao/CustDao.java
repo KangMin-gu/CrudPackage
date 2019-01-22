@@ -12,7 +12,7 @@ public interface CustDao {
 	public int totalCnt(Map<String, Object> map);
 	public List<Map<String,Object>> custList(Map<String, Object> cstVal);	
 	public Map<String,Object> custDetail(Map<String,Object> cstVal);	
-	public Map<String,Object> custUpdateForm(int cstid);
+	public Map<String,Object> custDetailForm(int cstid);
 	public int custDelete(CustDto CustDto);	
 	public int custformInsert(CustDto CustDto);
 	public void custformInsertDeny(CustDenyDto custDenyDto);

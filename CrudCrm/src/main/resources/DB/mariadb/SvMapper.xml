@@ -178,6 +178,8 @@
 		,SERVICECODE
 		,SERVICECHANNEL
 		,ISDELETE
+		,MEMO
+		,COMPLETE
 		)VALUES(
 		#{servicename}
 		,#{servicedesc}
@@ -197,6 +199,8 @@
 		,#{servicecode}
 		,#{servicechannel}
 		,#{isdelete}
+		,#{memo}
+		,#{complete}
 		)
 		<selectKey keyProperty="serviceno"  resultType="integer" order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -436,5 +440,28 @@
 		AND A.SERVICESTEP != 1
 		AND A.ISDELETE = 0
 	</select>
+	
+	<insert id="svGoodsInsert" parameterType="hashMap">
+		INSERT INTO sv300060
+		(
+		SERVICENO
+		 ,GOODSB
+		 ,GOODSM
+		 ,GOODSS
+		 ,REGDATE
+		 ,REGUSER
+		 ,EDTDATE
+		 ,EDTUSER
+		)VALUES(
+		#{serviceno}
+		,#{goodsb}
+		,#{goodsm}
+		,#{goodss}
+		,NOW()
+		,#{regdate}
+		,NOW()
+		,#{edtdate}
+		)
+	</insert>
 	
 </mapper>

@@ -1,5 +1,7 @@
 package saas.crud.crm.vc.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,16 @@ public class VocDaoImpl implements VocDao{
 	
 	@Autowired
 	private SqlSession session;
-	
+
+	@Override
+	public int vocInsert(Map<String, Object> param) {
+		int cnt = session.insert("vc.insert",param);
+		return cnt;
+	}
+
+	@Override
+	public void vocGoodsInsert(Map<String, Object> param) {
+		session.insert("vc.goodsInsert",param);
+	}
 	
 }

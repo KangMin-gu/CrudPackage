@@ -359,14 +359,17 @@
                             <col style="width: auto;">
                             <col style="width: 100px; background: #fafafa;">
                             <col style="width: auto;">
+                            <col style="width: 100px; background: #fafafa;">
+                            <col style="width: auto;">
                         </colgroup>
                         <tbody>
                             <tr>
                                 <th>상담구분</th>
                                 <td>
                                     <div class="i-checks">
-                                        <label class="mr-2 mb-0"><input type="radio" value="" name="a"> 문의</label>
-                                        <label class="mb-0"><input type="radio" value="" name="a"> A/S</label>
+                                    	<c:forEach var="serviceType" items="${SERVICETYPE }">
+                                    		<label class="mr-2 mb-0 voc"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
+                                        </c:forEach>
                                     </div>
                                 </td>
                                 <th>상담 템플릿</th>
@@ -382,12 +385,12 @@
                             <tr>
                                 <th>상담유형</th>
                                 <td colspan="3" class="clearfix">
-                                    <select class="form-control float-left mr-2 col-sm-5">
+                                    <select class="form-control float-left mr-2 col-sm-5 voc">
                                         <option>option 2</option>
                                         <option>option 3</option>
                                         <option>option 4</option>
                                     </select>
-                                    <select class="form-control float-left col-sm-5">
+                                    <select class="form-control float-left col-sm-5 voc">
                                         <option>option 2</option>
                                         <option>option 3</option>
                                         <option>option 4</option>
@@ -400,61 +403,121 @@
                                     <div class="select-area mt-1">
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
                                          <div class="select-box mb-1">
-                                            <select class="form-control d-inline-block mr-2">
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
+                                            <select id="goods11" name="goodsb1" class="form-control d-inline-block mr-2 voc">
+                                                <option value="b11">option 2</option>
+                                                <option value="b12">option 3</option>
+                                                <option value="b13">option 4</option>
                                             </select>
-                                            <select class="form-control d-inline-block mr-2">
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
+                                            <select id="goods12 name="goodsm1" class="form-control d-inline-block mr-2 voc">
+                                                <option value="m11">option 2</option>
+                                                <option value="m12">option 3</option>
+                                                <option value="m13">option 4</option>
                                             </select>
-                                            <select class="form-control d-inline-block mr-2">
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
+                                            <select id="goods13" name="goodss1" class="form-control d-inline-block mr-2 voc">
+                                                <option value="s11">option 2</option>
+                                                <option value="s12">option 3</option>
+                                                <option value="s13">option 4</option>
                                             </select>
-                                            <button class="btn btn-primary d-inline-block btn-sm mr-2">추가</button>
+                                            <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
                                         </div>
+                                        <div class="select-box mb-1">
+                                            <select id="goods21" name="goodsb2" class="form-control d-inline-block mr-2 voc">
+                                                <option>option 2</option>
+                                                <option>option 3</option>
+                                                <option>option 4</option>
+                                            </select>
+                                            <select id="goods22" name="goodsm2" class="form-control d-inline-block mr-2 voc">
+                                                <option>option 2</option>
+                                                <option>option 3</option>
+                                                <option>option 4</option>
+                                            </select>
+                                            <select id="goods23" name="goodss2" class="form-control d-inline-block mr-2 voc">
+                                                <option>option 2</option>
+                                                <option>option 3</option>
+                                                <option>option 4</option>
+                                            </select>
+                                            <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
+                                        </div>
+                                        
                                         <!-- E: 이 영역을 계속 추가 하면 됨 -->
                                     </div>
-                                </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>접수내용</th>
                                 <td colspan="3">
-                                    <input type="text"class="form-control">
+                                    <input type="text"class="form-control voc" name="servicename" id="servicename" value="${vocInfo.SERVICENAME }">
                                 </td>
                             </tr>
                             <tr>
                                 <th>상담내용</th>
                                 <td colspan="3">
-                                    <textarea name="" id="" class="form-control" style="height: 200px; resize: none;"></textarea>
+                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" style="height: 200px; resize: none;"></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks">
-                                        <label class="mr-2 mb-0"><input type="radio" value="" name="b"> 완료</label>
-                                        <label class="mr-2 mb-0"><input type="radio" value="" name="b"> 담당자 이관</label>
-                                        <label class="mr-2 mb-0"><input type="radio" value="" name="b"> 상급자 이관</label>
-                                        <label class="mb-0"><input type="radio" value="" name="b"> 상담예약</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="2" id="vocstep2" name="vocstep"> 처리</label>
+                                        <label class="mb-0"><input type="radio" class="check voc" value="3" id="vocstep3" name="vocstep"> 상담예약</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="4" id="vocstep4" name="vocstep"> 담당자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="5" id="vocstep5" name="vocstep"> 상급자 이관</label>
                                     </div>
                                 </td>
+                            </tr>
+                            <tr class="convey">
+                            	<th>이관 담당자 </th>
+                            	<td colspan="1">
+                            		<div class="input-group owner" id="nextowner_">
+                            			<input type="text" class="form-control" autocomplete="off" name="nextowner_" value="">
+                                        <input type="hidden" name="nextowner" id="nextowner" value="">
+                                        <span class="input-group-addon">
+                                        	<a><i class="fa fa-search"></i></a>
+                                        </span>
+                                    </div>
+                            	</td>
+                            	<th>이관 사유</th>
+                            	<td colspan="1">
+                            		<select class="form-control voc" name="conveyreason" id="conveyreason">
+										<option label="선택" value=""/>
+                                       	<c:forEach var="conveyReason" items="${CONVEYREASON }">
+                                       		<option label="${conveyReason.codename }" value="${conveyReason.codeval }"/>
+                                       	</c:forEach>
+                                    </select>
+                            	</td>
+                            </tr>
+                            <tr class="convey">
+                            	<th>비고</th>
+                            	<td colspan="3">
+                            		<textarea id="conveydesc" class="form-control voc" name="conveydesc" cols="80" rows="3"></textarea>
+                            	</td>
+                            </tr>
+                            <tr class="reservation">
+                            	<th>예약 전화번호
+                            	<td>
+                            		<input type="text" class="form-control voc" autocomplete="off" name="reservphone" value="">
+                            	</td>
+                            	<th>예약 일시
+                            	<td>
+                            		<div class="input-group date" data-autoclose="true">
+                            			<span class="input-group-addon">
+                                    		<span class="fa fa-calendar"></span>
+                                		</span>
+                                		<input type="text"  class="form-control date voc" name="reservdate" id="reservdate" value="">
+                            		</div>	
+                            	</td>
                             </tr>
                             <tr>
                                 <th>이력 및 메모</th>
                                 <td colspan="3" >
-                                    <textarea name="" id="" class="form-control" style="height: 150px; resize: none;"></textarea>
+                                    <textarea name="memo" id="memo" class="form-control voc" style="height: 150px; resize: none;"></textarea>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="btn-area text-right">
-                        <button class="btn btn-primary btn-large">저장</button>
+                        <button id="save" class="btn btn-primary btn-large">저장</button>
                     </div>
                 </div>
             </div>
@@ -490,15 +553,48 @@
             </div>
         </div>
     </div>
-<%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+<%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
+<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
+<script src="${pageContext.request.contextPath}/resources/crud/crud_right.js"></script>
 
-        
-        $('#test').change(function(){
-        	alert("test");
-        });
+<script>
+	
+$(document).ready(function () {
+	$('.convey').hide();
+	$('.reservation').hide();
+});
+
+$('.check').on('ifChecked', function(event){
+
+	
+	var value = event.currentTarget.value;
+	if(value == 4 || value == 5){
+		$('.convey').show();
+		$('.reservation').hide();
+	}else if (value == 3){
+		$('.convey').hide();
+		$('.reservation').show();
+	}else{
+		$('.convey').hide();
+		$('.reservation').hide();
+	}
+
+});
+
+
+$(".plus").click(function(){
+	var cloneCount = $('[name*="goodsb"]').length;
+	var countP = cloneCount + 1;
+    
+    $('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
+    $('.select-area .select-box:last').find('#goods'+cloneCount+1).attr('name','goods'+countP+1).attr('id','goods'+countP+1);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+1);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+1);
+ }); 
+
+	
 </script>
 	<!-- E: 추가 js -->
 </body>

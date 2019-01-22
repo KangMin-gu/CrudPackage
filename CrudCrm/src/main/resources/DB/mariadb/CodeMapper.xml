@@ -155,7 +155,7 @@
     
     	SELECT CODEGRP, CODENAME, CODEVAL FROM sys990020
     	WHERE SITEID = 1
-    	
+    	AND ISDELETE = 0
     	<if test ="value != null">
     		AND CODEGRP = #{value} 
     	</if>

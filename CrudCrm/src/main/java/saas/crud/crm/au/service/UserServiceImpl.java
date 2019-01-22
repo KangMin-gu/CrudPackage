@@ -73,8 +73,6 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		ModelAndView mView = new ModelAndView();
-		String url = request.getParameter("url"); 
-		StringBuffer buf = new StringBuffer();
 
 		if(isValid){
 			

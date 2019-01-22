@@ -251,17 +251,17 @@
                                             </td>
                                         </tr>
                                     	<tr>
-                                        	<th class="border-top-0">접수매체</th>
+                                        	<th class="border-top-0">접수유형1</th>
                                         	<td class="border-top-0">
-                                                <select class="form-control validate numberV" name="servicechannel" id="servicechannel">
+                                                <select class="form-control validate numberV" name="servicecode1" id="servicecode1">
                                             		<option label="선택" value="0"/>
-                                                	<c:forEach var="serviceChannel" items="${SERVICECHANNEL }">
+                                                	<c:forEach var="serviceCode1" items="${SERVICECODE1 }">
                                                 		<c:choose>
-                                                			<c:when test="${serviceInfo.SERVICECHANNEL eq serviceChannel.codeval}">
-                                                				<option selected label="${serviceChannel.codename }" value="${serviceChannel.codeval }"/>
+                                                			<c:when test="${serviceInfo.SERVICECODE1 eq serviceCode1.codeval}">
+                                                				<option selected label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
                                                 			</c:when>
                                                 			<c:otherwise>
-                                                				<option label="${serviceChannel.codename }" value="${serviceChannel.codeval }"/>
+                                                				<option label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
                                                 			</c:otherwise>
                                                 		</c:choose>
                                                 	</c:forEach>
@@ -287,13 +287,20 @@
 											</td>
                                         </tr>
                                         <tr>
-                                            <th>서비스유형</th>
+                                            <th>접수유형2</th>
                                             <td>
-                                            	<select class="form-control select validate numberV" name="servicecode" id="servicecode" value="${serviceInfo.SERVICECODE }">
+                                            	<select class="form-control select validate numberV" name="servicecode2" id="servicecode2" value="${serviceInfo.SERVICECODE2 }">
                                                     	<option value="0">선택</option>
-                                                    	<option value="1" <c:if test='${serviceInfo.SERVICECODE eq 1}'>selected</c:if>>클라1</option>
-                                                    	<option value="2" <c:if test='${serviceInfo.SERVICECODE eq 2}'>selected</c:if>>클라2</option>
-                                                    	<option value="3" <c:if test='${serviceInfo.SERVICECODE eq 3}'>selected</c:if>>클라3</option>
+                                                    	<c:forEach var="serviceCode2" items="${SERVICECODE2 }">
+                                                		<c:choose>
+                                                			<c:when test="${serviceInfo.SERVICECODE2 eq serviceCode2.codeval}">
+                                                				<option selected label="${serviceCode2.codename }" value="${serviceCode2.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${serviceCode2.codename }" value="${serviceCode2.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
 											</td>
                                         </tr>

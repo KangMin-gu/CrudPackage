@@ -45,8 +45,13 @@ public interface SvDao {
 	public List<Map<String, Object>> conveyTabList(ConveyDto conveyDto);
 	// 이관 추가
 	public void conveyInsert(ConveyDto conveyDto);
-	
+	// 캘린더
 	public List<Map<String,Object>> svCalList(RewardDto rewardDto);
+	
+	// voc 제품등록
+	public void svGoodsInsert(Map<String,Object> param);
+	// voc 상담예약
+	public void svReservInsert(Map<String,Object> param);
 	
 
 }

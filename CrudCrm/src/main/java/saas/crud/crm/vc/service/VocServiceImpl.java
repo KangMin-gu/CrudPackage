@@ -64,15 +64,28 @@ public class VocServiceImpl implements VocService{
 		
 		int vocStep = Integer.parseInt(search.get("vocstep").toString());
 		
-		if(vocStep == 2) {
+		if(vocStep == 3) {
 			// 처리
-			serviceDto.setServicestep(2);
+			serviceDto.setServicestep(vocStep);
 			svDao.svStepUpdate(serviceDto);
-		}else if (vocStep == 3) {
+		}else if (vocStep == 4) {
 			// 상담예약
-			serviceDto.setServicestep(3);
+			Map<String,Object> reserv = new HashMap();
+			reserv.put("siteid", siteId);
+			reserv.put("reguser", userNo);
+			reserv.put("edtuser", userNo);
+			reserv.put("serviceno", serviceNo);
+			reserv.put("reservphone", search.get("reservphone").toString());
+			reserv.put("reservdate", search.get("reservdate").toString());
+			reserv.put("reservtimeto", search.get("reservtimeto").toString());
+			reserv.put("reservtimefrom", search.get("reservtimefrom").toString());
+			reserv.put("complete", 0);
+			
+			svDao.svReservInsert(reserv);
+			
+			serviceDto.setServicestep(vocStep);
 			svDao.svStepUpdate(serviceDto);
-		}else if (vocStep == 4 || vocStep == 5) {
+		}else if (vocStep == 5 || vocStep == 6) {
 			// 이관
 			ConveyDto conveyDto = new ConveyDto();
 			
@@ -99,29 +112,30 @@ public class VocServiceImpl implements VocService{
 		String value;
 		
 		Iterator<String> keyiterator = treeMap.keySet().iterator();
-		
+		map.put("siteid", siteId);
+		map.put("reguser", userNo);
+		map.put("edtuser", userNo);
+		map.put("serviceno", serviceNo);
 		while(keyiterator.hasNext()) {
 			
 			key = keyiterator.next().toString();
 			if(search.get(key) != null) {
 				value = search.get(key).toString();
-				if(key.contains("goodsb")) {
-					map.put(key, value);
+				if(key.contains("goods")) {
+					cnt ++;
+					if(cnt == 1) {
+					map.put("goodsb", value);
+					}else if(cnt ==2) {
+						map.put("goodsm", value);
+					}else if(cnt ==3) {
+						map.put("goodss", value);
+						cnt = 0;
+						svDao.svGoodsInsert(map);
+					}
 				}
 			}
-			
-			
-			
 		}
-
-
-		
-		
-		
-		
-		
 		return serviceNo;
 	}
 	
-
 }

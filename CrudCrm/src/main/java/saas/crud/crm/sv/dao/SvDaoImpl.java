@@ -106,12 +106,23 @@ public class SvDaoImpl implements SvDao{
 		
 		session.insert("sv.conveyInsert",conveyDto);
 	}
+	// 서비스 캘린더
 	@Override
 	public List<Map<String, Object>> svCalList(RewardDto rewardDto) {
 		
 		
 		List<Map<String,Object>> svCalList = session.selectList("sv.calList",rewardDto);
 		return svCalList;
+	}
+	// VOC 서비스 제품등록
+	@Override
+	public void svGoodsInsert(Map<String, Object> param) {
+		session.insert("sv.svGoodsInsert",param);
+	}
+	// VOC 상담 예약
+	@Override
+	public void svReservInsert(Map<String, Object> param) {
+		session.insert("sv.svReservInsert",param);
 	}
 	
 }

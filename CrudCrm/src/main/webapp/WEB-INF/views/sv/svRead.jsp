@@ -208,8 +208,8 @@
                                             <td>${serviceInfo.SERVICEOWNER_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>접수매체</th>
-                                            <td>${serviceInfo.SERVICECHANNEL_ }</td>
+                                            <th>접수유형1</th>
+                                            <td>${serviceInfo.SERVICECODE1 }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -226,8 +226,8 @@
                                             <td>${serviceInfo.SERVICESTEP_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>서비스유형</th>
-                                            <td>${serviceInfo.SERVICECODE_ }</td>
+                                            <th>서비스유형2</th>
+                                            <td>${serviceInfo.SERVICECODE2 }</td>
                                         </tr>
                                     </tbody>
                                 </table>

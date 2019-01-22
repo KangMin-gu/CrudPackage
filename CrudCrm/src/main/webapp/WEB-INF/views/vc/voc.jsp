@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>INSPINIA | Article</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 </head>
 
 
@@ -385,15 +386,31 @@
                             <tr>
                                 <th>상담유형</th>
                                 <td colspan="3" class="clearfix">
-                                    <select class="form-control float-left mr-2 col-sm-5 voc">
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
+                                    <select class="form-control float-left mr-2 col-sm-5 voc" name="servicecode1" id="servicecode1">
+                                        <option label="선택" value=""/>
+                                        <c:forEach var="serviceCode1" items="${SERVICECODE1 }">
+                                            <c:choose>
+                                                <c:when test="${serviceInfo.SERVICECODE1 eq serviceCode1.codeval}">
+                                                	<option selected label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                	<option label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
+                                            	</c:otherwise>
+                                        	</c:choose>
+                                    	</c:forEach>
                                     </select>
-                                    <select class="form-control float-left col-sm-5 voc">
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
+                                    <select class="form-control float-left mr-2 col-sm-5 voc" name="servicecode2" id="servicecode2" upper ="servicecode1">
+                                        <option label="선택" value=""/>
+                                        <c:forEach var="serviceCode1" items="${SERVICECODE1 }">
+                                            <c:choose>
+                                                <c:when test="${serviceInfo.SERVICECODE1 eq serviceCode1.codeval}">
+                                                	<option selected label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                	<option label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
+                                            	</c:otherwise>
+                                        	</c:choose>
+                                    	</c:forEach>
                                     </select>
                                 </td>
                             </tr>
@@ -403,17 +420,17 @@
                                     <div class="select-area mt-1">
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
                                          <div class="select-box mb-1">
-                                            <select id="goods11" name="goodsb1" class="form-control d-inline-block mr-2 voc">
+                                            <select id="goods11" name="goods11" class="form-control d-inline-block mr-2 voc">
                                                 <option value="b11">option 2</option>
                                                 <option value="b12">option 3</option>
                                                 <option value="b13">option 4</option>
                                             </select>
-                                            <select id="goods12 name="goodsm1" class="form-control d-inline-block mr-2 voc">
+                                            <select id="goods12" name="goods12" class="form-control d-inline-block mr-2 voc">
                                                 <option value="m11">option 2</option>
                                                 <option value="m12">option 3</option>
                                                 <option value="m13">option 4</option>
                                             </select>
-                                            <select id="goods13" name="goodss1" class="form-control d-inline-block mr-2 voc">
+                                            <select id="goods13" name="goods13" class="form-control d-inline-block mr-2 voc">
                                                 <option value="s11">option 2</option>
                                                 <option value="s12">option 3</option>
                                                 <option value="s13">option 4</option>
@@ -421,17 +438,17 @@
                                             <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
                                         </div>
                                         <div class="select-box mb-1">
-                                            <select id="goods21" name="goodsb2" class="form-control d-inline-block mr-2 voc">
+                                            <select id="goods21" name="goods21" class="form-control d-inline-block mr-2 voc">
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
                                             </select>
-                                            <select id="goods22" name="goodsm2" class="form-control d-inline-block mr-2 voc">
+                                            <select id="goods22" name="goods22" class="form-control d-inline-block mr-2 voc">
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
                                             </select>
-                                            <select id="goods23" name="goodss2" class="form-control d-inline-block mr-2 voc">
+                                            <select id="goods23" name="goods23" class="form-control d-inline-block mr-2 voc">
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
@@ -459,10 +476,10 @@
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks">
-                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="2" id="vocstep2" name="vocstep"> 처리</label>
-                                        <label class="mb-0"><input type="radio" class="check voc" value="3" id="vocstep3" name="vocstep"> 상담예약</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="4" id="vocstep4" name="vocstep"> 담당자 이관</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="5" id="vocstep5" name="vocstep"> 상급자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="3" id="vocstep2" name="vocstep"> 처리</label>
+                                        <label class="mb-0"><input type="radio" class="check voc" value="4" id="vocstep3" name="vocstep"> 상담예약</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="6" id="vocstep5" name="vocstep"> 상급자 이관</label>
                                     </div>
                                 </td>
                             </tr>
@@ -496,7 +513,7 @@
                             <tr class="reservation">
                             	<th>예약 전화번호
                             	<td>
-                            		<input type="text" class="form-control voc" autocomplete="off" name="reservphone" value="">
+                            		<input type="text" class="form-control voc" autocomplete="off" id="reservphone" name="reservphone" value="">
                             	</td>
                             	<th>예약 일시
                             	<td>
@@ -505,6 +522,23 @@
                                     		<span class="fa fa-calendar"></span>
                                 		</span>
                                 		<input type="text"  class="form-control date voc" name="reservdate" id="reservdate" value="">
+                            		</div>	
+                            	</td>
+                            </tr>
+                            <tr class="reservation">
+                            	<th>예약 시간
+                            	<td colspan="3">
+                            		<div class="input-group clockpicker" data-autoclose="true">
+                            			<span class="input-group-addon">
+                                    		<span class="fa fa-clock-o"></span>
+                                		</span>
+                            			<input type="text" class="form-control voc" autocomplete="off" name="reservtimefrom" id="reservtimefrom" value="">
+                            		</div>
+                            		<div class="input-group clockpicker" data-autoclose="true">
+                            			<span class="input-group-addon">
+                                    		<span class="fa fa-clock-o"></span>
+                                		</span>	
+                                		<input type="text"  class="form-control date voc" name="reservtimeto" id="reservtimeto" value="">
                             		</div>	
                             	</td>
                             </tr>
@@ -555,6 +589,7 @@
     </div>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_right.js"></script>
@@ -570,10 +605,10 @@ $('.check').on('ifChecked', function(event){
 
 	
 	var value = event.currentTarget.value;
-	if(value == 4 || value == 5){
+	if(value == 5 || value == 6){
 		$('.convey').show();
 		$('.reservation').hide();
-	}else if (value == 3){
+	}else if (value == 4){
 		$('.convey').hide();
 		$('.reservation').show();
 	}else{
@@ -585,13 +620,13 @@ $('.check').on('ifChecked', function(event){
 
 
 $(".plus").click(function(){
-	var cloneCount = $('[name*="goodsb"]').length;
+	var cloneCount = $('.plus').length;
 	var countP = cloneCount + 1;
     
     $('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
     $('.select-area .select-box:last').find('#goods'+cloneCount+1).attr('name','goods'+countP+1).attr('id','goods'+countP+1);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+1);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+1);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+2);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+3);
  }); 
 
 	

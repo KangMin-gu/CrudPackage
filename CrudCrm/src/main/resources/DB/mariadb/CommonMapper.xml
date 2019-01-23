@@ -88,14 +88,29 @@
 			<if test="custname != null">
 				AND CUSTNAME like CONCAT('%',#{custname},'%')
 			</if>
-			<if test="phone != null">
-				AND ( 
-					CONCAT(MOBILE1,MOBILE2,MOBILE3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%') 
-					OR CONCAT(HOMTEL1,HOMTEL2,HOMTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')
-					OR CONCAT(WRKTEL1,WRKTEL2,WRKTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')  
+			<choose>
+				<when test='condition != null and keyword != null and condition.equals("phone")'>
+					AND ( 
+					CONCAT(MOBILE1,MOBILE2,MOBILE3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%') 
+					OR CONCAT(HOMTEL1,HOMTEL2,HOMTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')
+					OR CONCAT(WRKTEL1,WRKTEL2,WRKTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')  
 					)	
-			</if>
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("mobile")'>
+					AND CONCAT(MOBILE1,MOBILE2,MOBILE3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%') 
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("homtel")'>
+					AND CONCAT(HOMTEL1,HOMTEL2,HOMTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("wrktel")'>
+					AND CONCAT(WRKTEL1,WRKTEL2,WRKTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("custname")'>
+					AND CUSTNAME like CONCAT('%',#{keyword},'%') 
+				</when>
+			</choose>		
 	</select>
+	
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
 	<select id="popCustList" parameterType="hashMap" resultType="hashMap">
 	SELECT * 
@@ -129,15 +144,29 @@
 			A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="custname != null">
-				AND CUSTNAME like CONCAT('%',#{custname},'%')
+				AND A.CUSTNAME like CONCAT('%',#{custname},'%')
 			</if>
-			<if test="phone != null">
-				AND ( 
-					CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%') 
-					OR CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')
-					OR CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3) like CONCAT('%', REPLACE(#{phone},'-','') ,'%')  
-					)			
-			</if>
+			<choose>
+				<when test='condition != null and keyword != null and condition.equals("phone")'>
+					AND ( 
+					CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%') 
+					OR CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')
+					OR CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')  
+					)	
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("mobile")'>
+					AND CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%') 
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("homtel")'>
+					AND CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("wrktel")'>
+					AND CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3) like CONCAT('%', REPLACE(#{keyword},'-','') ,'%')
+				</when>
+				<when test='condition != null and keyword != null and condition.equals("custname")'>
+					AND A.CUSTNAME like CONCAT('%',#{keyword},'%') 
+				</when>
+			</choose>			
 		ORDER BY A.CUSTNO
 		) T
 	WHERE 

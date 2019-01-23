@@ -148,12 +148,16 @@
 		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
 		,C.DENYFAX ,C.DENYVISIT  
 		,A.CLINO,D.CLINAME
-		,A.RELCUSTNO, SELF.CUSTNAME AS RELCUSTNAME
+		,A.RELCUSTNO
+		,  (SELECT A.CUSTNAME 
+			FROM CU100010 A INNER JOIN CU100010 SELF ON A.CUSTNO = SELF.RELCUSTNO
+			WHERE SELF.CUSTNO = #{custno}) AS RELCUSTNAME
+		
 		FROM cu100010 A		
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
 		LEFT OUTER JOIN sa200010 D ON A.CLINO = D.CLINO
-		LEFT OUTER JOIN CU100010 SELF ON A.CUSTNO = SELF.RELCUSTNO   
+		   
 		WHERE 
 		A.SITEID = #{siteid}
 		AND A.ISDELETE = 0
@@ -241,6 +245,7 @@
 		,MEMO
 		,INFOAGREE
 		,CLINO
+		,RELCUSTNO
 		)
 		VALUES
 		(	
@@ -276,6 +281,7 @@
 		,#{memo}
 		,#{infoagree}	
 		,#{clino}
+		,#{relcustno}
 		)
 		<selectKey keyProperty="custno"  resultType="integer" order="AFTER">
 		SELECT LAST_INSERT_ID()
@@ -401,8 +407,11 @@
 		<if test="clino != null and clino != 0 ">
 		,CLINO = #{clino}
 		</if>
+		<if test="relcustno != null and relcustno != 0 ">
+		,RELCUSTNO = #{relcustno}
+		</if>
 		WHERE
-		CUSTNO = #{custno}
+			CUSTNO = #{custno}
 	</update>
 	
 	<!-- 고객 수신거부 정보 수정 -->
@@ -410,7 +419,8 @@
 		UPDATE cu100080
 		SET
 		EDITDATE = now()
-		,EDITUSER = #{edituser}	
+		,EDITUSER = #{edituser}
+			
 		,DENYMAILAD = #{denymailad}
 		,DENYMAILNEWS = #{denymailnews}	
 		,DENYMAILSEMINAR = #{denymailseminar} 	

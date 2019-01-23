@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.service.CodeService;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonService;
 import saas.crud.crm.cu.dto.CustDenyDto;
@@ -37,11 +37,16 @@ public class VocController {
 	private CustService custService;
 	@Autowired
 	private CrudEngine crud;
+	@Autowired
+	private CodeService codeService;
 
 	@RequestMapping(value="vc/voc", method=RequestMethod.GET)
-	public String authvocPage() {
-		
-		return "vc/voc";
+	public ModelAndView authvocPage() {
+		ModelAndView mView = new ModelAndView();
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("vc/voc");
+		return mView;
 	}
 	
 	@RequestMapping(value="vc/satis", method=RequestMethod.GET)
@@ -54,7 +59,7 @@ public class VocController {
 	@RequestMapping(value="/vc/pop/cust", method=RequestMethod.GET)
 	public ModelAndView authvocPopCust(HttpServletRequest request) {
 		ModelAndView mav = commonService.svcPopGetCustName(request);
-		mav.setViewName("vc/pop/popcustvoc");
+		mav.setViewName("vc/pop/vocpopcust");
 		return mav;
 	}
 	
@@ -73,9 +78,7 @@ public class VocController {
 	//voc 고객 추가
 	@RequestMapping(value="/vc/cust/post", method=RequestMethod.POST)
 	@ResponseBody
-	public int authvocPopCustInsert(HttpServletRequest request) {		
-		//System.out.println("@@@@@@@@@@@@@@@"+request.getParameter("custname"));
-		
+	public int authvocPopCustInsert(HttpServletRequest request) {				
 		Map<String, Object> search = crud.searchParam(request);
 		
 		//세션 정보 값 DTO셋팅  
@@ -88,12 +91,27 @@ public class VocController {
 		custDto.setReguser(userno);
 		custDto.setEdituser(userno);
 		custDto.setSiteid(siteid);
-				
+		//인풋 바인딩.
+		custDto.setCustname((String)search.get("custname"));
+		custDto.setCustgubun(Integer.parseInt((String)search.get("custgubun")));
+		custDto.setMobile1((String)search.get("mobile1"));
+		custDto.setMobile2((String)search.get("mobile2"));
+		custDto.setMobile3((String)search.get("mobile3"));
+		custDto.setHomtel1((String)search.get("homtel1"));
+		custDto.setHomtel2((String)search.get("homtel2"));
+		custDto.setHomtel3((String)search.get("homtel3"));
+		custDto.setRelcustno(Integer.parseInt((String)search.get("relcustno")));
+		custDto.setEmail((String)search.get("email"));
+		custDto.setCustgrade(Integer.parseInt((String)search.get("custgrade")));
+		custDto.setHomaddr1((String)search.get("homaddr1"));
+		custDto.setHomaddr2((String)search.get("homaddr2"));
+		custDto.setHomaddr3((String)search.get("homaddr3"));
+			
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
 				
-	//	int custno = custService.svcCustformInsert(custDto,custDenyDto);
-		int custno = 0;	
+		int custno = custService.svcCustformInsert(custDto,custDenyDto);
+		
 		return custno;
 	}
 	
@@ -101,26 +119,40 @@ public class VocController {
 	@RequestMapping(value="/vc/cust/post/{custno}", method=RequestMethod.POST)
 	@ResponseBody
 	public int authvocPopCustUpdate(HttpServletRequest request,@PathVariable int custno) {		
-		System.out.println("@@@@@@@@@@@@@@@"+request.getParameter("custname"));
-		
 		Map<String, Object> search = crud.searchParam(request);
+		
 		//세션 정보 값 DTO셋팅  
 		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		CustDto custDto = new CustDto();
 		CustDenyDto custDenyDto = new CustDenyDto();
-			
+		
 		//필수 값 설정. 등록/수정자는 로그인한 유저로 설정
-		custDto.setCustno(custno);
 		custDto.setReguser(userno);
 		custDto.setEdituser(userno);
 		custDto.setSiteid(siteid);
-							
+		custDto.setCustno(custno);
+		//인풋 바인딩.
+		custDto.setCustname((String)search.get("custname"));
+		custDto.setCustgubun(Integer.parseInt((String)search.get("custgubun")));
+		custDto.setMobile1((String)search.get("mobile1"));
+		custDto.setMobile2((String)search.get("mobile2"));
+		custDto.setMobile3((String)search.get("mobile3"));
+		custDto.setHomtel1((String)search.get("homtel1"));
+		custDto.setHomtel2((String)search.get("homtel2"));
+		custDto.setHomtel3((String)search.get("homtel3"));
+		custDto.setRelcustno(Integer.parseInt((String)search.get("relcustno")));
+		custDto.setEmail((String)search.get("email"));
+		custDto.setCustgrade(Integer.parseInt((String)search.get("custgrade")));
+		custDto.setHomaddr1((String)search.get("homaddr1"));
+		custDto.setHomaddr2((String)search.get("homaddr2"));
+		custDto.setHomaddr3((String)search.get("homaddr3"));
+			
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
-					
-	//	int custno = custService.svcCustformUpdate(custDto,custDenyDto);
-			
+				
+		custno = custService.svcCustformUpdate(custDto,custDenyDto);
+		
 		return custno;
 	}
 	

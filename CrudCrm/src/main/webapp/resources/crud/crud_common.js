@@ -63,7 +63,9 @@
 	});
 	// 고객 팝업
 	$('.cust').click(function(e){debugger;
-		openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
+		if( e.target.classList.contains('dataCancle') == false ){
+			openNewWindow('고객','/popcust',e.currentTarget.id,650,700);
+		}
 	});	
 	//내부통지팝업
 	$('.note').click(function(e){
@@ -208,12 +210,15 @@
 	}
 	
 	function parentCustname(tr){	
+		debugger;
 		var parentid = $('#parentid').val();	
 		var id = tr.getAttribute("value");
 		opener.$('[name="'+parentid+'"]').next().val(id);		
 		opener.$('[name="'+parentid+'"]').val(tr.children.custname.textContent).trigger('keyup');
-		popCustClick(id);
 		
+		if(parentid != "relcustname"){//관련 고객에서의 호출이 아니라면 아래행 실행
+			popCustClick(id);
+		}
 		setTimeout(function(){
 			window.close();
 		},300);

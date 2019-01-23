@@ -394,7 +394,7 @@
 														<th>회원구분</th>
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
-																<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
+																<option value="0">선택</option>
 																<c:forEach var="custGubun" items="${CUSTGUBUN }">
                                                       			<c:choose>
                                                          			<c:when test="${custUpdate.CUSTGUBUN eq custGubun.codeval}">

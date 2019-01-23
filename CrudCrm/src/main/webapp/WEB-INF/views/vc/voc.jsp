@@ -69,78 +69,81 @@
         <div class="wrapper wrapper-content">
             <div class="ibox clearfix">
                 <div class="ibox-left">
-                	<div class="ibox-content left-cont" id="regDiv"></div>
+                	<div class="ibox-content text-right" id="regDiv"></div>
                 
                     <div class="ibox-content left-cont pt-0">
                         <table class="table table-bordered mb-2">
                             <colgroup>
                                 <col style="width: 100px; background: #fafafa;">
-                                <col style="width: auto;">
+                                <col style="width: auto; min-width: 250px;">
                                 <col style="width: 100px; background: #fafafa;">
-                                <col style="width: auto;">
-                                <col style="width: 100px; background: #fafafa;">
-                                <col style="width: 120PX;">
+                                <col style="width: auto;min-width: 250px;">
                             </colgroup>
                             <tbody>
-                            
                                 <tr>
                                     <th>수신번호</th>
                                     <td>	
-                                        <input type="text" class="form-control" onkeyup="enterkey(this);" id="phone" name="phone">
+                                        <input type="text" class="form-control" onkeyup="enterkey(this);" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9. -]/g, '').replace(/(\..*)\./g, '$1');">
                                     </td>
                                     <th>고객명</th>
                                     <td>
                                     	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
                                     	<input type="text" class="form-control custInput" id="custname" name="custname">
                                     </td>
-                                    <th>고객구분</th>
-                                    <td>
-                                        <select class="form-control custInput" id="custgubun" name="custgubun" >
-                                            <option value="0">선택</option>
-                                            <option value="1">option 1</option>
-                                            <option value="2">option 2</option>
-                                        </select>
-                                    </td>
-                                </tr>
+                                  </tr>
                                 <tr>
                                 	<th>휴대전화</th>
                                     <td>
-                                    	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile1" id="mobile1"  >        		
-										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile2" id="mobile2"  > 
-										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile3" id="mobile3"  >
+                                    	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile1" id="mobile1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >        		
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile2" id="mobile2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" > 
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="mobile3" id="mobile3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
                                     </td>
                                     <th>집전화</th>
                                     <td>
-                                    	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel1" id="homtel1"  >        		
-										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel2" id="homtel2"  > 
-										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel3" id="homtel3"  >
+                                    	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel1" id="homtel1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >        		
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel2" id="homtel2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" > 
+										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel3" id="homtel3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>고객구분</th>
+                                    <td>
+                                    	<select class="form-control custInput" name="custgubun" id="custgubun">
+											<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
+											<c:forEach var="code" items="${CUSTGUBUN }">
+                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                            </c:forEach>
+										</select>
                                     </td>
                                     <th>관련고객</th>
                                     <td>
                                         <div class="input-group cust" id="relcustname">
                                             <input type="text" class="form-control" name="relcustname" readonly>
                                             <input class="custInput" type="hidden" id="relcustno" name="relcustno" value="0" />
-                                        </div>    
+                                            <span class="input-group-addon"><a href="#"><i class="fa fa-search cust"></i></a></span>
+                                            <span class="input-group-addon"><a href="#"><i class="fa fa-times dataCancle"></i></a></span>  
+                                        </div>
+                                          
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>이메일</th>
-                                    <td colspan="3">
+                                    <td >
                                         <input type="text" class="form-control custInput" id="email" name="email" >
                                     </td>
                                     <th>등급</th>
                                     <td>
-                                        <select class="form-control custInput" id="custgrade" name="custgrade">
-                                            <option value="0">선택</option>
-                                            <option value="1">option 1</option>
-                                            <option value="2">option 2</option>
-                                            <option value="3">option 2</option>
-                                        </select>
+                                    	 <select class="form-control custInput" id="custgrade" name="custgrade">
+											<option value="0" ${custUpdate.CUSTGRADE eq "0" ? "selected" :""}>선택</option>
+											<c:forEach var="code" items="${CUSTGRADE }">
+                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                            </c:forEach>
+										</select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>주소</th>
-                                    <td colspan="5">
+                                    <td colspan="3">
             							<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
             								<input type="text" class="form-control custInput daumzip" name="homaddr1" id="homaddr1" readonly>
             								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a>
@@ -511,82 +514,10 @@
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script>
 
-function enterkey(event) {
-	debugger;
-	var id = event.id;
-    if (window.event.keyCode == 13) {
-    	if(id == 'phone'){
-    		var searchPhoneNo = document.getElementById(id).value;
-    		openNewWindow('voc','/vc/pop/cust?phone='+searchPhoneNo,'voc',900,600);
-    	}
-    }
-}
 
-function goCustInsert(){
-	debugger; 	
-	var urlStr = "/vc/cust/post";
-	var custName = $("#custname").val();
-	if(custName.trim() == ''){
-		$("#custname").val('익명');
-	}	
-	
-	var param={};
-	param = custDataToJson(param);
-	
-	$.ajax({
-        url: urlStr,
-        method: "POST",
-        dataType: "json",
-        data:param,
-        cache: false,
-        contentType : "application/json; charset=UTF-8",
-        success: function (data) {
-        	debugger;
-        	console.log(data.custno);
-        	alert("추가 되었습니다.");
-        },
-        error: function (request, status, error) {
-            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        }
-    });
-	
-}
-
-function goCustUpdate(){
-	debugger;
-	var custNo = $("#custno").val();
-	var urlStr = "/vc/cust/post/"+custNo;			
-	var param={};	
-	param = custDataToJson(param);
-	
-	$.ajax({
-        url: urlStr,
-        method: "POST",
-        dataType: "json",
-        data:param,
-        contentType : "application/json; charset=UTF-8",
-        success: function (data) {
-        	debugger;
-        	console.log(data.custno);
-        	alert("수정 되었습니다.");
-        },
-        error: function (request, status, error) {
-            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        }
-    });
-}
-
-function custDataToJson(param){//고객 인풋 필드 데이터 	
-	var custData = $('.custInput');
-	var custLength = custData.length;
-    for(i=0; i<custLength;i++){
-       var idVal = custData[i].id;
-       param[idVal] = custData[i].value;
-    }
-    return param;
-}
 
 </script>
 

@@ -83,8 +83,8 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		companyDto.setEdtuser(userNo);
 		String fileSearchKey = request.getParameter("fileSearchKey");
+		companyDto.setEdtuser(userNo);		
 		companyDto.setSitelogo(fileSearchKey);
 		companyDao.companyUpdate(companyDto);
 	}
@@ -93,9 +93,10 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String fileSearchKey = request.getParameter("fileSearchKey");
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);
-		
+		companyDto.setSitelogo(fileSearchKey);
 		int siteid = companyDao.companyInsert(companyDto);
 		
 		companyDto.setSiteid(siteid);

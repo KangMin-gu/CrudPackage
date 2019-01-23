@@ -130,6 +130,7 @@ function custInfoClear(){//인풋 필드 초기화
 }
 
 function custInfoBinding(data){//인풋 필드 데이터 바인딩
+	debugger;
 	opener.$('#custname').val(data.CUSTNAME);
 	opener.$('#custno').val(data.CUSTNO);
 	opener.$('#custgubun').val(data.CUSTGUBUN);
@@ -140,7 +141,9 @@ function custInfoBinding(data){//인풋 필드 데이터 바인딩
 	opener.$('#homtel2').val(data.HOMTEL2);
 	opener.$('#homtel3').val(data.HOMTEL3);
 	opener.$('[name="relcustname"]').val(data.RELCUSTNAME);
-	opener.$('#relcustno').val(data.RELCUSTNO);
+	if(data.RELCUSTNO != null && data.RELCUSTNO != '' ){
+		opener.$('#relcustno').val(data.RELCUSTNO);
+	}
 	opener.$('#email').val(data.EMAIL);
 	opener.$('#custgrade').val(data.CUSTGRADE);
 	opener.$('#homaddr1').val(data.HOMADDR1);

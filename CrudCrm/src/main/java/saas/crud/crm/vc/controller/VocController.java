@@ -147,7 +147,9 @@ public class VocController {
 		custDto.setHomaddr1((String)search.get("homaddr1"));
 		custDto.setHomaddr2((String)search.get("homaddr2"));
 		custDto.setHomaddr3((String)search.get("homaddr3"));
-			
+		
+		custDto.setInfoagree(9);//voc에서는 infoagree 필드가 없기에 수정에서 항목 제외를 위한 값 설정 .
+				
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
 				

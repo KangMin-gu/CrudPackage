@@ -148,13 +148,6 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
-<script>
-function vocPopCustSearch(){
-	var searchMenu = 
-	var searchMenuVal
-}
 
-
-</script>
 </body>
 </html>

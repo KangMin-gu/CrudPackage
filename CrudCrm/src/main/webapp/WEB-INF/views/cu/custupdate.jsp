@@ -301,7 +301,7 @@
 																<option value="0" ${custUpdate.MARRIED eq "0" ? "selected" :""}>선택</option>
 																<c:forEach var="married" items="${MARRIED }">
                                                       			<c:choose>
-                                                         			<c:when test="${custUpdate.HOMTEL1 eq married.codeval}">
+                                                         			<c:when test="${custUpdate.MARRIED eq married.codeval}">
                                                             			<option selected label="${married.codename }" value="${married.codeval }"/>
                                                          			</c:when>
                                                          			<c:otherwise>

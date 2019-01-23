@@ -1,5 +1,6 @@
 package saas.crud.crm.au.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,5 +109,13 @@ public class CodeController {
 		
 		return mView;
 	}
+	// 상위코드의 GRPCODE, CODEVAL로 하위 코드들 가져오기
+	@RequestMapping(value="/code/upper", method=RequestMethod.GET)
+	@ResponseBody
+	public List<CodeDto> authGetUpperCodeList(HttpServletRequest request){
+		List<CodeDto> upperCode = codeService.getUpperCodeGrp(request);
+		return upperCode;
+	}
+	
 
 }

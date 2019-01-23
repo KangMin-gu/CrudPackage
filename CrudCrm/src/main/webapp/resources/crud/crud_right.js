@@ -56,3 +56,32 @@ $('#save').click(function(e){
     });
 	
 });
+
+function upperCode(codeGrp){
+	 var code = $('#'+codeGrp).val();
+	 var id = $('#'+codeGrp).attr('id');
+	 var url = "/code/upper"
+	 $.ajax({
+ 		url: url+"?codegrp="+id+"&codeval="+code,
+ 		method: "GET",
+ 		dataType: "json",
+ 		cache: false,
+ 		success: function (data) {
+ 			var text = "";
+ 			$('[upper="'+codeGrp+'"] option').remove();
+ 			$('[upper="'+codeGrp+'"]').append('<option label="선택" value="0"/>');
+ 			for(i=0;i<data.length;i++){
+ 				text = '<option label="'+data[i].codename+'" value="'+data[i].codeval+'"/>';
+ 				$('[upper="'+codeGrp+'"]').append(text);
+ 			}
+ 		},
+ 		error: function (request, status, error) {
+ 			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+ 		}
+ 	});
+	
+	
+	
+}
+
+

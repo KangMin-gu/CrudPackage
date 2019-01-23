@@ -9584,3 +9584,6 @@ th sup{color: #ff5050;}
 .sms-form .limit-text p{font-size: 14px; color: #1c1c1c;}
 
 th b{color: #ff5050;}
+
+table thead{text-align: center;}
+button {cursor:pointer;}

@@ -65,7 +65,7 @@
    			,B.CODENAME AS UPPERCODEGRP_
    			,B.CODEVAL AS UPPERCODEGRP
     	FROM sys990020 A 
-    	LEFT OUTER JOIN sys990020 B ON B.UPPERCODEGRP = A.CODENO
+    	LEFT OUTER JOIN sys990020 B ON B.CODENO = A.UPPERCODEGRP
     	WHERE A.SITEID = #{siteid}
     	AND A.CODENO = #{codeno}
     	
@@ -160,13 +160,27 @@
     	AND ISDELETE = 0
     	<if test ="value != null">
     		AND CODEGRP = #{value} 
-    	</if>
-    	
+    	</if>	
     </select>
-    
+ 
     <select id="grpCodeList" resultType="codeDto">
     	select CODEGRP from sys990020
 			WHERE SITEID = 1
 		GROUP BY CODEGRP
     </select>
+    
+    <select id="getCodeNo" parameterType="codeDto" resultType="int">
+    	SELECT CODENO FROM SYS990020
+    	WHERE SITEID = #{siteid}
+    	AND CODEGRP = #{codegrp}
+    	AND CODEVAL = #{codeval}
+    
+    </select>
+    
+    <select id="getUpperCodeGrp" parameterType="codeDto" resultType="codeDto">
+    	SELECT * FROM sys990020
+    	WHERE SITEID = #{siteid} 
+    	AND UPPERCODEGRP = #{uppercodegrp}
+    </select>
+
 </mapper>

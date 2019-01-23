@@ -48,9 +48,8 @@
                                     <i class="fa fa-envelope"></i>
                                     <span class="li-text">3</span>
                                 </li>
-                                <li>
+                                <li onClick="window.open('/')">
                                     <i class="fa fa-home"></i>
-                                    <span class="li-text">3</span>
                                 </li>
                             </ul>
                         </li>
@@ -593,8 +592,6 @@ $(document).ready(function () {
 });
 
 $('.check').on('ifChecked', function(event){
-
-	
 	var value = event.currentTarget.value;
 	if(value == 5 || value == 6){
 		$('.convey').show();
@@ -606,7 +603,6 @@ $('.check').on('ifChecked', function(event){
 		$('.convey').hide();
 		$('.reservation').hide();
 	}
-
 });
 
 
@@ -618,9 +614,12 @@ $(".plus").click(function(){
     $('.select-area .select-box:last').find('#goods'+cloneCount+1).attr('name','goods'+countP+1).attr('id','goods'+countP+1);
     $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+2);
     $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+3);
- }); 
+}); 
+ 
+ $('#servicecode1').change(function(){
+	 upperCode('servicecode1'); 
+ });
 
-	
 </script>
 	<!-- E: 추가 js -->
 </body>

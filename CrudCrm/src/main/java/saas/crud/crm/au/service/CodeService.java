@@ -24,4 +24,6 @@ public interface CodeService {
 	public ModelAndView codeUpperList(HttpServletRequest request);
 	
 	public Map<String,Object> getCode();
+	
+	public List<CodeDto> getUpperCodeGrp(HttpServletRequest request);
 }

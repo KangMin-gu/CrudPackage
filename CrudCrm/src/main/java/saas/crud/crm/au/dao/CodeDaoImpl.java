@@ -72,5 +72,17 @@ public class CodeDaoImpl implements CodeDao {
 		List<CodeDto> grpCodeList = session.selectList("code.grpCodeList");
 		return grpCodeList;
 	}
+	// 상위 코드 값으로 하위 코드 값을 가져옴
+	@Override
+	public List<CodeDto> getUpperCodeGrp(CodeDto codeDto) {
+		List<CodeDto> upperGrpCodeList = session.selectList("code.getUpperCodeGrp",codeDto);
+		return upperGrpCodeList;
+	}
+
+	@Override
+	public int getCodeNo(CodeDto codeDto) {
+		int codeNo = session.selectOne("code.getCodeNo",codeDto);
+		return codeNo;
+	}
 
 }

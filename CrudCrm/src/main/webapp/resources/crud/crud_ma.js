@@ -390,7 +390,7 @@ if(window.location.pathname.lastIndexOf('/code') > 0) {
                 $('.body #codeval').val(data.CODEVAL);
                 $('.body #isdelete').val(data.ISDELETE);
                 $('.body #uppercodegrp').val(data.UPPERCODEGRP);
-                $('.body #uppercodegrp_').val(data.UPPERCODENAME);
+                $('.body #uppercodegrp_').val(data.UPPERCODEGRP_);
             },
             error: function (request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

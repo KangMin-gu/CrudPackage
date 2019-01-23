@@ -69,17 +69,21 @@ public class LoginManager implements HttpSessionBindingListener {
 	
 	//로그인한 사용자와session 을 리턴 
 	public List<Map<String, String>> allSession() {
-		 List<Map<String, String>> loginUserss = new ArrayList<>();
-		 Map<String, String> loginuser = new HashMap<>();
-		 
+		
+		 List<Map<String, String>> loginUserss = new ArrayList<Map<String, String>>();		
 		 Set key = loginUsers.keySet();
+		 
 		 for (Iterator iterator = key.iterator(); iterator.hasNext();) {
+			   Map<String, String> loginuser = new HashMap<String, String>();
 			   String keyName = (String) iterator.next();
 			   String valueName = (String) loginUsers.get(keyName);
+			   System.out.println("valuename"+valueName);
 			   loginuser.put("ID", valueName);
 			   loginuser.put("session", keyName);
+			   
 			   loginUserss.add(loginuser);
-		 }
+		 }	
+
 		 return loginUserss;
 	}
 	

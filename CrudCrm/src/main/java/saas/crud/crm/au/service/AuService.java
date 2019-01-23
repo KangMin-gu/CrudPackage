@@ -26,4 +26,5 @@ public interface AuService {
 	public ModelAndView myInfoReadSet(HttpServletRequest request, UserDto userDto);
 	public ModelAndView userPwdReset(HttpServletRequest request, int userNo);
 	public ModelAndView useSessionList(HttpServletRequest reuqest, HttpServletResponse response);
+	public ModelAndView authSession(HttpServletRequest request, String userId);
 }

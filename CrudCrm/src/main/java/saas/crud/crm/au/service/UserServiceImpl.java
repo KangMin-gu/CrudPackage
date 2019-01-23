@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService{
 					loginManager.setSession(request.getSession(),urInfo.get("USERID").toString()); // 로그인정보 로그인매니저등록
 				
 				}else {			
-
-					buf.append("<script>alert('이미 로그인 되었습니다.'); location.href='");
+					loginManager.removeSession(userId);
+					buf.append("<script>alert('다른 사용자가 로그인 되어 있습니다. 이전 사용자를 로그아웃 합니다.'); location.href='");
 				 	buf.append(location);
 				 	buf.append("';</script>");							 		
 					response.setContentType("text/html; charset=UTF-8");

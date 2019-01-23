@@ -1,21 +1,16 @@
 package saas.crud.crm.au.service;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dao.UserDao;
-import saas.crud.crm.au.dto.MenuDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.ce.CrudEngine;
@@ -301,25 +295,30 @@ public class AuServiceImpl implements AuService{
 	//사용중인 유저 확인
 	@Override
 	public ModelAndView useSessionList(HttpServletRequest reuqest, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
 		System.out.println("in");
+		List<Map<String, Object>> useList = new ArrayList<>();	
 		LoginManager loginManager = LoginManager.getInstance();
-		List<Map<String, String>> loginUserss = loginManager.allSession();		
-		
-		List<Map<String, Object>> listSender = new ArrayList<Map<String, Object>>();
-		Map<String, Object> mapSender = new HashMap<>();
-		
-		for(int i = 0; i< loginUserss.size(); i++) {
-			String userId = loginUserss.get(i).get("ID").toString();
-			System.out.println("asd"+loginUserss.get(i).get("ID"));
-			mapSender = urDao.useInfo(userId);
-			listSender.add(mapSender);		
-		}
-		 
+		int count = loginManager.getUserCount();
+		Collection collection = loginManager.getUsers();
+		 for (Object elem : collection) {
+		        String userId = elem.toString();
+		        Map<String, Object> use = urDao.useInfo(userId);
+		        System.out.println(use);
+		        useList.add(use);
+		    }
+		 System.out.println(useList);
 		ModelAndView mView = new ModelAndView();
-		mView.addObject("sessionList", listSender);
+		mView.addObject("sessionList", useList);
+		mView.addObject("count", count);
 		return mView;
+	}
+	
+	//로그인 사용자 강제종료 시키기
+	@Override
+	public ModelAndView authSession(HttpServletRequest request, String userId) {
+		LoginManager loginManager = LoginManager.getInstance();
+		loginManager.removeSession(userId);
+		return null;
 	}
 
 }

@@ -24,12 +24,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.sv.dto.ServiceDto" alias="serviceDto"/>
 		<typeAlias type="saas.crud.crm.sv.dto.RewardDto" alias="rewardDto"/>
 		<typeAlias type="saas.crud.crm.sv.dto.RactDto" alias="ractDto"/>
-		<typeAlias type="saas.crud.crm.sv.dto.ConveyDto" alias="conveyDto"/>
-		
+		<typeAlias type="saas.crud.crm.sv.dto.ConveyDto" alias="conveyDto"/>	
 		<typeAlias type="saas.crud.crm.cp.dto.CampaignDto" alias="campaignDto"/>
 		<typeAlias type="saas.crud.crm.cp.dto.CampaignFormDto" alias="campaignFormDto"/>
 		<typeAlias type="saas.crud.crm.cp.dto.CampaignContentsDto" alias="campaignContentsDto"/>
-		
 		<typeAlias type="saas.crud.crm.ce.MailDto" alias="mailDto"/>
 		
 	</typeAliases>

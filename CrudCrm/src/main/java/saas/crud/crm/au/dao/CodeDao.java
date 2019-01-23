@@ -24,4 +24,8 @@ public interface CodeDao {
 	public List<CodeDto> getCodeList(String codeGrp);
 
 	public List<CodeDto> grpCodeList();
+	
+	public int getCodeNo(CodeDto codeDto);
+	
+	public List<CodeDto> getUpperCodeGrp(CodeDto codeDto);
 }

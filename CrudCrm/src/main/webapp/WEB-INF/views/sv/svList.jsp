@@ -368,7 +368,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 
 </body>
 </html>

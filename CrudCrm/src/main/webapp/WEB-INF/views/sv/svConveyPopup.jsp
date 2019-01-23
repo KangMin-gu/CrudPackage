@@ -127,7 +127,7 @@
                                         <tr>
                                             <th><label for="conveydesc">비고</label></th>
                                             <td>
-                                            	<textarea id="conveydesc" name="conveydesc"></textarea>
+                                            	<textarea id="conveydesc" name="conveydesc" cols="140" rows="9"></textarea>
                                             	<input type="hidden" id="no" name="no"/>
                                            </td>
                                         </tr>
@@ -153,16 +153,12 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script><!-- summernote-->
 	<script>
 	
 		$(document).ready(function () {
-			
-			$('#conveydesc').summernote({
-				 height: 115,   
-			});
 			
 			$('.date').datepicker({
 				keyboardNavigation:false,

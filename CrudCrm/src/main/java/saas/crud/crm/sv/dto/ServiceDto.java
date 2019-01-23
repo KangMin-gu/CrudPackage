@@ -25,6 +25,8 @@ public class ServiceDto {
 	private String edtdate;
 	private int edtuser;
 	private int isdelete;
+	private String memo;
+	private int complete;
 	private List<MultipartFile> servicefile; //Spring 에서 파일 업로드 처리하기 위해
 	
 	public ServiceDto() {}
@@ -32,7 +34,7 @@ public class ServiceDto {
 	public ServiceDto(int serviceno, String servicename, String servicedesc, int serviceowner, String receptiondate,
 			int custno, int clino, int servicestep, int owner, int siteid, int servicetype, int servicecode,
 			int servicechannel, String filesearchkey, String regdate, int reguser, String edtdate, int edtuser,
-			int isdelete, List<MultipartFile> servicefile) {
+			int isdelete, String memo, int complete, List<MultipartFile> servicefile) {
 		super();
 		this.serviceno = serviceno;
 		this.servicename = servicename;
@@ -53,6 +55,8 @@ public class ServiceDto {
 		this.edtdate = edtdate;
 		this.edtuser = edtuser;
 		this.isdelete = isdelete;
+		this.memo = memo;
+		this.complete = complete;
 		this.servicefile = servicefile;
 	}
 
@@ -208,16 +212,29 @@ public class ServiceDto {
 		this.isdelete = isdelete;
 	}
 
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public int getComplete() {
+		return complete;
+	}
+
+	public void setComplete(int complete) {
+		this.complete = complete;
+	}
+
 	public List<MultipartFile> getServicefile() {
 		return servicefile;
 	}
 
 	public void setServicefile(List<MultipartFile> servicefile) {
 		this.servicefile = servicefile;
-	};
-	
-	
-	
-	
+	}
+
 	
 }

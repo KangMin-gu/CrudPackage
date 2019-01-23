@@ -162,7 +162,7 @@
                                     <tbody>
                                         <tr>
                                             <th>라이센스명</th>
-                                            <td><input type="text" class="form-control error validate required stringV" name="licensename" id="licensename" value=""></td>
+                                            <td><input type="text" class="form-control error validate required stringV" maxlength="20" name="licensename" id="licensename" value=""></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -178,7 +178,7 @@
                                             <th>라이센스 단가</th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control error validate required numberV" name="licensecost" id="licensecost" value="">
+                                                    <input type="text" class="form-control error validate required numberV" maxlength="10" name="licensecost" id="licensecost" value="">
                                                 </div>
                                             </td>
                                         </tr>

@@ -208,8 +208,8 @@
                                             <td>${serviceInfo.SERVICEOWNER_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>접수매체</th>
-                                            <td>${serviceInfo.SERVICECHANNEL_ }</td>
+                                            <th>접수유형1</th>
+                                            <td>${serviceInfo.SERVICECODE1 }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -226,8 +226,8 @@
                                             <td>${serviceInfo.SERVICESTEP_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>서비스유형</th>
-                                            <td>${serviceInfo.SERVICECODE_ }</td>
+                                            <th>서비스유형2</th>
+                                            <td>${serviceInfo.SERVICECODE2 }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -538,25 +538,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="box col-12 mb-2 mt-3" style="padding-left: 0px;padding-right: 0px;">
-                	<div class=" float-left" style="height:2.00rem;padding-lㄹeft: 0px;" >
-                    	<a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a>
-                        <c:if test="${serviceInfo.SERVICESTEP le 4 }">
-                        	<a href="#" class="btn btn-primary servicenext">이관</a>
+                <div class="box col-12 mb-2 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
+                	<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
+                            		<%-- <a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> --%>
+                    	<c:if test="${serviceInfo.SERVICESTEP le 4 }">
+                            			<!-- <a href="#" class="btn btn-primary servicenext">이관</a> -->
+                        	<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
                         </c:if>
                         <c:if test="${serviceInfo.SERVICESTEP eq 4 }">
                         	<a href="#" class="btn btn-primary complete">종결</a>
                         </c:if>
                     </div>
-                    <div class="float-right" style="padding-right: 0px;">
-                    	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
-                        	<c:if test="${serviceInfo.SERVICESTEP ne 5 }">
-                        		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
-								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-							</c:if>
-						</form:form> 
-                    </div>
-                </div>
+                    <div class="float-right text-right" style="padding-right: 0px;">
+                    <form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                    	<c:if test="${serviceInfo.SERVICESTEP ne 5 }">
+                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
+							<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+							<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
+						</c:if>
+					</form:form> 
+                	</div>
+            	</div>
                 <div class="col-lg-12" style="background: #ffffff;">
                 	<div class="ibox">
                             <div class="ibox-title row">

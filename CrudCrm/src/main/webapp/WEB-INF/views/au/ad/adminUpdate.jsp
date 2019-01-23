@@ -105,8 +105,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 error required validate phone2V phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left error required validate phone3V phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 error required validate phone2V phone-group" maxlength="4" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left error required validate phone3V phone-group" maxlength="4" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -125,8 +125,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="telno2" id="telno2" value="${user.TELNO2}">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" maxlength="4" name="telno2" id="telno2" value="${user.TELNO2}">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" maxlength="4" name="telno3" id="telno3" value="${user.TELNO3 }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -162,7 +162,7 @@
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control error required validate emailV" name="email" id="email" value="${user.EMAIL }">
+                                                <input type="text" class="form-control error required validate emailV" maxlength="50" name="email" id="email" value="${user.EMAIL }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -177,11 +177,11 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control"  name="userpassword" id="userpassword" disabled></td>
+                                            <td><input type="password" class="form-control" maxlength="20"  name="userpassword" id="userpassword" disabled></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
-                                            <td><input type="text" class="form-control validate stringV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
+                                            <td><input type="text" class="form-control validate stringV" maxlength="20" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="chkauth">관리자여부</label></th>

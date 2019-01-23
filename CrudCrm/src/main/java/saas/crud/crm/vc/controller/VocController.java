@@ -22,6 +22,7 @@ import saas.crud.crm.common.CommonService;
 import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
 import saas.crud.crm.cu.service.CustService;
+import saas.crud.crm.sv.dto.ServiceDto;
 import saas.crud.crm.vc.service.VocService;
 
 @Controller
@@ -48,6 +49,16 @@ public class VocController {
 		mView.setViewName("vc/voc");
 		return mView;
 	}
+	
+	@RequestMapping(value="/vc/voc/post",method=RequestMethod.POST)
+	@ResponseBody
+	public int authVocInsert(HttpServletRequest request) {
+		
+		int cnt = vcService.vocInsert(request);
+		return cnt; 
+	}
+	
+	
 	
 	@RequestMapping(value="vc/satis", method=RequestMethod.GET)
 	public String authvocSatis() {

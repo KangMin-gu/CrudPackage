@@ -186,7 +186,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="menuname">메뉴명</label></th>
-                                            <td><input type="text" class="form-control required error validate stringV" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
+                                            <td><input type="text" class="form-control required error validate stringV" maxlength="20" name="menuname" id="menuname" value="${menu.MENUNAME}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -202,7 +202,7 @@
                                             <th><label for="menuval">메뉴 값</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control required error validate numberV" name="menuval" id="menuval" value="${menu.MENUVAL}">
+                                                    <input type="text" class="form-control required error validate numberV" maxlength="10" name="menuval" id="menuval" value="${menu.MENUVAL}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -255,7 +255,7 @@
                                         <tr>
                                             <th class="border-top-0"><label for="menudesc">메뉴설명</label></th>
                                             <td>
-                                            	<input type="text" class="form-control" name="menudesc" id="menudesc" value="${menu.MENUDESC}">
+                                            	<input type="text" class="form-control" maxlength="50" name="menudesc" id="menudesc" value="${menu.MENUDESC}">
                                             </td>
 
                                         </tr>

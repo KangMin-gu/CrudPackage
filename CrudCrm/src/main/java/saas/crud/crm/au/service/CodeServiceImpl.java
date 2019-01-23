@@ -149,4 +149,25 @@ public class CodeServiceImpl implements CodeService{
 		}
 		return map;
 	}
+
+	@Override
+	public List<CodeDto> getUpperCodeGrp(HttpServletRequest request) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		String codeVal = request.getParameter("codeval").toString();
+		String codeGrp = request.getParameter("codegrp").toString().toUpperCase();
+		
+		
+		CodeDto codeDto = new CodeDto();
+		codeDto.setSiteid(siteId);
+		codeDto.setCodeval(codeVal);
+		codeDto.setCodegrp(codeGrp);
+		
+		int getCodeNo = codeDao.getCodeNo(codeDto);
+		
+		codeDto.setUppercodegrp(getCodeNo);
+		
+		List<CodeDto> getUpperCodeGrp = codeDao.getUpperCodeGrp(codeDto);
+		return getUpperCodeGrp;
+	}
 }

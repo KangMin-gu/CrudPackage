@@ -84,7 +84,7 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="username">사용자명</label></th>
-                                            <td><input type="text" class="form-control error required validate nameV"  name="username" id="username" value="${user.USERNAME}"></td>
+                                            <td><input type="text" class="form-control error required validate nameV" maxlength="20" name="username" id="username" value="${user.USERNAME}"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="mobile">휴대번호</label></th>
@@ -102,8 +102,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 error required validate phone2V phone-group" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
-                                                <input type="text" class="form-control col-3 float-left error required validate phone3V phone-group" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 error required validate phone2V phone-group" maxlength="4" name="mobile2" id="mobile2" value="${user.MOBILE2 }">
+                                                <input type="text" class="form-control col-3 float-left error required validate phone3V phone-group" maxlength="4" name="mobile3" id="mobile3" value="${user.MOBILE3 }">
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,8 +122,8 @@
                                                 		</c:choose>
                                                 	</c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="telno2" id="telno2" value="${user.TELNO2 }">
-                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="telno3" id="telno3" value="${user.TELNO3 }">
+                                                <input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" maxlength="4" name="telno2" id="telno2" value="${user.TELNO2 }">
+                                                <input type="text" class="form-control col-3 float-left validate phone3V phone-group" maxlength="4" name="telno3" id="telno3" value="${user.TELNO3 }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -140,7 +140,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control"  name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control" maxlength="20" name="userid" id="userid" value="${user.USERID}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -151,14 +151,14 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control float-left date dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                            		<input type="text" class="form-control float-left date validate dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
                                             	</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label for="email">이메일</label></th>
                                             <td>
-                                                <input type="text" class="form-control error required validate emailV" name="email" id="email" value="${user.EMAIL }">
+                                                <input type="text" class="form-control error required validate emailV" maxlength="50" name="email" id="email" value="${user.EMAIL }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -173,11 +173,11 @@
                                     <tbody>
                                         <tr>
                                             <th><label for="incno">비밀번호</label></th>
-                                            <td><input type="password" class="form-control error required validate passwordV"  name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
+                                            <td><input type="password" class="form-control error required validate passwordV" maxlength="20" name="userpassword" id="userpassword" value="${user.USERPASSWORD}"></td>
                                         </tr>
                                         <tr>
                                             <th class="border-top-0"><label for="userduty">직책</label></th>
-                                            <td><input type="text" class="form-control validate stringV" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
+                                            <td><input type="text" class="form-control validate stringV" maxlength="20" name="userduty" id="userduty" value="${user.USERDUTY }"></td>
                                         </tr>
                                         <tr>
                                             <th><label for="chkauth">관리자여부</label></th>

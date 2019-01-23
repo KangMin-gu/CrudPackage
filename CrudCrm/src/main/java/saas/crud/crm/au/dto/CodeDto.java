@@ -12,7 +12,7 @@ public class CodeDto implements Serializable{
 	private String codegrp;
 	private String codename;
 	private String codeval;
-	private String uppercodegrp;
+	private int uppercodegrp;
 	private int siteid;
 	private String regdate;
 	private int reguser;
@@ -22,7 +22,7 @@ public class CodeDto implements Serializable{
 	
 	public CodeDto() {}
 
-	public CodeDto(int codeno, String codegrp, String codename, String codeval, String uppercodegrp, int siteid,
+	public CodeDto(int codeno, String codegrp, String codename, String codeval, int uppercodegrp, int siteid,
 			String regdate, int reguser, String edtdate, int edtuser, int isdelete) {
 		super();
 		this.codeno = codeno;
@@ -70,11 +70,11 @@ public class CodeDto implements Serializable{
 		this.codeval = codeval;
 	}
 
-	public String getUppercodegrp() {
+	public int getUppercodegrp() {
 		return uppercodegrp;
 	}
 
-	public void setUppercodegrp(String uppercodegrp) {
+	public void setUppercodegrp(int uppercodegrp) {
 		this.uppercodegrp = uppercodegrp;
 	}
 

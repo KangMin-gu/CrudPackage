@@ -11,7 +11,7 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                        <a href="${pageContext.request.contextPath}/">
-                       <img alt="image" class="rounded" src="${pageContext.request.contextPath}/file/logo/${SITELOGO }"/>
+                       <img alt="image" class="rounded" src="${pageContext.request.contextPath}/${SITELOGO }"/>
                        </a>                     
                         <!--  <img alt="image" class="rounded-circle" src="${pageContext.request.contextPath}/resources/img/crud/crud_saas_mark.png"/>-->
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">

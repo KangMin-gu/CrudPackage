@@ -84,6 +84,8 @@ public class CompanyServiceImpl implements CompanyService{
 	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		companyDto.setEdtuser(userNo);
+		String fileSearchKey = request.getParameter("fileSearchKey");
+		companyDto.setSitelogo(fileSearchKey);
 		companyDao.companyUpdate(companyDto);
 	}
 	

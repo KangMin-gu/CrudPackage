@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("CALLNAME", urInfo.get("CALLNAME")); //사이트 약어
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
-			request.getSession().setAttribute("SITELOGO", urInfo.get("SITELOGO")); //회사 로고
+			request.getSession().setAttribute("SITELOGO", urInfo.get("IMGPATH")); //회사 로고
 			request.getSession().setAttribute("SIDESTATES","1");
 			
 			if(url != null) {

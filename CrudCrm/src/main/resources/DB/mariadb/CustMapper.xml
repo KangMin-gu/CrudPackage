@@ -115,13 +115,17 @@
 		,A.CUSTNAME, A.DEPTNAME
 		,A.DUTY
 		,CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) AS MOBILE
+		,A.MOBILE1,A.MOBILE2,A.MOBILE3
 		,A.EMAIL
 		,CONCAT(A.WRKTEL1,'-',A.WRKTEL2,'-',A.WRKTEL3) AS WRKTEL
+		,A.WRKTEL1,A.WRKTEL2,A.WRKTEL3
 		,CONCAT(A.WRKFAX1,'-',A.WRKFAX2,'-',A.WRKFAX3) AS WRKFAX
+		,A.WRKFAX1,A.WRKFAX2,A.WRKFAX3
 		,A.WRKURL
 		,A.WRKADDR1, A.WRKADDR2, A.WRKADDR3
 		,A.OWNER, B.USERNAME AS OWNERNAME
 		,CONCAT(A.HOMTEL1,'-',A.HOMTEL2,'-',A.HOMTEL3) AS HOMTEL
+		,A.HOMTEL1,A.HOMTEL2,A.HOMTEL3
 		,A.SEX
 		,A.BIRTH
 		,A.MARRIED
@@ -135,6 +139,7 @@
 		,A.ACTGRADE
 		,A.HOMADDR1, A.HOMADDR2, A.HOMADDR3
 		,CONCAT(A.HOMADDR1 , A.HOMADDR2 , A.HOMADDR3) AS HOMADDR
+		,A.HOMADDR1, A.HOMADDR2, A.HOMADDR3
 		,A.MEMO
 		,A.INFOAGREE
 		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR 
@@ -143,10 +148,16 @@
 		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
 		,C.DENYFAX ,C.DENYVISIT  
 		,A.CLINO,D.CLINAME
+		,A.RELCUSTNO
+		,  (SELECT A.CUSTNAME 
+			FROM CU100010 A INNER JOIN CU100010 SELF ON A.CUSTNO = SELF.RELCUSTNO
+			WHERE SELF.CUSTNO = #{custno}) AS RELCUSTNAME
+		
 		FROM cu100010 A		
 		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
 		LEFT OUTER JOIN CU100080 C on A.CUSTNO = C.CUSTNO
-		LEFT OUTER JOIN sa200010 D ON A.CLINO = D.CLINO  
+		LEFT OUTER JOIN sa200010 D ON A.CLINO = D.CLINO
+		   
 		WHERE 
 		A.SITEID = #{siteid}
 		AND A.ISDELETE = 0
@@ -154,7 +165,7 @@
 	</select>
 	
 	<!-- 고객 수정 페이지에 바인딩 할 정보 출력 -->
-	<select id="custUpdateForm" parameterType="int" resultType="hashMap">
+	<select id="custDetailForm" parameterType="int" resultType="hashMap">
 		SELECT
 		A.CUSTNO
 		,A.CUSTNAME
@@ -234,6 +245,7 @@
 		,MEMO
 		,INFOAGREE
 		,CLINO
+		,RELCUSTNO
 		)
 		VALUES
 		(	
@@ -269,6 +281,7 @@
 		,#{memo}
 		,#{infoagree}	
 		,#{clino}
+		,#{relcustno}
 		)
 		<selectKey keyProperty="custno"  resultType="integer" order="AFTER">
 		SELECT LAST_INSERT_ID()
@@ -352,50 +365,128 @@
 	<update id="custformUpdate" parameterType="saas.crud.crm.cu.dto.CustDto" >
 		UPDATE cu100010
 		SET
-		CUSTNAME = #{custname}
+		EDITDATE = now()
+		,EDITUSER = #{edituser}
+		
+		<if test="custname != null">
+		,CUSTNAME = #{custname}
+		</if>
+		<if test="owner != null and owner != 0 ">
 		,OWNER = #{owner}
-		,EDITDATE = now()
-		,EDITUSER = #{edituser}	
+		</if>
+		<if test="deptname != null">	
 		,DEPTNAME = #{deptname}
+		</if>
+		<if test="duty != null">
 		,DUTY = #{duty}
+		</if>
+		<if test="mobile1 != null">
 		,MOBILE1 = #{mobile1}
+		</if>
+		<if test="mobile2 != null">
 		,MOBILE2 = #{mobile2}
+		</if>
+		<if test="mobile3 != null">
 		,MOBILE3 = #{mobile3}
+		</if>
+		<if test="email != null">
 		,EMAIL = #{email}
+		</if>
+		<if test="wrktel1 != null">
 		,WRKTEL1 = #{wrktel1}
+		</if>
+		<if test="wrktel2 != null">
 		,WRKTEL2 = #{wrktel2}
+		</if>
+		<if test="wrktel3 != null">
 		,WRKTEL3 = #{wrktel3}
+		</if>
+		<if test="wrkfax1 != null">
 		,WRKFAX1 = #{wrkfax1}
+		</if>
+		<if test="wrkfax2 != null">
 		,WRKFAX2 = #{wrkfax2}
+		</if>
+		<if test="wrkfax3 != null">
 		,WRKFAX3 = #{wrkfax3}
+		</if>
+		<if test="wrkurl != null">
 		,WRKURL = #{wrkurl}
+		</if>
+		<if test="wrkaddr1 != null">
 		,WRKADDR1 = #{wrkaddr1}
+		</if>
+		<if test="wrkaddr2 != null">
 		,WRKADDR2 = #{wrkaddr2}
+		</if>
+		<if test="wrkaddr3 != null">
 		,WRKADDR3 = #{wrkaddr3}
+		</if>
+		<if test="homtel1 != null">
 		,HOMTEL1 = #{homtel1}
+		</if>
+		<if test="homtel2 != null">
 		,HOMTEL2 = #{homtel2}
+		</if>
+		<if test="homtel3 != null">
 		,HOMTEL3 = #{homtel3}
+		</if>
+		<if test="sex != null and sex != 0">
 		,SEX = #{sex}
+		</if>
+		<if test="birth != null">
 		,BIRTH = #{birth }
+		</if>
+		<if test="married != null and married != 0">
 		,MARRIED = #{married}
+		</if>
+		<if test="mailto != null and mailto != 0">
 		,MAILTO = #{mailto}
+		</if>
+		<if test="solar != null and solar != 0">
 		,SOLAR = #{solar}
+		</if>
+		<if test="weddingday != null">
 		,WEDDINGDAY = #{weddingday}
+		</if>
+		<if test="custgrade != null and custgrade != 0">
 		,CUSTGRADE = #{custgrade}
+		</if>
+		<if test="job != null">
 		,JOB = #{job}
+		</if>
+		<if test="hobby != null">
 		,HOBBY = #{hobby}
+		</if>
+		<if test="custgubun != null and custgubun != 0">
 		,CUSTGUBUN = #{custgubun}
+		</if>
+		<if test="actgrade != null and actgrade != 0">
 		,ACTGRADE = #{actgrade}
+		</if>
+		<if test="homaddr1 != null">
 		,HOMADDR1 = #{homaddr1}
+		</if>
+		<if test="homaddr2 != null">
 		,HOMADDR2 = #{homaddr2}
+		</if>
+		<if test="homaddr3 != null">
 		,HOMADDR3 = #{homaddr3}
+		</if>
+		<if test="memo != null">
 		,MEMO = #{memo}
+		</if>
+		<if test="infoagree == 0 or infoagree == 1 ">
 		,INFOAGREE = #{infoagree}
+		</if>
 		<if test="clino != null and clino != 0 ">
 		,CLINO = #{clino}
 		</if>
+		<if test="relcustno != null and relcustno != 0 ">
+		,RELCUSTNO = #{relcustno}
+		</if>
 		WHERE
-		CUSTNO = #{custno}
+			CUSTNO = #{custno}
 	</update>
 	
 	<!-- 고객 수신거부 정보 수정 -->
@@ -403,7 +494,8 @@
 		UPDATE cu100080
 		SET
 		EDITDATE = now()
-		,EDITUSER = #{edituser}	
+		,EDITUSER = #{edituser}
+			
 		,DENYMAILAD = #{denymailad}
 		,DENYMAILNEWS = #{denymailnews}	
 		,DENYMAILSEMINAR = #{denymailseminar} 	

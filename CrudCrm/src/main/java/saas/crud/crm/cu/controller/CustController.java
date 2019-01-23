@@ -93,7 +93,7 @@ public class CustController {
 		ModelAndView mView = new ModelAndView();
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
-		mView.addObject("custUpdate",custService.svcCustUpdateForm(custno));
+		mView.addObject("custUpdate",custService.svcCustDetailForm(custno));
 		mView.setViewName("cu/custupdate");
 		return mView;
 	}
@@ -102,7 +102,15 @@ public class CustController {
 	@RequestMapping(value="/cust/post/{custno}", method=RequestMethod.POST)
 	public String authcustDetailUpdate(HttpServletRequest request, @PathVariable int custno 
 									,@ModelAttribute CustDto custDto, @ModelAttribute CustDenyDto custDenyDto) {
-		int res = custService.svcCustformUpdate(request, custDto,custDenyDto);
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		custDto.setEdituser(userno); //수정자는 로그인한 본인
+		custDto.setSiteid(siteid);
+		
+		custDenyDto.setEdituser(userno);
+		
+		int res = custService.svcCustformUpdate(custDto,custDenyDto);
 		ModelAndView mview = new ModelAndView();		
 		return "redirect:/cust/view/"+res;
 	}
@@ -125,8 +133,19 @@ public class CustController {
 	
 	//고객 insert (실행)	
 	@RequestMapping(value="/cust/post", method=RequestMethod.POST)
-	public String authcustInsert(HttpServletRequest request, @ModelAttribute CustDto custDto, @ModelAttribute CustDenyDto custDenyDto) {
-		int res = custService.svcCustformInsert(request, custDto,custDenyDto);
+	public String authcustInsert(HttpServletRequest request, @ModelAttribute CustDto custDto, @ModelAttribute CustDenyDto custDenyDto) {		
+		//세션 정보 값 DTO셋팅  
+		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		//필수 값 설정. 등록/수정자는 로그인한 유저로 설정
+		custDto.setReguser(userno);
+		custDto.setEdituser(userno);
+		custDto.setSiteid(siteid);
+		
+		custDenyDto.setReguser(userno);
+		custDenyDto.setEdituser(userno);
+		
+		int res = custService.svcCustformInsert(custDto,custDenyDto);
 		ModelAndView mview = new ModelAndView();		
 		mview.setViewName("cu/custinsert");
 		return "redirect:/cust/view/"+res;

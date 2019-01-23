@@ -117,22 +117,14 @@ public class CustServiceImpl implements CustService {
 	
 	//고객 추가 실행
 	@Override
-	public int svcCustformInsert(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
-		//세션 정보 값 DTO셋팅  
-		int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		//필수 값 설정. 등록/수정자는 로그인한 유저로 설정
-		custDto.setReguser(userno);
-		custDto.setEdituser(userno);
-		custDto.setSiteid(siteid);
-	
+	public int svcCustformInsert(CustDto custDto, CustDenyDto custDenyDto) {
+			
 		//고객 추가 dao호출 추가된 고객pk 값 리턴
 		int custno = custDao.custformInsert(custDto);
 		
 		//수신거부 테이블 default 값 + 파라미터 dto 값 전달  
 		custDenyDto.setCustno(custno);
-		custDenyDto.setReguser(userno);
-		custDenyDto.setEdituser(userno);
+		
 		//수신거부 테이블에 해당 고객 데이터 생성
 		custDao.custformInsertDeny(custDenyDto);
 		
@@ -144,34 +136,26 @@ public class CustServiceImpl implements CustService {
 	}
 
 	//고객 수정 - form 화면에 바인딩 할 데이터 전달 
-	public Map<String,Object> svcCustUpdateForm(int custno){
-		Map<String,Object> map = custDao.custUpdateForm(custno);
+	public Map<String,Object> svcCustDetailForm(int custno){
+		Map<String,Object> map = custDao.custDetailForm(custno);
 		return  map;
 	}
 	
 	//고객 수정 실행 
 	@Override
-	public int svcCustformUpdate(HttpServletRequest request, CustDto custDto, CustDenyDto custDenyDto) {
-			//세션 정보 값 DTO셋팅  
-			int userno  = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-			int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-			
-			custDto.setEdituser(userno); //수정자는 로그인한 본인
-			custDto.setSiteid(siteid);
-			custDao.custformUpdate(custDto);//업데이트 dao호출
+	public int svcCustformUpdate(CustDto custDto, CustDenyDto custDenyDto) {			
+			custDao.custformUpdate(custDto);//업데이트 dao호출			
 			
 			//업데이트한 pk값 수신거부 dto에 설정
 			int custno = custDto.getCustno();
 			custDenyDto.setCustno(custno);
-			custDenyDto.setEdituser(userno);
-			
+						
 			//수신거부 dao 호출  
 			custDao.custformUpdateDeny(custDenyDto);
 			
 			if(custDto.getClino() != 0) {//clino가 존재하면 거래처-관련고객 테이블에 update or insert
 				custDao.mergeCliCust(custDto);
-			}
-			
+			}	
 			return custno;
 	}
 	

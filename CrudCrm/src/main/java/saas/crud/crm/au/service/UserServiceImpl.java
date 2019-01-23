@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		ModelAndView mView = new ModelAndView();
-
 		if(isValid){
 			
 			Map<String,Object> param = crudRemote.getRemote(request);

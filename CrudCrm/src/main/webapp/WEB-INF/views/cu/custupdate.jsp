@@ -301,7 +301,7 @@
 																<option value="0" ${custUpdate.MARRIED eq "0" ? "selected" :""}>선택</option>
 																<c:forEach var="married" items="${MARRIED }">
                                                       			<c:choose>
-                                                         			<c:when test="${custUpdate.HOMTEL1 eq married.codeval}">
+                                                         			<c:when test="${custUpdate.MARRIED eq married.codeval}">
                                                             			<option selected label="${married.codename }" value="${married.codeval }"/>
                                                          			</c:when>
                                                          			<c:otherwise>
@@ -394,7 +394,7 @@
 														<th>회원구분</th>
 														<td>
 															<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
-																<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
+																<option value="0">선택</option>
 																<c:forEach var="custGubun" items="${CUSTGUBUN }">
                                                       			<c:choose>
                                                          			<c:when test="${custUpdate.CUSTGUBUN eq custGubun.codeval}">

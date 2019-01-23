@@ -705,7 +705,7 @@
 	<!-- S: 추가 js-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 영업js 관련고객 탭 사용 -->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- 영업js 관련고객 탭 사용 -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script>
 	<script>
         $(document).ready(function () {
             // icheck css

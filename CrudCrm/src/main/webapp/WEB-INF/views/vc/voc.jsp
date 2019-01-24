@@ -539,17 +539,17 @@
                             <tr class="reservation">
                             	<th>예약 시간
                             	<td colspan="3">
-                            		<div class="input-group clockpicker" data-autoclose="true">
+                            		<div class="input-group clockpicker clock01" data-autoclose="true">
                             			<span class="input-group-addon">
                                     		<span class="fa fa-clock-o"></span>
                                 		</span>
                             			<input type="text" class="form-control voc" autocomplete="off" name="reservtimefrom" id="reservtimefrom" value="">
                             		</div>
-                            		<div class="input-group clockpicker" data-autoclose="true">
+                            		<div class="input-group clockpicker clock02" data-autoclose="true">
                             			<span class="input-group-addon">
                                     		<span class="fa fa-clock-o"></span>
                                 		</span>	
-                                		<input type="text"  class="form-control date voc" name="reservtimeto" id="reservtimeto" value="">
+                                		<input type="text"  class="form-control voc" name="reservtimeto" id="reservtimeto" value="">
                             		</div>	
                             	</td>
                             </tr>

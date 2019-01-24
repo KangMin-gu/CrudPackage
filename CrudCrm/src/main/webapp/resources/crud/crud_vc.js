@@ -2,7 +2,6 @@
 // 2개의 대상 타겟이 동일한 div에 담겨 있어야 하며  네이밍 규칙이 다음과 같아야한다.
 // XXXXname , XXXXno   ex) custname , custno  
 $(".dataCancle").click(function(e){
-	debugger;
 	var viewTarget = e.target.offsetParent.id;//클릭한 div요소 id값 획득  
 	var hiddenTarget = viewTarget.replace('name','no');//히든 값 id 획득
 	$('[name='+viewTarget+']').val('');
@@ -11,7 +10,6 @@ $(".dataCancle").click(function(e){
 
 //인입 된 번호로 고객 검색.
 function enterkey(event) {
-	debugger;
 	var id = event.id;
     if (window.event.keyCode == 13) {//입력 값이 enter 
     	if(id == 'phone'){
@@ -23,7 +21,6 @@ function enterkey(event) {
 
 //고객 추가
 function goCustInsert(){
-	debugger; 	
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
 	if(custName.trim() == ''){//입력 값이 없으면 기본값으로 설정.
@@ -39,7 +36,6 @@ function goCustInsert(){
         data: param,
         cache: false,
         success: function (data) {
-        	debugger;
         	$('#custno').val(data);
         	custFormActivation("update","voc");//수정 버튼으로 변경
         	alert("추가 되었습니다.");
@@ -65,7 +61,6 @@ function goCustUpdate(){
         data:param,
         cache: false,
         success: function (data) {
-        	debugger;
         	alert("수정 되었습니다.");
         },
         error: function (request, status, error) {
@@ -88,12 +83,12 @@ function custDataToJson(param){//고객 인풋 필드 데이터 json형식 변�
 //********popup 관련************************************************************************************************* 
 
 function vocCustSelected(tr){//tr이 클릭 이벤트
-	debugger;		
 	var custno = tr.getAttribute("value");
 	var urlStr = "/vc/pop/cust/"+custno;
+	var urlServ = "/vc/pop/service/"+custno;
 	var statusStr = 'update';
 	vocGetCustInfo(urlStr);//정보획득 후 데이터 바인딩.
-	
+	vocGetServiceInfo(urlServ);
 	setTimeout(function(){
 		custFormActivation('update');//수정 버튼생성.
 	},300);
@@ -106,9 +101,23 @@ function vocGetCustInfo(urlStr){
         method: "GET",
         dataType: "json",
         success: function (data) {
-        	debugger;
         	custInfoClear();//기존 입력 된 데이터 삭제
         	custInfoBinding(data);//바인딩
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+//최근 서비스 1건 획득 후 바인딩
+function vocGetServiceInfo(urlServ){
+	$.ajax({
+        url: urlServ,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+        	serviceInfoBinding(data);//바인딩
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -130,7 +139,6 @@ function custInfoClear(){//인풋 필드 초기화
 }
 
 function custInfoBinding(data){//인풋 필드 데이터 바인딩
-	debugger;
 	opener.$('#custname').val(data.CUSTNAME);
 	opener.$('#custno').val(data.CUSTNO);
 	opener.$('#custgubun').val(data.CUSTGUBUN);
@@ -151,10 +159,42 @@ function custInfoBinding(data){//인풋 필드 데이터 바인딩
 	opener.$('#homaddr3').val(data.HOMADDR3);
 }
 
+function serviceInfoBinding(data){
+	
+	opener.$('input:radio[name="servicetype"]').each(function(index){
+		if(this.value == data.SERVICETYPE){
+			opener.$('input:radio[name="servicetype"]:eq('+index+')').iCheck('check');
+		}
+	});
+	
+	opener.$('#servicecode1').val(data.SERVICECODE1);
+	opener.$('#servicecode2').val(data.SERVICECODE2);
+	opener.$('#servicename').val(data.SERVICENAME);
+	opener.$('#servicedesc').val(data.SERVICEDESC);
+	opener.$('#memo').val(data.MEMO);
+	opener.$('input:radio[name="vocstep"]').each(function(index){
+		if(this.value == data.SERVICESTEP){
+			opener.$('input:radio[name="vocstep"]:eq('+index+')').iCheck('check');
+		}
+	});
+	
+	if(data.SERVICESTEP == 4){
+		opener.$('#reservphone').val(data.reserv.MOBILENO);
+		opener.$('#reservdate').val(formatDate(data.reserv.RESERVDATE));
+		opener.$('#reservtimeto').val(data.reserv.RESERVTIMETO);
+		opener.$('#reservtimefrom').val(data.reserv.RESERVTIMEFROM);
+	}else if(data.SERVICESTEP == 5 || data.SERVICESTEP == 6){
+		opener.$('#nextowner').val(data.convey.NEXTOWNER);
+		opener.$('#nextowner_').val(data.convey.NEXTOWNER_);
+		opener.$('#conveyreason').val(data.convey.CONVEYREASON);
+		opener.$('#conveydesc').val(data.convey.CONVEYDESC);
+	}
+	
+}
+
 //버튼 생성 메서드
 //파라미터에 따라 insert/ update 버튼을 생성
 function custFormActivation(statusStr,fromStr){
-	debugger;	
 	var btnStr = "";
 	if(statusStr == 'insert'){
 		custInfoClear();

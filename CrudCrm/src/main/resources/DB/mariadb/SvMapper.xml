@@ -7,7 +7,7 @@
 			SELECT
 			A.SERVICENO 
 		 	, A.SERVICENAME 
-			,(case when length(A.SERVICECODE2) > 0 then CONCAT(FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid}), ' / ', FN_GETCODE('SERVICECODE2',A.SERVICECODE2,#{siteid}))
+			,(case when length(A.SERVICECODE2) > 0 then CONCAT(FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid}), ' / ', FN_GETCODEUPPER('SERVICECODE2',A.SERVICECODE2,#{siteid},FN_GETCODENO('SERVICECODE1',A.SERVICECODE1,#{siteid})))
 	         	   when length(A.SERVICECODE1) > 0 then FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid})
 	    		else '' end) SERVICECODE_
 			, FN_GETCODE('SERVICECHANNEL',A.SERVICECHANNEL,1) AS SERVICECHANNEL_
@@ -499,7 +499,30 @@
 		,#{edtuser}
 		,#{siteid}
 		)
-		
 	</insert>
+	
+	<select id="topList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM sv300010
+		WHERE SITEID = #{siteid}
+		AND CUSTNO = #{custno}
+		order by SERVICENO DESC
+		LIMIT 1
+	</select>
+	
+	<select id="topReserv" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM sv300070
+		WHERE SITEID = #{siteid}
+		and SERVICENO = #{serviceno}
+		ORDER BY NO DESC
+		LIMIT 1
+	</select>
+	
+	<select id="topConvey" parameterType="hashMap" resultType="hashMap">
+		SELECT A.*,(SELECT USERNAME FROM sysme800010 WHERE USERNO = A.NEXTOWNER ) AS NEXTOWNER_ FROM sv300050 A
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+		ORDER BY A.CONVEYNO DESC
+		LIMIT 1
+	</select>
 	
 </mapper>

@@ -85,6 +85,18 @@ public class VocController {
 		Map<String,Object> custMap = vcService.svcVocPopCustSelect(prmMap);
 		return custMap;
 	}
+	//voc 고객팝업창 tr 클릭 시 해당 고객의 최근 한건의 서비스 데이터 바인딩
+	@RequestMapping(value="/vc/pop/service/{custNo}", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authVocPopServiceSelect(HttpServletRequest request,@PathVariable int custNo){
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("siteid", siteId);
+		map.put("custno", custNo);
+		Map<String,Object> serviceMap = vcService.svcVocPopServiceSelect(map);
+		
+		return serviceMap;
+	}
 	
 	//voc 고객 추가
 	@RequestMapping(value="/vc/cust/post", method=RequestMethod.POST)

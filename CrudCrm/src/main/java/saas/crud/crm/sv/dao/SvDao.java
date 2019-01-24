@@ -52,6 +52,12 @@ public interface SvDao {
 	public void svGoodsInsert(Map<String,Object> param);
 	// voc 상담예약
 	public void svReservInsert(Map<String,Object> param);
+	// voc 최근 서비스 한건
+	public Map<String,Object> svTopDesc(Map<String,Object> param);
+	// voc 최근 상담예약 한건
+	public Map<String,Object> svTopResv(Map<String,Object> param);
+	// voc 최근 이관 한건
+	public Map<String,Object> svTopConvey(Map<String,Object> param);
 	
 
 }

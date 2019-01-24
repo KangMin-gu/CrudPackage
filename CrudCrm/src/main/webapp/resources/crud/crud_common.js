@@ -299,6 +299,32 @@
 	$('.date02').change(function(e){
 		check_date();
 	});
+	
+	// clockpicker 앞의 값이 변했을때
+	$('.clock01').change(function(e){
+		check_time();
+	});
+	// clockpicker 뒤의 값이 변했을때
+	$('.clock02').change(function(e){
+		check_time();
+	});
+	
+	function check_time(){
+		var time1val = $('.clock01 input').val();
+		var time2val = $('.clock02 input').val();
+		var msg = "정상적인 날짜 범위가 아닙니다. 다시 선택해 주세요";
+		
+		if(time1val != '' && time2val !=''){
+			if(time1val > time2val){
+				alert(msg);
+				$('.clock01 input').val('');
+				$('.clock01 input').focus();
+			}
+		}
+	}
+	
+	
+	
 	// datepicker 앞, 뒤의 값을 확인해서 앞의 값이 뒤의 값보다 크면 alert 처리하고 초기화
 	function check_date(){
 		
@@ -519,6 +545,16 @@
         });
     });	 
     
+    function formatDate(date) {
+    	var time = new Date(date);
+    	var year = time.getFullYear();
+    	var month = time.getMonth() +1;
+    	if(month < 10){
+    		month = '0'+month;
+    	}
+    	var day = time.getDate();
+    	  return year+'-'+month+'-' + day;
+    	}
     
     //좌측 사이드바 접기상태 변경
     $("#sideBarStatus").click(function(){

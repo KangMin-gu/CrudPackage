@@ -124,5 +124,23 @@ public class SvDaoImpl implements SvDao{
 	public void svReservInsert(Map<String, Object> param) {
 		session.insert("sv.svReservInsert",param);
 	}
+	//VOC 최근 서비스 한건 가져오기
+	@Override
+	public Map<String, Object> svTopDesc(Map<String, Object> param) {
+		Map<String,Object> svTopList = session.selectOne("sv.topList",param);
+		return svTopList;
+	}
+	//VOC 최근 상담예약 한건 가져오기
+	@Override
+	public Map<String, Object> svTopResv(Map<String, Object> param) {
+		Map<String,Object> svTopResv = session.selectOne("sv.topReserv",param);
+		return svTopResv;
+	}
+	//VOC 최근 이관 한건 가져오기
+	@Override
+	public Map<String, Object> svTopConvey(Map<String, Object> param) {
+		Map<String,Object> svTopConvey = session.selectOne("sv.topConvey",param);
+		return svTopConvey;
+	}
 	
 }

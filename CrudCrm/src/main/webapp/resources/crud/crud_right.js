@@ -11,10 +11,9 @@ $('#save').click(function(e){
     var reservdate = $('#reservdate').val();
     var reservtimeto = $('#reservtimeto').val();
     var reservtimefrom = $('#reservtimefrom').val();
+    var custno = $('#custno').val();
     
-   // var memo = $("#memo").val();
-    //var param = {"servicetype":servicetype,"servicename":servicename,"servicedesc":servicedesc,"memo":memo};
-    var param = {"servicetype":servicetype,"servicename":servicename,"servicedesc":servicedesc,"vocstep":vocstep,"nextowner":nextowner
+    var param = {"custno":custno,"servicetype":servicetype,"servicename":servicename,"servicedesc":servicedesc,"vocstep":vocstep,"nextowner":nextowner
     		,"conveyreason":conveyreason,"conveydesc":conveydesc,"reservphone":reservphone,"reservdate":reservdate,"reservtimeto":reservtimeto,"reservtimefrom":reservtimefrom};
 
     var goodsLength = $('.plus').length;

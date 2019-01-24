@@ -61,8 +61,8 @@ public class VocServiceImpl implements VocService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		//serviceDto.setOwner(userNo);
 		ServiceDto serviceDto = new ServiceDto();
-		serviceDto.setCustno(4);
-		//serviceDto.setCustno(Integer.parseInt(search.get("custno").toString()));
+		//serviceDto.setCustno(4);
+		serviceDto.setCustno(Integer.parseInt(search.get("custno").toString()));
 		serviceDto.setSiteid(siteId);
 		serviceDto.setServicestep(1);
 		serviceDto.setServicename(search.get("servicename").toString());
@@ -151,6 +151,20 @@ public class VocServiceImpl implements VocService{
 			}
 		}
 		return serviceNo;
+	}
+
+	@Override
+	public Map<String, Object> svcVocPopServiceSelect(Map<String, Object> map) {
+		Map<String,Object> serviceMap = svDao.svTopDesc(map);
+		int serviceStep = Integer.parseInt(serviceMap.get("SERVICESTEP").toString()); 
+		int serviceNo = Integer.parseInt(serviceMap.get("SERVICENO").toString());
+		map.put("serviceno",serviceNo);
+		if(serviceStep == 4) {			
+			serviceMap.put("reserv", svDao.svTopResv(map));
+		}else if(serviceStep == 5 || serviceStep == 6) {
+			serviceMap.put("convey", svDao.svTopConvey(map));
+		}
+		return serviceMap;
 	}
 	
 }

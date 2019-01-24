@@ -12,4 +12,6 @@ public interface VocService {
 	public int vocInsert(HttpServletRequest request);
 
 	public Map<String,Object> svcVocPopCustSelect(Map<String,Object> prm);
+	
+	public Map<String,Object> svcVocPopServiceSelect(Map<String,Object> map);
 }

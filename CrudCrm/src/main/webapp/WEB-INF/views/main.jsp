@@ -17,7 +17,7 @@
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 </head>
 
-<body>
+<body onunload="colse()">
 	<div id="wrapper">
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 	<div id="page-wrapper" class="gray-bg">
@@ -425,6 +425,10 @@
 							});
 
 				});
+		function colse(){
+			alert('aaa');
+		}
+
 	</script>
 </body>
 </html>

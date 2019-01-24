@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService{
 				
 				}else {			
 					loginManager.removeSession(userId);
-					buf.append("<script>alert('다른 사용자가 로그인 되어 있습니다. 이전 사용자를 로그아웃 합니다.'); location.href='");
+					buf.append("<script>alert('이전 사용자를 로그아웃 합니다. 재 로그인 해주세요.'); location.href='");
 				 	buf.append(location);
 				 	buf.append("';</script>");							 		
 					response.setContentType("text/html; charset=UTF-8");

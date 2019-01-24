@@ -169,5 +169,13 @@ public class VocController {
 		return custno;
 	}
 	
+	//VOC -  탭 서비스 리스트	
+	@RequestMapping(value="/vc/tab/sv",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocTabServiceList(HttpServletRequest request) {
+		Map<String,Object> svMap = vcService.svcVocTabServiceList(request);
+		return svMap;
+	}
+	
 
 }

@@ -153,4 +153,12 @@ public class VocServiceImpl implements VocService{
 		return serviceNo;
 	}
 	
+	//VOC 1탭 - 서비스 리스트
+	@Override
+	public Map<String,Object> svcVocTabServiceList(HttpServletRequest request){
+		
+		
+		return null;
+	}
+	
 }

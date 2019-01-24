@@ -85,7 +85,64 @@ function custDataToJson(param){//고객 인풋 필드 데이터 json형식 변�
 }
 
 
-//********popup 관련************************************************************************************************* 
+
+//********좌측 탭 *************************************************************************************************
+function tabTargetState(pageNum){
+	debugger;
+	var salesNo = $('#salesno').val();
+	var state = $('#state').val();
+	var urlStr = '/sales/view/tab/state?salesno='+salesNo+'&pageNum='+pageNum+'&state='+state;
+    $.ajax({
+        url: urlStr,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	debugger;
+        	$('#tab1 tbody tr').remove();
+        	$('#tab1 .pagination li').remove();
+        	
+        	var length = data.stateList.length;
+        	var html ="";
+        	for (var i = 0; i < length; i++) {
+        		html = '<tr><td>' + data.stateList[i].ENTDATE + '</td><td>' + data.stateList[i].PRESTATE + '</td><td>' + data.stateList[i].STATE + '</td><td>' + data.stateList[i].MODREASON + '</td><td>' + data.stateList[i].PROB + '</td><td>' + data.stateList[i].USERNAME + '</td></tr>';
+        		$('#tab2 tbody').append(html);
+        	}
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetState(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+            }
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetState(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetState(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetState(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            
+            if(length != 0){
+            	$('#tab2 .pagination').append(html2);
+            }
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}	
+
+
+
+
+
+//********고객 팝업 관련************************************************************************************************* 
 
 function vocCustSelected(tr){//tr이 클릭 이벤트
 	debugger;		
@@ -122,7 +179,7 @@ function custInfoClear(){//인풋 필드 초기화
 	opener.$('#custgubun').val('0');
 	opener.$('#mobile1').val('');opener.$('#mobile2').val('');opener.$('#mobile3').val('');
 	opener.$('#homtel1').val('');opener.$('#homtel2').val('');opener.$('#homtel3').val('');
-	opener.$('#relcustname').val('');
+	opener.$('[name="relcustname"]').val('');
 	opener.$('#relcustno').val('0');
 	opener.$('#email').val('');
 	opener.$('#custgrade').val('0');
@@ -213,3 +270,4 @@ function splitPhoneNum(phoneNum){//01로 시작하면 휴대폰에 바인딩. �
 		opener.$('#homtel3').val(phone3);
 	}	
 }
+//******************************************** 고객 팝업 끝 ******************************

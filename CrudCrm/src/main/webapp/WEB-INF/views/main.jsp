@@ -426,7 +426,28 @@
 
 				});
 		function colse(){
-			alert('aaa');
+			$.ajax({
+		        url: "/popclient/"+id,
+		        method: "GET",
+		        dataType: "json",
+		        success: function (data) {
+		        	var TEL = data.MOBILE1 +'-'+ data.MOBILE2 +'-'+data.MOBILE3
+		        	opener.$('#bsno').val('');
+		        	opener.$('#incno').val('');
+		        	opener.$('#prsdname').val('');
+		        	opener.$('#clitelno').val('');
+		        	opener.$('#homepage').val('');
+		        	
+		        	opener.$('#bsno').val(data.BSNO);
+		        	opener.$('#incno').val(data.CORP_SN);
+		        	opener.$('#prsdname').val(data.PRSDNAME);
+		        	opener.$('#clitelno').val(TEL);
+		        	opener.$('#homepage').val(data.HOMEPAGE);
+		        },
+		        error: function (request, status, error) {
+		            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		        }
+		    });
 		}
 
 	</script>

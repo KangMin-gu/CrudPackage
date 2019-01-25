@@ -21,6 +21,7 @@ import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.ce.CrudEngine;
+import saas.crud.crm.ce.EmailTemplate;
 import saas.crud.crm.ce.LoginManager;
 
 
@@ -268,9 +269,9 @@ public class AuServiceImpl implements AuService{
 		Map<String, Object> adminUserInfo = auDao.urRead(adminUserDto);
 		Map<String, Object> sendPwdInfo = new HashMap<>();
 		
-		
-		StringBuffer buf = new StringBuffer();
-		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
+		EmailTemplate eTemp = new EmailTemplate();
+		StringBuffer buf = eTemp.passwordResetTemple(newPwd);
+		//buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
 		//초기화된 비밀번호 업데이트
 		auDao.userPwdReset(resetUserDto);
 		//초기화된 비밀번호 이메일테이블 인서트

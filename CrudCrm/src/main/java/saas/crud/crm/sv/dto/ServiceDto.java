@@ -17,7 +17,8 @@ public class ServiceDto {
 	private int owner;
 	private int siteid;
 	private int servicetype;
-	private int servicecode;
+	private int servicecode1;
+	private int servicecode2;
 	private int servicechannel;
 	private String filesearchkey;
 	private String regdate;
@@ -32,9 +33,9 @@ public class ServiceDto {
 	public ServiceDto() {}
 
 	public ServiceDto(int serviceno, String servicename, String servicedesc, int serviceowner, String receptiondate,
-			int custno, int clino, int servicestep, int owner, int siteid, int servicetype, int servicecode,
-			int servicechannel, String filesearchkey, String regdate, int reguser, String edtdate, int edtuser,
-			int isdelete, String memo, int complete, List<MultipartFile> servicefile) {
+			int custno, int clino, int servicestep, int owner, int siteid, int servicetype, int servicecode1,
+			int servicecode2, int servicechannel, String filesearchkey, String regdate, int reguser, String edtdate,
+			int edtuser, int isdelete, String memo, int complete, List<MultipartFile> servicefile) {
 		super();
 		this.serviceno = serviceno;
 		this.servicename = servicename;
@@ -47,7 +48,8 @@ public class ServiceDto {
 		this.owner = owner;
 		this.siteid = siteid;
 		this.servicetype = servicetype;
-		this.servicecode = servicecode;
+		this.servicecode1 = servicecode1;
+		this.servicecode2 = servicecode2;
 		this.servicechannel = servicechannel;
 		this.filesearchkey = filesearchkey;
 		this.regdate = regdate;
@@ -148,12 +150,20 @@ public class ServiceDto {
 		this.servicetype = servicetype;
 	}
 
-	public int getServicecode() {
-		return servicecode;
+	public int getServicecode1() {
+		return servicecode1;
 	}
 
-	public void setServicecode(int servicecode) {
-		this.servicecode = servicecode;
+	public void setServicecode1(int servicecode1) {
+		this.servicecode1 = servicecode1;
+	}
+
+	public int getServicecode2() {
+		return servicecode2;
+	}
+
+	public void setServicecode2(int servicecode2) {
+		this.servicecode2 = servicecode2;
 	}
 
 	public int getServicechannel() {
@@ -235,6 +245,5 @@ public class ServiceDto {
 	public void setServicefile(List<MultipartFile> servicefile) {
 		this.servicefile = servicefile;
 	}
-
 	
 }

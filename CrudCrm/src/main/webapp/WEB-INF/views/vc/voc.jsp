@@ -389,7 +389,7 @@
                                 <td>
                                     <div class="i-checks">
                                     	<c:forEach var="serviceType" items="${SERVICETYPE }">
-                                    		<label class="mr-2 mb-0 voc"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
+                                    		<label class="mr-2 mb-0"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
                                         </c:forEach>
                                     </div>
                                 </td>
@@ -432,16 +432,19 @@
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
                                          <div class="select-box mb-1">
                                             <select id="goods11" name="goods11" class="form-control d-inline-block mr-2 voc">
+                                            	<option value="">선택</option>
                                                 <option value="b11">option 2</option>
                                                 <option value="b12">option 3</option>
                                                 <option value="b13">option 4</option>
                                             </select>
                                             <select id="goods12" name="goods12" class="form-control d-inline-block mr-2 voc">
+                                            	<option value="">선택</option>
                                                 <option value="m11">option 2</option>
                                                 <option value="m12">option 3</option>
                                                 <option value="m13">option 4</option>
                                             </select>
                                             <select id="goods13" name="goods13" class="form-control d-inline-block mr-2 voc">
+                                            	<option value="">선택</option>
                                                 <option value="s11">option 2</option>
                                                 <option value="s12">option 3</option>
                                                 <option value="s13">option 4</option>
@@ -450,16 +453,19 @@
                                         </div>
                                         <div class="select-box mb-1">
                                             <select id="goods21" name="goods21" class="form-control d-inline-block mr-2 voc">
+                                            	<option value="">선택</option>
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
                                             </select>
                                             <select id="goods22" name="goods22" class="form-control d-inline-block mr-2 voc">
+                                                <option value="">선택</option>
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
                                             </select>
                                             <select id="goods23" name="goods23" class="form-control d-inline-block mr-2 voc">
+                                                <option value="">선택</option>
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
@@ -487,10 +493,10 @@
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks">
-                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="3" id="vocstep2" name="vocstep"> 처리</label>
-                                        <label class="mb-0"><input type="radio" class="check voc" value="4" id="vocstep3" name="vocstep"> 상담예약</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check voc" value="6" id="vocstep5" name="vocstep"> 상급자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep2" name="vocstep"> 처리</label>
+                                        <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep5" name="vocstep"> 상급자 이관</label>
                                     </div>
                                 </td>
                             </tr>
@@ -521,6 +527,33 @@
                             		<textarea id="conveydesc" class="form-control voc" name="conveydesc" cols="80" rows="3"></textarea>
                             	</td>
                             </tr>
+                            <tr class="adminconvey">
+                            	<th>상급 담당자 </th>
+                            	<td colspan="1">
+                            		<div class="input-group adminowner" id="nextadminowner_">
+                            			<input type="text" class="form-control" autocomplete="off" name="nextadminowner_" value="">
+                                        <input type="hidden" name="nextadminowner" id="nextadminowner" value="">
+                                        <span class="input-group-addon">
+                                        	<a><i class="fa fa-search"></i></a>
+                                        </span>
+                                    </div>
+                            	</td>
+                            	<th>이관 사유</th>
+                            	<td colspan="1">
+                            		<select class="form-control voc" name="conveyreason" id="conveyreason">
+										<option label="선택" value=""/>
+                                       	<c:forEach var="conveyReason" items="${CONVEYREASON }">
+                                       		<option label="${conveyReason.codename }" value="${conveyReason.codeval }"/>
+                                       	</c:forEach>
+                                    </select>
+                            	</td>
+                            </tr>
+                            <tr class="adminconvey">
+                            	<th>비고</th>
+                            	<td colspan="3">
+                            		<textarea id="conveydesc" class="form-control voc" name="conveydesc" cols="80" rows="3"></textarea>
+                            	</td>
+                            </tr>
                             <tr class="reservation">
                             	<th>예약 전화번호
                             	<td>
@@ -539,18 +572,20 @@
                             <tr class="reservation">
                             	<th>예약 시간
                             	<td colspan="3">
-                            		<div class="input-group clockpicker clock01" data-autoclose="true">
-                            			<span class="input-group-addon">
-                                    		<span class="fa fa-clock-o"></span>
-                                		</span>
-                            			<input type="text" class="form-control voc" autocomplete="off" name="reservtimefrom" id="reservtimefrom" value="">
+                            		<div class="input-group">
+                            			<div class="input-group clockpicker clock01" data-autoclose="true">
+                            				<span class="input-group-addon">
+                                    			<span class="fa fa-clock-o"></span>
+                                			</span>
+                            				<input type="text" class="form-control voc clock01" autocomplete="off" name="reservtimefrom" id="reservtimefrom" value="">
+                            			</div>  
+                            			<div class="input-group clockpicker clock02" data-autoclose="true">
+                            				<span class="input-group-addon">
+                                    			<span class="fa fa-clock-o"></span>
+                                			</span>	
+                                			<input type="text"  class="form-control voc clock02" name="reservtimeto" id="reservtimeto" value="">
+                            			</div>	
                             		</div>
-                            		<div class="input-group clockpicker clock02" data-autoclose="true">
-                            			<span class="input-group-addon">
-                                    		<span class="fa fa-clock-o"></span>
-                                		</span>	
-                                		<input type="text"  class="form-control voc" name="reservtimeto" id="reservtimeto" value="">
-                            		</div>	
                             	</td>
                             </tr>
                             <tr>
@@ -562,6 +597,7 @@
                         </tbody>
                     </table>
                     <div class="btn-area text-right">
+                    	<button id="create" class="btn btn-primary btn-large">추가</button>
                         <button id="save" class="btn btn-primary btn-large">저장</button>
                     </div>
                 </div>
@@ -610,33 +646,9 @@
 	
 $(document).ready(function () {
 	$('.convey').hide();
+	$('.adminconvey').hide();
 	$('.reservation').hide();
 });
-
-$('.check').on('ifChecked', function(event){
-	var value = event.currentTarget.value;
-	if(value == 5 || value == 6){
-		$('.convey').show();
-		$('.reservation').hide();
-	}else if (value == 4){
-		$('.convey').hide();
-		$('.reservation').show();
-	}else{
-		$('.convey').hide();
-		$('.reservation').hide();
-	}
-});
-
-
-$(".plus").click(function(){
-	var cloneCount = $('.plus').length;
-	var countP = cloneCount + 1;
-    
-    $('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
-    $('.select-area .select-box:last').find('#goods'+cloneCount+1).attr('name','goods'+countP+1).attr('id','goods'+countP+1);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+2);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+3);
-}); 
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 

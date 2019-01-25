@@ -19,6 +19,9 @@
 			<if test="username != null">
 			AND USERNAME like CONCAT('%',#{username},'%')
 			</if>
+			<if test="chkauth != null">
+			AND CHKAUTH = #{chkauth}
+			</if>
 	</select>
 	<!-- 담당자로 설정 할 수 있는 회원 목록 출력  -->
 	<select id="popUserList" parameterType="hashMap" resultType="hashMap">
@@ -35,6 +38,9 @@
 				AND ISDELETE = 0
 				<if test="username != null">
 					AND USERNAME like CONCAT('%',#{username},'%')
+				</if>
+				<if test="chkauth != null">
+					AND CHKAUTH = #{chkauth}
 				</if>
 			ORDER BY USERNAME
 			) T

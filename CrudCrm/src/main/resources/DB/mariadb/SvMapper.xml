@@ -41,8 +41,11 @@
 			<if test="clino != null">
 				AND A.CLINO = #{clino}
 			</if>
-			<if test="servicechannel != null">
-				AND A.SERVICECHANNEL = #{servicechannel}
+			<if test="servicecode1 != null">
+				AND A.SERVICECODE1 = #{servicecode1}
+			</if>
+			<if test="servicecode2 != null">
+				AND A.SERVICECODE2 = #{servicecode2}
 			</if>
 			<if test="serviceowner != null">
 				AND A.SERVICEOWNER = #{serviceowner}
@@ -102,17 +105,16 @@
 			A.SERVICENO 
 		 	, A.SERVICENAME 
 		 	, A.SERVICEDESC
-		 	, FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid})
-		 	, FN_GETCODE('SERVICECODE2',A.SERVICECODE2,#{siteid})
+		 	, FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid}) AS SERVICECODE1
+		 	, FN_GETCODEUPPER('SERVICECODE2',A.SERVICECODE2,#{siteid},FN_GETCODENO('SERVICECODE1',A.SERVICECODE1,#{siteid})) AS SERVICECODE2
 		 	, A.SERVICETYPE
 		 	, A.SERVICEOWNER
 		 	, A.SERVICESTEP
 		 	, A.FILESEARCHKEY
 		 	, A.OWNER
-		 	,(case when length(A.SERVICECODE2) > 0 then CONCAT(FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid}), ' / ', FN_GETCODE('SERVICECODE2',A.SERVICECODE2,#{siteid}))
+		 	,(case when length(A.SERVICECODE2) > 0 then CONCAT(FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid}), ' / ', FN_GETCODEUPPER('SERVICECODE2',A.SERVICECODE2,#{siteid},FN_GETCODENO('SERVICECODE1',A.SERVICECODE1,#{siteid})))
 	         	   when length(A.SERVICECODE1) > 0 then FN_GETCODE('SERVICECODE1',A.SERVICECODE1,#{siteid})
 	    		else '' end) SERVICECODE
-			, FN_GETCODE('SERVICECHANNEL',A.SERVICECHANNEL,#{siteid}) AS SERVICECHANNEL_
 			, FN_GETCODE('SERVICETYPE',A.SERVICETYPE,1) AS SERVICETYPE_
 			, DATE_FORMAT(RECEPTIONDATE,'%Y-%m-%d') AS RECEPTIONDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.SERVICEOWNER) AS SERVICEOWNER_

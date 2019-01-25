@@ -62,6 +62,11 @@ public class CommonServiceImpl implements CommonService {
 		Map<String,Object> searchVal = crud.searchParam(request);
 		
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		if(request.getParameter("chkauth") != null) {
+		int chkAuth = Integer.parseInt(request.getParameter("chkauth").toString());
+		searchVal.put("chkauth", chkAuth);
+		}
 		searchVal.put("siteid", siteid);
 		
 				

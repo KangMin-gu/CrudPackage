@@ -48,7 +48,6 @@ function goCustInsert(){
 }
 //고객 수정
 function goCustUpdate(){
-	debugger;
 	var custNo = $("#custno").val();
 	var urlStr = "/vc/cust/post/"+custNo;			
 	var param={};	
@@ -100,6 +99,7 @@ function vocGetCustInfo(urlStr){
         url: urlStr,
         method: "GET",
         dataType: "json",
+        cache: false,
         success: function (data) {
         	custInfoClear();//기존 입력 된 데이터 삭제
         	custInfoBinding(data);//바인딩
@@ -116,6 +116,7 @@ function vocGetServiceInfo(urlServ){
         url: urlServ,
         method: "GET",
         dataType: "json",
+        cache: false,
         success: function (data) {
         	serviceInfoBinding(data);//바인딩
         },
@@ -160,13 +161,11 @@ function custInfoBinding(data){//인풋 필드 데이터 바인딩
 }
 
 function serviceInfoBinding(data){
-	
 	opener.$('input:radio[name="servicetype"]').each(function(index){
 		if(this.value == data.SERVICETYPE){
 			opener.$('input:radio[name="servicetype"]:eq('+index+')').iCheck('check');
 		}
 	});
-	
 	opener.$('#servicecode1').val(data.SERVICECODE1);
 	opener.$('#servicecode2').val(data.SERVICECODE2);
 	opener.$('#servicename').val(data.SERVICENAME);
@@ -177,7 +176,6 @@ function serviceInfoBinding(data){
 			opener.$('input:radio[name="vocstep"]:eq('+index+')').iCheck('check');
 		}
 	});
-	
 	if(data.SERVICESTEP == 4){
 		opener.$('#reservphone').val(data.reserv.MOBILENO);
 		opener.$('#reservdate').val(formatDate(data.reserv.RESERVDATE));
@@ -189,6 +187,11 @@ function serviceInfoBinding(data){
 		opener.$('#conveyreason').val(data.convey.CONVEYREASON);
 		opener.$('#conveydesc').val(data.convey.CONVEYDESC);
 	}
+	
+	
+	opener.$('.voc').attr('readonly',true);
+	opener.$('.voc').iCheck('disable');
+	opener.$('.plus').hide();
 	
 }
 
@@ -253,3 +256,23 @@ function splitPhoneNum(phoneNum){//01로 시작하면 휴대폰에 바인딩. �
 		opener.$('#homtel3').val(phone3);
 	}	
 }
+
+$('#create').click(function(){
+	$('.voc').attr('readonly',false);
+	$('.voc').iCheck('enable');
+	$('.voc').val('');
+	$('.i-checks').iCheck('uncheck');
+	$('[name="vocstep"]:first').iCheck('check');
+	$('[name="servicetype"]:first').iCheck('check');
+});
+
+$(".plus").click(function(){
+	var cloneCount = $('.plus').length;
+	var countP = cloneCount + 1;
+    
+    $('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
+    $('.select-area .select-box:last').find('#goods'+cloneCount+1).attr('name','goods'+countP+1).attr('id','goods'+countP+1);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+2);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+3);
+    $('.select-area .select-box:last').find('#goods'+cloneCount+3).next().clone(true).removeClass('plus').addClass('minus');
+}); 

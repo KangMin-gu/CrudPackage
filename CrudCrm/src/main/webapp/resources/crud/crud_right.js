@@ -11,21 +11,26 @@ $('#save').click(function(e){
     var reservdate = $('#reservdate').val();
     var reservtimeto = $('#reservtimeto').val();
     var reservtimefrom = $('#reservtimefrom').val();
+    var nextadminowner = $('#nextadminowner').val();
+    var servicecode1 = $('#servicecode1').val();
+    var servicecode2 = $('#servicecode2').val();
+    var memo = $('#memo').val();
     var custno = $('#custno').val();
     
     var param = {"custno":custno,"servicetype":servicetype,"servicename":servicename,"servicedesc":servicedesc,"vocstep":vocstep,"nextowner":nextowner
-    		,"conveyreason":conveyreason,"conveydesc":conveydesc,"reservphone":reservphone,"reservdate":reservdate,"reservtimeto":reservtimeto,"reservtimefrom":reservtimefrom};
+    		,"conveyreason":conveyreason,"conveydesc":conveydesc,"reservphone":reservphone,"reservdate":reservdate,"reservtimeto":reservtimeto,"reservtimefrom":reservtimefrom
+    		,"nextadminowner":nextadminowner,"memo":memo,"servicecode1":servicecode1,"servicecode2":servicecode2};
 
     var goodsLength = $('.plus').length;
     
     for (i=1; i <= goodsLength;i++){
-    	var test = $('[id*="goods'+i+'1"]').attr('id');
-    	var test2 = $('[id*="goods'+i+'2"]').attr('id');
-    	var test3 = $('[id*="goods'+i+'3"]').attr('id');
+    	var goods = $('[id*="goods'+i+'1"]').attr('id');
+    	var goods2 = $('[id*="goods'+i+'2"]').attr('id');
+    	var goods3 = $('[id*="goods'+i+'3"]').attr('id');
     	
-    	param[test] = $('[id*="goods'+i+'1"]').val();
-    	param[test2] = $('[id*="goods'+i+'2"]').val();
-    	param[test3] = $('[id*="goods'+i+'3"]').val();
+    	param[goods] = $('[id*="goods'+i+'1"]').val();
+    	param[goods2] = $('[id*="goods'+i+'2"]').val();
+    	param[goods3] = $('[id*="goods'+i+'3"]').val();
     }
     
     
@@ -56,31 +61,30 @@ $('#save').click(function(e){
 	
 });
 
-function upperCode(codeGrp){
-	 var code = $('#'+codeGrp).val();
-	 var id = $('#'+codeGrp).attr('id');
-	 var url = "/code/upper"
-	 $.ajax({
- 		url: url+"?codegrp="+id+"&codeval="+code,
- 		method: "GET",
- 		dataType: "json",
- 		cache: false,
- 		success: function (data) {
- 			var text = "";
- 			$('[upper="'+codeGrp+'"] option').remove();
- 			$('[upper="'+codeGrp+'"]').append('<option label="선택" value="0"/>');
- 			for(i=0;i<data.length;i++){
- 				text = '<option label="'+data[i].codename+'" value="'+data[i].codeval+'"/>';
- 				$('[upper="'+codeGrp+'"]').append(text);
- 			}
- 		},
- 		error: function (request, status, error) {
- 			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
- 		}
- 	});
+$('.i-checks').on('ifChecked', function(event){
+	debugger;
+	var value = event.target.value;
+	var name = event.target.name;
+	if(name =='vocstep'){
+		if(value == 5 ){
+			$('.convey').show();
+			$('.adminconvey').hide();
+			$('.reservation').hide();
+		}else if(value== 6){
+			$('.convey').hide();
+			$('.adminconvey').show();
+			$('.reservation').hide();
+		}else if (value == 4){
+			$('.convey').hide();
+			$('.adminconvey').hide();
+			$('.reservation').show();
+		}else{
+			$('.convey').hide();
+			$('.adminconvey').hide();
+			$('.reservation').hide();
+		}
+	}
 	
-	
-	
-}
+});
 
 

@@ -124,12 +124,19 @@
                                         <tr>
                                             <th>접수유형</th>
                                             <td>
-                                                    <select class="form-control reset" name="servicetype" id="servicetype" value="${search.servicetype }">
-                                                    	<option value="">선택</option>
-                                                    	<option value="1" <c:if test='${search.servicetype eq 1}'>selected</c:if>>문의</option>
-                                                    	<option value="2" <c:if test='${search.servicetype eq 2}'>selected</c:if>>개선</option>
-                                                    	<option value="3" <c:if test='${search.servicetype eq 3}'>selected</c:if>>오류</option>
-                                                	</select>
+                                            	<select class="form-control reset" name="servicetype" id="servicetype" value="${search.servicetype }">
+                                                	<option value="">선택</option>
+                                                	<c:forEach var="serviceType" items="${SERVICETYPE }">
+                                                		<c:choose>
+                                                			<c:when test="${search.servicetype eq serviceType.codeval}">
+                                                				<option selected label="${serviceType.codename }" value="${serviceType.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+	                                                			<option label="${serviceType.codename }" value="${serviceType.codeval }"/>
+    	                                            		</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                               	</select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -147,12 +154,25 @@
                                         <tr>
                                             <th>접수매체</th>
                                             <td class="border-top-0">
-                                                <select class="form-control reset" name="servicechannel" id="servicechannel" value="${search.servicechannel }">
+                                            <div class="input-group">
+                                                <select class="form-control reset" name="servicecode1" id="servicecode1" value="${search.servicecode1 }">
                                             		<option value="">선택</option>
-                                                    <option value="10" <c:if test='${search.servicechannel eq 10}'>selected</c:if>>전화</option>
-                                                    <option value="20" <c:if test='${search.servicechannel eq 20}'>selected</c:if>>SMS</option>
-                                                    <option value="30" <c:if test='${search.servicechannel eq 30}'>selected</c:if>>메일</option>
+                                                    <c:forEach var="serviceCode1" items="${SERVICECODE1 }">
+                                                		<c:choose>
+                                                			<c:when test="${search.servicecode1 eq serviceCode1.codeval}">
+                                                				<option selected label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+	                                                			<option label="${serviceCode1.codename }" value="${serviceCode1.codeval }"/>
+    	                                            		</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
                                                 </select>
+                                                <select class="form-control reset" name="servicecode2" id="servicecode2" upper="servicecode1" value="${search.servicechannel }">
+                                            		<option value="">선택</option>
+                                                    
+                                                </select>
+                                            </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -275,7 +295,7 @@
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" name="icheckAll" id="icheckAll"></th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">서비스명</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수유형</th>
-                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수매체</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">상담유형</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">고객명</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">거래처명</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수일</th>
@@ -290,7 +310,7 @@
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"> ${svList.SERVICETYPE_ }</td>
-                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.SERVICECHANNEL_ }</td>
+                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.SERVICECODE_ }</td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.CUSTNAME_ }</td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.CLINAME_ }</td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.RECEPTIONDATE_ }</td>
@@ -370,5 +390,11 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 
+<script>
+
+$('#servicecode1').change(function(){
+	 upperCode('servicecode1'); 
+});
+</script>
 </body>
 </html>

@@ -57,6 +57,11 @@
 		//openNewWindow('담당자','/common/user',e.target.id,650,700);
 		openNewWindow('담당자','/popowner',e.currentTarget.id,600,500);
 	});
+	
+	$('.adminowner').click(function(e){
+		//openNewWindow('담당자','/common/user',e.target.id,650,700);
+		openNewWindow('admin담당자','/popowner?chkauth=20',e.currentTarget.id,600,500);
+	});
 	//거래처팝업
 	$('.cli').click(function(e){
 		openNewWindow('거래처','/popclient',e.currentTarget.id,650,750);
@@ -555,6 +560,30 @@
     	var day = time.getDate();
     	  return year+'-'+month+'-' + day;
     	}
+    // 상위 코드 받아서 하위코드 매핑하기
+    function upperCode(codeGrp){
+   	 var code = $('#'+codeGrp).val();
+   	 var id = $('#'+codeGrp).attr('id');
+   	 var url = "/code/upper"
+   	 $.ajax({
+    		url: url+"?codegrp="+id+"&codeval="+code,
+    		method: "GET",
+    		dataType: "json",
+    		cache: false,
+    		success: function (data) {
+    			var text = "";
+    			$('[upper="'+codeGrp+'"] option').remove();
+    			$('[upper="'+codeGrp+'"]').append('<option label="선택" value="0"/>');
+    			for(i=0;i<data.length;i++){
+    				text = '<option label="'+data[i].codename+'" value="'+data[i].codeval+'"/>';
+    				$('[upper="'+codeGrp+'"]').append(text);
+    			}
+    		},
+    		error: function (request, status, error) {
+    			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    		}
+    	});
+   }
     
     //좌측 사이드바 접기상태 변경
     $("#sideBarStatus").click(function(){

@@ -270,7 +270,7 @@ public class AuServiceImpl implements AuService{
 		Map<String, Object> sendPwdInfo = new HashMap<>();
 		
 		EmailTemplate eTemp = new EmailTemplate();
-		StringBuffer buf = eTemp.passwordResetTemple(newPwd);
+		StringBuffer buf = eTemp.passwordResetTemple(newPwd, adminUserInfo.get("USERNAME").toString());
 		//buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
 		//초기화된 비밀번호 업데이트
 		auDao.userPwdReset(resetUserDto);

@@ -72,7 +72,7 @@ public class EmailTemplate {
 				"                                <tr>\n" + 
 				"                                <tr>\r\n" + 
 				"                                    <td class=\"content-block\">");
-		buf.append("<strong>"+ usrName +"</strong>의 비밀번호가 초기화 되었습니다.");
+		buf.append("<strong>"+ usrName +"</strong>님의 비밀번호가 초기화 되었습니다.");
 		buf.append("</td>\r\n" + 
 				"                                </tr>"+
 				"                                    <td class=\"content-block\" style=\"vertical-align: top; padding: 0 0 20px;\" valign=\"top\">");		
@@ -365,7 +365,7 @@ public class EmailTemplate {
 				"                                </tr>\r\n" + 
 				"                                <tr>\r\n" + 
 				"                                    <td class=\"content-block\">");
-		buf.append("<strong>"+siteName+"</strong> 관리계정 비밀번호가 초기화되었습니다."); //사이트이름 바인딩
+		buf.append("<strong>"+siteName+"</strong> 사이트관리 계정 비밀번호가 초기화되었습니다."); //사이트이름 바인딩
 		buf.append("</td>\r\n" + 
 				"                                </tr>\r\n" + 
 				"                                <tr>\r\n" + 

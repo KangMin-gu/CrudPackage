@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -16,6 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -25,6 +31,7 @@ import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
+import saas.crud.crm.sv.dto.RewardDto;
 import saas.crud.crm.sv.dto.ServiceDto;
 import saas.crud.crm.vc.dao.VocDao;
 
@@ -65,7 +72,7 @@ public class VocServiceImpl implements VocService{
 		ServiceDto serviceDto = new ServiceDto();
 		//serviceDto.setCustno(4);
 		serviceDto.setCustno(Integer.parseInt(search.get("custno").toString()));
-		
+		int serviceType = Integer.parseInt(search.get("servicetype").toString());
 		if(search.get("servicecode1") != null) {
 			serviceDto.setServicecode1(Integer.parseInt(search.get("servicecode1").toString()));
 		}
@@ -75,7 +82,7 @@ public class VocServiceImpl implements VocService{
 		serviceDto.setSiteid(siteId);
 		serviceDto.setServicestep(1);
 		serviceDto.setServicename(search.get("servicename").toString());
-		serviceDto.setServicetype(Integer.parseInt(search.get("servicetype").toString()));
+		serviceDto.setServicetype(serviceType);
 		serviceDto.setServicedesc(search.get("servicedesc").toString());
 		serviceDto.setServiceowner(userNo);
 		serviceDto.setReguser(userNo);
@@ -88,68 +95,111 @@ public class VocServiceImpl implements VocService{
 			serviceDto.setMemo(search.get("memo").toString());
 		}
 		int serviceNo = svDao.svInsert(serviceDto);
-		
-		int vocStep = 0 ;
-		if(search.get("vocstep") == null) {
-			vocStep = 3;
-		}else {
-			vocStep = Integer.parseInt(search.get("vocstep").toString());	
-		}
+		int owner = 0;
+		// 문의 인경우
+		if(serviceType == 1) {
+			int vocStep = 0 ;
+			//vocStep이 아무것도 없는경우
+			if(search.get("vocstep") == null) {
+				vocStep = 3;
+			}else {
+				vocStep = Integer.parseInt(search.get("vocstep").toString());	
+			}
 
-		if(vocStep == 3) {
-			// 처리
-			RactDto ractDto = new RactDto();
-			ractDto.setServiceno(serviceNo);
-			ractDto.setSiteid(siteId);
-			ractDto.setRactdesc(search.get("servicedesc").toString());
-			ractDto.setRactdate(currentTime);
-			ractDto.setReguser(userNo);
-			ractDto.setEdtuser(userNo);
-			svDao.ractInsert(ractDto);
-			serviceDto.setServicestep(vocStep);
+			if(vocStep == 3) {
+				// 처리
+				RactDto ractDto = new RactDto();
+				ractDto.setServiceno(serviceNo);
+				ractDto.setSiteid(siteId);
+				ractDto.setRactdesc(search.get("servicedesc").toString());
+				ractDto.setRactdate(currentTime);
+				ractDto.setReguser(userNo);
+				ractDto.setEdtuser(userNo);
+				svDao.ractInsert(ractDto);
+				serviceDto.setServicestep(vocStep);
+				svDao.svStepUpdate(serviceDto);
+			}else if (vocStep == 4) {
+				// 상담예약
+				Map<String,Object> reserv = new HashMap();
+				reserv.put("siteid", siteId);
+				reserv.put("reguser", userNo);
+				reserv.put("edtuser", userNo);
+				reserv.put("serviceno", serviceNo);
+				reserv.put("reservphone", search.get("reservphone").toString());
+				reserv.put("reservdate", search.get("reservdate").toString());
+				reserv.put("reservtimeto", search.get("reservtimeto").toString());
+				reserv.put("reservtimefrom", search.get("reservtimefrom").toString());
+				reserv.put("complete", 0);
+				
+				svDao.svReservInsert(reserv);
+				
+				serviceDto.setServicestep(vocStep);
+				svDao.svStepUpdate(serviceDto);
+			}else if (vocStep == 5 || vocStep == 6) {
+				// 이관
+				ConveyDto conveyDto = new ConveyDto();
+				if(search.get("nextowner") != null) {
+					owner = Integer.parseInt(search.get("nextowner").toString());
+				}
+				if(search.get("nextadminowner") != null) {
+					owner = Integer.parseInt(search.get("nextadminowner").toString());
+				}
+				conveyDto.setConveydate(currentTime);
+				conveyDto.setPrevowner(userNo);
+				conveyDto.setNextowner(owner);
+				conveyDto.setConveydesc(search.get("conveydesc").toString());
+				conveyDto.setConveyreason(Integer.parseInt(search.get("conveyreason").toString()));
+				conveyDto.setReguser(userNo);
+				conveyDto.setEdtuser(userNo);
+				conveyDto.setServiceno(serviceNo);
+				conveyDto.setSiteid(siteId);
+				
+				svDao.conveyInsert(conveyDto);
+				
+				serviceDto.setServicestep(vocStep);
+				svDao.svStepUpdate(serviceDto);
+			}
+		}else if(serviceType == 2) {
+			if(search.get("asowner") != null) {
+				owner = Integer.parseInt(search.get("asowner").toString());
+			}
+			serviceDto.setServicestep(4);
 			svDao.svStepUpdate(serviceDto);
-		}else if (vocStep == 4) {
-			// 상담예약
-			Map<String,Object> reserv = new HashMap();
-			reserv.put("siteid", siteId);
-			reserv.put("reguser", userNo);
-			reserv.put("edtuser", userNo);
-			reserv.put("serviceno", serviceNo);
-			reserv.put("reservphone", search.get("reservphone").toString());
-			reserv.put("reservdate", search.get("reservdate").toString());
-			reserv.put("reservtimeto", search.get("reservtimeto").toString());
-			reserv.put("reservtimefrom", search.get("reservtimefrom").toString());
-			reserv.put("complete", 0);
+			RewardDto rewardDto = new RewardDto();
+			if(request.getParameter("visitdate") != null) {
+				rewardDto.setVisitdate(request.getParameter("visitdate").toString());	
+			}
 			
-			svDao.svReservInsert(reserv);
-			
-			serviceDto.setServicestep(vocStep);
-			svDao.svStepUpdate(serviceDto);
-		}else if (vocStep == 5 || vocStep == 6) {
-			// 이관
+			if(request.getParameter("visittime") != null) {
+				rewardDto.setVisittime(request.getParameter("visittime").toString());
+			}
+			rewardDto.setReguser(userNo);
+			rewardDto.setEdtuser(userNo);
+			rewardDto.setSiteid(siteId);
+			rewardDto.setServiceno(serviceNo);
+			rewardDto.setOwner(3);
+			rewardDto.setVisitaddr1(request.getParameter("visitaddr1").toString());
+			rewardDto.setVisitaddr2(request.getParameter("visitaddr2").toString());
+			rewardDto.setVisitaddr3(request.getParameter("visitaddr3").toString());
+			svDao.rewardInsert(rewardDto);
+
 			ConveyDto conveyDto = new ConveyDto();
-			int owner = 0;
-			if(search.get("nextowner") != null) {
-				owner = Integer.parseInt(search.get("nextowner").toString());
-			}
-			if(search.get("nextadminowner") != null) {
-				owner = Integer.parseInt(search.get("nextadminowner").toString());
-			}
 			conveyDto.setConveydate(currentTime);
 			conveyDto.setPrevowner(userNo);
 			conveyDto.setNextowner(owner);
-			conveyDto.setConveydesc(search.get("conveydesc").toString());
-			conveyDto.setConveyreason(Integer.parseInt(search.get("conveyreason").toString()));
+			String msg = "A/S 기사님에게 이관합니다.";
+			conveyDto.setConveydesc(msg);
+			if(search.get("conveyreason") != null) {
+				conveyDto.setConveyreason(Integer.parseInt(search.get("conveyreason").toString()));
+			}
 			conveyDto.setReguser(userNo);
 			conveyDto.setEdtuser(userNo);
 			conveyDto.setServiceno(serviceNo);
 			conveyDto.setSiteid(siteId);
 			
 			svDao.conveyInsert(conveyDto);
-			
-			serviceDto.setServicestep(vocStep);
-			svDao.svStepUpdate(serviceDto);
 		}
+		
 		int cnt = 0;
 		Map<String,Object> map = new HashMap();
 		TreeMap<String,Object> treeMap = new TreeMap<String,Object>(search);
@@ -200,6 +250,32 @@ public class VocServiceImpl implements VocService{
 			serviceMap = new HashMap<>();
 		}
 		return serviceMap;
+	}
+
+	@Override
+	public ModelAndView vocCalList(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		ModelAndView mView = new ModelAndView();
+		RewardDto rewardDto = new RewardDto();
+		
+		
+		rewardDto.setSiteid(siteId);
+		
+		List<Map<String,Object>> rewardOwnerList = svDao.svRewardOwner(rewardDto);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rewardOwnerList);
+		} catch (JsonProcessingException e) {
+			
+			e.printStackTrace();
+		}
+		
+		mView.addObject("schList",jsonStr);//캘린더 스케쥴
+		mView.addObject("svSchList",rewardOwnerList);//캘린더 틀 목록.
+
+		return mView;
 	}
 	
 }

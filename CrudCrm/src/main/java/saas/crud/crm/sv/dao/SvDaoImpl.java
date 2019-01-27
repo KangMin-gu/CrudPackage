@@ -142,5 +142,11 @@ public class SvDaoImpl implements SvDao{
 		Map<String,Object> svTopConvey = session.selectOne("sv.topConvey",param);
 		return svTopConvey;
 	}
+	@Override
+	public List<Map<String, Object>> svRewardOwner(RewardDto rewardDto) {
+
+		List<Map<String,Object>> svRewardOwner = session.selectList("sv.rewardOwner",rewardDto);
+		return svRewardOwner;
+	}
 	
 }

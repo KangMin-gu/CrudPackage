@@ -11,7 +11,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>INSPINIA | Article</title>
+<title>CRUD SYSTEM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 </head>
@@ -387,7 +387,7 @@
                             <tr>
                                 <th>상담구분</th>
                                 <td>
-                                    <div class="i-checks">
+                                    <div class="i-checks servicetype">
                                     	<c:forEach var="serviceType" items="${SERVICETYPE }">
                                     		<label class="mr-2 mb-0"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
                                         </c:forEach>
@@ -489,7 +489,41 @@
                                     <textarea name="servicedesc" id="servicedesc" class="form-control voc" style="height: 200px; resize: none;"></textarea>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="as">
+                            	<th>방문일시</th>
+                            	<td>
+                            		<div class="input-group date" data-autoclose="true">
+                            			<span class="input-group-addon">
+                                    		<span class="fa fa-calendar"></span>
+                                		</span>
+                                		<input type="text" class="form-control date voc" name="visitdate" id="visitdate" value="">
+                            		</div>
+                            	</td>
+                            	<th>방문 기사</th>
+                            	<td>
+                            		<div class="input-group asowner" id="asowner_">
+                            			<input type="text" class="form-control voc" autocomplete="off" name="asowner_" value="">
+                                        <input type="hidden" name="asowner" class="voc" id="asowner" value="">
+                                        <span class="input-group-addon">
+                                        	<a><i class="fa fa-search"></i></a>
+                                        </span>
+                                	</div>
+                                </td>
+                            </tr>
+                            <tr class="as">
+                            	<th>방문지 주소</th>
+                            	<td colspan="3">
+            						<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
+            							<input type="text" class="form-control custInput daumzip voc" name="visitaddr1" id="visitaddr1" readonly>
+            							<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a></span>
+            						</div>
+            						<input type="text" class="form-control float-left mr-2 custInput voc" name="visitaddr2" id="visitaddr2" readonly style="width: 220px;">
+            						<input type="text" class="form-control float-left custInput voc" name="visitaddr3" id="visitaddr3" style="width: 220px;">
+            						<input type="radio" class="i-checks" value="" id="addrsame" name="addrsame">
+            						<label>고객주소와 동일</label>
+                                </td>                                
+                            </tr>
+                            <tr class="result">
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks">
@@ -648,6 +682,7 @@ $(document).ready(function () {
 	$('.convey').hide();
 	$('.adminconvey').hide();
 	$('.reservation').hide();
+	$('.as').hide();
 });
  
  $('#servicecode1').change(function(){

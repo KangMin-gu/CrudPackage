@@ -276,3 +276,9 @@ $(".plus").click(function(){
     $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+3);
     $('.select-area .select-box:last').find('#goods'+cloneCount+3).next().clone(true).removeClass('plus').addClass('minus');
 }); 
+
+
+$('.asowner').click(function(e){
+	//openNewWindow('담당자','/common/user',e.target.id,650,700);
+	openNewWindow('AS기사','/vc/voc/cal',e.currentTarget.id,900,500);
+});

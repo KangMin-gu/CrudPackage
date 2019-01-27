@@ -201,6 +201,17 @@ $('.complete').click(function(e){
 });
 
 
+$('.i-checks').on('ifChecked', function(event){
+	var value = event.target.value;
+	var name = event.target.name;
+	if(name=="addrsame"){
+		$('#visitaddr1').val($('#homaddr1').val());
+		$('#visitaddr2').val($('#homaddr2').val());
+		$('#visitaddr3').val($('#homaddr3').val());
+	}
+});
+
+
 if($('#calendar').length > 0){
 	var schList= $('#schList').val();//hidden value에 담겨있는 스케쥴 리스트를 받아온다.(json String) 
 /* initialize the calendar
@@ -208,6 +219,8 @@ if($('#calendar').length > 0){
  	var url = window.location.pathname;
 
  	$('#calendar').fullCalendar({
+ 		
+ 		
 	
 		header: {//캘린더 프레임 헤더설정
 			left: 'prev,next today',//저번달, 다음달, 오늘로이동
@@ -233,6 +246,11 @@ if($('#calendar').length > 0){
 		timeFormat : "HH:mm",
 
 		eventRender: function(event, element){
+			
+			if(event.end == null){
+				event.end = event.start;
+				event.end._i = event.start._i;
+			}
 		
           	element.popover({
         	  	placement:'top',

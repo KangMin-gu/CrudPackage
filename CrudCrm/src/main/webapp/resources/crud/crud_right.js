@@ -1,6 +1,8 @@
 $('#save').click(function(e){
 
-	var servicetype = $("#servicetype").val();
+	
+	
+	var servicetype = $('.servicetype .checked input').val();
 	var servicename= $("#servicename").val();
     var servicedesc = $("#servicedesc").val();
     var vocstep = $('.check:checked').val();
@@ -16,10 +18,19 @@ $('#save').click(function(e){
     var servicecode2 = $('#servicecode2').val();
     var memo = $('#memo').val();
     var custno = $('#custno').val();
+    var asowner = $('#asowner').val();
+    var visitdate = $('#visitdate').val();
+    var visittime = $('#visittime').val();
+    debugger;
+    var visitaddr1 = $('#visitaddr1').val();
+    var visitaddr2 = $('#visitaddr2').val();
+    var visitaddr3 = $('#visitaddr3').val();
+    
     
     var param = {"custno":custno,"servicetype":servicetype,"servicename":servicename,"servicedesc":servicedesc,"vocstep":vocstep,"nextowner":nextowner
     		,"conveyreason":conveyreason,"conveydesc":conveydesc,"reservphone":reservphone,"reservdate":reservdate,"reservtimeto":reservtimeto,"reservtimefrom":reservtimefrom
-    		,"nextadminowner":nextadminowner,"memo":memo,"servicecode1":servicecode1,"servicecode2":servicecode2};
+    		,"nextadminowner":nextadminowner,"memo":memo,"servicecode1":servicecode1,"servicecode2":servicecode2,"asowner":asowner
+    		,"visitdate":visitdate,"visittime":visittime,"visitaddr1":visitaddr1,"visitaddr2":visitaddr2,"visitaddr3":visitaddr3};
 
     var goodsLength = $('.plus').length;
     
@@ -32,7 +43,6 @@ $('#save').click(function(e){
     	param[goods2] = $('[id*="goods'+i+'2"]').val();
     	param[goods3] = $('[id*="goods'+i+'3"]').val();
     }
-    
     
     /*
     var d = [];
@@ -62,7 +72,6 @@ $('#save').click(function(e){
 });
 
 $('.i-checks').on('ifChecked', function(event){
-	debugger;
 	var value = event.target.value;
 	var name = event.target.name;
 	if(name =='vocstep'){
@@ -83,8 +92,22 @@ $('.i-checks').on('ifChecked', function(event){
 			$('.adminconvey').hide();
 			$('.reservation').hide();
 		}
+	}else if(name=="servicetype"){
+		if(value == 1){
+			$('.result').show();
+			$('.as').hide();
+		}else if(value == 2){
+			$('.convey').hide();
+			$('.adminconvey').hide();
+			$('.reservation').hide();
+			$('.result').hide();
+			$('.as').show();
+		}
+	}else if(name=="addrsame"){
+		$('#visitaddr1').val($('#homaddr1').val());
+		$('#visitaddr2').val($('#homaddr2').val());
+		$('#visitaddr3').val($('#homaddr3').val());
 	}
-	
 });
 
 

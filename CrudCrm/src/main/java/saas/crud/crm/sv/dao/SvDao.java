@@ -59,5 +59,6 @@ public interface SvDao {
 	// voc 최근 이관 한건
 	public Map<String,Object> svTopConvey(Map<String,Object> param);
 	
+	public List<Map<String,Object>> svRewardOwner(RewardDto rewardDto);
 
 }

@@ -362,11 +362,25 @@
                                     <tbody>
                                         <tr>
                                             <th>담당자</th>
-                                            <td>${serviceInfo.OWNER_ }</td>
+                                            <td>${rewardInfo.OWNER_ }</td>
                                         </tr>
                                         <tr>
                                             <th>????</th>
                                             <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-12 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>방문지 주소</th>
+                                            <td>${rewardInfo.VISITADDR_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>

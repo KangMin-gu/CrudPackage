@@ -22,12 +22,17 @@ public class RewardDto {
 	private int edtuser;
 	private int siteid;
 	private List<MultipartFile> rewardfile; //Spring 에서 파일 업로드 처리하기 위해
+	private String visitaddr1;
+	private String visitaddr2;
+	private String visitaddr3;
+	private int owner;
 	
 	public RewardDto() {}
 
 	public RewardDto(int rewardno, int serviceno, String visitdate, String visittime, int rewardtype, int causecode,
 			int delaytype, String rewarddesc, String delaydesc, String filesearchkey, String regdate, int reguser,
-			String edtdate, int edtuser, int siteid, List<MultipartFile> rewardfile) {
+			String edtdate, int edtuser, int siteid, List<MultipartFile> rewardfile, String visitaddr1,
+			String visitaddr2, String visitaddr3, int owner) {
 		super();
 		this.rewardno = rewardno;
 		this.serviceno = serviceno;
@@ -45,6 +50,10 @@ public class RewardDto {
 		this.edtuser = edtuser;
 		this.siteid = siteid;
 		this.rewardfile = rewardfile;
+		this.visitaddr1 = visitaddr1;
+		this.visitaddr2 = visitaddr2;
+		this.visitaddr3 = visitaddr3;
+		this.owner = owner;
 	}
 
 	public int getRewardno() {
@@ -175,7 +184,38 @@ public class RewardDto {
 		this.rewardfile = rewardfile;
 	}
 
-	
+	public String getVisitaddr1() {
+		return visitaddr1;
+	}
+
+	public void setVisitaddr1(String visitaddr1) {
+		this.visitaddr1 = visitaddr1;
+	}
+
+	public String getVisitaddr2() {
+		return visitaddr2;
+	}
+
+	public void setVisitaddr2(String visitaddr2) {
+		this.visitaddr2 = visitaddr2;
+	}
+
+	public String getVisitaddr3() {
+		return visitaddr3;
+	}
+
+	public void setVisitaddr3(String visitaddr3) {
+		this.visitaddr3 = visitaddr3;
+	}
+
+	public int getOwner() {
+		return owner;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
+	}
+		
 }
 	
 	

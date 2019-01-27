@@ -204,7 +204,7 @@ public class SvServiceImpl implements SvService{
 				ractDto.setServiceno(serviceNo);
 				ractDto.setReguser(userNo);
 				svDao.ractInsert(ractDto);
-				serviceDto.setServicestep(4);
+				serviceDto.setServicestep(3);
 				svDao.svStepUpdate(serviceDto);
 			}
 		}
@@ -230,7 +230,7 @@ public class SvServiceImpl implements SvService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		int serviceNo = 0;
-		String sCheck[] = request.getParameterValues("rcvno");
+		String sCheck[] = request.getParameterValues("serviceno");
 		
 		ServiceDto serviceDto = new ServiceDto();
 		

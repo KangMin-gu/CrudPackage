@@ -120,6 +120,9 @@
                                             <th class="border-top-0">고객주소</th>
                                             <td class="border-top-0">
                                             	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
+                                           		<input type="hidden" class="form-control" name="custno" id="homaddr1" value="${serviceInfo.HOMADDR1 }">
+                                           		<input type="hidden" class="form-control" name="custno" id="homaddr2" value="${serviceInfo.HOMADDR2 }">
+                                           		<input type="hidden" class="form-control" name="custno" id="homaddr3" value="${serviceInfo.HOMADDR3 }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -489,6 +492,29 @@
                                                     </span>
                                                 </div>
                                             </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-12 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>방문지 주소</th>
+                            				<td>
+            									<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
+            										<input type="text" class="form-control daumzip" name="visitaddr1" id="visitaddr1" readonly>
+            										<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a></span>
+            									</div>
+            									<input type="text" class="form-control float-left mr-2" name="visitaddr2" id="visitaddr2" readonly style="width: 220px;">
+            									<input type="text" class="form-control float-left" name="visitaddr3" id="visitaddr3" style="width: 220px;">
+            									<input type="radio" class="i-checks" value="" id="addrsame" name="addrsame">
+            									<label>고객주소와 동일</label>
+                                			</td>
                                         </tr>
                                     </tbody>
                                 </table>

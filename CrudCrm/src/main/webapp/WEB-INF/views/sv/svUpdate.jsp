@@ -119,6 +119,9 @@
                                             <th class="border-top-0">고객주소</th>
                                             <td class="border-top-0">
                                             	<input type="text" class="form-control" disabled name="custaddress" id="custaddress" value="${serviceInfo.CUSTADDRESS }">
+                                            	<input type="hidden" class="form-control" name="custno" id="homaddr1" value="${serviceInfo.HOMADDR1 }">
+                                           		<input type="hidden" class="form-control" name="custno" id="homaddr2" value="${serviceInfo.HOMADDR2 }">
+                                           		<input type="hidden" class="form-control" name="custno" id="homaddr3" value="${serviceInfo.HOMADDR3 }">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -481,6 +484,29 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="box1 col-lg-12 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>방문지 주소</th>
+                            				<td>
+            									<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
+            										<input type="text" class="form-control daumzip reward" name="visitaddr1" id="visitaddr1" value="${rewardInfo.VISITADDR1 }" readonly>
+            										<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a></span>
+            									</div>
+            									<input type="text" class="form-control float-left mr-2 reward" name="visitaddr2" id="visitaddr2" value="${rewardInfo.VISITADDR2 }" readonly style="width: 220px;">
+            									<input type="text" class="form-control float-left reward" name="visitaddr3" id="visitaddr3" value="${rewardInfo.VISITADDR3 }" style="width: 220px;">
+            									<input type="radio" class="i-checks reward" value="" id="addrsame" name="addrsame">
+            									<label>고객주소와 동일</label>
+                                			</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="box4 col-lg-12 col-xl-12 p-0">
                                 <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
@@ -724,12 +750,14 @@
 				
 				$('.service').prop("disabled",true);
 				$('.reward').prop("disabled",true);
+				$('.reward').iCheck('disable');
 				
 			}else if(step == 4){
 				$('#servicedesc').summernote('disable');
 				$('#rewarddesc').summernote('disable');
 				$('.service').prop("disabled",true);
 				$('.reward').prop("disabled",true);
+				$('.reward').iCheck('disable');
 				$('.ract').prop("disabled",true);
 			}
 			

@@ -180,6 +180,11 @@ public class VocController {
 		
 		return custno;
 	}
-	
+	@RequestMapping(value="/vc/voc/cal", method=RequestMethod.GET)
+	public ModelAndView vocCalList(HttpServletRequest request) {
+		ModelAndView mView = vcService.vocCalList(request);
+		mView.setViewName("vc/calendar/vocCalMain");
+		return mView;
+	}
 
 }

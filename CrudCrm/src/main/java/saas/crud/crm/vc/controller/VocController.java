@@ -169,7 +169,7 @@ public class VocController {
 		return custno;
 	}
 	
-	//VOC -  탭 서비스 리스트	
+	//VOC -  좌측탭 서비스 리스트	
 	@RequestMapping(value="/vc/tab/sv",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String,Object> authvocTabServiceList(HttpServletRequest request) {
@@ -177,5 +177,25 @@ public class VocController {
 		return svMap;
 	}
 	
-
+	//VOC -  좌측탭 email 리스트	
+	@RequestMapping(value="/vc/tab/email",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocTabEmailList(HttpServletRequest request) {
+		Map<String,Object> emailMap = vcService.svcVocTabEmailList(request);
+		return emailMap;
+	}
+	//VOC - 좌측탭 - 윈도우 팝업 email 상세 
+	@RequestMapping(value="/vc/tab/email/view/{custno}",method=RequestMethod.GET)
+	public ModelAndView authvocTabEmailList(HttpServletRequest request,@PathVariable int custno) {
+		Map<String,Object> prmMap = new HashMap<String,Object>();
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		prmMap.put("siteid", siteid);
+		prmMap.put("custno", custno);
+		
+		Map<String,Object> emailDetailMap = vcService.svcVocTabEmailDetail(prmMap);
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("emailDetailMap",emailDetailMap);
+		mView.setViewName("vc/pop/emaildetail");
+		return mView;
+	}
 }

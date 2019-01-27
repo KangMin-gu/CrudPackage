@@ -160,8 +160,7 @@ $(document).ready(function() {
 			if(url.indexOf("pop") != -1){
 				self.close();
 				alert("전송되었습니다.")
-			}
-	
+			}	
 	});
 	</script>
 </body>

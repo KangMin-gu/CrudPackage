@@ -13,4 +13,7 @@ public interface VocService {
 
 	public Map<String,Object> svcVocPopCustSelect(Map<String,Object> prm);
 	public Map<String,Object> svcVocTabServiceList(HttpServletRequest request);
+	public Map<String,Object> svcVocTabEmailList(HttpServletRequest request);
+	public Map<String,Object> svcVocTabEmailDetail(Map<String,Object> prm);
+	
 }

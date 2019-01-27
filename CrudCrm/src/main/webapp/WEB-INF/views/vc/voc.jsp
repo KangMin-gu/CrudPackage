@@ -69,8 +69,6 @@
         <div class="wrapper wrapper-content">
             <div class="ibox clearfix">
                 <div class="ibox-left">
-                	<div class="ibox-content text-right" id="regDiv"></div>
-                
                     <div class="ibox-content left-cont pt-0">
                         <table class="table table-bordered mb-2">
                             <colgroup>
@@ -156,26 +154,34 @@
                             	
                             </tbody>
                         </table>
+                        
+                        <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                            <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                             	<span id="regSpan"></span> 
+                            </div>                                       
+                            <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
+								<button class="btn btn-primary btn-sm">SMS 발송</button>
+                            	<button class="btn btn-primary btn-sm">블랙추가</button>	
+                         	</div>
+                         </div>
+                        
                     </div>
                     <div class="ibox-content bot-cont">
-                        <div class="btn-area text-right">
-                            <button class="btn btn-primary btn-sm">SMS 발송</button>
-                            <button class="btn btn-primary btn-sm">블랙추가</button>
-                        </div>
+                        
                         <div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li><a class="nav-link active" data-toggle="tab" href="#tab1">상담이력</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">영업</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab2">강성고객이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab3">콜백이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab4">SMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab5">MMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab6">LMS</a></li>
-                                <li><a class="nav-link" data-toggle="tab" href="#tab7">이메일</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetVocEmail(1);" data-toggle="tab" href="#tab7">이메일</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" id="tab1" class="tab-pane active">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시1</th>
@@ -188,22 +194,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab2" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시2</th>
@@ -227,11 +227,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab3" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시3</th>
@@ -255,11 +258,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab4" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시4</th>
@@ -283,11 +289,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab5" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시5</th>
@@ -311,11 +320,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab6" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시6</th>
@@ -339,34 +351,29 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab7" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시7</th>
-                                                    <th>상담구분</th>
-                                                    <th>상담유형</th>
-                                                    <th>접수자</th>
-                                                    <th>고객명</th>
-                                                    <th>접수제품</th>
-                                                    <th>처리자</th>
+                                                	<th>제목</th>
+                                                    <th>수신 주소</th>
+                                                    <th>발신 주소</th>
+                                                    <th>발송 일시</th>
+                                                    <th>수신 형태</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                             </div>

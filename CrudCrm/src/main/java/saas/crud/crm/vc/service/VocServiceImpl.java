@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -153,12 +154,74 @@ public class VocServiceImpl implements VocService{
 		return serviceNo;
 	}
 	
-	//VOC 1탭 - 서비스 리스트
+	//VOC 좌측 탭 - 서비스 리스트
 	@Override
 	public Map<String,Object> svcVocTabServiceList(HttpServletRequest request){
-		
-		
-		return null;
+		Map<String, Object> searchVal = crud.searchParam(request);
+
+		//총자료수
+		int totalRows = svDao.svServiceTotalRows(searchVal);
+							
+		//paging			
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+		page.put("totalRows", totalRows);					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+					
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+					
+		//서비스 리스트 출력
+		List<Map<String,Object>> svList = svDao.svList(searchVal);
+				
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("svList", svList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+							
+		return resMap;
+	}
+
+	//VOC 좌측 탭 EMAIL 리스트
+	@Override
+	public Map<String, Object> svcVocTabEmailList(HttpServletRequest request) {
+		Map<String, Object> searchVal = crud.searchParam(request);
+
+		//총자료수
+		int totalRows = vcDao.emailListCnt(searchVal);
+							
+		//paging			
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+		page.put("totalRows", totalRows);					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+					
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+					
+		//이메일 리스트 출력
+		List<Map<String,Object>> emailList = vcDao.emailList(searchVal);
+				
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("emailList", emailList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+							
+		return resMap;
+	}
+	//VOC 좌측 텝 - 이메일 상세 
+	@Override
+	public Map<String, Object> svcVocTabEmailDetail(Map<String, Object> prm) {
+		Map<String,Object> emailMap = vcDao.vocEmailDetail(prm);
+		return emailMap;
 	}
 	
 }

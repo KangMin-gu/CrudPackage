@@ -9,6 +9,11 @@ $(".dataCancle").click(function(e){
 	$('#'+hiddenTarget).val('0');
 });
 
+$("#custRegBtn").click(function(e){
+	custFormActivation('insert');
+	window.close();
+});
+
 //인입 된 번호로 고객 검색.
 function enterkey(event) {
 	debugger;
@@ -87,59 +92,116 @@ function custDataToJson(param){//고객 인풋 필드 데이터 json형식 변�
 
 
 //********좌측 탭 *************************************************************************************************
-function tabTargetState(pageNum){
+function tabTargetVocService(pageNum){//서비스탭
 	debugger;
-	var salesNo = $('#salesno').val();
-	var state = $('#state').val();
-	var urlStr = '/sales/view/tab/state?salesno='+salesNo+'&pageNum='+pageNum+'&state='+state;
-    $.ajax({
-        url: urlStr,
-        method: "GET",
-        dataType: "json",
-        cache: false,
-        success: function (data) {
-        	debugger;
-        	$('#tab1 tbody tr').remove();
-        	$('#tab1 .pagination li').remove();
-        	
-        	var length = data.stateList.length;
-        	var html ="";
-        	for (var i = 0; i < length; i++) {
-        		html = '<tr><td>' + data.stateList[i].ENTDATE + '</td><td>' + data.stateList[i].PRESTATE + '</td><td>' + data.stateList[i].STATE + '</td><td>' + data.stateList[i].MODREASON + '</td><td>' + data.stateList[i].PROB + '</td><td>' + data.stateList[i].USERNAME + '</td></tr>';
-        		$('#tab2 tbody').append(html);
-        	}
-        	var html2= "";
-        	
-        	if (data.page.startPageNum != 1) {
-                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetState(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
-            } else {
-                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
-            }
-            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
-                if (i == data.page.pageNum) {
-                    html2 += '<li class="footable-page active"><a onclick="tabTargetState(' + i + ')">'+i+'</a></li>'
-                } else {
-                    html2 += '<li><a onclick="tabTargetState(' + i + ')">'+i+'</a></li>'
-                }
-            }
-            if (data.page.endPageNum < data.page.totalPageCount) {
-                html2 += '<li><a onclick="tabTargetState(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
-            } else {
-                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
-            }
-            
-            if(length != 0){
-            	$('#tab2 .pagination').append(html2);
-            }
-        },
-        error: function (request, status, error) {
-            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        }
-    });
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/sv?custno='+custNo;
+	
+	if(custNo != 0 ){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#tab1 tbody tr').remove();
+	        	$('#tab1 .pagination li').remove();
+	        	
+	        	var length = data.svList.length;
+	        	var html ="";
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICENAME + '</td><td>' + data.svList[i].SERVICECHANNEL + '</td><td>' + data.svList[i].SERVICEOWNER + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>' + data.svList[i].USERNAME + '</td></tr>';
+	        		$('#tab1 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetVocService(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetVocService(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetVocService(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab1 .pagination').append(html2);
+	            }
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+    
 }	
 
 
-
+function tabTargetVocEmail(pageNum){//email 탭 
+	debugger;
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/email?custno='+custNo;
+	
+	if(custNo != 0){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#tab7 tbody tr').remove();
+	        	$('#tab7 .pagination li').remove();
+	        	var emailId = "";
+	        	var length = data.emailList.length;
+	        	var html ="";
+	        	var hrefStr = '/vc/tab/email/view/';        	
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','"+hrefStr+data.emailList[i].CUSTNO+"','voc',800,700);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOMAIL + '</td><td>' + data.emailList[i].FROMMAIL + '</td><td>' + data.emailList[i].RLTDATE + '</td><td>' + data.emailList[i].MIDEATYPE + '</td></tr>';
+	        		console.log(html);
+	        		$('#tab7 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocEmail(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetVocEmail(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetVocEmail(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetVocEmail(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab7 .pagination').append(html2);
+	            }
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+    
+}	
 
 
 //********고객 팝업 관련************************************************************************************************* 
@@ -150,9 +212,12 @@ function vocCustSelected(tr){//tr이 클릭 이벤트
 	var urlStr = "/vc/pop/cust/"+custno;
 	var statusStr = 'update';
 	vocGetCustInfo(urlStr);//정보획득 후 데이터 바인딩.
+	custFormActivation('update');//수정 버튼생성.
+	
+	opener.$('#tab1Btn').trigger('click');
 	
 	setTimeout(function(){
-		custFormActivation('update');//수정 버튼생성.
+		window.close();
 	},300);
 }
 
@@ -215,21 +280,21 @@ function custFormActivation(statusStr,fromStr){
 	var btnStr = "";
 	if(statusStr == 'insert'){
 		custInfoClear();
-		btnStr = "<Button type='button' class='btn btn-primary' onClick='goCustInsert()'>고객 등록</Button>";
+		btnStr = "<Button type='button' class='btn btn-primary btn-sm' onClick='goCustInsert()'>고객 등록</Button>";
 		var phoneNum = opener.$('#phone').val(); //인입된 전화번호
 		splitPhoneNum(phoneNum);//3자리로 자른 후 핸드폰번호에 바인딩 
 		
 	}else if (statusStr == 'update'){
-		btnStr = "<Button type='button' class='btn btn-primary' onClick='goCustUpdate()'>고객 수정</Button>";
+		btnStr = "<Button type='button' class='btn btn-primary btn-sm' onClick='goCustUpdate()'>고객 수정</Button>";
 	}
 	if(fromStr == "voc"){//호출한 곳이 voc 페이지면
-		$('#regDiv').empty();
-		$('#regDiv').html(btnStr);
+		$('#regSpan').empty();
+		$('#regSpan').html(btnStr);
 	}else{//팝업
-		opener.$('#regDiv').empty();
-		opener.$('#regDiv').html(btnStr);
+		opener.$('#regSpan').empty();
+		opener.$('#regSpan').html(btnStr);
 	}
-	window.close();
+	
 }
 
 function splitPhoneNum(phoneNum){//01로 시작하면 휴대폰에 바인딩. 그 외 집전화에 바인딩

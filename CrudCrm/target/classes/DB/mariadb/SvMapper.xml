@@ -501,5 +501,74 @@
 		)
 		
 	</insert>
+	<!-- voc tab 이메일리스트 카운트-->
+	<select id="emailListCnt" parameterType="hashMap" resultType="int">
+	SELECT COUNT(*)
+	FROM SYS980010
+	WHERE 
+		SITEID = #{siteid}
+		AND RESERV = 0
+		<if test="custno != null and custno != 0">
+		AND CUSTNO = #{custno}
+		</if>
+	</select>
+	<!-- voc tab 이메일리스트 -->
+	<select id="emailList" parameterType="hashMap" resultType="hashMap">
+	SELECT * 
+	FROM (
+			SELECT 
+			A.EMAILLOGID, A.CUSTNO,A.CSTNAME, A.USERNAME, A.FROMEMAIL,A.TOEMAIL, A.SUBJECT
+			,A.FILESEARCHKEY, A.RLTDATE, A.EMAILTYPE 
+			,CASE WHEN IFNULL(A.CAMPNO,0) != 0 
+			THEN CONCAT('[캠페인]',B.CAMPNAME)
+			WHEN IFNULL(A.NOTICENO,0) != 0
+			THEN '내부통지'
+			ELSE ''
+			END AS MEDIATYPE
+			, @RNUM:=@RNUM + 1 AS ROWNUM
+			
+			FROM SYS980010 A
+			LEFT OUTER JOIN CP400010 B ON A.CAMPNO = B.CAMPNO
+			,(SELECT @RNUM := 0) R
+			WHERE 
+				A.SITEID = #{siteid}
+				AND A.RESERV = 0
+				<if test="custno != null and custno != 0">
+				AND A.CUSTNO = #{custno}
+				</if>
+		) X
+	<if test="endRowNum != null">
+	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</if> 
+	ORDER BY RLTDATE DESC 
+	</select>
+	
+	<!-- VOC EMAIL 상세 -->
+	<select id="vocEmailDetail" parameterType="hashMap" resultType="hashMap">
+	SELECT * 
+	FROM (	
+		SELECT 
+		A.EMAILLOGID, A.CUSTNO,A.CSTNAME, A.USERNAME, A.FROMEMAIL, A.TOEMAIL, A.SUBJECT
+		,A.FILESEARCHKEY, A.RLTDATE, A.EMAILTYPE
+		,CASE WHEN IFNULL(A.CAMPNO,0) != 0 
+			THEN CONCAT('[캠페인]',B.CAMPNAME)
+			WHEN IFNULL(A.NOTICENO,0) != 0
+			THEN '내부통지'
+			ELSE ''
+			END AS MEDIATYPE
+		, @RNUM:=@RNUM + 1 AS ROWNUM
+			
+		FROM SYS980010 A
+		LEFT OUTER JOIN CP400010 B ON A.CAMPNO = B.CAMPNO
+		,(SELECT @RNUM := 0) R
+	
+		WHERE 
+			A.SITEID = #{siteid}
+			<if test="custno != null and custno != 0 " >
+			AND A.CUSTNO = #{custno}
+			</if>
+		) X 
+		
+	</select>
 	
 </mapper>

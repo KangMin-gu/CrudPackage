@@ -135,7 +135,7 @@ public class CustServiceImpl implements CustService {
 		return custno;//상세 페이지 이동을 위해 생성된 pk값 리턴 
 	}
 
-	//고객 수정 - form 화면에 바인딩 할 데이터 전달 
+	//고객 수정폼 - form 화면에 바인딩 할 데이터 전달 
 	public Map<String,Object> svcCustDetailForm(int custno){
 		Map<String,Object> map = custDao.custDetailForm(custno);
 		return  map;
@@ -157,6 +157,13 @@ public class CustServiceImpl implements CustService {
 				custDao.mergeCliCust(custDto);
 			}	
 			return custno;
+	}
+	
+	//VOC 에서 고객 수정
+	@Override
+	public int svcVocCustUpdate(Map<String,Object> prmMap) {
+		int res = custDao.vocCustUpdate(prmMap); 
+		return res;
 	}
 	
 	//고객 상세 탭 - 캠페인 리스트

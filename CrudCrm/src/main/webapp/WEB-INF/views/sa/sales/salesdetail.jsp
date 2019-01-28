@@ -403,8 +403,8 @@
 													<tbody></tbody>
 												</table>
 												<div class="m-auto" style="float:center;">
-												<ul class="pagination"></ul>
-											</div>	
+													<ul class="pagination"></ul>
+												</div>	
 											</div>
 										</div>
 										

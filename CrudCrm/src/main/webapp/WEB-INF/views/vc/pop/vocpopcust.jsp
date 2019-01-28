@@ -67,7 +67,7 @@ body {
 						</form:form>
 					</div>
 					<div class="col-mg-12 p-0 text-right" style="margin-bottom: 10px;">
-						<button class="btn btn-primary" onClick="custFormActivation('insert');">신규 등록</button>
+						<button class="btn btn-primary" type="button" id="custRegBtn">신규 등록</button>
 						<input type="hidden" id="parentid" name="parentid" value="" />		
 					</div>
 					<div class="overflow-x w-100">

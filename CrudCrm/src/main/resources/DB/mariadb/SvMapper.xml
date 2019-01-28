@@ -15,7 +15,7 @@
 			, (SELECT CLINAME FROM sa200010 WHERE CLINO = A.CLINO) AS CLINAME_
 			, DATE_FORMAT(A.RECEPTIONDATE,'%Y-%m-%d') AS RECEPTIONDATE_
 			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.SERVICEOWNER) AS SERVICEOWNER_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_
+			, IFNULL( (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) ,'') AS OWNER_ 
 			, FN_GETCODE('SERVICESTEP',A.SERVICESTEP,1) AS SERVICESTEP_
 			, FN_GETCODE('SERVICETYPE',A.SERVICETYPE,1) AS SERVICETYPE_
 			, @RNUM:=@RNUM + 1 AS ROWNUM
@@ -515,6 +515,112 @@
 		,#{siteid}
 		)
 	</insert>
+	<!-- voc tab 이메일리스트 카운트-->
+	<select id="emailListCnt" parameterType="hashMap" resultType="int">
+	SELECT COUNT(*)
+	FROM SYS980010
+	WHERE 
+		SITEID = #{siteid}
+		AND RESERV = 0
+		<if test="custno != null and custno != 0">
+		AND CUSTNO = #{custno}
+		</if>
+	</select>
+	<!-- voc tab 이메일리스트 -->
+	<select id="emailList" parameterType="hashMap" resultType="hashMap">
+	SELECT * 
+	FROM (
+			SELECT 
+			A.EMAILLOGID, A.CUSTNO,A.CSTNAME, A.USERNAME, A.FROMEMAIL,A.TOEMAIL, A.SUBJECT
+			,A.FILESEARCHKEY, A.EMAILTYPE
+			,DATE_FORMAT(A.RLTDATE,'%Y-%m-%d') AS RLTDATE_ 
+			,CASE WHEN IFNULL(A.CAMPNO,0) != 0 
+			THEN CONCAT('[캠페인]',B.CAMPNAME)
+			WHEN IFNULL(A.NOTICENO,0) != 0
+			THEN '내부통지'
+			ELSE ''
+			END AS MEDIATYPE
+			, @RNUM:=@RNUM + 1 AS ROWNUM
+			
+			FROM SYS980010 A
+			LEFT OUTER JOIN CP400010 B ON A.CAMPNO = B.CAMPNO
+			,(SELECT @RNUM := 0) R
+			WHERE 
+				A.SITEID = #{siteid}
+				AND A.RESERV = 0
+				<if test="custno != null and custno != 0">
+				AND A.CUSTNO = #{custno}
+				</if>
+		) X
+	<if test="endRowNum != null">
+	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</if> 
+	ORDER BY RLTDATE DESC 
+	</select>
+	
+	<!-- VOC EMAIL 상세 -->
+	<select id="vocEmailDetail" parameterType="hashMap" resultType="hashMap">		
+	SELECT 
+	A.EMAILLOGID, A.CUSTNO,A.CSTNAME, A.USERNAME, A.FROMEMAIL, A.TOEMAIL, A.SUBJECT
+	,A.CONTENT
+	,A.FILESEARCHKEY
+	,DATE_FORMAT(A.RLTDATE,'%Y-%m-%d') AS RLTDATE_
+	,A.EMAILTYPE
+	,CASE WHEN IFNULL(A.CAMPNO,0) != 0 
+		THEN CONCAT('[캠페인]',B.CAMPNAME)
+		WHEN IFNULL(A.NOTICENO,0) != 0
+		THEN '[내부통지]'
+		ELSE '[기타]'
+		END AS MEDIATYPE
+			
+	FROM SYS980010 A
+	LEFT OUTER JOIN CP400010 B ON A.CAMPNO = B.CAMPNO
+	
+	WHERE 
+		A.SITEID = #{siteid}
+		AND A.EMAILLOGID = #{emaillogid}		
+	</select>
+	
+	<!-- voc 블랙추가  -->
+	<insert id="vocBlackCustInsert" parameterType="hashMap">		
+		INSERT INTO cu120010
+		(		
+			CUSTNO
+			,BLACKTYPE
+			,RECEIVENO
+			,MEMO
+			,REGDATE
+			,REGUSER
+			,ISDELETE
+			,SITEID
+		)
+		VALUES
+		(	
+			#{custno}
+			,#{blacktype}
+			,#{receiveno}
+			,#{memo}
+			,NOW()
+			,#{userno}
+			,0
+			,#{siteid}
+		)
+		<selectKey keyProperty="bcustno"  resultType="integer" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="vocBlackCustDelete" parameterType="hashMap">
+		UPDATE CU120010 
+		SET
+		EDTUSER = #{userno}
+		,EDTDATE = NOW()
+		,ISDELETE = 1
+		WHERE
+			CUSTNO = #{custno}
+			AND SITEID = #{siteid}
+			AND ISDELETE = 0
+	</update>
 	
 	<select id="topList" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM sv300010

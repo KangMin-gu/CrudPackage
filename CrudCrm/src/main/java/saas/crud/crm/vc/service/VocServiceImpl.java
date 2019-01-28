@@ -1,6 +1,7 @@
 package saas.crud.crm.vc.service;
 
 import java.util.Map;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import saas.crud.crm.cu.dao.CustDao;
-
+import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
@@ -49,6 +50,9 @@ public class VocServiceImpl implements VocService{
 	private CustDao custDao;
 	@Autowired
 	private SvDao svDao;
+	@Autowired
+	private NoteDao ntDao;
+
 	//팝업 - 고객 리스트 TR 클릭. 바인딩용 고객 상세 데이터
 	@Override
 	public Map<String, Object> svcVocPopCustSelect(Map<String, Object> prm) {
@@ -282,6 +286,98 @@ public class VocServiceImpl implements VocService{
 		mView.addObject("svSchList",rewardOwnerList);//캘린더 틀 목록.
 
 		return mView;
+	}
+	
+	//VOC 좌측 탭 - 서비스 리스트
+	@Override
+	public Map<String,Object> svcVocTabServiceList(HttpServletRequest request){
+		Map<String, Object> searchVal = crud.searchParam(request);
+
+		//총자료수
+		int totalRows = svDao.svServiceTotalRows(searchVal);
+							
+		//paging			
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+		page.put("totalRows", totalRows);					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+					
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+					
+		//서비스 리스트 출력
+		List<Map<String,Object>> svList = svDao.svList(searchVal);
+				
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("svList", svList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+							
+		return resMap;
+	}
+
+	//VOC 좌측 탭 EMAIL 리스트
+	@Override
+	public Map<String, Object> svcVocTabEmailList(HttpServletRequest request) {
+		Map<String, Object> searchVal = crud.searchParam(request);
+
+		//총자료수
+		int totalRows = vcDao.emailListCnt(searchVal);
+							
+		//paging			
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+		page.put("totalRows", totalRows);					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+					
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+					
+		//이메일 리스트 출력
+		List<Map<String,Object>> emailList = vcDao.emailList(searchVal);
+				
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("emailList", emailList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+							
+		return resMap;
+	}
+	//VOC 좌측 텝 - 이메일 상세 
+	@Override
+	public Map<String, Object> svcVocTabEmailDetail(Map<String, Object> prm) {
+		Map<String,Object> emailMap = vcDao.vocEmailDetail(prm);
+								
+		//전달, 파일서치키가 null이 아니면 
+		if(emailMap.get("FILESEARCHKEY") != null) {
+			String fileSearchKey = emailMap.get("FILESEARCHKEY").toString();
+			prm.put("filesearchkey", fileSearchKey);
+			//파일정보 읽어옴 siteid , fileSearchKey
+			List<Map<String, Object>> replyFile = ntDao.noteFile(prm);
+			emailMap.put("replyFile", replyFile);
+		}				
+					
+		return emailMap;
+	}
+	//voc 블랙 추가
+	@Override
+	public int svcVocBlackCustInsert(Map<String, Object> blackInsMap) {
+		int bcustno = vcDao.vocBlackCustInsert(blackInsMap);
+		return bcustno;
+	}
+	//voc 블랙 삭제
+	@Override
+	public int svcVocBlackCustDelete(Map<String, Object> prm) {
+		int bcustno = vcDao.vocBlackCustDelete(prm);
+		return bcustno;
 	}
 	
 }

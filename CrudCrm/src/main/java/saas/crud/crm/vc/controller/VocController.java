@@ -182,9 +182,25 @@ public class VocController {
 	}
 	
 	//VOC -  블랙 추가 실행 	
-	@RequestMapping(value="/vc/black/post",method=RequestMethod.GET)
+	@RequestMapping(value="/vc/black/post",method=RequestMethod.POST)
+	@ResponseBody
 	public int authvocBlackCustInsert(HttpServletRequest request) {
-		int bcustno = 0;
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		Map<String,Object> blackInsMap = crud.searchParam(request);
+		blackInsMap.put("userno", userno);
+		int bcustno = vcService.svcVocBlackCustInsert(blackInsMap);
+		return bcustno;
+	}
+	
+	//VOC - 블랙 해제 실행 	
+	@RequestMapping(value="/vc/black/del/{custno}",method=RequestMethod.GET)
+	@ResponseBody
+	public int authvocBlackCustDelete(HttpServletRequest request,@PathVariable int custno) {
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		Map<String,Object> blackDelMap = crud.searchParam(request);
+		blackDelMap.put("userno", userno);
+		blackDelMap.put("custno", custno);
+		int bcustno = vcService.svcVocBlackCustDelete(blackDelMap);
 		return bcustno;
 	}
 }

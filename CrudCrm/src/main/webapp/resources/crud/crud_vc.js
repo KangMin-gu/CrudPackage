@@ -10,7 +10,12 @@ $(".dataCancle").click(function(e){
 });
 
 $("#custRegBtn").click(function(e){
-	custFormActivation('insert');
+	custFormActivation('insert');//버튼 변경 이벤트
+	
+	opener.$('#addBlackSpan').show();//강성고객 관련 버튼 제어
+	opener.$('#cancleBlackSpan').hide();
+	opener.$('#blackDiv').hide();
+	
 	window.close();
 });
 
@@ -215,7 +220,9 @@ function vocCustSelected(tr){//tr이 클릭 이벤트
 	var statusStr = 'update';
 	vocGetCustInfo(urlStr);//정보획득 후 데이터 바인딩.
 	custFormActivation('update');//수정 버튼생성.
-		
+	
+	
+	
 	setTimeout(function(){
 		opener.$('#tab1Btn').trigger('click');
 		window.close();
@@ -232,6 +239,18 @@ function vocGetCustInfo(urlStr){
         	debugger;
         	custInfoClear();//기존 입력 된 데이터 삭제
         	custInfoBinding(data);//바인딩
+        	
+        	var blackCnt = opener.$('#blackcnt').val();	
+        	if(blackCnt > 0 ){ //블랙리스트 관련 버튼 제어
+        		opener.$('#addBlackSpan').hide();
+        		opener.$('#cancleBlackSpan').show();
+        		opener.$('#blackDiv').show();
+        	}else{
+        		opener.$('#addBlackSpan').show();
+        		opener.$('#cancleBlackSpan').hide();
+        		opener.$('#blackDiv').hide();
+        	}
+        	
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -272,6 +291,7 @@ function custInfoBinding(data){//인풋 필드 데이터 바인딩
 	opener.$('#homaddr1').val(data.HOMADDR1);
 	opener.$('#homaddr2').val(data.HOMADDR2);
 	opener.$('#homaddr3').val(data.HOMADDR3);
+	opener.$('#blackcnt').val(data.BLACKCNT);
 }
 
 //버튼 생성 메서드

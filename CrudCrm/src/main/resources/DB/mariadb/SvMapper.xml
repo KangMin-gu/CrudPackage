@@ -567,4 +567,45 @@
 		AND A.EMAILLOGID = #{emaillogid}		
 	</select>
 	
+	<!-- voc 블랙추가  -->
+	<insert id="vocBlackCustInsert" parameterType="hashMap">		
+		INSERT INTO cu120010
+		(		
+			CUSTNO
+			,BLACKTYPE
+			,RECEIVENO
+			,MEMO
+			,REGDATE
+			,REGUSER
+			,ISDELETE
+			,SITEID
+		)
+		VALUES
+		(	
+			#{custno}
+			,#{blacktype}
+			,#{receiveno}
+			,#{memo}
+			,NOW()
+			,#{userno}
+			,0
+			,#{siteid}
+		)
+		<selectKey keyProperty="bcustno"  resultType="integer" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="vocBlackCustDelete" parameterType="hashMap">
+		UPDATE CU120010 
+		SET
+		EDTUSER = #{userno}
+		,EDTDATE = NOW()
+		,ISDELETE = 1
+		WHERE
+			CUSTNO = #{custno}
+			AND SITEID = #{siteid}
+			AND ISDELETE = 0
+	</update>
+	
 </mapper>

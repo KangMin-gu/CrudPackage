@@ -29,7 +29,7 @@ body {
 	<div class="wrapper">
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-10">
-				<h2>블랙 추가</h2>
+				<h2>강성 고객 등록</h2>
 
 			</div>
 
@@ -42,19 +42,20 @@ body {
 				<div class="ibox">
 
 					<div class="ibox-content row">
-						<form:form method="post" id="command" onsubmit="return false;">
+						
 							<input type="hidden" id="parentid" name="parentid" value="">
 							<div class="w-100 text-right mb-3">
-								<Button class="btn btn-primary" type="submit" onclick="blackSubmit('/vc/black/post','');">추가</Button>
+								<button class="btn btn-primary" type="button" onclick="blackSubmit('/vc/black/post')">등록</button>
 							</div>
 							<div class="box1 col-lg-12 col-xl-4 p-0">
 								<table class="table table-bordered mb-0">
+								<form method="post" class="blackForm" >
 									<colgroup>
 										<col style="width: 110px; background: #fafafa;">
 										<col style="width: auto;">
 									</colgroup>
 									<tbody>
-
+									
 										<tr>
 											<th>고객명</th>
 											<td><input type="text" class="form-control"
@@ -81,11 +82,12 @@ body {
 											<td><textarea name="memo" id="memo" class="form-control"
 													style="resize: none;" rows="4"></textarea></td>
 										</tr>
-
+									
 									</tbody>
+								</form>
 								</table>
 							</div>
-						</form:form>
+						
 
 
 
@@ -110,20 +112,27 @@ body {
 
 		});
 
-		function blackSubmit(fromUrl, toUrl) {
+		function blackSubmit(fromUrl) {
 			debugger;
-			var form = new FormData(document.getElementById('command'));
-			var urlStr = 
+			var custno = $('#custno').val();
+			var receiveno = $('#receiveno').val();
+			var blacktype = $('#blacktype').val();
+			var memo = $('#memo').val();
+			var jsonPrm = {"custno":custno, "receiveno":receiveno, "blacktype":blacktype, "memo":memo };
+			
 			$.ajax({
-				url : '/vc/black/post',
-				data : form,
-				dataType : 'json',
-				processData : false,
-				contentType : false,
-				type : 'POST',
+				url: fromUrl,
+		        method: "POST",
+		        dataType: "json",
+		        data: jsonPrm,
+		        cache: false,
 
 				success : function(response) {
-					opener.window.location.reload();
+					alert('등록 되었습니다.');
+					opener.$('#bcustno').val(response);
+					opener.$('#addBlackSpan').hide();
+					opener.$('#cancleBlackSpan').show();
+					opener.$('#blackDiv').show();
 					window.close();
 				}
 			});

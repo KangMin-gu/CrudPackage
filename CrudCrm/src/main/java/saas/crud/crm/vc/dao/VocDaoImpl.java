@@ -51,4 +51,18 @@ public class VocDaoImpl implements VocDao{
 		return emailMap;
 	}
 	
+	//VOC 블랙 추가 
+	@Override
+	public int vocBlackCustInsert(Map<String,Object> blackInsMap){
+		session.insert("sv.vocBlackCustInsert",blackInsMap);
+		int bcustno = (int)blackInsMap.get("bcustno");
+		return bcustno;
+	}
+	//VOC 블랙 삭제
+	@Override
+	public int vocBlackCustDelete(Map<String, Object> param) {
+		int bcustno = session.update("sv.vocBlackCustDelete",param);
+		return bcustno;
+	}
+	
 }

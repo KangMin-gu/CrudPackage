@@ -71,8 +71,15 @@
            
                 <div class="ibox-left">
                     <div class="ibox-content left-cont pt-0">
-                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;display:none;"><b>블랙 리스트에 등록 되어 있는 고객입니다.</b></div>
-                        <table class="table table-bordered mb-2">
+                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;padding-top: 6px;padding-bottom: 6px;display:none;">
+                    	<b>블랙 리스트에 등록 되어 있는 고객입니다.</b>
+                    </div>
+                    <div id="custHiddenDiv">
+                    	<input type="hidden" id="bcustno" name="bcustno" value="0" />
+                    	<input type="hidden" id="blackcnt" name="blackcnt" value="0" />
+                    	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
+                    </div>
+                        <table class="table table-bordered mb-2">              	
                             <colgroup>
                                 <col style="width: 100px; background: #fafafa;">
                                 <col style="width: auto; min-width: 250px;">
@@ -87,7 +94,6 @@
                                     </td>
                                     <th>고객명</th>
                                     <td>
-                                    	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
                                     	<input type="text" class="form-control custInput" id="custname" name="custname">
                                     </td>
                                   </tr>
@@ -153,7 +159,6 @@
             							<input type="text" class="form-control float-left custInput" name="homaddr3" id="homaddr3" style="width: 220px;">
                                     </td>
                                 </tr>
-                            	
                             </tbody>
                         </table>
                         
@@ -665,6 +670,30 @@ $(".plus").click(function(){
 	 	alert('대상이 선택되지 않았습니다.');
 	 }
  }
+ 
+ function cancleBlack(){
+	 debugger;
+	 var custno = $('#custno').val();
+	 var urlStr = '/vc/black/del/'+custno;
+	 $.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#blackcnt').val(0);
+	        	$('#addBlackSpan').show();
+				$('#cancleBlackSpan').hide();
+				$('#blackDiv').hide();
+	        	alert("해제 되었습니다.");
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+ }
+ 
 </script>
 
 	

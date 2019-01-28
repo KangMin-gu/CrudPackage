@@ -236,5 +236,17 @@ public class VocServiceImpl implements VocService{
 					
 		return emailMap;
 	}
+	//voc 블랙 추가
+	@Override
+	public int svcVocBlackCustInsert(Map<String, Object> blackInsMap) {
+		int bcustno = vcDao.vocBlackCustInsert(blackInsMap);
+		return bcustno;
+	}
+	//voc 블랙 삭제
+	@Override
+	public int svcVocBlackCustDelete(Map<String, Object> prm) {
+		int bcustno = vcDao.vocBlackCustDelete(prm);
+		return bcustno;
+	}
 	
 }

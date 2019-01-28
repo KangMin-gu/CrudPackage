@@ -249,13 +249,7 @@
 		WHERE SITEID = #{siteid}
 		AND USERNO = #{userno}
 	</select>
-	<!-- 메일정보 얻어오기  -->
-	<select id="adminMail" resultType="hashMap">
-		<![CDATA[
-		SELECT EMAIL,USERNAME,USERNO,SITEID,USERID FROM me800010
-		WHERE EMAIL <> ' ' AND EMAIL IS NOT NULL
-		]]> 
-	</select>
+	
 	
 	<update id="urPwdReset" parameterType="userDto">
 		UPDATE me800010 SET USERPASSWORD = #{userpassword} WHERE SITEID = #{siteid} AND USERNO=#{userno}

@@ -238,9 +238,9 @@ public class NoteController {
 		return mView;
 	}
 	
-	//쪽지팝업(ajax)
-	@ResponseBody
+	//쪽지팝업(ajax)	
 	@RequestMapping(value="/note/summary",method=RequestMethod.GET)
+	@ResponseBody
 	public List<Map<String,Object>> noteSummary(HttpServletRequest request) {
 		List<Map<String,Object>> recentlyNote = ntService.noteSummary(request);
 		return recentlyNote;

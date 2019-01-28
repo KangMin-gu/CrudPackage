@@ -181,8 +181,9 @@ public class NoteDaoImpl implements NoteDao{
 	
 	//발송 폼 입장시 셀렉트 박스에 넣을 정보 
 	@Override
-	public List<Map<String, String>> adminMail() {
-		return session.selectList("au.adminMail");
+	public List<Map<String, String>> adminMail(int siteId) {
+		List<Map<String, String>> noteInfo = session.selectList("note.adminMail", siteId);
+		return noteInfo;
 	}
 	
 	// 사용자번호로 이메일과 이름 받아옴 

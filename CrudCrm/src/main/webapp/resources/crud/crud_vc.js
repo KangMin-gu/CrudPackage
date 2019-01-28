@@ -97,6 +97,8 @@ function tabTargetVocService(pageNum){//서비스탭
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/sv?custno='+custNo;
 	
+	var svLinkStr = '<a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">' ;
+	
 	if(custNo != 0 ){
 		$.ajax({
 	        url: urlStr,
@@ -111,7 +113,7 @@ function tabTargetVocService(pageNum){//서비스탭
 	        	var length = data.svList.length;
 	        	var html ="";
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICENAME + '</td><td>' + data.svList[i].SERVICECHANNEL + '</td><td>' + data.svList[i].SERVICEOWNER + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>' + data.svList[i].USERNAME + '</td></tr>';
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/service/"+data.svList[i].SERVICENO+"','voc',750,700);"+'">'+ data.svList[i].SERVICENAME + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td></tr>';
 	        		$('#tab1 tbody').append(html);
 	        	}
 	        	var html2= "";
@@ -167,7 +169,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 	        	var html ="";
 	        	var hrefStr = '/vc/tab/email/view/';        	
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','"+hrefStr+data.emailList[i].CUSTNO+"','voc',800,700);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOMAIL + '</td><td>' + data.emailList[i].FROMMAIL + '</td><td>' + data.emailList[i].RLTDATE + '</td><td>' + data.emailList[i].MIDEATYPE + '</td></tr>';
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,700);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';
 	        		console.log(html);
 	        		$('#tab7 tbody').append(html);
 	        	}
@@ -213,10 +215,9 @@ function vocCustSelected(tr){//tr이 클릭 이벤트
 	var statusStr = 'update';
 	vocGetCustInfo(urlStr);//정보획득 후 데이터 바인딩.
 	custFormActivation('update');//수정 버튼생성.
-	
-	opener.$('#tab1Btn').trigger('click');
-	
+		
 	setTimeout(function(){
+		opener.$('#tab1Btn').trigger('click');
 		window.close();
 	},300);
 }

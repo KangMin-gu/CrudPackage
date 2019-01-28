@@ -1,12 +1,12 @@
 package saas.crud.crm.vc.service;
 
 import java.util.Map;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import saas.crud.crm.cu.dao.CustDao;
-
+import saas.crud.crm.nt.dao.NoteDao;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
@@ -42,6 +42,9 @@ public class VocServiceImpl implements VocService{
 	private CustDao custDao;
 	@Autowired
 	private SvDao svDao;
+	@Autowired
+	private NoteDao ntDao;
+
 	//팝업 - 고객 리스트 TR 클릭. 바인딩용 고객 상세 데이터
 	@Override
 	public Map<String, Object> svcVocPopCustSelect(Map<String, Object> prm) {
@@ -221,6 +224,16 @@ public class VocServiceImpl implements VocService{
 	@Override
 	public Map<String, Object> svcVocTabEmailDetail(Map<String, Object> prm) {
 		Map<String,Object> emailMap = vcDao.vocEmailDetail(prm);
+								
+		//전달, 파일서치키가 null이 아니면 
+		if(emailMap.get("FILESEARCHKEY") != null) {
+			String fileSearchKey = emailMap.get("FILESEARCHKEY").toString();
+			prm.put("filesearchkey", fileSearchKey);
+			//파일정보 읽어옴 siteid , fileSearchKey
+			List<Map<String, Object>> replyFile = ntDao.noteFile(prm);
+			emailMap.put("replyFile", replyFile);
+		}				
+					
 		return emailMap;
 	}
 	

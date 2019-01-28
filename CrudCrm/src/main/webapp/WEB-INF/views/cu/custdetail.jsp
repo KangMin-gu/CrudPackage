@@ -173,7 +173,7 @@
 														<c:choose>
 															<c:when test="${fn:trim(custDetail.WRKURL) eq ''}"></c:when>
 															<c:otherwise>
-																<%-- <a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a> --%>
+																<!-- <a class="btn btn-primary dim" style="padding-top: 2px; padding-bottom: 2px; padding-left: 6px; padding-right: 6px; border-bottom-width: 0px;border-top-width: 0px;" href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" ></i></a> -->
 																<a href="http://${custDetail.WRKURL}" target="_blank"><i class="fa fa-home" style="font-size:18px;"></i></a>  
 															</c:otherwise>
 														</c:choose>	
@@ -241,10 +241,13 @@
 													<tr>
 														<th>결혼여부</th>
 														<td>
-														<c:choose>
-															<c:when test="${custDetail.MARRIED eq 1 }">미혼</c:when>
-															<c:when test="${custDetail.MARRIED eq 2 }">기혼</c:when>
-														</c:choose>
+															<c:forEach var="married" items="${MARRIED }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.MARRIED eq married.codeval}">
+                                                            			${married.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 													<tr>
@@ -268,47 +271,49 @@
 													<tr>
 														<th>성별</th>
 														<td>
-															<c:choose>
-																<c:when test="${custDetail.SEX eq 1 }">남자</c:when>
-																<c:when test="${custDetail.SEX eq 2 }">여자</c:when>
-																<c:otherwise>
-																</c:otherwise>
-															</c:choose>
+															<c:forEach var="sex" items="${SEX }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.SEX eq sex.codeval}">
+                                                            			${sex.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 													<tr>
 														<th>발송처</th>
 														<td>
-															<c:choose>
-																<c:when test="${custDetail.MAILTO eq 1 }">자택</c:when>
-																<c:when test="${custDetail.MAILTO eq 2 }">직장</c:when>
-																<c:otherwise>
-																</c:otherwise>
-															</c:choose>
+															<c:forEach var="mailto" items="${MAILTO }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.MAILTO eq mailto.codeval}">
+                                                            			${mailto.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 													<tr>
 														<th>고객등급</th>
 														<td>
-															<c:choose>
-																<c:when test="${custDetail.CUSTGRADE eq 1 }">일반</c:when>
-																<c:when test="${custDetail.CUSTGRADE eq 2 }">VIP</c:when>
-																<c:when test="${custDetail.CUSTGRADE eq 3 }">VVIP</c:when>
- 																<c:otherwise>
-																</c:otherwise>
-															</c:choose>
+															<c:forEach var="custgrade" items="${CUSTGRADE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.CUSTGRADE eq custgrade.codeval}">
+                                                            			${custgrade.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 													<tr>
 														<th>회원구분</th>
 														<td>
-															 <c:choose>
-																<c:when test="${custDetail.CUSTGUBUN eq 1 }">회원</c:when>
-																<c:when test="${custDetail.CUSTGUBUN eq 2 }">비회원</c:when>
-																<c:when test="${custDetail.CUSTGUBUN eq 3 }">탈퇴회원</c:when>															
-																<c:otherwise>
-																</c:otherwise>
-															</c:choose>
+															 <c:forEach var="custgubun" items="${CUSTGUBUN }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.CUSTGUBUN eq custgubun.codeval}">
+                                                            			${custgubun.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 												</tbody>
@@ -328,12 +333,13 @@
 													<tr>
 														<th>양력/음력</th>
 														<td>
-															 <c:choose>
-																<c:when test="${custDetail.SOLAR eq 1 }">양력</c:when>
-																<c:when test="${custDetail.SOLAR eq 2 }">음력</c:when>
-																<c:otherwise>
-																</c:otherwise>
-															</c:choose>
+															 <c:forEach var="solar" items="${SOLAR }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.SOLAR eq solar.codeval}">
+                                                            			${solar.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 													<tr>
@@ -343,11 +349,13 @@
 													<tr>
 														<th>활동등급</th>
 														<td>
-															<c:choose>
-																<c:when test="${custDetail.ACTGRADE eq 1 }">우수</c:when>
-																<c:otherwise>
-																</c:otherwise>
-															</c:choose>
+															<c:forEach var="actGrade" items="${ACTGRADE }">
+                                                      			<c:choose>
+                                                         			<c:when test="${custDetail.ACTGRADE eq actGrade.codeval}">
+                                                            			${actGrade.codename }
+                                                         			</c:when>
+                                                      			</c:choose>
+                                                   			</c:forEach>
 														</td>
 													</tr>
 												</tbody>
@@ -493,11 +501,11 @@
 												</tbody>
 											</table>
 										</div>
-										<%-- <div class="w-100 text-right">
+										<!-- <div class="w-100 text-right">
 											<a href="/cust/post/${custDetail.CUSTNO}" class="btn btn-primary">수 정</a>
 											<Button type="submit" class="btn btn-primary">삭 제</Button>	
 											<a href="/cust" class="btn btn-primary">목 록</a>
-										</div> --%>
+										</div> -->
 									</div>
 								</div>
 								

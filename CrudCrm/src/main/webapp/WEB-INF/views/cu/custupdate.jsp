@@ -467,7 +467,7 @@
                                                             			<option label="${actGrade.codename }" value="${actGrade.codeval }"/>
                                                          			</c:otherwise>
                                                       			</c:choose>
-                                                   			</c:forEach>
+                                                   				</c:forEach>
 															</select>
 														</td>
 													</tr>

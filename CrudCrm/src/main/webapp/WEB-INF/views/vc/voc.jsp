@@ -68,8 +68,10 @@
         </div>
         <div class="wrapper wrapper-content">
             <div class="ibox clearfix">
+           
                 <div class="ibox-left">
                     <div class="ibox-content left-cont pt-0">
+                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;display:none;"><b>블랙 리스트에 등록 되어 있는 고객입니다.</b></div>
                         <table class="table table-bordered mb-2">
                             <colgroup>
                                 <col style="width: 100px; background: #fafafa;">
@@ -144,7 +146,7 @@
                                     <td colspan="3">
             							<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
             								<input type="text" class="form-control custInput daumzip" name="homaddr1" id="homaddr1" readonly>
-            								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a>
+            								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip" id="homaddr1"></i></a>
             								</span>
             							</div>
             							<input type="text" class="form-control float-left mr-2 custInput" name="homaddr2" id="homaddr2" readonly style="width: 220px;">
@@ -161,7 +163,12 @@
                             </div>                                       
                             <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
 								<button class="btn btn-primary btn-sm">SMS 발송</button>
-                            	<button class="btn btn-primary btn-sm">블랙추가</button>	
+								<span id="addBlackSpan">
+                            		<button class="btn btn-primary btn-sm" id="addBlackBtn" onClick="addBlack()">블랙 추가</button>
+                            	</span>
+                            	<span id="cancleBlackSpan" style="display:none;">
+                            		<button class="btn btn-primary btn-sm" id="cancleBlackBtn" onClick="cancleBlack()">블랙 해제</button>
+                            	</span>
                          	</div>
                          </div>
                         
@@ -170,7 +177,7 @@
                         
                         <div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">영업</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">서비스</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab2">강성고객이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab3">콜백이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab4">SMS</a></li>
@@ -184,8 +191,8 @@
                                         <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시1</th>
-                                                    <th>상담구분</th>
+                                                    <th>서비스명</th>
+                                                    <th>접수일시</th>
                                                     <th>상담유형</th>
                                                     <th>접수자</th>
                                                     <th>고객명</th>
@@ -365,7 +372,7 @@
                                                     <th>수신 주소</th>
                                                     <th>발신 주소</th>
                                                     <th>발송 일시</th>
-                                                    <th>수신 형태</th>
+                                                    <th>발송 타입</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -649,6 +656,15 @@ $(".plus").click(function(){
 	 upperCode('servicecode1'); 
  });
 
+ 
+ function addBlack(){
+	 var custno = $('#custno').val();
+	 if(custno > 0 ){
+		 openNewWindow('voc','/vc/black/post','voc',700,480);
+	 }else{
+	 	alert('대상이 선택되지 않았습니다.');
+	 }
+ }
 </script>
 
 	

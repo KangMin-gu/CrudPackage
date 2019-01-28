@@ -28,4 +28,6 @@ public interface CustService {
 	
 	public Map<String,Object> svcCustTabCampList(HttpServletRequest request);
 	
+	public int svcVocCustUpdate(Map<String,Object> prmMap);
+	
 }

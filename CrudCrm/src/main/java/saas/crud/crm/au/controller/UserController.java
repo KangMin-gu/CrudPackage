@@ -70,5 +70,8 @@ public class UserController {
 	public String sideStatus(HttpServletRequest request, @PathVariable String userId) {
 		String a = urService.sideStatus(request, userId);
 		return a;
-	}	
+	}
+	
+	//unload시 로그아웃
+	//@RequestMapping(value="/bodyclose", method=)
 }

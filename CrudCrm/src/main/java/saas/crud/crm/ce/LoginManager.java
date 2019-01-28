@@ -1,6 +1,7 @@
 package saas.crud.crm.ce;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -16,103 +17,129 @@ import javax.servlet.http.HttpSessionBindingListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginManager implements HttpSessionBindingListener {
+/*
+* session이 끊어졌을때를 처리하기 위해 사용
+* static메소드에서는 static만사용 하므로static으로 선언한다.
+*/
+public class LoginManager implements HttpSessionBindingListener{
 
-	// LoginManager 클래스의 객체 선언
-	private static LoginManager loginManager = null;
-	// 사용자 ID를 저장해둘 Hashtable 선언
-	private static Hashtable loginUsers = new Hashtable();
-		
-	private LoginManager() {
-		super();
-	}
-
-	// 싱글톤 기법 사용
-	public static synchronized LoginManager getInstance() {
-		if (loginManager == null) {
-			loginManager = new LoginManager();
-		}
-		return loginManager;
-	}
-
-	// 해당 세션에서 이미 로그인을 했는지 안했는지를 체크
-	public boolean isLogin(String sessionID) {
-		boolean isLogin = false;
-		Enumeration e = loginUsers.keys();
-		String key = "";
-
-		while (e.hasMoreElements()) {
-			key = (String) e.nextElement();
-			if (sessionID.equals(key)) {
-				isLogin = true;
-			}
-		}
-
-		return isLogin;
-	}
-
-	// 해당 아이디의 동시 사용을 막기위해 이미 사용중인 아이디인지를 알아본다.
-	public boolean isUsing(String userID) {
-		boolean isUsing = false;
-		Enumeration e = loginUsers.keys();
-		String key = "";
-
-		while (e.hasMoreElements()) {
-			key = (String) e.nextElement();
-			if (userID.equals(loginUsers.get(key))) {
-				isUsing = true;
-			}
-		}
-
-		return isUsing;
-	}
-	
-	//로그인한 사용자와session 을 리턴 
-	public List<Map<String, String>> allSession() {
-		
-		 List<Map<String, String>> loginUserss = new ArrayList<Map<String, String>>();		
-		 Set key = loginUsers.keySet();
-		 
-		 for (Iterator iterator = key.iterator(); iterator.hasNext();) {
-			   Map<String, String> loginuser = new HashMap<String, String>();
-			   String keyName = (String) iterator.next();
-			   String valueName = (String) loginUsers.get(keyName);
-			   System.out.println("valuename"+valueName);
-			   loginuser.put("ID", valueName);
-			   loginuser.put("session", keyName);
-			   
-			   loginUserss.add(loginuser);
-		 }	
-
-		 return loginUserss;
-	}
-	
-	// ID 저장, Sessiong Binding
-	public void setSession(HttpSession session, String userID) {
-		loginUsers.put(session.getId(), userID);
-		// Session Binding이 일어나는 시점
-		session.setAttribute("login", this.getInstance());
-	}
-
-	// 세션이 성립되었을때, HttpSessionBindingListener 인터페이스 추상 메서드 구현
-	public void valueBound(HttpSessionBindingEvent event) {
-		// 아무일도 하지 않는다.
-	}
-
-	// 세션이 끊겼을때 자동으로 호출된다. Hashable에 저장된 아이디를 삭제한다. HttpSessionBindingListener 인터페이스
-	// 추상 메서드 구현.
-	public void valueUnbound(HttpSessionBindingEvent event) {
-		loginUsers.remove(event.getSession().getId());
-
-	}
-
-	// 세션 ID로 현재 로그인한 ID를 구분해 낸다.
-	public String getUserID(String sessionID) {
-		return (String) loginUsers.get(sessionID);
-	}
-
-	// 현재 접속자수
-	public int getUserCount() {
-		return loginUsers.size();
-	}
+    private static LoginManager loginManager = null;
+    
+    //로그인한 접속자를 담기위한 해시테이블
+    private static Hashtable loginUsers = new Hashtable();
+    
+    /*
+     * 싱글톤 패턴 사용
+     */
+    public static synchronized LoginManager getInstance(){
+        if(loginManager == null){
+            loginManager = new LoginManager();
+        }
+        return loginManager;
+    }
+     
+    
+    /*
+     * 이 메소드는 세션이 연결되을때 호출된다.(session.setAttribute("login", this))
+     * Hashtable에 세션과 접속자 아이디를 저장한다.
+     */
+    public void valueBound(HttpSessionBindingEvent event) {
+        //session값을 put한다.
+        loginUsers.put(event.getSession(), event.getName());
+     }
+    
+    
+     /*
+      * 이 메소드는 세션이 끊겼을때 호출된다.(invalidate)
+      * Hashtable에 저장된 로그인한 정보를 제거해 준다.
+      */
+     public void valueUnbound(HttpSessionBindingEvent event) {
+         //session값을 찾아서 없애준다.
+         loginUsers.remove(event.getSession());
+     }
+     
+     
+     /*
+      * 입력받은 아이디를 해시테이블에서 삭제. 
+      * @param userID 사용자 아이디
+      * @return void
+      */ 
+     public void removeSession(String userId){
+          Enumeration e = loginUsers.keys();
+          HttpSession session = null;
+          while(e.hasMoreElements()){
+               session = (HttpSession)e.nextElement();
+               if(loginUsers.get(session).equals(userId)){
+                   //세션이 invalidate될때 HttpSessionBindingListener를 
+                   //구현하는 클레스의 valueUnbound()함수가 호출된다.
+                   session.invalidate();
+               }
+          }
+     }
+    
+    /*
+     * 해당 아이디의 동시 사용을 막기위해서 
+     * 이미 사용중인 아이디인지를 확인한다.
+     * @param userID 사용자 아이디
+     * @return boolean 이미 사용 중인 경우 true, 사용중이 아니면 false
+     */
+    public boolean isUsing(String userID){
+        return loginUsers.containsValue(userID);
+    }
+     
+    
+    /*
+     * 로그인을 완료한 사용자의 아이디를 세션에 저장하는 메소드
+     * @param session 세션 객체
+     * @param userID 사용자 아이디
+     */
+    public void setSession(HttpSession session, String userId){
+        //이순간에 Session Binding이벤트가 일어나는 시점
+        //name값으로 userId, value값으로 자기자신(HttpSessionBindingListener를 구현하는 Object)
+        session.setAttribute(userId, this);//login에 자기자신을 집어넣는다.
+    }
+     
+     
+    /*
+      * 입력받은 세션Object로 아이디를 리턴한다.
+      * @param session : 접속한 사용자의 session Object
+      * @return String : 접속자 아이디
+     */
+    public String getUserID(HttpSession session){
+        return (String)loginUsers.get(session);
+    }
+     
+     
+    /*
+     * 현재 접속한 총 사용자 수
+     * @return int  현재 접속자 수
+     */
+    public int getUserCount(){
+        return loginUsers.size();
+    }
+     
+     
+    /*
+     * 현재 접속중인 모든 사용자 아이디를 출력
+     * @return void
+     */
+    public void printloginUsers(){
+        Enumeration e = loginUsers.keys();
+        HttpSession session = null;
+        System.out.println("===========================================");
+        int i = 0;
+        while(e.hasMoreElements()){
+            session = (HttpSession)e.nextElement();
+            System.out.println((++i) + ". 접속자 : " +  loginUsers.get(session));
+        }
+     }
+     
+    /*
+     * 현재 접속중인 모든 사용자리스트를 리턴
+     * @return list
+     */
+    public Collection getUsers(){
+        Collection collection = loginUsers.values();
+        return collection;
+    }
 }

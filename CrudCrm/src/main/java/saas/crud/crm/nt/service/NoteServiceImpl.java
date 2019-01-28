@@ -465,7 +465,7 @@ public class NoteServiceImpl implements NoteService{
 		//CC
 		List<Map<String, Object>> ccList = ntDao.ccList(noteVal); 
 		//전달시 셀렉트 박스 
-		List<Map<String,String>> adminMail = ntDao.adminMail();
+		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 		
 		
 		//통지작성에서 넘어온거면 읽음체크 안함 
@@ -586,7 +586,7 @@ public class NoteServiceImpl implements NoteService{
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
-		List<Map<String,String>> adminMail = ntDao.adminMail();
+		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 		
 		NoteCategoryDto noteCategory = new NoteCategoryDto();
 		noteCategory.setUserno(userNo);
@@ -602,8 +602,9 @@ public class NoteServiceImpl implements NoteService{
 	//답장화면
 	@Override
 	public ModelAndView noteReply(HttpServletRequest request,int noticeId) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
-		List<Map<String,String>> adminMail = ntDao.adminMail();
+		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 		//noticeId를 이용하여 답장받을 사람의 정보를 가져옴
 		Map<String,Object> replyUser = ntDao.noteReply(noticeId);
 		String curUrl = request.getRequestURL().toString();

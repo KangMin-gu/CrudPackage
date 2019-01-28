@@ -191,7 +191,7 @@ public class AuController {
 	
 	//회원 비밀번호 초기화
 	@RequestMapping(value="/pwdreset/{userNo}", method=RequestMethod.GET)
-	public ModelAndView userPwdReset(HttpServletRequest request, @PathVariable int userNo) {
+	public ModelAndView authuserPwdReset(HttpServletRequest request, @PathVariable int userNo) {
 		ModelAndView mView = auService.userPwdReset(request,userNo);
 		mView.setViewName("au/myinforesult");
 		return mView;
@@ -199,9 +199,15 @@ public class AuController {
 	
 	//이용 중인 유저 확인
 	@RequestMapping(value="/ma/sitechk",method=RequestMethod.GET)
-	public ModelAndView useSessionList(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView authuseSessionList(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mView = auService.useSessionList(request, response);
 		mView.setViewName("au/ma/check/sitecheck");
+		return mView;
+	}
+	
+	@RequestMapping(value="ma/sitecehck/{userId}", method=RequestMethod.GET)
+	public ModelAndView authSession(HttpServletRequest request, @PathVariable String userId) {
+		ModelAndView mView = auService.authSession(request, userId);
 		return mView;
 	}
 	

@@ -36,7 +36,7 @@ public interface NoteDao {
 	public void notetoAndCc(NoteDto ntDto);
 	public List<Map<String, Object>> noteFile(Map<String, Object> noteVal);
 	public List<Map<String,String>> noteEmail(int fromUser);
-	public List<Map<String,String>> adminMail();
+	public List<Map<String,String>> adminMail(int siteId);
 	public void noteSendMail(Map<String,Object> map);
 	//메세지버튼
 	public List<Map<String,Object>> noteSummary(int userNo);

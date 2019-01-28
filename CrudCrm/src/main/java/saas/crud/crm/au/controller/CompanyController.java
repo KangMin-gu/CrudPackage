@@ -139,6 +139,7 @@ public class CompanyController {
 		mView.setViewName("au/myinforesult");
 		return mView;
 	}
+	
 	@RequestMapping(value="/ma/company/licensecnt",method=RequestMethod.GET)
 	@ResponseBody
 	public int authCompanyLicenseCnt(HttpServletRequest request) {

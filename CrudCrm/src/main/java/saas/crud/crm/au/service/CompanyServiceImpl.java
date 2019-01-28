@@ -182,8 +182,8 @@ public class CompanyServiceImpl implements CompanyService{
 		//String 타입으로 읽을수 있게 형변환한다.
 		String newPwd = temp.toString();
 		String hash = encoder.encode(newPwd);
-		String adminId = request.getParameter("adid");
-		String managerNo = request.getParameter("mano");
+		String adminId = request.getParameter("adid"); //관리계정
+		String managerNo = request.getParameter("mano"); //담당자번호 
 		
 		//admin 계정정보가져오기
 		Map<String, Object> adminInfo = urDao.getData(adminId); //접속자 정보 //크루드테스트 생성시 메일생성안됨.
@@ -197,7 +197,7 @@ public class CompanyServiceImpl implements CompanyService{
 		//담당자한테 mano 값으로 메일정보가져오기
 		//비밀번호 정보 업데이트
 		companyDao.adminPwdReset(resetUserDto);
-		String siteName = request.getSession().getAttribute("SITENAME").toString();
+		String siteName = adminInfo.get("SITENAME").toString();
 		
 		EmailTemplate eTemp = new EmailTemplate();		
 		StringBuffer buf = eTemp.sitePwdRestTemle(newPwd, siteName);

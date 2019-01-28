@@ -20,6 +20,7 @@
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/myinfo/${sessionScope.USERNO}">내 정보</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/import/${sessionScope.SITEID}">공지사항</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/note/inbox">내부통지</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
@@ -136,7 +137,7 @@
 			   		<li <c:if test="${fn:substring(urls, 0, 3) eq '/ad' }"> class="active"</c:if>>
 			   			<a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
 			   			<ul class="nav nav-second-level collapse">
-			   				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>
+			   				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>			   				
 			   				<li><a href="${pageContext.request.contextPath}/ad/code">회원사 코드관리</a></li>
 			   				<li><a href="${pageContext.request.contextPath}/ad/company/${sessionScope.SITEID}">회원사 관리</a></li>
 			   			</ul>
@@ -151,7 +152,7 @@
 						<li><a href="${pageContext.request.contextPath}/ma/code">공통코드</a></li>
 						<li><a href="${pageContext.request.contextPath}/ma/license">라이센스 관리</a></li>
 						<li><a href="${pageContext.request.contextPath}/ma/menu">메뉴 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/ma/sitechk">사용자 확인</a></li>
+						<li><a href="${pageContext.request.contextPath}/ma/sitechk">접속자 확인</a></li>
 					</ul>
 			        </li>
 		      	</c:if>

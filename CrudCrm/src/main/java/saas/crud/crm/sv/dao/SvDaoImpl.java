@@ -142,11 +142,18 @@ public class SvDaoImpl implements SvDao{
 		Map<String,Object> svTopConvey = session.selectOne("sv.topConvey",param);
 		return svTopConvey;
 	}
+	//VOC 최근 현상파악 한건 가져오기
+	@Override
+	public Map<String, Object> svTopReward(Map<String, Object> param) {
+		Map<String,Object> svTopReward = session.selectOne("sv.topReward",param);
+		return svTopReward;
+	}
 	@Override
 	public List<Map<String, Object>> svRewardOwner(RewardDto rewardDto) {
 
 		List<Map<String,Object>> svRewardOwner = session.selectList("sv.rewardOwner",rewardDto);
 		return svRewardOwner;
 	}
+	
 	
 }

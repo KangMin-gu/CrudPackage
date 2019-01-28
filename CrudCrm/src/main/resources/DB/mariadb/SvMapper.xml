@@ -410,7 +410,7 @@
 			AND SITEID = #{siteid};
 			
 			UPDATE sv300010
-			SET SERVICESTEP = 3
+			SET SERVICESTEP = 5
 			WHERE SERVICENO = #{serviceno}
 			AND SITEID = #{siteid};
 	</insert>
@@ -537,6 +537,15 @@
 		WHERE A.SITEID = #{siteid}
 		AND A.SERVICENO = #{serviceno}
 		ORDER BY A.CONVEYNO DESC
+		LIMIT 1
+	</select>
+	
+	<select id="topReward" parameterType="hashMap" resultType="hashMap">
+		SELECT DATE_FORMAT(A.VISITDATE,'%Y-%m-%d') AS VISITDATE,A.VISITADDR1,A.VISITADDR2,A.VISITADDR3,A.OWNER
+				,(SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) AS OWNER_ FROM sv300030 A
+		WHERE A.SITEID = #{siteid}
+		AND A.SERVICENO = #{serviceno}
+		ORDER BY A.REWARDNO DESC
 		LIMIT 1
 	</select>
 	

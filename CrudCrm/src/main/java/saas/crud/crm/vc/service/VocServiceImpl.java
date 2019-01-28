@@ -163,6 +163,7 @@ public class VocServiceImpl implements VocService{
 			if(search.get("asowner") != null) {
 				owner = Integer.parseInt(search.get("asowner").toString());
 			}
+			owner = 75;
 			serviceDto.setServicestep(4);
 			svDao.svStepUpdate(serviceDto);
 			RewardDto rewardDto = new RewardDto();
@@ -240,11 +241,16 @@ public class VocServiceImpl implements VocService{
 		if(serviceMap != null) {
 			int serviceStep = Integer.parseInt(serviceMap.get("SERVICESTEP").toString()); 
 			int serviceNo = Integer.parseInt(serviceMap.get("SERVICENO").toString());
+			int serviceType = Integer.parseInt(serviceMap.get("SERVICETYPE").toString());
 			map.put("serviceno",serviceNo);
-			if(serviceStep == 4) {			
-				serviceMap.put("reserv", svDao.svTopResv(map));
-			}else if(serviceStep == 5 || serviceStep == 6) {
-				serviceMap.put("convey", svDao.svTopConvey(map));
+			if(serviceType == 1) {
+				if(serviceStep == 4) {			
+					serviceMap.put("reserv", svDao.svTopResv(map));
+				}else if(serviceStep == 5 || serviceStep == 6) {
+					serviceMap.put("convey", svDao.svTopConvey(map));
+				}
+			}else if(serviceType == 2) {
+				serviceMap.put("reward", svDao.svTopReward(map));
 			}
 		}else {
 			serviceMap = new HashMap<>();

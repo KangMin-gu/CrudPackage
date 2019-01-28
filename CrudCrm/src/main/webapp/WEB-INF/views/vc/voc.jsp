@@ -387,7 +387,7 @@
                             <tr>
                                 <th>상담구분</th>
                                 <td>
-                                    <div class="i-checks servicetype">
+                                    <div class="i-checks servicetype voc">
                                     	<c:forEach var="serviceType" items="${SERVICETYPE }">
                                     		<label class="mr-2 mb-0"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
                                         </c:forEach>
@@ -396,7 +396,7 @@
                                 <th>상담 템플릿</th>
                                 <td>
                                     <div class="input-group">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control voc">
                                         <span class="input-group-addon">
                                             <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
                                         </span>
@@ -519,14 +519,14 @@
             						</div>
             						<input type="text" class="form-control float-left mr-2 custInput voc" name="visitaddr2" id="visitaddr2" readonly style="width: 220px;">
             						<input type="text" class="form-control float-left custInput voc" name="visitaddr3" id="visitaddr3" style="width: 220px;">
-            						<input type="radio" class="i-checks" value="" id="addrsame" name="addrsame">
+            						<input type="radio" class="i-checks voc" value="" id="addrsame" name="addrsame">
             						<label>고객주소와 동일</label>
                                 </td>                                
                             </tr>
                             <tr class="result">
                                 <th>상담결과</th>
                                 <td colspan="3">
-                                    <div class="i-checks">
+                                    <div class="i-checks voc">
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep2" name="vocstep"> 처리</label>
                                         <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
@@ -538,8 +538,8 @@
                             	<th>이관 담당자 </th>
                             	<td colspan="1">
                             		<div class="input-group owner" id="nextowner_">
-                            			<input type="text" class="form-control" autocomplete="off" name="nextowner_" value="">
-                                        <input type="hidden" name="nextowner" id="nextowner" value="">
+                            			<input type="text" class="form-control voc" autocomplete="off" name="nextowner_" value="">
+                                        <input type="hidden" name="nextowner voc" id="nextowner" value="">
                                         <span class="input-group-addon">
                                         	<a><i class="fa fa-search"></i></a>
                                         </span>
@@ -565,8 +565,8 @@
                             	<th>상급 담당자 </th>
                             	<td colspan="1">
                             		<div class="input-group adminowner" id="nextadminowner_">
-                            			<input type="text" class="form-control" autocomplete="off" name="nextadminowner_" value="">
-                                        <input type="hidden" name="nextadminowner" id="nextadminowner" value="">
+                            			<input type="text" class="form-control voc" autocomplete="off" name="nextadminowner_" value="">
+                                        <input type="hidden" name="nextadminowner voc" id="nextadminowner" value="">
                                         <span class="input-group-addon">
                                         	<a><i class="fa fa-search"></i></a>
                                         </span>
@@ -606,20 +606,16 @@
                             <tr class="reservation">
                             	<th>예약 시간
                             	<td colspan="3">
-                            		<div class="input-group">
-                            			<div class="input-group clockpicker clock01" data-autoclose="true">
-                            				<span class="input-group-addon">
-                                    			<span class="fa fa-clock-o"></span>
-                                			</span>
-                            				<input type="text" class="form-control voc clock01" autocomplete="off" name="reservtimefrom" id="reservtimefrom" value="">
-                            			</div>  
-                            			<div class="input-group clockpicker clock02" data-autoclose="true">
-                            				<span class="input-group-addon">
-                                    			<span class="fa fa-clock-o"></span>
-                                			</span>	
-                                			<input type="text"  class="form-control voc clock02" name="reservtimeto" id="reservtimeto" value="">
-                            			</div>	
-                            		</div>
+                            		<div class="input-group p-0 ">
+                                        <div class="d-flex clockpicker clock01 col-lg-5 col-md-5 p-0 col-5">
+                                    	    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" class="form-control voc" autocomplete=off name="reservtimefrom" id="reservtimefrom" value="">
+                                        </div>
+                                        <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                        <div class="d-flex clockpicker clock02 col-lg-5 col-md-5 p-0 col-5">
+                                        	<span class="input-group-addon"><i class="fa fa-clock-o"></i></span><input type="text" class="form-control voc" autocomplete=off name="reservtimeto" id="reservtimeto" value="">
+                                        </div>
+                                    </div>
+                            			
                             	</td>
                             </tr>
                             <tr>

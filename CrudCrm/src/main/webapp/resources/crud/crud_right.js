@@ -72,6 +72,7 @@ $('#save').click(function(e){
 });
 
 $('.i-checks').on('ifChecked', function(event){
+	debugger;
 	var value = event.target.value;
 	var name = event.target.name;
 	if(name =='vocstep'){

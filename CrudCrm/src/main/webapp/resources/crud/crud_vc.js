@@ -171,25 +171,35 @@ function serviceInfoBinding(data){
 	opener.$('#servicename').val(data.SERVICENAME);
 	opener.$('#servicedesc').val(data.SERVICEDESC);
 	opener.$('#memo').val(data.MEMO);
-	opener.$('input:radio[name="vocstep"]').each(function(index){
-		if(this.value == data.SERVICESTEP){
-			opener.$('input:radio[name="vocstep"]:eq('+index+')').iCheck('check');
+	if(data.SERVICETYPE == 1){
+		
+		opener.$('input:radio[name="vocstep"]').each(function(index){
+			if(this.value == data.SERVICESTEP){
+				opener.$('input:radio[name="vocstep"]:eq('+index+')').iCheck('check');
+			}
+		});
+		if(data.SERVICESTEP == 4){
+			opener.$('#reservphone').val(data.reserv.MOBILENO);
+			opener.$('#reservdate').val(formatDate(data.reserv.RESERVDATE));
+			opener.$('#reservtimeto').val(data.reserv.RESERVTIMETO);
+			opener.$('#reservtimefrom').val(data.reserv.RESERVTIMEFROM);
+		}else if(data.SERVICESTEP == 5 || data.SERVICESTEP == 6){
+			opener.$('#nextowner').val(data.convey.NEXTOWNER);
+			opener.$('#nextowner_').val(data.convey.NEXTOWNER_);
+			opener.$('#conveyreason').val(data.convey.CONVEYREASON);
+			opener.$('#conveydesc').val(data.convey.CONVEYDESC);
 		}
-	});
-	if(data.SERVICESTEP == 4){
-		opener.$('#reservphone').val(data.reserv.MOBILENO);
-		opener.$('#reservdate').val(formatDate(data.reserv.RESERVDATE));
-		opener.$('#reservtimeto').val(data.reserv.RESERVTIMETO);
-		opener.$('#reservtimefrom').val(data.reserv.RESERVTIMEFROM);
-	}else if(data.SERVICESTEP == 5 || data.SERVICESTEP == 6){
-		opener.$('#nextowner').val(data.convey.NEXTOWNER);
-		opener.$('#nextowner_').val(data.convey.NEXTOWNER_);
-		opener.$('#conveyreason').val(data.convey.CONVEYREASON);
-		opener.$('#conveydesc').val(data.convey.CONVEYDESC);
+	}else if(data.SERVICETYPE == 2){
+		opener.$('#visitdate').val(data.reward.VISITDATE);
+		opener.$('#visitaddr1').val(data.reward.VISITADDR1);
+		opener.$('#visitaddr2').val(data.reward.VISITADDR2);
+		opener.$('#visitaddr3').val(data.reward.VISITADDR3);
+		opener.$('[name="asowner_"]').val(data.reward.OWNER_);
+		opener.$('[name="#asowner"]').val(data.reward.OWNER);
 	}
 	
 	
-	opener.$('.voc').attr('readonly',true);
+	opener.$('.voc').attr('disabled',true);
 	opener.$('.voc').iCheck('disable');
 	opener.$('.plus').hide();
 	
@@ -258,12 +268,13 @@ function splitPhoneNum(phoneNum){//01로 시작하면 휴대폰에 바인딩. �
 }
 
 $('#create').click(function(){
-	$('.voc').attr('readonly',false);
+	$('.voc').attr('disabled',false);
 	$('.voc').iCheck('enable');
 	$('.voc').val('');
 	$('.i-checks').iCheck('uncheck');
 	$('[name="vocstep"]:first').iCheck('check');
 	$('[name="servicetype"]:first').iCheck('check');
+	$('#create').hide();
 });
 
 $(".plus").click(function(){

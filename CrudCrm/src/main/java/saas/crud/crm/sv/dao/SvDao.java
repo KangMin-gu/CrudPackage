@@ -58,7 +58,10 @@ public interface SvDao {
 	public Map<String,Object> svTopResv(Map<String,Object> param);
 	// voc 최근 이관 한건
 	public Map<String,Object> svTopConvey(Map<String,Object> param);
+	// voc 최근 현상파악 한건
+	public Map<String,Object> svTopReward(Map<String,Object> param);
 	
+	//voc AS기사 캘린더
 	public List<Map<String,Object>> svRewardOwner(RewardDto rewardDto);
 
 }

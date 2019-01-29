@@ -72,7 +72,9 @@ public class CustController {
 								 ,@PathVariable int custno) {
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		ModelAndView mView = new ModelAndView();
-		mView = custService.svcCustDetail(custno,siteid);		
+		mView = custService.svcCustDetail(custno,siteid);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
 		mView.setViewName("cu/custdetail");
 		return mView;
 	}

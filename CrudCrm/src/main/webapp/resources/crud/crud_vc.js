@@ -8,6 +8,16 @@ $(".dataCancle").click(function(e){
 	$('#'+hiddenTarget).val('0');
 });
 
+$("#custRegBtn").click(function(e){
+	custFormActivation('insert');//버튼 변경 이벤트
+	
+	opener.$('#addBlackSpan').show();//강성고객 관련 버튼 제어
+	opener.$('#cancleBlackSpan').hide();
+	opener.$('#blackDiv').hide();
+	
+	window.close();
+});
+
 //인입 된 번호로 고객 검색.
 function enterkey(event) {
 	var id = event.id;
@@ -79,7 +89,123 @@ function custDataToJson(param){//고객 인풋 필드 데이터 json형식 변�
 }
 
 
-//********popup 관련************************************************************************************************* 
+
+//********좌측 탭 *************************************************************************************************
+function tabTargetVocService(pageNum){//서비스탭
+	debugger;
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/sv?custno='+custNo;
+	
+	var svLinkStr = '<a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">' ;
+	
+	if(custNo != 0 ){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#tab1 tbody tr').remove();
+	        	$('#tab1 .pagination li').remove();
+	        	
+	        	var length = data.svList.length;
+	        	var html ="";
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/service/"+data.svList[i].SERVICENO+"','voc',750,700);"+'">'+ data.svList[i].SERVICENAME + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td></tr>';
+	        		$('#tab1 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetVocService(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetVocService(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetVocService(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab1 .pagination').append(html2);
+	            }
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+    
+}	
+
+
+function tabTargetVocEmail(pageNum){//email 탭 
+	debugger;
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/email?custno='+custNo;
+	
+	if(custNo != 0){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#tab7 tbody tr').remove();
+	        	$('#tab7 .pagination li').remove();
+	        	var emailId = "";
+	        	var length = data.emailList.length;
+	        	var html ="";
+	        	var hrefStr = '/vc/tab/email/view/';        	
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,700);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';
+	        		console.log(html);
+	        		$('#tab7 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocEmail(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetVocEmail(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetVocEmail(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetVocEmail(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab7 .pagination').append(html2);
+	            }
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+    
+}	
+
+
+//********고객 팝업 관련************************************************************************************************* 
 
 function vocCustSelected(tr){//tr이 클릭 이벤트
 	var custno = tr.getAttribute("value");
@@ -88,8 +214,11 @@ function vocCustSelected(tr){//tr이 클릭 이벤트
 	var statusStr = 'update';
 	vocGetCustInfo(urlStr);//정보획득 후 데이터 바인딩.
 	vocGetServiceInfo(urlServ);
+	custFormActivation('update');//수정 버튼생성.
+	
 	setTimeout(function(){
-		custFormActivation('update');//수정 버튼생성.
+		opener.$('#tab1Btn').trigger('click');
+		window.close();
 	},300);
 }
 
@@ -103,6 +232,18 @@ function vocGetCustInfo(urlStr){
         success: function (data) {
         	custInfoClear();//기존 입력 된 데이터 삭제
         	custInfoBinding(data);//바인딩
+        	
+        	var blackCnt = opener.$('#blackcnt').val();	
+        	if(blackCnt > 0 ){ //블랙리스트 관련 버튼 제어
+        		opener.$('#addBlackSpan').hide();
+        		opener.$('#cancleBlackSpan').show();
+        		opener.$('#blackDiv').show();
+        	}else{
+        		opener.$('#addBlackSpan').show();
+        		opener.$('#cancleBlackSpan').hide();
+        		opener.$('#blackDiv').hide();
+        	}
+        	
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -132,7 +273,7 @@ function custInfoClear(){//인풋 필드 초기화
 	opener.$('#custgubun').val('0');
 	opener.$('#mobile1').val('');opener.$('#mobile2').val('');opener.$('#mobile3').val('');
 	opener.$('#homtel1').val('');opener.$('#homtel2').val('');opener.$('#homtel3').val('');
-	opener.$('#relcustname').val('');
+	opener.$('[name="relcustname"]').val('');
 	opener.$('#relcustno').val('0');
 	opener.$('#email').val('');
 	opener.$('#custgrade').val('0');
@@ -158,6 +299,7 @@ function custInfoBinding(data){//인풋 필드 데이터 바인딩
 	opener.$('#homaddr1').val(data.HOMADDR1);
 	opener.$('#homaddr2').val(data.HOMADDR2);
 	opener.$('#homaddr3').val(data.HOMADDR3);
+	opener.$('#blackcnt').val(data.BLACKCNT);
 }
 
 function serviceInfoBinding(data){
@@ -211,21 +353,21 @@ function custFormActivation(statusStr,fromStr){
 	var btnStr = "";
 	if(statusStr == 'insert'){
 		custInfoClear();
-		btnStr = "<Button type='button' class='btn btn-primary' onClick='goCustInsert()'>고객 등록</Button>";
+		btnStr = "<Button type='button' class='btn btn-primary btn-sm' onClick='goCustInsert()'>고객 등록</Button>";
 		var phoneNum = opener.$('#phone').val(); //인입된 전화번호
 		splitPhoneNum(phoneNum);//3자리로 자른 후 핸드폰번호에 바인딩 
 		
 	}else if (statusStr == 'update'){
-		btnStr = "<Button type='button' class='btn btn-primary' onClick='goCustUpdate()'>고객 수정</Button>";
+		btnStr = "<Button type='button' class='btn btn-primary btn-sm' onClick='goCustUpdate()'>고객 수정</Button>";
 	}
 	if(fromStr == "voc"){//호출한 곳이 voc 페이지면
-		$('#regDiv').empty();
-		$('#regDiv').html(btnStr);
+		$('#regSpan').empty();
+		$('#regSpan').html(btnStr);
 	}else{//팝업
-		opener.$('#regDiv').empty();
-		opener.$('#regDiv').html(btnStr);
+		opener.$('#regSpan').empty();
+		opener.$('#regSpan').html(btnStr);
 	}
-	window.close();
+	
 }
 
 function splitPhoneNum(phoneNum){//01로 시작하면 휴대폰에 바인딩. 그 외 집전화에 바인딩
@@ -267,6 +409,7 @@ function splitPhoneNum(phoneNum){//01로 시작하면 휴대폰에 바인딩. �
 	}	
 }
 
+
 $('#create').click(function(){
 	$('.voc').attr('disabled',false);
 	$('.voc').iCheck('enable');
@@ -293,3 +436,6 @@ $('.asowner').click(function(e){
 	//openNewWindow('담당자','/common/user',e.target.id,650,700);
 	openNewWindow('AS기사','/vc/voc/cal',e.currentTarget.id,900,500);
 });
+
+//******************************************** 고객 팝업 끝 ******************************
+

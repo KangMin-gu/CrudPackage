@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService{
 					loginManager.setSession(request.getSession(),urInfo.get("USERID").toString()); // 로그인정보 로그인매니저등록
 				
 				}else {			
-
-					buf.append("<script>alert('이미 로그인 되었습니다.'); location.href='");
+					loginManager.removeSession(userId);
+					buf.append("<script>alert('이전 사용자를 로그아웃 합니다. 재 로그인 해주세요.'); location.href='");
 				 	buf.append(location);
 				 	buf.append("';</script>");							 		
 					response.setContentType("text/html; charset=UTF-8");
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService{
 			request.getSession().setAttribute("CALLNAME", urInfo.get("CALLNAME")); //사이트 약어
 			request.getSession().setAttribute("USERLANG", urInfo.get("USERLANG")); //사용자 언어
 			request.getSession().setAttribute("CHKAUTH", urInfo.get("CHKAUTH")); //사용자 권한
-			request.getSession().setAttribute("SITELOGO", urInfo.get("SITELOGO")); //회사 로고
+			request.getSession().setAttribute("SITELOGO", urInfo.get("IMGPATH")); //회사 로고
 			request.getSession().setAttribute("SIDESTATES","1");
 			
 			if(url != null) {

@@ -85,15 +85,21 @@ public class CustDaoImpl implements CustDao {
 	//고객 수정 
 	@Override
 	public int custformUpdate(CustDto custDto) {
-		int res = session.insert("customer.custformUpdate", custDto);
+		int res = session.update("customer.custformUpdate", custDto);
 		return res;
 	}
 	//고객 수정 - 수신거부테이블
 	@Override
 	public int custformUpdateDeny(CustDenyDto custDenyDto) {
-		int res = session.insert("customer.custformUpdateDeny", custDenyDto);
+		int res = session.update("customer.custformUpdateDeny", custDenyDto);
 		return res;
 	}
+	//VOC고객 수정
+	public int vocCustUpdate(Map<String,Object> prm) {
+		int res = session.update("customer.vocCustUpdate",prm);
+		return res;
+	}
+	
 	//고객 상세 탭 - 캠페인 리스트 카운터
 	@Override
 	public int custTabCampListCnt(Map<String, Object> searchVal) {

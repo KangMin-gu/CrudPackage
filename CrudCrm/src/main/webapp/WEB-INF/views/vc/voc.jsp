@@ -68,11 +68,18 @@
         </div>
         <div class="wrapper wrapper-content">
             <div class="ibox clearfix">
+           
                 <div class="ibox-left">
-                	<div class="ibox-content text-right" id="regDiv"></div>
-                
                     <div class="ibox-content left-cont pt-0">
-                        <table class="table table-bordered mb-2">
+                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;padding-top: 6px;padding-bottom: 6px;display:none;">
+                    	<b>블랙 리스트에 등록 되어 있는 고객입니다.</b>
+                    </div>
+                    <div id="custHiddenDiv">
+                    	<input type="hidden" id="bcustno" name="bcustno" value="0" />
+                    	<input type="hidden" id="blackcnt" name="blackcnt" value="0" />
+                    	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
+                    </div>
+                        <table class="table table-bordered mb-2">              	
                             <colgroup>
                                 <col style="width: 100px; background: #fafafa;">
                                 <col style="width: auto; min-width: 250px;">
@@ -87,7 +94,6 @@
                                     </td>
                                     <th>고객명</th>
                                     <td>
-                                    	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
                                     	<input type="text" class="form-control custInput" id="custname" name="custname">
                                     </td>
                                   </tr>
@@ -146,40 +152,52 @@
                                     <td colspan="3">
             							<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
             								<input type="text" class="form-control custInput daumzip" name="homaddr1" id="homaddr1" readonly>
-            								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip"></i></a>
+            								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip" id="homaddr1"></i></a>
             								</span>
             							</div>
             							<input type="text" class="form-control float-left mr-2 custInput" name="homaddr2" id="homaddr2" readonly style="width: 220px;">
             							<input type="text" class="form-control float-left custInput" name="homaddr3" id="homaddr3" style="width: 220px;">
                                     </td>
                                 </tr>
-                            	
                             </tbody>
                         </table>
+                        
+                        <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                            <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                             	<span id="regSpan"></span> 
+                            </div>                                       
+                            <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
+								<button class="btn btn-primary btn-sm">SMS 발송</button>
+								<span id="addBlackSpan">
+                            		<button class="btn btn-primary btn-sm" id="addBlackBtn" onClick="addBlack()">블랙 추가</button>
+                            	</span>
+                            	<span id="cancleBlackSpan" style="display:none;">
+                            		<button class="btn btn-primary btn-sm" id="cancleBlackBtn" onClick="cancleBlack()">블랙 해제</button>
+                            	</span>
+                         	</div>
+                         </div>
+                        
                     </div>
                     <div class="ibox-content bot-cont">
-                        <div class="btn-area text-right">
-                            <button class="btn btn-primary btn-sm">SMS 발송</button>
-                            <button class="btn btn-primary btn-sm">블랙추가</button>
-                        </div>
+                        
                         <div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li><a class="nav-link active" data-toggle="tab" href="#tab1">상담이력</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">서비스</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab2">강성고객이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab3">콜백이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab4">SMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab5">MMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab6">LMS</a></li>
-                                <li><a class="nav-link" data-toggle="tab" href="#tab7">이메일</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetVocEmail(1);" data-toggle="tab" href="#tab7">이메일</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" id="tab1" class="tab-pane active">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시1</th>
-                                                    <th>상담구분</th>
+                                                    <th>서비스명</th>
+                                                    <th>접수일시</th>
                                                     <th>상담유형</th>
                                                     <th>접수자</th>
                                                     <th>고객명</th>
@@ -188,22 +206,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab2" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시2</th>
@@ -227,11 +239,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab3" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시3</th>
@@ -255,11 +270,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab4" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시4</th>
@@ -283,11 +301,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab5" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시5</th>
@@ -311,11 +332,14 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab6" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시6</th>
@@ -339,34 +363,29 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                                 <div role="tabpanel" id="tab7" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시7</th>
-                                                    <th>상담구분</th>
-                                                    <th>상담유형</th>
-                                                    <th>접수자</th>
-                                                    <th>고객명</th>
-                                                    <th>접수제품</th>
-                                                    <th>처리자</th>
+                                                	<th>제목</th>
+                                                    <th>수신 주소</th>
+                                                    <th>발신 주소</th>
+                                                    <th>발송 일시</th>
+                                                    <th>발송 타입</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -685,6 +704,39 @@ $(document).ready(function () {
 	 upperCode('servicecode1'); 
  });
 
+ 
+ function addBlack(){
+	 var custno = $('#custno').val();
+	 if(custno > 0 ){
+		 openNewWindow('voc','/vc/black/post','voc',700,480);
+	 }else{
+	 	alert('대상이 선택되지 않았습니다.');
+	 }
+ }
+ 
+ function cancleBlack(){
+	 debugger;
+	 var custno = $('#custno').val();
+	 var urlStr = '/vc/black/del/'+custno;
+	 $.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#blackcnt').val(0);
+	        	$('#addBlackSpan').show();
+				$('#cancleBlackSpan').hide();
+				$('#blackDiv').hide();
+	        	alert("해제 되었습니다.");
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+ }
+ 
 </script>
 
 	

@@ -22,6 +22,7 @@ import saas.crud.crm.au.dto.CompanyDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
+import saas.crud.crm.ce.EmailTemplate;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{
@@ -83,7 +84,9 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		companyDto.setEdtuser(userNo);
+		String fileSearchKey = request.getParameter("fileSearchKey");
+		companyDto.setEdtuser(userNo);		
+		companyDto.setSitelogo(fileSearchKey);
 		companyDao.companyUpdate(companyDto);
 	}
 	
@@ -91,9 +94,10 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String fileSearchKey = request.getParameter("fileSearchKey");
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);
-		
+		companyDto.setSitelogo(fileSearchKey);
 		int siteid = companyDao.companyInsert(companyDto);
 		
 		companyDto.setSiteid(siteid);
@@ -178,8 +182,8 @@ public class CompanyServiceImpl implements CompanyService{
 		//String 타입으로 읽을수 있게 형변환한다.
 		String newPwd = temp.toString();
 		String hash = encoder.encode(newPwd);
-		String adminId = request.getParameter("adid");
-		String managerNo = request.getParameter("mano");
+		String adminId = request.getParameter("adid"); //관리계정
+		String managerNo = request.getParameter("mano"); //담당자번호 
 		
 		//admin 계정정보가져오기
 		Map<String, Object> adminInfo = urDao.getData(adminId); //접속자 정보 //크루드테스트 생성시 메일생성안됨.
@@ -193,10 +197,11 @@ public class CompanyServiceImpl implements CompanyService{
 		//담당자한테 mano 값으로 메일정보가져오기
 		//비밀번호 정보 업데이트
 		companyDao.adminPwdReset(resetUserDto);
+		String siteName = adminInfo.get("SITENAME").toString();
 		
-		StringBuffer buf = new StringBuffer();
-		buf.append("초기화된 비밀번호는 : "+newPwd+" 입니다.");
-
+		EmailTemplate eTemp = new EmailTemplate();		
+		StringBuffer buf = eTemp.sitePwdRestTemle(newPwd, siteName);
+		
 		//초기화된 비밀번호 이메일테이블 인서트
 		sendPwdInfo.put("managerno", managerNo);
 		sendPwdInfo.put("userno", Integer.parseInt(adminInfo.get("USERNO").toString()));
@@ -205,7 +210,7 @@ public class CompanyServiceImpl implements CompanyService{
 		sendPwdInfo.put("toemail",adminInfo.get("EMAIL"));
 		sendPwdInfo.put("username",adminInfo.get("USERNAME"));
 		sendPwdInfo.put("content", buf.toString());
-		sendPwdInfo.put("subject", "IDEA CRM의 비밀번호가 초기화 되었습니다.");
+		sendPwdInfo.put("subject", "IDEA CRM 회원사 비밀번호가 초기화 되었습니다.");
 		sendPwdInfo.put("cstname",adminInfo.get("USERNAME"));
 		sendPwdInfo.put("fromemail","crudsystem@crudsystem.co.kr");
 		

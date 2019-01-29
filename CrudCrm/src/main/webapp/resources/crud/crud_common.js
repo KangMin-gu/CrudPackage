@@ -74,7 +74,7 @@
 	});	
 	//내부통지팝업
 	$('.note').click(function(e){
-		 openNewWindow('내부통지','/popnote',e.currentTarget.id,650,1100);	
+		 openNewWindow('내부통지','/popnote',e.currentTarget.id,1280,850);	
 	})
 	//영업팝업
 	$('.sales').click(function(e){
@@ -142,7 +142,7 @@
 	
 	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분
-		var specs= "menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
+		var specs= "scrollbars=yes,menubar=no,status=no,toolbar=no,Width="+x+",Height="+y;
 		// window.open 함수를 통해서 팝업창 호출
 		newWindow = window.open(url, name, specs);
 		// window Popup이 되고 난후에 바로 실행시키면 inpu창이 만들어지지 않아서 1초의 시간을 지연시킴

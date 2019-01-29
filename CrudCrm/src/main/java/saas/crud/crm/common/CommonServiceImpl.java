@@ -244,7 +244,7 @@ public class CommonServiceImpl implements CommonService {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		
 		//유저정보
-		List<Map<String,String>> adminMail = ntDao.adminMail();
+		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 		
 		NoteCategoryDto noteCategory = new NoteCategoryDto();
 		noteCategory.setUserno(userNo);

@@ -202,6 +202,7 @@ function changePhoneState(state, stateStr){
     if( stateCheckCount > 0 ){
         ts.options[stateCheckIdx].selected = true;
     }
+
     if(state=="0300"){//전화대기 - 걸기, 당겨받기
           showImgPhone("search_call_o");hiddenImgPhone("search_get_o");showImgPhone("search_pickup_o");
           hiddenImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
@@ -656,6 +657,7 @@ function ctiEvent(msg){
 		 "06" : 당겨받기
 		 "07" : 돌려받기
 		 "08" : 3자통화
+
 				팝업시점
 		 "1" : Ring (팝업타입 "06", "07" 제외)
 		 "2" : Answer
@@ -669,6 +671,8 @@ function ctiEvent(msg){
 		      "\nB-3 IVR 연동데이터:" + tmpData[13] + "\nB-4 콜아이디:" + tmpData[14] + "\nB-5 IVR메뉴번호:" + tmpData[15] +
 		      "\nB-6 사용자데이터:" + tmpData[16]);
 */
+	
+
 		document.getElementById("makeCallNum").value = tmpData[4];
 		document.getElementById("phone").value=tmpData[4];
 		/*
@@ -859,4 +863,6 @@ function goWebSocketDisconnect(){
 window.onerror = function(msg, url, line){
 	//alert("Message : " + msg + "\n URL : " + url + "Line number : " + line);
 }
+
 /////////////////////////////////////////////////////////////////////웹소켓/////////////////////////////////////////////////////////////////////
+

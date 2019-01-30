@@ -15,49 +15,44 @@
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 </head>
+
+
 	<body>
     <div id="wrap">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-            <div class="cti" style="display:none">
-           		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="203.239.190.10">
-				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.190.10">
-				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
-				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="7338">
-				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="7338">
-				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
-				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
-			
-				<span id="outCallNum">07042622938</span>
-				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
-				<div>
-					<textarea id="messages" cols="150" rows="10"></textarea>
-				<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
-				</div>
-            </div>
-            <div>
-				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<input type="button" value="로그인" onclick="loginGo();">
-			</div>
                     <ul class="top-btn">
-                    	<li>수신번호 </li>
-                        <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm">걸기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm">받기 <i class="fa fa-phone"></i></button></li>
+                        <li>유입경로 </li>
+                        <li><input type="text" class="form-control"></li>
+                        <li class="mr-2"><input type="text" class="form-control"></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">걸기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>&nbsp; |&nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm">휴식 <i class="fa fa-coffee"></i></button></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button class="btn btn-primary btn-sm">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
-                        <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-                        <li class="liBtn2"><span>상담창 상태</span>
-                        <span id="status" class="cti_text_nomal">연결안됨</span>
-                         <button class="btn btn-default btn-sm">Out연결</button></li>
-                        <li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
+                        <li>00 : 00 : 12</li>&nbsp; | &nbsp;
+                        <li class="liBtn2"><span>상담창 상태</span> <button class="btn btn-default btn-sm">Out연결</button></li>
+                        <li class="mr-2 ml-2"><strong>고객대기 <span>7</span></strong></li>
+                        <li>
+                            <ul class="top-ul02">
+                                <li class="tit02">옴니채널</li>
+                                <li>
+                                    <i class="fa fa-comment"></i>
+                                    <span class="li-text">3</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-wifi"></i>
+                                    <span class="li-text">3</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="li-text">3</span>
+                                </li>
+                                <li onClick="window.open('/')">
+                                    <i class="fa fa-home"></i>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="float-right">
                             <ul class="top-ul03">
                                 <li onClick="window.open('notice.html','','resizable=yes,menubar=no,toolbar=yes,width=850,height=500,scrollbars=yes')">
@@ -65,6 +60,7 @@
                                     <span class="li-text">3</span>
                                 </li>
                                 <li><i class="fa fa-power-off"></i></li>
+                                <li><i class="fa fa-bars"></i></li>
                             </ul>
                         </li>
                     </ul>
@@ -668,6 +664,8 @@
                     <li><strong>89%</strong></li>
                     <li class="call-tit">누적통화시간</li>
                     <li class="yellow"><strong>00:01:30</strong></li>
+                    <li class="call-tit">VB</li>
+                    <li><strong>20 건</strong></li>
                     <li class="call-tit">O/B</li>
                     <li><strong>3 건</strong></li>
                     <li class="call-tit">미처리</li>
@@ -676,20 +674,12 @@
                     <li><strong>0</strong></li>
                     <li class="call-tit">예약</li>
                     <li><strong>0</strong></li>
-                    <li class="call-tit">호분배시도</li>
-                    <li><span id="transferTryCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">호분배연결</li>
-                    <li><span id="transferConnectCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">인바운드시도</li>
-                    <li><span id="ibTryCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">인바운드연결<li>
-                    <li><span id="ibConnectCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">아웃바운드시도</li>
-                    <li><span id="obTryCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">아웃바운드연결</li>
-                    <li><span id="obConnectCnt"><strong>0</strong></span></li>
-                    
                 </ul>
+                <div class="btn-area float-right mr-3">
+                    <button class="btn btn-primary btn-sm">상담스크립트 <i class="fa fa-pen"></i></button>
+                    <button class="btn btn-primary btn-sm ml-1">KMS <i class="fa fa-list-alt"></i></button>
+                    <button class="btn btn-primary btn-sm ml-1">문자보내기 <i class="fa fa-envelope"></i></button>
+                </div>
             </div>
         </div>
     </div>
@@ -700,7 +690,6 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_right.js"></script>
-<script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
 
 <script>
 	
@@ -735,6 +724,7 @@ $(document).ready(function () {
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
+	        	debugger;
 	        	$('#blackcnt').val(0);
 	        	$('#addBlackSpan').show();
 				$('#cancleBlackSpan').hide();
@@ -745,23 +735,8 @@ $(document).ready(function () {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
- };
+ }
  
- var second = 00;
- var minite = 00;
- var countdown = setInterval(function(){
-         //0초면 초기화 후 이동되는 사이트
-         debugger;
- 	var time = second+":"+minite;
- 		document.getElementById('timer').innerHtml = time;
- 		document.getElementById('timer').value = time;
- 		
-         second++;//카운트 감소
-         if(second == 60){
-        	 second = 00;
-        	 minite ++;
-         }
-     }, 1000);
 </script>
 
 	

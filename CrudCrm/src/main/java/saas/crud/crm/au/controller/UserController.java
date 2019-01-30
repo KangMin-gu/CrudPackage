@@ -41,9 +41,8 @@ public class UserController {
 		if(url==null){        
 			url=request.getContextPath()+"/"; 
 		}
-		//로그인후 이동할 url 정보를 ModelAndView 객체에 담고
-		//ModelAndView mView = urService.crudNotice(request);
-		ModelAndView mView = new ModelAndView();
+
+		ModelAndView mView = urService.crudNotice(request);
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
 		mView.addObject("url", url);

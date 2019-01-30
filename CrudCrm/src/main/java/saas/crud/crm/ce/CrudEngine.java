@@ -16,6 +16,6 @@ public interface CrudEngine {
 	public boolean whiteSizeFlag(long fileSize);
 	public Map<String, Object> searchParam(HttpServletRequest request);
 	public Map<String, Integer> paging(HttpServletRequest request, int totalRows, int PAGE_ROW_COUNT, int PAGE_DISPLAY_COUNT);
-	public List<Integer> adressQuarter(String mailAdress);
+	public List<Object> adressQuarter(String mailAdress);
 	public String getMapValueNullCheck(Map target, String key);
 }

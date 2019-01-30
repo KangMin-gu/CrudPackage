@@ -329,7 +329,7 @@ public class CrudEngineImpl implements CrudEngine{
 	
 	//내부통지 주소 쿼터
 	@Override
-	public List<Integer> adressQuarter(String mailAdress) {
+	public List<Object> adressQuarter(String mailAdress) {
 		
 		/*
 		 *  메일에서 To 또는 CC  ex) 123@naver.com;123@naver.com;123@naver.com;123@naver.com
@@ -337,7 +337,7 @@ public class CrudEngineImpl implements CrudEngine{
 		 * 
 		 */
 		
-		List<Integer> mailTarget = new ArrayList<Integer>();
+		List<Object> mailTarget = new ArrayList<Object>();
 			
 			String[] mailAdresses = mailAdress.split(";");
 			

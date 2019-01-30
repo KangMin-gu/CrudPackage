@@ -138,8 +138,9 @@
 			   			<a href="#"><i class="fa fa-cog"></i> <span class="nav-label">관리자</span><span class="fa arrow"></span></a>
 			   			<ul class="nav nav-second-level collapse">
 			   				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>			   				
-			   				<li><a href="${pageContext.request.contextPath}/ad/code">회원사 코드관리</a></li>
+			   				<li><a href="${pageContext.request.contextPath}/ad/code">코드 관리</a></li>
 			   				<li><a href="${pageContext.request.contextPath}/ad/company/${sessionScope.SITEID}">회원사 관리</a></li>
+			   				<li><a href="${pageContext.request.contextPath}/ad/sitenotice">공지사항 관리</a></li>
 			   			</ul>
 			   		</li>
 		       	</c:if>
@@ -152,7 +153,8 @@
 						<li><a href="${pageContext.request.contextPath}/ma/code">공통코드</a></li>
 						<li><a href="${pageContext.request.contextPath}/ma/license">라이센스 관리</a></li>
 						<li><a href="${pageContext.request.contextPath}/ma/menu">메뉴 관리</a></li>
-						<li><a href="${pageContext.request.contextPath}/ma/sitechk">접속자 확인</a></li>
+						<li><a href="${pageContext.request.contextPath}/ma/allnotice">전체 공지사항 관리</a></li>
+						<li><a href="${pageContext.request.contextPath}/ma/sitechk">접속 유저 확인</a></li>
 					</ul>
 			        </li>
 		      	</c:if>

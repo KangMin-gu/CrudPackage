@@ -67,28 +67,35 @@ body {
 						</form:form>
 					</div>
 					<div class="col-mg-12 p-0 text-right" style="margin-bottom: 10px;">
-						<button class="btn btn-primary" type="button" id="custRegBtn">신규 등록</button>
+						<button class="btn btn-primary btn-sm" type="button" id="custRegBtn">신규 등록</button>
 						<input type="hidden" id="parentid" name="parentid" value="" />		
 					</div>
 					<div class="overflow-x w-100">
 						<table class="table table-bordered table-hover">
+							<colgroup>
+								<col width="100px;">
+								<col width="120px;">
+								<col width="120px;">
+								<col width="120px;">
+								<col width="300px;">
+							</colgroup>
 							<thead>
 								<tr>
 									<th>고객명</th>
 									<th>휴대전화</th>
 									<th>집전화</th>
 									<th>직장전화</th>
-									<th>이메일</th>
+									<th>주소</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="list" items="${custList }">
 									<tr style="cursor: pointer;" onClick="javascript:vocCustSelected(this);" value="${list.CUSTNO }"> 
-										<td id="custname">${list.CUSTNAME}</td>
+										<td id="custname" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.CUSTNAME}</td>
 										<td>${list.MOBILE}</td>
 										<td>${list.HOMTEL }</td>
 										<td>${list.WRKTEL }</td>
-										<td>${list.EMAIL}</td>
+										<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.HOMADDR_}</td>
 									</tr>
 								</c:forEach>
 							</tbody>

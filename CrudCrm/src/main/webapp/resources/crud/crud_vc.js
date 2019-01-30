@@ -24,7 +24,7 @@ function enterkey(event) {
     if (window.event.keyCode == 13) {//입력 값이 enter 
     	if(id == 'phone'){
     		var searchPhoneNo = document.getElementById(id).value;
-    		openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',900,800);
+    		openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',1260,800);
     	}
     }
 }
@@ -34,6 +34,7 @@ function goCustInsert(){
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
 	if(custName.trim() == ''){//입력 값이 없으면 기본값으로 설정.
+		var recieveNo =
 		$("#custname").val('익명');
 	}	
 	
@@ -168,7 +169,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 	        	var html ="";
 	        	var hrefStr = '/vc/tab/email/view/';        	
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,700);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,500);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';
 	        		console.log(html);
 	        		$('#tab7 tbody').append(html);
 	        	}

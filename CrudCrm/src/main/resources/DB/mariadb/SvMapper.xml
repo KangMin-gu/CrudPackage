@@ -555,7 +555,7 @@
 	<if test="endRowNum != null">
 	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</if> 
-	ORDER BY RLTDATE DESC 
+	ORDER BY RLTDATE_ DESC 
 	</select>
 	
 	<!-- VOC EMAIL 상세 -->

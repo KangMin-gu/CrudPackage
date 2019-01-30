@@ -48,6 +48,7 @@ public class VocController {
 		Map<String,Object> code = codeService.getCode();
 		mView.addAllObjects(code);
 		mView.setViewName("vc/voc");
+		//mView.setViewName("vc/vocTest");
 		return mView;
 	}
 	
@@ -62,8 +63,7 @@ public class VocController {
 	
 	
 	@RequestMapping(value="vc/satis", method=RequestMethod.GET)
-	public String authvocSatis() {
-		
+	public String authvocSatis() {	
 		return "vc/satis";
 	}
 	
@@ -89,7 +89,7 @@ public class VocController {
 	//voc 고객팝업창 tr 클릭 시 해당 고객의 최근 한건의 서비스 데이터 바인딩
 	@RequestMapping(value="/vc/pop/service/{custNo}", method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> authVocPopServiceSelect(HttpServletRequest request,@PathVariable int custNo){
+	public Map<String,Object> authvocPopServiceSelect(HttpServletRequest request,@PathVariable int custNo){
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("siteid", siteId);
@@ -158,7 +158,7 @@ public class VocController {
 	}
 
 	@RequestMapping(value="/vc/voc/cal", method=RequestMethod.GET)
-	public ModelAndView vocCalList(HttpServletRequest request) {
+	public ModelAndView authvocCalList(HttpServletRequest request) {
 		ModelAndView mView = vcService.vocCalList(request);
 		mView.setViewName("vc/calendar/vocCalMain");
 		return mView;
@@ -222,6 +222,13 @@ public class VocController {
 		blackDelMap.put("custno", custno);
 		int bcustno = vcService.svcVocBlackCustDelete(blackDelMap);
 		return bcustno;
+	}
+	
+	//VOC - 세션유지 	
+	@RequestMapping(value="/vc/sess",method=RequestMethod.GET)
+	@ResponseBody
+	public int authvocSessionMaintain(HttpServletRequest request) {
+		return 0;
 	}
 
 }

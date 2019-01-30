@@ -438,3 +438,27 @@ $('.asowner').click(function(e){
 });
 
 //******************************************** 고객 팝업 끝 ******************************
+
+
+
+function cti_test(){
+	
+	var url = "/cti/history";
+	var param = {"custno":custno,"servicetype":servicetype};
+	
+	$.ajax({
+        url: url,
+        method: "POST",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	serviceInfoBinding(data);//바인딩
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+	
+}
+
+

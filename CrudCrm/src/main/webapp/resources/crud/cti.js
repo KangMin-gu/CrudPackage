@@ -672,7 +672,7 @@ function ctiEvent(msg){
 		      "\nA-8 녹취폴더(녹취일):" + tmpData[10] + "\nB-1 대표번호:" + tmpData[11] + "\nB-2 발신자번호:" + tmpData[12] +
 		      "\nB-3 IVR 연동데이터:" + tmpData[13] + "\nB-4 콜아이디:" + tmpData[14] + "\nB-5 IVR메뉴번호:" + tmpData[15] +
 		      "\nB-6 사용자데이터:" + tmpData[16]);
-*/
+		*/
 		document.getElementById("makeCallNum").value = tmpData[4];
 		document.getElementById("phone").value=tmpData[4];
 		/*

@@ -20,23 +20,24 @@
         <div class="ibox-top">
             <div class="ibox-content clearfix">
             <div class="cti" style="display:none">
-           		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="203.239.190.10">
-				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.190.10">
+           		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
+				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
 				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
 				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
 				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="7338">
+				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
 				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="7338">
+				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622886">
 				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
 				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
 			
-				<span id="outCallNum">07042622938</span>
+				<span id="outCallNum">07042622886</span>
 				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
 				<div>
 					<textarea id="messages" cols="150" rows="10"></textarea>
 				<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
+				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
             </div>
             <div>
@@ -49,11 +50,12 @@
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
                         <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm">걸기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm">받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>&nbsp; |&nbsp;
+                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm">끊기<i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>&nbsp; |&nbsp;
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button class="btn btn-primary btn-sm">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
-                        <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
+                        <li><span id="timer">00 : 00</span></li>&nbsp; | &nbsp;
                         <li class="liBtn2"><span>상담창 상태</span>
                         <span id="status" class="cti_text_nomal">연결안됨</span>
                          <button class="btn btn-default btn-sm">Out연결</button></li>
@@ -551,7 +553,7 @@
                                 <td colspan="3">
                                     <div class="i-checks voc">
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep2" name="vocstep"> 처리</label>
-                                        <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>
+                                        <!-- <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>-->
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep5" name="vocstep"> 상급자 이관</label>
                                     </div>
@@ -681,7 +683,7 @@
                     <li class="call-tit">호분배연결</li>
                     <li><span id="transferConnectCnt"><strong>0</strong></span></li>
                     <li class="call-tit">인바운드시도</li>
-                    <li><span id="ibTryCnt"><strong>0</strong></span></li>
+                    <li><span id="ibTryCnt">0</span></li>
                     <li class="call-tit">인바운드연결<li>
                     <li><span id="ibConnectCnt"><strong>0</strong></span></li>
                     <li class="call-tit">아웃바운드시도</li>
@@ -747,21 +749,24 @@ $(document).ready(function () {
 	    });
  };
  
- var second = 00;
- var minite = 00;
+ var second = "0";
+ var min = "00";
  var countdown = setInterval(function(){
          //0초면 초기화 후 이동되는 사이트
-         debugger;
- 	var time = second+":"+minite;
- 		document.getElementById('timer').innerHtml = time;
- 		document.getElementById('timer').value = time;
  		
-         second++;//카운트 감소
          if(second == 60){
         	 second = 00;
-        	 minite ++;
+        	 min ++;
          }
+         
+         if(second < "10"){
+        	 second = "0"+second;
+         }
+ 	var time = min+" : "+second;
+ 	$('#timer').text(time);
+ 	second++;//카운트 증가
      }, 1000);
+ 
 </script>
 
 	

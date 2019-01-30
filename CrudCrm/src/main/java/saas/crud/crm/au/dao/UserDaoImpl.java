@@ -51,5 +51,11 @@ public class UserDaoImpl implements UserDao{
 		Map<String, Object> useInfo = session.selectOne("user.useCheck", userId);
 		return useInfo;
 	}
+
+	@Override
+	public Map<String, Object> userInfo(int userNo) {
+		Map<String, Object> useInfo = session.selectOne("user.useInfo", userNo);
+		return useInfo;
+	}
 	
 }

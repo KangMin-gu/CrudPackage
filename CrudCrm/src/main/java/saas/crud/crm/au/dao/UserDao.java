@@ -14,4 +14,5 @@ public interface UserDao {
 	public void userHistory(Map<String,Object> param);
 	public List<Map<String, Object>> crudNotice();
 	public Map<String, Object> useInfo(String userId);
+	public Map<String, Object> userInfo(int userNo);
 }

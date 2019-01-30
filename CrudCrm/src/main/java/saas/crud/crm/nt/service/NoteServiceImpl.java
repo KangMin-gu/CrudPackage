@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dao.AuDao;
+import saas.crud.crm.au.dao.UserDao;
+import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonDao;
 import saas.crud.crm.nt.dao.NoteDao;
@@ -34,6 +37,8 @@ public class NoteServiceImpl implements NoteService{
 	@Autowired
 	private CrudEngine crudEngine;
 	
+	@Autowired
+	private UserDao urDao;
 	
 	
 	 
@@ -503,36 +508,34 @@ public class NoteServiceImpl implements NoteService{
 		String toUserList[] = request.getParameterValues("touser");
 		String ccUserList[] = request.getParameterValues("ccuser");
 		
+		ntDto.setSiteid(siteId);
+		
+		
+		//보낸이
+		Map<String, Object> fromInfo = urDao.userInfo(fromUserNo);
+			String fromEmail = fromInfo.get("EMAIL").toString();
+			String fromName = fromInfo.get("USERNAME").toString();
+		
+		//받는이	
 		for(String a : toUserList) {
-			System.out.println(a);
-			if(a.equals(",,")) {
-				System.out.println("yes");
-			}else {
-				System.out.println("no");
+
+			if(!a.equals(",,")) {
+				int userNo = Integer.parseInt(a);	
+				
+				//받는이		
+				Map<String, Object> toInfo = urDao.userInfo(userNo);				
+				String toEmail = toInfo.get("EMAIL").toString();
+				String toName = toInfo.get("USERNAME").toString();
+				//등록 보낸이등록
+				
 			}
 		}
 		
-		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
 			
-		//받는 사람 이름,유저넘버,이메일이 넘어옴 
-		String[] toUserEmail = request.getParameterValues("touser"); 
-		String[] ccUserEmail = request.getParameterValues("ccuser");
 		
-		//insert 시킬 값 넣는 map
-		HashMap<String, Object> map= new HashMap<String,Object>();
 		
-		//;를 이어붙어서 만든 userno(target),email,name값들 (받는이)  
-		HashMap<String,String> toTargetMap = null;
-		
-		//받는이
-		//userno
-		String toTarget = toTargetMap.get("target");
-		//email
-		String toUser = toTargetMap.get("email");
-		//name 
-		String toName = toTargetMap.get("name");
 		
 		return 0;
 	}

@@ -84,9 +84,9 @@
 <p class="text-muted text-center"> <small>Copyright CRUD XaaS SYSTEM &copy; 2018</small> </p>
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.1.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 
 </body>
 

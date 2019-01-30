@@ -55,4 +55,8 @@
 		INNER JOIN ma900010 AS B ON A.SITEID = B.SITEID
 		WHERE USERID = #{userid}
 	</select>
+	
+	<select id="useInfo" parameterType="int" resultType="hashMap">
+		SELECT * FROM me800010 WHERE USERNO = #{userno}
+	</select>
 </mapper>

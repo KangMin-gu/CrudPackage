@@ -39,7 +39,6 @@ public class NoteController {
 	@RequestMapping(value="/note/inbox", method=RequestMethod.GET)
 	public ModelAndView authNoteInbox(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteInbox(request);		
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -48,7 +47,6 @@ public class NoteController {
 	@RequestMapping(value="/note/inbox", method=RequestMethod.POST)
 	public ModelAndView authNoteInsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteInbox(request);	
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -57,7 +55,6 @@ public class NoteController {
 	@RequestMapping(value="/note/inbox/{noticeId}", method=RequestMethod.GET)
 	public ModelAndView authnoteDetail(@PathVariable int noticeId,HttpServletRequest request) {
 		ModelAndView mView = ntService.noteDetail(noticeId, request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notedetail");
 		return mView;
 	}
@@ -66,7 +63,6 @@ public class NoteController {
 	@RequestMapping(value="/note/outbox", method=RequestMethod.GET)
 	public ModelAndView authnoteOutbox(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteOutbox(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -75,7 +71,6 @@ public class NoteController {
 	@RequestMapping(value="/note/outbox", method=RequestMethod.POST)
 	public ModelAndView authNoteOutsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteOutbox(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -84,7 +79,6 @@ public class NoteController {
 	@RequestMapping(value="/note/outbox/{noticeId}", method=RequestMethod.GET)
 	public ModelAndView authnoteOutDetail(@PathVariable int noticeId, HttpServletRequest request) {
 		ModelAndView mView = ntService.noteDetail(noticeId, request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notedetail");
 		return mView;
 	}
@@ -93,7 +87,6 @@ public class NoteController {
 	@RequestMapping(value="/note/import", method=RequestMethod.GET)
 	public ModelAndView authnoteImport(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteImport(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -102,7 +95,6 @@ public class NoteController {
 	@RequestMapping(value="/note/import", method=RequestMethod.POST)
 	public ModelAndView authnoteImportsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteImport(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -111,7 +103,6 @@ public class NoteController {
 	@RequestMapping(value="/note/import/{noticeId}", method=RequestMethod.GET)
 	public ModelAndView noteImportDetail(@PathVariable int noticeId,HttpServletRequest request) {
 		ModelAndView mView = ntService.noteDetail(noticeId, request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notedetail");
 		return mView;
 	}
@@ -120,7 +111,6 @@ public class NoteController {
 	@RequestMapping(value="/note/trash", method=RequestMethod.GET)
 	public ModelAndView authnoteTrash(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteTrash(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -129,7 +119,6 @@ public class NoteController {
 	@RequestMapping(value="/note/trash", method=RequestMethod.POST)
 	public ModelAndView authnoteTrashsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteTrash(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notelist");
 		return mView;
 	}
@@ -156,7 +145,6 @@ public class NoteController {
 	@RequestMapping(value="/note/trash/{noticeId}", method=RequestMethod.GET)
 	public ModelAndView authnoteTrashDetail(@PathVariable int noticeId,HttpServletRequest request) {
 		ModelAndView mView = ntService.noteDetail(noticeId, request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
 		mView.setViewName("nt/notedetail");
 		return mView;
 	}
@@ -164,29 +152,10 @@ public class NoteController {
 	//메일 발송 화면
 	@RequestMapping(value="/note/send", method=RequestMethod.GET)
 	public ModelAndView authnoteSendForm(HttpServletRequest request) {
-		ModelAndView mView = ntService.noteSet(request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
+		ModelAndView mView = new ModelAndView();
 		mView.setViewName("nt/noteform");
 		return mView;
 	}
-	//답장 화면 
-	@RequestMapping(value="/note/send/{noticeId}", method=RequestMethod.GET)
-	public ModelAndView authnoteSendForm(HttpServletRequest request,@PathVariable int noticeId) {
-		ModelAndView mView = ntService.noteReply(request,noticeId);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));	
-		mView.setViewName("nt/noteform");
-		return mView;
-	}
-	
-	//전달 화면 
-	@RequestMapping(value="/note/forward/{noticeId}", method=RequestMethod.GET)
-	public ModelAndView authnoteForwardForm(HttpServletRequest request,@PathVariable int noticeId) {
-		ModelAndView mView = ntService.noteDetail(noticeId, request);
-		mView.addObject("noteCommonRows",ntService.noteCommonRows(request));
-		mView.setViewName("nt/noteform");
-		return mView;
-	}
-	
 	
 	//메일 발송
 	@RequestMapping(value="/note/send", method=RequestMethod.POST)
@@ -237,6 +206,7 @@ public class NoteController {
 		mView.setViewName("fileDownView");
 		return mView;
 	}
+
 	
 	//쪽지팝업(ajax)	
 	@RequestMapping(value="/note/summary",method=RequestMethod.GET)

@@ -38,7 +38,7 @@
                     <input id="userpassword" name="userpassword" type="password" class="form-control" placeholder="비밀번호" required>
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>     
-                 <small>Chrome, Internet Exploer 11이상의 버전에 최적화 되어 있습니다.</small>      
+                <small>Chrome, IE 11이상의 버전에 최적화 되어 있습니다.</small>      
             </form:form>
             <br/>
             <div class="container">

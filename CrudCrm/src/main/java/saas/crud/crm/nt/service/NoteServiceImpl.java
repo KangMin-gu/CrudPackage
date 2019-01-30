@@ -493,16 +493,24 @@ public class NoteServiceImpl implements NoteService{
 		}	
 		
 	}
-	//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
-	//		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
-	
 	
 	//통지발송
 	@Override
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
+		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
+		String toUserList[] = request.getParameterValues("touser");
+		String ccUserList[] = request.getParameterValues("ccuser");
+		
+		for(String a : toUserList) {
+			System.out.println(a);
+			if(a.equals(",,")) {
+				System.out.println("yes");
+			}else {
+				System.out.println("no");
+			}
+		}
 		
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
@@ -535,6 +543,18 @@ public class NoteServiceImpl implements NoteService{
 	public int noteCount(NoteDto ntDto) {
 		int noteCount = ntDao.noteCount(ntDto);	
 		return noteCount;
+	}
+
+
+
+	//통지 발송 화면
+	@Override
+	public ModelAndView noteSendForm(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("adminMail", adminMail);
+		return mView;
 	}
 
 

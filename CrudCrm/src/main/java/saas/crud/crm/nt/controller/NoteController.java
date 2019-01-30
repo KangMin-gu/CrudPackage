@@ -152,7 +152,7 @@ public class NoteController {
 	//메일 발송 화면
 	@RequestMapping(value="/note/send", method=RequestMethod.GET)
 	public ModelAndView authnoteSendForm(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
+		ModelAndView mView = ntService.noteSendForm(request);
 		mView.setViewName("nt/noteform");
 		return mView;
 	}

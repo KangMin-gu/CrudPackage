@@ -221,7 +221,6 @@ public class NoteDaoImpl implements NoteDao{
 	@Override
 	public int noteCount(NoteDto ntDto) {
 		int aram = session.selectOne("note.count", ntDto);
-		System.out.println(aram +"-----");
 		return aram;
 	}
 	

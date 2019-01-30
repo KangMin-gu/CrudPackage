@@ -27,4 +27,5 @@ public interface NoteService {
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest);
 	public List<Map<String,Object>> noteSummary(HttpServletRequest request);
 	public int noteCount(NoteDto ntDto);
+	public ModelAndView noteSendForm(HttpServletRequest request);
 }

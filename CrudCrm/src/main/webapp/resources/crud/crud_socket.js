@@ -1,14 +1,14 @@
 //내부통지 알람
 function send_message(){
 
-    var sock = new SockJS("http://211.233.81.190/noteCount");
+   // var sock = new SockJS("http://211.233.81.190/noteCount");
+	 var sock = new SockJS("http://localhost/noteCount");
     sock.onopen = function(evt) {
         timerNote();
     };
 
     sock.onmessage = function(evt) {
         var alarmNum = evt.data;   
-        console.log('실행'+evt.data);
         if(alarmNum != 0){        	
             $("#alarm").text(evt.data);
             $('#dropClick span').show();

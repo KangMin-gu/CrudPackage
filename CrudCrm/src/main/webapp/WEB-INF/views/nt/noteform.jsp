@@ -146,9 +146,12 @@
 									<div class="form-group row">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
 										<div class="col-md-6">
-											<input id="file" name="file" class="form-control" type="file"
-												multiple>
+											<input id="file" name="file" class="form-control" type="file" multiple>
+											<input type="hidden" name/>
 											<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+											        <input class="form-control" type="text" id="filename" name="filename" disabled />
+                                            		<button type="button" id="searchKey" class="btn btn-light btn-xs">로고 등록</button>
+                                            		<input type="hidden" id="fileSearchKey" name="fileSearchKey" />
 										</div>
 										
 									</div>

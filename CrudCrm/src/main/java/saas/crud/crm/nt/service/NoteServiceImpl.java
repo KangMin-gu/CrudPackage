@@ -507,37 +507,49 @@ public class NoteServiceImpl implements NoteService{
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
 		String toUserList[] = request.getParameterValues("touser");
 		String ccUserList[] = request.getParameterValues("ccuser");
-		
+		MultipartFile singleFile = null;
 		ntDto.setSiteid(siteId);
-		
-		
+		//ntDto 셋팅
 		//보낸이
-		Map<String, Object> fromInfo = urDao.userInfo(fromUserNo);
-			String fromEmail = fromInfo.get("EMAIL").toString();
-			String fromName = fromInfo.get("USERNAME").toString();
+		ntDto.setFromuserno(fromUserNo);
 		
-		//받는이	
+		
+		if(multipartHttpServletRequest != null) {
+			//첨부파일
+			List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+			String fileSearchKey = crudEngine.fileSearchKey(multipartHttpServletRequest);
+			ntDto.setFilesearchkey(fileSearchKey);
+			crudEngine.fileUpload(response, request, fileUpload, singleFile, fileSearchKey);
+		}
+		
+		int noticeId = ntDao.noteSend(ntDto); //통지내용등록
+		
 		for(String a : toUserList) {
-
 			if(!a.equals(",,")) {
-				int userNo = Integer.parseInt(a);	
-				
-				//받는이		
-				Map<String, Object> toInfo = urDao.userInfo(userNo);				
-				String toEmail = toInfo.get("EMAIL").toString();
-				String toName = toInfo.get("USERNAME").toString();
-				//등록 보낸이등록
-				
+				int toUserNo = Integer.parseInt(a);
+				ntDto.setUserno(toUserNo);				
+				ntDao.notetoAndCc(ntDto); // to 등록
+			}
+		}
+
+		if(ccUserList.length != 0) {
+			for(String b : ccUserList) {
+				int ccUserNo = Integer.parseInt(b);
+				ntDto.setUserno(ccUserNo);
+				ntDto.setChkcc(1);
+				ntDao.notetoAndCc(ntDto); //cc 등록
 			}
 		}
 		
-		ntDto.setUserno(fromUserNo);
-		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		/*
+		//이메일보낸이
+		Map<String, Object> fromInfo = urDao.userInfo(fromUserNo);
+			String fromEmail = fromInfo.get("EMAIL").toString();
+			String fromName = fromInfo.get("USERNAME").toString();
+		*/
+		
 			
-		
-		
-		
-		return 0;
+		return noticeId;
 	}
 
 			

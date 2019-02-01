@@ -35,7 +35,7 @@ public class CrudEngineImpl implements CrudEngine{
 	//fileupload 엔진
 	@Override
 	public void fileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> multiFile, MultipartFile singleFile, String fileSearchKey) {
-
+		boolean upload = false;
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		String url = request.getRequestURI();
@@ -60,7 +60,7 @@ public class CrudEngineImpl implements CrudEngine{
 				whiteListFlag = whiteFlag(orgFileName);
 				
 				//확장자가 올바르지 않으면 false로 떨궈서 alert() 타게함 
-				if(!whiteListFlag) {
+				if(!whiteListFlag) {			
 					buf.append("<script>alert('허가되지 않은 확장자 입니다.');");
 					buf.append("location.href='");
 					buf.append(referer+"?fsk="+fileSearchKey);				

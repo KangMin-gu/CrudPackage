@@ -513,13 +513,14 @@ public class NoteServiceImpl implements NoteService{
 		//보낸이
 		ntDto.setFromuserno(fromUserNo);
 		
-		
+		//파일첨부
 		if(multipartHttpServletRequest != null) {
 			//첨부파일
 			List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
 			String fileSearchKey = crudEngine.fileSearchKey(multipartHttpServletRequest);
 			ntDto.setFilesearchkey(fileSearchKey);
 			crudEngine.fileUpload(response, request, fileUpload, singleFile, fileSearchKey);
+			
 		}
 		
 		int noticeId = ntDao.noteSend(ntDto); //통지내용등록

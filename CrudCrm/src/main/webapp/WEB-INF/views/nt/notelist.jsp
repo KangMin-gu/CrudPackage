@@ -172,9 +172,9 @@
 							<table class="table table-hover table-mail">
 							<colgroup>
 											<col width="35px;">
+											<col width="50px;">
 											<col width="150px;">
-											<col width="100px;">
-											<col width="100px;">
+											<col width="90px;">
 											<col width="50px;">
 										
 							</colgroup>
@@ -184,9 +184,9 @@
 													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
 												</th>
 												<th style="padding-left:12px">보낸이</th>
-												<th>제목</th>
-												<th>날짜</th>
-												<th>첨부파일</th>
+												<th class="text-center">제목</th>
+												<th class="text-center">날짜</th>
+												<th class="text-center">첨부파일</th>
 												
 											
 											</tr>
@@ -203,8 +203,8 @@
 	                 					>
 											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks chksquare" value="${tmp.NOTICEID }"></td>
 											<td class="mail-ontact">${tmp.FROMUSERNAME }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
-											<td class="mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
-											<td class="text-right mail-date">
+											<td class="text-center mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
+											<td class="text-center mail-date">
 												<jsp:useBean id="toDay" class="java.util.Date" />
 												<fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd" var="nowDate"/>
 												<c:choose>
@@ -213,7 +213,7 @@
 												</c:choose>																	
 											</td>
 											
-											<td class="text-right"><c:if test="${tmp.FILESEARCHKEY ne NULL }"><i class="fa fa-paperclip"></i></c:if></td>
+											<td class="text-center"><c:if test="${tmp.FILESEARCHKEY ne NULL }"><i class="fa fa-paperclip"></i></c:if></td>
 										</tr>
 										
 									</c:forEach>

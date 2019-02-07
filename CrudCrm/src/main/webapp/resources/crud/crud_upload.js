@@ -2,48 +2,70 @@
 
 /*
  * 
- * Ajax 파일업로드 확장자체크 파일서치키만 DB 전달.
+ * Ajax 파일업로드 확장체크
  * 
  * 
  */
 
-//파일서치키 생성
-	jQuery.extend({
-		fileSearchKey : function(){
-			var Now = new Date();
-			var yyyy = Now.getFullYear().toString(); 
-			var MM = (Now.getMonth()+1).toString(); 
-			var dd = Now.getDate().toString(); 
-			var HH = Now.getHours().toString(); 
-			var mm = Now.getMinutes().toString(); 
-			var ss = Now.getSeconds().toString(); 
-			var SSS = Now.getMilliseconds().toString();
-			
-			var fileSearchKey = yyyy+MM+dd+HH+mm+ss+SSS;
-			
-			return fileSearchKey;
+//회원사 로고 체크
+$('input[id=logoChk]').change(function(){
+	if($(this).val() != ""){
+		
+		var ext = $(this).val().split(".").pop().toLowerCase();
+		
+		if($.inArray(ext, ["gif","jpg","jpeg","png"]) == -1 ){
+			alert("gif, jpg, jpeg, png 파일만 업로드 해주세요.");
+			$(this).val("");
+			return;
 		}
-	});
-//로고이미지체크
+		
+		var fileSize = this.files[0].size;
+		var maxSize = 1024*1024;
+		if(fileSize > maxSize){
+			alert("로고파일은 10MB 이내로 등록 가능합니다.");
+			$(this).val("");
+			return;
+		}
+		
+	    var file  = this.files[0];
+	    var _URL = window.URL || window.webkitURL;
+	    var img = new Image();
+	    
+	    img.src = _URL.createObjectURL(file);
+	    img.onload = function() {
+	  
+	        if(img.width != 170 || img.height != 48) {
+	            alert("이미지 가로 170px, 세로 48px로 맞춰서 올려주세요.");
+	            $('input[id=logoChk]').val("");
+	            return;
+	        } 
+	    }
+	}
+});
 
 //내부통지 파일업로드
+$('input[id=filesChk]').change(function(){
+	fileBuffer = [];
+    const target = document.getElementsByName('file');
+    Array.prototype.push.apply(fileBuffer, target[0].files);
+    $.each(target[0].files, function(index, file){
+    	const fileName = file.name;
+    	const fileEx = fileName.slice(fileName.indexOf(".") + 1).toLowerCase(); 
 
-//파일업로드 ajax 실행
-    function fileSubmit() {
-        var formData = new FormData($("#fileForm")[0]);
-        $.ajax({
-            type : 'post',
-            url : 'fileUpload',
-            data : formData,
-            processData : false,
-            contentType : false,
-            success : function(html) {
-                alert("파일 업로드하였습니다.");
-            },
-            error : function(error) {
-                alert("파일 업로드에 실패하였습니다.");
-                console.log(error);
-                console.log(error.status);
-            }
-        });
-    }
+    	if($.inArray(fileEx, ["xls","xlsx","doc","docx","ppt","pptx","pdf","jpg","gif","tif","bmp","mov","ogg","zip","wav","txt","png","PNG"]) == -1 ){
+            alert("해당 파일은 등록 가능한 확장자가 아닙니다.");
+            $('input[id=filesChk]').val("");
+            return false;
+        }
+    	
+    	const fileSize = file.size;
+		var maxSize = 1024*1024;
+		if(fileSize > maxSize){
+			alert("파일사이즈를 초과하였습니다.");
+			$('input[id=noteChk]').val("");
+			return false;
+		}
+		
+    });
+
+});

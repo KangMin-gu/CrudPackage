@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.CompanyDto;
@@ -69,14 +71,15 @@ public class CompanyController {
 
 	// 회원사 UPDATE 실행
 	@RequestMapping(value="/ma/company/post/{siteId}",method=RequestMethod.POST)
-
-	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
-		companyService.comapnyUpdate(request, CompanyDto);	
+	public ModelAndView authCompanyUpdateSet(@ModelAttribute CompanyDto CompanyDto,HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("files") MultipartFile file) {
+		companyService.comapnyUpdate(request, response, CompanyDto, file);	
 		ModelAndView mView = new ModelAndView();
 		int siteId = CompanyDto.getSiteid();
 		mView.setViewName("redirect:/ma/company/"+siteId);
 		return mView;
 	}
+	
 	// 회원사 INSERT 화면
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.GET)
 	public ModelAndView authCompanyInsert(@ModelAttribute CompanyDto CompanyDto) {
@@ -88,9 +91,10 @@ public class CompanyController {
 	}
 	// 회원사 INSERT 실행
 	@RequestMapping(value="/ma/company/post", method=RequestMethod.POST)
-	public ModelAndView authCompanyInsertSet(HttpServletResponse response, @ModelAttribute CompanyDto CompanyDto,HttpServletRequest request) {
+	public ModelAndView authCompanyInsertSet(HttpServletResponse response, @ModelAttribute CompanyDto CompanyDto,HttpServletRequest request,
+			@RequestParam("files") MultipartFile file) {
 		ModelAndView mView = new ModelAndView();
-		int siteid = companyService.companyInsert(response,request,CompanyDto);
+		int siteid = companyService.companyInsert(response,request,CompanyDto, file);
 		
 		mView.setViewName("redirect:/ma/company/"+siteid);
 		

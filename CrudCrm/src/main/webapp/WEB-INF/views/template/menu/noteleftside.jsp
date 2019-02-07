@@ -12,9 +12,9 @@
                             <div class="space-25"></div>
                             <h5>Folders</h5>
                             <ul class="folder-list m-b-md" style="padding: 0">
-                                <li><a href="${pageContext.request.contextPath}/note/inbox"> <i class="fa fa-inbox "></i> 받은 통지함 <span class="label label-warning float-right">${noteCommonRows.inboxVal }</span> </a></li>
+                                <li><a href="${pageContext.request.contextPath}/note/inbox"> <i class="fa fa-inbox "></i> 받은 통지함 <span class="label label-warning float-right" id="noteAlarm"> </span> </a></li>
                                 <li><a href="${pageContext.request.contextPath}/note/outbox"> <i class="fa fa-envelope-o"></i> 보낸 통지함</a></li>
-                                <li><a href="${pageContext.request.contextPath}/note/import"> <i class="fa fa-certificate"></i> 중요 통지함 <span class="label label-danger float-right">${noteCommonRows.importBoxVal}</span></a></li>   
+                                <li><a href="${pageContext.request.contextPath}/note/import"> <i class="fa fa-certificate"></i> 중요 통지함 <span class="label label-danger float-right" id="noteImportant"> </span></a></li>   
                                 <li><a href="${pageContext.request.contextPath}/note/trash"> <i class="fa fa-trash-o"></i> 휴지통</a></li>                             
                                 <!-- <li><a href="${pageContext.request.contextPath}/note/set"> <i class="fa fa-cog"></i>카테고리 설정</a></li> -->                               
                             </ul>

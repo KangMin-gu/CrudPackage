@@ -80,17 +80,8 @@
 										<div class="col-md-10" id="toto" style="padding-left:0px;padding-right:0px;">
 											<select id="touser" name="touser" class="chosen-select" multiple="multiple" style="width: 350px; display: none;" tabindex="-1">  											              
 								                <c:forEach var="adminMail" items="${adminMail}" >
-								                	<option value="${adminMail.USERNO}">${adminMail.USERNAME}</option>
+								                	<option value="${adminMail.USERNO}">${adminMail.USERNAME}</option>								                	
 								                </c:forEach>
-								                
-								               
-								                <c:choose>								               
-								                	<c:when test="${!fn:contains(curUrl,'forward')}">
-								       				<option value="${replyUser.USERNAME},${replyUser.USERNO},${replyUser.EMAIL}" ${replyUser.USERNO ne "" ? "selected" :""}>
-								       					${replyUser.USERNAME}
-								       				</option>
-								       				</c:when>
-								       			</c:choose>
                 							</select>
 										</div>
 									</div>
@@ -143,18 +134,13 @@
 								<c:if test="${replyFile eq null}">
 								
 								<div class="mail-body">
-									<div class="form-group row">
+									<div class="form-group row custom-file">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
 										<div class="col-md-6">
-											<input id="file" name="file" class="form-control" type="file" multiple>
-											<input type="hidden" name/>
-											<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
-											        <input class="form-control" type="text" id="filename" name="filename" disabled />
-                                            		<button type="button" id="searchKey" class="btn btn-light btn-xs">로고 등록</button>
-                                            		<input type="hidden" id="fileSearchKey" name="fileSearchKey" />
+											<input id="filesChk" name="files" class="form-control" type="file" multiple>
+											<p class="help-block">크기 50MB 이하의 파일 선택</p>											
 										</div>
-										
-									</div>
+									</div>								
 								</div>
 								
 								</c:if>								
@@ -202,6 +188,8 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.MultiFile.min.js"></script>
 	<script>
 	<!-- radioBox-->
 	

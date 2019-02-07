@@ -19,6 +19,17 @@
 		<websocket:sockjs />
 	</websocket:handlers>
 
-	  <bean id="NoteHandler" class="saas.crud.crm.ce.NoteCountHandler"/> 
+	<websocket:handlers>
+		<websocket:mapping handler="AramHandler"
+			path="/alramCount" />
+		<websocket:handshake-interceptors>
+			<bean
+				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>
+	
+	<bean id="NoteHandler" class="saas.crud.crm.ce.NoteCountHandler"/> 
+  	<bean id="AramHandler" class="saas.crud.crm.ce.AlarmHandler"/> 
  
 </beans>

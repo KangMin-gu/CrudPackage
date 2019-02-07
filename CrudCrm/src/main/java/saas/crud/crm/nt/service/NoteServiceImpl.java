@@ -507,33 +507,29 @@ public class NoteServiceImpl implements NoteService{
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
 		String toUserList[] = request.getParameterValues("touser");
 		String ccUserList[] = request.getParameterValues("ccuser");
-		MultipartFile singleFile = null;
 		ntDto.setSiteid(siteId);
 		//ntDto 셋팅
 		//보낸이
-		ntDto.setFromuserno(fromUserNo);
+		ntDto.setFromuserno(fromUserNo);	
 		
 		//파일첨부
-		if(multipartHttpServletRequest != null) {
-			//첨부파일
-			List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
-			String fileSearchKey = crudEngine.fileSearchKey(multipartHttpServletRequest);
+		List<MultipartFile> mFile = ((MultipartHttpServletRequest)request).getFiles("file");
+		if(mFile.size() != 0) {			
+			//첨부파일			
+			String fileSearchKey = crudEngine.multiUpload(response, multipartHttpServletRequest, mFile);
 			ntDto.setFilesearchkey(fileSearchKey);
-			crudEngine.fileUpload(response, request, fileUpload, singleFile, fileSearchKey);
-			
+
 		}
 		
 		int noticeId = ntDao.noteSend(ntDto); //통지내용등록
 		
 		for(String a : toUserList) {
-			if(!a.equals(",,")) {
 				int toUserNo = Integer.parseInt(a);
 				ntDto.setUserno(toUserNo);				
 				ntDao.notetoAndCc(ntDto); // to 등록
-			}
 		}
 
-		if(ccUserList.length != 0) {
+		if(ccUserList != null) {
 			for(String b : ccUserList) {
 				int ccUserNo = Integer.parseInt(b);
 				ntDto.setUserno(ccUserNo);

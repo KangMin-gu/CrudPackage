@@ -15,4 +15,5 @@ public interface UserDao {
 	public List<Map<String, Object>> crudNotice();
 	public Map<String, Object> useInfo(String userId);
 	public Map<String, Object> userInfo(int userNo);
+	public Map<String, Object> userAram(int userNo);
 }

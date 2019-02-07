@@ -2,19 +2,33 @@
 function send_message(){
 
    // var sock = new SockJS("http://211.233.81.190/noteCount");
-	 var sock = new SockJS("http://localhost/noteCount");
+	// var sock = new SockJS("http://localhost/noteCount");
+	 var sock = new SockJS("http://localhost/alramCount");
     sock.onopen = function(evt) {
         timerNote();
     };
 
     sock.onmessage = function(evt) {
-        var alarmNum = evt.data;   
-        if(alarmNum != 0){        	
-            $("#alarm").text(evt.data);
-            $('#dropClick span').show();
+        var alarmJson = evt.data;   
+        var jData = JSON.parse(evt.data);
+        var noteAlarm = jData.payload.READCHEK;
+        var noteImport = jData.payload.IMPORTANT;
+        
+        if(noteAlarm != 0){        	
+            $("#alarm").text(noteAlarm);
+            $("#noteAlarm").text(noteAlarm);
+            $('#dropClick span').show();           
         }else {
         	$('#dropClick span').hide();
         }
+        
+        if(noteImport != 0){
+        	$("#noteImportant").text(noteImport);
+        	$('#noteImportant').show();
+        }else {
+        	$('#noteImportant').hide();
+        }
+
     };
 
     sock.onclose = function(evt) {

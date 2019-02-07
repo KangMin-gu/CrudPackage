@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CrudEngine {
 	
 	public void fileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> mFile, MultipartFile sFile, String fileSearchKey);
+	public String singleUpload(HttpServletResponse response, HttpServletRequest request,MultipartFile sFile);
+	public String multiUpload(HttpServletResponse response, HttpServletRequest request,List<MultipartFile> mFile);
 	public String fileSearchKey(HttpServletRequest request);
 	public boolean whiteFlag(String orgFileName);
 	public boolean whiteSizeFlag(long fileSize);

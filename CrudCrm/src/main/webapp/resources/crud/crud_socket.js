@@ -17,9 +17,11 @@ function send_message(){
         if(noteAlarm != 0){        	
             $("#alarm").text(noteAlarm);
             $("#noteAlarm").text(noteAlarm);
-            $('#dropClick span').show();           
+            $('#dropClick span').show();
+            $('#noteAlarm').show();
         }else {
         	$('#dropClick span').hide();
+        	$('#noteAlarm').hide();
         }
         
         if(noteImport != 0){

@@ -198,6 +198,7 @@ function changePhoneState(state, stateStr){
 	
     var ts = document.getElementById("tellerStatus");    
     ts.value = state;
+    chanegeStatusBtnImage();
     
       
     if(state=="0300"){//전화대기 - 걸기, 당겨받기
@@ -946,6 +947,28 @@ function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받�
 	btn.disabled = booleanBtnState;
 }
 
+function chanegeStatusBtnImage(){
+	 var stVal = $('#tellerStatus').val();
+	 var actColor = '#179d82';
+	 var nomalColor = '#104355';
+	if(stVal == '0300'){
+		$('#waitingBtn').css({"background-color":actColor,"border-color": actColor});
+		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});		
+	}else if (stVal == 'R001'){
+		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#restBtn').css({"background-color":actColor,"border-color": actColor});
+		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
+	}else if(stVal == 'W004'){
+		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#postCleaningBtn').css({"background-color":actColor,"border-color": actColor});	
+	}else{
+		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
+	}
 
+}
 
 /////////////////////////////////////////////////////////////////////웹소켓/////////////////////////////////////////////////////////////////////

@@ -783,29 +783,7 @@ $(document).ready(function () {
          }
      }, 1000);
 
- function chanegeStatusBtnImage(){
-	 var stVal = $('#tellerStatus').val();
-	 var actColor = '#179d82';
-	 var nomalColor = '#104355';
-	if(stVal == '0300'){
-		$('#waitingBtn').css({"background-color":actColor,"border-color": actColor});
-		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
-		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});		
-	}else if (stVal == 'R001'){
-		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
-		$('#restBtn').css({"background-color":actColor,"border-color": actColor});
-		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
-	}else if(stVal == 'W004'){
-		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
-		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
-		$('#postCleaningBtn').css({"background-color":actColor,"border-color": actColor});	
-	}else{
-		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
-		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
-		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
-	}
 
- }
  
  
 </script>

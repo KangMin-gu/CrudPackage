@@ -20,5 +20,9 @@ public interface VocService {
 	public Map<String,Object> svcVocTabEmailDetail(Map<String,Object> prm);
 	public int svcVocBlackCustInsert(Map<String,Object> blackInsMap);
 	public int svcVocBlackCustDelete(Map<String,Object> prm);
+	
+	public Map<String,Object> vocOwnerList(HttpServletRequest request,int asOwner);
+	
+	public ModelAndView vocCalOwnerList(HttpServletRequest request,int asOwner);
 
 }

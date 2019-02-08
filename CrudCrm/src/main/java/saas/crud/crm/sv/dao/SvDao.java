@@ -49,7 +49,7 @@ public interface SvDao {
 	public List<Map<String,Object>> svCalList(RewardDto rewardDto);
 	
 	// voc 제품등록
-	public void svGoodsInsert(Map<String,Object> param);
+	public void svProductInsert(Map<String,Object> param);
 	// voc 상담예약
 	public void svReservInsert(Map<String,Object> param);
 	// voc 최근 서비스 한건
@@ -62,6 +62,8 @@ public interface SvDao {
 	public Map<String,Object> svTopReward(Map<String,Object> param);
 	
 	//voc AS기사 캘린더
-	public List<Map<String,Object>> svRewardOwner(RewardDto rewardDto);
+	public List<Map<String,Object>> svCalRewardOwner(RewardDto rewardDto);
+	//voc AS기사 캘린더에서 클릭했을때 나오는 팝업
+	public List<Map<String,Object>> svCalRewardOwnerList(Map<String,Object> param);
 
 }

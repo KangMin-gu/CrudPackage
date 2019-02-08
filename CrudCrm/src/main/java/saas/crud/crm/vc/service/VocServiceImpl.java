@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import saas.crud.crm.cu.dao.CustDao;
 import saas.crud.crm.nt.dao.NoteDao;
+import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.sv.dao.SvDao;
 import saas.crud.crm.sv.dto.ConveyDto;
@@ -43,7 +44,6 @@ public class VocServiceImpl implements VocService{
 
 	@Autowired
 	private CrudEngine crud;
-	
 	@Autowired
 	private VocDao vcDao;
 	@Autowired
@@ -52,6 +52,8 @@ public class VocServiceImpl implements VocService{
 	private SvDao svDao;
 	@Autowired
 	private NoteDao ntDao;
+	@Autowired
+	private AuDao auDao;
 
 	//팝업 - 고객 리스트 TR 클릭. 바인딩용 고객 상세 데이터
 	@Override
@@ -168,8 +170,6 @@ public class VocServiceImpl implements VocService{
 				owner = Integer.parseInt(search.get("asowner").toString());
 			}
 			owner = 75;
-			serviceDto.setServicestep(4);
-			svDao.svStepUpdate(serviceDto);
 			RewardDto rewardDto = new RewardDto();
 			if(request.getParameter("visitdate") != null) {
 				rewardDto.setVisitdate(request.getParameter("visitdate").toString());	
@@ -182,7 +182,7 @@ public class VocServiceImpl implements VocService{
 			rewardDto.setEdtuser(userNo);
 			rewardDto.setSiteid(siteId);
 			rewardDto.setServiceno(serviceNo);
-			rewardDto.setOwner(3);
+			rewardDto.setOwner(owner);
 			rewardDto.setVisitaddr1(request.getParameter("visitaddr1").toString());
 			rewardDto.setVisitaddr2(request.getParameter("visitaddr2").toString());
 			rewardDto.setVisitaddr3(request.getParameter("visitaddr3").toString());
@@ -203,6 +203,8 @@ public class VocServiceImpl implements VocService{
 			conveyDto.setSiteid(siteId);
 			
 			svDao.conveyInsert(conveyDto);
+			serviceDto.setServicestep(2);
+			svDao.svStepUpdate(serviceDto);
 		}
 		
 		int cnt = 0;
@@ -222,16 +224,16 @@ public class VocServiceImpl implements VocService{
 			key = keyiterator.next().toString();
 			if(search.get(key) != null) {
 				value = search.get(key).toString();
-				if(key.contains("goods")) {
+				if(key.contains("product")) {
 					cnt ++;
 					if(cnt == 1) {
-					map.put("goodsb", value);
+					map.put("productb", value);
 					}else if(cnt ==2) {
-						map.put("goodsm", value);
+						map.put("productm", value);
 					}else if(cnt ==3) {
-						map.put("goodss", value);
+						map.put("products", value);
 						cnt = 0;
-						svDao.svGoodsInsert(map);
+						svDao.svProductInsert(map);
 					}
 				}
 			}
@@ -268,11 +270,14 @@ public class VocServiceImpl implements VocService{
 		
 		ModelAndView mView = new ModelAndView();
 		RewardDto rewardDto = new RewardDto();
-		
-		
+		Map<String,Object> search = crud.searchParam(request);
+		if(request.getParameter("asowner") != null) {
+			int as = Integer.parseInt(request.getParameter("asowner").toString());
+			rewardDto.setOwner(as);
+		}
 		rewardDto.setSiteid(siteId);
 		
-		List<Map<String,Object>> rewardOwnerList = svDao.svRewardOwner(rewardDto);
+		List<Map<String,Object>> rewardOwnerList = svDao.svCalRewardOwner(rewardDto);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonStr = "";
 		try {
@@ -282,8 +287,14 @@ public class VocServiceImpl implements VocService{
 			e.printStackTrace();
 		}
 		
+		List<Map<String,Object>> owner = auDao.urList(search);
+		List<Map<String,Object>> asOwner = auDao.urAsOwner(siteId);
+		
 		mView.addObject("schList",jsonStr);//캘린더 스케쥴
 		mView.addObject("svSchList",rewardOwnerList);//캘린더 틀 목록.
+		mView.addObject("asOwner",asOwner);
+		mView.addObject("search",search);
+		mView.addObject("owner",owner);
 
 		return mView;
 	}
@@ -379,5 +390,42 @@ public class VocServiceImpl implements VocService{
 		int bcustno = vcDao.vocBlackCustDelete(prm);
 		return bcustno;
 	}
+
+	
+	@Override
+	public Map<String, Object> vocOwnerList(HttpServletRequest request,int asOwner) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		Map<String,Object> ownerCalList = new HashMap();
+		RewardDto rewardDto = new RewardDto();
+		rewardDto.setSiteid(siteId);
+		rewardDto.setOwner(asOwner);
+		List<Map<String,Object>> rewardOwnerList = svDao.svCalRewardOwner(rewardDto);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rewardOwnerList);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		ownerCalList.put("schList",jsonStr);//캘린더 스케쥴
+		ownerCalList.put("svSchList",rewardOwnerList);//캘린더 틀 목록.
+		return ownerCalList;
+	}
+	
+	@Override
+	public ModelAndView vocCalOwnerList (HttpServletRequest request,int asOwner) {
+		
+		ModelAndView mView = new ModelAndView();
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		Map<String,Object> param = crud.searchParam(request);
+		param.put("owner",asOwner);
+		
+		List<Map<String,Object>> calOwner = svDao.svCalRewardOwnerList(param);
+		mView.addObject("calOwner",calOwner);
+		
+		return mView;
+	}
+	
 	
 }

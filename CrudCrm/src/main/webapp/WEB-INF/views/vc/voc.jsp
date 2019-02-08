@@ -26,18 +26,12 @@
 				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
 				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
 				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud02">
-				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622887">
-				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
-				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
-				<span id="outCallNum">07042622878</span>
 				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
 				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622886">
+				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622864">
 				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
 				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
-				<span id="outCallNum">07042622886</span>
+				<span id="outCallNum">07042622883</span>
 				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
 				<div>
 					<textarea id="messages" cols="150" rows="10"></textarea>
@@ -55,13 +49,7 @@
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
                         <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm">걸기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm">받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm">끊기 <i class="fa fa-phone"></i></button></li>
                         &nbsp; |&nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm">휴식 <i class="fa fa-coffee"></i></button></li>
-                        <li class="liBtn"><button class="btn btn-primary btn-sm">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
-                        <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
                         <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm">끊기<i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>&nbsp; |&nbsp;
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
@@ -468,19 +456,26 @@
                                     <div class="select-area mt-1">
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
                                          <div class="select-box mb-1">
-                                            <select id="goods11" name="goods11" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product11" name="product11" class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
-                                                <option value="b11">option 2</option>
-                                                <option value="b12">option 3</option>
-                                                <option value="b13">option 4</option>
+                                                <c:forEach var="productB" items="${productB }">
+                                            		<c:choose>
+                                                		<c:when test="${serviceCode1.SERVICECODE1 eq productB.prdno}">
+                                                			<option selected label="${productB.prdname }" value="${productB.prdno }"/>
+                                                		</c:when>
+                                                		<c:otherwise>
+                                                			<option label="${productB.prdname }" value="${productB.prdno }"/>
+                                            			</c:otherwise>
+                                        			</c:choose>
+                                    			</c:forEach>
                                             </select>
-                                            <select id="goods12" name="goods12" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product12" name="product12"  class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                                 <option value="m11">option 2</option>
                                                 <option value="m12">option 3</option>
                                                 <option value="m13">option 4</option>
                                             </select>
-                                            <select id="goods13" name="goods13" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product13" name="product13" class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                                 <option value="s11">option 2</option>
                                                 <option value="s12">option 3</option>
@@ -489,19 +484,19 @@
                                             <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
                                         </div>
                                         <div class="select-box mb-1">
-                                            <select id="goods21" name="goods21" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product21" name="product21" class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
                                             </select>
-                                            <select id="goods22" name="goods22" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product22" name="product22" class="form-control d-inline-block mr-2 voc">
                                                 <option value="">선택</option>
                                                 <option>option 2</option>
                                                 <option>option 3</option>
                                                 <option>option 4</option>
                                             </select>
-                                            <select id="goods23" name="goods23" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product23" name="product23" class="form-control d-inline-block mr-2 voc">
                                                 <option value="">선택</option>
                                                 <option>option 2</option>
                                                 <option>option 3</option>
@@ -529,11 +524,11 @@
                             <tr class="as">
                             	<th>방문일시</th>
                             	<td>
-                            		<div class="input-group date" data-autoclose="true">
+                            		<div class="input-group" data-autoclose="true">
                             			<span class="input-group-addon">
                                     		<span class="fa fa-calendar"></span>
                                 		</span>
-                                		<input type="text" class="form-control date voc" name="visitdate" id="visitdate" value="">
+                                		<input type="text" class="form-control voc" readOnly="true" name="visitdate" id="visitdate" value="">
                             		</div>
                             	</td>
                             	<th>방문 기사</th>
@@ -675,13 +670,13 @@
                 <h3 class="float-left">개인전광판</h3>
                 <ul class="call-option float-left">
                     <li class="call-tit">평균통화</li>
-                    <li class="yellow"><strong>00:01:30</strong></li>
+                    <li class="yellow"><strong><span id="avgCall">0</span></strong></li>
                     <li class="call-tit">평균대기</li>
-                    <li><strong>00:01:30</strong></li>
+                    <li><strong><span id="avgWait">0</span></strong></li>
                     <li class="call-tit">응대율</li>
-                    <li><strong>89%</strong></li>
+                    <li><strong><span id="ResponseRate">0%</span></strong></li>
                     <li class="call-tit">누적통화시간</li>
-                    <li class="yellow"><strong>00:01:30</strong></li>
+                    <li class="yellow"><strong><span id="sumCall">0</span></strong></li>
                     <li class="call-tit">O/B</li>
                     <li><strong>3 건</strong></li>
                     <li class="call-tit">미처리</li>
@@ -696,7 +691,6 @@
                     <li><span id="transferConnectCnt"><strong>0</strong></span></li>
                     <li class="call-tit">인바운드시도</li>
                     <li><span id="ibTryCnt"><strong>0</strong></span></li>
-                    <li><span id="ibTryCnt">0</span></li>
                     <li class="call-tit">인바운드연결<li>
                     <li><span id="ibConnectCnt"><strong>0</strong></span></li>
                     <li class="call-tit">아웃바운드시도</li>
@@ -747,6 +741,10 @@ $(document).ready(function () {
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
+ });
+ 
+ $('#product11').change(function(){
+	 upperProduct(this); 
  });
  
  function addBlack(){
@@ -802,7 +800,6 @@ $(document).ready(function () {
  var minite = 00;
  var countdown = setInterval(function(){
          //0초면 초기화 후 이동되는 사이트
-         debugger;
  	var time = second+":"+minite;
  		document.getElementById('timer').innerHtml = time;
  		document.getElementById('timer').value = time;

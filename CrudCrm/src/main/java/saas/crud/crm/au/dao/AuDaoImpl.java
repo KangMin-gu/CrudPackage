@@ -105,4 +105,10 @@ public class AuDaoImpl implements AuDao{
 		session.update("au.urPwdReset", userDto);
 		
 	}
+	@Override
+	public List<Map<String,Object>> urAsOwner(int siteId){
+		
+		List<Map<String,Object>> asOwner = session.selectList("au.asOwner",siteId);
+		return asOwner;
+	}
 }

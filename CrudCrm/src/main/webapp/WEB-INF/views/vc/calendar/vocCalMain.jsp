@@ -20,18 +20,61 @@
 <body>
 	<div id="wrapper">
 		<!-- Top -->
-		<div id="page-wrapper" class="gray-bg">
+		<div id="page-wrapper" class="gray-bg" style="margin-left: 0px;">
 			<div class="wrapper wrapper-content">
 				<div class="row animated fadeInDown">
 					<div class="col-lg-12">
 						<div class="ibox ">
 							<div class="ibox-title">
 								<h5>AS 기사 일정 관리</h5>
+								<select id="asowner" name="asowner">
+									<option label="선택" value="0"/>
+                                        <c:forEach var="owner" items="${owner }">
+                                            <c:choose>
+                                                <c:when test="${search.asowner eq owner.USERNO}">
+                                                	<option selected label="${owner.USERNAME }" value="${owner.USERNO }"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                	<option label="${owner.USERNAME }" value="${owner.USERNO }"/>
+                                            	</c:otherwise>
+                                        	</c:choose>
+                                    	</c:forEach>
+								</select>
+							</div>
+							<div class="wrapper wrapper-content">
+				<div class="row animated fadeInDown">
+					<div class="col-lg-3">
+						<div class="ibox ">
+							<div class="ibox-title">
+								<h5>AS 기사</h5>
+							</div>
+							<div class="ibox-content">
+								<div id='external-events'>	
+									<input type="hidden" id="hiddenId" name="hiddenId" value="">
+									<input type="hidden" id="hiddenColor" name="hiddenColor" value="">
+									<c:forEach var="list" items="${asOwner}"  varStatus="status"> 
+										<div class='external-event navy-bg' style="position: relative;" id="status${status.index }"> 
+											${list.title }   
+											<input type="hidden" id="id${status.index }" name="id${list.id }" value="${list.id }">
+										</div>
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9">
+						<div class="ibox ">
+							<div class="ibox-title">
+								<h5>AS기사 일정</h5>
 							</div>
 							<div class="ibox-content">
 								<input type="hidden" id="schList" name="schList" value='${schList }'/>
 								<div id="calendar"></div>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 						</div>
 					</div>
 				</div>
@@ -57,8 +100,8 @@
 	<!-- Full Calendar -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 	<!-- 캘린더 이벤트 정의 -->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 	<script>
 	
     $(document).ready(function() {
@@ -67,6 +110,8 @@
             radioClass: 'iradio_square-green'
         });
     });
+   
+
 </script>
 </body>
 

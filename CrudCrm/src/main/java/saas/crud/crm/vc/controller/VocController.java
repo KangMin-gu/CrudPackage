@@ -1,6 +1,7 @@
 package saas.crud.crm.vc.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.au.service.CodeService;
+import saas.crud.crm.au.service.ProductService;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonService;
 import saas.crud.crm.cu.dto.CustDenyDto;
@@ -41,12 +44,16 @@ public class VocController {
 	private CrudEngine crud;
 	@Autowired
 	private CodeService codeService;
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value="vc/voc", method=RequestMethod.GET)
-	public ModelAndView authvocPage() {
+	public ModelAndView authvocPage(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		Map<String,Object> code = codeService.getCode();
+		List<ProductDto> productB = productService.getProductB(request);
 		mView.addAllObjects(code);
+		mView.addObject("productB",productB);
 		mView.setViewName("vc/voc");
 		//mView.setViewName("vc/vocTest");
 		return mView;
@@ -161,6 +168,20 @@ public class VocController {
 	public ModelAndView authvocCalList(HttpServletRequest request) {
 		ModelAndView mView = vcService.vocCalList(request);
 		mView.setViewName("vc/calendar/vocCalMain");
+		return mView;
+	}
+	
+	@RequestMapping(value="/vc/voc/cal/{asOwner}", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authVocOwnerCalList(HttpServletRequest request,@PathVariable int asOwner) {
+		Map<String,Object> ownerCalList = vcService.vocOwnerList(request,asOwner);
+		return ownerCalList;
+	}
+	
+	@RequestMapping(value="/vc/voc/owner/{asOwner}",method=RequestMethod.GET)
+	public ModelAndView authVocOwnerList(HttpServletRequest request, @PathVariable int asOwner) {
+		ModelAndView mView = vcService.vocCalOwnerList(request, asOwner);
+		mView.setViewName("/vc/calendar/vocCalPopUp");
 		return mView;
 	}
 

@@ -44,54 +44,44 @@ body {
 
 		<!-- S: 고객 목록 ppt p01-->
 		<div class="wrapper wrapper-content  animated fadeInRight article">
-
-			<div class="col-lg-12">
-				<div class="ibox">
-
-					<div class="ibox-content row">
-					
-						
-						<div class="w-100 text-right mb-3">
-							<a class="btn btn-primary" id="submitBtn" onclick="javascript:moveDetail();">서비스 상세로 이동</a>
-						</div>
-						<div class="box1 col-lg-12 col-xl-4 p-0">
-							<table class="table table-bordered mb-0">
-								<colgroup>
-									<col style="width: 110px; background: #fafafa;">
-									<col style="width: auto;">
-								</colgroup>
-								<tbody>
-									<tr>
-										<th>서비스명</th>
-										<td>${serviceInfo.SERVICENAME }</td>
-									</tr>
-									
-									<tr>
-										<th>진행 단계</th>
-										<td>${serviceInfo.SERVICESTEP_ }</td>
-									</tr>								
-									<tr>
-										<th>접수자</th>
-										<td>${serviceInfo.SERVICEOWNER_ }</td>
-									</tr>							
-									<tr>
-										<th>담당자</th>
-										<td>${serviceInfo.OWNER_ }</td>
-									</tr>
-									<tr>
-										<th>비고</th>
-										 <td><textarea name="servicedesc" id="servicedesc"  class="form-control" style="resize:none;" rows="4" readonly>${serviceInfo.SERVICEDESC }</textarea></td>
-										 <input type="hidden" name="no" id="no" value="${serviceInfo.SERVICENO }"/>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
+			<div class="row justify-content-md-center">
+				<div class="col-lg-12">
+					<div class="ibox">
+						<div class="ibox-content row border-top-0 pt-lg-0">
+							<div class="overflow-x w-100 head">
+								<table class="table table-bordered table-hover">
+									<colgroup>
+										<col style="width: 100px;">
+                            			<col style="width: 100px;">
+                            			<col style="width: 200px;">
+                            			<col style="width: 100px;">
+                            		</colgroup>  
+                            		<thead>
+                                		<tr>
+                                    		<th>고객명</th>
+                                    		<th>연락처</th>
+                                    		<th>주소</th>
+                                    		<th>처리상태</th>
+                                		</tr>
+                            		</thead>
+                            		<tbody>
+                            		<c:forEach var="calOwner" items="${calOwner }">
+                                		<tr>
+                                    		<td>${calOwner.CUSTNAME}</td>
+                                    		<td>${calOwner.MOBILE_ }</td>
+                                    		<td>${calOwner.ADDR_ }</td>
+                                    		<td>${calOwner.SERVICESTEP_ }</td>
+                                		</tr>
+                            		</c:forEach>
+                            		</tbody>
+                        		</table>
+                    		</div>
+                		</div>
+            		</div>
+        		</div>
+    		</div>
 		</div>
 	</div>
-
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>

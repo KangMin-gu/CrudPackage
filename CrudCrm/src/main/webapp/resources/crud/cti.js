@@ -860,10 +860,11 @@ function ctiEvent(msg){
 			document.getElementById("obTryCnt").innerHTML =  tmpData[13];
 			document.getElementById("obConnectCnt").innerHTML =  tmpData[14];
 			/*2019-02-01 추가*/
-			document.getElementById("cti_sign_info_01").innerHTML =  tmpData[24];
-			document.getElementById("cti_sign_info_02").innerHTML =  tmpData[25];
-			
-			/*2019-02-01 추가*/
+			document.getElementById("avgCall").innerHTML = tmpData[24];
+			document.getElementById("avgWait").innerHTML = tmpData[25];
+			document.getElementById("sumCall").innerHTML = tmpData[27];
+			document.getElementById("ResponseRate").innerHTML = tmpData[10]/tmpData[9] * 100 + '%'
+
 		}
 	}else if(tmpData[0] == "95"){// 고객대기자수 
 		document.getElementById("cti_waitting_cnt").innerText =  tmpData[1];

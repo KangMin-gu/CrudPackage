@@ -427,16 +427,16 @@ $(".plus").click(function(){
 	var countP = cloneCount + 1;
     
     $('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
-    $('.select-area .select-box:last').find('#goods'+cloneCount+1).attr('name','goods'+countP+1).attr('id','goods'+countP+1);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+2).attr('name','goods'+countP+2).attr('id','goods'+countP+2);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+3).attr('name','goods'+countP+3).attr('id','goods'+countP+3);
-    $('.select-area .select-box:last').find('#goods'+cloneCount+3).next().clone(true).removeClass('plus').addClass('minus');
+    $('.select-area .select-box:last').find('#product'+cloneCount+1).attr('name','product'+countP+1).attr('id','product'+countP+1);
+    $('.select-area .select-box:last').find('#product'+cloneCount+2).attr('name','product'+countP+2).attr('id','product'+countP+2);
+    $('.select-area .select-box:last').find('#product'+cloneCount+3).attr('name','product'+countP+3).attr('id','product'+countP+3);
+    $('.select-area .select-box:last').find('#product'+cloneCount+3).next().clone(true).removeClass('plus').addClass('minus');
 }); 
 
 
 $('.asowner').click(function(e){
 	//openNewWindow('담당자','/common/user',e.target.id,650,700);
-	openNewWindow('AS기사','/vc/voc/cal',e.currentTarget.id,900,500);
+	openNewWindow('AS기사','/vc/voc/cal',e.currentTarget.id,1200,800);
 });
 
 //******************************************** 고객 팝업 끝 ******************************
@@ -460,7 +460,122 @@ function cti_test(){
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     });
-	
 }
 
+$('#asowner').change(function(){
+	var asOwner =  $(this).val();
+	
+	var url ="/vc/voc/cal/"+asOwner;
+	
+	$.ajax({
+        url: url,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	$('#calendar').fullCalendar('removeEvents');
+        	for(i=0;i<data.svSchList.length;i++){
+        		$('#calendar').fullCalendar('renderEvent',data.svSchList[i],true);
+        	}
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+	
+});
 
+if($('#calendar').length > 0){
+	var schList= $('#schList').val();//hidden value에 담겨있는 스케쥴 리스트를 받아온다.(json String) 
+/* initialize the calendar
+     -----------------------------------------------------------------*/            
+ 	var url = window.location.pathname;
+ 	
+ 	$('#external-events div.external-event').each(function() {
+
+		// store data so the calendar knows to render an event upon drop
+		$(this).data('event', {			
+			title: $.trim($(this).text()), // use the element's text as the event title
+			stick: true // maintain when user navigates (see docs on the renderEvent method)
+		});
+
+		// make the event draggable using jQuery UI
+		$(this).draggable({	
+			zIndex: 1111999,
+			revert: true,      // will cause the event to go back to its
+			revertDuration: 0  //  original position after the drag
+		});
+
+	});
+
+ 	$('#calendar').fullCalendar({
+ 		
+		header: {//캘린더 프레임 헤더설정
+			left: 'prev,next today',//저번달, 다음달, 오늘로이동
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay' //월,주,일별 보기 
+		},
+
+		editable: true, //false - 일정 수정 안됨. 
+
+		droppable: true, // false - 드래그 박스의 일정 캘린더로 이동이 안됨.  
+		
+		drop: function(event,a,b) { //드래그 박스의 일정 캘린더로 드랍시 발생 function
+			debugger;
+			var name = $(b.helper).text().trim();
+			var val1 = $(b.helper).children().val();
+			var date = formatDate(event._d);
+			var flag = confirm(name+" 기사님에게 배정하시겠습니까?");
+			if(flag){
+				opener.$('[name="asowner_"]').val(name);
+				opener.$('[name="asowner"]').val(val1);
+				opener.$('#visitdate').val(date);
+				alert("배정되었습니다.");
+				self.close();
+			}else{
+				alert("취소되었습니다.");
+			}
+			
+		},
+	
+		//한글화
+		monthNames: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+		monthNamesShort: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+		dayNames: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
+		dayNamesShort: ["일","월","화","수","목","금","토"],
+		buttonText: {
+			today : "오늘",
+			month : "월별",
+			week : "주별",
+			day : "일별",
+		},
+		timeFormat : "HH:mm",
+
+		eventRender: function(event, element){
+			if(event.end == null){
+				event.end = event.start;
+				event.end._i = event.start._i;
+			}
+		
+          	element.popover({
+        	  	placement:'top',
+              	animation:true,
+              	delay: 100,
+              	content: '<b>서비스명</b>:'+event.title+"<b>서비스 일자</b>:"+event.start._i,
+              	trigger: 'hover',
+              	html : true
+          	});
+        },
+	
+        eventClick: function(event, element,func) {//캘린더 이벤트 클릭시
+        	//window.location.href = campUrl+"/"+id;
+			openNewWindow("AS기사 접수내용","/vc/voc/owner/"+event.id+"?visitdate="+event.start._i,"",600,700);
+		},
+		eventSources: [
+			{				
+				events:  JSON.parse(schList)//json String객체를 json객체로 변환해준다  -> 스케쥴 리스트 달력에 표시됨				
+			}
+		]
+	});//캘린더의끝
+
+}

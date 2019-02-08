@@ -21,4 +21,6 @@ public interface VocService {
 	public int svcVocBlackCustInsert(Map<String,Object> blackInsMap);
 	public int svcVocBlackCustDelete(Map<String,Object> prm);
 	public int svcVocCallBackInsert(Map<String,Object> prm);
+	public Map<String,Object> vocOwnerList(HttpServletRequest request,int asOwner);
+	public ModelAndView vocCalOwnerList(HttpServletRequest request,int asOwner);
 }

@@ -584,6 +584,31 @@
     		}
     	});
    }
+ // 상위 코드 받아서 하위코드 매핑하기
+    function upperProduct(product){
+   	 var productNo = $(product).val();
+   	 var url = "/product/upper/"+productNo;
+   	 var nextId = 'product'+ parseInt(parseInt(product.id.substring(7))+1);
+   	 $.ajax({
+    		url: url,
+    		method: "GET",
+    		dataType: "json",
+    		cache: false,
+    		success: function (data) {
+    			var text = "";
+    			$('#'+nextId).find('option').remove();
+    			$('#'+nextId).append('<option label="선택" value="0"/>');
+    			for(i=0;i<data.length;i++){
+    				text = '<option label="'+data[i].prdname+'" value="'+data[i].prdno+'"/>';
+    				$('#'+nextId).append(text);
+    			}
+    		},
+    		error: function (request, status, error) {
+    			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    		}
+    	});
+   } 
+    
     
     //좌측 사이드바 접기상태 변경
     $("#sideBarStatus").click(function(){

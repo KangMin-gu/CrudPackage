@@ -28,4 +28,6 @@ public interface AuDao {
 	public List<Map<String,Object>> urUserMenuList(UserDto userDto);
 	public void userPwdResetsend(Map<String, Object> sendPwdInfo);
 	public void userPwdReset(UserDto userDto);
+	
+	public List<Map<String,Object>> urAsOwner(int siteId);
 }

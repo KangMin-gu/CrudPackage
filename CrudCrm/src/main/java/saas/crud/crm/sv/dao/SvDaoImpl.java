@@ -116,8 +116,8 @@ public class SvDaoImpl implements SvDao{
 	}
 	// VOC 서비스 제품등록
 	@Override
-	public void svGoodsInsert(Map<String, Object> param) {
-		session.insert("sv.svGoodsInsert",param);
+	public void svProductInsert(Map<String, Object> param) {
+		session.insert("sv.svProductInsert",param);
 	}
 	// VOC 상담 예약
 	@Override
@@ -149,10 +149,15 @@ public class SvDaoImpl implements SvDao{
 		return svTopReward;
 	}
 	@Override
-	public List<Map<String, Object>> svRewardOwner(RewardDto rewardDto) {
+	public List<Map<String, Object>> svCalRewardOwner(RewardDto rewardDto) {
 
-		List<Map<String,Object>> svRewardOwner = session.selectList("sv.rewardOwner",rewardDto);
-		return svRewardOwner;
+		List<Map<String,Object>> svCalRewardOwner = session.selectList("sv.calRewardOwner",rewardDto);
+		return svCalRewardOwner;
+	}
+	@Override
+	public List<Map<String,Object>> svCalRewardOwnerList(Map<String,Object> param){
+		List<Map<String,Object>> svCalRewardOwnerList = session.selectList("sv.calRewardOwnerList",param);
+		return svCalRewardOwnerList;
 	}
 	
 	

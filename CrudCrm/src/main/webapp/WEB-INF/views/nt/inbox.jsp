@@ -43,10 +43,10 @@
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
 						<div class="mail-box-header">				
-							<form:form method="post" action="${pageContext.request.contextPath}/${url}">
+							<form:form method="post" action="${pageContext.request.contextPath}/note/inbox">
 									<div class="container-fluid">
 										<div class="row">
-											<div class="col-lg-3 "><h2>${NOTENAME }(${notReadVal })</h2></div> 
+											<div class="col-lg-3 "><h2>받은 통지 (${notReadVal })</h2></div> 
 											<div class="col-lg-9 ">										
 												<div class="container">
 													<div class="row">
@@ -106,18 +106,18 @@
 											<c:choose>
 												<c:when test="${i eq page.pageNum }">
 													<li class="active page-item"><a class="page-link"
-														href="${pageContext.request.contextPath}/${url }?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
+														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a
-														href="${pageContext.request.contextPath}/${url }?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
+														href="${pageContext.request.contextPath}/note/inbox?pageNum=${i }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">${i }</a></li>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
 										<c:choose>
 											<c:when test="${page.endPageNum lt page.totalPageCount }">
 												<li><a
-													href="${pageContext.request.contextPath}/${url }?pageNum=${page.endPageNum+1 }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">&raquo;</a>
+													href="${pageContext.request.contextPath}/note/inbox?pageNum=${page.endPageNum+1 }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">&raquo;</a>
 												</li>
 											</c:when>
 											<c:otherwise>
@@ -128,42 +128,18 @@
 									</ul>
 								</div>
 								<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="새로고침" 
-									onclick="window.location.href='${pageContext.request.contextPath}/${url }?pageNum=${page.pageNum}&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}'">
+									onclick="window.location.href='${pageContext.request.contextPath}/note/inbox?pageNum=${page.pageNum}&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}'">
 									<i class="fa fa-refresh"></i>
-								</button>
-								
-								<c:set var="urls" value="${requestScope['javax.servlet.forward.request_uri']}" />							
-								
-								<c:if test="${urls  eq '/note/inbox' or urls eq '/note/import' or urls eq '/note/trash'}">
+								</button>			
 								<button id="eyeChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="읽음">
 									<i class="fa fa-eye"></i>
 								</button>
-								</c:if>
-								
-								<c:if test="${urls  eq '/note/inbox' or urls eq '/note/import'}">
 								<button id="importChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="중요 통지">
 									<i class="fa fa-exclamation"></i>
-								</button>
-								</c:if>												
-								
-								<c:choose>
-									<c:when test="${urls  eq '/note/inbox' or urls eq '/note/import'}">
-										<button id="trashChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="휴지통으로 이동">
-											<i class="fa fa-trash-o"></i>
-										</button>
-									</c:when>
-									<c:when test="${urls eq '/note/trash' }">
-										<button id="returnChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="보관함으로 이동">
-											<i class="fa fa-retweet"></i>
-										</button>
-										<button id="deleteChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="삭제">
-											<i class="fa fa-trash-o"></i>
-										</button>
-									</c:when>
-									<c:otherwise>
-										
-									</c:otherwise>
-								</c:choose>				
+								</button>																																
+								<button id="trashChk" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="휴지통으로 이동">
+									<i class="fa fa-trash-o"></i>
+								</button>																										
 							</div>
 						</div>
 						
@@ -203,7 +179,7 @@
 	                 					>
 											<td class="check-mail"><input id="noticeid" name="noticeid" type="checkbox" class="i-checks chksquare" value="${tmp.NOTICEID }"></td>
 											<td class="mail-ontact">${tmp.FROMUSERNAME }<c:if test="${tmp.IMPORTANT  eq  1 }"><span class="label label-danger float-right">!</span></c:if></td>
-											<td class="text-center mail-subject"><a href="${pageContext.request.contextPath}/${url }/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
+											<td class="text-center mail-subject"><a href="${pageContext.request.contextPath}/note/inbox/${tmp.NOTICEID}">${tmp.TITLE }</a></td>
 											<td class="text-center mail-date">
 												<jsp:useBean id="toDay" class="java.util.Date" />
 												<fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd" var="nowDate"/>

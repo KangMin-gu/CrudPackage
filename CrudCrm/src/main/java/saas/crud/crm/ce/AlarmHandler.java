@@ -20,15 +20,18 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import saas.crud.crm.au.dao.UserDao;
 import saas.crud.crm.nt.dto.NoteDto;
 import saas.crud.crm.nt.service.NoteService;
 
 
 @Component
-public class NoteCountHandler extends TextWebSocketHandler{
+public class AlarmHandler extends TextWebSocketHandler{
 	
 	@Autowired
 	private NoteService ntService;
+	@Autowired
+	private UserDao userDao;
 	
 	private static List<WebSocketSession> list = new ArrayList<WebSocketSession>();
 	private static final Logger logger = LoggerFactory.getLogger(NoteCountHandler.class);
@@ -45,27 +48,32 @@ public class NoteCountHandler extends TextWebSocketHandler{
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> maps = mapper.readValue(ntCountKey, new TypeReference<Map<String, Object>>() {});
 
-		if(maps.size() != 0){
+		int userNo =  Integer.parseInt((String) maps.get("userNo"));
+		//Map<String, Object> userAram = userDao.userAram(userNo);
 
-			int userNo =  Integer.parseInt(maps.get("userNo").toString());
-			int siteId =  Integer.parseInt(maps.get("siteId").toString());
+		WebSocketMessage<Map<String, Object>> alarmInfo = new WebSocketMessage<Map<String, Object>>() {
 
-			NoteDto ntDto = new NoteDto();
-			ntDto.setSiteid(siteId);
-			ntDto.setUserno(userNo);
-			//top 메일알림
-			int count = ntService.noteCount(ntDto);
-			//내부통지화면 left 받은통지
-			//내부통지화면 left 중요통지
-			String aram = String.valueOf(count);
-			for(WebSocketSession s : list){
-
-				if(s.getId().equals(session.getId())){
-					s.sendMessage(new TextMessage(aram));
-				}
+			@Override
+			public Map<String, Object> getPayload() {
+				Map<String, Object> alarmInfo = userDao.userAram(userNo);	
+				
+				return alarmInfo;
 			}
+
+			@Override
+			public boolean isLast() {
+				return false;
+			}
+		};
+		
+		String alarmJson = "";
+		alarmJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(alarmInfo); 
+		
+		for(WebSocketSession s: list) {
+			s.sendMessage(new TextMessage(alarmJson));
 		}
 	}
+
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {

@@ -38,7 +38,7 @@
                     <input id="userpassword" name="userpassword" type="password" class="form-control" placeholder="비밀번호" required>
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>     
-                 <small>Chrome, Internet Exploer 11이상의 버전에 최적화 되어 있습니다.</small>      
+                <small>Chrome, IE 11이상의 버전에 최적화 되어 있습니다.</small>      
             </form:form>
             <br/>
             <div class="container">
@@ -53,18 +53,16 @@
            			<div class="col-xs-12">
 						<table class="table">
 							<colgroup>
-								<col style="width: 50px;">
-								<col style="width: 150px;">
+								<col style="width: 200px;">
 								<col style="width: 100px;">												
 							</colgroup>							
 							<tbody>																	
 								   <c:forEach var="crudNotice" items="${crudNotice }">								  
 								   		<tr>
-								   			<td>${crudNotice.ICNUM }</td>
 											   <c:choose>
 										       		<c:when test="${fn:length(crudNotice.SUBJECT) > 14}">
 										       			<c:if test="${crudNotice.REGDATE } "></c:if>
-										            	<td><a href="#" style="text-decoration:none ; color:#000000;"><c:out value="${fn:substring(crudNotice.SUBJECT,0,13)}"/>....</a></td>
+										            	<td><a href="#" style="text-decoration:none ; color:#000000;"><c:out value="${fn:substring(crudNotice.SUBJECT,0,20)}"/>....</a></td>
 										           	</c:when>
 										           <c:otherwise>
 										            	<td><a href="#" style="text-decoration:none ; color:#000000;"><c:out value="${crudNotice.SUBJECT}"/></a></td>
@@ -83,15 +81,28 @@
 <p class="text-muted text-center"><small>고객센터 : 02-336-7800 주소: 서울특별시 마포구 독막로 10 성지빌딩 5층 509호</small></p>               
 <p class="text-muted text-center"> <small>Copyright CRUD XaaS SYSTEM &copy; 2018</small> </p>
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-
-</body>
-
-<!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>				
+<!-- Mainly scripts -->
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.1.1.min.js"></script>
+<script 
+	src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script
+	src="${pageContext.request.contextPath}/resources/js/inspinia.js"></script>
+<!-- Sparkline -->
+<script
+	src="${pageContext.request.contextPath}/resources/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- crud js -->	
+<script
+	src="${pageContext.request.contextPath}/resources/crud/crud_common.js"></script>	
 
 </body>
 </html>

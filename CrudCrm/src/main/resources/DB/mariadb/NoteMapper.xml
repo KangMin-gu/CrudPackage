@@ -35,7 +35,7 @@
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
 			LEFT OUTER JOIN me800010 AS D ON B.USERNO = D.USERNO
 			,(SELECT @RNUM := 0) R			
-			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND A.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
+			WHERE A.SITEID = #{siteid} AND B.USERNO = #{userno} AND B.ISDELETE = 0 AND A.NTCWAYEMAIL = 1
 				<if test="title != null">
 					AND A.TITLE LIKE CONCAT('%',#{title},'%')
 				</if>
@@ -78,7 +78,7 @@
 	<!--  보낸 통지 총갯수 -->
 	<select id="outTotalRows" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*) AS totalRows FROM
-			( SELECT A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME, A.REGDATE AS REGDATE
+			( SELECT A.TITLE, D.USERNAME AS FROMUSERNAME, C.USERNAME AS TOUSERNAME, A.REGDATE AS REGDATE
 			 	FROM sys970010 AS A
 				LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 				LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO
@@ -101,7 +101,7 @@
 	<!-- 보낸 통지 리스트-->	
 	<select id="outbox" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
-			SELECT A.NOTICEID, A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME,
+			SELECT A.NOTICEID, A.TITLE, D.USERNAME AS FROMUSERNAME, C.USERNAME AS TOUSERNAME,
 				A.IMPORTANT, A.FILESEARCHKEY, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS SENDDATE, A.REGDATE AS SENDDATETIME, A.REGDATE AS REGDATE,
 				B.READCHEK
 				, @RNUM:=@RNUM + 1 AS ROWNUM
@@ -128,7 +128,7 @@
 	<!-- 보낸 통지중 읽지않은 갯수 -->
 	<select id="noteOutReadVal" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*) AS notReadVal FROM ( 
-			SELECT A.TITLE, C.USERNAME AS FROMUSERNAME, D.USERNAME AS TOUSERNAME, A.REGDATE AS REGDATE
+			SELECT A.TITLE, D.USERNAME AS FROMUSERNAME, C.USERNAME AS TOUSERNAME, A.REGDATE AS REGDATE
 			FROM sys970010 AS A
 			LEFT OUTER JOIN sys970011 AS B ON A.NOTICEID = B.NOTICEID
 			LEFT OUTER JOIN me800010 AS C ON A.USERNO = C.USERNO 
@@ -294,7 +294,7 @@
 
 	<!-- 통지상세정보 -->
 	<select id="noteDetail" parameterType="hashMap" resultType="hashMap">
-		SELECT A.NOTICEID, A.TITLE, A.CONTENT, A.LNKURL, A.FILESEARCHKEY, B.USERNAME AS FROMUSERNAME, B.EMAIL AS FROMEMAIL, A.REGDATE
+		SELECT A.USERNO AS TOUSERNO, A.NOTICEID, A.TITLE, A.CONTENT, A.LNKURL, A.FILESEARCHKEY, B.USERNAME AS FROMUSERNAME, B.EMAIL AS FROMEMAIL, A.REGDATE
 		FROM sys970010 AS A
 		LEFT OUTER JOIN me800010 AS B ON A.USERNO = B.USERNO
 		WHERE A.SITEID = #{siteid} AND A.ISDELETE = 0 AND A.NTCWAYEMAIL = 1 AND A.NOTICEID = #{noticeid}
@@ -334,13 +334,13 @@
 	
 	<!-- 휴지통 이동 -->
 	<update id="noteTrashChk" parameterType="noteDto">
-		UPDATE sys970010 SET ISDELETE = 2, EDTUSER = #{userno}, EDTDATE = now()
+		UPDATE sys970011 SET ISDELETE = 2, EDTUSER = #{userno}, EDTDATE = now()
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 0
 	</update>
 	
 	<!-- 통지 삭제-->
 	<update id="noteDeleteChk" parameterType="noteDto">
-		UPDATE sys970010 SET ISDELETE = 1, EDTUSER = #{userno}, EDTDATE = now() 
+		UPDATE sys970011 SET ISDELETE = 1, EDTUSER = #{userno}, EDTDATE = now() 
 		WHERE SITEID = #{siteid} AND NOTICEID = #{noticeid} AND ISDELETE = 2
 	</update>
 	
@@ -360,7 +360,7 @@
 			INSERT INTO sys970010 
 			(USERNO, NTCWAYEMAIL, TITLE, CONTENT, LNKURL, REGUSER, REGDATE, SITEID, IMPORTANT, EDTUSER, EDTDATE, FILESEARCHKEY) 
 			VALUES 
-			(#{userno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, now(), #{siteid}, #{important}, #{userno}, now(), #{filesearchkey} )
+			(#{fromuserno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, now(), #{siteid}, #{important}, #{userno}, now(), #{filesearchkey} )
 		<selectKey resultType="int" keyProperty="noticeid" order="AFTER">	
 			SELECT LAST_INSERT_ID() 
 		</selectKey>	
@@ -421,8 +421,8 @@
 	
 		<!-- 메일정보 얻어오기  -->
 	<select id="adminMail" parameterType="int"  resultType="hashMap">
-		SELECT EMAIL,USERNAME,USERNO,SITEID,USERID, CHKAUTH FROM me800010
-		WHERE EMAIL <![CDATA[<>]]> ' ' AND CHKAUTH = 10 OR CHKAUTH = 20 AND SITEID = #{siteid} AND MASTERYN = 0 AND EMAIL IS NOT NULL;
+		SELECT EMAIL, USERNAME,USERNO,SITEID,USERID,CHKAUTH FROM me800010
+		WHERE CHKAUTH = 10 OR CHKAUTH = 20 AND SITEID = #{siteid} AND MASTERYN = 0 AND EMAIL IS NOT NULL;
 	</select>
 	
 	

@@ -35,7 +35,7 @@ public class CrudEngineImpl implements CrudEngine{
 	//fileupload 엔진
 	@Override
 	public void fileUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> multiFile, MultipartFile singleFile, String fileSearchKey) {
-
+		boolean upload = false;
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		String url = request.getRequestURI();
@@ -60,7 +60,7 @@ public class CrudEngineImpl implements CrudEngine{
 				whiteListFlag = whiteFlag(orgFileName);
 				
 				//확장자가 올바르지 않으면 false로 떨궈서 alert() 타게함 
-				if(!whiteListFlag) {
+				if(!whiteListFlag) {			
 					buf.append("<script>alert('허가되지 않은 확장자 입니다.');");
 					buf.append("location.href='");
 					buf.append(referer+"?fsk="+fileSearchKey);				
@@ -329,7 +329,7 @@ public class CrudEngineImpl implements CrudEngine{
 	
 	//내부통지 주소 쿼터
 	@Override
-	public List<Object> adressQuarter(String mailAdress) {
+	public List<Integer> adressQuarter(String mailAdress) {
 		
 		/*
 		 *  메일에서 To 또는 CC  ex) 123@naver.com;123@naver.com;123@naver.com;123@naver.com
@@ -337,9 +337,9 @@ public class CrudEngineImpl implements CrudEngine{
 		 * 
 		 */
 		
-		List<Object> mailTarget = new ArrayList<Object>();
+		List<Integer> mailTarget = new ArrayList<Integer>();
 			
-			String[] mailAdresses = mailAdress.split(";");
+			String[] mailAdresses = mailAdress.split(",");
 			
 			for(int i=0; i<mailAdresses.length; i++) {
 			    int target = Integer.parseInt(mailAdresses[i]);
@@ -360,4 +360,194 @@ public class CrudEngineImpl implements CrudEngine{
 		}
 	}
 	
+	//싱글업로드
+	@Override
+	public String singleUpload(HttpServletResponse response, HttpServletRequest request, MultipartFile sFile) {
+		
+		String fileSearchKey = fileSearchKey(request);
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String referer = request.getHeader("Referer");
+		Calendar calendar = Calendar.getInstance();
+		String years = String.valueOf(calendar.get(Calendar.YEAR));
+		String months = String.valueOf(calendar.get(Calendar.MONTH) + 1);			
+		EUploadDto fileInfo = new EUploadDto();
+		StringBuffer buf = new StringBuffer();
+		String realPath = null;
+		String imgPath = null;
+		boolean whiteListFlag = false;
+		boolean sizeFlag = false;
+		
+		String orgFileName = sFile.getOriginalFilename();
+		whiteListFlag = whiteFlag(orgFileName);
+		
+		if(!whiteListFlag) {				
+			buf.append("<script>alert('허용되지 않은 확장자입니다. 관리자에게 문의해주세요.');");
+			buf.append("location.href='");
+			buf.append(referer);				
+			buf.append("';</script>");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println(buf);					 
+				out.flush();
+			} catch (IOException e) {					
+				e.printStackTrace();
+			}	
+			
+		}else {
+			
+			long fileSize = sFile.getSize();
+			sizeFlag = whiteSizeFlag(fileSize);
+			
+			if(!sizeFlag) {
+				buf.append("<script>alert('파일용량이 제한용량보다 큽니다. 관리자에게 문의해주세요.');");
+				buf.append("location.href='");
+				buf.append(referer);				
+				buf.append("';</script>");
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out;
+				try {
+					out = response.getWriter();
+					out.println(buf);					 
+					out.flush();
+				} catch (IOException e) {					
+					e.printStackTrace();
+				}
+			}else {
+				
+				//로고 업로드
+				realPath = request.getSession().getServletContext().getRealPath("/logo/"+years+"/"+months);
+				imgPath = "logo/"+years+"/"+months+"/"+fileSearchKey+"_"+orgFileName;
+				fileInfo.setImgpath(imgPath);
+				fileInfo.setTablename("ma900010");	
+									 
+				String filePath = realPath+File.separator;					
+				String saveFileName = fileSearchKey+"_"+orgFileName;
+				String path = filePath + saveFileName;			
+				
+				File file=new File(filePath);	
+				if(!file.exists()){
+					file.mkdirs();
+				}
+				try{			
+					sFile.transferTo(new File(filePath+saveFileName));
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				fileInfo.setFilesize(fileSize);
+				fileInfo.setSavefilename(saveFileName);
+				fileInfo.setOrgfilename(orgFileName);
+				fileInfo.setPath(path);
+				fileInfo.setUserno(userNo);
+				fileInfo.setSiteid(siteId);
+				fileInfo.setFilesearchkey(fileSearchKey);
+				commonDao.fileUpload(fileInfo);
+				
+			}
+			
+		}
+		
+		return fileSearchKey;
+	}
+	//멀티업로드
+	@Override
+	public String multiUpload(HttpServletResponse response, HttpServletRequest request, List<MultipartFile> multiFile) {
+
+		String fileSearchKey = fileSearchKey(request);
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		String url = request.getRequestURI();
+		String referer = request.getHeader("Referer");
+		Calendar calendar = Calendar.getInstance();
+		String years = String.valueOf(calendar.get(Calendar.YEAR));
+		String months = String.valueOf(calendar.get(Calendar.MONTH) + 1);			
+		EUploadDto fileInfo = new EUploadDto();
+		StringBuffer buf = new StringBuffer();
+		String realPath = null;
+		boolean whiteListFlag = false;
+		boolean sizeFlag = false;
+		
+		List<MultipartFile> mFile = multiFile;
+		
+				for(int i=0; i<mFile.size(); i++) {
+					String orgFileName = mFile.get(i).getOriginalFilename();
+					whiteListFlag = whiteFlag(orgFileName);
+					
+					//확장자가 올바르지 않으면 false로 떨궈서 alert() 타게함 
+					if(!whiteListFlag) {			
+						buf.append("<script>alert('허가되지 않은 확장자 입니다. 관리자에게 문의해주세요.');");
+						buf.append("location.href='");
+						buf.append(referer);				
+						buf.append("';</script>");
+						response.setContentType("text/html; charset=UTF-8");
+						PrintWriter out;
+						try {
+							out = response.getWriter();
+							out.println(buf);					 
+							out.flush();
+						} catch (IOException e) {					
+							e.printStackTrace();
+						}	
+						
+					}else {
+						
+						long fileSize = mFile.get(i).getSize();
+						sizeFlag = whiteSizeFlag(fileSize);
+						if(!sizeFlag) {
+							buf.append("<script>alert('파일용량이 제한용량보다 큽니다. 관리자에게 문의해주세요.');");
+							buf.append("location.href='");
+							buf.append(referer);				
+							buf.append("';</script>");
+							response.setContentType("text/html; charset=UTF-8");
+							PrintWriter out;
+							try {
+								out = response.getWriter();
+								out.println(buf);					 
+								out.flush();
+							} catch (IOException e) {					
+								e.printStackTrace();
+							}						
+						}else {
+							
+							if(url.equals("/note/send")) {
+								realPath = request.getSession().getServletContext().getRealPath("/file/note/"+years+"/"+months);
+								fileInfo.setTablename("sys970010");
+							}else if(url.equals("/campaign/send")) {
+								realPath = request.getSession().getServletContext().getRealPath("/file/campaign/"+years+"/"+months);
+								fileInfo.setTablename("cp400010");
+							}
+							
+							
+							String filePath = realPath+File.separator;					
+							String saveFileName = fileSearchKey+"_"+userNo+"_"+orgFileName;
+							String path = filePath + saveFileName;
+							
+							File file=new File(filePath);
+							if(!file.exists()){
+								file.mkdirs();
+							}
+							try{			
+								mFile.get(i).transferTo(new File(filePath+saveFileName));
+							}catch(Exception e){
+								e.printStackTrace();
+							}
+							
+							fileInfo.setFilesize(fileSize);
+							fileInfo.setSavefilename(saveFileName);
+							fileInfo.setOrgfilename(orgFileName);
+							fileInfo.setPath(path);
+							fileInfo.setUserno(userNo);
+							fileInfo.setSiteid(siteId);
+							fileInfo.setFilesearchkey(fileSearchKey);
+							commonDao.fileUpload(fileInfo);
+						}
+						
+					}
+				}//for
+			
+			return fileSearchKey;		
+	}
 }

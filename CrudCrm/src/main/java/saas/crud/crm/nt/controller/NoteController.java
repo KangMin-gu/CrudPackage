@@ -39,7 +39,7 @@ public class NoteController {
 	@RequestMapping(value="/note/inbox", method=RequestMethod.GET)
 	public ModelAndView authNoteInbox(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteInbox(request);		
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/inbox");
 		return mView;
 	}
 	
@@ -47,7 +47,7 @@ public class NoteController {
 	@RequestMapping(value="/note/inbox", method=RequestMethod.POST)
 	public ModelAndView authNoteInsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteInbox(request);	
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/inbox");
 		return mView;
 	}
 	
@@ -63,7 +63,7 @@ public class NoteController {
 	@RequestMapping(value="/note/outbox", method=RequestMethod.GET)
 	public ModelAndView authnoteOutbox(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteOutbox(request);
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/outbox");
 		return mView;
 	}
 	
@@ -71,7 +71,7 @@ public class NoteController {
 	@RequestMapping(value="/note/outbox", method=RequestMethod.POST)
 	public ModelAndView authNoteOutsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteOutbox(request);
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/outbox");
 		return mView;
 	}
 	
@@ -87,7 +87,7 @@ public class NoteController {
 	@RequestMapping(value="/note/import", method=RequestMethod.GET)
 	public ModelAndView authnoteImport(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteImport(request);
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/importbox");
 		return mView;
 	}
 	
@@ -95,7 +95,7 @@ public class NoteController {
 	@RequestMapping(value="/note/import", method=RequestMethod.POST)
 	public ModelAndView authnoteImportsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteImport(request);
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/importbox");
 		return mView;
 	}
 	
@@ -111,7 +111,7 @@ public class NoteController {
 	@RequestMapping(value="/note/trash", method=RequestMethod.GET)
 	public ModelAndView authnoteTrash(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteTrash(request);
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/trashbox");
 		return mView;
 	}
 	
@@ -119,7 +119,7 @@ public class NoteController {
 	@RequestMapping(value="/note/trash", method=RequestMethod.POST)
 	public ModelAndView authnoteTrashsearch(HttpServletRequest request) {
 		ModelAndView mView = ntService.noteTrash(request);
-		mView.setViewName("nt/notelist");
+		mView.setViewName("nt/trashbox");
 		return mView;
 	}
 	
@@ -152,7 +152,7 @@ public class NoteController {
 	//메일 발송 화면
 	@RequestMapping(value="/note/send", method=RequestMethod.GET)
 	public ModelAndView authnoteSendForm(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
+		ModelAndView mView = ntService.noteSendForm(request);
 		mView.setViewName("nt/noteform");
 		return mView;
 	}

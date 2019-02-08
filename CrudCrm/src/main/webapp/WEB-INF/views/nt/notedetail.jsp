@@ -38,11 +38,9 @@
 						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
-						<div class="mail-box-header">
-						<!-- 팝업여부 체크  -->
-						<input type="hidden" value="${referUrl}" id="referUrl"/>
+						<div class="mail-box-header">		
 							<div class="float-right tooltip-demo">
-								<a href="/note/send/${note.NOTICEID}" class="btn btn-white btn-sm"
+								<a href="/note/send?noteid=${note.NOTICEID}" class="btn btn-white btn-sm"
 									data-toggle="tooltip" data-placement="top" title="Reply"><i
 									class="fa fa-reply"></i> 답장</a> 
 									
@@ -111,11 +109,9 @@
 								</div>
 							</div>
 							<div class="mail-body text-right tooltip-demo">
-								<a class="btn btn-sm btn-white" href="/note/send/${note.NOTICEID}"><i
-									class="fa fa-reply"></i> 답장</a> 
+								<a class="btn btn-sm btn-white" href="/note/send?noteid=${note.NOTICEID}"><i class="fa fa-reply"></i> 답장</a> 
 									<a class="btn btn-sm btn-white"
-									href="/note/forward/${note.NOTICEID}"><i class="fa fa-arrow-right"></i>
-									전달</a>									
+									href="/note/send?noteid=${note.NOTICEID}"><i class="fa fa-arrow-right"></i>전달</a>									
 										<!-- 휴지통에서는 완전삭제 -->
 									<c:choose>							
 										<c:when test="${fn:contains(referUrl,'trash')}">

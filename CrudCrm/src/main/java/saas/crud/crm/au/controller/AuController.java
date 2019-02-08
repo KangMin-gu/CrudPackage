@@ -205,10 +205,14 @@ public class AuController {
 		return mView;
 	}
 	
-	@RequestMapping(value="ma/sitecehck/{userId}", method=RequestMethod.GET)
+	@RequestMapping(value="/ma/sitecehck/{userId}", method=RequestMethod.GET)
 	public ModelAndView authSession(HttpServletRequest request, @PathVariable String userId) {
 		ModelAndView mView = auService.authSession(request, userId);
 		return mView;
 	}
 	
+	@RequestMapping(value="/ad/notice", method=RequestMethod.GET)
+	public String authNotice(HttpServletRequest request) {
+		return "au/ad/notice";
+	}
 }

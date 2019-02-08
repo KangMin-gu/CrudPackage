@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import saas.crud.crm.au.dto.UserDto;
 
 @Repository
@@ -50,6 +54,18 @@ public class UserDaoImpl implements UserDao{
 	public Map<String, Object> useInfo(String userId) {
 		Map<String, Object> useInfo = session.selectOne("user.useCheck", userId);
 		return useInfo;
+	}
+
+	@Override
+	public Map<String, Object> userInfo(int userNo) {
+		Map<String, Object> useInfo = session.selectOne("user.useInfo", userNo);
+		return useInfo;
+	}
+
+	@Override
+	public Map<String, Object> userAram(int userNo) {
+		Map<String, Object> userAram = session.selectOne("user.userAram", userNo);
+		return userAram;
 	}
 	
 }

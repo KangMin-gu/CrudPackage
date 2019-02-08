@@ -31,6 +31,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.sun.mail.smtp.SMTPTransport;
+
 import saas.crud.crm.common.CommonDao;
 
 @Component
@@ -278,8 +280,7 @@ public class MailScheduler {
 		
 	
 			Transport.send(message);
-		
-		
+
 		
 		
 	}

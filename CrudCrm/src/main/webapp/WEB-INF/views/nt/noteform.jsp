@@ -72,48 +72,16 @@
 								
 							</div>
 							<div class="mail-box">
-								        <c:if test="${fn:contains(curUrl,'forward')}">
-								        	<c:set var="toUser" value="${fn:split(toList,',')}"></c:set>
-								        	
-								        	<input type="hidden" id="curUrl" value='${curUrl}' />     
-								       		<input type="hidden" id="subject" value='${note.TITLE}' />
-								       		<input type="hidden" id="content" value='${note.CONTENT}' />
-								       		<input type="hidden" id="fromUser" value='${note.FROMUSERNAME}' />
-								       		<span id="toUser" style="display:none">
-												<c:forEach var="to" items="${toList}" varStatus="comma">																						
-													 ${to.USERNAME}			 					 					
-												<c:if test="${!comma.last }">,</c:if>																																	
-												</c:forEach>								
-											</span>
-											<span id="ccUser">
-												<c:forEach var="cc" items="${ccList }" varStatus="commaTwo">								
-												${cc.USERNAME }										  										
-												<c:if test="${!commaTwo.last }">,</c:if>	
-												</c:forEach>
-									 		</span>
-									 		<input type="hidden" id="date" value="${note.REGDATE }" />
-								       </c:if>
-
 								<div class="mail-body">
 
 									<!-- 받는이 -->
 									<div class="form-group row" id="mysel">
 										<label class="col-md-2 col-form-label" for="touser">받는이</label>
 										<div class="col-md-10" id="toto" style="padding-left:0px;padding-right:0px;">
-											<select data-placeholder=" " id="touser" name="touser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">  											              
+											<select id="touser" name="touser" class="chosen-select" multiple="multiple" style="width: 350px; display: none;" tabindex="-1">  											              
 								                <c:forEach var="adminMail" items="${adminMail}" >
-								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
-								                	${adminMail.USERNAME}</option>
+								                	<option value="${adminMail.USERNO}">${adminMail.USERNAME}</option>								                	
 								                </c:forEach>
-								                
-								               
-								                <c:choose>								               
-								                	<c:when test="${!fn:contains(curUrl,'forward')}">
-								       				<option value="${replyUser.USERNAME},${replyUser.USERNO},${replyUser.EMAIL}" ${replyUser.USERNO ne "" ? "selected" :""}>
-								       					${replyUser.USERNAME}
-								       				</option>
-								       				</c:when>
-								       			</c:choose>
                 							</select>
 										</div>
 									</div>
@@ -123,11 +91,9 @@
 									<div class="form-group row">
 										<label class="col-md-2 col-form-label" for="ccuser">참조</label>
 										<div class="col-md-10" style="padding-left:0px;padding-right:0px;">
-											<select data-placeholder=" " id="ccuser" name="ccuser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
+											<select id="ccuser" name="ccuser" class="chosen-select" multiple="multiple" style="width: 350px; display: none;" tabindex="-1">   						              
 								                <c:forEach var="adminMail" items="${adminMail}" >
-								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
-								                	${adminMail.USERNAME}</option>
-								                	
+								                	<option value="${adminMail.USERNO}">${adminMail.USERNAME}</option>								                	
 								                </c:forEach>
                 							</select>
 										</div>
@@ -168,28 +134,29 @@
 								<c:if test="${replyFile eq null}">
 								
 								<div class="mail-body">
-									<div class="form-group row">
+									<div class="form-group row custom-file">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
 										<div class="col-md-6">
-											<input id="file" name="file" class="form-control" type="file"
-												multiple>
-											<p class="help-block">크기 200Mbyte 이하의 파일 선택</p>
+											<input id="filesChk" name="files" class="form-control" type="file" multiple>
+											<p class="help-block">크기 50MB 이하의 파일 선택</p>											
 										</div>
-										
-									</div>
+									</div>								
 								</div>
 								
 								</c:if>								
 								
 								<div class="mail-body text-right tooltip-demo">
 								
-								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100"  style="padding-right: 0px;">
-											<button class="btn btn-sm btn-primary submit" disabled id="sub" data-toggle="tooltip">
+
+
+										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100"  style="padding-right: 0px;">
+											<button class="btn btn-sm btn-primary submit" disabled id="submit" data-toggle="tooltip">
 												<i class="fa fa-reply"></i> 발송
 											</button>
-											<a href="mailbox.html" class="btn btn-white btn-sm"
+											<a href="/note/inbox" class="btn btn-white btn-sm"
 											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>																		
-								</div>	
+										</div>
+
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -221,6 +188,8 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.MultiFile.min.js"></script>
 	<script>
 	<!-- radioBox-->
 	
@@ -294,14 +263,7 @@
 			
 
 		})
-		
-		
-		var replyFile = $('#replyFile').attr('value');
-		var fileName = $('#fileName').attr('value');
-		
-		
-		
-		
+
 		//chosen
 		$('.chosen-select').chosen(
 				{
@@ -313,37 +275,6 @@
 		$('.summernote').summernote();
 		$('.note-editable').css('height','300px');
 	
-		
-		//summernote에 넣을 내용 
-		var forwardHtml = '';
-		//현재 url값 
-		var curUrl = $('#curUrl').val();
-		debugger;
-		var subject = $('#subject').val();
-		var date = $('#date').val();
-		var from = $('#fromUser').val();
-		var to = $('#toUser')
-		to = to.text().replace(/\n/g, "").replace(/(\s*)/g,"");
-		var cc = $('#ccUser')
-		cc = cc.text().replace(/\n/g, "").replace(/(\s*)/g,"");
-		var content = $('#content').val();
-		
-		forwardHtml += '<br><p style="border-left:2px solid black;padding-left:10px;height:140px">-------------- Original Message -------------- <br>';
-			forwardHtml += '<strong>Subject: </strong>&nbsp;' + subject + '<br>';
-			forwardHtml += '<strong>Date: </strong>&nbsp;' + date + '<br>';
-			forwardHtml += '<strong>From: </strong>&nbsp;' + from + '<br>';
-			forwardHtml += '<strong>To: </strong>&nbsp;' + to + '<br>';
-			forwardHtml += '<strong>Cc: </strong>&nbsp;' + cc + '<br>';
-			forwardHtml += '<h4>' + content + '</h4><br></p><br>';
-			
-		if(curUrl.indexOf('forward') > 0){
-			$('#title').attr('value','FW: '+subject)
-			$('.summernote').summernote('code',forwardHtml);
-		}
-		
-
-		
-		
 		
 	});
 	

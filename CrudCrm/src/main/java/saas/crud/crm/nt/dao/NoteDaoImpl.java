@@ -124,6 +124,7 @@ public class NoteDaoImpl implements NoteDao{
 		List<Map<String, Object>> toList = session.selectList("note.toList", noteTrashVal);
 		return toList;
 	}
+	
 	//읽음표시
 	@Override
 	public void noteEyeChk(Map<String, Object> noteVal) {
@@ -221,7 +222,6 @@ public class NoteDaoImpl implements NoteDao{
 	@Override
 	public int noteCount(NoteDto ntDto) {
 		int aram = session.selectOne("note.count", ntDto);
-		System.out.println(aram +"-----");
 		return aram;
 	}
 	

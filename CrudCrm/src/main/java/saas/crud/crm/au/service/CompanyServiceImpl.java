@@ -82,22 +82,30 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	//회원사 수정
 	@Override
-	public void comapnyUpdate(HttpServletRequest request, CompanyDto companyDto) {
+	public void comapnyUpdate(HttpServletRequest request, HttpServletResponse response, CompanyDto companyDto, MultipartFile file) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		String fileSearchKey = request.getParameter("fileSearchKey");
-		companyDto.setEdtuser(userNo);		
-		companyDto.setSitelogo(fileSearchKey);
+		if(file != null) {
+			MultipartFile sFile = file;	
+			String fileSearchKey =  crud.singleUpload(response, request, sFile);
+			companyDto.setSitelogo(fileSearchKey);
+		}
+		companyDto.setEdtuser(userNo);				
 		companyDao.companyUpdate(companyDto);
 	}
 	
 	// 회원사 추가
 	@Override
-	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto) {
+	public int companyInsert(HttpServletResponse response, HttpServletRequest request, CompanyDto companyDto,MultipartFile file) {
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		String fileSearchKey = request.getParameter("fileSearchKey");
+		
+		if(file != null) {
+			MultipartFile sFile = file;	
+			String fileSearchKey =  crud.singleUpload(response, request, sFile);
+			companyDto.setSitelogo(fileSearchKey);
+		}
+		
 		companyDto.setReguser(userNo);
 		companyDto.setEdtuser(userNo);
-		companyDto.setSitelogo(fileSearchKey);
 		int siteid = companyDao.companyInsert(companyDto);
 		
 		companyDto.setSiteid(siteid);

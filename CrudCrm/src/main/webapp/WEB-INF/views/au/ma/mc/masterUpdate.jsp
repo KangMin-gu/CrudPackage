@@ -350,10 +350,12 @@
                                         <tr>
                                             <th><label for="sitelogo">회원사로고</label></th>
                                             <td>  
-                                            	<div class="input-group poplogo">
-                                            		<input class="form-control" type="text" id="filename" name="filename" disabled />
+                                            <!-- 	<div class="input-group poplogo">-->
+                                            	<div class="input-group ">
+                                            		<!-- <input class="form-control" type="text" id="filename" name="filename" disabled />
                                             		<button type="button" id="searchKey" class="btn btn-light btn-xs">로고 등록</button>
-                                            		<input type="hidden" id="fileSearchKey" name="fileSearchKey" />
+                                            		<input type="hidden" id="fileSearchKey" name="fileSearchKey" />-->
+                                            		<input class="form-control" type="file" name="files" id="logoChk"/>
                                             	</div>                                                 											
                                             </td>
                                         </tr>
@@ -407,6 +409,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>
 	<script>
 	$(document).ready(function () {
 		

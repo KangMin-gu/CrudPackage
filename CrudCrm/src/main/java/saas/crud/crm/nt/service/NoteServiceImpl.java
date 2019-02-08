@@ -1,11 +1,19 @@
 package saas.crud.crm.nt.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dao.AuDao;
+import saas.crud.crm.au.dao.UserDao;
+import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonDao;
 import saas.crud.crm.nt.dao.NoteDao;
@@ -34,6 +45,8 @@ public class NoteServiceImpl implements NoteService{
 	@Autowired
 	private CrudEngine crudEngine;
 	
+	@Autowired
+	private UserDao urDao;
 	
 	
 	 
@@ -99,10 +112,8 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteReadVal(noteVal);
 		
-		mView.addObject("url", "note/inbox");
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","받은 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		
 		return mView;
@@ -172,10 +183,9 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteOutReadVal(noteOutVal);
 		
-		mView.addObject("url", "note/outbox");		
+	
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","보낸 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		return mView;
 	}
@@ -258,10 +268,8 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteImportReadVal(noteImportVal);
 		
-		mView.addObject("url", "note/import");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","중요 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리		
 		
 		
@@ -328,10 +336,9 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteTrashReadVal(noteTrashVal);
 					
-		mView.addObject("url", "note/trash");		
+	
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","휴지통"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		return mView;		
 	}	
@@ -493,40 +500,55 @@ public class NoteServiceImpl implements NoteService{
 		}	
 		
 	}
-	//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
-	//		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
-	
 	
 	//통지발송
 	@Override
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
-		
+		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
+		String toUserList[] = request.getParameterValues("touser");
+		String ccUserList[] = request.getParameterValues("ccuser");
 		ntDto.setSiteid(siteId);
-		ntDto.setUserno(fromUserNo);
-		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
+		//ntDto 셋팅
+		//보낸이
+		ntDto.setFromuserno(fromUserNo);	
+		
+		//파일첨부
+		List<MultipartFile> mFile = ((MultipartHttpServletRequest)request).getFiles("file");
+		if(mFile.size() != 0) {			
+			//첨부파일			
+			String fileSearchKey = crudEngine.multiUpload(response, multipartHttpServletRequest, mFile);
+			ntDto.setFilesearchkey(fileSearchKey);
+
+		}
+		
+		int noticeId = ntDao.noteSend(ntDto); //통지내용등록
+		
+		for(String a : toUserList) {
+				int toUserNo = Integer.parseInt(a);
+				ntDto.setUserno(toUserNo);				
+				ntDao.notetoAndCc(ntDto); // to 등록
+		}
+
+		if(ccUserList != null) {
+			for(String b : ccUserList) {
+				int ccUserNo = Integer.parseInt(b);
+				ntDto.setUserno(ccUserNo);
+				ntDto.setChkcc(1);
+				ntDao.notetoAndCc(ntDto); //cc 등록
+			}
+		}
+		
+		/*
+		//이메일로 발송 로직 수정대기
+		Map<String, Object> fromInfo = urDao.userInfo(fromUserNo);
+			String fromEmail = fromInfo.get("EMAIL").toString();
+			String fromName = fromInfo.get("USERNAME").toString();
+		*/
+		
 			
-		//받는 사람 이름,유저넘버,이메일이 넘어옴 
-		String[] toUserEmail = request.getParameterValues("touser"); 
-		String[] ccUserEmail = request.getParameterValues("ccuser");
-		
-		//insert 시킬 값 넣는 map
-		HashMap<String, Object> map= new HashMap<String,Object>();
-		
-		//;를 이어붙어서 만든 userno(target),email,name값들 (받는이)  
-		HashMap<String,String> toTargetMap = null;
-		
-		//받는이
-		//userno
-		String toTarget = toTargetMap.get("target");
-		//email
-		String toUser = toTargetMap.get("email");
-		//name 
-		String toName = toTargetMap.get("name");
-		
-		return 0;
+		return noticeId;
 	}
 
 			
@@ -535,6 +557,61 @@ public class NoteServiceImpl implements NoteService{
 	public int noteCount(NoteDto ntDto) {
 		int noteCount = ntDao.noteCount(ntDto);	
 		return noteCount;
+	}
+
+
+
+	//통지 발송 화면
+	@Override
+	public ModelAndView noteSendForm(HttpServletRequest request) {
+		
+		File emlFile = new File("/Users/mingukang/Downloads/attached.eml");
+		
+		Properties props = System.getProperties();
+
+		Session mailSession = Session.getDefaultInstance(props, null);
+
+		// parse eml file
+		InputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(emlFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MimeMessage message = null;
+		try {
+			message = new MimeMessage(mailSession, inputStream);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			System.out.println("From : " + message.getFrom()[0]);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
+		
+		String noticeId=request.getParameter("noticeid");
+		ModelAndView mView = new ModelAndView();
+		Map<String, Object> noteVal = new HashMap<>();
+		//해당 답장사용자정보 가져오는 로직 아직 미완성 테이블 변경에 따라 수정요망.
+		if(noticeId != null && !noticeId.equals("")){ //전달 또는 답장 내용
+				noteVal.put("noticeid", noticeId);
+				Map<String, Object> noteContent = ntDao.noteDetail(noteVal);
+				StringBuffer buf = new StringBuffer();
+				mView.addObject("noteContent", noteContent);
+		}
+		
+		mView.addObject("adminMail", adminMail);
+		return mView;
 	}
 
 

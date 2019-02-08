@@ -14,4 +14,7 @@ public interface VocDao {
 	public Map<String,Object> vocEmailDetail(Map<String,Object> param);
 	public int vocBlackCustInsert(Map<String,Object> blackInsMap);
 	public int vocBlackCustDelete(Map<String,Object> param);
+	
+	public int vocCallBackInsert(Map<String,Object> calbackMap);
+	
 }

@@ -34,7 +34,7 @@ public class ClientDto {
 	private long anntrdamount;
 	private long annsalesamount;
 	private int staffcount;
-	private int contid;
+	private int contno;
 	private int owner;
 	private String erpno1;
 	private String erpno2;
@@ -57,7 +57,7 @@ public class ClientDto {
 			String faxtel2, String faxtel3, String mobile1, String mobile2, String mobile3, String bscond,
 			String bstype, String bscategory, String homepage, String prsdname, String corp_sn, String bsno,
 			int rprcliid, int internal, int companysize, int cligrade, long anntrdamount, long annsalesamount,
-			int staffcount, int contid, int owner, String erpno1, String erpno2, String regdate, int reguser,
+			int staffcount, int contno, int owner, String erpno1, String erpno2, String regdate, int reguser,
 			String editdate, int edituser, String email, String clienttype, int ck_cliid, int importance, int friendly,
 			int isdelete, int clicustno) {
 		super();
@@ -93,7 +93,7 @@ public class ClientDto {
 		this.anntrdamount = anntrdamount;
 		this.annsalesamount = annsalesamount;
 		this.staffcount = staffcount;
-		this.contid = contid;
+		this.contno = contno;
 		this.owner = owner;
 		this.erpno1 = erpno1;
 		this.erpno2 = erpno2;
@@ -366,12 +366,12 @@ public class ClientDto {
 		this.staffcount = staffcount;
 	}
 
-	public int getContid() {
-		return contid;
+	public int getContno() {
+		return contno;
 	}
 
-	public void setContid(int contid) {
-		this.contid = contid;
+	public void setContno(int contno) {
+		this.contno = contno;
 	}
 
 	public int getOwner() {
@@ -485,6 +485,6 @@ public class ClientDto {
 	public void setClicustno(int clicustno) {
 		this.clicustno = clicustno;
 	}
-	
+
 	
 }

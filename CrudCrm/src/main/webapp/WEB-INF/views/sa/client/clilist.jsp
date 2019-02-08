@@ -323,7 +323,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script> 
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script><!-- radioBox-->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 영업js -->
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script><!-- file download -->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script><!-- file download -->
 	<script>
 		
 	$(document).ready(function(){

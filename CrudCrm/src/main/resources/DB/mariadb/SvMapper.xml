@@ -670,5 +670,33 @@
 		FROM sv300030 A
 		WHERE A.SITEID = #{siteid}
 	</select>
-	
+		
+	<insert id="vocCallBackInsert" parameterType="hashMap">	
+		INSERT INTO CTI510010
+		(
+		CALLER
+		,TRUNK
+		,CALLBACK
+		,GCODE1
+		,GCODE2
+		,GCODE3
+		,RECEIVEDATE
+		,REGDATE
+		,DTWEEK
+		,CALLSTATUS
+		)
+		VALUES
+		(
+		#{CALLER}
+		,#{TRUNK}
+		,#{CALLBACK}
+		,#{GCODE1}
+		,#{GCODE2}
+		,#{GCODE3}
+		,CONCAT(#{DATE1},' ',#{TIME1})
+		,NOW()
+		,#{DTWEEK}
+		,#{callstatus}
+		)
+	</insert>
 </mapper>

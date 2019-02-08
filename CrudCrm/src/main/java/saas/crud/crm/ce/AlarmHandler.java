@@ -49,8 +49,6 @@ public class AlarmHandler extends TextWebSocketHandler{
 		Map<String, Object> maps = mapper.readValue(ntCountKey, new TypeReference<Map<String, Object>>() {});
 
 		int userNo =  Integer.parseInt((String) maps.get("userNo"));
-	
-
 		//Map<String, Object> userAram = userDao.userAram(userNo);
 
 		WebSocketMessage<Map<String, Object>> alarmInfo = new WebSocketMessage<Map<String, Object>>() {

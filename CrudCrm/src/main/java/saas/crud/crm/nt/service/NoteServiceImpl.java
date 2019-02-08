@@ -1,11 +1,19 @@
 package saas.crud.crm.nt.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -104,10 +112,8 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteReadVal(noteVal);
 		
-		mView.addObject("url", "note/inbox");
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","받은 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		
 		return mView;
@@ -177,10 +183,9 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteOutReadVal(noteOutVal);
 		
-		mView.addObject("url", "note/outbox");		
+	
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","보낸 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		return mView;
 	}
@@ -263,10 +268,8 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteImportReadVal(noteImportVal);
 		
-		mView.addObject("url", "note/import");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","중요 통지"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리		
 		
 		
@@ -333,10 +336,9 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteTrashReadVal(noteTrashVal);
 					
-		mView.addObject("url", "note/trash");		
+	
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
-		mView.addObject("NOTENAME","휴지통"); //대메뉴이름 처리
 		mView.addObject("notReadVal", noteReadVal); //읽지않은 메세지 갯수 처리
 		return mView;		
 	}	
@@ -539,7 +541,7 @@ public class NoteServiceImpl implements NoteService{
 		}
 		
 		/*
-		//이메일보낸이
+		//이메일로 발송 로직 수정대기
 		Map<String, Object> fromInfo = urDao.userInfo(fromUserNo);
 			String fromEmail = fromInfo.get("EMAIL").toString();
 			String fromName = fromInfo.get("USERNAME").toString();
@@ -562,9 +564,52 @@ public class NoteServiceImpl implements NoteService{
 	//통지 발송 화면
 	@Override
 	public ModelAndView noteSendForm(HttpServletRequest request) {
+		
+		File emlFile = new File("/Users/mingukang/Downloads/attached.eml");
+		
+		Properties props = System.getProperties();
+
+		Session mailSession = Session.getDefaultInstance(props, null);
+
+		// parse eml file
+		InputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(emlFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MimeMessage message = null;
+		try {
+			message = new MimeMessage(mailSession, inputStream);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			System.out.println("From : " + message.getFrom()[0]);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
+		
+		String noticeId=request.getParameter("noticeid");
 		ModelAndView mView = new ModelAndView();
+		Map<String, Object> noteVal = new HashMap<>();
+		//해당 답장사용자정보 가져오는 로직 아직 미완성 테이블 변경에 따라 수정요망.
+		if(noticeId != null && !noticeId.equals("")){ //전달 또는 답장 내용
+				noteVal.put("noticeid", noticeId);
+				Map<String, Object> noteContent = ntDao.noteDetail(noteVal);
+				StringBuffer buf = new StringBuffer();
+				mView.addObject("noteContent", noteContent);
+		}
+		
 		mView.addObject("adminMail", adminMail);
 		return mView;
 	}

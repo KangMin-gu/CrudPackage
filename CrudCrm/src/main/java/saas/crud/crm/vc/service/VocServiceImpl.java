@@ -379,5 +379,12 @@ public class VocServiceImpl implements VocService{
 		int bcustno = vcDao.vocBlackCustDelete(prm);
 		return bcustno;
 	}
+
+	//voc 콜백 추가. cti에서 보내 준 데이터 콜백 테이블에 insert 
+	@Override
+	public int svcVocCallBackInsert(Map<String, Object> calBackMap) {
+		int res = vcDao.vocCallBackInsert(calBackMap);
+		return res;
+	}
 	
 }

@@ -20,5 +20,5 @@ public interface VocService {
 	public Map<String,Object> svcVocTabEmailDetail(Map<String,Object> prm);
 	public int svcVocBlackCustInsert(Map<String,Object> blackInsMap);
 	public int svcVocBlackCustDelete(Map<String,Object> prm);
-
+	public int svcVocCallBackInsert(Map<String,Object> prm);
 }

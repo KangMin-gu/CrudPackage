@@ -20,13 +20,14 @@ $("#custRegBtn").click(function(e){
 
 //인입 된 번호로 고객 검색.
 function enterkey(event) {
-	var id = event.id;
     if (window.event.keyCode == 13) {//입력 값이 enter 
-    	if(id == 'phone'){
-    		var searchPhoneNo = document.getElementById(id).value;
-    		openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',1260,800);
-    	}
+    	popVocCust();
     }
+}
+
+function popVocCust(){
+	var searchPhoneNo = document.getElementById('phone').value;
+	openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',1260,800);
 }
 
 //고객 추가

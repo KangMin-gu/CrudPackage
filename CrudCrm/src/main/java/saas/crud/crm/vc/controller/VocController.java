@@ -228,7 +228,27 @@ public class VocController {
 	@RequestMapping(value="/vc/sess",method=RequestMethod.GET)
 	@ResponseBody
 	public int authvocSessionMaintain(HttpServletRequest request) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@sess test@@@@@@@@@@@@@@@@@@@");
 		return 0;
 	}
-
+	
+	//VOC 온피아 -> 콜백 받기 
+	@RequestMapping(value="/vc/callback",method=RequestMethod.POST)
+	@ResponseBody
+	public int authvocGetCallBack(HttpServletRequest request) {
+		Map<String, Object> callBackMap = crud.searchParam(request);
+		callBackMap.put("callstatus", 0); //콜백 상태 기본 값 0 		
+		int res = vcService.svcVocCallBackInsert(callBackMap);
+		return res;
+	}
+	
+	//VOC - 콜백 테스트용. (**기능 구현 완료 후 반드시 삭제 ) 	
+	@RequestMapping(value="/vc/test",method=RequestMethod.GET)
+	public ModelAndView authvocTest(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("vc/test1");
+		return mView;
+	}
+	
+	
 }

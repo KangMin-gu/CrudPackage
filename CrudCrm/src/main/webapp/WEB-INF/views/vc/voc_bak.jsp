@@ -15,65 +15,52 @@
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 </head>
+
+
 	<body>
     <div id="wrap">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-
-            <div class="cti" style="display:none;">
-           		서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
-
-				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
-				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
-				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud02">
-				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622865">
-				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
-				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
-				<span id="outCallNum">07042622883</span>
-
-				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
-				<div>
-					<textarea id="messages" cols="150" rows="10"></textarea>
-				<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
-				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
-				</div>
-            </div>
-            <div>
-				<!-- <input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<input type="button" value="로그인" onclick="loginGo();"> -->
-			</div>
                     <ul class="top-btn">
-                    	<li>수신번호 </li>
-                        <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
-                        &nbsp; |&nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
-                        <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-
-                        <li class="liBtn2"><span>상담 상태 : </span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
-                        <span id="status" class="cti_text_nomal" style="display:inline-block; min-width:100px;">연결안됨</span></li>
-
-                        <li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
+                        <li>유입경로 </li>
+                        <li><input type="text" class="form-control"></li>
+                        <li class="mr-2"><input type="text" class="form-control"></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">걸기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>&nbsp; |&nbsp;
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">휴식 <i class="fa fa-coffee"></i></button></li>
+                        <li class="liBtn"><button class="btn btn-primary btn-sm">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
+                        <li>00 : 00 : 12</li>&nbsp; | &nbsp;
+                        <li class="liBtn2"><span>상담창 상태</span> <button class="btn btn-default btn-sm">Out연결</button></li>
+                        <li class="mr-2 ml-2"><strong>고객대기 <span>7</span></strong></li>
+                        <li>
+                            <ul class="top-ul02">
+                                <li class="tit02">옴니채널</li>
+                                <li>
+                                    <i class="fa fa-comment"></i>
+                                    <span class="li-text">3</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-wifi"></i>
+                                    <span class="li-text">3</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="li-text">3</span>
+                                </li>
+                                <li onClick="window.open('/')">
+                                    <i class="fa fa-home"></i>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="float-right">
                             <ul class="top-ul03">
                                 <li onClick="window.open('notice.html','','resizable=yes,menubar=no,toolbar=yes,width=850,height=500,scrollbars=yes')">
                                     <i class="fa fa-bell"></i>
                                     <span class="li-text">3</span>
                                 </li>
-                                <li>
-                                	<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#ff5555e8 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
-                                	<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #85ff00f5;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
-                                </li>
+                                <li><i class="fa fa-power-off"></i></li>
+                                <li><i class="fa fa-bars"></i></li>
                             </ul>
                         </li>
                     </ul>
@@ -101,9 +88,9 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>검색번호</th>
+                                    <th>수신번호</th>
                                     <td>	
-                                        <input type="text" class="form-control" onkeyup="enterkey(this);" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <input type="text" class="form-control" onkeyup="enterkey(this);" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9. -]/g, '').replace(/(\..*)\./g, '$1');">
                                     </td>
                                     <th>고객명</th>
                                     <td>
@@ -560,7 +547,7 @@
                                 <td colspan="3">
                                     <div class="i-checks voc">
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep2" name="vocstep"> 처리</label>
-                                        <!-- <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>-->
+                                        <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
                                         <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep5" name="vocstep"> 상급자 이관</label>
                                     </div>
@@ -670,29 +657,29 @@
                 <h3 class="float-left">개인전광판</h3>
                 <ul class="call-option float-left">
                     <li class="call-tit">평균통화</li>
-                    <li class="yellow"><strong><span id="cti_sign_info_01">00:00:00</span></strong></li>
+                    <li class="yellow"><strong>00:01:30</strong></li>
                     <li class="call-tit">평균대기</li>
-                    <li><strong><span id="cti_sign_info_02">00:00:00</span></strong></li>
+                    <li><strong>00:01:30</strong></li>
                     <li class="call-tit">응대율</li>
-                    <li><strong><span id="responseRate">0%</span></strong></li>
+                    <li><strong>89%</strong></li>
                     <li class="call-tit">누적통화시간</li>
                     <li class="yellow"><strong>00:01:30</strong></li>
+                    <li class="call-tit">VB</li>
+                    <li><strong>20 건</strong></li>
+                    <li class="call-tit">O/B</li>
+                    <li><strong>3 건</strong></li>
+                    <li class="call-tit">미처리</li>
+                    <li><strong>0</strong></li>
                     <li class="call-tit">콜백</li>
                     <li><strong>0</strong></li>
-                    <li class="call-tit">통화분배시도</li>
-                    <li><span id="transferTryCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">통화분배연결</li>
-                    <li><span id="transferConnectCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">인바운드시도</li>
-                    <li><span id="ibTryCnt"><strong>0</strong></span></li>
-                    <li><span id="ibTryCnt">0</span></li>
-                    <li class="call-tit">인바운드연결<li>
-                    <li><span id="ibConnectCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">아웃바운드시도</li>
-                    <li><span id="obTryCnt"><strong>0</strong></span></li>
-                    <li class="call-tit">아웃바운드연결</li>
-                    <li><span id="obConnectCnt"><strong>0</strong></span></li>
+                    <li class="call-tit">예약</li>
+                    <li><strong>0</strong></li>
                 </ul>
+                <div class="btn-area float-right mr-3">
+                    <button class="btn btn-primary btn-sm">상담스크립트 <i class="fa fa-pen"></i></button>
+                    <button class="btn btn-primary btn-sm ml-1">KMS <i class="fa fa-list-alt"></i></button>
+                    <button class="btn btn-primary btn-sm ml-1">문자보내기 <i class="fa fa-envelope"></i></button>
+                </div>
             </div>
         </div>
     </div>
@@ -703,45 +690,21 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_right.js"></script>
-<script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
 
 <script>
-var intervalId;//전역변수
-function sessMaintain(){//세션유지용
- 	$.ajax({
-       		url: "/vc/sess",
-        	method: "GET",
-        	dataType: "json",
-        	cache: false,
-        	success: function (data) {	           		
-        		alert.log('t');//테스트 종료후 삭제
-        	}
- 	});
-}
-function intervalFuncOn(){
-	var timer = 1740000;//29분마다 실행
-	this.intervalId = setInterval("sessMaintain()",timer);
-}
-function intervalFuncOff(){//세션 유지 타이머 함수 종료 
-	clearInterval(this.intervalId);
-	this.intervalId = null;
-}
-
-$(document).ready(function () {
 	
+$(document).ready(function () {
 	$('.convey').hide();
 	$('.adminconvey').hide();
 	$('.reservation').hide();
 	$('.as').hide();
-	
 });
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
  });
- 
 
- //블랙추가
+ 
  function addBlack(){
 	 var custno = $('#custno').val();
 	 if(custno > 0 ){
@@ -751,7 +714,6 @@ $(document).ready(function () {
 	 }
  }
  
- //블랙해제
  function cancleBlack(){
 	 debugger;
 	 var custno = $('#custno').val();
@@ -762,6 +724,7 @@ $(document).ready(function () {
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
+	        	debugger;
 	        	$('#blackcnt').val(0);
 	        	$('#addBlackSpan').show();
 				$('#cancleBlackSpan').hide();
@@ -772,44 +735,7 @@ $(document).ready(function () {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
- };
- 
- var second = "0";
- var min = "00";
- var countdown = setInterval(function(){
-         //0초면 초기화 후 이동되는 사이트
- 		
-         if(second == 60){
-        	 second = 00;
-        	 min ++;
-         }
-         
-         if(second < "10"){
-        	 second = "0"+second;
-         }
- 	var time = min+" : "+second;
- 	$('#timer').text(time);
- 	second++;//카운트 증가
-     }, 1000);
- 
- var second = 00;
- var minite = 00;
- var countdown = setInterval(function(){
-         //0초면 초기화 후 이동되는 사이트
-         debugger;
- 	var time = second+":"+minite;
- 		document.getElementById('timer').innerHtml = time;
- 		document.getElementById('timer').value = time;
- 		
-         second++;//카운트 감소
-         if(second == 60){
-        	 second = 00;
-        	 minite ++;
-         }
-     }, 1000);
-
-
- 
+ }
  
 </script>
 

@@ -53,7 +53,7 @@ public class NoteCountHandler extends TextWebSocketHandler{
 			NoteDto ntDto = new NoteDto();
 			ntDto.setSiteid(siteId);
 			ntDto.setUserno(userNo);
-			
+			System.out.println("handler들어옴");
 			int count = ntService.noteCount(ntDto);
 			String aram = String.valueOf(count);
 			for(WebSocketSession s : list){

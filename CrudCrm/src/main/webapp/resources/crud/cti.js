@@ -200,7 +200,6 @@ function changePhoneState(state, stateStr){
     ts.value = state;
     chanegeStatusBtnImage();
     
-      
     if(state=="0300"){//전화대기 - 걸기, 당겨받기
     	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
     	setBtnStatus("pickupBtn",false);setBtnStatus("hangUpBtn",true);
@@ -724,6 +723,7 @@ function ctiEvent(msg){
 		 "06" : 당겨받기
 		 "07" : 돌려받기
 		 "08" : 3자통화
+
 				팝업시점
 		 "1" : Ring (팝업타입 "06", "07" 제외)
 		 "2" : Answer
@@ -737,6 +737,8 @@ function ctiEvent(msg){
 		      "\nB-3 IVR 연동데이터:" + tmpData[13] + "\nB-4 콜아이디:" + tmpData[14] + "\nB-5 IVR메뉴번호:" + tmpData[15] +
 		      "\nB-6 사용자데이터:" + tmpData[16]);
 */
+	
+
 		document.getElementById("makeCallNum").value = tmpData[4];
 		document.getElementById("phone").value=tmpData[4];
 		/*
@@ -940,6 +942,7 @@ window.onerror = function(msg, url, line){
 
 
 
+
 //크루드시스템 추가
 //작업자 : 신동우
 function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받아 버튼의 disabled 상태 제어
@@ -971,4 +974,6 @@ function chanegeStatusBtnImage(){
 
 }
 
+
 /////////////////////////////////////////////////////////////////////웹소켓/////////////////////////////////////////////////////////////////////
+

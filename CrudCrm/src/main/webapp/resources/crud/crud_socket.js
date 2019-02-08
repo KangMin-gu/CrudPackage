@@ -8,7 +8,7 @@ function send_message(){
 
     sock.onmessage = function(evt) {
         var alarmNum = evt.data;   
-      
+        console.log('실행'+evt.data);
         if(alarmNum != 0){        	
             $("#alarm").text(evt.data);
             $('#dropClick span').show();

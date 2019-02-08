@@ -28,7 +28,7 @@
             	</a>               
             </div>
            <!--  <h4>고객 관계를 생각하는 IDEA CRM에 오신 것을 환영합니다.</h4> -->
-            <small>Internet Exploer 11이상의 버전에 최적화 되어 있습니다.</small>                   
+                            
             <form:form class="m-t" role="form" action="${pageContext.request.contextPath}/login" method="post">
             	<input type="hidden" name="url" value="${url }"/>
                 <div class="form-group">
@@ -37,7 +37,8 @@
                 <div class="form-group">
                     <input id="userpassword" name="userpassword" type="password" class="form-control" placeholder="비밀번호" required>
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>         
+                <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>     
+                 <small>Chrome, Internet Exploer 11이상의 버전에 최적화 되어 있습니다.</small>      
             </form:form>
             <br/>
             <div class="container">
@@ -56,16 +57,17 @@
 								<col style="width: 150px;">
 								<col style="width: 100px;">												
 							</colgroup>							
-							<tbody>
-								   <c:forEach var="crudNotice" items="${crudNotice }">
+							<tbody>																	
+								   <c:forEach var="crudNotice" items="${crudNotice }">								  
 								   		<tr>
 								   			<td>${crudNotice.ICNUM }</td>
 											   <c:choose>
 										       		<c:when test="${fn:length(crudNotice.SUBJECT) > 14}">
-										            	<td><c:out value="${fn:substring(crudNotice.SUBJECT,0,13)}"/>....</td>
+										       			<c:if test="${crudNotice.REGDATE } "></c:if>
+										            	<td><a href="#" style="text-decoration:none ; color:#000000;"><c:out value="${fn:substring(crudNotice.SUBJECT,0,13)}"/>....</a></td>
 										           	</c:when>
 										           <c:otherwise>
-										            	<td><c:out value="${crudNotice.SUBJECT}"/></td>
+										            	<td><a href="#" style="text-decoration:none ; color:#000000;"><c:out value="${crudNotice.SUBJECT}"/></a></td>
 										           </c:otherwise> 
 										       </c:choose>													
 											<td>${crudNotice.REGDATE }</td>

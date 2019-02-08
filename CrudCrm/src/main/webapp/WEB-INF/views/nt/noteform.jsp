@@ -53,11 +53,11 @@
 									
 		
 
-									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-										<div class="col-xl-8 col-lg-12 float-left alert w-100 alert-info" id="reqMsgDiv" style="height: 2rem; padding-top: 6px; overflow: hidden;">
-											<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요." style=""><strong class="text-danger"> 필수 입력값을 확인해 주세요.</strong></span>
-											<span id="reqSuccessMsg" style="display: none;"><strong>필수값이 정상적으로 입력 되었습니다.</strong></span>				
-	                          			</div>
+										<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+											<div class="col-xl-8 col-lg-12 float-left alert w-100 alert-info" id="reqMsgDiv" style="height: 2rem; padding-top: 6px; overflow: hidden;">
+												<span id="reqDefaultMsg" title="필수 입력값을 확인해 주세요." style=""><strong class="text-danger">받는이 및 제목을 입력해 주세요.</strong></span>
+												<span id="reqSuccessMsg" style="display: none;"><strong>받는이 및 제목이 입력되었습니다.</strong></span>				
+		                          			</div>
 																	
 										<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100"  style="padding-right: 0px;">
 											<button class="btn btn-sm btn-primary submit" disabled id="submit" data-toggle="tooltip">
@@ -66,20 +66,7 @@
 											<a href="/note/inbox" class="btn btn-white btn-sm"
 											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>																		
 										</div>										
-									</div>
-									
-									<!-- 
-									
-									
-	                          			
-									<div class="col-md-6 text-right">
-										<button class="btn btn-sm btn-primary submit" id="sub" data-toggle="tooltip">
-											<i class="fa fa-reply"></i> 발송
-										</button>
-										<a href="mailbox.html" class="btn btn-white btn-sm"
-											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
-									</div>
-									  -->							
+									</div>														
 								</div>
 								
 								

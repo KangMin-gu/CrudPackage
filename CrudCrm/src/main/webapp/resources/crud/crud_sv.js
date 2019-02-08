@@ -220,8 +220,6 @@ if($('#calendar').length > 0){
 
  	$('#calendar').fullCalendar({
  		
- 		
-	
 		header: {//캘린더 프레임 헤더설정
 			left: 'prev,next today',//저번달, 다음달, 오늘로이동
 			center: 'title',
@@ -246,7 +244,7 @@ if($('#calendar').length > 0){
 		timeFormat : "HH:mm",
 
 		eventRender: function(event, element){
-			
+			debugger;
 			if(event.end == null){
 				event.end = event.start;
 				event.end._i = event.start._i;

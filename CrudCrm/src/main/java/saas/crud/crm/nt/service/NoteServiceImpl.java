@@ -36,39 +36,7 @@ public class NoteServiceImpl implements NoteService{
 	
 	
 	
-	//추가
-	@Override
-	public Map<String, Integer> noteCommonRows(HttpServletRequest request) {
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		//totalRows의 결과값이 들어올 자리 
-		Map<String, Integer> importInbox = new HashMap<String,Integer>();
-		//총 갯수를 구하기위해 siteId와 userNo를 넣을 map 
-		Map<String, Object> noteVal = new HashMap<>();
-		
-		//받은 메세지 중 안읽은 메세지 갯수 
-		int noteReadVal = 0;
-		//중요통지함 총 갯수 
-		int importTotalRows = 0; 
-		
-		
-		//Mapper 검색 조건 담기
-		noteVal.put("siteid", siteId);
-		noteVal.put("userno", userNo);
-		
-		//받은 메세지 중 안읽은 메세지 갯수 추출
-		noteReadVal = ntDao.noteReadVal(noteVal);
-		//중요통지함 총 갯수 추출 
-		importTotalRows = ntDao.notetotalImportRows(noteVal);
-		
-		importInbox.put("inboxVal", noteReadVal);
-		importInbox.put("importBoxVal", importTotalRows);
-		
-		
-		return importInbox;
-		
-	}
-
+	 
 	//inbox
 	@Override
 	public ModelAndView noteInbox(HttpServletRequest request) {
@@ -130,12 +98,6 @@ public class NoteServiceImpl implements NoteService{
 		
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteReadVal(noteVal);
-		
-		NoteCategoryDto noteCategory = new NoteCategoryDto();
-		noteCategory.setUserno(userNo);
-		noteCategory.setSiteid(siteId);
-		//List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
-		
 		
 		mView.addObject("url", "note/inbox");
 		mView.addObject("page", page); //페이징처리
@@ -210,12 +172,6 @@ public class NoteServiceImpl implements NoteService{
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteOutReadVal(noteOutVal);
 		
-		NoteCategoryDto noteCategory = new NoteCategoryDto();
-		noteCategory.setUserno(userNo);
-		noteCategory.setSiteid(siteId);
-		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
-		
-		mView.addObject("category", category);
 		mView.addObject("url", "note/outbox");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -301,12 +257,7 @@ public class NoteServiceImpl implements NoteService{
 						
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteImportReadVal(noteImportVal);
-		NoteCategoryDto noteCategory = new NoteCategoryDto();
-		noteCategory.setUserno(userNo);
-		noteCategory.setSiteid(siteId);
-		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
 		
-		mView.addObject("category", category);				
 		mView.addObject("url", "note/import");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -376,14 +327,7 @@ public class NoteServiceImpl implements NoteService{
 						
 		//받은 메세지 중 안읽은 메세지 갯수 추출
 		int noteReadVal = ntDao.noteTrashReadVal(noteTrashVal);
-		NoteCategoryDto noteCategory = new NoteCategoryDto();
-		noteCategory.setUserno(userNo);
-		noteCategory.setSiteid(siteId);
-		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
-		
-		
-		
-		mView.addObject("category", category);				
+					
 		mView.addObject("url", "note/trash");		
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("noteList", note); //리스트처리
@@ -525,7 +469,6 @@ public class NoteServiceImpl implements NoteService{
 	}
 	
 	
-	
 	//통지 삭제
 	@Override
 	public void noteDeleteChk(HttpServletRequest request, List<Integer> noticeid) {
@@ -550,128 +493,13 @@ public class NoteServiceImpl implements NoteService{
 		}	
 		
 	}
-	// 이메일 ; 기준 자르기 
+	//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
+	//		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 	
-	@Override
-	public List<String> emailQuarter(String mailAdress) {
-		
-		/*
-		 *  메일에서 To 또는 CC  ex) 123@naver.com;123@naver.com;123@naver.com;123@naver.com
-		 *  형식을 [123@naver.com,123@naver.com,123@naver.com,123@naver.com] 으로 리스트 배열에 담아 리턴한다. 
-		 * 
-		 */
-		
-		List<String> mailTarget = new ArrayList<String>();
-			
-		//; 기준으로 끊으면 111@naver.com 형태로 들어감
-	
-			String[] mailAdresses = mailAdress.split(";");
-			
-			for(int i=0; i<mailAdresses.length; i++) {
-			    
-			    String target = mailAdresses[i];
-			   
-			    mailTarget.add(target);
-			}
-			
-			return mailTarget;
-	}
-	
-	
-	//카테고리화면
-	@Override
-	public ModelAndView noteSet(HttpServletRequest request) {
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
-		//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
-		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
-		
-		NoteCategoryDto noteCategory = new NoteCategoryDto();
-		noteCategory.setUserno(userNo);
-		noteCategory.setSiteid(siteId);
-		
-		List<Map<String, Object>> category = ntDao.noteSet(noteCategory);
-		ModelAndView mView = new ModelAndView();
-		mView.addObject("category", category);
-		mView.addObject("adminMail",adminMail);
-		return mView;
-	}
-	
-	//답장화면
-	@Override
-	public ModelAndView noteReply(HttpServletRequest request,int noticeId) {
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		//내부통지 작성 폼 입장시, 셀렉트박스에 넣을 모든 유저정보  
-		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
-		//noticeId를 이용하여 답장받을 사람의 정보를 가져옴
-		Map<String,Object> replyUser = ntDao.noteReply(noticeId);
-		String curUrl = request.getRequestURL().toString();
-		
-		ModelAndView mView = new ModelAndView();
-		mView.addObject("adminMail",adminMail);
-		mView.addObject("replyUser",replyUser);
-		mView.addObject("curUrl",curUrl);
-		
-		return mView;
-	}
-	
-	
-	
-	
-	
-	//셀렉트박스에서 넘어온 값들 ; 붙여주기 
-	@Override
-	public HashMap<String,String> noteChosen(String[] userEmail){
-		HashMap<String,String> map = new HashMap<String,String>();
-		
-		//;를 이어붙일 StringBuffer 생성 
-		StringBuffer sbTarget = new StringBuffer();
-		StringBuffer sbEmail = new StringBuffer();
-		StringBuffer sbName = new StringBuffer();
-
-		//;붙이기 
-		for(int i=0;i<userEmail.length;i++) {
-			//받는 사람 이름 
-			String toNameAr = userEmail[i].substring(0,userEmail[i].indexOf(","));
-			sbName.append(toNameAr + ";");
-
-			//받는 사람 userno
-			String toTargetAr = userEmail[i].substring(userEmail[i].indexOf(",")+1,userEmail[i].lastIndexOf(","));
-			sbTarget.append(toTargetAr + ";");
-			
-			//이메일 
-			String toUserAr = userEmail[i].substring(userEmail[i].lastIndexOf(",")+1);
-			sbEmail.append(toUserAr + ";");
-		}
-		
-		//마지막 ; 제거 
-		//유저번호 
-		String target = sbTarget.toString().substring(0,sbTarget.toString().length()-1);
-		//이메일
-		String email = sbEmail.toString().substring(0,sbEmail.toString().length()-1);
-		//이름
-		String name = sbName.toString().substring(0,sbName.toString().length()-1); 
-
-		map.put("target", target);
-		map.put("email", email);
-		map.put("name", name);
-		
-		return map;
-	}
-	
-	
-
 	
 	//통지발송
 	@Override
 	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
-		File file = null;
-		Boolean whiteListFlag = false;
-		Boolean whiteSizeFlag = false;
-		List<MultipartFile> mFile = null;
-		MultipartFile sFile = null;
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
@@ -679,10 +507,7 @@ public class NoteServiceImpl implements NoteService{
 		ntDto.setSiteid(siteId);
 		ntDto.setUserno(fromUserNo);
 		List<MultipartFile> fileUpload = multipartHttpServletRequest.getFiles("file");
-		
-		
-
-
+			
 		//받는 사람 이름,유저넘버,이메일이 넘어옴 
 		String[] toUserEmail = request.getParameterValues("touser"); 
 		String[] ccUserEmail = request.getParameterValues("ccuser");
@@ -691,7 +516,7 @@ public class NoteServiceImpl implements NoteService{
 		HashMap<String, Object> map= new HashMap<String,Object>();
 		
 		//;를 이어붙어서 만든 userno(target),email,name값들 (받는이)  
-		HashMap<String,String> toTargetMap = noteChosen(toUserEmail);
+		HashMap<String,String> toTargetMap = null;
 		
 		//받는이
 		//userno
@@ -701,220 +526,16 @@ public class NoteServiceImpl implements NoteService{
 		//name 
 		String toName = toTargetMap.get("name");
 		
-		
-		//To ; 기준 끈기 (userNo)
-		List<Integer> toAdress = crudEngine.adressQuarter(toTarget);
-		//; 기준끊기 (Email)
-		List<String> cutterToEmail = emailQuarter(toUser);
-		//; 기준 끊기 (Name) 
-		List<String> cutterToName = emailQuarter(toName);
-		
-		
-		
-		//참조 
-		
-		//;를 중간에 삽입한 문자열이 들어오는 곳 
-		//참조 userno
-		String ccTarget = null;
-		//참조 email
-		String ccUser = null;
-		//참조 이름 
-		String ccName = null;
-		
-		
-		//참조 ;를 기준으로 잘린값들이 들어올 리스트
-		List<Integer> cutterCcAdress = null;
-		List<String> cutterCcEmail = null;
-		List<String> cutterCcName = null;
-		
-		
-		//참조 유저가 있다면 if문 진입  
-		if(ccUserEmail != null) {
-			//;를 이어붙임
-			HashMap<String,String> ccTargetMap = noteChosen(ccUserEmail);
-			ccTarget = ccTargetMap.get("target");
-			ccUser = ccTargetMap.get("email");
-			ccName = ccTargetMap.get("name");
-			
-			//cc ; 기준 끊기 
-
-			//; 기준끊기 (userno)
-			cutterCcAdress = crudEngine.adressQuarter(ccTarget);
-			//; 기준끊기 (Email)
-			cutterCcEmail = emailQuarter(ccUser);
-			//; 기준 끊기 (Name) 
-			cutterCcName = emailQuarter(ccName);
-		}
-		
-		String orgFileName = "";
-		long fileSize = 0;
-		
-		//확장자 체크, t_mail에 정보가  들어가지 않기 위해 값을 얻어옴 
-		if(fileUpload.size() > 0) {
-		orgFileName = fileUpload.get(0).getOriginalFilename();
-		fileSize = fileUpload.get(0).getSize();
-		}
-		
-		whiteListFlag = crudEngine.whiteFlag(orgFileName);		// 파일이없으면 null이니까 flase로 떨어짐 , 파일이있고 제대로 된거면 true로 떨어짐 
-	    whiteSizeFlag = crudEngine.whiteSizeFlag(fileSize);		
-		
-		
-
-		
-		//파일 업로드 실행 
-		if(orgFileName.length() > 0) {
-			
-			
-			
-			String fileSearchKey = crudEngine.fileSearchKey(request);
-			crudEngine.fileUpload(response, multipartHttpServletRequest, fileUpload, sFile, fileSearchKey);
-			//crudEngine.fileUpload(response, multipartHttpServletRequest, mFile, sFile, fileSearchKey);
-			
-			//파일이 잘못된 형식이면 fileSearchkey를 1로 만듬 
-			if(!whiteListFlag) {
-				ntDto.setFilesearchkey("1");	
-			}else {
-				ntDto.setFilesearchkey(fileSearchKey);
-			}
-		}
-		
-		
-		
-		//통지등록, 리턴되는 값은 등록하는 사람의 통지 테이블에 자동증가된 값이 들어옴  (t_notice테이블에 등록) 
-		//파일이 정상인지 비정상인지 체크 여부 판단 값 
-		
-		
-		int noticeId = ntDao.noteSend(ntDto);
-		ntDto.setNoticeid(noticeId);
-		
-		
-		
-	
-	
-		//이메일 주소와 이름 구해옴 (보내는 사람) 
-		List<Map<String,String>> nameEmail = 
-		ntDao.noteEmail(ntDto.getUserno());
-		
-		String fileSearchKey = ntDto.getFilesearchkey();
-	
-				//userno 사이즈로 반복 
-				for(int i=0; i<toAdress.size(); i++) {
-					//파일서치키가 있다면 
-					if(fileSearchKey != null){
-					map.put("fileSearchkey",fileSearchKey);
-					}	
-					//SITEID
-					map.put("siteId", siteId);
-					//제목
-					map.put("subject",ntDto.getTitle());
-					//내용
-					map.put("content",ntDto.getContent());
-					//받는 사람 이메일 
-					map.put("toEmail",cutterToEmail.get(i));
-					//받는 사람 이름 
-					map.put("cstName",cutterToName.get(i));
-					//통지번호 
-					map.put("noticeNo",noticeId);
-					
-					
-					//보내는 사람 이름,보내는 사람 이메일 : TB980010테이블에서 가져옴 
-					map.put("userName", nameEmail.get(0).get("USERNAME"));
-					map.put("fromEmail",nameEmail.get(0).get("EMAIL") );
-					//보내는 사람 userNo
-					map.put("userNo",fromUserNo);
-					//받는 사람 userNo
-					map.put("toUserNo",toAdress.get(i));
-					
-					//첨부파일이 없을때 
-					if(orgFileName.length() == 0 && !whiteListFlag && whiteSizeFlag) {
-						ntDao.noteSendMail(map);	
-					}
-					//첨부파일이 있을때 
-					if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag) {
-						ntDao.noteSendMail(map);
-					}
-
-					//참조 유저가 있다면, 
-					if(ccUserEmail != null) {
-						if(cutterCcAdress.size()>0) {
-							//참조 유저 수 만큼 다시 반복문을 돌림 
-						for(int j=0; j<cutterCcAdress.size(); j++) {
-						//SITEID
-						map.put("siteId", siteId);
-						//제목
-						map.put("subject",ntDto.getTitle());
-						//내용
-						map.put("content",ntDto.getContent());
-						//받는 사람 이메일 
-						map.put("toEmail",cutterCcEmail.get(j));
-						
-						//파일서치키가 있다면 
-						if(fileSearchKey != null){
-							map.put("fileSearchkey",fileSearchKey);
-						}
-						
-						//받는 사람 이름 
-						map.put("cstName",cutterCcName.get(j));
-						//통지번호 
-						map.put("noticeNo",noticeId);
-						//보내는 사람 이름,보내는 사람 이메일 : TB980010테이블에서 가져옴 
-						map.put("userName", nameEmail.get(0).get("USERNAME"));
-						map.put("fromEmail",nameEmail.get(0).get("EMAIL") );
-						//보내는 사람 userNo
-						map.put("userNo",fromUserNo);
-						//받는 사람 userNo
-						map.put("toUserNo",cutterCcAdress.get(j));
-						
-						//첨부파일이 없을때 
-						if(orgFileName.length() == 0 && !whiteListFlag && whiteSizeFlag) {
-							ntDao.noteSendMail(map);	
-						}
-						//첨부파일이 있을때 
-						if(orgFileName.length() > 0 &&whiteListFlag && whiteSizeFlag){
-							ntDao.noteSendMail(map);
-						}
-						
-							}
-						// for문이 끝나면 리스트를 비움 
-						cutterCcAdress.clear();
-						}
-					}
-				}
-				
-
-		
-		int chkcc = 1;
-		
-		//t_notice02
-		if( 1 <= toAdress.size()) {			
-			for(int i = 0; i<toAdress.size(); i++) {
-				//받아오는게 타겟 번호 = userno
-			    int target = toAdress.get(i);
-			    ntDto.setUserno(target);
-			    //dao 타겟태우기
-			    ntDao.notetoAndCc(ntDto);
-			}
-				if( ccTarget != null && !ccTarget.equals("")) {
-					//CC가 있다면 실행
-					List<Integer> ccAdress = crudEngine.adressQuarter(ccTarget);	
-					for(int i = 0; i<ccAdress.size(); i++) {					
-					    int target = ccAdress.get(i);
-					    ntDto.setUserno(target);
-					    ntDto.setChkcc(chkcc);
-					    //dao 타겟태우기				   
-					    ntDao.notetoAndCc(ntDto);
-					}			
-				}
-		}
-		
-		return noticeId;
+		return 0;
 	}
-	
+
+			
 	//안읽은 내부통지 갯수
 	@Override
 	public int noteCount(NoteDto ntDto) {
 		int noteCount = ntDao.noteCount(ntDto);	
 		return noteCount;
 	}
+
 
 }

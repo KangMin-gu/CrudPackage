@@ -356,8 +356,7 @@
 	</select>
 	
 	<!-- 통지등록 -->
-	<insert id="noteSend" parameterType="noteDto">
-		
+	<insert id="noteSend" parameterType="noteDto">	
 			INSERT INTO sys970010 
 			(USERNO, NTCWAYEMAIL, TITLE, CONTENT, LNKURL, REGUSER, REGDATE, SITEID, IMPORTANT, EDTUSER, EDTDATE, FILESEARCHKEY) 
 			VALUES 

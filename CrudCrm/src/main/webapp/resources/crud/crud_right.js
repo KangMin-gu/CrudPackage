@@ -32,16 +32,16 @@ $('#save').click(function(e){
     		,"nextadminowner":nextadminowner,"memo":memo,"servicecode1":servicecode1,"servicecode2":servicecode2,"asowner":asowner
     		,"visitdate":visitdate,"visittime":visittime,"visitaddr1":visitaddr1,"visitaddr2":visitaddr2,"visitaddr3":visitaddr3};
 
-    var goodsLength = $('.plus').length;
+    var productNum = $('.plus:last').prev().attr('id').substring(7,8);
     
-    for (i=1; i <= goodsLength;i++){
-    	var goods = $('[id*="goods'+i+'1"]').attr('id');
-    	var goods2 = $('[id*="goods'+i+'2"]').attr('id');
-    	var goods3 = $('[id*="goods'+i+'3"]').attr('id');
+    for (i=1; i <= productNum;i++){
+    	var products = $('[id*="product'+i+'1"]').attr('id');
+    	var products2 = $('[id*="product'+i+'2"]').attr('id');
+    	var products3 = $('[id*="product'+i+'3"]').attr('id');
     	
-    	param[goods] = $('[id*="goods'+i+'1"]').val();
-    	param[goods2] = $('[id*="goods'+i+'2"]').val();
-    	param[goods3] = $('[id*="goods'+i+'3"]').val();
+    	param[products] = $('[id*="product'+i+'1"]').val();
+    	param[products2] = $('[id*="product'+i+'2"]').val();
+    	param[products3] = $('[id*="product'+i+'3"]').val();
     }
     
     /*

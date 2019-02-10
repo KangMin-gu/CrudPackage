@@ -703,4 +703,14 @@
 		AND DATE_FORMAT(A.VISITDATE,'%Y-%m-%d') = #{visitdate}
 	</select>
 	
+	<select id="svProductRead" parameterType="hashMap" resultType="hashMap">
+		SELECT PRODUCTB,PRODUCTM,PRODUCTS
+		,FN_PRODUCT(PRODUCTB,#{siteid}) AS PRODUCTBNAME
+		,FN_PRODUCT(PRODUCTM,#{siteid}) AS PRODUCTMNAME
+		,FN_PRODUCT(PRODUCTS,#{siteid}) AS PRODUCTSNAME
+		 FROM SV300060
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+	</select>
+	
 </mapper>

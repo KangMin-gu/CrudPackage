@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
 import saas.crud.crm.sv.dto.RewardDto;
@@ -158,6 +159,13 @@ public class SvDaoImpl implements SvDao{
 	public List<Map<String,Object>> svCalRewardOwnerList(Map<String,Object> param){
 		List<Map<String,Object>> svCalRewardOwnerList = session.selectList("sv.calRewardOwnerList",param);
 		return svCalRewardOwnerList;
+	}
+	
+	@Override
+	public List<ProductDto> svProductRead(Map<String,Object> param){
+		List<ProductDto> svProductRead = session.selectList("sv.svProductRead",param);
+		
+		return svProductRead;		
 	}
 	
 	

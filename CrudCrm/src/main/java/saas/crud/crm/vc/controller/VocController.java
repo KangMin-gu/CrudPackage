@@ -184,6 +184,14 @@ public class VocController {
 		mView.setViewName("/vc/calendar/vocCalPopUp");
 		return mView;
 	}
+	
+	@RequestMapping(value="/vc/productB", method=RequestMethod.GET)
+	@ResponseBody
+	public List<ProductDto> authVocProudctB(HttpServletRequest request){
+		
+		List<ProductDto> productB = productService.getProductB(request);
+		return productB;
+	}
 
 	
 	//VOC -  좌측탭 서비스 리스트	

@@ -455,7 +455,7 @@
                                 <td colspan="3">
                                     <div class="select-area mt-1">
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
-                                         <div class="select-box mb-1">
+                                         <div class="select-box mb-1 product">
                                             <select id="product11" name="product11" class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                                 <c:forEach var="productB" items="${productB }">
@@ -471,40 +471,13 @@
                                             </select>
                                             <select id="product12" name="product12"  class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
-                                                <option value="m11">option 2</option>
-                                                <option value="m12">option 3</option>
-                                                <option value="m13">option 4</option>
                                             </select>
                                             <select id="product13" name="product13" class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
-                                                <option value="s11">option 2</option>
-                                                <option value="s12">option 3</option>
-                                                <option value="s13">option 4</option>
                                             </select>
                                             <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
+                                            <button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>
                                         </div>
-                                        <div class="select-box mb-1">
-                                            <select id="product21" name="product21" class="form-control d-inline-block mr-2 voc">
-                                            	<option value="">선택</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                            <select id="product22" name="product22" class="form-control d-inline-block mr-2 voc">
-                                                <option value="">선택</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                            <select id="product23" name="product23" class="form-control d-inline-block mr-2 voc">
-                                                <option value="">선택</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                            <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
-                                        </div>
-                                        
                                         <!-- E: 이 영역을 계속 추가 하면 됨 -->
                                     </div>
                                 </td>
@@ -737,13 +710,14 @@ $(document).ready(function () {
 	$('.adminconvey').hide();
 	$('.reservation').hide();
 	$('.as').hide();
+	$('.product .minus:first').remove();
 });
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
  });
  
- $('#product11').change(function(){
+ $('[name*=product]').change(function(){
 	 upperProduct(this); 
  });
  
@@ -819,4 +793,4 @@ $(document).ready(function () {
 	
 </body>
 
-</html>
+</html>c

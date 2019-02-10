@@ -346,6 +346,22 @@ function serviceInfoBinding(data){
 	opener.$('.voc').iCheck('disable');
 	opener.$('.plus').hide();
 	
+	
+	
+	$.each(data.product,function(index,item){
+		if(index != 0){
+			procutPlus(index);
+		}
+		opener.$('#product'+parseInt(parseInt(index+1)+'1')).empty();
+		opener.$('#product'+parseInt(parseInt(index+1)+'2')).empty();
+		opener.$('#product'+parseInt(parseInt(index+1)+'3')).empty();
+		debugger;
+		opener.$('#product'+parseInt(parseInt(index+1)+'1')).append('<option label="'+item.PRODUCTBNAME+'" value="'+item.PRODUCTB+'"/>');
+		opener.$('#product'+parseInt(parseInt(index+1)+'2')).append('<option label="'+item.PRODUCTMNAME+'" value="'+item.PRODUCTM+'"/>');
+		opener.$('#product'+parseInt(parseInt(index+1)+'3')).append('<option label="'+item.PRODUCTSNAME+'" value="'+item.PRODUCTS+'"/>');
+		opener.$('#product'+parseInt(parseInt(index+1)+'3')).next().remove();
+	});
+	
 }
 
 //버튼 생성 메서드
@@ -419,28 +435,79 @@ $('#create').click(function(){
 	$('[name="vocstep"]:first').iCheck('check');
 	$('[name="servicetype"]:first').iCheck('check');
 	$('#create').hide();
+	$('.product').not(':first').remove();
+	$('.product:first select').empty();
+	$('.product:first select').append('<option label="선택" value=""></option>');
+	productB();
+	
 });
 
-$(".plus").click(function(){
-	var cloneCount = $('.plus').length;
-	var countP = cloneCount + 1;
-    
-    $('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
-    $('.select-area .select-box:last').find('#product'+cloneCount+1).attr('name','product'+countP+1).attr('id','product'+countP+1);
-    $('.select-area .select-box:last').find('#product'+cloneCount+2).attr('name','product'+countP+2).attr('id','product'+countP+2);
-    $('.select-area .select-box:last').find('#product'+cloneCount+3).attr('name','product'+countP+3).attr('id','product'+countP+3);
-    $('.select-area .select-box:last').find('#product'+cloneCount+3).next().clone(true).removeClass('plus').addClass('minus');
-}); 
+$(".plus").click(function(e){
+	var productNum = $(e.target).prev().attr('id').substring(7,8);
+	procutPlus(parseInt(productNum));
+});
+
+$(document).on('click','.minus',function(e){
+	$(e.target).parent().remove();
+});
+
+//최근 한건을 가져올때 제품의 갯수를 늘려줌
+function procutPlus(length){
+	debugger;
+	var countP = length+1;
+	var flag = window.location.pathname.indexOf('pop');
+	
+	if(flag == -1){
+		$('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
+		$('.select-area .select-box:last').find('#product'+length+1).attr('name','product'+countP+1).attr('id','product'+countP+1);
+		$('.select-area .select-box:last').find('#product'+length+2).attr('name','product'+countP+2).attr('id','product'+countP+2);
+		$('.select-area .select-box:last').find('#product'+length+3).attr('name','product'+countP+3).attr('id','product'+countP+3);
+		$('.select-area .select-box:last').find('#product'+length+3).next().clone(true);
+		if(length == 1){
+			$('.select-area .select-box:last').append('<button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>');
+		}
+	}else{
+		opener.$('.select-area .select-box:last').clone(true).insertAfter('.select-area .select-box:last');
+		opener.$('.select-area .select-box:last').find('#product'+length+1).attr('name','product'+countP+1).attr('id','product'+countP+1);
+		opener.$('.select-area .select-box:last').find('#product'+length+2).attr('name','product'+countP+2).attr('id','product'+countP+2);
+		opener.$('.select-area .select-box:last').find('#product'+length+3).attr('name','product'+countP+3).attr('id','product'+countP+3);
+	}
+	
+}
 
 
 $('.asowner').click(function(e){
-	//openNewWindow('담당자','/common/user',e.target.id,650,700);
-	openNewWindow('AS기사','/vc/voc/cal',e.currentTarget.id,1200,800);
+	var custName = $('#custname').val();
+	if(custName ==""){
+		e.preventDefault();
+		alert("고객이 선택되지 않았습니다. 고객을 선택해주세요");
+	}else{
+		openNewWindow('AS기사','/vc/voc/cal',e.currentTarget.id,1200,800);
+	}
+	
 });
 
 //******************************************** 고객 팝업 끝 ******************************
 
-
+function productB(){
+	var urlServ = "/vc/productB";
+	$.ajax({
+        url: urlServ,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	debugger;
+        	for(i=0;i<data.length;i++){
+        	$('.product select:first').append('<option label="'+data[i].prdname+'" value="'+data[i].prdno+'"/>');
+        	}
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+	
+}
 
 function cti_test(){
 	

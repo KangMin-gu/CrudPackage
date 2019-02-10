@@ -564,38 +564,7 @@ public class NoteServiceImpl implements NoteService{
 	//통지 발송 화면
 	@Override
 	public ModelAndView noteSendForm(HttpServletRequest request) {
-		
-		File emlFile = new File("/Users/mingukang/Downloads/attached.eml");
-		
-		Properties props = System.getProperties();
 
-		Session mailSession = Session.getDefaultInstance(props, null);
-
-		// parse eml file
-		InputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(emlFile);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		MimeMessage message = null;
-		try {
-			message = new MimeMessage(mailSession, inputStream);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			System.out.println("From : " + message.getFrom()[0]);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		
-		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 		

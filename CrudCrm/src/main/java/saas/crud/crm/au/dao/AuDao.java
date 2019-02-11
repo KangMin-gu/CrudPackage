@@ -28,6 +28,7 @@ public interface AuDao {
 	public List<Map<String,Object>> urUserMenuList(UserDto userDto);
 	public void userPwdResetsend(Map<String, Object> sendPwdInfo);
 	public void userPwdReset(UserDto userDto);
-	
 	public List<Map<String,Object>> urAsOwner(int siteId);
+	public int noticeTotalRows(Map<String, Object> noticeVal);
+	public List<Map<String,Object>> authNotice(Map<String, Object> noticeVal);
 }

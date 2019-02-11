@@ -321,5 +321,68 @@ public class AuServiceImpl implements AuService{
 		loginManager.removeSession(userId);
 		return null;
 	}
+	
+	
+	//회원사 공지사항 리스트
+	@Override
+	public ModelAndView authNotice(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		//검색과 관련된 파라미터를 읽어와 본다.
+		String keyword=request.getParameter("keyword");
+		String condition=request.getParameter("condition");
+		String startDate = request.getParameter("startdate");
+		String endDate = request.getParameter("enddate");
+		
+		//한 페이지에 나타낼 갯수 설정
+		int PAGE_DISPLAY_COUNT = 5;
+		int PAGE_ROW_COUNT = 14;
+		
+		ModelAndView mView = new ModelAndView();
+		Map<String, Object> noticeVal = new HashMap<>();
+		
+		if(keyword != null && !keyword.equals("")){ //검색어가 전달된 경우
+			if(condition.equals("title")){//제목 검색
+				noticeVal.put("title", keyword);
+			}else if(condition.equals("editor")){//작성자 검색
+				noticeVal.put("editor", keyword);
+			}
+			 
+			mView.addObject("condition", condition);
+			mView.addObject("keyword", keyword);	
+		}
+		//날짜검색
+		if(startDate != null && endDate != null && !startDate.equals("") && !endDate.equals("")){
+			
+			noticeVal.put("startdate", startDate);
+			noticeVal.put("enddate", endDate);
+			mView.addObject("startdate", startDate);
+			mView.addObject("enddate", endDate);
+			
+		}
+		
+		//Mapper 검색 조건 담기
+		noticeVal.put("siteid", siteId);
+		
+		//토탈로우 디비컨넥션
+		int totalRows = auDao.noticeTotalRows(noticeVal);
+		
+		//페이징 생성자 호출 후 로직실행
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+				
+		//받은메세지 리스트 추출
+		noticeVal.put("startRowNum", startRowNum);
+		noticeVal.put("endRowNum", endRowNum);
+		
+		//받은통지 리스트 출력
+		List<Map<String, Object>> siteNotice = auDao.authNotice(noticeVal);							
+				
+		mView.addObject("page", page); //페이징처리
+		mView.addObject("siteNotice", siteNotice); //리스트처리
+				
+		return mView;
+	}
 
 }

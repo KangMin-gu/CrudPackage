@@ -271,4 +271,44 @@
 		AND ISDELETE = 0
 	</select>
 	
+	
+	<!-- 회원사 공지토탈로우 -->
+	<select  id="noticeTotalRows" parameterType="hashMap" resultType="int">
+			SELECT COUNT(*) AS totalRows FROM
+			(SELECT A.ICNUM, A.HEADER, A.SUBJECT, A.CONTENT, A.LINKURL, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE, A.ISDELETE FROM crud_saas.ma900040 AS A
+			  LEFT OUTER JOIN crud_saas.me800010 AS B ON A.REGUSER = B.USERNO
+			  WHERE A.ISDELETE = 0 AND A.SITEID = 1) AS E
+			<where>
+				<if test="title != null">
+					AND E.SUBJECT LIKE CONCAT('%',#{title},'%')
+				</if>
+				<if test="editor != null">
+					AND E.USERNAME LIKE CONCAT('%',#{editor},'%')
+				</if>
+				<if test="enddate != null">
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
+				</if>	
+			</where>
+	</select>
+	<!-- 회원사 공지리스트-->
+	<select  id="siteNotice" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT A.ICNUM, A.HEADER, A.SUBJECT, A.CONTENT, A.LINKURL, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE, A.ISDELETE, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM crud_saas.ma900040 AS A
+			LEFT OUTER JOIN crud_saas.me800010 AS B ON A.REGUSER = B.USERNO,(SELECT @RNUM := 0) R			
+			WHERE A.ISDELETE = 0 AND A.SITEID = 1
+				<if test="title != null">
+					AND E.SUBJECT LIKE CONCAT('%',#{title},'%')
+				</if>
+				<if test="editor != null">
+					AND E.USERNAME LIKE CONCAT('%',#{editor},'%')
+				</if>
+				<if test="enddate != null">
+					AND E.REGDATE BETWEEN #{startdate} AND DATE_ADD(#{enddate}, INTERVAL 1 DAY)
+				</if>	
+			order by A.ICNUM DESC ) AS result
+			<if test="startRowNum != null">
+			WHERE result.ROWNUM BETWEEN #{startRowNum} AND #{endRowNum} ORDER BY result.ICNUM DESC
+			</if>
+	</select>
 </mapper>

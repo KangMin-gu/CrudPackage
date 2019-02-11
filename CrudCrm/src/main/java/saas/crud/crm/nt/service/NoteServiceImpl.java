@@ -95,8 +95,6 @@ public class NoteServiceImpl implements NoteService{
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.notetotalRows(noteVal);
 		
-	
-		
 		//페이징 생성자 호출 후 로직실행
 		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");

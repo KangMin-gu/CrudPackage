@@ -50,12 +50,42 @@
 								<div class="ibox-content row">
 									<form:form action="${pageContext.request.contextPath}/ad/user/delete" method="POST">
 			                        <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
-			                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-																						
-											<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
-												<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
-												<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
-											</div>
+			                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">					                          																							
+											 <div class="col-xl-10 col-lg-10 float-left text-rigth mb-2 w-100" style="padding-right: 0px;">
+												
+												<form:form method="post" action="${pageContext.request.contextPath}/note/inbox">
+												
+													<div class="row">
+														<div class="col-xl-8">
+															<div class="row">
+																<div class="d-flex col-xl-6">
+																	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                                      	<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작일" value="${startdate }">	
+																</div>
+																<div class="d-flex col-xl-6">
+																	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                                      	<input id="enddate" name="enddate" type="text" class="form-control" placeholder="종료일" value="${enddate }">
+																</div>
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="row">
+																<div class="col-xl-4">3</div>
+																<div class="col-xl-4">4</div>
+																<div class="col-xl-4">5</div>
+															</div>
+														</div>
+													</div>
+												
+												</form:form>	
+																				 
+											 </div>
+											 <div class="col-xl-2 col-lg-2 float-right text-right mb-2 w-100" style="padding-right: 0px;">			
+												<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">
+													<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>											
+													<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+												</c:if>																							
+											</div> 
 										</div>
 										
 			                            <div class="overflow-x w-100">
@@ -75,12 +105,12 @@
 			                                    </tr>
 			                                </thead>
 			                                <tbody>
-			                                <c:forEach var="user" items="${user }">
+			                                <c:forEach var="notice" items="${siteNotice }">
 			                                    <tr>			                                        
-			                                        <td>${user.USERDUTY }</td>
-			                                        <td>${user.ENTERDATE }</td>
-			                                        <td>${user.ISDELETE_ }</td>
-			                                        <td>${user.REGDATE }</td>
+			                                        <td>${notice.HEADER }</td>
+			                                        <td>${notice.SUBJECT }</td>
+			                                        <td>${notice.USERNAME }</td>
+			                                        <td>${notice.REGDATE }</td>
 			                                    </tr>
 			                                </c:forEach>
 			                                       
@@ -142,7 +172,7 @@
 			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
 		</div>
 	</div>
-	
+	</div>
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>

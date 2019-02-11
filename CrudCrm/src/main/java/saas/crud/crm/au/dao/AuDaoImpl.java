@@ -3,6 +3,8 @@ package saas.crud.crm.au.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -110,5 +112,19 @@ public class AuDaoImpl implements AuDao{
 		
 		List<Map<String,Object>> asOwner = session.selectList("au.asOwner",siteId);
 		return asOwner;
+	}
+	
+	//회원사 공지사항 리스트
+	@Override
+	public List<Map<String,Object>> authNotice(Map<String,Object> noticeVal) {
+		List<Map<String,Object>> siteNotice = session.selectList("au.siteNotice", noticeVal);
+		return siteNotice;
+	}
+	
+	//회원사 공지사항 총갯수
+	@Override
+	public int noticeTotalRows(Map<String, Object> noticeVal) {		
+		int totalRows = session.selectOne("au.noticeTotalRows",noticeVal);		
+		return totalRows;
 	}
 }

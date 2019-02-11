@@ -204,15 +204,32 @@ public class AuController {
 		mView.setViewName("au/ma/check/sitecheck");
 		return mView;
 	}
-	
+	//접속중유저 확인
 	@RequestMapping(value="/ma/sitecehck/{userId}", method=RequestMethod.GET)
 	public ModelAndView authSession(HttpServletRequest request, @PathVariable String userId) {
 		ModelAndView mView = auService.authSession(request, userId);
 		return mView;
 	}
-	
+	//회원사 공지사항
 	@RequestMapping(value="/ad/notice", method=RequestMethod.GET)
-	public String authNotice(HttpServletRequest request) {
-		return "au/ad/notice";
+	public ModelAndView authNotice(HttpServletRequest request) {
+		ModelAndView mView = auService.authNotice(request);
+		mView.setViewName("au/ad/notice");
+		return mView;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

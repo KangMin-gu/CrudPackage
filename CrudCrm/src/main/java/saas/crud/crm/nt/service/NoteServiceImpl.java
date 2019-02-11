@@ -518,7 +518,7 @@ public class NoteServiceImpl implements NoteService{
 		List<MultipartFile> mFile = ((MultipartHttpServletRequest)request).getFiles("file");
 		if(mFile.size() != 0) {			
 			//첨부파일			
-			String fileSearchKey = crudEngine.multiUpload(response, multipartHttpServletRequest, mFile);
+			String fileSearchKey = crudEngine.multiUpload(response, request, mFile);
 			ntDto.setFilesearchkey(fileSearchKey);
 
 		}
@@ -570,15 +570,7 @@ public class NoteServiceImpl implements NoteService{
 		
 		String noticeId=request.getParameter("noticeid");
 		ModelAndView mView = new ModelAndView();
-		Map<String, Object> noteVal = new HashMap<>();
-		//해당 답장사용자정보 가져오는 로직 아직 미완성 테이블 변경에 따라 수정요망.
-		if(noticeId != null && !noticeId.equals("")){ //전달 또는 답장 내용
-				noteVal.put("noticeid", noticeId);
-				Map<String, Object> noteContent = ntDao.noteDetail(noteVal);
-				StringBuffer buf = new StringBuffer();
-				mView.addObject("noteContent", noteContent);
-		}
-		
+	
 		mView.addObject("adminMail", adminMail);
 		return mView;
 	}

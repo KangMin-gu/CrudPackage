@@ -21,7 +21,6 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css"
 	rel="stylesheet">
-
 <!-- choosen -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/chosen/chosen.css"
@@ -130,21 +129,18 @@
 										style="height: 100px;"></textarea>
 									<div class="clearfix"></div>
 								</div>
-								
-								<c:if test="${replyFile eq null}">
-								
+																	
 								<div class="mail-body">
 									<div class="form-group row custom-file">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
 										<div class="col-md-6">
-											<input id="filesChk" name="files" class="form-control" type="file" multiple>
+											<input id="filesChk" name="file" class="form-control" type="file" multiple>
 											<p class="help-block">크기 50MB 이하의 파일 선택</p>											
 										</div>
 									</div>								
 								</div>
 								
-								</c:if>								
-								
+	
 								<div class="mail-body text-right tooltip-demo">
 								
 

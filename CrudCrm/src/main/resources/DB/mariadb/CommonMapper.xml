@@ -4,9 +4,9 @@
 
 	<insert id="noteFile" parameterType="hashMap">
 			INSERT INTO sys990030
-			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID, IMGPATH )
+			( TABLENAME, FILESEARCHKEY, SAVEFILENAME, ORGFILENAME, FILESIZE, PATH, REGUSER, REGDATE, SITEID, IMGPATH, ISDELETE )
 			VALUES
-			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, now(), #{siteid}, #{imgpath})			
+			( #{tablename}, #{filesearchkey}, #{savefilename}, #{orgfilename}, #{filesize}, #{path}, #{userno}, now(), #{siteid}, #{imgpath}, 0)			
 	</insert>
 	
 	<!-- 담당자로 설정 할 수 있는 회원 수 출력 -->

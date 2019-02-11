@@ -358,9 +358,9 @@
 	<!-- 통지등록 -->
 	<insert id="noteSend" parameterType="noteDto">	
 			INSERT INTO sys970010 
-			(USERNO, NTCWAYEMAIL, TITLE, CONTENT, LNKURL, REGUSER, REGDATE, SITEID, IMPORTANT, EDTUSER, EDTDATE, FILESEARCHKEY) 
+			(USERNO, NTCWAYEMAIL, TITLE, CONTENT, LNKURL, REGUSER, REGDATE, SITEID, IMPORTANT, EDTUSER, EDTDATE, FILESEARCHKEY, ISDELETE) 
 			VALUES 
-			(#{fromuserno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, now(), #{siteid}, #{important}, #{userno}, now(), #{filesearchkey} )
+			(#{fromuserno}, 1, #{title}, #{content}, #{linkurl}, #{userno}, now(), #{siteid}, #{important}, #{userno}, now(), #{filesearchkey}, 0 )
 		<selectKey resultType="int" keyProperty="noticeid" order="AFTER">	
 			SELECT LAST_INSERT_ID() 
 		</selectKey>	
@@ -369,9 +369,9 @@
 	<!-- to / cc 등록 -->
 	<insert id="toAndCc" parameterType="noteDto">
 		INSERT INTO sys970011
-		(NOTICEID, USERNO, CHKCC, SITEID, EDTUSER, EDTDATE )
+		(NOTICEID, USERNO, CHKCC, SITEID, EDTUSER, EDTDATE, ISDELETE, CHKRLTCODE, READCHEK )
 		VALUES
-		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, now() )
+		(#{noticeid}, #{userno}, #{chkcc}, #{siteid}, #{userno}, now(), 0, 0, 0 )
 	</insert>
 	
 		<!-- USERNO를 받아와서 EMAIL과 USERNAME를 받아옴   -->

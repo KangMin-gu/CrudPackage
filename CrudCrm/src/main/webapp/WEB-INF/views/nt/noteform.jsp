@@ -101,22 +101,8 @@
 									
 									<div class="form-group row">
 										<label class="col-md-2 col-form-label" for="title">제목</label>
-										<div class="col-md-8" style="padding-left:0px;">
-											<c:choose>
-											
-											 <c:when test="${fn:contains(curUrl,'forward')}">
-												<input id="title" name="title" type="text"
-													class="form-control" value="">
-											</c:when>
-											<c:otherwise>
-												<input id="title" name="title" type="text"
-													class="form-control" value="">
-											
-											</c:otherwise>
-											
-											</c:choose>
-											<!--   error validate allV required -->
-											
+										<div class="col-md-8" style="padding-left:0px;">	
+											<input id="title" name="title" type="text" class="form-control" value="">
 										</div>
 										<div class="checkbox float-left col-lg-2 p-0">
 																<input type="checkbox" class="i-checks" name="important" id="important" value="1">

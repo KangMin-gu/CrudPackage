@@ -331,8 +331,6 @@ public class AuServiceImpl implements AuService{
 		//검색과 관련된 파라미터를 읽어와 본다.
 		String keyword=request.getParameter("keyword");
 		String condition=request.getParameter("condition");
-		String startDate = request.getParameter("startdate");
-		String endDate = request.getParameter("enddate");
 		
 		//한 페이지에 나타낼 갯수 설정
 		int PAGE_DISPLAY_COUNT = 5;
@@ -350,15 +348,6 @@ public class AuServiceImpl implements AuService{
 			 
 			mView.addObject("condition", condition);
 			mView.addObject("keyword", keyword);	
-		}
-		//날짜검색
-		if(startDate != null && endDate != null && !startDate.equals("") && !endDate.equals("")){
-			
-			noticeVal.put("startdate", startDate);
-			noticeVal.put("enddate", endDate);
-			mView.addObject("startdate", startDate);
-			mView.addObject("enddate", endDate);
-			
 		}
 		
 		//Mapper 검색 조건 담기
@@ -382,6 +371,22 @@ public class AuServiceImpl implements AuService{
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("siteNotice", siteNotice); //리스트처리
 				
+		return mView;
+	}
+	
+	//사이트공지사항 상세정보
+	@Override
+	public ModelAndView authNoticeDetail(HttpServletRequest request, int noticeId) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		Map<String, Object> noticeVal = new HashMap<>();
+		noticeVal.put("siteid",siteId);
+		noticeVal.put("noticeid", noticeId);
+		
+		Map<String,Object> noticeInfo = auDao.authNoticeDetail(noticeVal);
+		ModelAndView mView = new ModelAndView();
+		mView.addObject("noticeInfo",noticeInfo);
+		
 		return mView;
 	}
 

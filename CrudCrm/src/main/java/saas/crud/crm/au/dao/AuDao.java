@@ -31,4 +31,5 @@ public interface AuDao {
 	public List<Map<String,Object>> urAsOwner(int siteId);
 	public int noticeTotalRows(Map<String, Object> noticeVal);
 	public List<Map<String,Object>> authNotice(Map<String, Object> noticeVal);
+	public Map<String,Object> authNoticeDetail(Map<String, Object> noticeVal);
 }

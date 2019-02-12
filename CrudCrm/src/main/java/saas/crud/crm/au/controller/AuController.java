@@ -218,6 +218,28 @@ public class AuController {
 		return mView;
 	}
 	
+	//회원사 공지사항 검색
+	@RequestMapping(value="/ad/notice", method=RequestMethod.POST)
+	public ModelAndView authNoticeSearch(HttpServletRequest request) {
+		ModelAndView mView = auService.authNotice(request);
+		mView.setViewName("au/ad/notice");
+		return mView;
+	}
+	
+	//회원사 공지사항 상세보기
+	@RequestMapping(value="/ad/notice/{noticeId}", method=RequestMethod.GET)
+	public ModelAndView authNoticeDetail(HttpServletRequest request, @PathVariable int noticeId) {
+		ModelAndView mView = auService.authNoticeDetail(request, noticeId);
+		mView.setViewName("au/ad/noticedetail");
+		return mView;
+	}
+	
+	//회원사 공지폼
+	@RequestMapping(value="/ad/notice/post", method=RequestMethod.GET)
+	public String authNoticeForm() {
+		return "au/ad/noticeform";
+	}
+	
 	
 	
 	

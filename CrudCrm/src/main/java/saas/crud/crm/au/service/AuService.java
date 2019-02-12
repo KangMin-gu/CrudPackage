@@ -28,4 +28,5 @@ public interface AuService {
 	public ModelAndView useSessionList(HttpServletRequest reuqest, HttpServletResponse response);
 	public ModelAndView authSession(HttpServletRequest request, String userId);
 	public ModelAndView authNotice(HttpServletRequest request);
+	public ModelAndView authNoticeDetail(HttpServletRequest request, int noticeId); 
 }

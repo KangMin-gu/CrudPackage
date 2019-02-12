@@ -127,4 +127,10 @@ public class AuDaoImpl implements AuDao{
 		int totalRows = session.selectOne("au.noticeTotalRows",noticeVal);		
 		return totalRows;
 	}
+	//회원사 공지사항 정보
+	@Override
+	public Map<String,Object> authNoticeDetail(Map<String, Object> noticeVal) {
+		Map<String, Object> noticeInfo = session.selectOne("au.noticeDetail", noticeVal);
+		return noticeInfo;
+	}
 }

@@ -35,7 +35,7 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-10">
-					<h2>공지사항</h2> 					
+					<h2><strong>공지사항</strong></h2> 					
 				</div>
 				<div class="col-lg-2">
 				</div>
@@ -48,31 +48,35 @@
 							<div class="ibox">				
 								<!-- conten-row -->
 								<div class="ibox-content row">
-									<form:form action="${pageContext.request.contextPath}/ad/user/delete" method="POST">
+						
 			                        <div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
 			                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">					                          																							
-											 <div class="col-xl-10 col-lg-10 float-left text-rigth mb-2 w-100" style="padding-right: 0px;">
+											 <div class="col-xl-10 col-lg-10 float-left text-rigth mb-2 w-100">
 												
-												<form:form method="post" action="${pageContext.request.contextPath}/note/inbox">
-												
-													<div class="row">
+												<form:form method="post" action="${pageContext.request.contextPath}/ad/notice">												
+													<div class="row">				
 														<div class="col-xl-8">
 															<div class="row">
-																<div class="d-flex col-xl-6">
-																	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-			                                                      	<input id="startdate" name="startdate" type="text" class="form-control" placeholder="시작일" value="${startdate }">	
+																<div class="col-xl-2">
+																	<select id="header" name="header" class="form-control">
+																			<option value="a">전체</option>										                                                                       
+										                                    <option value="a">공지</option>
+										                                    <option value="b">알림</option>
+										                                    <option value="c">뉴스</option>
+							                                    	</select>
 																</div>
-																<div class="d-flex col-xl-6">
-																	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-			                                                      	<input id="enddate" name="enddate" type="text" class="form-control" placeholder="종료일" value="${enddate }">
+																<div class="col-xl-2" style="padding: 0px;">
+																	<select id="condition" name="condition" class="form-control">										                                                                       
+										                                    <option value="title">제목</option>
+										                                    <option value="editor">작성자</option>
+							                                    	</select>																
+																</div>																
+												 				<div class="col-xl-6" style="padding: 0px;">
+																	<input type="text" class="form-control" id="keyword" name="keyword" placeholder="검색어">																
 																</div>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="row">
-																<div class="col-xl-4">3</div>
-																<div class="col-xl-4">4</div>
-																<div class="col-xl-4">5</div>
+																<div class="col-xl-2" style="padding: 0px;">
+																	<button type="submit" class="btn btn-md btn-primary btn-block" >검색</button>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -80,10 +84,9 @@
 												</form:form>	
 																				 
 											 </div>
-											 <div class="col-xl-2 col-lg-2 float-right text-right mb-2 w-100" style="padding-right: 0px;">			
+											 <div class="col-xl-2 col-lg-2 float-right text-right mb-2 w-100">			
 												<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">
-													<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>											
-													<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+													<a href="${pageContext.request.contextPath}/ad/notice/post" class="btn btn-primary">등록</a>																			
 												</c:if>																							
 											</div> 
 										</div>
@@ -91,16 +94,16 @@
 			                            <div class="overflow-x w-100">
 			                            <table class="table table-bordered table-hover">
 			                                <colgroup>
-			                            		<col style="width: 50px;">
-			                            		<col style="width: 150px;">
+			                            		<col style="width: 10px;">
 			                            		<col style="width: 70px;">
-			                            		<col style="width: 100px;">			                            		                     		                            		                            		                            		                            		                            		                            		
+			                            		<col style="width: 10px;">
+			                            		<col style="width: 10px;">			                            		                     		                            		                            		                            		                            		                            		                            		
 			                            	</colgroup>  
-			                                <thead>
+			                                <thead>	
 			                                    <tr>
-			                                        <th>말머리</th>
-			                                        <th>내용</th>
-			                                        <th>글쓴이</th>
+			                                        <th>분류</th>
+			                                        <th>공지 제목</th>
+			                                        <th>작성자</th>
 			                                        <th>등록일</th>			                         
 			                                    </tr>
 			                                </thead>
@@ -108,7 +111,7 @@
 			                                <c:forEach var="notice" items="${siteNotice }">
 			                                    <tr>			                                        
 			                                        <td>${notice.HEADER }</td>
-			                                        <td>${notice.SUBJECT }</td>
+			                                        <td><a href="${pageContext.request.contextPath}/ad/notice/${notice.ICNUM }">${notice.SUBJECT }</a></td>
 			                                        <td>${notice.USERNAME }</td>
 			                                        <td>${notice.REGDATE }</td>
 			                                    </tr>
@@ -120,43 +123,44 @@
 			                            </div>
 			                            <div class="m-auto">
 			                            	<ul class="pagination">
-			                                    <c:choose>
-														<c:when test="${page.startPageNum ne 1 }">
-															<li><a onclick="javascript:paging(${page.startPageNum-1})">&laquo;</a>
-															</li>
-														</c:when>
-														<c:otherwise>
-															<li class="disabled"><a href="javascript:">&laquo;</a>
-															</li>
-														</c:otherwise>
-													</c:choose>
-													<c:forEach var="i" begin="${page.startPageNum }"
-														end="${page.endPageNum }">
-														<c:choose>
-															<c:when test="${i eq page.pageNum }">
-																<li class="footable-page active"><a
-																	onclick="javascript:paging(${i})">${i }</a></li>
-															</c:when>
-															<c:otherwise>
-																<li><a onclick="javascript:paging(${i})">${i }</a></li>
-															</c:otherwise>
-														</c:choose>
-													</c:forEach>
+												<c:choose>
+													<c:when test="${page.startPageNum ne 1 }">
+														<li><a
+															href="${pageContext.request.contextPath}/${url }?pageNum=${page.startPageNum-1 }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">&laquo;</a>
+														</li>
+													</c:when>
+													<c:otherwise>
+														<li class="disabled"><a href="javascript:">&laquo;</a>
+														</li>
+													</c:otherwise>
+												</c:choose>
+												<c:forEach var="i" begin="${page.startPageNum }"
+													end="${page.endPageNum }">
 													<c:choose>
-														<c:when test="${page.endPageNum lt page.totalPageCount }">
-															<li><a onclick="javascript:paging(${page.endPageNum+1 })">&raquo;</a>
-															</li>
+														<c:when test="${i eq page.pageNum }">
+															<li class="active page-item"><a class="page-link"
+																href="${pageContext.request.contextPath}/ad/notice?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
 														</c:when>
 														<c:otherwise>
-															<li class="disabled"><a href="javascript:">&raquo;</a>
-															</li>
+															<li><a
+																href="${pageContext.request.contextPath}/ad/notice?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
 														</c:otherwise>
 													</c:choose>
-			                                </ul>
-			                            </div>
-			                           <h4 class="float-right">&middot; 총 자료수 : ${totalRows }</h4>
-			                        </div>
-			                        </form:form>
+												</c:forEach>
+												<c:choose>
+													<c:when test="${page.endPageNum lt page.totalPageCount }">
+														<li><a
+															href="${pageContext.request.contextPath}/ad/notice?pageNum=${page.endPageNum+1 }&condition=${condition}&keyword=${keyword}">&raquo;</a>
+														</li>
+													</c:when>
+													<c:otherwise>
+														<li class="disabled"><a href="javascript:">&raquo;</a>
+														</li>
+													</c:otherwise>
+												</c:choose>
+											</ul>
+			                            </div>			                          
+			                        </div>			                     
 							</div>
 						</div>
 					</div>
@@ -178,7 +182,13 @@
 	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	
 	<script>
-	
+	$(document).ready(function(){
+		$('#condition').attr("style","height: 33px !important; max-height: 33px !important;");
+		$('#header').attr("style","height: 33px !important; max-height: 33px !important;");
+		$('#keyword').attr("style","height: 33px !important; max-height: 33px !important;");		
+		$('.input-group-addon').attr("style","height: 33px !important; max-height: 33px !important");
+	});
+		
 	</script>
 	
 	

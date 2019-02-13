@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>CrudSystem</title>
+<title>IDEA CRM</title>
 <link rel="stylesheet" href="/css/common/pop_template.css" type="text/css">
 <link rel="stylesheet" href="/css/popup/agr_easy.css" type="text/css">
 <!-- 이메일 수신거부 신규 CSS 추가 -->

@@ -16,7 +16,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/reconfirm.css"
 	media="all" rel="stylesheet" type="text/css" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 </head>
 

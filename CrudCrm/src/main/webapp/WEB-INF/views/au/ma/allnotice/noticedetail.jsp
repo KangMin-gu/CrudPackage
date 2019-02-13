@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>IDEA CRM</title>
+<title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <!-- Toastr style -->
@@ -20,7 +20,7 @@
 	rel="stylesheet">
 <!-- DatePicker -->
 <link href="/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
+
 <link href="/resources/css/animate.css" rel="stylesheet">
 <link href="/resources/css/style.css" rel="stylesheet">
 </head>
@@ -38,7 +38,7 @@
 					<h2><strong>공지사항</strong></h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/cust">목록</a></li>
-						<li class="breadcrumb-item active"><strong>공지사항 등록</strong></li>
+						<li class="breadcrumb-item active"><strong>상세 정보</strong></li>
 					</ol> 					
 				</div>
 				<div class="col-lg-2">
@@ -53,44 +53,36 @@
 							<div class="ibox">				
 								<!-- conten-row -->
 								<div class="ibox-title row">
-									<h4>공지사항 작성</h4>
-								</div>		
-								
-								<form:form action="${pageContext.request.contextPath}/notice/post" method="POST">		
+									<h4>공지 정보</h4>
+								</div>				
 								<div class="ibox-content row">													
 									<div class="col-md-8 offset-md-2">
-										<div class="row">
-											<div class="col-xl-2">
-												<select id="header" name="header" class="form-control" style="height: 30px;">
-													<option value="0">전체</option>										                                                                       
-										            <option value="1">공지</option>
-										            <option value="2">알림</option>
-										            <option value="3">뉴스</option>
-							                     </select>											
-											</div>											
-											<div class="col-xl-10"><input style="height:30px;" id="subject" name="subject" type="text" class="form-control" value="${noticeInfo.SUBJECT }"></div>
-										</div>										
+										<h3>${noticeInfo.SUBJECT}</h3>
 									</div>																							                        		                            	           
-								</div>								
-								<div class="hr-line-dashed" style="margin-top: 0px;"></div>
+								</div>
 								<div class="row">
 									<div class="col-md-8 offset-md-2">
-										<textarea class="summernote" id="content" name="content" style="height: 500px;" >${noticeInfo.CONTENT}</textarea>
-										<div class="clearfix"></div>
+										${noticeInfo.HEADER} | ${noticeInfo.USERNAME} | ${noticeInfo.REGDATE}
 									</div>	
 								</div>
 								<div class="hr-line-dashed"></div>
 								<div class="row">
-									<div class="col-md-8 offset-md-2">										 		
-										<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">													
-											<a href="${pageContext.request.contextPath}/notice/${noticeInfo.ICNUM}" class="btn btn-primary float-right">취소</a>
-											<button  type="submit" class="btn btn-primary float-right" style="margin-right:3px;">등록</button>																		
-										</c:if>																																																			
+									<div class="col-md-8 offset-md-2">
+										${noticeInfo.CONTENT}
 									</div>	
 								</div>
-								<input type="hidden" name="icnum" id="icnum" value="${noticeInfo.ICNUM }" />
-								</form:form>
-								
+								<div class="hr-line-dashed"></div>
+								<div class="row">
+									<div class="col-md-8 offset-md-2">																	
+										<form:form action="${pageContext.request.contextPath}/notice/trash/${noticeInfo.ICNUM}" method="PUT">										
+											<a href="${pageContext.request.contextPath}/notice" class="btn btn-primary">목록</a>									 			
+											<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">											
+												<a href="${pageContext.request.contextPath}/notice/post/${noticeInfo.ICNUM }" class="btn btn-primary float-right" style="margin-left: 3px;">수정</a>
+												<button class="btn btn-primary float-right">삭제</button>																																										
+											</c:if>																							
+										</form:form>												
+									</div>	
+								</div>
 							</div>
 						</div>
 					</div>
@@ -109,18 +101,9 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
+	
 	<script>
-		$(document).ready(function() {		
-			$('.summernote').summernote();
-			$('.note-editable').css('height','300px');
-			
-			$('#header option').each(function(){
-				if($(this).val()=="${noticeInfo.HEADER}"){
-					$(this).attr("selected", "selected");
-				}
-			});
-		});
+		
 	</script>
 	
 	

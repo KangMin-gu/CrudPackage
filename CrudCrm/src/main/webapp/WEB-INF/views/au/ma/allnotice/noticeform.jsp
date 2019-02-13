@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>IDEA CRM</title>
+<title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <!-- Toastr style -->
@@ -68,14 +68,14 @@
 										            <option value="3">뉴스</option>
 							                     </select>											
 											</div>											
-											<div class="col-xl-10"><input style="height:30px;" id="subject" name="subject" type="text" class="form-control" value="${noticeInfo.SUBJECT }"></div>
+											<div class="col-xl-10"><input style="height:30px;" id="subject" name="subject" type="text" class="form-control" value=""></div>
 										</div>										
 									</div>																							                        		                            	           
 								</div>								
 								<div class="hr-line-dashed" style="margin-top: 0px;"></div>
 								<div class="row">
 									<div class="col-md-8 offset-md-2">
-										<textarea class="summernote" id="content" name="content" style="height: 500px;" >${noticeInfo.CONTENT}</textarea>
+										<textarea class="summernote" id="content" name="content" style="height: 500px;"></textarea>
 										<div class="clearfix"></div>
 									</div>	
 								</div>
@@ -83,12 +83,11 @@
 								<div class="row">
 									<div class="col-md-8 offset-md-2">										 		
 										<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">													
-											<a href="${pageContext.request.contextPath}/notice/${noticeInfo.ICNUM}" class="btn btn-primary float-right">취소</a>
+											<a href="${pageContext.request.contextPath}/notice" class="btn btn-primary float-right">취소</a>
 											<button  type="submit" class="btn btn-primary float-right" style="margin-right:3px;">등록</button>																		
 										</c:if>																																																			
 									</div>	
 								</div>
-								<input type="hidden" name="icnum" id="icnum" value="${noticeInfo.ICNUM }" />
 								</form:form>
 								
 							</div>
@@ -114,12 +113,6 @@
 		$(document).ready(function() {		
 			$('.summernote').summernote();
 			$('.note-editable').css('height','300px');
-			
-			$('#header option').each(function(){
-				if($(this).val()=="${noticeInfo.HEADER}"){
-					$(this).attr("selected", "selected");
-				}
-			});
 		});
 	</script>
 	

@@ -15,15 +15,52 @@
 					<ul class="nav navbar-top-links navbar-right">
 						<!-- <li><span class="m-r-sm text-muted welcome-message">CRUD CRM에 오신 <strong>${sessionScope.USERNAME }</strong>님 환영합니다.</span></li> -->
 						<li class="dropdown">
-							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" id='dropClick'> 
+							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" id='noteAlaram'> 
 								<i class="fa fa-envelope"></i>
 								<span id="alarm" class="label label-warning"></span>
 							</a>
-							<ul class="dropdown-menu dropdown-messages" id="dropDown">							
-							</ul>
-						</li>
+							<ul class="dropdown-menu dropdown-messages" id="noteAlaramList">	
+							
+							 <!-- 
+							<li>
+	                            <div class="dropdown-messages-box">
+	                                <a class="dropdown-item float-left" href="profile.html"></a>
+	                                <div class="media-body ">                                   
+	                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+	                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+	                                </div>
+	                            </div>
+                        	</li>
+                        	<li class="dropdown-divider"></li>
+                        	<li>
+	                            <div class="dropdown-messages-box">
+	                                <a class="dropdown-item float-left" href="profile.html"></a>
+	                                <div class="media-body ">                                   
+	                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+	                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+	                                </div>
+	                            </div>
+                        	</li>
+                        
+                       
+                       
+	                        <li class="dropdown-divider"></li>
+	                        <li>
+	                            <div class="text-center link-block">
+	                                <a href="mailbox.html" class="dropdown-item">
+	                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+	                                </a>
+	                            </div>
+	                        </li>	-->			
+						</ul>
+					</li>
 						<!-- 공지사항 알람기능추가 -->
 						<li class="dropdown">
+						
+							
+						
+						
+						
 			                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 			                    <i class="fa fa-bell"></i>  <span class="label label-danger">8</span>
 			                </a>

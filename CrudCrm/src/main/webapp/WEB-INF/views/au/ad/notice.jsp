@@ -53,16 +53,16 @@
 			                            <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">					                          																							
 											 <div class="col-xl-10 col-lg-10 float-left text-rigth mb-2 w-100">
 												
-												<form:form method="post" action="${pageContext.request.contextPath}/ad/notice">												
+												<form:form method="post" action="${pageContext.request.contextPath}/notice">												
 													<div class="row">				
 														<div class="col-xl-8">
 															<div class="row">
 																<div class="col-xl-2">
 																	<select id="header" name="header" class="form-control">
-																			<option value="a">전체</option>										                                                                       
-										                                    <option value="a">공지</option>
-										                                    <option value="b">알림</option>
-										                                    <option value="c">뉴스</option>
+																			<option value="0">전체</option>										                                                                       
+										                                    <option value="1">공지</option>
+										                                    <option value="2">알림</option>
+										                                    <option value="3">뉴스</option>
 							                                    	</select>
 																</div>
 																<div class="col-xl-2" style="padding: 0px;">
@@ -86,7 +86,7 @@
 											 </div>
 											 <div class="col-xl-2 col-lg-2 float-right text-right mb-2 w-100">			
 												<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">
-													<a href="${pageContext.request.contextPath}/ad/notice/post" class="btn btn-primary">등록</a>																			
+													<a href="${pageContext.request.contextPath}/notice/post" class="btn btn-primary">등록</a>																			
 												</c:if>																							
 											</div> 
 										</div>
@@ -110,8 +110,8 @@
 			                                <tbody>
 			                                <c:forEach var="notice" items="${siteNotice }">
 			                                    <tr>			                                        
-			                                        <td>${notice.HEADER }</td>
-			                                        <td><a href="${pageContext.request.contextPath}/ad/notice/${notice.ICNUM }">${notice.SUBJECT }</a></td>
+			                                        <td id="header">${notice.HEADER }</td>
+			                                        <td><a href="${pageContext.request.contextPath}/notice/${notice.ICNUM }">${notice.SUBJECT }</a></td>
 			                                        <td>${notice.USERNAME }</td>
 			                                        <td>${notice.REGDATE }</td>
 			                                    </tr>
@@ -126,7 +126,7 @@
 												<c:choose>
 													<c:when test="${page.startPageNum ne 1 }">
 														<li><a
-															href="${pageContext.request.contextPath}/${url }?pageNum=${page.startPageNum-1 }&condition=${condition}&keyword=${keyword}&startdate=${startdate}&enddate=${enddate}">&laquo;</a>
+															href="${pageContext.request.contextPath}/notice?pageNum=${page.startPageNum-1 }&condition=${condition}&keyword=${keyword}">&laquo;</a>
 														</li>
 													</c:when>
 													<c:otherwise>
@@ -139,18 +139,18 @@
 													<c:choose>
 														<c:when test="${i eq page.pageNum }">
 															<li class="active page-item"><a class="page-link"
-																href="${pageContext.request.contextPath}/ad/notice?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
+																href="${pageContext.request.contextPath}/notice?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
 														</c:when>
 														<c:otherwise>
 															<li><a
-																href="${pageContext.request.contextPath}/ad/notice?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
+																href="${pageContext.request.contextPath}/notice?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
 												<c:choose>
 													<c:when test="${page.endPageNum lt page.totalPageCount }">
 														<li><a
-															href="${pageContext.request.contextPath}/ad/notice?pageNum=${page.endPageNum+1 }&condition=${condition}&keyword=${keyword}">&raquo;</a>
+															href="${pageContext.request.contextPath}/notice?pageNum=${page.endPageNum+1 }&condition=${condition}&keyword=${keyword}">&raquo;</a>
 														</li>
 													</c:when>
 													<c:otherwise>
@@ -187,6 +187,12 @@
 		$('#header').attr("style","height: 33px !important; max-height: 33px !important;");
 		$('#keyword').attr("style","height: 33px !important; max-height: 33px !important;");		
 		$('.input-group-addon').attr("style","height: 33px !important; max-height: 33px !important");
+		
+		$('#header').each(function(){
+			if($(this).val()=="${noticeInfo.HEADER}"){
+				$(this).attr("selected", "selected");
+			}
+		});
 	});
 		
 	</script>

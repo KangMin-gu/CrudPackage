@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.MenuDto;
+import saas.crud.crm.au.dto.NoticeDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 
@@ -116,7 +117,7 @@ public class AuDaoImpl implements AuDao{
 	
 	//회원사 공지사항 리스트
 	@Override
-	public List<Map<String,Object>> authNotice(Map<String,Object> noticeVal) {
+	public List<Map<String,Object>> notice(Map<String,Object> noticeVal) {
 		List<Map<String,Object>> siteNotice = session.selectList("au.siteNotice", noticeVal);
 		return siteNotice;
 	}
@@ -129,8 +130,25 @@ public class AuDaoImpl implements AuDao{
 	}
 	//회원사 공지사항 정보
 	@Override
-	public Map<String,Object> authNoticeDetail(Map<String, Object> noticeVal) {
+	public Map<String,Object> noticeDetail(Map<String, Object> noticeVal) {
 		Map<String, Object> noticeInfo = session.selectOne("au.noticeDetail", noticeVal);
 		return noticeInfo;
+	}
+	//회원사 공지등록
+	@Override
+	public int noticeInsert(NoticeDto noticeDto) {
+		session.insert("au.noticeInsert", noticeDto);
+		int noticeNo = noticeDto.getIcnum();
+		return noticeNo;
+	}
+	//회원사 공지 삭제
+	@Override
+	public void noticeDelete(NoticeDto noticeDto) {
+		session.update("au.noticeDelete",noticeDto);
+	}
+
+	@Override
+	public void noticeUpdate(NoticeDto noticeDto) {
+		session.update("au.noticeUpdate", noticeDto);
 	}
 }

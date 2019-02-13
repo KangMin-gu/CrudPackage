@@ -20,7 +20,7 @@
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/myinfo/${sessionScope.USERNO}">내 정보</a></li>
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ad/notice">공지사항</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/notice">공지사항</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/note/inbox">내부통지</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
@@ -140,7 +140,7 @@
 			   				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>			   				
 			   				<li><a href="${pageContext.request.contextPath}/ad/code">코드 관리</a></li>
 			   				<li><a href="${pageContext.request.contextPath}/ad/company/${sessionScope.SITEID}">회원사 관리</a></li>
-			   				<li><a href="${pageContext.request.contextPath}/ad/notice">공지사항 관리</a></li>
+			   				<li><a href="${pageContext.request.contextPath}/notice">공지사항 관리</a></li>
 			   			</ul>
 			   		</li>
 		       	</c:if>

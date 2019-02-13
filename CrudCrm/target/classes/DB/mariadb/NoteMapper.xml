@@ -389,24 +389,14 @@
 		#{userNo},#{userNo},now(),now(),now(),0,#{toUserNo},#{noticeNo}
 		)
 	</insert>
+	
 	<!-- 메세지버튼 팝업 -->
-	<select id="noteSummary" resultType="hashMap" parameterType="int">
-		SELECT * FROM 
-		(
-		SELECT 
-		A.SUBJECT,
-		A.USERNAME,
-		A.RLTDATE,
-		A.NOTICENO,
-		A.USERNO,
-		B.ISDELETE 
-		FROM sys980010 AS A
-		INNER JOIN sys970010 AS B ON B.NOTICEID = A.NOTICENO
-		)C
-		WHERE C.USERNO=#{USERNO} 
-		AND C.ISDELETE NOT IN(1,2)
-		ORDER BY C.RLTDATE DESC
-		limit 4
+	<select id="noteSummary" resultType="hashMap" parameterType="hashMap">
+		SELECT C.NOTICEID, C.TITLE, C.CONTENT, D.USERNAME AS SENDER, C.SENDDATE, C.READCHEK FROM
+			(SELECT A.NOTICEID, B.TITLE, B.CONTENT, B.USERNO AS SENDER, DATE_FORMAT(B.REGDATE,'%Y-%m-%d') AS SENDDATE, A.READCHEK
+				FROM crud_saas.sys970011 AS A
+				LEFT OUTER JOIN crud_saas.sys970010 AS B ON A.NOTICEID = B.NOTICEID WHERE A.USERNO = #{userno} AND A.SITEID = #{siteid} AND A.ISDELETE = 0  LIMIT 5 ) AS C
+		LEFT OUTER JOIN crud_saas.me800010 AS D ON C.SENDER = D.USERNO
 	</select>
 	
 	<!-- 안읽은 통지갯수 -->

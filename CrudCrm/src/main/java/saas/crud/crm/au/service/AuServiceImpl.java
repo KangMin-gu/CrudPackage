@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dao.AuDao;
 import saas.crud.crm.au.dao.UserDao;
+import saas.crud.crm.au.dto.NoticeDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.ce.CrudEngine;
@@ -316,7 +317,7 @@ public class AuServiceImpl implements AuService{
 	
 	//로그인 사용자 강제종료 시키기
 	@Override
-	public ModelAndView authSession(HttpServletRequest request, String userId) {
+	public ModelAndView session(HttpServletRequest request, String userId) {
 		LoginManager loginManager = LoginManager.getInstance();
 		loginManager.removeSession(userId);
 		return null;
@@ -325,7 +326,7 @@ public class AuServiceImpl implements AuService{
 	
 	//회원사 공지사항 리스트
 	@Override
-	public ModelAndView authNotice(HttpServletRequest request) {
+	public ModelAndView notice(HttpServletRequest request) {
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		//검색과 관련된 파라미터를 읽어와 본다.
@@ -366,7 +367,7 @@ public class AuServiceImpl implements AuService{
 		noticeVal.put("endRowNum", endRowNum);
 		
 		//받은통지 리스트 출력
-		List<Map<String, Object>> siteNotice = auDao.authNotice(noticeVal);							
+		List<Map<String, Object>> siteNotice = auDao.notice(noticeVal);							
 				
 		mView.addObject("page", page); //페이징처리
 		mView.addObject("siteNotice", siteNotice); //리스트처리
@@ -376,18 +377,62 @@ public class AuServiceImpl implements AuService{
 	
 	//사이트공지사항 상세정보
 	@Override
-	public ModelAndView authNoticeDetail(HttpServletRequest request, int noticeId) {
+	public ModelAndView noticeDetail(HttpServletRequest request, int noticeId) {
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		Map<String, Object> noticeVal = new HashMap<>();
 		noticeVal.put("siteid",siteId);
 		noticeVal.put("noticeid", noticeId);
 		
-		Map<String,Object> noticeInfo = auDao.authNoticeDetail(noticeVal);
+		Map<String,Object> noticeInfo = auDao.noticeDetail(noticeVal);
 		ModelAndView mView = new ModelAndView();
 		mView.addObject("noticeInfo",noticeInfo);
 		
 		return mView;
 	}
+	
+	//회원사 공지등록
+	@Override
+	public int noticeInsert(HttpServletRequest request, NoticeDto noticeDto) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		noticeDto.setSiteid(siteId);
+		noticeDto.setEdtuser(userNo);
+		noticeDto.setReguser(userNo);
+		
+		int noticeNo = auDao.noticeInsert(noticeDto);
+		return noticeNo;
+	}
+	
+	//회원사 공지 삭제
+	@Override
+	public void noticeDelete(HttpServletRequest request, int noticeId) {
+		
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		NoticeDto noticeDto = new NoticeDto();
+		noticeDto.setSiteid(siteId);
+		noticeDto.setIcnum(noticeId);
+		noticeDto.setEdtuser(userNo);
+		
+		auDao.noticeDelete(noticeDto);
+	}
+	
+	//회원사 수정
+	@Override
+	public void noticeUpdate(HttpServletRequest request, NoticeDto noticeDto) {
+
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		
+		noticeDto.setSiteid(siteId);
+		noticeDto.setEdtuser(userNo);
+		
+		auDao.noticeUpdate(noticeDto);
+	}
+
 
 }

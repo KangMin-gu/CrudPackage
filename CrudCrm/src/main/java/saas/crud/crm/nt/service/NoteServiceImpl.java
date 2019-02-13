@@ -191,19 +191,13 @@ public class NoteServiceImpl implements NoteService{
 	//상단 메세지버튼 클릭 시
 	@Override
 	public List<Map<String,Object>> noteSummary(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		List<Map<String,Object>> subject = ntDao.noteSummary(userNo);
-		
-		int size = subject.size();
-		String rltDate = null;
-		if(size > 0) {
-			for(int i = 0; i < size; i++) {
-				rltDate = subject.get(i).get("RLTDATE").toString();
-				// UTC로 나오는 부분으로 인해서 해당 부분으로 처리 추후 SQL에서 UTC 처리 예정
-				subject.get(i).put("RLTSTR", rltDate);
-			}
-		}
-		return subject;
+		Map<String, Object> summaryVal = new HashMap<>();
+		summaryVal.put("siteid", siteId);
+		summaryVal.put("userno", userNo);
+		List<Map<String,Object>> alramNoteList = ntDao.noteSummary(summaryVal);
+		return alramNoteList;
 	}
 
 	//중요 통지

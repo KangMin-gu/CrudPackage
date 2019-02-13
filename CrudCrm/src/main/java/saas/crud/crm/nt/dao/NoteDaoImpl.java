@@ -191,8 +191,8 @@ public class NoteDaoImpl implements NoteDao{
 	}
 	//상단 메세지버튼 팝업
 	@Override
-	public List<Map<String, Object>> noteSummary(int userNo) {
-		List<Map<String, Object>> note = session.selectList("note.noteSummary",userNo);
+	public List<Map<String, Object>> noteSummary(Map<String, Object> summaryVal) {
+		List<Map<String, Object>> note = session.selectList("note.noteSummary",summaryVal);
 		return note;
 	}
 	

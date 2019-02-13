@@ -73,12 +73,14 @@
 								</div>
 								<div class="hr-line-dashed"></div>
 								<div class="row">
-									<div class="col-md-8 offset-md-2">
-										 <div class="col-xl-2 col-lg-2 float-right text-right mb-2 w-100">			
-											<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">
-												<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">삭제</a>																			
+									<div class="col-md-8 offset-md-2">																	
+										<form:form action="${pageContext.request.contextPath}/notice/trash/${noticeInfo.ICNUM}" method="PUT">										
+											<a href="${pageContext.request.contextPath}/notice" class="btn btn-primary">목록</a>									 			
+											<c:if test="${CHKAUTH eq 20 || CHKAUTH eq 30 }">											
+												<a href="${pageContext.request.contextPath}/notice/post/${noticeInfo.ICNUM }" class="btn btn-primary float-right" style="margin-left: 3px;">수정</a>
+												<button class="btn btn-primary float-right">삭제</button>																																										
 											</c:if>																							
-										</div> 																		
+										</form:form>												
 									</div>	
 								</div>
 							</div>

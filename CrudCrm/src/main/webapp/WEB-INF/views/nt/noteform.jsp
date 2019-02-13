@@ -41,8 +41,7 @@
 						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
-						<form:form action="/note/send" method="post"
-							enctype="multipart/form-data">
+						<form:form action="/note/send" method="post" enctype="multipart/form-data">
 							<div class="mail-box-header" style="padding-bottom:0px;">
 						
 								<div class="row">
@@ -120,7 +119,8 @@
 									<div class="form-group row custom-file">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
 										<div class="col-md-6">
-											<input id="filesChk" name="file" class="form-control" type="file" multiple>
+											<input id="filesChk" name="file" class="form-control" type="file" multiple/>
+											
 											<p class="help-block">크기 50MB 이하의 파일 선택</p>											
 										</div>
 									</div>								
@@ -171,7 +171,6 @@
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.MultiFile.min.js"></script>
 	<script>
 	<!-- radioBox-->
 	

@@ -495,7 +495,7 @@ public class NoteServiceImpl implements NoteService{
 	
 	//통지발송
 	@Override
-	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
+	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest mtfRequest) {		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
@@ -505,14 +505,13 @@ public class NoteServiceImpl implements NoteService{
 		//ntDto 셋팅
 		//보낸이
 		ntDto.setFromuserno(fromUserNo);	
-		
+
 		//파일첨부
-		List<MultipartFile> mFile = ((MultipartHttpServletRequest)request).getFiles("file");
+		List<MultipartFile> mFile = mtfRequest.getFiles("file");
 		if(mFile.size() != 0) {			
 			//첨부파일			
 			String fileSearchKey = crudEngine.multiUpload(response, request, mFile);
 			ntDto.setFilesearchkey(fileSearchKey);
-
 		}
 		
 		int noticeId = ntDao.noteSend(ntDto); //통지내용등록

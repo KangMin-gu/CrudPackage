@@ -30,7 +30,7 @@
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>캠페인 서식관리</h2>
+                    <h2>서식관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">
                             <strong>서식 목록</strong>
@@ -45,7 +45,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-lg-12">
                     <div class="ibox">
-                    <form:form action="${pageContext.request.contextPath}/campaign/contents" method="POST">
+                    <form:form action="${pageContext.request.contextPath}/ad/content" method="POST">
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         		<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
@@ -59,27 +59,6 @@
 								</div>
 							</div>
 							<br><br>
-                            <div class="box1 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered mb-0">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>사용매체</th>
-                                            <td>
-                                            	<select class="form-control reset select" name="formtype" id="formtype" style="height: 22px !important">
-                                                   	<option value="">선택</option>
-                                                   	<option value="1" <c:if test='${search.formtype eq 1}'>selected</c:if>>EMAIL</option>
-                                                   	<option value="2" <c:if test='${search.formtype eq 2}'>selected</c:if>>SMS/LMS</option>
-                                                   	<option value="3" <c:if test='${search.formtype eq 3}'>selected</c:if>>MMS</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                             <div class="box2 col-lg-12 col-xl-4 p-0">
                                 <table class="table table-bordered border-top-0 mb-0">
                                     <colgroup>
@@ -96,12 +75,53 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>사용메뉴</th>
+                                            <td>
+                                            	<select class="form-control reset select" name="menutype" id="menutype" style="height: 22px !important">
+                                                   	<option value="">선택</option>
+                                                   	<option value="1" <c:if test='${search.menutype eq 1}'>selected</c:if>>VOC</option>
+                                                   	<option value="2" <c:if test='${search.menutype eq 2}'>selected</c:if>>캠페인</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>발송매체</th>
+                                            <td>
+                                            	<select class="form-control reset select" name="formtype" id="formtype" style="height: 22px !important">
+                                                   	<option value="">선택</option>
+                                                   	<option value="1" <c:if test='${search.formtype eq 1}'>selected</c:if>>EMAIL</option>
+                                                   	<option value="2" <c:if test='${search.formtype eq 2}'>selected</c:if>>SMS/LMS</option>
+                                                   	<option value="3" <c:if test='${search.formtype eq 3}'>selected</c:if>>MMS</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         </form:form>
-                        <form:form action="${pageContext.request.contextPath}/campaign/contents/delete" method="POST">
+                        <form:form action="${pageContext.request.contextPath}/ad/content/delete" method="POST">
                         <div class="ibox-content row border-top-0 pt-lg-0">
                         	<div class="w-100 text-right mb-2">
-                                <a href="${pageContext.request.contextPath}/campaign/contents/post" class="btn btn-primary">추가</a>
+                                <a href="${pageContext.request.contextPath}/ad/content/post" class="btn btn-primary">추가</a>
                                 <div class="d-inline-block mt-sx-1">
                                 	<button class="btn btn-primary">삭제</button>
                                 </div>
@@ -111,17 +131,17 @@
                                 <colgroup>
                                     <col style="width: 50px"/>
                                     <col style="width: 200px"/>
+                                    <col style="width: 200px"/>
                                     <col style="width: 100px"/>
-                                    <col style="width: 150px"/>
                                     <col style="width: 150px"/>
                                     <col style="width: 100px"/>                     
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="i-checks" name=""></th>
+                                        <th><input type="checkbox" class="i-checks chksquare" name="icheckAll" id="icheckAll"></th>
                                         <th>제목</th>
-                                        <th>사용매체</th>
-                                        <th>용도</th>
+                                        <th>사용메뉴</th>
+                                        <th>발송매체</th>
                                         <th>등록자</th>
                                         <th>등록일시</th>
                                     </tr>
@@ -129,10 +149,10 @@
                                 <tbody>
                                     <c:forEach var="contentsList" items="${contents }">
                                     	<tr>
-                                        	<td><input type="checkbox" class="i-checks" name="no" id="no" value="${contentsList.NO }"></td>
-                                        	<td><a href="${pagecontext.request.contextpath}/campaign/contents/${contentsList.NO }">${contentsList.TITLE}</a></td>
+                                        	<td><input type="checkbox" class="i-checks chksquare" name="no" id="no" value="${contentsList.CONTENTNO }"></td>
+                                        	<td><a href="${pagecontext.request.contextpath}/ad/content/${contentsList.CONTENTNO }">${contentsList.TITLE}</a></td>
+                                        	<td>${contentsList.MENUTYPE_ }</td>
                                         	<td>${contentsList.FORMTYPE_ }</td>
-                                        	<td>${contentsList.PURP }</td>
                                         	<td>${contentsList.REGUSER_ }</td>
                                         	<td>${contentsList.REGDATE_ }</td>
                                     	</tr>

@@ -33,7 +33,7 @@
                     <h2>서식 관리</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/campaign/contents">서식목록</a>
+                            <a href="/ad/content">서식목록</a>
                         </li>
                         <li class="breadcrumb-item active">
                             <strong>서식 추가</strong>
@@ -47,7 +47,7 @@
 		
 		
 <!-- Content -->		
-<form:form action ="${pageContext.request.contextPath}/campaign/contents/${contentsInfo.NO }" method="POST">
+<form:form action ="${pageContext.request.contextPath}/ad/content/${contentInfo.CONTENTNO }" method="POST">
 			<div class="wrapper wrapper-content  animated fadeInRight article">
             <div class="row justify-content-md-center">
             
@@ -60,14 +60,14 @@
                         <div class="ibox-content row">
                         	<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="w-100 text-right mb-2">
-                                	<form:form action="${pageContext.request.contextPath}/campaign/contents/${contentsInfo.NO }" method="POST">
-                                		<a href="${pageContext.request.contextPath}/campaign/contents/post/${contentsInfo.NO }" class="btn btn-primary">수정</a>
+                                	<form:form action="${pageContext.request.contextPath}/ad/content/${contentInfo.CONTENTNO }" method="POST">
+                                		<a href="${pageContext.request.contextPath}/ad/content/post/${contentInfo.CONTENTNO }" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-										<a href="${pageContext.request.contextPath}/campaign/contents" class="btn btn-primary">목록</a>
+										<a href="${pageContext.request.contextPath}/ad/content" class="btn btn-primary">목록</a>
 									</form:form>
                             	</div>
 							</div>
-														<div class="box1 col-lg-12 col-xl-8 p-0">
+							<div class="box1 col-lg-12 col-xl-6 p-0">
 								<table class="table table-bordered mb-0">
 									<colgroup>
                                     	<col style="width: 110px; background: #fafafa;">
@@ -76,12 +76,12 @@
                                     <tbody>
                                     	<tr>
                                         	<th>서식명</th>
-                                            <td>${contentsInfo.TITLE }</td>
+                                            <td>${contentInfo.TITLE }</td>
                                         </tr>
                                     </tbody>
                                 </table>
                              </div>
-                             <div class="box2 col-lg-12 col-xl-4 p-0">
+                             <div class="box2 col-lg-12 col-xl-3 p-0">
                              	<table class="table table-bordered mb-0">
                              		<colgroup>
                              			<col style="width: 110px; background: #fafafa;">
@@ -89,24 +89,22 @@
                                     </colgroup>
                                     <tbody>
                                     	<tr>
-                                        	<th>매체유형</th>
-                                            <td>${contentsInfo.FORMTYPE_ }</td>
+                                        	<th>사용메뉴</th>
+                                            <td>${contentInfo.MENUTYPE_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box2 col-lg-12 p-0">
-                             	<table class="table table-bordered border-top-0 mb-0">
+                             <div class="box2 col-lg-12 col-xl-3 p-0">
+                             	<table class="table table-bordered mb-0">
                              		<colgroup>
-                                    	<col style="width: 110px; background: #fafafa;">
+                             			<col style="width: 110px; background: #fafafa;">
                                         <col style="width: auto;">
                                     </colgroup>
                                     <tbody>
                                     	<tr>
-                                        	<th class="border-top-0">용도</th>
-                                            <td class="border-top-0">
-                                            	${contentsInfo.PURP }
-                                            </td>
+                                        	<th>발송매체</th>
+                                            <td>${contentInfo.FORMTYPE_ }</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -121,7 +119,7 @@
                                     	<tr>
                                         	<th class="border-top-0">비고</th>
                                             <td class="border-top-0">
-                                            	<textarea name="content" id="content"  class="form-control summernote" style="resize:none; height: 8em;">${contentsInfo.CONTENT }</textarea>
+                                            	<textarea name="content" id="content"  class="form-control summernote" style="resize:none; height: 8em;">${contentInfo.CONTENT }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>

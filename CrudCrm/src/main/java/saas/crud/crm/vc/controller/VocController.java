@@ -259,5 +259,16 @@ public class VocController {
 	public int authvocSessionMaintain(HttpServletRequest request) {
 		return 0;
 	}
+	
+	@RequestMapping(value="/vc/callback", method=RequestMethod.POST)
+	public ModelAndView VocGetCallBack(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		Map<String,Object> callBackMap = crud.searchParam(request);
+		callBackMap.put("callstatus", 0);
+		vcService.svcVocCallBackInsert(callBackMap);
+		
+		//return "test";
+		return mView;
+	}
 
 }

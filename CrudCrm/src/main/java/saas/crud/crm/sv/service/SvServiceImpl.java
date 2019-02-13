@@ -1,8 +1,10 @@
 package saas.crud.crm.sv.service;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.MailDao;
 import saas.crud.crm.cp.dto.CampaignDto;
@@ -45,7 +48,7 @@ public class SvServiceImpl implements SvService{
 		Map<String, Object> search = crud.searchParam(request);
 		String uri = request.getRequestURI();
 		if(uri.contains("convey")) {
-			search.put("servicestep", 3);
+			search.put("servicestep", 6);
 		}
 
 		int totalRows = svDao.svServiceTotalRows(search);
@@ -82,6 +85,7 @@ public class SvServiceImpl implements SvService{
 		Map<String,Object> serviceInfo = svDao.serviceRead(param);
 		Map<String,Object> rewardInfo = svDao.rewardRead(param);
 		Map<String,Object> ractInfo = svDao.ractRead(param);
+		List<ProductDto> product = svDao.svProductRead(param);
 		
 		if(serviceInfo.get("FILESEARCHKEY") != null) {
 			String fileSearchKey = (String) serviceInfo.get("FILESEARCHKEY");
@@ -109,6 +113,7 @@ public class SvServiceImpl implements SvService{
 				param.remove("filesearchkey");
 			}
 		}
+		mView.addObject("product",product);
 		mView.addObject("serviceInfo", serviceInfo);
 		mView.addObject("rewardInfo", rewardInfo);
 		mView.addObject("ractInfo", ractInfo);
@@ -123,7 +128,7 @@ public class SvServiceImpl implements SvService{
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
+		Map<String,Object> search = crud.searchParam(request);
 		serviceDto.setSiteid(siteId);
 		serviceDto.setEdtuser(userNo);
 		serviceDto.setReguser(userNo);
@@ -188,7 +193,7 @@ public class SvServiceImpl implements SvService{
 					 rewardDto.setServiceno(serviceNo);
 					 rewardDto.setReguser(userNo);
 					 svDao.rewardInsert(rewardDto);
-					 serviceDto.setServicestep(2);
+					 serviceDto.setServicestep(3);
 					 svDao.svStepUpdate(serviceDto);
 				 }
 			 }
@@ -204,8 +209,40 @@ public class SvServiceImpl implements SvService{
 				ractDto.setServiceno(serviceNo);
 				ractDto.setReguser(userNo);
 				svDao.ractInsert(ractDto);
-				serviceDto.setServicestep(3);
+				serviceDto.setServicestep(4);
 				svDao.svStepUpdate(serviceDto);
+			}
+		}
+		
+		int cnt = 0;
+		Map<String,Object> map = new HashMap();
+		TreeMap<String,Object> treeMap = new TreeMap<String,Object>(search);
+		
+		String key;
+		String value;
+		
+		Iterator<String> keyiterator = treeMap.keySet().iterator();
+		map.put("siteid", siteId);
+		map.put("reguser", userNo);
+		map.put("edtuser", userNo);
+		map.put("serviceno", serviceNo);
+		while(keyiterator.hasNext()) {
+			
+			key = keyiterator.next().toString();
+			if(search.get(key) != null) {
+				value = search.get(key).toString();
+				if(key.contains("product")) {
+					cnt ++;
+					if(cnt == 1) {
+					map.put("productb", value);
+					}else if(cnt ==2) {
+						map.put("productm", value);
+					}else if(cnt ==3) {
+						map.put("products", value);
+						cnt = 0;
+						svDao.svProductInsert(map);
+					}
+				}
 			}
 		}
 		return serviceNo;
@@ -287,7 +324,7 @@ public class SvServiceImpl implements SvService{
 		
 		serviceDto.setSiteid(siteId);
 		serviceDto.setEdtuser(userNo);
-		serviceDto.setServicestep(4);
+		serviceDto.setServicestep(6);
 		svDao.svStepUpdate(serviceDto);
 		
 	}
@@ -302,7 +339,7 @@ public class SvServiceImpl implements SvService{
 		serviceDto.setSiteid(siteId);
 		serviceDto.setEdtuser(userNo);
 		serviceDto.setServiceno(serviceNo);
-		serviceDto.setServicestep(5);
+		serviceDto.setServicestep(8);
 		
 		svDao.svStepUpdate(serviceDto);
 		

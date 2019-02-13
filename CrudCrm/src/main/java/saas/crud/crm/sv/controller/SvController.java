@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.au.service.CodeService;
+import saas.crud.crm.au.service.ProductService;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
 import saas.crud.crm.sv.dto.RewardDto;
@@ -33,6 +35,9 @@ public class SvController {
 	
 	@Autowired
 	private CodeService codeService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	//서비스 List
 	@RequestMapping(value="/service", method=RequestMethod.GET)
@@ -68,6 +73,8 @@ public class SvController {
 		
 		ModelAndView mView = new ModelAndView();
 		Map<String,Object> code = codeService.getCode();
+		List<ProductDto> productB = productService.getProductB(request);
+		mView.addObject("productB",productB);
 		mView.addAllObjects(code);
 		mView.setViewName("sv/svInsert");
 		

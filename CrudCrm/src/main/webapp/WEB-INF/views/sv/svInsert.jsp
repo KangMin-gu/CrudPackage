@@ -214,21 +214,13 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>접수유형</th>
+                                            <th>상담구분</th>
                                             <td class="border-top-0">
-                                                <select class="form-control validate numberV" name="servicetype" id="servicetype">
-                                            		<option label="선택" value="0"/>
-                                                	<c:forEach var="serviceType" items="${SERVICETYPE }">
-                                                		<c:choose>
-                                                			<c:when test="${serviceInfo.SERVICETYPE eq serviceType.codeval}">
-                                                				<option selected label="${serviceType.codename }" value="${serviceType.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${serviceType.codename }" value="${serviceType.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </select>
+                                                <div class="i-checks servicetype voc">
+                                    				<c:forEach var="serviceType" items="${SERVICETYPE }">
+                                    					<label class="mr-2 mb-0"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
+                                        			</c:forEach>
+                                    			</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -292,18 +284,8 @@
                                         <tr>
                                             <th>접수유형2</th>
                                             <td>
-                                            	<select class="form-control select validate numberV" name="servicecode2" id="servicecode2" value="${serviceInfo.SERVICECODE2 }">
-                                                    	<option value="0">선택</option>
-                                                    	<c:forEach var="serviceCode2" items="${SERVICECODE2 }">
-                                                		<c:choose>
-                                                			<c:when test="${serviceInfo.SERVICECODE2 eq serviceCode2.codeval}">
-                                                				<option selected label="${serviceCode2.codename }" value="${serviceCode2.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${serviceCode2.codename }" value="${serviceCode2.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
+                                            	<select class="form-control select validate numberV" name="servicecode2" id="servicecode2" upper ="servicecode1" value="${serviceInfo.SERVICECODE2 }">
+                                                    <option value="0">선택</option>
                                                 </select>
 											</td>
                                         </tr>
@@ -346,6 +328,41 @@
                                                         <a><i class="fa fa-child"></i></a>
                                                     </span>
                                                 </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box4 col-lg-12 col-xl-12 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                            <th class="border-top-0 border-bottom-0">문의제품</th>
+                                        	<td class="border-top-0">
+                                        		<div class="select-area mt-1">
+                                        <!-- S: 이 영역을 계속 추가 하면 됨 -->
+                                         			<div class="select-box mb-1 product" style="height: 29px;">
+                                            			<select id="product11" name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                            				<option value="">선택</option>
+                                                			<c:forEach var="productB" items="${productB }">
+                                            					<option label="${productB.prdname }" value="${productB.prdno }"/>
+                                    						</c:forEach>
+                                            			</select>
+                                            			<select id="product12" name="product12"  class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                            				<option value="">선택</option>
+                                            			</select>
+                                            			<select id="product13" name="product13" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                            				<option value="">선택</option>
+                                            			</select>
+                                            			<button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
+                                            			<button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>
+                                        			</div>
+                                        			<!-- E: 이 영역을 계속 추가 하면 됨 -->
+                                    			</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -741,6 +758,14 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
+	<script>
+	$(document).ready(function () {
+		$('.product .minus:first').remove();
+	});
 	
+	 $('#servicecode1').change(function(){
+		 upperCode('servicecode1'); 
+	 });
+	</script>
 </body>
 </html>

@@ -78,7 +78,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>접수일자</th>
+                                            <th>접수일</th>
                                             <td>
                                                 <div class="input-group p-0 ">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
@@ -122,7 +122,7 @@
                                     </colgroup>
                                     <tbody>
                                         <tr>
-                                            <th>접수유형</th>
+                                            <th>접수구분</th>
                                             <td>
                                             	<select class="form-control reset" name="servicetype" id="servicetype" value="${search.servicetype }">
                                                 	<option value="">선택</option>
@@ -152,7 +152,36 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>접수매체</th>
+                                            <th>처리상태</th>
+                                            <td class="border-top-0">
+                                                <select class="form-control reset" name="servicestep" id="servicestep" value="${search.servicestep }">
+                                            		<option label="선택" value=""/>
+                                                	<c:forEach var="serviceStep" items="${SERVICESTEP }">
+                                                		<c:choose>
+                                                			<c:when test="${search.servicestep eq serviceStep.codeval}">
+                                                				<option selected label="${serviceStep.codename }" value="${serviceStep.codeval }"/>
+                                                			</c:when>
+                                                			<c:otherwise>
+                                                				<option label="${serviceStep.codename }" value="${serviceStep.codeval }"/>
+                                                			</c:otherwise>
+                                                		</c:choose>
+                                                	</c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box3 col-lg-12 col-xl-4 p-0">
+                                <table class="table table-bordered">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                            <th>접수유형</th>
                                             <td class="border-top-0">
                                             <div class="input-group">
                                                 <select class="form-control reset" name="servicecode1" id="servicecode1" value="${search.servicecode1 }">
@@ -175,28 +204,6 @@
                                             </div>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box3 col-lg-12 col-xl-4 p-0">
-                                <table class="table table-bordered">
-                                    <colgroup>
-                                        <col style="width: 110px; background: #fafafa;">
-                                        <col style="width: auto;">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <th>접수자</th>
-                                            <td class="border-top-0">
-                                                <div class="input-group owner" id="serviceowner_">
-                                                    <input type="text" class="form-control reset" readonly autocomplete="off" name="serviceowner_" value="${search.serviceowner_ }">
-                                                    <input type="hidden" class="reset" name="serviceowner" value="${search.serviceowner }">
-                                                    <span class="input-group-addon">
-                                                        <a><i class="fa fa-search"></i></a>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <th>담당자</th>
                                             <td class="border-top-0">
@@ -210,21 +217,15 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>처리상태</th>
+                                            <th>접수자</th>
                                             <td class="border-top-0">
-                                                <select class="form-control reset" name="servicestep" id="servicestep" value="${search.servicestep }">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="serviceStep" items="${SERVICESTEP }">
-                                                		<c:choose>
-                                                			<c:when test="${search.servicestep eq serviceStep.codeval}">
-                                                				<option selected label="${serviceStep.codename }" value="${serviceStep.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${serviceStep.codename }" value="${serviceStep.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </select>
+                                                <div class="input-group owner" id="serviceowner_">
+                                                    <input type="text" class="form-control reset" readonly autocomplete="off" name="serviceowner_" value="${search.serviceowner_ }">
+                                                    <input type="hidden" class="reset" name="serviceowner" value="${search.serviceowner }">
+                                                    <span class="input-group-addon">
+                                                        <a><i class="fa fa-search"></i></a>
+                                                    </span>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -292,10 +293,10 @@
                             	</colgroup>                            
                                 <thead>
                                     <tr>
-                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" name="icheckAll" id="icheckAll"></th>
+                                        <th><input type="checkbox" class="i-checks chksquare" name="icheckAll" id="icheckAll"></th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">서비스명</th>
+                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수구분</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수유형</th>
-                                        <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">상담유형</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">고객명</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">거래처명</th>
                                         <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">접수일</th>
@@ -307,7 +308,7 @@
                                 <tbody>
                                 <c:forEach var="svList" items="${svList }">
                                     <tr>
-                                        <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
+                                        <td><input type="checkbox" class="i-checks chksquare" name="serviceno" id="serviceno" value="${svList.SERVICENO }"></td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"> ${svList.SERVICETYPE_ }</td>
                                         <td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${svList.SERVICECODE_ }</td>

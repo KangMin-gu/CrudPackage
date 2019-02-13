@@ -65,4 +65,9 @@ public class VocDaoImpl implements VocDao{
 		return bcustno;
 	}
 	
+	@Override
+	public void vocCallBackInsert(Map<String,Object> param) {
+		 session.insert("sv.vocCallBack",param);
+	}
+	
 }

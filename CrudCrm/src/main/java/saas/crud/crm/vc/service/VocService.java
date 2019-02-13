@@ -24,5 +24,7 @@ public interface VocService {
 	public Map<String,Object> vocOwnerList(HttpServletRequest request,int asOwner);
 	
 	public ModelAndView vocCalOwnerList(HttpServletRequest request,int asOwner);
+	
+	public void svcVocCallBackInsert(Map<String,Object> param);
 
 }

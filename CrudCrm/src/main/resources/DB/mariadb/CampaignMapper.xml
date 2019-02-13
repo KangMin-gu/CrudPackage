@@ -367,7 +367,7 @@
 				,SENDTIME
 				,TITLE
 				,SENDDESC
-				,CONTENTSNO
+				,CONTENTNO
 				,TESTER
 				,REGDATE
 				,REGUSER
@@ -391,7 +391,7 @@
 				,#{sendtime}
 				,#{title}
 				,#{senddesc}
-				,#{contentsno}
+				,#{contentno}
 				,#{tester}
 				,NOW()
 				,#{reguser}
@@ -418,7 +418,7 @@
 			, TITLE = #{title}
 			, SENDDESC = #{senddesc}
 			, TESTER = #{tester}
-			, CONTENTSNO = #{contentsno}
+			, CONTENTNO = #{contentno}
 			, EDTDATE = NOW()
 			, EDTUSER = #{edtuser}
 			, SENDFORM = #{sendform}
@@ -463,8 +463,8 @@
 				,A.TITLE
 				,A.SENDDESC
 				,A.TESTER
-				,A.CONTENTSNO
-				,(SELECT TITLE FROM cp410010 WHERE NO = A.CONTENTSNO) AS CONTENTSNO_
+				,A.CONTENTNO
+				,(SELECT TITLE FROM sys990050 WHERE CONTENTNO = A.CONTENTNO) AS CONTENTSNO_
 				, A.FILESEARCHKEY1
 				, A.FILESEARCHKEY2
 				, A.FILESEARCHKEY3
@@ -500,137 +500,7 @@
 
 	</insert>
 	
-	<select id="contentsList" parameterType="hashMap" resultType="hashMap">
 	
-		SELECT * FROM (
-			SELECT 
-			A.NO
-			, A.FORMTYPE
-			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
-				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
-				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
-			, A.TITLE, A.CONTENT, A.PURP
-			, A.SITEID, A.ISDELETE
-			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
-			, USECNT
-			, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM cp410010 A ,(SELECT @RNUM := 0) R
-			WHERE A.SITEID = #{siteid}
-			AND A.ISDELETE = 0
-			<if test="title != null">
-				AND  TITLE LIKE CONCAT('%',#{title},'%')
-			</if>
-			<if test="formtype != null">
-				AND  FORMTYPE = #{formtype}
-			</if>
-			) X 
-			WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
-	</select>
-	
-	<select id="contentsUseDescList" parameterType="hashMap" resultType="hashMap">
-			SELECT 
-			A.NO
-			, A.FORMTYPE
-			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
-				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
-				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
-			, A.TITLE, A.CONTENT, A.PURP
-			, A.SITEID, A.ISDELETE
-			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
-			, USECNT
-			FROM cp410010 A
-			WHERE A.SITEID = #{siteid}
-			AND A.ISDELETE = 0
-			AND A.FORMTYPE = #{formtype}
-			ORDER BY USECNT DESC
-			LIMIT 5
-	</select>
-	
-	<select id="contentsTotalRows" parameterType="hashMap" resultType="int">
-		SELECT COUNT(NO) 
-		FROM cp410010
-		WHERE SITEID = #{siteid}
-		AND ISDELETE = 0
-		<if test="title != null">
-			AND  TITLE LIKE CONCAT('%' , #{title} , '%')
-		</if>
-		<if test="formtype != null">
-			AND  FORMTYPE = #{formtype}
-		</if>
-	</select>
-	
-	<insert id="contentsInsert" parameterType="campaignContentsDto">
-		INSERT INTO cp410010(
-			FORMTYPE
-			,TITLE
-			,CONTENT
-			,PURP
-			,SITEID
-			,ISDELETE
-			,REGDATE
-			,REGUSER
-			,EDTDATE
-			,EDTUSER
-		)VALUES(
-		#{formtype}
-		,#{title}
-		,#{content}
-		,#{purp}
-		,#{siteid}
-		,0
-		,NOW()
-		,#{reguser}
-		,NOW()
-		,#{edtuser}
-		)
-		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	
-	<select id="contentsRead" parameterType="campaignContentsDto" resultType="hashMap">
-		SELECT A.NO
-			, A.FORMTYPE
-			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
-				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
-				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
-			, A.TITLE, A.CONTENT, A.PURP
-			, A.SITEID, A.ISDELETE
-			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
-		FROM cp410010 A
-		WHERE A.SITEID = #{siteid}
-		AND A.NO = #{no}
-	</select>
-	
-	<update id="contentsUpdate" parameterType="campaignContentsDto">
-		UPDATE cp410010
-			SET FORMTYPE = #{formtype}
-			,TITLE = #{title}
-			,CONTENT = #{content}
-			,PURP = #{purp}
-			,EDTDATE = NOW()
-			,EDTUSER = #{edtuser}
-		WHERE NO = #{no}
-		AND SITEID = #{siteid} 
-	</update>
-	
-	<update id="contentsDelete" parameterType="campaignContentsDto">
-		UPDATE cp410010
-			SET EDTDATE = NOW()
-			,EDTUSER= #{edtuser}
-			,ISDELETE = 1
-		WHERE NO = #{no}
-		AND SITEID = #{siteid}
-	</update>
 	
 	<update id="send" statementType="CALLABLE" parameterType="hashMap">
 		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int},#{sendform, mode=IN, jdbcType=INTEGER, javaType=int})}
@@ -640,7 +510,7 @@
 		SELECT B.CODENAME
 			, IFNULL(C.CODENAME,A.VALUE) AS VALUE
 			, A.CAMPORDER
-			, A.REGDATE
+			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
 		FROM cp400022 A
         LEFT OUTER JOIN sys990020 B ON B.CODEVAL = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND B.CODEGRP = 'CAMP'
         LEFT OUTER JOIN sys990020 C ON C.CODEGRP = CASE WHEN SUBSTRING(A.NAME,0,5) = 'addr' THEN SUBSTRING(A.NAME,0,6) ELSE A.NAME END AND C.CODEVAL = A.VALUE

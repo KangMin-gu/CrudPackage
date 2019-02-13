@@ -427,6 +427,12 @@ public class VocServiceImpl implements VocService{
 		
 		return mView;
 	}
+
+	@Override
+	public void svcVocCallBackInsert(Map<String, Object> param) {
+		 vcDao.vocCallBackInsert(param);
+		
+	}
 	
 	
 }

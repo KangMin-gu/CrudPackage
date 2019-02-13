@@ -70,14 +70,15 @@
                             			<a href="#" class="btn btn-primary complete">종결</a>
                             		</c:if>
                                 </div>
+                                
                            		<div class="float-right text-right" style="padding-right: 0px;">
-                           		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30' } ">
+                           		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
                               		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">                              		
                                 		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
 										<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
 									</form:form>
-								</c:if> 
+								</c:if>
                            		</div>
                            	</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -186,7 +187,7 @@
                                             <td>${serviceInfo.RECEPTIONDATE_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>접수유형</th>
+                                            <th>접수구분</th>
                                             <td>${serviceInfo.SERVICETYPE_ }</td>
                                         </tr>
                                     </tbody>
@@ -222,7 +223,7 @@
                                             <td>${serviceInfo.SERVICESTEP_ }</td>
                                         </tr>
                                         <tr>
-                                            <th>서비스유형2</th>
+                                            <th>접수유형2</th>
                                             <td>${serviceInfo.SERVICECODE2 }</td>
                                         </tr>
                                     </tbody>
@@ -257,6 +258,37 @@
                                         	<td class="border-top-0">
                                         		${serviceInfo.OWNER_ }
                                         	</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box4 col-lg-12 col-xl-12 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                            <th class="border-top-0 border-bottom-0">문의제품</th>
+                                        	<td class="border-top-0">
+                                        		<div class="select-area mt-1">
+                                        			<c:forEach var="product" items="${product }">
+                                        				<div class="select-box mb-1 product" style="height: 29px;">
+                                        					<select id="product11" disabled name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                        						<option label="${product.PRODUCTBNAME }" value="${product.PRODUCTBNAME }"/>
+                                        					</select>
+                                        					<select id="product11" disabled name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                        						<option label="${product.PRODUCTMNAME }" value="${product.PRODUCTMNAME }"/>
+                                        					</select>
+                                        					<select id="product11" disabled name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                        						<option label="${product.PRODUCTSNAME }" value="${product.PRODUCTSNAME }"/>
+                                        					</select>
+                                        				</div>
+                                        			</c:forEach>
+                                        			<!-- E: 이 영역을 계속 추가 하면 됨 -->
+                                    			</div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -550,25 +582,24 @@
                 </div>
                 <div class="box col-12 mb-2 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
                 	<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
-                            		<%-- <a href="${pageContext.request.contextPath}/service" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> --%>
-                    	<c:if test="${serviceInfo.SERVICESTEP le 4 }">
-                            			<!-- <a href="#" class="btn btn-primary servicenext">이관</a> -->
-                        	<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
+                    	<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO }">
+                    		<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
                         </c:if>
-                        <c:if test="${serviceInfo.SERVICESTEP eq 4 }">
+                        <c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30' }">
                         	<a href="#" class="btn btn-primary complete">종결</a>
                         </c:if>
                     </div>
+                                
                     <div class="float-right text-right" style="padding-right: 0px;">
-                    <form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
-                    	<c:if test="${serviceInfo.SERVICESTEP ne 5 }">
-                        	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
-							<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-							<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
+                    	<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+                    		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">                              		
+                        		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
+								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+								<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
+							</form:form>
 						</c:if>
-					</form:form> 
-                	</div>
-            	</div>
+                    </div>
+                </div>
                 <div class="col-lg-12" style="background: #ffffff;">
                 	<div class="ibox">
                             <div class="ibox-title row">

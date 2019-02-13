@@ -44,7 +44,7 @@ table{margin-bottom: 0 !important;}
 .ibox-right{width: 950px; height: auto; float: right;}
 .select-area{width: 100%; max-height: 95px; overflow-y: auto;}
 .select-area .select-box{}
-.select-area .select-box select{width: 180px;}
+.select-area .select-box select{width: 205px;}
 
 .ibox-bottom{width: 100%; height: auto; position: fixed; bottom: 0; z-index: 999; min-width: 1650px;}
 .ibox-bottom .ibox-content{background: #104355; padding: 8px 0; }

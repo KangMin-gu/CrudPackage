@@ -433,11 +433,11 @@
 					summaryList += "<li>";
 					summaryList += "<div class='dropdown-messages-box'>";				
 					summaryList += "<div class='media-body'>";
-					summaryList += "<small class='float-left text-navy'>"+sender+"</small>";
-					summaryList += "<strong class='float-right'>"+"<a href='/note/inbox/"+noticeNo+"'>";
+					summaryList += "<small class='float-right text-navy'>"+sender+"</small>";
+					summaryList += "<strong class='float-left'>"+"<a href='/note/inbox/"+noticeNo+"'>";
 					summaryList += title;
 					summaryList += "</a></strong></br>";
-					summaryList += "<small class='text-muted'>"+senddate+"</small>";
+					summaryList += "<small class='float-right text-muted'>"+senddate+"</small>";
 					summaryList += "</div>";
 					summaryList += "</div>";
 					summaryList += "</li>";
@@ -452,7 +452,7 @@
 					foot += "<li>";
 					foot += "<div class='text-center link-block'>";
 					foot += "<a href='/note/inbox' class='dropdown-item'>";
-					foot += " <i class='fa fa-envelope'></i> <strong>모든 내부통지 확인</strong>";
+					foot += " <i class='fa fa-envelope'></i> <strong>전체 내부 통지</strong>";
 					foot += " </a>";
 					foot += "</div></li>";
 					

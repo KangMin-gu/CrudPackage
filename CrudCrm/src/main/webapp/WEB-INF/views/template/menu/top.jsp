@@ -19,90 +19,9 @@
 								<i class="fa fa-envelope"></i>
 								<span id="alarm" class="label label-warning"></span>
 							</a>
-							<ul class="dropdown-menu dropdown-messages" id="noteAlaramList">	
-							
-							 <!-- 
-							<li>
-	                            <div class="dropdown-messages-box">
-	                                <a class="dropdown-item float-left" href="profile.html"></a>
-	                                <div class="media-body ">                                   
-	                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-	                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-	                                </div>
-	                            </div>
-                        	</li>
-                        	<li class="dropdown-divider"></li>
-                        	<li>
-	                            <div class="dropdown-messages-box">
-	                                <a class="dropdown-item float-left" href="profile.html"></a>
-	                                <div class="media-body ">                                   
-	                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-	                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-	                                </div>
-	                            </div>
-                        	</li>
-                        
-                       
-                       
-	                        <li class="dropdown-divider"></li>
-	                        <li>
-	                            <div class="text-center link-block">
-	                                <a href="mailbox.html" class="dropdown-item">
-	                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-	                                </a>
-	                            </div>
-	                        </li>	-->			
-						</ul>
-					</li>
-						<!-- 공지사항 알람기능추가 -->
-						<li class="dropdown">
+							<ul class="dropdown-menu dropdown-alerts" id="noteAlaramList"></ul>
+						</li>
 						
-							
-						
-						
-						
-			                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-			                    <i class="fa fa-bell"></i>  <span class="label label-danger">8</span>
-			                </a>
-			                <ul class="dropdown-menu dropdown-alerts">
-			                    <li>
-			                        <a href="mailbox.html">
-			                            <div>
-			                                <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-			                                <span class="float-right text-muted small">4 minutes ago</span>
-			                            </div>
-			                        </a>
-			                    </li>
-			                    <li class="dropdown-divider"></li>
-			                    <li>
-			                        <a href="profile.html">
-			                            <div>
-			                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-			                                <span class="float-right text-muted small">12 minutes ago</span>
-			                            </div>
-			                        </a>
-			                    </li>
-			                    <li class="dropdown-divider"></li>
-			                    <li>
-			                        <a href="grid_options.html">
-			                            <div>
-			                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-			                                <span class="float-right text-muted small">4 minutes ago</span>
-			                            </div>
-			                        </a>
-			                    </li>
-			                    <li class="dropdown-divider"></li>
-			                    <li>
-			                        <div class="text-center link-block">
-			                            <a href="notifications.html">
-			                                <strong>See All Alerts</strong>
-			                                <i class="fa fa-angle-right"></i>
-			                            </a>
-			                        </div>
-			                    </li>
-			                </ul>
-			            </li>
-			            <!-- 공지사항 알람기능추가 -->
 						<li>
 						<a href="${pageContext.request.contextPath}/logout"> <i class="fa fa-sign-out"></i>로그아웃</a>
 						</li>

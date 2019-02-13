@@ -387,10 +387,6 @@
 				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
 			</div>
 		</div>
-		<!-- right side -->
-		<div id="right-sidebar">
-			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
-		</div>
 	</div>
 
 	<!-- js includ -->

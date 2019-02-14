@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link
@@ -21,7 +21,6 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css"
 	rel="stylesheet">
-
 <!-- choosen -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/chosen/chosen.css"
@@ -42,8 +41,7 @@
 						<%@ include file="/WEB-INF/views/template/menu/noteleftside.jsp"%>
 					</div>
 					<div class="col-lg-10 animated fadeInRight">
-						<form:form action="/note/send" method="post"
-							enctype="multipart/form-data">
+						<form:form action="/note/send" method="post" enctype="multipart/form-data">
 							<div class="mail-box-header" style="padding-bottom:0px;">
 						
 								<div class="row">
@@ -102,22 +100,8 @@
 									
 									<div class="form-group row">
 										<label class="col-md-2 col-form-label" for="title">제목</label>
-										<div class="col-md-8" style="padding-left:0px;">
-											<c:choose>
-											
-											 <c:when test="${fn:contains(curUrl,'forward')}">
-												<input id="title" name="title" type="text"
-													class="form-control" value="">
-											</c:when>
-											<c:otherwise>
-												<input id="title" name="title" type="text"
-													class="form-control" value="">
-											
-											</c:otherwise>
-											
-											</c:choose>
-											<!--   error validate allV required -->
-											
+										<div class="col-md-8" style="padding-left:0px;">	
+											<input id="title" name="title" type="text" class="form-control" value="">
 										</div>
 										<div class="checkbox float-left col-lg-2 p-0">
 																<input type="checkbox" class="i-checks" name="important" id="important" value="1">
@@ -130,21 +114,19 @@
 										style="height: 100px;"></textarea>
 									<div class="clearfix"></div>
 								</div>
-								
-								<c:if test="${replyFile eq null}">
-								
+																	
 								<div class="mail-body">
 									<div class="form-group row custom-file">
 										<label class="col-lg-1 col-form-label" for="file">첨부파일</label>
 										<div class="col-md-6">
-											<input id="filesChk" name="files" class="form-control" type="file" multiple>
+											<input id="filesChk" name="file" class="form-control" type="file" multiple/>
+											
 											<p class="help-block">크기 50MB 이하의 파일 선택</p>											
 										</div>
 									</div>								
 								</div>
 								
-								</c:if>								
-								
+	
 								<div class="mail-body text-right tooltip-demo">
 								
 
@@ -189,7 +171,6 @@
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.MultiFile.min.js"></script>
 	<script>
 	<!-- radioBox-->
 	

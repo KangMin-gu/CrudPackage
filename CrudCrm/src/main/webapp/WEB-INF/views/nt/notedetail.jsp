@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link
@@ -40,17 +40,23 @@
 					<div class="col-lg-10 animated fadeInRight">
 						<div class="mail-box-header">		
 							<div class="float-right tooltip-demo">
-								<a href="/note/send?noteid=${note.NOTICEID}" class="btn btn-white btn-sm"
+						<!-- 		<a href="/note/send?noteid=${note.NOTICEID}" class="btn btn-white btn-sm"
 									data-toggle="tooltip" data-placement="top" title="Reply"><i
-									class="fa fa-reply"></i> 답장</a> 
+									class="fa fa-reply"></i> 답장</a>  -->
 									
 									<!-- trash가 들어오면 true가 됨  -->
-									<c:if test="${!fn:contains(referUrl,'trash')}">
-									<a href="/note/intrash/${note.NOTICEID}"
-									class="btn btn-white btn-sm" data-toggle="tooltip"
-									data-placement="top" title="Move to trash"><i
-									class="fa fa-trash-o"></i> </a>
-									</c:if>
+									<c:choose>							
+										<c:when test="${fn:contains(referUrl,'trash')}">
+											<a class="btn btn-sm btn-white"
+											href="/note/indelete/${note.NOTICEID}"><i class="fa fa-trash-o"></i>
+											완전 삭제</a>
+										</c:when>										
+										<c:otherwise>
+											<a class="btn btn-sm btn-white"
+											href="/note/intrash/${note.NOTICEID}"><i class="fa fa-trash-o"></i>
+											삭제</a>
+										</c:otherwise>
+									</c:choose>		
 							</div>
 							<h2>${note.TITLE }</h2>
 							<div class="mail-tools tooltip-demo m-t-md">
@@ -78,17 +84,12 @@
 								${note.CONTENT }
 							</div>
 							<div class="mail-attachment">	
-								
-								<c:forEach var="file" items="${noteFile }">		
-									<c:if test="${file.ORGFILENAME ne null}">																	
-										<p>	<span><i class="fa fa-paperclip"></i> 첨부파일</span></p>
-									</c:if>
-								</c:forEach>
-								
+
 								<div class="attachment">
 								
-								<c:forEach var="file" items="${noteFile}">
+								<c:forEach var="file" items="${noteFile}">												
 									<div class="file-box">
+										<span><i class="fa fa-paperclip"></i> 첨부파일</span>
 										<div class="file">
 											<a href="${pageContext.request.contextPath}/note/download/${file.FILEID}"> <span class="corner"></span>
 												<div class="icon">
@@ -109,15 +110,15 @@
 								</div>
 							</div>
 							<div class="mail-body text-right tooltip-demo">
-								<a class="btn btn-sm btn-white" href="/note/send?noteid=${note.NOTICEID}"><i class="fa fa-reply"></i> 답장</a> 
+								<!-- <a class="btn btn-sm btn-white" href="/note/send?noteid=${note.NOTICEID}"><i class="fa fa-reply"></i> 답장</a> 
 									<a class="btn btn-sm btn-white"
-									href="/note/send?noteid=${note.NOTICEID}"><i class="fa fa-arrow-right"></i>전달</a>									
+									href="/note/send?noteid=${note.NOTICEID}"><i class="fa fa-arrow-right"></i>전달</a>					 -->				
 										<!-- 휴지통에서는 완전삭제 -->
 									<c:choose>							
 										<c:when test="${fn:contains(referUrl,'trash')}">
 											<a class="btn btn-sm btn-white"
 											href="/note/indelete/${note.NOTICEID}"><i class="fa fa-trash-o"></i>
-											완전삭제</a>
+											완전 삭제</a>
 										</c:when>										
 										<c:otherwise>
 											<a class="btn btn-sm btn-white"

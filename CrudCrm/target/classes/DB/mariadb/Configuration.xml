@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="saas.crud.crm.cp.dto.CampaignDto" alias="campaignDto"/>
 		<typeAlias type="saas.crud.crm.cp.dto.CampaignFormDto" alias="campaignFormDto"/>
 		<typeAlias type="saas.crud.crm.ce.MailDto" alias="mailDto"/>
+		<typeAlias type="saas.crud.crm.au.dto.NoticeDto" alias="noticeDto"/>
 		
 	</typeAliases>
 

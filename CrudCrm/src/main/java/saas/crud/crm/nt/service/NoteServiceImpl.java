@@ -95,8 +95,6 @@ public class NoteServiceImpl implements NoteService{
 		//토탈로우 디비컨넥션
 		int totalRows = ntDao.notetotalRows(noteVal);
 		
-	
-		
 		//페이징 생성자 호출 후 로직실행
 		Map<String, Integer> page = crudEngine.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
 		int startRowNum = page.get("startRowNum");
@@ -193,19 +191,13 @@ public class NoteServiceImpl implements NoteService{
 	//상단 메세지버튼 클릭 시
 	@Override
 	public List<Map<String,Object>> noteSummary(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		List<Map<String,Object>> subject = ntDao.noteSummary(userNo);
-		
-		int size = subject.size();
-		String rltDate = null;
-		if(size > 0) {
-			for(int i = 0; i < size; i++) {
-				rltDate = subject.get(i).get("RLTDATE").toString();
-				// UTC로 나오는 부분으로 인해서 해당 부분으로 처리 추후 SQL에서 UTC 처리 예정
-				subject.get(i).put("RLTSTR", rltDate);
-			}
-		}
-		return subject;
+		Map<String, Object> summaryVal = new HashMap<>();
+		summaryVal.put("siteid", siteId);
+		summaryVal.put("userno", userNo);
+		List<Map<String,Object>> alramNoteList = ntDao.noteSummary(summaryVal);
+		return alramNoteList;
 	}
 
 	//중요 통지
@@ -503,7 +495,7 @@ public class NoteServiceImpl implements NoteService{
 	
 	//통지발송
 	@Override
-	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest multipartHttpServletRequest) {		
+	public int noteSend(HttpServletResponse response, HttpServletRequest request, NoteDto ntDto, MultipartHttpServletRequest mtfRequest) {		
 		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
@@ -513,14 +505,13 @@ public class NoteServiceImpl implements NoteService{
 		//ntDto 셋팅
 		//보낸이
 		ntDto.setFromuserno(fromUserNo);	
-		
-		//파일첨부
-		List<MultipartFile> mFile = ((MultipartHttpServletRequest)request).getFiles("file");
-		if(mFile.size() != 0) {			
-			//첨부파일			
-			String fileSearchKey = crudEngine.multiUpload(response, multipartHttpServletRequest, mFile);
-			ntDto.setFilesearchkey(fileSearchKey);
 
+		//파일첨부
+		List<MultipartFile> mFile = mtfRequest.getFiles("file");
+		if(mFile.size() != 0) {		
+			//첨부파일			
+			String fileSearchKey = crudEngine.multiUpload(response, request, mFile);
+			ntDto.setFilesearchkey(fileSearchKey);
 		}
 		
 		int noticeId = ntDao.noteSend(ntDto); //통지내용등록
@@ -564,52 +555,13 @@ public class NoteServiceImpl implements NoteService{
 	//통지 발송 화면
 	@Override
 	public ModelAndView noteSendForm(HttpServletRequest request) {
-		
-		File emlFile = new File("/Users/mingukang/Downloads/attached.eml");
-		
-		Properties props = System.getProperties();
 
-		Session mailSession = Session.getDefaultInstance(props, null);
-
-		// parse eml file
-		InputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(emlFile);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		MimeMessage message = null;
-		try {
-			message = new MimeMessage(mailSession, inputStream);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			System.out.println("From : " + message.getFrom()[0]);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		
-		
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		List<Map<String,String>> adminMail = ntDao.adminMail(siteId);
 		
 		String noticeId=request.getParameter("noticeid");
 		ModelAndView mView = new ModelAndView();
-		Map<String, Object> noteVal = new HashMap<>();
-		//해당 답장사용자정보 가져오는 로직 아직 미완성 테이블 변경에 따라 수정요망.
-		if(noticeId != null && !noticeId.equals("")){ //전달 또는 답장 내용
-				noteVal.put("noticeid", noticeId);
-				Map<String, Object> noteContent = ntDao.noteDetail(noteVal);
-				StringBuffer buf = new StringBuffer();
-				mView.addObject("noteContent", noteContent);
-		}
-		
+	
 		mView.addObject("adminMail", adminMail);
 		return mView;
 	}

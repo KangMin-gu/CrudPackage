@@ -47,11 +47,13 @@ $('input[id=logoChk]').change(function(){
 $('input[id=filesChk]').change(function(){
 	fileBuffer = [];
     const target = document.getElementsByName('file');
+    const target2 = $('#filesChk').val();
     Array.prototype.push.apply(fileBuffer, target[0].files);
-    $.each(target[0].files, function(index, file){
+   
+    $.each(fileBuffer, function(index, file){
     	const fileName = file.name;
     	const fileEx = fileName.slice(fileName.indexOf(".") + 1).toLowerCase(); 
-
+    	
     	if($.inArray(fileEx, ["xls","xlsx","doc","docx","ppt","pptx","pdf","jpg","gif","tif","bmp","mov","ogg","zip","wav","txt","png","PNG"]) == -1 ){
             alert("해당 파일은 등록 가능한 확장자가 아닙니다.");
             $('input[id=filesChk]').val("");

@@ -39,7 +39,7 @@ public interface NoteDao {
 	public List<Map<String,String>> adminMail(int siteId);
 	public void noteSendMail(Map<String,Object> map);
 	//메세지버튼
-	public List<Map<String,Object>> noteSummary(int userNo);
+	public List<Map<String,Object>> noteSummary(Map<String, Object> summaryVal);
 	//답장
 	public Map<String,Object> noteReply(int noticeId);
 	//휴지통 상세 

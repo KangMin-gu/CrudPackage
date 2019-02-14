@@ -230,8 +230,7 @@
 				ELSE 1 END  != 0
 	</select>
 	
-	<update id="menuDelete" parameterType="userMenuDto">
-	
+	<update id="menuDelete" parameterType="userMenuDto">	
 		UPDATE me810011
 			SET ISDELETE = 1
 			WHERE USERNO = #{userno}
@@ -270,5 +269,79 @@
 		WHERE SITEID = #{value}
 		AND ISDELETE = 0
 	</select>
+	
+	
+	<!-- 회원사 공지토탈로우 -->
+	<select  id="noticeTotalRows" parameterType="hashMap" resultType="int">
+			SELECT COUNT(*) AS totalRows FROM
+			(SELECT A.ICNUM, A.HEADER, A.SUBJECT, A.CONTENT, A.LINKURL, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE, A.ISDELETE FROM crud_saas.ma900040 AS A
+			  LEFT OUTER JOIN crud_saas.me800010 AS B ON A.REGUSER = B.USERNO
+			  WHERE A.ISDELETE = 0 AND A.SITEID = #{siteid}) AS E
+			<where>
+				<if test="title != null">
+					AND E.SUBJECT LIKE CONCAT('%',#{title},'%')
+				</if>
+				<if test="editor != null">
+					AND E.USERNAME LIKE CONCAT('%',#{editor},'%')
+				</if>	
+			</where>
+	</select>
+	<!-- 회원사 공지리스트-->
+	<select  id="siteNotice" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT A.ICNUM, 			
+			CASE A.HEADER
+				WHEN 0 THEN '전체' 
+				WHEN 1 THEN '공지' 
+				WHEN 2 THEN '알림' 
+				WHEN 3 THEN '뉴스'  
+			END AS HEADER
+			, A.SUBJECT, A.CONTENT, A.LINKURL, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE, A.ISDELETE, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM crud_saas.ma900040 AS A
+			LEFT OUTER JOIN crud_saas.me800010 AS B ON A.REGUSER = B.USERNO,(SELECT @RNUM := 0) R			
+			WHERE A.ISDELETE = 0 AND A.SITEID = #{siteid}
+				<if test="title != null">
+					AND A.SUBJECT LIKE CONCAT('%',#{title},'%')
+				</if>
+				<if test="editor != null">
+					AND B.USERNAME LIKE CONCAT('%',#{editor},'%')
+				</if>			
+			order by A.ICNUM DESC ) AS result			
+	</select>
+	<!-- 회원사 공지 상세 -->
+	<select id="noticeDetail" parameterType="hashMap" resultType="hashMap">
+		SELECT A.ICNUM, 
+		CASE A.HEADER
+				WHEN 0 THEN '전체' 
+				WHEN 1 THEN '공지' 
+				WHEN 2 THEN '알림' 
+				WHEN 3 THEN '뉴스'  
+		END AS HEADER
+		, A.SUBJECT, A.CONTENT, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE FROM crud_saas.ma900040 AS A
+		LEFT OUTER JOIN crud_saas.me800010 AS B ON A.REGUSER = B.USERNO
+		WHERE A.ICNUM = #{noticeid} AND A.SITEID = #{siteid}
+	</select>
+	<!-- 회원사 공지 등록 -->
+	<insert id="noticeInsert" parameterType="noticeDto">
+		INSERT INTO MA900040 
+		( SUBJECT, LINKURL, REGUSER, REGDATE, EDTUSER, EDTDATE, ISDELETE, SITEID, CONTENT, HEADER ) 
+		VALUES 
+		( #{subject}, #{linkurl}, #{reguser}, NOW(), #{edtuser}, NOW(), 0, #{siteid}, #{content}, #{header} );
+		
+		<selectKey resultType="int" keyProperty="icnum" order="AFTER">	
+			SELECT LAST_INSERT_ID() 
+		</selectKey>
+	</insert>
+	
+	<!-- 회원사 공지 업데이트 -->
+	<update id="noticeUpdate" parameterType="noticeDto">
+		UPDATE ma900040 SET SUBJECT=#{subject}, CONTENT=#{content}, EDTUSER=#{edtuser}, EDTDATE=#{edtdate}, HEADER = #{header} WHERE ICNUM = #{icnum} AND SITEID = #{siteid} 
+	</update>
+	
+	<!-- 회원사 공지 삭제 -->
+	<update id="noticeDelete" parameterType="noticeDto">
+		UPDATE ma900040 SET ISDELETE = 1, EDTUSER = #{edtuser}, EDTDATE = NOW() WHERE SITEID = #{siteid} AND ICNUM = #{icnum}
+	</update>
+	
 	
 </mapper>

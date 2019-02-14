@@ -11,7 +11,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->

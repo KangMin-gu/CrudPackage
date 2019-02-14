@@ -108,7 +108,7 @@ function custDataToJson(){//고객 인풋 필드 데이터 json형식 변경.
 function tabTargetVocService(pageNum){//서비스탭
 	
 	var custNo = $('#custno').val();
-	var urlStr = '/vc/tab/sv?custno='+custNo;
+	var urlStr = '/vc/tab/sv?custno='+custNo+'&pageNum='+pageNum;
 	
 	var svLinkStr = '<a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">' ;
 	
@@ -165,7 +165,7 @@ function tabTargetVocService(pageNum){//서비스탭
 function tabTargetVocEmail(pageNum){//email 탭 
 
 	var custNo = $('#custno').val();
-	var urlStr = '/vc/tab/email?custno='+custNo;
+	var urlStr = '/vc/tab/email?custno='+custNo+'&pageNum='+pageNum;
 	
 	if(custNo != 0){
 		$.ajax({
@@ -221,7 +221,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 //좌측 하단 콜백 탭 
 function tabTargetCallbackList(pageNum){
 	var ctitelno = $('#ctitelno').val();
-	var urlStr = '/vc/callback?status=callback&ctitelno='+ctitelno;
+	var urlStr = '/vc/callback?status=callback&ctitelno='+ctitelno+'&pageNum='+pageNum;
 	
 	$.ajax({
         url: urlStr,
@@ -237,11 +237,13 @@ function tabTargetCallbackList(pageNum){
         	var html ="";
         	//todo. string buffer  코드로 변경        	
         	for (var i = 0; i < length; i++) {
-        		html = '<tr><td><input type="hidden" id="callbackno" name="callbackno" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_;
+        		html = '<tr><td><input type="hidden" id="callbackno'+i+'" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_;
         		html += '</td><td><a onclick="bindCallBackNo('+"'"+data.callBackList[i].CALLBACK+"'"+');">'+data.callBackList[i].CALLBACK;
         		html += '</a></td><td>' + data.callBackList[i].CALLER; 
-        		html += '</td><td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callBackConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');"><i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'; 
-        		html += '</td><td><input class="form-control" type="text" id="vocmemo" name="vocmemo" value="'+data.callBackList[i].MEMO+'"></td><td><button class="btn btn-primary btn-sm">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm">불통</button></td></tr>';
+        		html += '</td><td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');"><i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'; 
+        		html += '</td><td><input type="text" id="vocmemo'+i+'" maxlength="800" value="'+data.callBackList[i].MEMO;
+        		html += '"></td><td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>';
+        		html += '<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackList[i].CUSTNO+'"/><input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>';
         		
         		
         		$('#callbackTab1 tbody').append(html); 	
@@ -268,6 +270,70 @@ function tabTargetCallbackList(pageNum){
             
             if(length != 0){
             	$('#callbackTab1 .pagination').append(html2);
+            }
+            
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+
+
+
+function tabTargetCallbackHistory(pageNum){
+	debugger;
+	var custno = $('#custno').val();
+	var urlStr = '/vc/callback?status=history&custno='+custno+'&pageNum='+pageNum;
+	
+	$.ajax({
+        url: urlStr,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {  
+        	debugger;
+        	$('#tab3 tbody tr').remove();
+        	$('#tab3 .pagination li').remove();
+        	
+        	var length = data.callBackList.length;
+        	var html ="";
+        	//todo. string buffer  코드로 변경        	
+        	for (var i = 0; i < length; i++) {
+        		html = '<tr><td><input type="hidden" id="callbackno'+i+'" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_;
+        		html += '</td><td>'+data.callBackList[i].CALLBACK;
+        		html += '</a></td><td>' + data.callBackList[i].CALLER; 
+        		html += '</td><td>'; 
+        		html += '</td><td>+data.callBackList[i].MEMO';
+        		html += '</td><td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>';
+        		html += '<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackList[i].CUSTNO+'"/><input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>';
+        		
+        		
+        		$('#tab3 tbody').append(html); 	
+        	}
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCallbackHistory(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+            }
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetCallbackHistory(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            
+            if(length != 0){
+            	$('#tab3 .pagination').append(html2);
             }
             
         },
@@ -574,6 +640,7 @@ function cti_test(){
     });
 	
 }
+//************************************콜백 관련 ***********************************************************
 
 function bindCallBackNo(phoneNo){
 	$('#makeCallNum').val(phoneNo);
@@ -581,3 +648,108 @@ function bindCallBackNo(phoneNo){
 	popVocCust();
 }
 
+function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
+	debugger;
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	 swal({
+         title: phoneNo,
+         text: "번호를 확인해 주세요",
+         showCancelButton: true,
+         confirmButtonColor: "#DD6B55",
+         confirmButtonText: "통 화",
+         closeOnConfirm: false
+     }, function () {
+         swal.close();
+         didCheckMakeCall();
+     });
+ }
+ 
+function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
+	debugger;
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	 swal({
+         title: phoneNo,
+         text: "번호를 확인해 주세요",
+         showCancelButton: true,
+         //confirmButtonColor: "#DD6B55",
+         confirmButtonText: "통 화",
+         closeOnConfirm: false
+     }, function () {
+         swal.close();
+         didCheckMakeCall();
+     });
+ }
+ 
+function callBackConfirm(idx,callstatus){//콜백 목록 처리
+	debugger;
+	var typeText;
+	var titleText;
+	if(callstatus == 2){//완료버튼 클릭시 
+		titleText = "완료 처리 하시겠습니까?";
+		typeText="success";
+	}else if(callstatus == 3){//통화불가버튼 클릭시
+		var callcount = $('#callcount'+idx).val();
+		if(callcount > 2){//현재 콜 시도횟수가 3회 이상이라면
+			titleText = "미해결 처리 하시겠습니까?"
+		}else{
+			titleText = "통화불가 처리 하시겠습니까?";	
+		}
+		typeText="warning";
+	}
+	
+	 swal({
+         title: titleText,
+         text: "",
+         showCancelButton: true,
+         type: typeText,
+         confirmButtonText: "완 료",
+         closeOnConfirm: false
+     }, function () {
+    	 var callbackno = $('#callbackno'+idx).val();
+    	 var custno = $('#callbackcustno'+idx).val();
+    	 var memo = $('#vocmemo'+idx).val();
+    	 var trunk = $('#ctitelno').val();
+  	 
+    	 var jsonPrm = {"callbackno":callbackno, "custno":custno, "memo":memo, "callstatus":callstatus , "trunk":trunk};
+    	 var urlStr = '/vc/callback/post/'+callbackno;
+    	 
+    	 $.ajax({
+ 	        url: urlStr,
+ 	        method: "POST",
+ 	        dataType: "json",
+ 	        data:jsonPrm,
+ 	        cache: false,
+ 	        success: function (data) {
+ 	        	$("#callbackTab1Btn").trigger("click");
+ 	        },
+ 	        error: function (request, status, error) {
+ 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+ 	        }
+ 	    });
+    	 
+    	 
+         swal.close();         
+     });
+ }
+ 
+function callBackMatching(idx){//매칭 버튼 클릭시 현재 바인딩 된 고객과 콜백 회원을 매칭시킨다. 
+	var custname = $('#custname').val();
+	var custno = $('#custno').val();
+	var phoneNo = $('#mobile1').val()+'-'+$('#mobile2').val()+'-'+$('#mobile3').val();
+		
+	var textStr = "고객명 : "+custname+ " / 휴대폰 : "+phoneNo;	
+	swal({
+        title: "매칭 회원을 확인해주세요",
+        text: textStr,
+        showCancelButton: true,
+        confirmButtonText: "완 료",
+        closeOnConfirm: false
+    }, function () {
+    	$('#callbackcustno'+idx).val(custno);
+    	swal.close(); 
+    });
+}
+
+//***********************************************************************************************************

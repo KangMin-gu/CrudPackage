@@ -83,5 +83,11 @@ public class VocDaoImpl implements VocDao{
 		List<Map<String,Object>> callBackList = session.selectList("sv.vocCallBackList",param);
 		return callBackList;
 	}
+	//VOC 콜백 상태 변경 (상담원)
+	@Override
+	public int vocCallBackUpdate(Map<String, Object> callbackPrm) {
+		int res = session.update("sv.vocCallBackUpdate",callbackPrm);
+		return res;
+	}
 	
 }

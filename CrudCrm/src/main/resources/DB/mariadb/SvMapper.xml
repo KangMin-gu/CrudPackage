@@ -703,7 +703,7 @@
 	
 	<!-- 콜백 카운터
 	 status 호출 구분 값 : callback = 상담원-할당 된 목록 , assign = 관리자-할당 해야 할 목록, history = 고객의 콜백내역   
-	 CALLSTATUS : 0=접수 , 1=할당, 2=완료, 3=통화불가, 4=미처리 -->
+	 CALLSTATUS : 0=접수 , 1=할당, 2=완료, 3=통화불가, 4=미해결 -->
 	<select id="vocCallBackListCnt" parameterType="hashMap" resultType="int">
 	SELECT
 	COUNT(*)
@@ -732,13 +732,13 @@
 	
 	<!-- 콜백 목록 
 	status 호출 구분 값 : callback = 상담원-할당 된 목록 , assign = 관리자-할당 해야 할 목록, history = 고객의 콜백내역   
-	CALLSTATUS : 0=접수 , 1=할당, 2=완료, 3=통화불가, 4=미처리-->
+	CALLSTATUS : 0=접수 , 1=할당, 2=완료, 3=통화불가, 4=미해결-->
 	<select id="vocCallBackList" parameterType="hashMap" resultType="hashMap">
 	SELECT *
 	FROM (
 		SELECT
 		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CALLBACKNO, A.CALLER, A.CALLBACK
+		,A.CALLBACKNO, A.CALLER, A.CALLBACK, IFNULL(A.CALLCOUNT,'') AS CALLCOUNT
 		,A.GCODE1, A.GCODE2, A.GCODE3
 		,DATE_FORMAT(A.RECEIVEDATE,'%Y-%m-%d %H:%i:%s') AS RECEIVEDATE_
 		,DATE_FORMAT(A.CALLDATE,'%Y-%m-%d %H:%i:%s') AS CALLDATE_  
@@ -748,11 +748,11 @@
 			WHEN CALLSTATUS = 1 THEN '할당'
 			WHEN CALLSTATUS = 2 THEN '완료'
 			WHEN CALLSTATUS = 3 THEN '통화불가' 
-			WHEN CALLSTATUS = 0 THEN '미처리'
+			WHEN CALLSTATUS = 4 THEN '미해결'
 			ELSE ''
 			END) AS CALLSTATUS_
 		,A.CALLUSER
-		,B.USERNAME
+		,IFNULL(A.CUSTNO,'') AS CUSTNO ,B.USERNAME
 		,IFNULL(A.MEMO,'') AS MEMO
 		
 		FROM CTI510010 A
@@ -782,6 +782,25 @@
 	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</if> 
 	</select>
+	
+	<update id="vocCallBackUpdate" parameterType="hashMap">
+	UPDATE CTI510010
+	SET
+	CALLSTATUS = #{callstatus}
+	,CALLCOUNT = IFNULL(CALLCOUNT,0) +1
+	,CALLUSER = #{userno}
+	,CALLDATE = now()
+	<if test="custno != null and custno != 0 ">
+	,CUSTNO = #{custno}
+	</if>
+	<if test="memo != null">
+	,MEMO = #{memo}
+	</if>
+	WHERE 
+		CALLBACKNO = #{callbackno}
+		AND TRUNK = #{trunk}
+	</update>
+	
 	
 	
 </mapper>

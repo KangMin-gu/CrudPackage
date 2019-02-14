@@ -247,8 +247,7 @@ public class VocController {
 		int res = vcService.svcVocCallBackInsert(callBackMap);
 		return res;
 	}
-	
-	
+		
 	//VOC 콜백 목록 조회 
 	@RequestMapping(value="/vc/callback",method=RequestMethod.GET)
 	@ResponseBody
@@ -257,4 +256,15 @@ public class VocController {
 		return callBackList;
 	}
 	
+	//VOC 콜백 상태 변경 (상담원 제어) 
+	@RequestMapping(value="/vc/callback/post/{callbackno}",method=RequestMethod.POST)
+	@ResponseBody
+	public int authvocCallBackUpdate(HttpServletRequest request,@PathVariable int callbackno) {		
+		Map<String,Object> callBackPrm = crud.searchParam(request);
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		callBackPrm.put("callbackno", callbackno);
+		callBackPrm.put("userno", userno);
+		int res = vcService.svcvocCallBackUpdate(callBackPrm);
+		return res;
+	}
 }

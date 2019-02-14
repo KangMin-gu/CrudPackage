@@ -419,5 +419,12 @@ public class VocServiceImpl implements VocService{
 							
 		return resMap;
 	}
+
+	//콜백 상태값 변경 (상담원)
+	@Override
+	public int svcvocCallBackUpdate(Map<String, Object> callbackPrm) {
+		int res = vcDao.vocCallBackUpdate(callbackPrm);
+		return res;
+	}
 	
 }

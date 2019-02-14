@@ -234,7 +234,7 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">서비스</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab2">강성고객이력</a></li>
-                                <li><a class="nav-link" data-toggle="tab" href="#tab3">콜백이력</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetCallbackHistory(1);" data-toggle="tab" href="#tab3">콜백이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab4">SMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab5">MMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab6">LMS</a></li>
@@ -299,25 +299,15 @@
                                         <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시3</th>
-                                                    <th>상담구분</th>
-                                                    <th>상담유형</th>
-                                                    <th>접수자</th>
-                                                    <th>고객명</th>
-                                                    <th>접수제품</th>
-                                                    <th>처리자</th>
+                                                    <th>접수일시</th>
+                                                    <th>콜백번호</th>
+                                                    <th>발신자번호</th>
+                                                    <th>상담원</th>
+                                                    <th>메모</th>
+                                                    <th>상태</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                         <div class="m-auto" style="text-align:center;padding-top:16px">
@@ -445,7 +435,7 @@
                     <div class="ibox-content">
                     	<div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li><a class="nav-link" data-toggle="tab" onClick="javascript:tabTargetCallbackList(1);" href="#callbackTab1">콜백 목록 &nbsp; <i class="fa fa-refresh"></i></a></li>
+                                <li><a class="nav-link" data-toggle="tab" onClick="javascript:tabTargetCallbackList(1);" href="#callbackTab1" id="callbackTab1Btn">콜백 목록 &nbsp; <i class="fa fa-refresh"></i></a></li>
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" id="callbackTab1" class="tab-pane active">
@@ -458,7 +448,7 @@
                                                     <th>발신자번호</th>
                                                     <th>통화</th>
                                                     <th>메모</th>
-                                                    <th>콜백상태</th>
+                                                    <th>처리</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -857,22 +847,7 @@ $(document).ready(function () {
      }, 1000);
 
  
-function callBackConfirm(phoneNo){
-	debugger;
-	$('#makeCallNum').val(phoneNo);
-	$('#phone').val(phoneNo);
-	 swal({
-         title: phoneNo,
-         text: "번호를 확인해 주세요",
-         showCancelButton: true,
-         confirmButtonColor: "#DD6B55",
-         confirmButtonText: "통 화",
-         closeOnConfirm: false
-     }, function () {
-         swal.close();
-         didCheckMakeCall();
-     });
- }
+
 </script>
 
 	

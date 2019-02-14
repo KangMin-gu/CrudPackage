@@ -19,4 +19,6 @@ public interface VocDao {
 	
 	public int vocCallBackListCnt(Map<String,Object> param);
 	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param);
+	
+	public int vocCallBackUpdate(Map<String,Object> callbackPrm);
 }

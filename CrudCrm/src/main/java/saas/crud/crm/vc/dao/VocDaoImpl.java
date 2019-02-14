@@ -64,12 +64,7 @@ public class VocDaoImpl implements VocDao{
 		int bcustno = session.update("sv.vocBlackCustDelete",param);
 		return bcustno;
 	}
-	//VOC 콜백 추가. cti에서 받아온 데이터 콜백 테이블에 insert
-	@Override
-	public int vocCallBackInsert(Map<String, Object> calbackMap) {
-		int res = session.insert("sv.vocCallBackInsert", calbackMap);
-		return res;
-	}
+
 
 	//VOC 콜백 리스트 카운터
 	@Override

@@ -19,7 +19,7 @@
     <div id="wrap">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-            <div class="cti" style="display:none">
+            <div class="cti" style="display:block">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
@@ -39,11 +39,9 @@
 				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
             </div>
-            <div>
-				<!-- <input type="button" value="웹소켓접속" onclick="webSocketGo();">
+            	 <input type="button" value="웹소켓접속" onclick="webSocketGo();">
 				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<input type="button" value="로그인" onclick="loginGo();"> -->
-			</div>
+				<input type="button" value="로그인" onclick="loginGo();">
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
@@ -63,7 +61,7 @@
                         <li class="liBtn"><button class="btn btn-primary btn-sm">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
                         <li><span id="timer">00 : 00</span></li>&nbsp; | &nbsp;
                         <li class="liBtn2"><span>상담창 상태</span>
-                        <span id="status" class="cti_text_nomal">연결안됨</span>
+                        <strong><span id="status">연결안됨</span></strong>
                          <button class="btn btn-default btn-sm">Out연결</button></li>
                         <li class="liBtn2"><span>상담 상태 : </span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
                         <span id="status" class="cti_text_nomal" style="display:inline-block; min-width:100px;">연결안됨</span></li>
@@ -150,6 +148,28 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>고객구분</th>
+                                    <td>
+                                    	<select class="form-control custInput" name="custgubun" id="custgubun">
+											<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
+											<c:forEach var="code" items="${CUSTGUBUN }">
+                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                            </c:forEach>
+										</select>
+                                    </td>
+                                    <th>관련고객</th>
+                                    <td>
+                                        <div class="input-group cust" id="relcustname">
+                                            <input type="text" class="form-control" name="relcustname" readonly>
+                                            <input class="custInput" type="hidden" id="relcustno" name="relcustno" value="0" />
+                                            <span class="input-group-addon"><a href="#"><i class="fa fa-search cust"></i></a></span>
+                                            <span class="input-group-addon"><a href="#"><i class="fa fa-times dataCancle"></i></a></span>  
+                                        </div>
+                                          
+                                    </td>
+                                </tr>
+                                
+                                <tr>
                                     <th>이메일</th>
                                     <td >
                                         <input type="text" class="form-control custInput" id="email" name="email" >
@@ -184,7 +204,6 @@
                              	<span id="regSpan"></span> 
                             </div>                                       
                             <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
-								<button class="btn btn-primary btn-sm">SMS 발송</button>
 								<span id="addBlackSpan">
                             		<button class="btn btn-primary btn-sm" id="addBlackBtn" onClick="addBlack()">블랙 추가</button>
                             	</span>
@@ -378,6 +397,42 @@
                                                     <td>박진열</td>
                                                     <td>처리자</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>2018-01-01 11:88:88</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>박진열</td>
+                                                    <td>박진열</td>
+                                                    <td>처리자</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2018-01-01 11:88:88</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>박진열</td>
+                                                    <td>박진열</td>
+                                                    <td>처리자</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2018-01-01 11:88:88</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>박진열</td>
+                                                    <td>박진열</td>
+                                                    <td>처리자</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2018-01-01 11:88:88</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>CRUD</td>
+                                                    <td>박진열</td>
+                                                    <td>박진열</td>
+                                                    <td>처리자</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                         <div class="m-auto" style="text-align:center;padding-top:16px">
@@ -421,26 +476,17 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th>상담구분</th>
-                                <td>
+                                <th>접수구분</th>
+                                <td colspan="3">
                                     <div class="i-checks servicetype voc">
                                     	<c:forEach var="serviceType" items="${SERVICETYPE }">
                                     		<label class="mr-2 mb-0"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
                                         </c:forEach>
                                     </div>
                                 </td>
-                                <th>상담 템플릿</th>
-                                <td>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control voc">
-                                        <span class="input-group-addon">
-                                            <a href="javascript:void(0);"><i class="fa fa-search"></i></a>
-                                        </span>
-                                    </div>
-                                </td>
                             </tr>
                             <tr>
-                                <th>상담유형</th>
+                                <th>접수유형</th>
                                 <td colspan="3" class="clearfix">
                                     <select class="form-control float-left mr-2 col-sm-5 voc" name="servicecode1" id="servicecode1">
                                         <option label="선택" value=""/>
@@ -466,56 +512,22 @@
                                 <td colspan="3">
                                     <div class="select-area mt-1">
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
-                                         <div class="select-box mb-1">
-                                            <select id="product11" name="product11" class="form-control d-inline-block mr-2 voc">
+                                         <div class="select-box mb-1 product" style="height: 29px;">
+                                            <select id="product11" name="product11"  class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                                 <c:forEach var="productB" items="${productB }">
-                                            		<c:choose>
-                                                		<c:when test="${serviceCode1.SERVICECODE1 eq productB.prdno}">
-                                                			<option selected label="${productB.prdname }" value="${productB.prdno }"/>
-                                                		</c:when>
-                                                		<c:otherwise>
-                                                			<option label="${productB.prdname }" value="${productB.prdno }"/>
-                                            			</c:otherwise>
-                                        			</c:choose>
+                                            		<option label="${productB.prdname }" value="${productB.prdno }"/>
                                     			</c:forEach>
                                             </select>
                                             <select id="product12" name="product12"  class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
-                                                <option value="m11">option 2</option>
-                                                <option value="m12">option 3</option>
-                                                <option value="m13">option 4</option>
                                             </select>
                                             <select id="product13" name="product13" class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
-                                                <option value="s11">option 2</option>
-                                                <option value="s12">option 3</option>
-                                                <option value="s13">option 4</option>
                                             </select>
                                             <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
+                                            <button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>
                                         </div>
-                                        <div class="select-box mb-1">
-                                            <select id="product21" name="product21" class="form-control d-inline-block mr-2 voc">
-                                            	<option value="">선택</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                            <select id="product22" name="product22" class="form-control d-inline-block mr-2 voc">
-                                                <option value="">선택</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                            <select id="product23" name="product23" class="form-control d-inline-block mr-2 voc">
-                                                <option value="">선택</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                            <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
-                                        </div>
-                                        
                                         <!-- E: 이 영역을 계속 추가 하면 됨 -->
                                     </div>
                                 </td>
@@ -528,9 +540,12 @@
                             </tr>
                             <tr>
                                 <th>상담내용</th>
-                                <td colspan="3">
-                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" style="height: 200px; resize: none;"></textarea>
+                                <td colspan="2">
+                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="2000" style="height: 350px; resize: none;"></textarea>
                                 </td>
+                                <td colspan="1">
+                                
+								</td>
                             </tr>
                             <tr class="as">
                             	<th>방문일시</th>
@@ -570,10 +585,10 @@
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks voc">
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep2" name="vocstep"> 처리</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="4" id="vocstep4" name="vocstep"> 처리</label>
                                         <!-- <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>-->
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep4" name="vocstep"> 담당자 이관</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep5" name="vocstep"> 상급자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep6" name="vocstep"> 담당자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="7" id="vocstep7" name="vocstep"> 상급자 이관</label>
                                     </div>
                                 </td>
                             </tr>
@@ -669,9 +684,16 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="btn-area text-right">
-                    	<button id="create" class="btn btn-primary btn-large">추가</button>
-                        <button id="save" class="btn btn-primary btn-large">저장</button>
+                    <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                        <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                          	<button class="btn btn-primary btn-sm" id="email">메일 발송</button>
+                          	<button class="btn btn-primary btn-sm" id="sms">SMS 발송</button>
+                          	<button class="btn btn-primary btn-sm" id="kakao">Kakao 발송</button> 
+                        </div>                                       
+                        <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
+                           	<button id="create" class="btn btn-primary btn-large">추가</button>
+                        	<button id="save" class="btn btn-primary btn-large">저장</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -716,7 +738,6 @@
 <script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
-<script src="${pageContext.request.contextPath}/resources/crud/crud_right.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
 
 <script>
@@ -747,18 +768,17 @@ $(document).ready(function () {
 	$('.adminconvey').hide();
 	$('.reservation').hide();
 	$('.as').hide();
+	$('.product .minus:first').remove();
+	var url = window.location.pathname;
+	vocContents("0",url);
 	
 });
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
  });
- 
 
-
- //블랙추가
-
- $('#product11').change(function(){
+ $('[name*=product]').change(function(){
 	 upperProduct(this); 
  });
 
@@ -773,7 +793,6 @@ $(document).ready(function () {
  
  //블랙해제
  function cancleBlack(){
-	 debugger;
 	 var custno = $('#custno').val();
 	 var urlStr = '/vc/black/del/'+custno;
 	 $.ajax({
@@ -793,27 +812,11 @@ $(document).ready(function () {
 	        }
 	    });
  };
- 
- var second = "0";
- var min = "00";
- var countdown = setInterval(function(){
-         //0초면 초기화 후 이동되는 사이트
- 		
-         if(second == 60){
-        	 second = 00;
-        	 min ++;
-         }
-         
-         if(second < "10"){
-        	 second = "0"+second;
-         }
- 	var time = min+" : "+second;
- 	$('#timer').text(time);
- 	second++;//카운트 증가
-     }, 1000);
+
  
  var second = 00;
  var minite = 00;
+
  var countdown = setInterval(function(){
          //0초면 초기화 후 이동되는 사이트
  	var time = second+":"+minite;
@@ -828,8 +831,6 @@ $(document).ready(function () {
      }, 1000);
 
 
- 
- 
 </script>
 
 	

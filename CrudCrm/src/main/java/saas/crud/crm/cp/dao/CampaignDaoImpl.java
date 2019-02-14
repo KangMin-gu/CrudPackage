@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
 
@@ -109,40 +108,7 @@ public class CampaignDaoImpl implements CampaignDao{
 	public void campTestSend(Map<String, Object> param) {
 		session.insert("cp.testSend",param);
 	}
-	// 캠페인 양식 List
-	@Override
-	public List<Map<String, Object>> campContentsList(Map<String,Object> search) {
-		List<Map<String,Object>> campContentList = session.selectList("cp.contentsList",search);
-		return campContentList;
-	}
-	// 캠페인 양식 수
-	@Override
-	public int campContentsTotalRows(Map<String,Object> search) {
-		return session.selectOne("cp.contentsTotalRows",search);
-	}
-	// 캠페인 양식 Insert
-	@Override
-	public int campContentsInsert(CampaignContentsDto campaignContentsDto) {
-		session.insert("cp.contentsInsert",campaignContentsDto);
-		int no = campaignContentsDto.getNo();
-		return no;
-	}
-	// 캠페인 양식 Read
-	@Override
-	public Map<String, Object> campContentsRead(CampaignContentsDto campaignContentsDto) {
-		return session.selectOne("cp.contentsRead",campaignContentsDto);
-	}
-	// 캠페인 양식 Update
-	@Override
-	public void campContentsUpdate(CampaignContentsDto campaignContentsDto) {
-		session.update("cp.contentsUpdate",campaignContentsDto);
-	}
-	// 캠페인 양식 삭제
-	@Override
-	public void campContentsDelete(CampaignContentsDto campaignContentsDto) {
-		
-		session.update("cp.contentsDelete",campaignContentsDto);
-	}
+	
 	// 캠페인 발송
 	@Override
 	public void campSend(Map<String,Object> param) {
@@ -187,13 +153,7 @@ public class CampaignDaoImpl implements CampaignDao{
 		return campCalList;
 	}
 
-	// 캠페인 양식 List(Top 5)
-	@Override
-	public List<Map<String, Object>> campContentsUseDescList(Map<String, Object> param) {
-		
-		List<Map<String,Object>> contentsUseDescList = session.selectList("cp.contentsUseDescList",param);
-		return contentsUseDescList;
-	}
+
 	// 캠페인 등록시 첨부파일
 	@Override
 	public List<Map<String, Object>> campFile(CampaignDto campaignDto) {

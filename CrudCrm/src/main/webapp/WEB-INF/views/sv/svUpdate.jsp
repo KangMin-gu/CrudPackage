@@ -213,21 +213,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>접수유형</th>
+                                            <th>상담구분</th>
                                             <td class="border-top-0">
-                                                <select class="form-control validate numberV service" name="servicetype" id="servicetype">
-                                            		<option label="선택" value=""/>
-                                                	<c:forEach var="serviceType" items="${SERVICETYPE }">
-                                                		<c:choose>
-                                                			<c:when test="${serviceInfo.SERVICETYPE eq serviceType.codeval}">
-                                                				<option selected label="${serviceType.codename }" value="${serviceType.codeval }"/>
-                                                			</c:when>
-                                                			<c:otherwise>
-                                                				<option label="${serviceType.codename }" value="${serviceType.codeval }"/>
-                                                			</c:otherwise>
-                                                		</c:choose>
-                                                	</c:forEach>
-                                                </select>
+                                                <input type="text" class="form-control" disabled id="servicetype" value="${serviceInfo.SERVICETYPE_ }" >
                                             </td>
                                         </tr>
                                     </tbody>
@@ -344,6 +332,37 @@
                                                         <a><i class="fa fa-child"></i></a>
                                                     </span>
                                                 </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box4 col-lg-12 col-xl-12 p-0">
+                                <table class="table table-bordered border-top-0 mb-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                    	<tr>
+                                            <th class="border-top-0 border-bottom-0">문의제품</th>
+                                        	<td class="border-top-0">
+                                        		<div class="select-area mt-1">
+                                        			<c:forEach var="product" items="${product }">
+                                        				<div class="select-box mb-1 product" style="height: 29px;">
+                                        					<select id="product11" disabled name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                        						<option label="${product.PRODUCTBNAME }" value="${product.PRODUCTBNAME }"/>
+                                        					</select>
+                                        					<select id="product11" disabled name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                        						<option label="${product.PRODUCTMNAME }" value="${product.PRODUCTMNAME }"/>
+                                        					</select>
+                                        					<select id="product11" disabled name="product11" class="form-control col-xl-3 d-inline-block mr-2 voc">
+                                        						<option label="${product.PRODUCTSNAME }" value="${product.PRODUCTSNAME }"/>
+                                        					</select>
+                                        				</div>
+                                        			</c:forEach>
+                                        			<!-- E: 이 영역을 계속 추가 하면 됨 -->
+                                    			</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -726,7 +745,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	 
 	 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-	 
+	 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
@@ -771,10 +790,8 @@
 		});
 		
 		$('#sendyn').on('ifChecked', function () {
-			debugger;
-		   	   $('#sendyn').val(1);
+			$('#sendyn').val(1);
 		   });
-
 		   //체크 해제시
 		   $('#sendyn').on('ifUnchecked', function () {
 		   	   $('#sendyn').val(0);

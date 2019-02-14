@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.cp.dao.CampaignDao;
-import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
 
@@ -413,122 +412,7 @@ public class CampaignServiceImpl implements CampaignService{
 
 	}
 
-	// 캠페인 양식 list
-	@Override
-	public ModelAndView campContentsList(HttpServletRequest request) {
-		
-		ModelAndView mView = new ModelAndView();
-		
-		Map<String, Object> search = crud.searchParam(request);
-
-		int totalRows = campaignDao.campContentsTotalRows(search);
-		
-		int PAGE_ROW_COUNT = 10;
-		int PAGE_DISPLAY_COUNT = 5;
-		
-		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
-		int startRowNum = page.get("startRowNum");
-		int endRowNum = page.get("endRowNum");
-		
-		search.put("startRowNum", startRowNum);
-		search.put("endRowNum", endRowNum);
-		
-		List<Map<String,Object>> campContentsList = campaignDao.campContentsList(search);
-		
-		mView.addObject("contents",campContentsList);
-		mView.addObject("search",search);
-		mView.addObject("page",page);
-		mView.addObject("totalRows",totalRows);
-		
-		return mView;
-	}
-
-	// 캠페인 양식 Insert
-	@Override
-	public int campContentsInsert(HttpServletRequest request,CampaignContentsDto campaignContentsDto) {
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
-		
-		campaignContentsDto.setSiteid(siteId);
-		campaignContentsDto.setReguser(userNo);
-		campaignContentsDto.setEdtuser(userNo);
-		
-		int no = campaignDao.campContentsInsert(campaignContentsDto);
-		return no;
-	}
-
-	// 캠페인 양식 Read
-	@Override
-	public ModelAndView campContentsRead(HttpServletRequest request, int no) {
-		
-		
-		ModelAndView mView = new ModelAndView();
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		CampaignContentsDto campaignContentsDto = new CampaignContentsDto();
-		
-		campaignContentsDto.setNo(no);
-		campaignContentsDto.setSiteid(siteId);
-		
-		Map<String,Object> contentsInfo = campaignDao.campContentsRead(campaignContentsDto);
-		mView.addObject("contentsInfo",contentsInfo);
-		
-		return mView;
-	}
-
-	//캠페인 양식 Update
-	@Override
-	public void campContentsUpdate(HttpServletRequest request, CampaignContentsDto campaignContentsDto) {
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
-		campaignContentsDto.setSiteid(siteId);
-		campaignContentsDto.setEdtuser(userNo);
-		
-		campaignDao.campContentsUpdate(campaignContentsDto);
-		
-	}
-
-	// 캠페인 양식 삭제
-	@Override
-	public void campContentsDelete(HttpServletRequest request, int no) {
-		
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		
-		CampaignContentsDto campaignContentsDto = new CampaignContentsDto();
-		campaignContentsDto.setSiteid(siteId);
-		campaignContentsDto.setEdtuser(userNo);
-		campaignContentsDto.setNo(no);
-		
-		campaignDao.campContentsDelete(campaignContentsDto);
-		
-	}
-
-	// 캠페인 양식 멀티 삭제
-	@Override
-	public void campContentesMultiDelete(HttpServletRequest request) {
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		String sCheck[] = request.getParameterValues("no");
-		
-		CampaignContentsDto campaignContentsDto = new CampaignContentsDto();
-		campaignContentsDto.setSiteid(siteId);
-		campaignContentsDto.setEdtuser(userNo);
-		
-		int length = sCheck.length;
-		
-		for(int i = 0; i < length; i++) {
-			int no = Integer.parseInt(sCheck[i]);
-			campaignContentsDto.setNo(no);
-			campaignDao.campContentsDelete(campaignContentsDto);
-		}
-	}
-
+	
 	// 캠페인 발송
 	@Override
 	public void campSend(HttpServletRequest request, int campNo) {
@@ -578,6 +462,7 @@ public class CampaignServiceImpl implements CampaignService{
 				campOrder = Integer.parseInt(tempMap.get("CAMPORDER").toString());
 				if(j==campOrder) {
 					if(tempMap.get("CODENAME") != null) {
+						name = tempMap.get("CODENAME").toString();
 						if(name.equals(tempMap.get("CODENAME").toString())) {
 							sb.append(tempMap.get("VALUE"));
 							sb.append("|");
@@ -587,7 +472,6 @@ public class CampaignServiceImpl implements CampaignService{
 							sb.append("-");
 							sb.append(tempMap.get("VALUE"));
 							sb.append("|");
-							name = tempMap.get("CODENAME").toString();
 						}
 					}
 				}
@@ -598,7 +482,6 @@ public class CampaignServiceImpl implements CampaignService{
 			input.put("history", strHistory);
 			history.add(j-1, input);
 			sb.delete(0,sb.toString().length());
-			
 		}
 		
 		return history;
@@ -674,18 +557,5 @@ public class CampaignServiceImpl implements CampaignService{
 		return mView;
 	}
 
-	// 캠페인 양식 사용 List ( TOP 5)
-	@Override
-	public List<Map<String, Object>> campContentsUseDescList(HttpServletRequest request, int id) {
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		
-		Map<String,Object> param = new HashMap<>();
-		
-		param.put("siteid", siteId);
-		param.put("formtype", id);
-		List<Map<String,Object>> contentsUseDescList = campaignDao.campContentsUseDescList(param);
-		return contentsUseDescList;
-	}
 	
 }

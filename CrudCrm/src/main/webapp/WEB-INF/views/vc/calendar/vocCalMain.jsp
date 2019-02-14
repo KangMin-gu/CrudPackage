@@ -87,23 +87,17 @@
 	</div>
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-
 	<!-- Mainly scripts -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/moment.min.js"></script>
-
 	<!-- jQuery UI  -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
 	<!-- iCheck -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
-
 	<!-- Full Calendar -->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/fullcalendar/fullcalendar.min.js"></script>
 	<!-- 캘린더 이벤트 정의 -->
-	
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 	<script>
-	
     $(document).ready(function() {
     	$('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',

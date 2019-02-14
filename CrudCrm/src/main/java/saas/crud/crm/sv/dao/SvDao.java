@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.sv.dto.ConveyDto;
 import saas.crud.crm.sv.dto.RactDto;
 import saas.crud.crm.sv.dto.RewardDto;
@@ -65,5 +66,7 @@ public interface SvDao {
 	public List<Map<String,Object>> svCalRewardOwner(RewardDto rewardDto);
 	//voc AS기사 캘린더에서 클릭했을때 나오는 팝업
 	public List<Map<String,Object>> svCalRewardOwnerList(Map<String,Object> param);
+	
+	public List<ProductDto> svProductRead(Map<String,Object> param);
 
 }

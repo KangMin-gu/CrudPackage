@@ -169,7 +169,6 @@ public class VocServiceImpl implements VocService{
 			if(search.get("asowner") != null) {
 				owner = Integer.parseInt(search.get("asowner").toString());
 			}
-			owner = 75;
 			RewardDto rewardDto = new RewardDto();
 			if(request.getParameter("visitdate") != null) {
 				rewardDto.setVisitdate(request.getParameter("visitdate").toString());	
@@ -258,6 +257,8 @@ public class VocServiceImpl implements VocService{
 			}else if(serviceType == 2) {
 				serviceMap.put("reward", svDao.svTopReward(map));
 			}
+		serviceMap.put("product", svDao.svProductRead(map));
+			
 		}else {
 			serviceMap = new HashMap<>();
 		}
@@ -431,6 +432,12 @@ public class VocServiceImpl implements VocService{
 		mView.addObject("calOwner",calOwner);
 		
 		return mView;
+	}
+
+	@Override
+	public void svcVocCallBackInsert(Map<String, Object> param) {
+		 vcDao.vocCallBackInsert(param);
+		
 	}
 	
 	

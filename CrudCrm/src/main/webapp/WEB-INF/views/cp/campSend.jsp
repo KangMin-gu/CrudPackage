@@ -912,7 +912,7 @@
 		}else if(type[2] == 'mms'){
 			id = 3;
 		}
-		contents(id);
+		campContents(id,url);
 	});
 		
 	$('#btn').click(function(e){

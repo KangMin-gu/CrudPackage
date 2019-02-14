@@ -258,7 +258,7 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="i-checks" name=""></th>
+                                        <th><input type="checkbox" class="i-checks chksquare" name="icheckAll" id="icheckAll"></th>
                                         <th>캠페인명</th>
                                         <th>캠페인 기간</th>
                                         <th>유형</th>
@@ -272,7 +272,7 @@
                                 <tbody>
                                     <c:forEach var="cpList" items="${camp }">
                                     	<tr>
-                                        	<td><input type="checkbox" class="i-checks" name="campno" id="campno" value="${cpList.CAMPNO }"></td>
+                                        	<td><input type="checkbox" class="i-checks chksquare" name="campno" id="campno" value="${cpList.CAMPNO }"></td>
                                         	<c:if test="${url eq '/campaign' }">
                                         	<td><a href="${pagecontext.request.contextpath}/campaign/${cpList.CAMPNO }">${cpList.CAMPNAME}</a></td>
                                         	</c:if>

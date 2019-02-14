@@ -3,7 +3,6 @@ package saas.crud.crm.cp.dao;
 import java.util.List;
 import java.util.Map;
 
-import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
 
@@ -45,19 +44,6 @@ public interface CampaignDao {
 	
 	public void campTestSend(Map<String,Object> param);
 	
-	
-	public List<Map<String,Object>> campContentsList(Map<String,Object> search);
-	
-	public int campContentsTotalRows(Map<String,Object> search);
-	
-	public int campContentsInsert(CampaignContentsDto campaignContentsDto);
-	
-	public Map<String,Object> campContentsRead(CampaignContentsDto campaignContentsDto);
-	
-	public void campContentsUpdate(CampaignContentsDto campaignContentsDto);
-	
-	public void campContentsDelete(CampaignContentsDto campaignContentsDto);
-	
 	public void campSend(Map<String,Object> param);
 	
 	public List<Map<String,Object>> campTabTargetHistory(Map<String, Object> param);
@@ -69,8 +55,6 @@ public interface CampaignDao {
 	public void campStepUpdate(CampaignDto campaignDto);
 	
 	public List<Map<String,Object>> campCalList(CampaignDto campaignDto);
-	
-	public List<Map<String,Object>> campContentsUseDescList(Map<String,Object> param);
 	
 	public List<Map<String,Object>> campFile(CampaignDto campaignDto);
 	

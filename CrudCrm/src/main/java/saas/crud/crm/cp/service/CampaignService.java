@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
 
@@ -35,18 +34,6 @@ public interface CampaignService {
 	
 	public void campTestSend(HttpServletRequest request, int campNo);
 	
-	public ModelAndView campContentsList(HttpServletRequest request);
-	
-	public int campContentsInsert(HttpServletRequest request, CampaignContentsDto campaignContentsDto);
-	
-	public ModelAndView campContentsRead(HttpServletRequest request, int no);
-	
-	public void campContentsUpdate(HttpServletRequest request, CampaignContentsDto campaignContentsDto);
-	
-	public void campContentsDelete(HttpServletRequest request, int no);
-	
-	public void campContentesMultiDelete(HttpServletRequest request);
-	
 	public void campSend(HttpServletRequest request, int campNo);
 	
 	public List<Map<String,Object>> campTabTargetHistory(HttpServletRequest request, int campNo);
@@ -57,5 +44,5 @@ public interface CampaignService {
 	
 	public ModelAndView campCalList(HttpServletRequest request);
 	
-	public List<Map<String,Object>> campContentsUseDescList(HttpServletRequest request, int id);
+	
 }

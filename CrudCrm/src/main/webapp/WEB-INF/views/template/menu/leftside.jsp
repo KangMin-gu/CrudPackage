@@ -94,10 +94,7 @@
 	                        <c:if test="${cp2 eq '42000'}">
 	                        	<li><a href="${pageContext.request.contextPath}/campaign/cust">캠페인 추출 대상</a></li>
 	                        </c:if>
-	                        <c:if test="${cp3 eq '43000'}">
-	                        	<li><a href="${pageContext.request.contextPath}/campaign/contents">양식 관리</a></li>
-	                        </c:if>
-	                        <c:if test="${cp4 eq '44000'}">
+	                        <c:if test="${cp4 eq '43000'}">
 	                        	<li><a href="${pageContext.request.contextPath}/campaign/cal">캠페인 일정</a></li>
 	                        </c:if>                                     
 	                    </ul>
@@ -139,6 +136,7 @@
 			   			<ul class="nav nav-second-level collapse">
 			   				<li><a href="${pageContext.request.contextPath}/ad/user">회원 관리</a></li>			   				
 			   				<li><a href="${pageContext.request.contextPath}/ad/code">코드 관리</a></li>
+			   				<li><a href="${pageContext.request.contextPath}/ad/content">서식 관리</a></li>
 			   				<li><a href="${pageContext.request.contextPath}/ad/company/${sessionScope.SITEID}">회원사 관리</a></li>
 			   				<li><a href="${pageContext.request.contextPath}/ad/notice">공지사항 관리</a></li>
 			   			</ul>

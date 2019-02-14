@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.service.CodeService;
+import saas.crud.crm.au.service.ContentService;
 import saas.crud.crm.common.CommonService;
-import saas.crud.crm.cp.dto.CampaignContentsDto;
 import saas.crud.crm.cp.dto.CampaignDto;
 import saas.crud.crm.cp.dto.CampaignFormDto;
 import saas.crud.crm.cp.service.CampaignService;
@@ -40,6 +40,9 @@ public class CampaignController {
 	
 	@Autowired
 	private CommonService commonService;
+	
+	@Autowired
+	private ContentService contentService;
 	
 	// 캠페인 List
 	@RequestMapping(value = "/campaign", method=RequestMethod.GET)
@@ -196,90 +199,11 @@ public class CampaignController {
 		campaignService.campTestSend(request,campNo);
 		return 0;
 	}
-	// 서식관리 List
-	@RequestMapping(value="/campaign/contents", method=RequestMethod.GET)
-	public ModelAndView authCampaignContents(HttpServletRequest request) {
-		ModelAndView mView = campaignService.campContentsList(request);
-		Map<String,Object> code = codeService.getCode();
-		mView.addAllObjects(code);
-		mView.setViewName("cp/contentsList");
-		return mView;
-	}
-	// 서식관리 List 검색조건
-	@RequestMapping(value="/campaign/contents", method=RequestMethod.POST)
-	public ModelAndView authCampaignContentsSearch(HttpServletRequest request) {
-		ModelAndView mView = campaignService.campContentsList(request);
-		Map<String,Object> code = codeService.getCode();
-		mView.addAllObjects(code);
-		mView.setViewName("cp/contentsList");
-		return mView;
-	}
-	//서식관리 추가 화면
-	@RequestMapping(value="/campaign/contents/post", method=RequestMethod.GET)
-	public ModelAndView authCampaignContentsInsert(@ModelAttribute CampaignContentsDto campaignContentsDto){
-		ModelAndView mView = new ModelAndView();
-		Map<String,Object> code = codeService.getCode();
-		mView.addAllObjects(code);
-		mView.setViewName("cp/contentsInsert");
-		return mView;
-	}
-	// 서식 추가
-	@RequestMapping(value="/campaign/contents/post", method=RequestMethod.POST)
-	public ModelAndView authCampaignContentsInsertSet(HttpServletRequest request, @ModelAttribute CampaignContentsDto campaignContentsDto){
-		ModelAndView mView = new ModelAndView();
-		
-		int no = campaignService.campContentsInsert(request, campaignContentsDto);
-		mView.setViewName("redirect:/campaign/contents/"+no);
-		return mView;
-	}
 	
-	//서식관리 상세
-	@RequestMapping(value="/campaign/contents/{no}", method=RequestMethod.GET)
-	public ModelAndView authCampaignContentsDetail(HttpServletRequest request,@PathVariable int no){
-		ModelAndView mView = campaignService.campContentsRead(request,no);
-		
-		mView.setViewName("cp/contentsRead");
-		return mView;
-	}
-	
-	//서식관리 수정화면
-	@RequestMapping(value="/campaign/contents/post/{no}", method=RequestMethod.GET)
-	public ModelAndView authCampaignContentsUpdate(HttpServletRequest request,@PathVariable int no,  @ModelAttribute CampaignContentsDto campaignContentsDto) {
-		ModelAndView mView = campaignService.campContentsRead(request, no);
-		Map<String,Object> code = codeService.getCode();
-		mView.addAllObjects(code);
-		mView.setViewName("cp/contentsUpdate");
-		return mView;
-	}
-	// 서식관리 수정
-	@RequestMapping(value="/campaign/contents/post/{no}", method=RequestMethod.POST)
-	public ModelAndView authCampaignContentsUpdateSet(HttpServletRequest request,@ModelAttribute CampaignContentsDto campaignContentsDto) {
-		ModelAndView mView = new ModelAndView();
-		campaignService.campContentsUpdate(request, campaignContentsDto);
-		int no = campaignContentsDto.getNo();
-		mView.setViewName("redirect:/campaign/contents/"+no);
-		return mView;
-	}
-	// 서식관리 단일삭제
-	@RequestMapping(value="/campaign/contents/{no}", method=RequestMethod.POST)
-	public ModelAndView authCampaignContentsDelete(HttpServletRequest request,@PathVariable int no) {
-		ModelAndView mView = new ModelAndView();
-		campaignService.campContentsDelete(request,no);
-		mView.setViewName("redirect:/campaign/contents");
-		return mView;
-	}
-	// 서식관리 멀티삭제
-	@RequestMapping(value="/campaign/contents/delete", method=RequestMethod.POST)
-	public ModelAndView authCampaignContentsDelete(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
-		campaignService.campContentesMultiDelete(request);
-		mView.setViewName("redirect:/campaign/contents");
-		return mView;
-	}
 	// 서식 팝업
 	@RequestMapping(value="/popcontents", method=RequestMethod.GET)
 	public ModelAndView authPopContents(HttpServletRequest request) {
-		ModelAndView mView = campaignService.campContentsList(request);
+		ModelAndView mView = contentService.contentList(request);
 		mView.setViewName("cp/popContents");
 		return mView;
 	}
@@ -346,11 +270,11 @@ public class CampaignController {
 		return mView;
 	}
 	
-	@RequestMapping(value="/campContents/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/campContents",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Map<String,Object>> authCampContents(HttpServletRequest request,@PathVariable int id){
+	public List<Map<String,Object>> authCampContents(HttpServletRequest request){
 		
-		List<Map<String,Object>> contents = campaignService.campContentsUseDescList(request, id);
+		List<Map<String,Object>> contents = contentService.contentUseDescList(request);
 		
 		return contents;
 		

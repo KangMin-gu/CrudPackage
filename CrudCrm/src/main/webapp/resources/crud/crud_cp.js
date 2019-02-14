@@ -184,9 +184,15 @@ function tabTargetCust(pageNum){
 
 	}
 	
-	function contents(hash){
+	function campContents(hash,url){
+		var menuType;
+		if(url.indexOf('voc') > 0){
+			menuType = 1;
+		}else if(url.indexOf('campaign') > 0){
+			menuType = 2;
+		}
 		$.ajax({
-			 url: "/campContents/"+hash,
+			 url: "/campContents?formType="+hash+"&menuType="+menuType,
 		        method: "GET",
 		        dataType: "json",
 		        success: function (data) {

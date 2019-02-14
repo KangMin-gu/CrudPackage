@@ -31,6 +31,9 @@ function loginGo(){
 	var strCtiLoginPwd = document.getElementById("cti_login_pwd").value;
 	var strCtiLoginExt = document.getElementById("cti_login_ext").value;
 	func_login(strCtiLoginId, strCtiLoginPwd, strCtiLoginExt);
+	
+	startInterval();
+	stopInterval();
 }
 
 //강제로그인
@@ -852,6 +855,10 @@ function ctiEvent(msg){
 					break;
 				}
 			}
+			stopInterval();
+			startInterval();
+
+			//stopInterval();
 
 			document.getElementById("transferTryCnt").innerHTML =  tmpData[9];
 			document.getElementById("transferConnectCnt").innerHTML =  tmpData[10];

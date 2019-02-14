@@ -586,10 +586,10 @@
    }
  // 상위 코드 받아서 하위코드 매핑하기
     function upperProduct(product){
-   	 var productNo = $(product).val();
-   	 var url = "/product/upper/"+productNo;
-   	 var nextId = 'product'+ parseInt(parseInt(product.id.substring(7))+1);
-   	 $.ajax({
+    	var productNo = $(product).val();
+   	 	var url = "/product/upper/"+productNo;
+   	 	var nextId = 'product'+ parseInt(parseInt(product.id.substring(7))+1);
+   	 	$.ajax({
     		url: url,
     		method: "GET",
     		dataType: "json",

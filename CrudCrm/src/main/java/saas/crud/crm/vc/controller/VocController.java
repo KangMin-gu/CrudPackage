@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.au.service.CodeService;
+import saas.crud.crm.au.service.ContentService;
 import saas.crud.crm.au.service.ProductService;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonService;
@@ -46,6 +47,9 @@ public class VocController {
 	private CodeService codeService;
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ContentService contentService;
 
 	@RequestMapping(value="vc/voc", method=RequestMethod.GET)
 	public ModelAndView authvocPage(HttpServletRequest request) {
@@ -184,6 +188,14 @@ public class VocController {
 		mView.setViewName("/vc/calendar/vocCalPopUp");
 		return mView;
 	}
+	
+	@RequestMapping(value="/vc/productB", method=RequestMethod.GET)
+	@ResponseBody
+	public List<ProductDto> authVocProudctB(HttpServletRequest request){
+		
+		List<ProductDto> productB = productService.getProductB(request);
+		return productB;
+	}
 
 	
 	//VOC -  좌측탭 서비스 리스트	
@@ -252,24 +264,30 @@ public class VocController {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@sess test@@@@@@@@@@@@@@@@@@@");
 		return 0;
 	}
-	
-	//VOC 온피아 -> 콜백 받기 
-	@RequestMapping(value="/vc/callback",method=RequestMethod.POST)
-	@ResponseBody
-	public int authvocGetCallBack(HttpServletRequest request) {
-		Map<String, Object> callBackMap = crud.searchParam(request);
-		callBackMap.put("callstatus", 0); //콜백 상태 기본 값 0 		
-		int res = vcService.svcVocCallBackInsert(callBackMap);
-		return res;
-	}
-	
-	//VOC - 콜백 테스트용. (**기능 구현 완료 후 반드시 삭제 ) 	
-	@RequestMapping(value="/vc/test",method=RequestMethod.GET)
-	public ModelAndView authvocTest(HttpServletRequest request) {
+
+	@RequestMapping(value="/vc/callback", method=RequestMethod.POST)
+	public ModelAndView VocGetCallBack(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
-		mView.setViewName("vc/test1");
+		Map<String,Object> callBackMap = crud.searchParam(request);
+		callBackMap.put("callstatus", 0);
+		vcService.svcVocCallBackInsert(callBackMap);
+		
 		return mView;
 	}
+	// voc 텝플릿 리스트 
+	@RequestMapping(value="/vocContents",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String,Object>> vocContentList(HttpServletRequest request){
+		
+		List<Map<String,Object>> vocContentList = contentService.contentUseDescList(request);
+		return vocContentList;
+	}
+	@RequestMapping(value="/voc/getContent/{contentNo}",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> vocGetContent(HttpServletRequest request, @PathVariable int contentNo){
 	
-	
+		Map<String,Object >vocContent = contentService.getContent(request, contentNo);
+		
+		return vocContent;
+	}
 }

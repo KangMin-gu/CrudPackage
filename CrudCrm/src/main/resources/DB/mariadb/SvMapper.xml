@@ -60,6 +60,7 @@
     		 <if test="endRowNum != null">
 				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
 			</if> 
+			ORDER BY SERVICENO DESC
 	</select>
 	
 	<select id="svServiceTotalRows" parameterType="hashMap" resultType="int">
@@ -422,7 +423,7 @@
 			,(SELECT USERNAME FROM me800010 WHERE A.PREVOWNER = USERNO) AS PREVOWNER_
 			,A.NEXTOWNER
 			,(SELECT USERNAME FROM me800010 WHERE A.NEXTOWNER = USERNO) AS NEXTOWNER_
-			,(SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'CONVEYREASON' AND SITEID = #{siteid} AND CODEVAL = A.CONVEYREASON) AS CONVEYREASON_
+			,IFNULL((SELECT CODENAME FROM sys990020 WHERE CODEGRP = 'CONVEYREASON' AND SITEID = #{siteid} AND CODEVAL = A.CONVEYREASON),'') AS CONVEYREASON_
 			,DATE_FORMAT(A.CONVEYDATE,'%Y-%m-%d') AS CONVEYDATE
 			,A.CONVEYDESC
 		FROM sv300050 A
@@ -702,8 +703,20 @@
 		AND A.OWNER = #{owner}
 		AND DATE_FORMAT(A.VISITDATE,'%Y-%m-%d') = #{visitdate}
 	</select>
-		
-	<insert id="vocCallBackInsert" parameterType="hashMap">	
+	
+	<select id="svProductRead" parameterType="hashMap" resultType="hashMap">
+		SELECT PRODUCTB,PRODUCTM,PRODUCTS
+		,FN_PRODUCT(PRODUCTB,#{siteid}) AS PRODUCTBNAME
+		,FN_PRODUCT(PRODUCTM,#{siteid}) AS PRODUCTMNAME
+		,FN_PRODUCT(PRODUCTS,#{siteid}) AS PRODUCTSNAME
+		,(SELECT COUNT(*) FROM sv300060 where siteid = #{siteid} and serviceno = #{serviceno}) AS CNT
+		 FROM SV300060
+		WHERE SITEID = #{siteid}
+		AND SERVICENO = #{serviceno}
+	</select>
+	
+	<insert id="vocCallBack" parameterType="hashMap">
+
 		INSERT INTO CTI510010
 		(
 		CALLER
@@ -716,9 +729,7 @@
 		,REGDATE
 		,DTWEEK
 		,CALLSTATUS
-		)
-		VALUES
-		(
+		)VALUES(
 		#{CALLER}
 		,#{TRUNK}
 		,#{CALLBACK}

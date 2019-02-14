@@ -273,10 +273,18 @@ public class AuController {
 	
 	
 	
+	//데시보드설정 화면
+	@RequestMapping(value="/dashboard/set", method=RequestMethod.GET)
+	public String authDashboardSet(HttpServletRequest request) {
+		return "au/db/dashboard";
+	}
 	
 	
-	
-	
+	//데시보드설정 화면
+	@RequestMapping(value="/dashboard/set2", method=RequestMethod.GET)
+	public String authDashboardSet2(HttpServletRequest request) {
+		return "au/db/dashboard2";
+	}
 	
 	
 	

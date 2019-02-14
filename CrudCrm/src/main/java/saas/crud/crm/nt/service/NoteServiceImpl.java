@@ -508,7 +508,7 @@ public class NoteServiceImpl implements NoteService{
 
 		//파일첨부
 		List<MultipartFile> mFile = mtfRequest.getFiles("file");
-		if(mFile.size() != 0) {			
+		if(mFile.size() != 0) {		
 			//첨부파일			
 			String fileSearchKey = crudEngine.multiUpload(response, request, mFile);
 			ntDto.setFilesearchkey(fileSearchKey);

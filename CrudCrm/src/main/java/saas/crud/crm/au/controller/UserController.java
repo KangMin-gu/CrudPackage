@@ -71,6 +71,4 @@ public class UserController {
 		return a;
 	}
 	
-	//unload시 로그아웃
-	//@RequestMapping(value="/bodyclose", method=)
 }

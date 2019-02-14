@@ -22,6 +22,8 @@
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/myinfo/${sessionScope.USERNO}">내 정보</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/notice">공지사항</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/note/inbox">내부통지</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dashboard/set">데쉬보드 설정</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dashboard/set2">데쉬보드 설정</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                         </ul>

@@ -66,7 +66,6 @@
                             </p>
                         </div>
                     </div>
-                    
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>Drag&amp;Drop</h5>

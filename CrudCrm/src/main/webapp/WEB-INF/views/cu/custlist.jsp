@@ -15,7 +15,6 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-
 <!-- S: 추가 CSS-->
 <!-- Toastr style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -25,10 +24,25 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
-<script>
-
-
-</script>
+<style>
+#fixedtable tbody {
+    display:block;
+    height:600px;
+    overflow:auto;
+    width: 1620px;
+}
+#fixedtable thead, #fixedtable tbody tr {
+    display:table;
+    width:1620px;
+    table-layout:fixed;
+}
+#fixedtable thead {
+    width: 1620px;
+}
+#fixedtable tbody tr td{
+    width: 40px;
+}
+</style>
 </head>
 
 <body>
@@ -240,9 +254,9 @@
                                     	</div>
                                 	</div>
                             	</div> 
-							
+							<div  >
 								<div class="table-responsive">
-									<table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;">
+									<table id="fixedtable" class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;">
 															
 										<colgroup>
 											<col width="40px;">
@@ -324,6 +338,8 @@
 										<tfoot>
 									</table>
 								</div>
+							</div>	
+								
 								<div class="m-auto">
 									 
 								</form:form>
@@ -397,9 +413,18 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	<!-- datePicker-->	
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script><!-- excel file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- cust js -->
-
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
 	<script>
+		$('#headerFixTable').fixedHeaderTable({
+			height: '200'
+		
+		});
+		
 		$(document).ready(function() {	
+			$('#headerFixTable').fixedHeaderTable({
+				height: '200',
+				minWidth:'800',		
+			});
 			
 			// icecks
 			$('.i-checks').iCheck({
@@ -434,6 +459,7 @@
 					    
 	    
 		});
+		
 	</script>
 </body>
 </html>

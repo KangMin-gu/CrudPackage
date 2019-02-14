@@ -153,13 +153,7 @@ public class CampaignDaoImpl implements CampaignDao{
 		return campCalList;
 	}
 
-	// 캠페인 양식 List(Top 5)
-	@Override
-	public List<Map<String, Object>> campContentsUseDescList(Map<String, Object> param) {
-		
-		List<Map<String,Object>> contentsUseDescList = session.selectList("cp.contentsUseDescList",param);
-		return contentsUseDescList;
-	}
+
 	// 캠페인 등록시 첨부파일
 	@Override
 	public List<Map<String, Object>> campFile(CampaignDto campaignDto) {

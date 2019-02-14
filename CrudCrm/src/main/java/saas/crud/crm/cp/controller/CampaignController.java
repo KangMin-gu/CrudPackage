@@ -270,11 +270,11 @@ public class CampaignController {
 		return mView;
 	}
 	
-	@RequestMapping(value="/campContents/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/campContents",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Map<String,Object>> authCampContents(HttpServletRequest request,@PathVariable int id){
+	public List<Map<String,Object>> authCampContents(HttpServletRequest request){
 		
-		List<Map<String,Object>> contents = campaignService.campContentsUseDescList(request, id);
+		List<Map<String,Object>> contents = contentService.contentUseDescList(request);
 		
 		return contents;
 		

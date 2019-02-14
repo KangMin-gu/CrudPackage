@@ -44,5 +44,5 @@ public interface CampaignService {
 	
 	public ModelAndView campCalList(HttpServletRequest request);
 	
-	public List<Map<String,Object>> campContentsUseDescList(HttpServletRequest request, int id);
+	
 }

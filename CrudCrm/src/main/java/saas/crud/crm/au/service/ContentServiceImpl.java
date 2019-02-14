@@ -1,5 +1,6 @@
 package saas.crud.crm.au.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,7 +140,36 @@ public class ContentServiceImpl implements ContentService {
 				contentDao.contentDelete(contentDto);
 			}
 		}
-
-	
-
+		
+		// 캠페인 양식 사용 List ( TOP 5)
+		@Override
+		public List<Map<String, Object>> contentUseDescList(HttpServletRequest request) {
+			
+			int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+			int formType = Integer.parseInt(request.getParameter("formType").toString());
+			int menuType = Integer.parseInt(request.getParameter("menuType").toString());
+			
+			Map<String,Object> param = new HashMap<>();
+			
+			param.put("siteid", siteId);
+			param.put("formtype", formType);
+			param.put("menutype", menuType);
+			List<Map<String,Object>> contentsUseDescList = contentDao.contentUseDescList(param);
+			return contentsUseDescList;
+		}
+		
+		@Override
+		public Map<String,Object> getContent(HttpServletRequest request,int contentNo){
+			
+			int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+			
+			ContentDto contentDto = new ContentDto();
+			contentDto.setSiteid(siteId);
+			contentDto.setContentno(contentNo);
+			
+			Map<String,Object> getContent = contentDao.contentRead(contentDto);
+			
+			return getContent;
+		}
+		
 }

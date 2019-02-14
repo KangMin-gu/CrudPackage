@@ -532,7 +532,9 @@
                                 <td colspan="2">
                                     <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="2000" style="height: 350px; resize: none;"></textarea>
                                 </td>
-                                <td>testasdf</td>
+                                <td colspan="1">
+                                
+								</td>
                             </tr>
                             <tr class="as">
                             	<th>방문일시</th>
@@ -757,6 +759,9 @@ $(document).ready(function () {
 	$('.reservation').hide();
 	$('.as').hide();
 	$('.product .minus:first').remove();
+	
+	var url = window.location.pathname;
+	vocContents("0",url);
 	
 });
  

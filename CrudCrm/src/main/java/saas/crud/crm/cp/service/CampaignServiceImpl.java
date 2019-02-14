@@ -557,18 +557,5 @@ public class CampaignServiceImpl implements CampaignService{
 		return mView;
 	}
 
-	// 캠페인 양식 사용 List ( TOP 5)
-	@Override
-	public List<Map<String, Object>> campContentsUseDescList(HttpServletRequest request, int id) {
-		
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
-		
-		Map<String,Object> param = new HashMap<>();
-		
-		param.put("siteid", siteId);
-		param.put("formtype", id);
-		List<Map<String,Object>> contentsUseDescList = campaignDao.campContentsUseDescList(param);
-		return contentsUseDescList;
-	}
 	
 }

@@ -56,8 +56,6 @@ public interface CampaignDao {
 	
 	public List<Map<String,Object>> campCalList(CampaignDto campaignDto);
 	
-	public List<Map<String,Object>> campContentsUseDescList(Map<String,Object> param);
-	
 	public List<Map<String,Object>> campFile(CampaignDto campaignDto);
 	
 	public List<CampaignFormDto> campFormList(CampaignFormDto campaignFormDto);

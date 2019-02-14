@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.ProductDto;
 import saas.crud.crm.au.service.CodeService;
+import saas.crud.crm.au.service.ContentService;
 import saas.crud.crm.au.service.ProductService;
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.common.CommonService;
@@ -46,6 +47,9 @@ public class VocController {
 	private CodeService codeService;
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ContentService contentService;
 
 	@RequestMapping(value="vc/voc", method=RequestMethod.GET)
 	public ModelAndView authvocPage(HttpServletRequest request) {
@@ -267,8 +271,22 @@ public class VocController {
 		callBackMap.put("callstatus", 0);
 		vcService.svcVocCallBackInsert(callBackMap);
 		
-		//return "test";
 		return mView;
 	}
-
+	// voc 텝플릿 리스트 
+	@RequestMapping(value="/vocContents",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String,Object>> vocContentList(HttpServletRequest request){
+		
+		List<Map<String,Object>> vocContentList = contentService.contentUseDescList(request);
+		return vocContentList;
+	}
+	@RequestMapping(value="/voc/getContent/{contentNo}",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> vocGetContent(HttpServletRequest request, @PathVariable int contentNo){
+	
+		Map<String,Object >vocContent = contentService.getContent(request, contentNo);
+		
+		return vocContent;
+	}
 }

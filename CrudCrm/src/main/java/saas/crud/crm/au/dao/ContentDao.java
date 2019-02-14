@@ -18,5 +18,7 @@ public interface ContentDao {
 	public void contentUpdate(ContentDto contentsDto);
 	
 	public void contentDelete(ContentDto contentsDto);
-
+	
+	public List<Map<String,Object>> contentUseDescList(Map<String,Object> param);
+	
 }

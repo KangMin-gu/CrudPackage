@@ -50,5 +50,13 @@ public class ContentDaoImpl implements ContentDao{
 			
 			session.update("content.contentDelete",contentDto);
 		}
+		
+		// 캠페인 양식 List(Top 5)
+		@Override
+		public List<Map<String, Object>> contentUseDescList(Map<String, Object> param) {
+			
+			List<Map<String,Object>> contentUseDescList = session.selectList("content.contentUseDescList",param);
+			return contentUseDescList;
+		}
 
 }

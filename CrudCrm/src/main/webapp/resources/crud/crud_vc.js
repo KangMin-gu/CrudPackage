@@ -134,25 +134,19 @@ function tabTargetVocService(pageNum) {// 서비스탭
 						var html2 = "";
 
 						if (data.page.startPageNum != 1) {
-							html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService('
-									+ eval(data.page.startPageNum - 1)
-									+ ')" >&laquo;</a></li>'
+							html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService('+ eval(data.page.startPageNum - 1)+ ')" >&laquo;</a></li>'
 						} else {
 							html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
 						}
 						for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
 							if (i == data.page.pageNum) {
-								html2 += '<li class="footable-page active"><a onclick="tabTargetVocService('
-										+ i + ')">' + i + '</a></li>'
+								html2 += '<li class="footable-page active"><a onclick="tabTargetVocService('+ i + ')">' + i + '</a></li>'
 							} else {
-								html2 += '<li><a onclick="tabTargetVocService('
-										+ i + ')">' + i + '</a></li>'
+								html2 += '<li><a onclick="tabTargetVocService('+ i + ')">' + i + '</a></li>'
 							}
 						}
 						if (data.page.endPageNum < data.page.totalPageCount) {
-							html2 += '<li><a onclick="tabTargetVocService('
-									+ eval(data.page.endPageNum + 1)
-									+ ')">&raquo;</a></li>'
+							html2 += '<li><a onclick="tabTargetVocService('+ eval(data.page.endPageNum + 1)+ ')">&raquo;</a></li>'
 						} else {
 							html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
 						}
@@ -162,9 +156,7 @@ function tabTargetVocService(pageNum) {// 서비스탭
 						}
 					},
 					error : function(request, status, error) {
-						alert("code:" + request.status + "\n" + "message:"
-								+ request.responseText + "\n" + "error:"
-								+ error);
+						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
 					}
 				});
 	}
@@ -356,10 +348,7 @@ function serviceInfoBinding(data) {
 	opener.$('input:radio[name="servicetype"]').each(
 			function(index) {
 				if (this.value == data.SERVICETYPE) {
-					opener
-							.$(
-									'input:radio[name="servicetype"]:eq('
-											+ index + ')').iCheck('check');
+					opener.$('input:radio[name="servicetype"]:eq('+ index + ')').iCheck('check');
 				}
 			});
 	opener.$('#servicecode1').val(data.SERVICECODE1);
@@ -372,10 +361,7 @@ function serviceInfoBinding(data) {
 		opener.$('input:radio[name="vocstep"]').each(
 				function(index) {
 					if (this.value == data.SERVICESTEP) {
-						opener
-								.$(
-										'input:radio[name="vocstep"]:eq('
-												+ index + ')').iCheck('check');
+						opener.$('input:radio[name="vocstep"]:eq('+ index + ')').iCheck('check');
 					}
 				});
 		if (data.SERVICESTEP == 5) {
@@ -412,17 +398,10 @@ function serviceInfoBinding(data) {
 		opener.$('#product' + parseInt(parseInt(index + 1) + '2')).empty();
 		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).empty();
 
-		opener.$('#product' + parseInt(parseInt(index + 1) + '1')).append(
-				'<option label="' + item.PRODUCTBNAME + '" value="'
-						+ item.PRODUCTB + '"/>');
-		opener.$('#product' + parseInt(parseInt(index + 1) + '2')).append(
-				'<option label="' + item.PRODUCTMNAME + '" value="'
-						+ item.PRODUCTM + '"/>');
-		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).append(
-				'<option label="' + item.PRODUCTSNAME + '" value="'
-						+ item.PRODUCTS + '"/>');
-		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).next()
-				.remove();
+		opener.$('#product' + parseInt(parseInt(index + 1) + '1')).append('<option label="' + item.PRODUCTBNAME + '" value="'+ item.PRODUCTB + '"/>');
+		opener.$('#product' + parseInt(parseInt(index + 1) + '2')).append('<option label="' + item.PRODUCTMNAME + '" value="'+ item.PRODUCTM + '"/>');
+		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).append('<option label="' + item.PRODUCTSNAME + '" value="'+ item.PRODUCTS + '"/>');
+		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).next().remove();
 	});
 
 }
@@ -707,8 +686,54 @@ function productB() {
 					+ request.responseText + "\n" + "error:" + error);
 		}
 	});
-
 }
+
+function vocContents(hash,url){
+	debugger;
+	var menuType;
+	if(url.indexOf('voc') > 0){
+		menuType = 1;
+	}else if(url.indexOf('campaign') > 0){
+		menuType = 2;
+	}
+	$.ajax({
+		 url: "/vocContents?formType="+hash+"&menuType="+menuType,
+	        method: "GET",
+	        dataType: "json",
+	        cache : false,
+	        success: function (data) {
+	        	var length = data.length;
+	        	var html="";
+	        	for(i = 0; i < length; i++){
+	        		html = '<a class="content" value="'+data[i].CONTENTNO+'">'+data[i].TITLE +'</a>';  
+	        		$("#servicedesc").parent().next().append(html);
+	        	}
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	});
+}
+
+$(document).on('click', '.content', function(e) {
+	var contentNo = $(e.target).attr('value');
+	var url = "/voc/getContent/"+contentNo;
+	$.ajax({
+		
+		url:url,
+		method:"GET",
+		dataType:"json",
+		cache :false,
+		success:function(data){
+			$('#servicedesc').val(data.CONTENT);
+			
+		},
+		error:function(request,status,error){
+			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+		
+	});
+});
 
 function cti_test() {
 

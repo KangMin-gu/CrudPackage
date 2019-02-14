@@ -309,7 +309,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = svDao.svServiceTotalRows(searchVal);
 							
 		//paging			
-		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageRowCount = 3; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -341,7 +341,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = vcDao.emailListCnt(searchVal);
 							
 		//paging			
-		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageRowCount = 3; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -440,5 +440,45 @@ public class VocServiceImpl implements VocService{
 		
 	}
 	
+	
+	//voc 콜백 리스트 
+	@Override
+	public Map<String, Object> svcVocCallBackList(HttpServletRequest request) {
+		Map<String, Object> searchVal = crud.searchParam(request);
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		searchVal.put("userno", userno);
+		//총자료수
+		int totalRows = vcDao.vocCallBackListCnt(searchVal);
+							
+		//paging			
+		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+		page.put("totalRows", totalRows);					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+					
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+					
+		//콜백 리스트 출력
+		List<Map<String,Object>> callBackList = vcDao.vocCallBackList(searchVal);
+				
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("callBackList", callBackList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+							
+		return resMap;
+	}
+
+	//콜백 상태값 변경 (상담원)
+	@Override
+	public int svcvocCallBackUpdate(Map<String, Object> callbackPrm) {
+		int res = vcDao.vocCallBackUpdate(callbackPrm);
+		return res;
+	}
 	
 }

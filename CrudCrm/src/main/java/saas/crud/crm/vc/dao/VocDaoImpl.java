@@ -70,6 +70,25 @@ public class VocDaoImpl implements VocDao{
 		int res = session.insert("sv.vocCallBackInsert", calbackMap);
 		return res;
 	}
+
+	//VOC 콜백 리스트 카운터
+	@Override
+	public int vocCallBackListCnt(Map<String, Object> param) {
+		int cnt = session.selectOne("sv.vocCallBackListCnt",param);
+		return cnt;
+	}
+	//VOC 콜백 리스트 
+	@Override
+	public List<Map<String,Object>> vocCallBackList(Map<String, Object> param) {
+		List<Map<String,Object>> callBackList = session.selectList("sv.vocCallBackList",param);
+		return callBackList;
+	}
+	//VOC 콜백 상태 변경 (상담원)
+	@Override
+	public int vocCallBackUpdate(Map<String, Object> callbackPrm) {
+		int res = session.update("sv.vocCallBackUpdate",callbackPrm);
+		return res;
+	}
 	
 	@Override
 	public void vocCallBackInsert(Map<String,Object> param) {

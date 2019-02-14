@@ -12,6 +12,11 @@ var checkGroupInterval;
 //var var_normalize = /[^0-9]/gi; //숫자정규식
 var var_normalize =/^(?=.*[*])|(?=.*[0-9])}/;
 
+function vocLoginGo(){
+	webSocketGo();
+	setTimeout('loginGo()',1500);
+}
+
 //웹소켓접속
 function webSocketGo(){
 	var strServerIp = document.getElementById("cti_server_ip").value;
@@ -60,7 +65,8 @@ function didCheckMakeCall(){
 	var did = document.getElementById("did");//did체크박스
 	var outCallNum = document.getElementById("outCallNum").innerHTML;//발신표시번호
 	var makeCallNum = document.getElementById("makeCallNum").value;//발신자번호
-
+	
+	
 	if(did.checked){//did체크시 - did번호
 		func_makeCall(outCallNum, makeCallNum, '');
 	}else{//did해제시 - 그룹대표번호
@@ -192,72 +198,90 @@ function hiddenImgPhone(obj){
 
 //전화기상태이미지
 function changePhoneState(state, stateStr){
-	/*
-    var ts = document.getElementById("tellerStatus");
-    var stateCheckCount = 0;
-    var stateCheckIdx = 0;
-    for(var i=0; i<ts.length; i++){
-        if( ts.options[i].value == state){
-            stateCheckCount += stateCheckCount + 1;
-            stateCheckIdx = i;
-        }
-    }
-    if( stateCheckCount > 0 ){
-        ts.options[stateCheckIdx].selected = true;
-    }
+
+	
+	
+    var ts = document.getElementById("tellerStatus");    
+    ts.value = state;
+    chanegeStatusBtnImage();
+    
+      
 
     if(state=="0300"){//전화대기 - 걸기, 당겨받기
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");showImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",false);setBtnStatus("hangUpBtn",true);
+    	/*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");showImgPhone("search_pickup_o");
           hiddenImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0310"){//In 전화중 - 받기, 끊기
-          hiddenImgPhone("search_call_o");showImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",false);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+    	/* hiddenImgPhone("search_call_o");showImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0311"){//In 연결 - 걸기, 끊기, 보류, 블라인드 호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+    	
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0312"){//In 실패
           changePhoneStateNone();
     }else if(state=="0315"){//In 재연결 - 걸기, 끓기, 보류, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0320"){//호분배 시도 - 받기, 끊기
-          hiddenImgPhone("search_call_o");showImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",false);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);	
+         /* hiddenImgPhone("search_call_o");showImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0321"){//호분배 연결 - 걸기, 끊기, 보류, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0322"){//호분배 실패 - X
           changePhoneStateNone();
     }else if(state=="0325"){//호분배재연결 - 걸기, 끊기, 보류, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0330"){//Out 시도 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0331"){//Out 연결 - 걸기, 끊기, 보류, 블라인드 호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0332"){//Out 실패
           changePhoneStateNone();
     }else if(state=="0335"){//Out 재연결 - 걸기, 끊기,보류, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0336"){//CTD 시도
           changePhoneStateNone();
     }else if(state=="0337"){//CTD 성공 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0338"){//CTD 실패
           changePhoneStateNone();
     }else if(state=="0342"){//B-TRNS 시도
@@ -267,25 +291,33 @@ function changePhoneState(state, stateStr){
     }else if(state=="0345"){//B-TRNS 성공
           changePhoneStateNone();
     }else if(state=="0350"){//3자통화시도 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0351"){//3자통화성공
           changePhoneStateNone();
     }else if(state=="0352"){//3자IN통화중 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0353"){//3자OUT통화중 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0354"){//3자통화실패
           changePhoneStateNone();
     }else if(state=="0360"){//픽업시도 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0361"){//픽업대상
           changePhoneStateNone();
     }else if(state=="0362"){//픽업호분배
@@ -293,43 +325,59 @@ function changePhoneState(state, stateStr){
     }else if(state=="0363"){//픽업In
           changePhoneStateNone();
     }else if(state=="0365"){//픽업실패 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0371"){//HOLD In - 걸기, 끓기, 보류해제, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0372"){//HOLD Div - 걸기, 끊기, 보류해제, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0373"){//HOLD Out - 걸기, 끊기, 보류해제, 블라인드호전환
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* showImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");showImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0374"){//HOLD 종료
           changePhoneStateNone();
     }else if(state=="0375"){//HOLD 복귀
           changePhoneStateNone();
     }else if(state=="0376"){//HELD In - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0377"){//HELD Div
           changePhoneStateNone();
     }else if(state=="0378"){//HELD Out - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0380"){//HOut 시도 - 끊기
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
     }else if(state=="0381"){//HOut 연결 - 끊기, 보류, 보류해제, 모니터호전환, 3자통화
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");
+          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");*/
     }else if(state=="0382"){//HOut 실패
           changePhoneStateNone();
     }else if(state=="0383"){//H자동걸기
@@ -347,33 +395,43 @@ function changePhoneState(state, stateStr){
     }else if(state=="0393"){//호전환 실패
           changePhoneStateNone();
     }else if(state=="0401"){//보류 OUT 재연결
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+         /* hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");
+          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");*/
     }else if(state=="0402"){//보류 IN 재연결
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");
+          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");*/
     }else if(state=="0403"){//보류 호분배 재연결
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+    	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           showImgPhone("search_hung_o");showImgPhone("search_hold_o");showImgPhone("search_holdout_o");
-          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");
+          showImgPhone("search_mo_o");hiddenImgPhone("search_return_o");showImgPhone("search_3_o");*/
     }else{//연결안됨, 상담원 등록코드
+    	setBtnStatus("dialingBtn",false);setBtnStatus("answerBtn",true);
+    	setBtnStatus("pickupBtn",false);setBtnStatus("hangUpBtn",true);
           //changePhoneStateNone();
-          //20101126 수정
-          showImgPhone("search_call_o");hiddenImgPhone("search_get_o");showImgPhone("search_pickup_o");
+         
+         /* showImgPhone("search_call_o");hiddenImgPhone("search_get_o");showImgPhone("search_pickup_o");
           hiddenImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
-          //20101126 수정
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
+         
     }
-    */
+ 
 }
 
 //전화기상태이미지 안나타내기
 function changePhoneStateNone(){
-          hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
+	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
+	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",true);
+          /*hiddenImgPhone("search_call_o");hiddenImgPhone("search_get_o");hiddenImgPhone("search_pickup_o");
           hiddenImgPhone("search_hung_o");hiddenImgPhone("search_hold_o");hiddenImgPhone("search_holdout_o");
-          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");
+          hiddenImgPhone("search_mo_o");hiddenImgPhone("search_return_o");hiddenImgPhone("search_3_o");*/
 }
 
 
@@ -449,7 +507,11 @@ function func_logout(){
 	if(func_loadingCheck() == false){
 		return;
 	}
-	goWebSocketSendMsg("on^logout");	
+	goWebSocketSendMsg("on^logout");
+	goWebSocketDisconnect();
+	$('#vocLogInSpan').show();
+	$('#vocLogOutSpan').hide();
+	intervalFuncOff();
 	alert("로그아웃 되었습니다.");
 }
 
@@ -459,6 +521,9 @@ function func_answer(){
 		return;
 	}
 	goWebSocketSendMsg("on^answer");
+	/*2019-02-08 신동우 코드 추가
+	해당번호 고객목록 조회 팝업 실행*/
+	popVocCust();
 }
 
 //전화끊기
@@ -498,7 +563,7 @@ function func_pickup(){
 	if(func_loadingCheck() == false){
 		return;
 	}
-	goWebSocketSendMsg("on^pickup");	
+	goWebSocketSendMsg("on^pickup");
 }
 
 //보류
@@ -599,6 +664,9 @@ function ctiEvent(msg){
 	if(tmpData[0] == "00"){// 로그인 응답
 		if(tmpData[4] == "1"){
 			alert("로그인되었습니다.");
+			$('#vocLogInSpan').hide();
+			$('#vocLogOutSpan').show();
+			intervalFuncOn();//세션 유지 실행
 	        //callGroupSelect(tmpData[6], tmpData[7], tmpData[8]);//소속그룹선택
             checkGroupInterval = setInterval("checkGroupTimeOut('"+tmpData[6]+"', '"+tmpData[7]+"', '"+tmpData[8]+"')", 1000);
 		}else if(tmpData[4] == "2"){
@@ -617,7 +685,8 @@ function ctiEvent(msg){
 		}
     }else if(tmpData[0] == "01"){// 강제로그아웃(타 모듈에서 강제로그인 하면 기존의 모듈은 로그아웃 됨으로 기존 모듈에게 로그아웃 메시지 알림.)
     	alert("강제로그아웃 되었습니다.");
-
+    	$('#vocLogInSpan').show();
+		$('#vocLogOutSpan').hide();
 		document.getElementById("status").innerHTML = "연결안됨";
 		document.getElementById("transferTryCnt").innerHTML = "0";
 		document.getElementById("transferConnectCnt").innerHTML = "0";
@@ -626,6 +695,7 @@ function ctiEvent(msg){
 		document.getElementById("obTryCnt").innerHTML = "0";
 		document.getElementById("obConnectCnt").innerHTML = "0";
 		document.getElementById("cti_waitting_cnt").innerHTML = "0";
+		
 	}else if(tmpData[0] == "02"){// 비밀번호변경 응답
 		if(tmpData[4] == "1"){
 			alert("비밀번호가 변경되었습니다.");
@@ -796,11 +866,12 @@ function ctiEvent(msg){
 			document.getElementById("ibConnectCnt").innerHTML =  tmpData[12];
 			document.getElementById("obTryCnt").innerHTML =  tmpData[13];
 			document.getElementById("obConnectCnt").innerHTML =  tmpData[14];
-			
+			/*2019-02-01 추가*/
 			document.getElementById("avgCall").innerHTML = tmpData[24];
 			document.getElementById("avgWait").innerHTML = tmpData[25];
 			document.getElementById("sumCall").innerHTML = tmpData[27];
 			document.getElementById("ResponseRate").innerHTML = tmpData[10]/tmpData[9] * 100 + '%'
+
 		}
 	}else if(tmpData[0] == "95"){// 고객대기자수 
 		document.getElementById("cti_waitting_cnt").innerText =  tmpData[1];
@@ -809,7 +880,11 @@ function ctiEvent(msg){
             alert("전화기가 등록이 되었습니다.\n 상태를 변경해주세요.");
             func_changeTellerStatus("R001");
         }else if(tmpData[4] == "2"){// 단말이 교환기에 미 등록된 상태
-            alert("전화기가 등록되지 않았습니다.");
+        	alert("전화기가 등록되지 않았습니다.");
+        	func_logout();
+        	$('#vocLogInSpan').show();
+        	$('#vocLogOutSpan').hide();
+            
         }
     } 
 }
@@ -874,6 +949,38 @@ function goWebSocketDisconnect(){
 //자바스크립트오류메시지
 window.onerror = function(msg, url, line){
 	//alert("Message : " + msg + "\n URL : " + url + "Line number : " + line);
+}
+
+
+//크루드시스템 추가
+//작업자 : 신동우
+function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받아 버튼의 disabled 상태 제어
+	var btn = document.getElementById(btnId);
+	btn.disabled = booleanBtnState;
+}
+
+function chanegeStatusBtnImage(){
+	 var stVal = $('#tellerStatus').val();
+	 var actColor = '#179d82';
+	 var nomalColor = '#104355';
+	if(stVal == '0300'){
+		$('#waitingBtn').css({"background-color":actColor,"border-color": actColor});
+		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});		
+	}else if (stVal == 'R001'){
+		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#restBtn').css({"background-color":actColor,"border-color": actColor});
+		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
+	}else if(stVal == 'W004'){
+		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#postCleaningBtn').css({"background-color":actColor,"border-color": actColor});	
+	}else{
+		$('#waitingBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
+		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////////웹소켓/////////////////////////////////////////////////////////////////////

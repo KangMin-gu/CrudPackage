@@ -25,7 +25,7 @@ public class SalesDto {
 	private int chkcomplete;
 	private int priority;
 	private int salecd;
-	private int contid;
+	private int contno;
 	private String regdate;
 	private int reguser;
 	private String editdate;
@@ -41,7 +41,7 @@ public class SalesDto {
 	public SalesDto(int salesno, int siteid, int clino, String salename, String prdname, String need, String custmemo,
 			String solution, int relation, String forddate, String fordamount, String prob, String rorddate,
 			String rordamount, String category, String interest, String statedate, int salestate, int owner,
-			int comreason, int chkcomplete, int priority, int salecd, int contid, String regdate, int reguser,
+			int comreason, int chkcomplete, int priority, int salecd, int contno, String regdate, int reguser,
 			String editdate, int edituser, String refusal, String surmount, String salesmemo, String lastcontactdate,
 			int isdelete) {
 		super();
@@ -68,7 +68,7 @@ public class SalesDto {
 		this.chkcomplete = chkcomplete;
 		this.priority = priority;
 		this.salecd = salecd;
-		this.contid = contid;
+		this.contno = contno;
 		this.regdate = regdate;
 		this.reguser = reguser;
 		this.editdate = editdate;
@@ -264,12 +264,12 @@ public class SalesDto {
 		this.salecd = salecd;
 	}
 
-	public int getContid() {
-		return contid;
+	public int getContno() {
+		return contno;
 	}
 
-	public void setContid(int contid) {
-		this.contid = contid;
+	public void setContno(int contno) {
+		this.contno = contno;
 	}
 
 	public String getRegdate() {
@@ -343,13 +343,7 @@ public class SalesDto {
 	public void setIsdelete(int isdelete) {
 		this.isdelete = isdelete;
 	}
-	
-	
-	
-	
 
-	
-	
 	
 	
 }

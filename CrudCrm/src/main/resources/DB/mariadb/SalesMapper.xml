@@ -274,8 +274,7 @@
 			INSERT INTO sa210080   (SITEID ,SCHNAME, CLINO, REGDATE,EDTDATE, REGUSER,EDTUSER,ISDELETE,PRIVACY,STARTDATE,OWNER,SALESNO, SORT  )
 							VALUES (#{siteid}, CONCAT('[영업 예상수주일]',#{salename}) ,  #{clino}, now(), now(), #{reguser}, #{reguser}, 0,0,#{forddate},#{owner},#{salesno}, 2 );
          ON DUPLICATE KEY UPDATE STARTDATE = #{rorddate},EDTUSER = #{edituser}, EDTDATE = now() 
-			
-			
+						
 		</if>		
 	</insert>
 	

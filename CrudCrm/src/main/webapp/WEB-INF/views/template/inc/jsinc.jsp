@@ -47,9 +47,9 @@
 <script
 	src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 
-	<!-- file download -->
+	<!-- excelfile download -->
 <script 
-	src="${pageContext.request.contextPath}/resources/crud/crud_file.js"></script>
+	src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script>
 
 <!-- socket js -->
 <script

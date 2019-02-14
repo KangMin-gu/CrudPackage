@@ -739,8 +739,7 @@
 		,NOW()
 		,#{DTWEEK}
 		,#{callstatus}
-		)
-	
+		)	
 	</insert>
-	
+
 </mapper>

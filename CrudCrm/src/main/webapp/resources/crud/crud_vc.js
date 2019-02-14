@@ -18,20 +18,21 @@ $("#custRegBtn").click(function(e) {
 	window.close();
 });
 
-// 인입 된 번호로 고객 검색.
-function enterkey(event) {
-	var id = event.id;
-	if (window.event.keyCode == 13) {// 입력 값이 enter
-		if (id == 'phone') {
-			var searchPhoneNo = document.getElementById(id).value;
-			openNewWindow('voc', '/vc/pop/cust?condition=phone&keyword='
-					+ searchPhoneNo, 'voc', 1260, 800);
-		}
-	}
-}
 
 // 고객 추가
 function goCustInsert() {
+    if (window.event.keyCode == 13) {//입력 값이 enter 
+    	popVocCust();
+    }
+}
+
+function popVocCust(){
+	var searchPhoneNo = document.getElementById('phone').value;
+	openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',1260,800);
+}
+
+//고객 추가
+function goCustInsert(){
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
 	if (custName.trim() == '') {// 입력 값이 없으면 기본값으로 설정.

@@ -162,7 +162,8 @@ public class CustServiceImpl implements CustService {
 	//VOC 에서 고객 수정
 	@Override
 	public int svcVocCustUpdate(Map<String,Object> prmMap) {
-		int res = custDao.vocCustUpdate(prmMap); 
+		int res = custDao.vocCustUpdate(prmMap);
+		custDao.vocCustDenyUpdate(prmMap);
 		return res;
 	}
 	

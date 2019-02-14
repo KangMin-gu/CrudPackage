@@ -142,9 +142,9 @@
 		,A.HOMADDR1, A.HOMADDR2, A.HOMADDR3
 		,A.MEMO
 		,A.INFOAGREE
-		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR 
-		,C.DENYSMSNOMAL,C.DENYSMSSEMINAR,C.DENYSMSAD    
-		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD  
+		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR, C.DENYMAILNOMAL, C.DENYMAILSURVEY 
+		,C.DENYSMSNOMAL,C.DENYSMSSEMINAR,C.DENYSMSAD, C.DENYSMSSURVEY    
+		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD, C.DENYDMNOMAL, C.DENYDMSURVEY  
 		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
 		,C.DENYFAX ,C.DENYVISIT  
 		,A.CLINO,D.CLINAME
@@ -164,6 +164,7 @@
 		AND A.ISDELETE = 0
 		AND A.CUSTNO = #{custno}
 	</select>
+	
 	
 	<!-- 고객 수정 페이지에 바인딩 할 정보 출력 -->
 	<select id="custDetailForm" parameterType="int" resultType="hashMap">
@@ -196,9 +197,9 @@
 		,A.INFOAGREE
 		,A.CLINO, D.CLINAME
 		,C.DENYNO
-		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR 
-		,C.DENYSMSNOMAL,C.DENYSMSSEMINAR,C.DENYSMSAD    
-		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD  
+		,C.DENYMAILAD,C.DENYMAILNEWS ,C.DENYMAILSEMINAR, C.DENYMAILNOMAL, C.DENYMAILSURVEY 
+		,C.DENYSMSNOMAL,C.DENYSMSSEMINAR,C.DENYSMSAD, C.DENYSMSSURVEY    
+		,C.DENYDMNEWS ,C.DENYDMSEMINAR,C.DENYDMAD, C.DENYDMNOMAL, C.DENYDMSURVEY  
 		,C.DENYTELNEWS ,C.DENYTELSEMINAR  
 		,C.DENYFAX ,C.DENYVISIT  
 		FROM cu100010 A		
@@ -302,12 +303,17 @@
 		,DENYMAILAD
 		,DENYMAILNEWS 
 		,DENYMAILSEMINAR 
+		,DENYMAILNOMAL
+		,DENYMAILSURVEY
 		,DENYSMSNOMAL 
 		,DENYSMSSEMINAR  
-		,DENYSMSAD 
+		,DENYSMSAD
+		,DENYSMSSURVEY 
 		,DENYDMNEWS 
 		,DENYDMSEMINAR 
-		,DENYDMAD  
+		,DENYDMAD
+		,DENYDMNOMAL
+		,DENYDMSURVEY  
 		,DENYTELNEWS  
 		,DENYTELSEMINAR  
 		,DENYFAX  
@@ -326,16 +332,21 @@
 		,#{denymailad}
 		,#{denymailnews} 
 		,#{denymailseminar} 
+		,#{denymailnomal}
+		,#{denymailsurvey}
 		,#{denysmsnomal} 
 		,#{denysmsseminar}  
-		,#{denysmsad} 
+		,#{denysmsad}
+		,#{denysmssurvey} 
 		,#{denydmnews} 
 		,#{denydmseminar} 
-		,#{denydmad}  
+		,#{denydmad}
+		,#{denydmnomal}
+		,#{denydmsurvey}  
 		,#{denytelnews}  
 		,#{denytelseminar}  
-		,#{denyfax}  
-		,#{denyvisit}		
+		,#{denyfax}
+		,#{denyvisit} 
 		)
 	</insert>
 	
@@ -424,26 +435,31 @@
 		SET
 		EDITDATE = now()
 		,EDITUSER = #{edituser}
-			
+		
+		,DENYMAILNOMAL = #{denymailnomal}
+		,DENYMAILSURVEY = #{denymailsurvey}	
 		,DENYMAILAD = #{denymailad}
 		,DENYMAILNEWS = #{denymailnews}	
 		,DENYMAILSEMINAR = #{denymailseminar} 	
-		,DENYSMSNOMAL = #{denysmsnomal} 
+		,DENYSMSNOMAL = #{denysmsnomal}
+		,DENYSMSSURVEY = #{denysmssurvey} 
 		,DENYSMSSEMINAR = #{denysmsseminar}		
-		,DENYSMSAD = #{denysmsad} 		
+		,DENYSMSAD = #{denysmsad}
+		,DENYDMNOMAL = #{denydmnomal}
+		,DENYDMSURVEY = #{denydmsurvey} 		
 		,DENYDMNEWS = #{denydmnews}	
 		,DENYDMSEMINAR = #{denydmseminar}	
 		,DENYDMAD = #{denydmad}
 		,DENYTELNEWS = #{denytelnews}
 		,DENYTELSEMINAR = #{denytelseminar}
 		,DENYFAX = #{denyfax}
-		,DENYVISIT = #{denyvisit}	
-		
+		,DENYVISIT = #{denyvisit}
+				
 		WHERE
 		DENYNO = #{denyno}		
 	</update>
 	
-	<!-- 고객 정보 수정 -->
+	<!-- VOC 고객 정보 수정 -->
 	<update id="vocCustUpdate" parameterType="hashMap" >
 	UPDATE CU100010
 	SET 
@@ -468,6 +484,24 @@
 		CUSTNO = #{custno}
 		AND SITEID = #{siteid}
 	</update>
+	<!-- VOC 고객 수신거부 정보 수정 -->
+	<update id="vocCustDenyUpdate" parameterType="hashMap" >
+	UPDATE CU100080
+	SET 
+	EDITUSER = #{userno}
+	,EDITDATE = NOW()
+	
+	,DENYMAILNOMAL = #{denymailnomal} 
+	,DENYMAILSURVEY = #{denymailsurvey}
+	,DENYSMSNOMAL = #{denysmsnomal}
+	,DENYSMSSURVEY = #{denysmssurvey}
+	,DENYDMNOMAL = #{denydmnomal}
+	,DENYDMSURVEY = #{denydmsurvey}
+	
+	WHERE
+		CUSTNO = #{custno}
+	</update>
+	
 	
 	
 	<!-- 고객상세-탭 캠페인 리스트 카운터 -->

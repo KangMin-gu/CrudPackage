@@ -14,6 +14,7 @@
 <title>CRUD SYSTEM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->
 </head>
 	<body>
     <div id="wrap">
@@ -34,7 +35,7 @@
 				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
 				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
 				<span id="outCallNum">07042622883</span>
-
+				<input type="hidden" id="ctitelno" name="ctitelno" value="07042622883" />
 				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
 				<div>
 					<textarea id="messages" cols="150" rows="10"></textarea>
@@ -50,10 +51,10 @@
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm dialingBtn" >걸기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm answerBtn" >받기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm pickupBtn" >당겨받기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm hangUpBtn" >끊기 <i class="fa fa-phone"></i></button></li>
                         &nbsp; |&nbsp;
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
@@ -94,7 +95,7 @@
                     </div>
                         <table class="table table-bordered mb-2">              	
                             <colgroup>
-                                <col style="width: 100px; background: #fafafa;">
+                                <col style="width: 140px; background: #fafafa;">
                                 <col style="width: auto; min-width: 250px;">
                                 <col style="width: 100px; background: #fafafa;">
                                 <col style="width: auto;min-width: 250px;">
@@ -172,6 +173,43 @@
             							<input type="text" class="form-control float-left custInput" name="homaddr3" id="homaddr3" style="width: 220px;">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>수신거부 (일반)</th>
+                                    <td colspan="3">
+            							<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denymailnomal" name="denymailnomal" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denymailnomal">이메일 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denysmsnomal" name="denysmsnomal" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denysmsnomal">SMS 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denydmnomal" name="denydmnomal" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denydmnomal">DM 거부</label>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>수신거부 (해피콜)</th>
+                                    <td colspan="3">
+            							<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denymailsurvey" name="denymailsurvey" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denymailnomal">이메일 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denysmssurvey" name="denysmssurvey" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denysmssurvey">SMS 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denydmsurvey" name="denydmsurvey" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denydmsurvey">DM 거부</label>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                
+                                </tr>
                             </tbody>
                         </table>
                         
@@ -188,9 +226,8 @@
                             		<button class="btn btn-primary btn-sm" id="cancleBlackBtn" onClick="cancleBlack()">블랙 해제</button>
                             	</span>
                          	</div>
-                         </div>
-                        
-                    </div>
+                         </div>       
+                    </div><!-- 좌측 고객div -->
                     <div class="ibox-content bot-cont">
                         
                         <div class="tabs-container">
@@ -403,7 +440,39 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div><!-- 좌측 탭 div -->
+                    
+                    <div class="ibox-content">
+                    	<div class="tabs-container">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li><a class="nav-link" data-toggle="tab" onClick="javascript:tabTargetCallbackList(1);" href="#callbackTab1">콜백 목록 &nbsp; <i class="fa fa-refresh"></i></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" id="callbackTab1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>접수일시</th>
+                                                    <th>콜백번호</th>
+                                                    <th>발신자번호</th>
+                                                    <th>통화</th>
+                                                    <th>메모</th>
+                                                    <th>콜백상태</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- 콜백div -->
+                    
                 </div>
                 <div class="ibox-right">
                     <table class="table table-bordered mb-2">
@@ -704,35 +773,16 @@
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_right.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/plugins/sweetalert/custom-sweetalert.min.js"></script><!-- Sweet alert -->
 <script>
-var intervalId;//전역변수
-function sessMaintain(){//세션유지용
- 	$.ajax({
-       		url: "/vc/sess",
-        	method: "GET",
-        	dataType: "json",
-        	cache: false,
-        	success: function (data) {	           		
-        		alert.log('t');//테스트 종료후 삭제
-        	}
- 	});
-}
-function intervalFuncOn(){
-	var timer = 1740000;//29분마다 실행
-	this.intervalId = setInterval("sessMaintain()",timer);
-}
-function intervalFuncOff(){//세션 유지 타이머 함수 종료 
-	clearInterval(this.intervalId);
-	this.intervalId = null;
-}
 
 $(document).ready(function () {
-	
+ 
 	$('.convey').hide();
 	$('.adminconvey').hide();
 	$('.reservation').hide();
 	$('.as').hide();
+	
 	
 });
  
@@ -740,7 +790,6 @@ $(document).ready(function () {
 	 upperCode('servicecode1'); 
  });
  
-
  //블랙추가
  function addBlack(){
 	 var custno = $('#custno').val();
@@ -753,7 +802,7 @@ $(document).ready(function () {
  
  //블랙해제
  function cancleBlack(){
-	 debugger;
+	 
 	 var custno = $('#custno').val();
 	 var urlStr = '/vc/black/del/'+custno;
 	 $.ajax({
@@ -796,7 +845,6 @@ $(document).ready(function () {
  var minite = 00;
  var countdown = setInterval(function(){
          //0초면 초기화 후 이동되는 사이트
-         debugger;
  	var time = second+":"+minite;
  		document.getElementById('timer').innerHtml = time;
  		document.getElementById('timer').value = time;
@@ -808,9 +856,23 @@ $(document).ready(function () {
          }
      }, 1000);
 
-
  
- 
+function callBackConfirm(phoneNo){
+	debugger;
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	 swal({
+         title: phoneNo,
+         text: "번호를 확인해 주세요",
+         showCancelButton: true,
+         confirmButtonColor: "#DD6B55",
+         confirmButtonText: "통 화",
+         closeOnConfirm: false
+     }, function () {
+         swal.close();
+         didCheckMakeCall();
+     });
+ }
 </script>
 
 	

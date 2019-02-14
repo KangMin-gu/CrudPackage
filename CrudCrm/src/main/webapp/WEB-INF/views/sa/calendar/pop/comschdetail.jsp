@@ -16,11 +16,10 @@
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 
-<!-- S: 추가 CSS-->
 <!-- Toastr style -->
-<link href="/resources/css/plugins/toastr/toastr.min.css"
-	rel="stylesheet">
-
+<link href="/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+<!-- colorPicker -->
+<link href="/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <style>
 body {
 	background-color: #f3f3f4;
@@ -71,7 +70,7 @@ body {
 																																
 									<tr>
 										<th>색상</th>
-										<td>${schDetail.COLOR }</td>
+										<td><input type="text" class="form-control colorPicker" id="color" name="color" value="${schDetail.COLOR }" autocomplete="off" readonly/></td>
 									</tr>
 									
 									<tr>
@@ -90,7 +89,12 @@ body {
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-
-
+	 <!-- Color picker -->
+    <script src="${pageContext.request.contextPath}/resources/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.colorPicker').colorpicker();
+	});		
+</script>		
 </body>
 </html>

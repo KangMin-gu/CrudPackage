@@ -40,7 +40,7 @@ function goCustInsert(){
 	}	
 	
 	var param={};
-	param = custDataToJson(param);
+	param = custDataToJson();
 	$.ajax({
         url: urlStr,
         method: "POST",
@@ -61,9 +61,8 @@ function goCustInsert(){
 //고객 수정
 function goCustUpdate(){
 	var custNo = $("#custno").val();
-	var urlStr = "/vc/cust/post/"+custNo;			
-	var param={};	
-	param = custDataToJson(param);
+	var urlStr = "/vc/cust/post/"+custNo;				
+	var param = custDataToJson(param);
 	
 	$.ajax({
         url: urlStr,
@@ -80,12 +79,25 @@ function goCustUpdate(){
     });
 }
 
-function custDataToJson(param){//고객 인풋 필드 데이터 json형식 변경.	
+function custDataToJson(){//고객 인풋 필드 데이터 json형식 변경. 
+	debugger;
+	var param={};
 	var custData = $('.custInput');
 	var custLength = custData.length;
+	
     for(i=0; i<custLength;i++){
        var idVal = custData[i].id;
-       param[idVal] = custData[i].value;
+           
+       if(idVal.substring(0,4) =='deny' ){ // 수신거부 체크박스 항목일 경우 
+    	   if($('#'+idVal).prop('checked') == true){
+    		   param[idVal] = custData[i].value;//체크 되었으면 값 바인딩
+    	   }else{
+    		   param[idVal] = 0; // 체크 해제 되었다면 0 
+    	   }
+    	   
+       }else{
+    	   param[idVal] = custData[i].value; 
+       }
     }
     return param;
 }
@@ -94,7 +106,7 @@ function custDataToJson(param){//고객 인풋 필드 데이터 json형식 변�
 
 //********좌측 탭 *************************************************************************************************
 function tabTargetVocService(pageNum){//서비스탭
-	debugger;
+	
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/sv?custno='+custNo;
 	
@@ -107,7 +119,7 @@ function tabTargetVocService(pageNum){//서비스탭
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
-	        	debugger;
+	        	
 	        	$('#tab1 tbody tr').remove();
 	        	$('#tab1 .pagination li').remove();
 	        	
@@ -151,7 +163,7 @@ function tabTargetVocService(pageNum){//서비스탭
 
 
 function tabTargetVocEmail(pageNum){//email 탭 
-	debugger;
+
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/email?custno='+custNo;
 	
@@ -162,7 +174,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
-	        	debugger;
+	        	
 	        	$('#tab7 tbody tr').remove();
 	        	$('#tab7 .pagination li').remove();
 	        	var emailId = "";
@@ -205,6 +217,68 @@ function tabTargetVocEmail(pageNum){//email 탭
 	}
     
 }	
+
+//좌측 하단 콜백 탭 
+function tabTargetCallbackList(pageNum){
+	var ctitelno = $('#ctitelno').val();
+	var urlStr = '/vc/callback?status=callback&ctitelno='+ctitelno;
+	
+	$.ajax({
+        url: urlStr,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {  
+        	debugger;
+        	$('#callbackTab1 tbody tr').remove();
+        	$('#callbackTab1 .pagination li').remove();
+        	
+        	var length = data.callBackList.length;
+        	var html ="";
+        	//todo. string buffer  코드로 변경        	
+        	for (var i = 0; i < length; i++) {
+        		html = '<tr><td><input type="hidden" id="callbackno" name="callbackno" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_;
+        		html += '</td><td><a onclick="bindCallBackNo('+"'"+data.callBackList[i].CALLBACK+"'"+');">'+data.callBackList[i].CALLBACK;
+        		html += '</a></td><td>' + data.callBackList[i].CALLER; 
+        		html += '</td><td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callBackConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');"><i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'; 
+        		html += '</td><td><input class="form-control" type="text" id="vocmemo" name="vocmemo" value="'+data.callBackList[i].MEMO+'"></td><td><button class="btn btn-primary btn-sm">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm">불통</button></td></tr>';
+        		
+        		
+        		$('#callbackTab1 tbody').append(html); 	
+        	}
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCallbackList(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+            }
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetCallbackList(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetCallbackList(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetCallbackList(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            
+            if(length != 0){
+            	$('#callbackTab1 .pagination').append(html2);
+            }
+            
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+//*********************************************************************************************************************
+
+
 
 
 //********고객 팝업 관련************************************************************************************************* 
@@ -280,6 +354,12 @@ function custInfoClear(){//인풋 필드 초기화
 	opener.$('#email').val('');
 	opener.$('#custgrade').val('0');
 	opener.$('#homaddr1').val('');opener.$('#homaddr2').val('');opener.$('#homaddr3').val('');
+	
+	//체크박스 해제 
+	opener.$('#denymailnomal').iCheck('uncheck');opener.$('#denymailsurvey').iCheck('uncheck');
+	opener.$('#denysmsnomal').iCheck('uncheck');opener.$('#denysmssurvey').iCheck('uncheck');
+	opener.$('#denydmnomal').iCheck('uncheck');opener.$('#denydmsurvey').iCheck('uncheck');
+	
 }
 
 function custInfoBinding(data){//인풋 필드 데이터 바인딩
@@ -302,6 +382,38 @@ function custInfoBinding(data){//인풋 필드 데이터 바인딩
 	opener.$('#homaddr2').val(data.HOMADDR2);
 	opener.$('#homaddr3').val(data.HOMADDR3);
 	opener.$('#blackcnt').val(data.BLACKCNT);
+	
+	//체크박스 제어
+	if(data.DENYMAILNOMAL == 1){ //mail일반
+		opener.$('#denymailnomal').iCheck('check'); 
+	}else 
+		opener.$('#denymailnomal').iCheck('uncheck'); 
+	
+	if(data.DENYMAILSURVEY == 1){ //mail해피콜
+		opener.$('#denymailsurvey').iCheck('check'); 
+	}else
+		opener.$('#denymailsurvey').iCheck('uncheck'); 
+	
+	if(data.DENYSMSNOMAL == 1){ //sms일반
+		opener.$('#denysmsnomal').iCheck('check'); 
+	}else
+		opener.$('#denysmsnomal').iCheck('uncheck'); 
+	
+	if(data.DENYSMSSURVEY == 1){ //sms해피콜
+		opener.$('#denysmssurvey').iCheck('check'); 
+	}else
+		opener.$('#denysmssurvey').iCheck('uncheck'); 
+		
+	if(data.DENYDMNOMAL == 1){ //dm일반
+		opener.$('#denydmnomal').iCheck('check'); 
+	}else
+		opener.$('#denydmnomal').iCheck('uncheck'); 
+	
+	if(data.DENYDMSURVEY == 1){ //dm해피콜
+		opener.$('#denydmsurvey').iCheck('check'); 
+	}else
+		opener.$('#denydmsurvey').iCheck('uncheck'); 
+		
 }
 
 function serviceInfoBinding(data){
@@ -463,4 +575,9 @@ function cti_test(){
 	
 }
 
+function bindCallBackNo(phoneNo){
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	popVocCust();
+}
 

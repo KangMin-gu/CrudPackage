@@ -133,7 +133,12 @@ public class VocController {
 			
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
-				
+		custDenyDto.setDenymailnomal(Integer.parseInt((String)search.get("denymailnomal")));
+		custDenyDto.setDenymailsurvey(Integer.parseInt((String)search.get("denymailsurvey")));
+		custDenyDto.setDenysmsnomal(Integer.parseInt((String)search.get("denysmsnomal")));
+		custDenyDto.setDenysmssurvey(Integer.parseInt((String)search.get("denysmssurvey")));
+		custDenyDto.setDenydmnomal(Integer.parseInt((String)search.get("denydmnomal")));
+		custDenyDto.setDenydmsurvey(Integer.parseInt((String)search.get("denydmsurvey")));
 		int custno = custService.svcCustformInsert(custDto,custDenyDto);
 		
 		return custno;
@@ -235,20 +240,21 @@ public class VocController {
 	//VOC 온피아 -> 콜백 받기 
 	@RequestMapping(value="/vc/callback",method=RequestMethod.POST)
 	@ResponseBody
-	public int authvocGetCallBack(HttpServletRequest request) {
+	public int vocGetCallBack(HttpServletRequest request) {
 		Map<String, Object> callBackMap = crud.searchParam(request);
-		callBackMap.put("callstatus", 0); //콜백 상태 기본 값 0 		
+		callBackMap.put("callstatus", 0); //콜백 상태 기본 값 0
+		callBackMap.put("callcount", 0); //상담원의 콜 시도 횟수 기본 값 0
 		int res = vcService.svcVocCallBackInsert(callBackMap);
 		return res;
 	}
 	
-	//VOC - 콜백 테스트용. (**기능 구현 완료 후 반드시 삭제 ) 	
-	@RequestMapping(value="/vc/test",method=RequestMethod.GET)
-	public ModelAndView authvocTest(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
-		mView.setViewName("vc/test1");
-		return mView;
-	}
 	
+	//VOC 콜백 목록 조회 
+	@RequestMapping(value="/vc/callback",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocCallBackList(HttpServletRequest request) {		
+		Map<String,Object> callBackList = vcService.svcVocCallBackList(request);
+		return callBackList;
+	}
 	
 }

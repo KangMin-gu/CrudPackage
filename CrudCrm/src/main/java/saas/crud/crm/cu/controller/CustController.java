@@ -146,7 +146,6 @@ public class CustController {
 		
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
-		
 		int res = custService.svcCustformInsert(custDto,custDenyDto);
 		ModelAndView mview = new ModelAndView();		
 		mview.setViewName("cu/custinsert");

@@ -409,6 +409,14 @@
 														<th class="border-top-0">EMAIL 거부</th>
 														<td class="border-top-0">
 															<div class="checkbox float-left col-lg-2 p-0">
+																<input id="denymailnomal" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYMAILNOMAL eq "1" ? "checked='checked'" : ""}>
+																<label for="denymailnomal" > 일반</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input id="denymailsurvey" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYMAILSURVEY eq "1" ? "checked='checked'" : ""}>
+																<label for="denymailsurvey" > 해피콜</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="emailChec1" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYMAILNEWS eq "1" ? "checked='checked'" : ""}>
 																<label for="emailChec1" > 뉴스레터</label>
 															</div>
@@ -426,12 +434,16 @@
 														<th>SMS 거부</th>
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="smsCheck1" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYSMSSEMINAR eq "1" ? "checked='checked'" : ""}>
-																<label for="smsCheck1"> 세미나</label>
+																<input id="denysmsnomal" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYSMSNOMAL eq "1" ? "checked='checked'" : ""}>
+																<label for="denysmsnomal"> 일반</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="smsCheck2" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYSMSNOMAL eq "1" ? "checked='checked'" : ""}>
-																<label for="smsCheck2"> 일반</label>
+																<input id="denysmssurvey" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYSMSSURVEY eq "1" ? "checked='checked'" : ""}>
+																<label for="denysmssurvey" > 해피콜</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input id="smsCheck1" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYSMSSEMINAR eq "1" ? "checked='checked'" : ""}>
+																<label for="smsCheck1"> 세미나</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="smsCheck3" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYSMSAD eq "1" ? "checked='checked'" : ""}>
@@ -442,6 +454,14 @@
 													<tr>
 														<th>DM 거부</th>
 														<td>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input id="denydmnomal" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYDMNOMAL eq "1" ? "checked='checked'" : ""}>
+																<label for="denydmnomal"> 일반</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input id="denydmsurvey" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYDMSURVEY eq "1" ? "checked='checked'" : ""}>
+																<label for="denydmsurvey" > 해피콜</label>
+															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="dmCheck1" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYDMNEWS eq "1" ? "checked='checked'" : ""}>
 																<label for="dmCheck1"> 뉴스레터</label>

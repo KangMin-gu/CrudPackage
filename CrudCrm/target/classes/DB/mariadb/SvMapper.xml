@@ -702,7 +702,9 @@
 		WHERE A.SITEID = #{siteid}
 		AND A.OWNER = #{owner}
 		AND DATE_FORMAT(A.VISITDATE,'%Y-%m-%d') = #{visitdate}
-	</select>	
+	</select>
+
+	
 	<select id="svProductRead" parameterType="hashMap" resultType="hashMap">
 		SELECT PRODUCTB,PRODUCTM,PRODUCTS
 		,FN_PRODUCT(PRODUCTB,#{siteid}) AS PRODUCTBNAME
@@ -713,9 +715,9 @@
 		WHERE SITEID = #{siteid}
 		AND SERVICENO = #{serviceno}
 	</select>
-
+	
+	<insert id="vocCallBack" parameterType="hashMap">
 	<!-- CTI서버 콜백 접수 -->	
-	<insert id="vocCallBackInsert" parameterType="hashMap">	
 		INSERT INTO CTI510010
 		(
 		CALLER
@@ -843,5 +845,7 @@
 		CALLBACKNO = #{callbackno}
 		AND TRUNK = #{trunk}
 	</update>
-
+	
+	
+	
 </mapper>

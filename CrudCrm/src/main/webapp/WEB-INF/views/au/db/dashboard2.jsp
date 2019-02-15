@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
@@ -15,612 +15,326 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-
+<%@ include file="/WEB-INF/views/template/inc/chartlininc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/jQueryUI/jquery-ui.css" rel="stylesheet">
 </head>
 
 <body>
-	<div id="wrapper" >
+	<div id="wrapper">
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-	<div id="page-wrapper" class="gray-bg">
-		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
-		            <div class="wrapper wrapper-content">
-        			<div class="row">
-                    <div class="col-lg-3">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <span class="label label-success float-right">Monthly</span>
-                                <h5>Income</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">40 886,200</h1>
-                                <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
-                                <small>Total income</small>
-                            </div>
+		<div id="page-wrapper" class="gray-bg">
+			<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
+			<div class="wrapper wrapper-content">
+				<div class="row" id="sortable-view">
+					<div class="col-lg-6">		                
+	                   	<div class="ibox ">
+	                        <div class="ibox-title">
+	                            <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
+	                        </div>
+	                        <div class="ibox-content">
+	                            <div>
+	                                <canvas id="barChart" height="140"></canvas>
+	                            </div>
+	                        </div>           
+		                </div>
+            		</div>
+					<div class="col-lg-6">
+						<div class="ibox ">
+							<div class="ibox-title">								
+								<h5>상담 유형별</h5>
+							</div>
+							<div class="ibox-content">								
+                                	<canvas id="doughnutChart" height="140"></canvas>                            	
+							</div>
+						</div>
+					</div>
+				</div>			
+				<div class="row" id="sortable-view">
+					<div class="col-lg-12">									
+						 <div class="ibox-title">
+                            <h5>채널별 캠페인 현황</h5>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <span class="label label-info float-right">Annual</span>
-                                <h5>Orders</h5>
+                        <div class="ibox-content">
+                            <div>
+                                <div id="lineChart"></div>
                             </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">275,800</h1>
-                                <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
-                                <small>New orders</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <span class="label label-primary float-right">Today</span>
-                                <h5>visits</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">106,120</h1>
-                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
-                                <small>New visits</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <span class="label label-danger float-right">Low value</span>
-                                <h5>User activity</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">80,600</h1>
-                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
-                                <small>In first month</small>
-                            </div>
-                        </div>
-            </div>
-        </div>
-        <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>Orders</h5>
-                                <div class="float-right">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-xs btn-white active">Today</button>
-                                        <button type="button" class="btn btn-xs btn-white">Monthly</button>
-                                        <button type="button" class="btn btn-xs btn-white">Annual</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="row">
-                                <div class="col-lg-9">
-                                    <div class="flot-chart">
-                                        <div class="flot-chart-content" id="flot-dashboard-chart"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <ul class="stat-list">
-                                        <li>
-                                            <h2 class="no-margins">2,346</h2>
-                                            <small>Total orders in period</small>
-                                            <div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i></div>
-                                            <div class="progress progress-mini">
-                                                <div style="width: 48%;" class="progress-bar"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <h2 class="no-margins ">4,422</h2>
-                                            <small>Orders in last month</small>
-                                            <div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i></div>
-                                            <div class="progress progress-mini">
-                                                <div style="width: 60%;" class="progress-bar"></div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <h2 class="no-margins ">9,180</h2>
-                                            <small>Monthly income from orders</small>
-                                            <div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i></div>
-                                            <div class="progress progress-mini">
-                                                <div style="width: 22%;" class="progress-bar"></div>
-                                            </div>
-                                        </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </div>
+                        </div>			
+					</div>
+				</div>
+						
+				<div class="row" id="sortable-view">
+					<div class="col-lg-12">
+						<div class="ibox ">
+							<div class="ibox ">
+								<div class="ibox-title">								
+									<h5>영업 현황 분석</h5>
+								</div>
+								<div class="ibox-content">								
+	                               <canvas id="mixed-chart" width="800" height="140"></canvas>                          	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="sortable-view">
+					<div class="col-lg-4">
+						<div class="ibox ">
+							<div class="ibox-title">
+								<h5>Messages</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a> <a class="close-link"> <i class="fa fa-times"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content ibox-heading">
+								<h3>
+									<i class="fa fa-envelope-o"></i> New messages
+								</h3>
+								<small><i class="fa fa-tim"></i> You have 22 new
+									messages and 16 waiting in draft folder.</small>
+							</div>
+							<div class="ibox-content">
+								<div class="feed-activity-list">
+									<div class="feed-element">
+										<div>
+											<small class="float-right">5m ago</small> <strong>Damian
+												Nowak</strong>
+											<div>The standard chunk of Lorem Ipsum used</div>
+											<small class="text-muted">Yesterday 8:48 pm -
+												10.06.2014</small>
+										</div>
+									</div>
+									<div class="feed-element">
+										<div>
+											<small class="float-right">5m ago</small> <strong>Gary
+												Smith</strong>
+											<div>200 Latin words, combined with a handful</div>
+											<small class="text-muted">Yesterday 8:48 pm -
+												10.06.2014</small>
+										</div>
+									</div>
 
-                            </div>
-                        </div>
-                    </div>
-
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>Messages</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content ibox-heading">
-                                <h3><i class="fa fa-envelope-o"></i> New messages</h3>
-                                <small><i class="fa fa-tim"></i> You have 22 new messages and 16 waiting in draft folder.</small>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="feed-activity-list">
-
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right text-navy">1m ago</small>
-                                            <strong>Monica Smith</strong>
-                                            <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum</div>
-                                            <small class="text-muted">Today 5:60 pm - 12.06.2014</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">2m ago</small>
-                                            <strong>Jogn Angel</strong>
-                                            <div>There are many variations of passages of Lorem Ipsum available</div>
-                                            <small class="text-muted">Today 2:23 pm - 11.06.2014</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Jesica Ocean</strong>
-                                            <div>Contrary to popular belief, Lorem Ipsum</div>
-                                            <small class="text-muted">Today 1:00 pm - 08.06.2014</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Monica Jackson</strong>
-                                            <div>The generated Lorem Ipsum is therefore </div>
-                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Anna Legend</strong>
-                                            <div>All the Lorem Ipsum generators on the Internet tend to repeat </div>
-                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
-                                        </div>
-                                    </div>
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Damian Nowak</strong>
-                                            <div>The standard chunk of Lorem Ipsum used </div>
-                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
-                                        </div>
-                                    </div>
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Gary Smith</strong>
-                                            <div>200 Latin words, combined with a handful</div>
-                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-8">
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>User project list</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content table-responsive">
-                                        <table class="table table-hover no-margins">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                                <th>User</th>
-                                                <th>Value</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><small>Pending...</small></td>
-                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
-                                                <td>Samantha</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><span class="label label-warning">Canceled</span> </td>
-                                                <td><i class="fa fa-clock-o"></i> 10:40am</td>
-                                                <td>Monica</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 66% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 01:30pm</td>
-                                                <td>John</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 54% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 02:20pm</td>
-                                                <td>Agnes</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 12% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 09:40pm</td>
-                                                <td>Janet</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 22% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><span class="label label-primary">Completed</span> </td>
-                                                <td><i class="fa fa-clock-o"></i> 04:10am</td>
-                                                <td>Amelia</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 66% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
-                                                <td>Damian</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>Small todo list</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content">
-                                        <ul class="todo-list m-t small-list">
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
-                                                <span class="m-l-xs todo-completed">Buy a milk</span>
-
-                                            </li>
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                                                <span class="m-l-xs">Go to shop and find some products.</span>
-
-                                            </li>
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                                                <span class="m-l-xs">Send documents to Mike</span>
-                                                <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                                                <span class="m-l-xs">Go to the doctor dr Smith</span>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
-                                                <span class="m-l-xs todo-completed">Plan vacation</span>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                                                <span class="m-l-xs">Create new stuff</span>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
-                                                <span class="m-l-xs">Call to Anna for dinner</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>Transactions worldwide</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content">
-
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <table class="table table-hover margin bottom">
-                                                    <thead>
-                                                    <tr>
-                                                        <th style="width: 1%" class="text-center">No.</th>
-                                                        <th>Transaction</th>
-                                                        <th class="text-center">Date</th>
-                                                        <th class="text-center">Amount</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="text-center">1</td>
-                                                        <td> Security doors
-                                                            </td>
-                                                        <td class="text-center small">16 Jun 2014</td>
-                                                        <td class="text-center"><span class="label label-primary">$483.00</span></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">2</td>
-                                                        <td> Wardrobes
-                                                        </td>
-                                                        <td class="text-center small">10 Jun 2014</td>
-                                                        <td class="text-center"><span class="label label-primary">$327.00</span></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">3</td>
-                                                        <td> Set of tools
-                                                        </td>
-                                                        <td class="text-center small">12 Jun 2014</td>
-                                                        <td class="text-center"><span class="label label-warning">$125.00</span></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">4</td>
-                                                        <td> Panoramic pictures</td>
-                                                        <td class="text-center small">22 Jun 2013</td>
-                                                        <td class="text-center"><span class="label label-primary">$344.00</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">5</td>
-                                                        <td>Phones</td>
-                                                        <td class="text-center small">24 Jun 2013</td>
-                                                        <td class="text-center"><span class="label label-primary">$235.00</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">6</td>
-                                                        <td>Monitors</td>
-                                                        <td class="text-center small">26 Jun 2013</td>
-                                                        <td class="text-center"><span class="label label-primary">$100.00</span></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div id="world-map" style="height: 300px;"></div>
-                                            </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                </div>
-
-			
-
-
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="ibox ">
+									<div class="ibox-title">
+										<h5>User project list</h5>
+										<div class="ibox-tools">
+											<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+											</a> <a class="close-link"> <i class="fa fa-times"></i>
+											</a>
+										</div>
+									</div>
+									<div class="ibox-content table-responsive">
+										<table class="table table-hover no-margins">
+											<thead>
+												<tr>
+													<th>Status</th>
+													<th>Date</th>
+													<th>User</th>
+													<th>Value</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><small>Pending...</small></td>
+													<td><i class="fa fa-clock-o"></i> 11:20pm</td>
+													<td>Samantha</td>
+													<td class="text-navy"><i class="fa fa-level-up"></i>
+														24%</td>
+												</tr>											
+												<tr>
+													<td><small>Pending...</small></td>
+													<td><i class="fa fa-clock-o"></i> 02:20pm</td>
+													<td>Agnes</td>
+													<td class="text-navy"><i class="fa fa-level-up"></i>
+														12%</td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="ibox ">
+									<div class="ibox-title">
+										<h5>User project list</h5>
+										<div class="ibox-tools">
+											<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+											</a> <a class="close-link"> <i class="fa fa-times"></i>
+											</a>
+										</div>
+									</div>
+									<div class="ibox-content table-responsive">
+										<table class="table table-hover no-margins">
+											<thead>
+												<tr>
+													<th>Status</th>
+													<th>Date</th>
+													<th>User</th>
+													<th>Value</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><small>Pending...</small></td>
+													<td><i class="fa fa-clock-o"></i> 11:20pm</td>
+													<td>Samantha</td>
+													<td class="text-navy"><i class="fa fa-level-up"></i>
+														24%</td>
+												</tr>											
+												<tr>
+													<td><small>Pending...</small></td>
+													<td><i class="fa fa-clock-o"></i> 02:20pm</td>
+													<td>Agnes</td>
+													<td class="text-navy"><i class="fa fa-level-up"></i>
+														12%</td>
+												</tr>												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-  	</div>			
+	</div>
+
 
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<%@ include file="/WEB-INF/views/template/inc/chartjsinc.jsp"%>
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
-   
-   
-        <!-- Sparkline demo data  -->
-    <script src="${pageContext.request.contextPath}/resources/js/demo/sparkline-demo.js"></script>
-        <!-- EayPIE -->
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/easypiechart/jquery.easypiechart.js"></script>
-        <!-- Jvectormap -->
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/demo/peity-demo.js"></script>
-    
-    
-    
-    
-     <script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
+	<script>
         $(document).ready(function() {
-            $('.chart').easyPieChart({
-                barColor: '#f8ac59',
-//                scaleColor: false,
-                scaleLength: 5,
-                lineWidth: 4,
-                size: 80
+        	WinMove();   	
+        	$(".ibox").resizable({
+                helper: "ui-resizable-helper",
+                grid: 20
             });
-
-            $('.chart2').easyPieChart({
-                barColor: '#1c84c6',
-//                scaleColor: false,
-                scaleLength: 5,
-                lineWidth: 4,
-                size: 80
-            });
-
-            var data2 = [
-                [gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
-                [gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4],
-                [gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6],
-                [gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8],
-                [gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6],
-                [gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13],
-                [gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8],
-                [gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
-            ];
-
-            var data3 = [
-                [gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700],
-                [gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589],
-                [gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700],
-                [gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786],
-                [gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888],
-                [gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567],
-                [gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900],
-                [gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
-            ];
-
-
-            var dataset = [
-                {
-                    label: "Number of orders",
-                    data: data3,
-                    color: "#1ab394",
-                    bars: {
-                        show: true,
-                        align: "center",
-                        barWidth: 24 * 60 * 60 * 600,
-                        lineWidth:0
-                    }
-
-                }, {
-                    label: "Payments",
-                    data: data2,
-                    yaxis: 2,
-                    color: "#1C84C6",
-                    lines: {
-                        lineWidth:1,
-                            show: true,
-                            fill: true,
-                        fillColor: {
-                            colors: [{
-                                opacity: 0.2
-                            }, {
-                                opacity: 0.4
-                            }]
-                        }
-                    },
-                    splines: {
-                        show: false,
-                        tension: 0.6,
-                        lineWidth: 1,
-                        fill: 0.1
-                    },
-                }
-            ];
-
-
-            var options = {
-                xaxis: {
-                    mode: "time",
-                    tickSize: [3, "day"],
-                    tickLength: 0,
-                    axisLabel: "Date",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: 'Arial',
-                    axisLabelPadding: 10,
-                    color: "#d5d5d5"
-                },
-                yaxes: [{
-                    position: "left",
-                    max: 1070,
-                    color: "#d5d5d5",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: 'Arial',
-                    axisLabelPadding: 3
-                }, {
-                    position: "right",
-                    clolor: "#d5d5d5",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: ' Arial',
-                    axisLabelPadding: 67
-                }
-                ],
-                legend: {
-                    noColumns: 1,
-                    labelBoxBorderColor: "#000000",
-                    position: "nw"
-                },
-                grid: {
-                    hoverable: false,
-                    borderWidth: 0
-                }
-            };
-
-            function gd(year, month, day) {
-                return new Date(year, month - 1, day).getTime();
-            }
-
-            var previousPoint = null, previousLabel = null;
-
-            $.plot($("#flot-dashboard-chart"), dataset, options);
-
-            var mapData = {
-                "US": 298,
-                "SA": 200,
-                "DE": 220,
-                "FR": 540,
-                "CN": 120,
-                "AU": 760,
-                "BR": 550,
-                "IN": 200,
-                "GB": 120,
-            };
-
-            $('#world-map').vectorMap({
-                map: 'world_mill_en',
-                backgroundColor: "transparent",
-                regionStyle: {
-                    initial: {
-                        fill: '#e4e4e4',
-                        "fill-opacity": 0.9,
-                        stroke: 'none',
-                        "stroke-width": 0,
-                        "stroke-opacity": 0
-                    }
-                },
-
-                series: {
-                    regions: [{
-                        values: mapData,
-                        scale: ["#1ab394", "#22d6b1"],
-                        normalizeFunction: 'polynomial'
-                    }]
-                },
-            });
+			
+        	//채널별 캠페인 현황
+        	  c3.generate({
+                  bindto: '#lineChart',
+                  data:{
+                      columns: [
+                          ['data1', 30, 200, 100, 400, 150, 250],
+                          ['data2', 50, 20, 10, 40, 15, 25]
+                      ],
+                      colors:{
+                          data1: '#1ab394',
+                          data2: '#BABABA'
+                      }
+                  }
+              });
+        	
         });
+        
+        //월별 신규 고객 등록 현황
+       var barData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "Data 1",
+                backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                pointBorderColor: "#fff",
+                data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+                label: "Data 2",
+                backgroundColor: 'rgba(26,179,148,0.5)',
+                borderColor: "rgba(26,179,148,0.7)",
+                pointBackgroundColor: "rgba(26,179,148,1)",
+                pointBorderColor: "#fff",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            },
+            {
+                label: "Data 2",
+                backgroundColor: 'rgba(26,179,148,0.5)',
+                borderColor: "rgba(26,179,148,0.7)",
+                pointBackgroundColor: "rgba(26,179,148,1)",
+                pointBorderColor: "#fff",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }
+        ]
+    };
+
+    var barOptions = {
+        responsive: true
+    };
+
+	
+    var ctx2 = document.getElementById("barChart").getContext("2d");
+    new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+
+
+        
+        
+   //상담유형별 PIE chart
+        var doughnutData = {
+                labels: ["App","Software","Laptop" ],
+                datasets: [{
+                    data: [300,50,100],
+                    backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
+                }]
+            } ;
+
+
+       var doughnutOptions = {
+                responsive: true
+       };
+
+
+       var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+       new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+       
+       
+       new Chart(document.getElementById("mixed-chart"), {
+    	    type: 'bar',
+    	    data: {
+    	      labels: ["1900", "1950", "1999", "2050"],
+    	      datasets: [{
+    	          label: "Europe",
+    	          type: "line",
+    	          borderColor: "#8e5ea2",
+    	          data: [408,547,675,734],
+    	          fill: false
+    	        }, {
+    	          label: "Africa",
+    	          type: "line",
+    	          borderColor: "#3e95cd",
+    	          data: [133,221,783,2478],
+    	          fill: false
+    	        }, {
+    	          label: "Europe",
+    	          type: "bar",
+    	          backgroundColor: "rgba(0,0,0,0.2)",
+    	          data: [408,547,675,734],
+    	        }, {
+    	          label: "Africa",
+    	          type: "bar",
+    	          backgroundColor: "rgba(0,0,0,0.2)",
+    	          backgroundColorHover: "#3e95cd",
+    	          data: [133,221,783,2478]
+    	        }
+    	      ]
+    	    },
+    	    options: {
+    	      title: {
+    	        display: true,
+    	        text: 'Population growth (millions): Europe & Africa'
+    	      },
+    	      legend: { display: false }
+    	    }
+    	});
     </script>
 </body>
 </html>

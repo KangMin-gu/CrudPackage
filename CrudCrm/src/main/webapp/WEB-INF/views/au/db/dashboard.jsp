@@ -15,138 +15,340 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-
+<%@ include file="/WEB-INF/views/template/inc/chartlininc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/jQueryUI/jquery-ui.css" rel="stylesheet">
 </head>
-
 <body>
 	<div id="wrapper" >
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-
-		<div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Draggable Panels - Dra&amp;Drop box</h2>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a>Tables</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <strong>Draggable Panels - Dra&amp;Drop box</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
-            </div>
-            
-            
-        <div class="wrapper wrapper-content  animated fadeInRight">
-            <div class="row" id="sortable-view">
-                <div class="col-lg-6">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Drag&amp;Drop</h5>
-                            <div class="ibox-tools">
-                                <label class="label label-primary">You can drag and drop me to other box.</label>
+		<div class="wrapper wrapper-content">
+		
+        	<div class="row" id="sortable-view">                                                     
+               <div class="col-lg-6">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <canvas id="barChart" height="140"></canvas>
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <h2>
-                                This is simple box container nr. 1
-                            </h2>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                                remaining essentially unchanged.
-                            </p>
-                        </div>
                     </div>
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Drag&amp;Drop</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
+                    <div class="col-lg-6">
+                        <div class="ibox ">
+                            <div class="ibox-title">                             
+                                <h5>상담 유형별</h5>
+                            </div>
+                            <div class="ibox-content">
+                              	<canvas id="doughnutChart" height="140"></canvas>
                             </div>
                         </div>
-                        <div class="ibox-content">
-                            <h2>
-                                This is simple box container nr. 3
-                            </h2>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                                remaining essentially unchanged.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-6">
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Drag&amp;Drop</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <h2>
-                                This is simple box container nr. 2
-                            </h2>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                                remaining essentially unchanged.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <h5>Drag&amp;Drop</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <h2>
-                                This is simple box container nr. 4
-                            </h2>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                                printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                                remaining essentially unchanged.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
+        <div class="row" id="sortable-view">
+            <div class="col-lg-12">
+               <div class="ibox ">
+                   <div class="ibox-title">
+                       <h5>채널별 캠페인 현황</h5>                          
+                    </div>
+                   <div class="ibox-content">
+                       <div class="row">
+                         <div class="col-lg-9">
+                          <div id="lineChart"></div>
+                         </div>
+                         <div class="col-lg-3">
+                          a
+                         </div>
+                      </div>                                          
+                    </div>
+                  </div>
+               </div>
+           </div>
+		<div class="row" id="sortable-view">
+					<div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>영업 현황 분석</h5>                             
+                            </div>
+                            <div class="ibox-content">
+                            	<div class="row">
+                            		<div class="col-lg-9">
+                            			<canvas id="mixed-chart" height="100"></canvas>
+                            		</div>
+                            		<div class="col-lg-3">
+                            			a
+                            		</div>
+                            	</div>                                          
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+				</div>
 
+                <div class="row" id="sortable-view">
+                    <div class="col-lg-4">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>내부통지</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content ibox-heading">
+                                <h3><i class="fa fa-envelope-o"></i> New messages</h3>
+                                <small><i class="fa fa-tim"></i> You have 22 new messages and 16 waiting in draft folder.</small>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="feed-activity-list">
+                                    <div class="feed-element">
+                                        <div>
+                                            <small class="float-right">5m ago</small>
+                                            <strong>Jesica Ocean</strong>
+                                            <div>Contrary to popular belief, Lorem Ipsum</div>
+                                            <small class="text-muted">Today 1:00 pm - 08.06.2014</small>
+                                        </div>
+                                    </div>
+                                    <div class="feed-element">
+                                        <div>
+                                            <small class="float-right">5m ago</small>
+                                            <strong>Monica Jackson</strong>
+                                            <div>The generated Lorem Ipsum is therefore </div>
+                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
+                                        </div>
+                                    </div>                          
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="ibox ">
+                                    <div class="ibox-title">
+                                        <h5>회원사 공지사항</h5>
+                                        <div class="ibox-tools">
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                            <a class="close-link">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content table-responsive">
+                                        <table class="table table-hover no-margins">
+                                            <thead>
+                                            <tr>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                                <th>User</th>
+                                                <th>Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><small>Pending...</small></td>
+                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
+                                                <td>Samantha</td>
+                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
+                                            </tr>
+                                            <tr>
+                                                <td><small>Pending...</small> </td>
+                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
+                                                <td>Damian</td>
+                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="ibox ">
+                                    <div class="ibox-title">
+                                        <h5>시스템 공지사항</h5>
+                                        <div class="ibox-tools">
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                            <a class="close-link">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content table-responsive">
+                                        <table class="table table-hover no-margins">
+                                            <thead>
+                                            <tr>
+                                                <th>Status</th>
+                                                <th>Date</th>
+                                                <th>User</th>
+                                                <th>Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><small>Pending...</small></td>
+                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
+                                                <td>Samantha</td>
+                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
+                                            </tr>
+                                            <tr>
+                                                <td><small>Pending...</small> </td>
+                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
+                                                <td>Damian</td>
+                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                	</div>
+                </div>
+        	</div>
 		</div>
-  	</div>		
- 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+  	</div>			
+
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<%@ include file="/WEB-INF/views/template/inc/chartjsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>	
-    <script>
-         $(document).ready(function(){
-            WinMove();
-        });
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
+
+     <script>
+        $(document).ready(function() {
+        	WinMove();   	
+        	$(".ibox").resizable({
+                helper: "ui-resizable-helper",
+                grid: 20
+            });
+        	//채널별 캠페인 현황
+      	  c3.generate({
+                bindto: '#lineChart',
+                data:{
+                    columns: [
+                        ['data1', 30, 200, 100, 400, 150, 250],
+                        ['data2', 50, 20, 10, 40, 15, 25]
+                    ],
+                    colors:{
+                        data1: '#1ab394',
+                        data2: '#BABABA'
+                    }
+                }
+            });
+      	
+      });
+      
+      //월별 신규 고객 등록 현황
+     var barData = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+          {
+              label: "Data 1",
+              backgroundColor: 'rgba(220, 220, 220, 0.5)',
+              pointBorderColor: "#fff",
+              data: [65, 59, 80, 81, 56, 55, 40]
+          },
+          {
+              label: "Data 2",
+              backgroundColor: 'rgba(26,179,148,0.5)',
+              borderColor: "rgba(26,179,148,0.7)",
+              pointBackgroundColor: "rgba(26,179,148,1)",
+              pointBorderColor: "#fff",
+              data: [28, 48, 40, 19, 86, 27, 90]
+          },
+          {
+              label: "Data 2",
+              backgroundColor: 'rgba(26,179,148,0.5)',
+              borderColor: "rgba(26,179,148,0.7)",
+              pointBackgroundColor: "rgba(26,179,148,1)",
+              pointBorderColor: "#fff",
+              data: [28, 48, 40, 19, 86, 27, 90]
+          }
+      ]
+  };
+
+  var barOptions = {
+      responsive: true
+  };
+
+	
+  var ctx2 = document.getElementById("barChart").getContext("2d");
+  new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+
+
+      
+      
+ //상담유형별 PIE chart
+      var doughnutData = {
+              labels: ["App","Software","Laptop" ],
+              datasets: [{
+                  data: [300,50,100],
+                  backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
+              }]
+          } ;
+
+
+     var doughnutOptions = {
+              responsive: true
+     };
+
+
+     var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+     new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+     
+     
+     new Chart(document.getElementById("mixed-chart"), {
+  	    type: 'bar',
+  	    data: {
+  	      labels: ["1900", "1950", "1999", "2050"],
+  	      datasets: [{
+  	          label: "Europe",
+  	          type: "line",
+  	          borderColor: "#8e5ea2",
+  	          data: [408,547,675,734],
+  	          fill: false
+  	        }, {
+  	          label: "Africa",
+  	          type: "line",
+  	          borderColor: "#3e95cd",
+  	          data: [133,221,783,2478],
+  	          fill: false
+  	        }, {
+  	          label: "Europe",
+  	          type: "bar",
+  	          backgroundColor: "rgba(0,0,0,0.2)",
+  	          data: [408,547,675,734],
+  	        }, {
+  	          label: "Africa",
+  	          type: "bar",
+  	          backgroundColor: "rgba(0,0,0,0.2)",
+  	          backgroundColorHover: "#3e95cd",
+  	          data: [133,221,783,2478]
+  	        }
+  	      ]
+  	    },
+  	    options: {
+  	      title: {
+  	        display: true,
+  	        text: 'Population growth (millions): Europe & Africa'
+  	      },
+  	      legend: { display: false }
+  	    }
+  	});
+     
+     $( "#resizable" ).resizable({
+         containment: "#container"
+       });
     </script>
-
-
 </body>
 </html>

@@ -7,7 +7,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <!--Custom and plugin javascript-->
 <script src="${pageContext.request.contextPath}/resources/js/inspinia.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/pace/pace.min.js"></script>

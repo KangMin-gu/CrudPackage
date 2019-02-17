@@ -19,7 +19,7 @@
     <div id="wrap">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-            <div class="cti" style="display:block">
+            <div class="cti" style="display:none">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
@@ -39,9 +39,6 @@
 				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
             </div>
-            	 <input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<input type="button" value="로그인" onclick="loginGo();">
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
@@ -73,6 +70,7 @@
                                     <span class="li-text">3</span>
                                 </li>
                                 <li>
+                                	<i id="menu" class="fa fa-bars"></i>
                                 	<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#ff5555e8 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
                                 	<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #85ff00f5;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
                                 </li>

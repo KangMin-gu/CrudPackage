@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="voc">
+	
+	<select id="callBackList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT 
+			A.CALLBACKNO
+			,A.CALLER
+			,A.TRUNK
+			,A.CALLBACK
+			,DATE_FORMAT(A.RECEIVEDATE,'%Y-%m-%d') AS RECEIVEDATE_
+			,A.CALLCOUNT
+			,(SELECT USERNAME FROM ME800010 WHERE SITEID = 1 AND USERNO = A.CALLUSER) AS CALLUSER_
+			,@RNUM:=@RNUM + 1 AS ROWNUM 
+			FROM CTI510010 A, (SELECT @RNUM := 0) R
+			WHERE
+			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
+			AND (CALLUSER IS NULL
+					OR IFNULL(CALLCOUNT,0) <![CDATA[<=]]> 3)
+		) X
+		<if test="endRowNum != null">
+				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+		</if>
+		
+		ORDER BY X.CALLBACKNO ASC
+		
+		<if test="userCnt != null">
+			limit ${userCnt}
+		</if>
+		
+	</select>
+	
+	<update id="callBackUpdate" parameterType="hashMap">
+		UPDATE CTI510010
+		SET CALLUSER = #{calluser}
+		, CALLSTATUS = #{callstatus}
+		WHERE CALLBACKNO = #{callbackno}
+	</update>
+	
+	<select id="ctiUserCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) AS CNT FROM ME800010
+		WHERE SITEID = #{siteid}
+		<!--  AND ROLE = #{role} -->
+	</select>
+	<select id="callBackTotalRow" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM CTI510010
+		WHERE
+			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
+			AND (CALLUSER IS NULL
+					OR CALLCOUNT <![CDATA[<=]]> 3)
+	</select>
+	
+</mapper>

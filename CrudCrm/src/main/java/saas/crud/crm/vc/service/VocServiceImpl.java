@@ -392,12 +392,7 @@ public class VocServiceImpl implements VocService{
 		return bcustno;
 	}
 
-	//voc 콜백 추가. cti에서 보내 준 데이터 콜백 테이블에 insert 
-	@Override
-	public int svcVocCallBackInsert(Map<String, Object> calBackMap) {
-		int res = vcDao.vocCallBackInsert(calBackMap);
-		return res;
-	}
+
 
 	@Override
 	public Map<String, Object> vocOwnerList(HttpServletRequest request,int asOwner) {
@@ -424,7 +419,6 @@ public class VocServiceImpl implements VocService{
 	public ModelAndView vocCalOwnerList (HttpServletRequest request,int asOwner) {
 		
 		ModelAndView mView = new ModelAndView();
-		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		Map<String,Object> param = crud.searchParam(request);
 		param.put("owner",asOwner);
 		
@@ -433,12 +427,58 @@ public class VocServiceImpl implements VocService{
 		
 		return mView;
 	}
-
+	//voc 콜백 추가. cti에서 보내 준 데이터 콜백 테이블에 insert 
 	@Override
 	public void svcVocCallBackInsert(Map<String, Object> param) {
 		 vcDao.vocCallBackInsert(param);
 		
 	}
 	
+	@Override
+	public Map<String,Object> vocCallBackList(HttpServletRequest request){
+		
+		Map<String,Object> param = crud.searchParam(request);
+		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
+		
+		int totalRows = vcDao.vocCallBackTotalRow(param);
+		
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+		
+		param.put("startRowNum", startRowNum);
+		param.put("endRowNum", endRowNum);
+		List<Map<String,Object>> callBackList = vcDao.vocCallBackList(param);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("callBack", callBackList);
+		result.put("page", page);
+		result.put("totalRows",totalRows);
+		return result;
+	}
 	
+	@Override
+	public Map<String,Object> vocCallBackUserList(HttpServletRequest request){
+		
+		Map<String,Object> param = crud.searchParam(request);
+		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
+		
+		int totalRows = auDao.urTotalRows(param);
+		
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+		
+		param.put("startRowNum", startRowNum);
+		param.put("endRowNum", endRowNum);
+		List<Map<String,Object>> callBackUserList = auDao.urList(param);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("callBackUser", callBackUserList);
+		result.put("page", page);
+		result.put("totalRows",totalRows);
+		return result;
+	}
 }

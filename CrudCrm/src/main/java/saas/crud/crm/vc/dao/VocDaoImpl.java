@@ -66,14 +66,28 @@ public class VocDaoImpl implements VocDao{
 	}
 	//VOC 콜백 추가. cti에서 받아온 데이터 콜백 테이블에 insert
 	@Override
-	public int vocCallBackInsert(Map<String, Object> calbackMap) {
-		int res = session.insert("sv.vocCallBackInsert", calbackMap);
-		return res;
-	}
-	
-	@Override
 	public void vocCallBackInsert(Map<String,Object> param) {
 		 session.insert("sv.vocCallBack",param);
 	}
 	
+	@Override
+	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param) {
+		List<Map<String,Object>> callBackList = session.selectList("voc.callBackList",param);
+		return callBackList;
+	}
+	@Override
+	public int vocCallUserCnt(Map<String,Object> param) {
+		int cnt = session.selectOne("voc.ctiUserCnt",param);
+		return cnt;
+	}
+	@Override
+	public void vocCallBackDiv(Map<String,Object> param) {
+		session.update("voc.callBackUpdate",param);
+	}
+
+	@Override
+	public int vocCallBackTotalRow(Map<String, Object> param) {
+		int cnt = session.selectOne("voc.callBackTotalRow",param);
+		return cnt;
+	}
 }

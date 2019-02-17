@@ -15,5 +15,13 @@ public interface VocDao {
 	public int vocBlackCustInsert(Map<String,Object> blackInsMap);
 	public int vocBlackCustDelete(Map<String,Object> param);
 	public void vocCallBackInsert(Map<String,Object> param);
+	
+	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param);
+	
+	public int vocCallUserCnt(Map<String,Object> param);
+	
+	public void vocCallBackDiv(Map<String,Object> param);
+	
+	public int vocCallBackTotalRow(Map<String,Object> param);
 
 }

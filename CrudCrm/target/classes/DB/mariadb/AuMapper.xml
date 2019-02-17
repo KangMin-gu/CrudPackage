@@ -37,6 +37,9 @@
 			<if test="enddate != null">
 				AND DATE_FORMAT(REGDATE,'%Y-%m-%d') <![CDATA[<=]]> #{enddate}
 			</if>
+			<if test="role != null">
+				AND ROLE = #{role}
+			</if> 
 			
 			ORDER BY A.USERNO DESC
 			) X 

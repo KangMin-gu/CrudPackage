@@ -703,7 +703,6 @@
 		AND A.OWNER = #{owner}
 		AND DATE_FORMAT(A.VISITDATE,'%Y-%m-%d') = #{visitdate}
 	</select>
-	
 	<select id="svProductRead" parameterType="hashMap" resultType="hashMap">
 		SELECT PRODUCTB,PRODUCTM,PRODUCTS
 		,FN_PRODUCT(PRODUCTB,#{siteid}) AS PRODUCTBNAME
@@ -739,7 +738,6 @@
 		,NOW()
 		,#{DTWEEK}
 		,#{callstatus}
-		)	
+		)
 	</insert>
-
 </mapper>

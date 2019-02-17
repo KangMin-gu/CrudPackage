@@ -299,3 +299,27 @@ public class VocController {
 		mView.setViewName("vc/test1");
 		return mView;
 	}
+	
+	@RequestMapping(value="/callBack/div", method=RequestMethod.GET)
+	public ModelAndView authVocCallBackDiv(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("vc/pop/callbackDiv");
+		return mView;
+	}
+	
+	@RequestMapping(value="/callBackList", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authVocCallBackList(HttpServletRequest request){
+		Map<String,Object> callBackList = vcService.vocCallBackList(request);
+		return callBackList;
+	}
+	
+	@RequestMapping(value="/callBackUserList", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authVocCallBackUserList(HttpServletRequest request){
+		Map<String,Object> callBackUserList = vcService.vocCallBackUserList(request);
+		return callBackUserList;
+	}
+	
+	
+}

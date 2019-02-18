@@ -246,7 +246,7 @@
                             <div class="table-responsive">
                             <table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
                                 <colgroup>
-                                    <col style="width: 50px"/>
+                                    <col style="width: 3%;">
                                     <col style="width: 200px"/>
                                     <col style="width: 200px"/>
                                     <col style="width: 100px"/>
@@ -349,6 +349,7 @@
 </div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
 	<script>

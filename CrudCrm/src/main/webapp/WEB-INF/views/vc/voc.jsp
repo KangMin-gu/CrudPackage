@@ -35,8 +35,8 @@
 				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
 				<div>
 					<textarea id="messages" cols="150" rows="10"></textarea>
-				<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
-				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
+					<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
+					<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
             </div>
                     <ul class="top-btn">
@@ -46,10 +46,14 @@
                         <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="restBtn">보류 <i class="fa fa-times-circle"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="restBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
                         &nbsp; |&nbsp;
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
+                        <li class="liBtn"><button onClick="javascript:func_blindTransfer('','');" class="btn btn-primary btn-sm status" id="postCleaningBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
+                        <li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="postCleaningBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
                         <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
                         <li class="liBtn2"><span>상담창 상태</span>
                         <strong><span id="status">연결안됨</span></strong>
@@ -70,7 +74,7 @@
                     </ul>
                 </div>
         </div>
-        <div class="wrapper wrapper-content">
+        <div class="wrapper wrapper-content" style="padding-top: 5px;">
             <div class="ibox clearfix">
            
                 <div class="ibox-left">
@@ -530,9 +534,9 @@
                             <tr>
                                 <th>상담내용</th>
                                 <td colspan="2">
-                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="2000" style="height: 350px; resize: none;"></textarea>
+                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="1500" style="height: 350px; resize: none;"></textarea>
                                 </td>
-                                <td colspan="1">
+                                <td colspan="1" style="width: 150px;">
                                 
 								</td>
                             </tr>
@@ -675,7 +679,7 @@
                     </table>
                     <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                          	<button class="btn btn-primary btn-sm" id="email">메일 발송</button>
+                          	<button class="btn btn-primary btn-sm note" id="email">메일 발송</button>
                           	<button class="btn btn-primary btn-sm" id="sms">SMS 발송</button>
                           	<button class="btn btn-primary btn-sm" id="kakao">Kakao 발송</button> 
                         </div>                                       
@@ -768,7 +772,7 @@ $(document).ready(function () {
  });
  
  $('[name*=product]').change(function(){
-	 upperProduct(this); 
+	 upperProduct(this);
  });
 
  function addBlack(){

@@ -15,6 +15,7 @@
 <title>CRUD SYSTEM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet"> <!--radioBox-->
 <link href="${pageContext.request.contextPath}/resources/css/test.css" rel="stylesheet">

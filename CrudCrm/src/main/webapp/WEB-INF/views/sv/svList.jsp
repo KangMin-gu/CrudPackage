@@ -386,16 +386,10 @@
 </div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/daterangepicker/daterangepicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
-
-<script>
-
-$('#servicecode1').change(function(){
-	 upperCode('servicecode1'); 
-});
-</script>
 </body>
 </html>

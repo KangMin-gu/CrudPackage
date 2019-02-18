@@ -242,18 +242,17 @@
 
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
-	window.onload = function () {
-		enableSubmit();
-	}
 	$(document).ready(function () {
 		
 		$('.date').datepicker({
 			keyboardNavigation:false,
 			forceParse:false,
 			autoclose:true
-		});	
+		});
+		enableSubmit();
 	});
 	
 	</script>		

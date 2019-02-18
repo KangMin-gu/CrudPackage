@@ -35,6 +35,11 @@ if($('.i-checks').length >0){
     	radioClass: 'iradio_square-green',
 	});			
 }
+
+$('#servicecode1').change(function(){
+	 upperCode('servicecode1'); 
+});
+
 var date = today();
 $('#receptiondate').val(date);
 $('#receptiondate_').val(date);

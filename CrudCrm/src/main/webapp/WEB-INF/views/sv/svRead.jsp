@@ -75,7 +75,9 @@
                            		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
                               		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">                              		
                                 		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
+                                		<c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
 										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+										</c:if>
 										<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
 									</form:form>
 								</c:if>

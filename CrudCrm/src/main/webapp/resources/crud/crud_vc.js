@@ -1,3 +1,15 @@
+//String Buffer------------------------------------
+var StringBuffer = function() {
+    this.buffer = new Array();
+}
+StringBuffer.prototype.append = function(obj) {
+     this.buffer.push(obj);
+}
+StringBuffer.prototype.toString = function(){
+     return this.buffer.join("");
+}
+//-------------------------------------------------
+
 // 선택 요소 초기화. 
 // 2개의 대상 타겟이 동일한 div에 담겨 있어야 하며  네이밍 규칙이 다음과 같아야한다.
 // XXXXname , XXXXno   ex) custname , custno  
@@ -101,6 +113,37 @@ function custDataToJson(){//고객 인풋 필드 데이터 json형식 변경.
     return param;
 }
 
+//블랙추가
+function addBlack(){
+	 var custno = $('#custno').val();
+	 if(custno > 0 ){
+		 openNewWindow('voc','/vc/black/post','voc',700,480);
+	 }else{
+	 	alert('대상이 선택되지 않았습니다.');
+	 }
+}
+
+//블랙해제
+function cancleBlack(){
+	 var custno = $('#custno').val();
+	 var urlStr = '/vc/black/del/'+custno;
+	 $.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	$('#blackcnt').val(0);
+	        	$('#addBlackSpan').show();
+				$('#cancleBlackSpan').hide();
+				$('#blackDiv').hide();
+	        	alert("해제 되었습니다.");
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+};
 
 
 //********좌측 탭 *************************************************************************************************
@@ -159,6 +202,58 @@ function tabTargetVocService(pageNum){//서비스탭
 	}
 }
 
+function tabTargetBlackHistory(pageNum){//강성고객이력탭
+	
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/black?custno='+custNo+'&pageNum='+pageNum;
+	
+	if(custNo != 0 ){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	debugger;
+	        	$('#tab2 tbody tr').remove();
+	        	$('#tab2 .pagination li').remove();
+	        	
+	        	var length = data.blackHistList.length;
+	        	var html ="";
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/service/"+data.blackHistList[i].BLACKTYPE_+"','voc',750,700);"+'">'+ data.blackHistList[i].SERVICENAME + '</a></td><td>' + data.blackHistList[i].RECEPTIONDATE_ + '</td><td>' + data.blackHistList[i].SERVICECHANNEL_ + '</td><td>' + data.blackHistList[i].OWNER_ + '</td><td>' + data.blackHistList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.blackHistList[i].SERVICEOWNER_ + '</td></tr>';
+	        		$('#tab2 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetBlackHistory(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetBlackHistory(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetBlackHistory(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetBlackHistory(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab2 .pagination').append(html2);
+	            }
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+}
 
 function tabTargetVocEmail(pageNum){//email 탭 
 
@@ -214,7 +309,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 	    });
 
 	}
-
+}
 
 //좌측 하단 콜백 탭 
 function tabTargetCallbackList(pageNum){
@@ -227,7 +322,7 @@ function tabTargetCallbackList(pageNum){
         dataType: "json",
         cache: false,
         success: function (data) {  
-        	debugger;
+        	
         	$('#callbackTab1 tbody tr').remove();
         	$('#callbackTab1 .pagination li').remove();
         	
@@ -239,11 +334,10 @@ function tabTargetCallbackList(pageNum){
         		html += '</td><td><a onclick="bindCallBackNo('+"'"+data.callBackList[i].CALLBACK+"'"+');">'+data.callBackList[i].CALLBACK;
         		html += '</a></td><td>' + data.callBackList[i].CALLER; 
         		html += '</td><td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');"><i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'; 
-        		html += '</td><td><input type="text" id="vocmemo'+i+'" maxlength="800" value="'+data.callBackList[i].MEMO;
-        		html += '"></td><td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>';
-        		html += '<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackList[i].CUSTNO+'"/><input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>';
-        		
-        		
+        		html += '</td><td><input type="text" id="vocmemo'+i+'" maxlength="100">';
+        		html += '</td><td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>';
+        		html += '<input type="hidden" id="callbackcustno'+i+'" value="0"/><input type="hidden" id="trunk'+i+'" value="'+data.callBackList[i].TRUNK+'"> <input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>';
+        		       		
         		$('#callbackTab1 tbody').append(html); 	
         	}
         	var html2= "";
@@ -281,9 +375,9 @@ function tabTargetCallbackList(pageNum){
 
 
 function tabTargetCallbackHistory(pageNum){
-	debugger;
+	
 	var custno = $('#custno').val();
-	var urlStr = '/vc/callback?status=history&custno='+custno+'&pageNum='+pageNum;
+	var urlStr = '/vc/callback/history?custno='+custno+'&pageNum='+pageNum;
 	
 	$.ajax({
         url: urlStr,
@@ -291,23 +385,22 @@ function tabTargetCallbackHistory(pageNum){
         dataType: "json",
         cache: false,
         success: function (data) {  
-        	debugger;
+        	
         	$('#tab3 tbody tr').remove();
         	$('#tab3 .pagination li').remove();
         	
-        	var length = data.callBackList.length;
+        	var length = data.callBackHistList.length;
         	var html ="";
         	//todo. string buffer  코드로 변경        	
         	for (var i = 0; i < length; i++) {
-        		html = '<tr><td><input type="hidden" id="callbackno'+i+'" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_;
-        		html += '</td><td>'+data.callBackList[i].CALLBACK;
-        		html += '</a></td><td>' + data.callBackList[i].CALLER; 
-        		html += '</td><td>'; 
-        		html += '</td><td>+data.callBackList[i].MEMO';
-        		html += '</td><td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>';
-        		html += '<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackList[i].CUSTNO+'"/><input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>';
-        		
-        		
+        		html = '<tr><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="hidden" id="callbachistkno'+i+'" value="'+data.callBackHistList[i].CALLBACKHISTNO+'"/>'+data.callBackHistList[i].REGDATE_;
+        		html += '</td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLBACK;
+        		html += '</a></td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">' + data.callBackHistList[i].CALLER; 
+        		html += '</td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].USERNAME; 
+        		html += '</td><td><input type="text" readonly value="'+data.callBackHistList[i].MEMO+'" title="'+data.callBackHistList[i].MEMO+'">';
+        		html += '</td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_;
+        		html += '<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackHistList[i].CUSTNO+'"/><input type="hidden" id="callcount'+i+'" value="'+data.callBackHistList[i].CALLCOUNT+'"/></td></tr>';
+        		  		
         		$('#tab3 tbody').append(html); 	
         	}
         	var html2= "";
@@ -815,7 +908,7 @@ function productB() {
 		dataType : "json",
 		cache : false,
 		success : function(data) {
-			debugger;
+		
 			for (i = 0; i < data.length; i++) {
 				$('.product select:first').append(
 						'<option label="' + data[i].prdname + '" value="'
@@ -830,7 +923,7 @@ function productB() {
 }
 
 function vocContents(hash,url){
-	debugger;
+	
 	var menuType;
 	if(url.indexOf('voc') > 0){
 		menuType = 1;
@@ -1000,7 +1093,7 @@ if ($('#calendar').length > 0) {
 
 				drop : function(event, a, b) { // 드래그 박스의 일정 캘린더로 드랍시 발생
 												// function
-					debugger;
+				
 					var name = $(b.helper).text().trim();
 					var val1 = $(b.helper).children().val();
 					var date = formatDate(event._d);
@@ -1069,7 +1162,7 @@ function bindCallBackNo(phoneNo){
 }
 
 function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
-	debugger;
+	
 	$('#makeCallNum').val(phoneNo);
 	$('#phone').val(phoneNo);
 	 swal({
@@ -1086,7 +1179,7 @@ function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
  }
  
 function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
-	debugger;
+	
 	$('#makeCallNum').val(phoneNo);
 	$('#phone').val(phoneNo);
 	 swal({
@@ -1103,14 +1196,15 @@ function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
  }
  
 function callBackConfirm(idx,callstatus){//콜백 목록 처리
-	debugger;
+	
 	var typeText;
 	var titleText;
+	var callcount = $('#callcount'+idx).val();
+	
 	if(callstatus == 2){//완료버튼 클릭시 
 		titleText = "완료 처리 하시겠습니까?";
 		typeText="success";
 	}else if(callstatus == 3){//통화불가버튼 클릭시
-		var callcount = $('#callcount'+idx).val();
 		if(callcount > 2){//현재 콜 시도횟수가 3회 이상이라면
 			titleText = "미해결 처리 하시겠습니까?"
 		}else{
@@ -1130,8 +1224,11 @@ function callBackConfirm(idx,callstatus){//콜백 목록 처리
     	 var callbackno = $('#callbackno'+idx).val();
     	 var custno = $('#callbackcustno'+idx).val();
     	 var memo = $('#vocmemo'+idx).val();
-    	 var trunk = $('#ctitelno').val();
-  	 
+    	 var trunk = $('#trunk'+idx).val();
+    	 if(callstatus == 3 && callcount > 2){//callcount가 3이상일때 불통 버튼 클릭 시 status = 4 미해결 
+    		 callstatus = 4;
+    	 }
+    	 
     	 var jsonPrm = {"callbackno":callbackno, "custno":custno, "memo":memo, "callstatus":callstatus , "trunk":trunk};
     	 var urlStr = '/vc/callback/post/'+callbackno;
     	 
@@ -1171,6 +1268,5 @@ function callBackMatching(idx){//매칭 버튼 클릭시 현재 바인딩 된 �
     	swal.close(); 
     });
 }
-
 //***********************************************************************************************************
 

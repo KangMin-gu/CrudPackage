@@ -17,11 +17,11 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->
 </head>
 	<body>
-    <div id="wrap">
+    <div id="wrap" style=" margin-bottom: 40px;margin-top: 70px;">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
 
-            <div class="cti" style="display:block">
+            <div class="cti" style="display:none">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
@@ -41,10 +41,11 @@
 				<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
 				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
-            </div>
-            	 <input type="button" value="웹소켓접속" onclick="webSocketGo();">
+				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
 				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
 				<input type="button" value="로그인" onclick="loginGo();">
+            </div>
+            	 
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
@@ -75,12 +76,12 @@
                     </ul>
                 </div>
         </div>
-        <div class="wrapper wrapper-content">
+        <div class="wrapper wrapper-content" >
             <div class="ibox clearfix">
            
                 <div class="ibox-left">
                     <div class="ibox-content left-cont pt-0">
-                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;padding-top: 6px;padding-bottom: 6px;display:none;">
+                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;padding-top: 6px;padding-bottom: 6px;bottom: 0px;margin-bottom: 5px;display:none;">
                     	<b>블랙 리스트에 등록 되어 있는 고객입니다.</b>
                     </div>
                     <div id="custHiddenDiv">
@@ -118,27 +119,6 @@
                                     	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel1" id="homtel1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >        		
 										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel2" id="homtel2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" > 
 										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel3" id="homtel3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>고객구분</th>
-                                    <td>
-                                    	<select class="form-control custInput" name="custgubun" id="custgubun">
-											<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
-											<c:forEach var="code" items="${CUSTGUBUN }">
-                                            	<option label="${code.codename }" value="${code.codeval }"/>
-                                            </c:forEach>
-										</select>
-                                    </td>
-                                    <th>관련고객</th>
-                                    <td>
-                                        <div class="input-group cust" id="relcustname">
-                                            <input type="text" class="form-control" name="relcustname" readonly>
-                                            <input class="custInput" type="hidden" id="relcustno" name="relcustno" value="0" />
-                                            <span class="input-group-addon"><a href="#"><i class="fa fa-search cust"></i></a></span>
-                                            <span class="input-group-addon"><a href="#"><i class="fa fa-times dataCancle"></i></a></span>  
-                                        </div>
-                                          
                                     </td>
                                 </tr>
                                 <tr>
@@ -244,12 +224,12 @@
                          	</div>
                          </div>       
                     </div><!-- 좌측 고객div -->
-                    <div class="ibox-content bot-cont">
+                    <div class="ibox-content bot-cont" style="padding-top:0px;">
                         
                         <div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">서비스</a></li>
-                                <li><a class="nav-link" data-toggle="tab" href="#tab2">강성고객이력</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetBlackHistory(1);" data-toggle="tab" href="#tab2">강성고객이력</a></li>
                                 <li><a class="nav-link" onClick="javascript:tabTargetCallbackHistory(1);" data-toggle="tab" href="#tab3">콜백이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab4">SMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab5">MMS</a></li>
@@ -284,25 +264,14 @@
                                         <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시2</th>
-                                                    <th>상담구분</th>
-                                                    <th>상담유형</th>
+                                                    <th>접수일시</th>
+                                                    <th>유형</th>
+                                                    <th>접수사유</th>
                                                     <th>접수자</th>
-                                                    <th>고객명</th>
-                                                    <th>접수제품</th>
-                                                    <th>처리자</th>
+                                                    <th>현재상태</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                         <div class="m-auto" style="text-align:center;padding-top:16px">
@@ -313,14 +282,22 @@
                                 <div role="tabpanel" id="tab3" class="tab-pane">
                                     <div class="panel-body">
                                         <table class="table table-bordered" style="margin-bottom: 16px;">
+                                        	<colgroup>
+												<col width="80px;">
+												<col width="80px;">
+												<col width="80px;">
+												<col width="150px;">
+												<col width="120px;">
+												<col width="80px;">
+											</colgroup>
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시</th>
-                                                    <th>콜백번호</th>
-                                                    <th>발신자번호</th>
-                                                    <th>상담원</th>
-                                                    <th>메모</th>
-                                                    <th>상태</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">통화일시</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">콜백번호</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">발신자번호</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">상담원</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">메모</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">상태</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -484,7 +461,7 @@
                         </div>
                     </div><!-- 좌측 탭 div -->
                     
-                    <div class="ibox-content">
+                    <div class="ibox-content" style="padding-top:0px;">
                     	<div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li><a class="nav-link" data-toggle="tab" onClick="javascript:tabTargetCallbackList(1);" href="#callbackTab1" id="callbackTab1Btn">콜백 목록 &nbsp; <i class="fa fa-refresh"></i></a></li>
@@ -815,38 +792,6 @@ $(document).ready(function () {
  });
 
  
- //블랙추가
- function addBlack(){
-	 var custno = $('#custno').val();
-	 if(custno > 0 ){
-		 openNewWindow('voc','/vc/black/post','voc',700,480);
-	 }else{
-	 	alert('대상이 선택되지 않았습니다.');
-	 }
- }
- 
- //블랙해제
- function cancleBlack(){
-	 var custno = $('#custno').val();
-	 var urlStr = '/vc/black/del/'+custno;
-	 $.ajax({
-	        url: urlStr,
-	        method: "GET",
-	        dataType: "json",
-	        cache: false,
-	        success: function (data) {
-	        	$('#blackcnt').val(0);
-	        	$('#addBlackSpan').show();
-				$('#cancleBlackSpan').hide();
-				$('#blackDiv').hide();
-	        	alert("해제 되었습니다.");
-	        },
-	        error: function (request, status, error) {
-	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-	        }
-	    });
- };
-
  
  var second = 00;
  var minite = 00;

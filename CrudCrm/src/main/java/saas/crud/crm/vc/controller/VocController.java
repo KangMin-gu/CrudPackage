@@ -280,7 +280,7 @@ public class VocController {
 		vcService.svcVocCallBackInsert(callBackMap);
 		
 		return mView;
-
+	}
 		
 	//VOC 콜백 목록 조회 
 	@RequestMapping(value="/vc/callback",method=RequestMethod.GET)
@@ -314,8 +314,24 @@ public class VocController {
 		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
 		callBackPrm.put("callbackno", callbackno);
 		callBackPrm.put("userno", userno);
-		int res = vcService.svcvocCallBackUpdate(callBackPrm);
+		int res = vcService.svcvocCallBackUpdate(callBackPrm);//콜백상태를 변경 , 콜백히스토리 insert
 		return res;
-
+	}
+	
+	//VOC 콜백 목록 조회 
+	@RequestMapping(value="/vc/callback/history",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocCallBackHistList(HttpServletRequest request) {		
+		Map<String,Object> callBackHistList = vcService.svcVocCallBackHistList(request);		
+		return callBackHistList;
+	}
+	
+	//VOC 고객 - 블랙 이력 조회 
+	@RequestMapping(value="/vc/tab/black",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocBlackHistList(HttpServletRequest request) {	
+		System.out.println("@@@@@@@@@@@@@@@@@");
+		Map<String,Object> blackHistList = vcService.svcVocBlackHistList(request);		
+		return blackHistList;
 	}
 }

@@ -23,5 +23,7 @@ public interface VocDao {
 	public void vocCallBackDiv(Map<String,Object> param);
 	
 	public int vocCallBackTotalRow(Map<String,Object> param);
+	
+	public int vocCallBackPassDiv(Map<String,Object> param);
 
 }

@@ -96,7 +96,6 @@ function custDataToJson(param) {// 고객 인풋 필드 데이터 json형식 변
 // ********좌측 탭
 // *************************************************************************************************
 function tabTargetVocService(pageNum) {// 서비스탭
-	debugger;
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/sv?custno=' + custNo;
 
@@ -110,7 +109,6 @@ function tabTargetVocService(pageNum) {// 서비스탭
 					dataType : "json",
 					cache : false,
 					success : function(data) {
-						debugger;
 						$('#tab1 tbody tr').remove();
 						$('#tab1 .pagination li').remove();
 
@@ -166,19 +164,16 @@ function tabTargetVocService(pageNum) {// 서비스탭
 }
 
 function tabTargetVocEmail(pageNum) {// email 탭
-	debugger;
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/email?custno=' + custNo;
 
 	if (custNo != 0) {
-		$
-				.ajax({
+		$.ajax({
 					url : urlStr,
 					method : "GET",
 					dataType : "json",
 					cache : false,
 					success : function(data) {
-						debugger;
 						$('#tab7 tbody tr').remove();
 						$('#tab7 .pagination li').remove();
 						var emailId = "";
@@ -676,7 +671,6 @@ function productB() {
 		dataType : "json",
 		cache : false,
 		success : function(data) {
-			debugger;
 			for (i = 0; i < data.length; i++) {
 				$('.product select:first').append(
 						'<option label="' + data[i].prdname + '" value="'
@@ -691,7 +685,6 @@ function productB() {
 }
 
 function vocContents(hash,url){
-	debugger;
 	var menuType;
 	if(url.indexOf('voc') > 0){
 		menuType = 1;
@@ -761,14 +754,19 @@ function cti_test() {
 }
 
 $('#menu').click(function(e){
-	openNewWindow('콜백분배','/callBack/div',e.currentTarget.id,800,1200);
+	openNewWindow('콜백분배','/callBack/div',e.currentTarget.id,800,600);
 });
 
-
+$('#leftSearch').click(function(e){
+	callBackList(1);
+});
+$('[name="owner_"]').keyup(function(e){
+	ctiUserList(1);
+});
 function callBackList(pageNum){
-	var callBackNum  = $('#callback').val();
-	if(callBackNum != undefined){
-		var url = '/callBackList?pageNum='+pageNum+'&callBackNum='+callBackNum;
+	var callBack  = $('#callback').val();
+	if(callBack != undefined){
+		var url = '/callBackList?pageNum='+pageNum+'&callBack='+callBack;
 	}else{
 		var url = '/callBackList?pageNum='+pageNum;
 	}
@@ -778,10 +776,9 @@ function callBackList(pageNum){
         dataType: "json",
         cache: false,
         success: function (data) {
-        	debugger;
         	$('.ibox-left .table-responsive tbody tr').remove();
         	$('.ibox-left .pagination li').remove();
-        	$('#tab1 .m-auto h4').remove();
+        	$('.ibox-left .m-auto h4').remove();
         	var length = data.callBack.length;
         	var html ="";
         	for (var i = 0; i < length; i++) {
@@ -824,7 +821,7 @@ function callBackList(pageNum){
     });
 }	
 function ctiUserList(pageNum){
-	var userNo  = $('#ctiuserno').val();
+	var userNo  = $('#owner').val();
 	if(userNo != undefined){
 		var url = '/callBackUserList?pageNum='+pageNum+'&userNo='+userNo;
 	}else{
@@ -836,15 +833,14 @@ function ctiUserList(pageNum){
         dataType: "json",
         cache: false,
         success: function (data) {
-        	debugger;
         	$('.ibox-right .table-responsive tbody tr').remove();
         	$('.ibox-right .pagination li').remove();
-        	$('#tab1 .m-auto h4').remove();
+        	$('.ibox-right .m-auto h4').remove();
         	var length = data.callBackUser.length;
         	var html ="";
         	for (var i = 0; i < length; i++) {
         		
-        		html = '<tr><td><input type="checkbox" class="i-checks chksquare" name="userno" id="userno" value="'+data.callBackUser[i].USERNO+'"></td><td>' + data.callBackUser[i].USERNAME + '</td><td>' + data.callBackUser[i].USERID + '</td></tr>';
+        		html = '<tr><td><input type="checkbox" class="i-checks chksquare" name="userno" id="userno" value="'+data.callBackUser[i].USERNO+'"></td><td>' + data.callBackUser[i].USERNAME + '</td><td>' + data.callBackUser[i].USERID + '</td><td>'+data.callBackUser[i].CTICOUNT+'</td></tr>';
         		$('.ibox-right .table-responsive tbody').append(html);
         	}
         	var html2= "";
@@ -881,6 +877,82 @@ function ctiUserList(pageNum){
         }
     });
 }
+
+$('#passDiv').click(function(e){
+	var callBackLength = $('.ibox-left .checked').length;
+	var userLength = $('.ibox-right .checked').length;
+	
+	var callBackNo="";
+	
+	if(callBackLength == 0){
+		alert("콜백 리스트에서 선택해주세요");
+		return false;
+	}
+	
+	if(userLength == 0){
+		alert("사용자 리스트에서 선택해주세요");
+		return false;
+	}else if(userLength >= 2){
+		alert("한명의 사용자만 선택해주세요");
+		return false;
+	}else{
+		var userNo = $('.ibox-right .checked input').val();
+		var userName = $('.ibox-right .checked').parent().next().text();
+	}
+	
+	if(callBackLength > 0 && userLength > 0){
+		for(i=0;i < callBackLength; i++){
+			var callBackVal = $('.ibox-left .checked:eq('+i+') input').val();
+			callBackNo += callBackVal+",";
+		}
+		
+		var url = "/callBack/passDiv?callBackNo="+callBackNo+"&userNo="+userNo;
+		 $.ajax({
+		        url: url ,
+		        method: "GET",
+		        dataType: "json",
+		        cache: false,
+		        success: function (data) {
+		        	alert(data+"건이 "+ userName +" 에게 할당 되었습니다.");
+		        	self.location.reload();
+		        },
+		        error: function (request, status, error) {
+		            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		        }
+		    });
+	
+	}
+
+});
+
+
+$('#autoDiv').click(function(e){
+	var userNo = $('#owner').val();
+	var callBack = $('#callback').val();
+	
+	if(callBack != "" && userNo != ""){
+		url='/callBack/autoDiv?callBack='+parseInt(callBack)+'&userNo='+parseInt(userNo);
+	}else if(callBack == "" && userNo != ""){
+		url='/callBack/autoDiv?userNo='+parseInt(userNo);
+	}else if(callBack != "" && userNo == ""){
+		url='/callBack/autoDiv?callBack='+parseInt(callBack);
+	}else{
+		url='/callBack/autoDiv';
+	}
+	$.ajax({
+        url: url ,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	alert("자동 분배 되었습니다.");
+        	self.location.reload();
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+});
 
 $('#asowner').change(
 		function() {
@@ -980,8 +1052,6 @@ if ($('#calendar').length > 0) {
 				droppable : true, // false - 드래그 박스의 일정 캘린더로 이동이 안됨.
 
 				drop : function(event, a, b) { // 드래그 박스의 일정 캘린더로 드랍시 발생
-												// function
-					debugger;
 					var name = $(b.helper).text().trim();
 					var val1 = $(b.helper).children().val();
 					var date = formatDate(event._d);

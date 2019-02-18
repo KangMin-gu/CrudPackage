@@ -18,6 +18,10 @@
 			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
 			AND (CALLUSER IS NULL
 					OR IFNULL(CALLCOUNT,0) <![CDATA[<=]]> 3)
+			AND CALLSTATUS IN (0,3)
+			<if test="callBack != null">
+				AND CALLBACK LIKE CONCAT('%',#{callBack},'%')
+			</if>
 		) X
 		<if test="endRowNum != null">
 				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
@@ -25,30 +29,48 @@
 		
 		ORDER BY X.CALLBACKNO ASC
 		
-		<if test="userCnt != null">
-			limit ${userCnt}
+		<if test="totalCnt != null">
+			limit ${totalCnt}
 		</if>
 		
 	</select>
 	
 	<update id="callBackUpdate" parameterType="hashMap">
 		UPDATE CTI510010
-		SET CALLUSER = #{calluser}
-		, CALLSTATUS = #{callstatus}
-		WHERE CALLBACKNO = #{callbackno}
+		SET CALLUSER = #{userNo}
+		, CALLSTATUS = 1
+		WHERE CALLBACKNO = #{callBackNo}
 	</update>
 	
 	<select id="ctiUserCnt" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*) AS CNT FROM ME800010
 		WHERE SITEID = #{siteid}
 		<!--  AND ROLE = #{role} -->
+		<if test="userNo != null">
+			AND USERNO =  #{userNo}
+		</if>
 	</select>
+	
 	<select id="callBackTotalRow" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*) FROM CTI510010
 		WHERE
 			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
 			AND (CALLUSER IS NULL
-					OR CALLCOUNT <![CDATA[<=]]> 3)
+					OR IFNULL(CALLCOUNT,0) <![CDATA[<=]]> 3)
+			AND CALLSTATUS IN (0,3)
+			<if test="callBack != null">
+				AND CALLBACK LIKE CONCAT('%',#{callBack},'%')
+			</if>
 	</select>
+	
+	<update id="callBackPassDiv" parameterType="hashMap">
+		UPDATE CTI510010
+		SET CALLUSER = #{userNo}
+			,CALLSTATUS = 1
+		WHERE CALLBACKNO IN
+		<foreach collection="callBackNo" item="type" index="index" open="(" separator="," close=")">
+      		#{type}
+       </foreach> 
+	</update>
 	
 </mapper>

@@ -321,5 +321,23 @@ public class VocController {
 		return callBackUserList;
 	}
 	
+	@RequestMapping(value="/callBack/passDiv",method=RequestMethod.GET)
+	@ResponseBody
+	public int authVocCallPassDiv(HttpServletRequest request) {
+		
+		int cnt = vcService.vocCallBackPassDiv(request);
+		
+		return cnt;
+		
+	}
+	
+	@RequestMapping(value="/callBack/autoDiv",method=RequestMethod.GET)
+	@ResponseBody
+	public int authVocCallAtouDiv(HttpServletRequest request) {
+		
+		int cnt = vcService.vocCallBackAutoDiv(request);
+		return cnt;
+	}
+	
 	
 }

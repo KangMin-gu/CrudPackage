@@ -27,4 +27,8 @@ public interface VocService {
 	
 	public Map<String,Object> vocCallBackList(HttpServletRequest request);
 	public Map<String,Object> vocCallBackUserList(HttpServletRequest request);
+	
+	public int vocCallBackPassDiv(HttpServletRequest request);
+	
+	public int vocCallBackAutoDiv(HttpServletRequest request);
 }

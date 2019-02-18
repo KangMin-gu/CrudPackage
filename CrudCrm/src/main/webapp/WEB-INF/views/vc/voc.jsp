@@ -16,7 +16,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 </head>
 	<body>
-    <div id="wrap">
+    <div id="wrap" style="margin-top: 0px;">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
             <div class="cti" style="display:none">
@@ -51,17 +51,8 @@
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
                         <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm">끊기<i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm">당겨받기 <i class="fa fa-phone"></i></button></li>&nbsp; |&nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm">대기 <i class="fa fa-spinner"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm">휴식 <i class="fa fa-coffee"></i></button></li>
-                        <li class="liBtn"><button class="btn btn-primary btn-sm">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
-                        <li><span id="timer">00 : 00</span></li>&nbsp; | &nbsp;
                         <li class="liBtn2"><span>상담창 상태</span>
                         <strong><span id="status">연결안됨</span></strong>
-                         <button class="btn btn-default btn-sm">Out연결</button></li>
-                        <li class="liBtn2"><span>상담 상태 : </span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
-                        <span id="status" class="cti_text_nomal" style="display:inline-block; min-width:100px;">연결안됨</span></li>
                         <li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
                         <li class="float-right">
                             <ul class="top-ul03">

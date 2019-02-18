@@ -90,4 +90,10 @@ public class VocDaoImpl implements VocDao{
 		int cnt = session.selectOne("voc.callBackTotalRow",param);
 		return cnt;
 	}
+	
+	@Override
+	public int vocCallBackPassDiv(Map<String,Object> param) {
+		int cnt = session.update("voc.callBackPassDiv",param);
+		return cnt;
+	}
 }

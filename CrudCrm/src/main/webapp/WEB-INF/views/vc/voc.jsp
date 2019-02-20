@@ -530,9 +530,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>접수내용</th>
+                                <th>제목</th>
                                 <td colspan="3">
-                                    <input type="text"class="form-control voc" name="servicename" id="servicename" value="${vocInfo.SERVICENAME }">
+                                    <input type="text"class="form-control voc" name="servicename" style="height:75px;"id="servicename" value="${vocInfo.SERVICENAME }">
                                 </td>
                             </tr>
                             <tr>

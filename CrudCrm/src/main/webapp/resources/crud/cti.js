@@ -826,7 +826,7 @@ function ctiEvent(msg){
 		document.getElementById("checkGroupValue").value = "Y";//CTI에 등록된 그룹정보체크
 
 	}else if(tmpData[0] == "93") {			/// 모든상담원상태 요구에 대한 응답
-		alert('test');  
+		
 	}else if(tmpData[0] == "94"){// 상담원 상태 변경 
 		if(tmpData[1] == document.getElementById("cti_login_id").value) {				// 받은 데이터가 로그인한 상담원의 아이디와 같은 경우
             if(document.getElementById("checkGroupValue2").value == "Y"){

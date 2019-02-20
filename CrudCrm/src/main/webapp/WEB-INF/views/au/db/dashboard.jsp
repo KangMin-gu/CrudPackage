@@ -28,8 +28,7 @@
             <div class="col-md-12">
                 <div data-arrange="lt-grid" class="lt-container lt-xs-h-6 lt-sm-h-5 lt-md-h-4">
 
-                    <div draggable="true" class="lt 
-                    		lt-xs-x-0
+                    <div draggable="true" class="lt lt-xs-x-0
                             lt-xs-y-0
                             lt-xs-w-1
                             lt-xs-h-1

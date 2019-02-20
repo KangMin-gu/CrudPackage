@@ -23,186 +23,84 @@
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-		<div id="resizable" class="wrapper wrapper-content">
-        	<div class="row" id="sortable-view">                                                     
-               <div class="col-lg-6">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <canvas id="barChart" height="140"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="ibox ">
-                            <div class="ibox-title">                             
-                                <h5>상담 유형별</h5>
-                            </div>
-                            <div class="ibox-content">
-                              	<canvas id="doughnutChart" height="140"></canvas>
-                            </div>
-                        </div>
-            </div>
-        </div>
-        <div class="row" id="sortable-view">
-            <div class="col-lg-12">
-               <div class="ibox ">
-                   <div class="ibox-title">
-                       <h5>채널별 캠페인 현황</h5>                          
-                    </div>
-                    <div class="ibox-content">
-                        <div>
-                            <div id="lineChart"></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-           </div>
-		<div class="row" id="sortable-view">
-					<div class="col-lg-12">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>영업 현황 분석</h5>                             
-                            </div>
-                            <div class="ibox-content">
-                               <canvas id="mixed-chart" width="800" height="140"></canvas>                 
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-				</div>
-
-                <div class="row" id="sortable-view">
-                    <div class="col-lg-4">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>Messages</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content ibox-heading">
-                                <h3><i class="fa fa-envelope-o"></i> New messages</h3>
-                                <small><i class="fa fa-tim"></i> You have 22 new messages and 16 waiting in draft folder.</small>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="feed-activity-list">
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Jesica Ocean</strong>
-                                            <div>Contrary to popular belief, Lorem Ipsum</div>
-                                            <small class="text-muted">Today 1:00 pm - 08.06.2014</small>
-                                        </div>
-                                    </div>
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Monica Jackson</strong>
-                                            <div>The generated Lorem Ipsum is therefore </div>
-                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
-                                        </div>
-                                    </div>                          
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-8">
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>User project list</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content table-responsive">
-                                        <table class="table table-hover no-margins">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                                <th>User</th>
-                                                <th>Value</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><small>Pending...</small></td>
-                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
-                                                <td>Samantha</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
-                                                <td>Damian</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>User project list</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content table-responsive">
-                                        <table class="table table-hover no-margins">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                                <th>User</th>
-                                                <th>Value</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><small>Pending...</small></td>
-                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
-                                                <td>Samantha</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
-                                                <td>Damian</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                	</div>
-                </div>
+		<div class="wrapper wrapper-content">
+	        	<div class="row">                                                     
+	               <div class="col-lg-4">
+	                   <div class="ibox ">
+	                      <div class="ibox-title">
+	                           <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
+	                      </div>
+	                      <div class="ibox-content">
+	                          <canvas id="barChart" height="140"></canvas>
+	                      </div>
+	                   </div>
+	              	</div>
+	                <div class="col-lg-4">
+	                   <div class="ibox ">
+	                      <div class="ibox-title">                             
+	                           <h5>상담 유형별</h5>
+	                      </div>
+	                    <div class="ibox-content">
+	                        <canvas id="doughnutChart" height="140"></canvas>
+	                    </div>
+	                   </div>
+	            	</div>
+	            	<div class="col-lg-4">
+	                   <div class="ibox ">
+	                      <div class="ibox-title">
+	                           <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
+	                      </div>
+	                      <div class="ibox-content">
+	                          <canvas id="barChart" height="140"></canvas>
+	                      </div>
+	                   </div>
+	              	</div>	
+	        	</div>
+		        <div class="row" id="sortable-view">
+		            <div class="col-lg-6">
+		               <div class="ibox ">
+		                   <div class="ibox-title">
+		                       <h5>채널별 캠페인 현황</h5>                          
+		                    </div>
+		                    <div class="ibox-content">                        
+		                            <div id="lineChart"></div>                       
+		                     </div>
+		                  </div>
+		            </div>
+		            <div class="col-lg-6">
+		                  <div class="ibox ">
+			                  <div class="ibox-title">
+			                     <h5>영업 현황 분석</h5>                             
+			                  </div>
+			                  <div class="ibox-content">
+			                       <canvas id="canvas" height="140"></canvas>                
+			                  </div>
+		               	</div>
+		            </div>
+		        </div>
+		        
+		 		<div class="row" id="sortable-view">
+		            <div class="col-lg-6">
+		               <div class="ibox ">
+		                   <div class="ibox-title">
+		                       <h5>채널별 캠페인 현황</h5>                          
+		                    </div>
+		                    <div class="ibox-content">                  
+		                            <div id="lineChart"></div>                       
+		                     </div>
+		                  </div>
+		            </div>
+		            <div class="col-lg-6">
+		                  <div class="ibox ">
+			                  <div class="ibox-title">
+			                     <h5>영업 현황 분석</h5>                             
+			                  </div>
+			                  <div class="ibox-content">
+			                       <canvas id="mixed-chart" width="800" height="140"></canvas>                 
+			                  </div>
+		               	</div>
+		            </div>
+		        </div>
         	</div>
 		</div>
   	</div>			
@@ -290,49 +188,113 @@
      var ctx4 = document.getElementById("doughnutChart").getContext("2d");
      new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
      
-     
-     new Chart(document.getElementById("mixed-chart"), {
-  	    type: 'bar',
-  	    data: {
-  	      labels: ["1900", "1950", "1999", "2050"],
-  	      datasets: [{
-  	          label: "Europe",
-  	          type: "line",
-  	          borderColor: "#8e5ea2",
-  	          data: [408,547,675,734],
-  	          fill: false
-  	        }, {
-  	          label: "Africa",
-  	          type: "line",
-  	          borderColor: "#3e95cd",
-  	          data: [133,221,783,2478],
-  	          fill: false
-  	        }, {
-  	          label: "Europe",
-  	          type: "bar",
-  	          backgroundColor: "rgba(0,0,0,0.2)",
-  	          data: [408,547,675,734],
-  	        }, {
-  	          label: "Africa",
-  	          type: "bar",
-  	          backgroundColor: "rgba(0,0,0,0.2)",
-  	          backgroundColorHover: "#3e95cd",
-  	          data: [133,221,783,2478]
-  	        }
-  	      ]
-  	    },
-  	    options: {
-  	      title: {
-  	        display: true,
-  	        text: 'Population growth (millions): Europe & Africa'
-  	      },
-  	      legend: { display: false }
-  	    }
-  	});
-     
-     $( "#resizable" ).resizable({
-         containment: "#container"
-       });
+//영업현황분석
+
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+				type: 'bar',
+				label: 'Dataset 1',
+				backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.red,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				type: 'line',
+				label: 'Dataset 2',
+				backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.blue,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				type: 'bar',
+				label: 'Dataset 3',
+				backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.green,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}]
+		};
+
+		// Define a plugin to provide data labels
+		Chart.plugins.register({
+			afterDatasetsDraw: function(chart) {
+				var ctx = chart.ctx;
+
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, index) {
+							// Draw the text in black, with the specified font
+							ctx.fillStyle = 'rgb(0, 0, 0)';
+
+							var fontSize = 16;
+							var fontStyle = 'normal';
+							var fontFamily = 'Helvetica Neue';
+							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+							// Just naively convert to string for now
+							var dataString = dataset.data[index].toString();
+
+							// Make sure alignment settings are correct
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+
+							var padding = 5;
+							var position = element.tooltipPosition();
+							ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+						});
+					}
+				});
+			}
+		});
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Chart.js Combo Bar Line Chart'
+					},
+				}
+			});
+		};
+
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			barChartData.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return randomScalingFactor();
+				});
+			});
+			window.myBar.update();
+		});
+	
     </script>
 </body>
 </html>

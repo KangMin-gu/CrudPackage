@@ -17,213 +17,118 @@
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/chartlininc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/jQueryUI/jquery-ui.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/js/layout-grid.css" rel="stylesheet">
 </head>
 <body>
 	<div id="wrapper" >
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-		<div class="wrapper wrapper-content">
-		
-        	<div class="row" id="sortable-view">                                                     
-               <div class="col-lg-6">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <canvas id="barChart" height="140"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="ibox ">
-                            <div class="ibox-title">                             
-                                <h5>상담 유형별</h5>
-                            </div>
-                            <div class="ibox-content">
-                              	<canvas id="doughnutChart" height="140"></canvas>
-                            </div>
-                        </div>
-            </div>
-        </div>
-        <div class="row" id="sortable-view">
-            <div class="col-lg-12">
-               <div class="ibox ">
-                   <div class="ibox-title">
-                       <h5>채널별 캠페인 현황</h5>                          
-                    </div>
-                   <div class="ibox-content">
-                       <div class="row">
-                         <div class="col-lg-9">
-                          <div id="lineChart"></div>
-                         </div>
-                         <div class="col-lg-3">
-                          a
-                         </div>
-                      </div>                                          
-                    </div>
-                  </div>
-               </div>
-           </div>
-		<div class="row" id="sortable-view">
-					<div class="col-lg-12">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>영업 현황 분석</h5>                             
-                            </div>
-                            <div class="ibox-content">
-                            	<div class="row">
-                            		<div class="col-lg-9">
-                            			<canvas id="mixed-chart" height="100"></canvas>
-                            		</div>
-                            		<div class="col-lg-3">
-                            			a
-                            		</div>
-                            	</div>                                          
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-				</div>
+		<div class="wrapper wrapper-content">	
+            <div class="col-md-12">
+                <div data-arrange="lt-grid" class="lt-container lt-xs-h-6 lt-sm-h-5 lt-md-h-4">
 
-                <div class="row" id="sortable-view">
-                    <div class="col-lg-4">
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>내부통지</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content ibox-heading">
-                                <h3><i class="fa fa-envelope-o"></i> New messages</h3>
-                                <small><i class="fa fa-tim"></i> You have 22 new messages and 16 waiting in draft folder.</small>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="feed-activity-list">
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Jesica Ocean</strong>
-                                            <div>Contrary to popular belief, Lorem Ipsum</div>
-                                            <small class="text-muted">Today 1:00 pm - 08.06.2014</small>
-                                        </div>
-                                    </div>
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="float-right">5m ago</small>
-                                            <strong>Monica Jackson</strong>
-                                            <div>The generated Lorem Ipsum is therefore </div>
-                                            <small class="text-muted">Yesterday 8:48 pm - 10.06.2014</small>
-                                        </div>
-                                    </div>                          
-                                </div>
-                            </div>
+                    <div draggable="true" class="lt 
+                    		lt-xs-x-0
+                            lt-xs-y-0
+                            lt-xs-w-1
+                            lt-xs-h-1
+                            lt-sm-x-0
+                            lt-sm-y-0
+                            lt-sm-w-1
+                            lt-sm-h-1
+                            lt-md-x-0
+                            lt-md-y-0
+                            lt-md-w-1
+                            lt-md-h-1                            
+							lt-lg-x-0
+                            lt-lg-y-0
+                            lt-lg-w-1
+                            lt-lg-h-1">
+                        <div class="lt-body bg-info text-center">
+                            <h3>1</h3>
                         </div>
                     </div>
-
-                    <div class="col-lg-8">
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>회원사 공지사항</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content table-responsive">
-                                        <table class="table table-hover no-margins">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                                <th>User</th>
-                                                <th>Value</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><small>Pending...</small></td>
-                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
-                                                <td>Samantha</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
-                                                <td>Damian</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="ibox ">
-                                    <div class="ibox-title">
-                                        <h5>시스템 공지사항</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content table-responsive">
-                                        <table class="table table-hover no-margins">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Date</th>
-                                                <th>User</th>
-                                                <th>Value</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><small>Pending...</small></td>
-                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
-                                                <td>Samantha</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><small>Pending...</small> </td>
-                                                <td><i class="fa fa-clock-o"></i> 12:08am</td>
-                                                <td>Damian</td>
-                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                    <div
+                     draggable="true"
+                     class="lt
+                            lt-xs-x-0
+                            lt-xs-y-1
+                            lt-xs-w-1
+                            lt-xs-h-2
+                            lt-sm-x-1
+                            lt-sm-y-0
+                            lt-sm-w-1
+                            lt-sm-h-2
+                            lt-md-x-2
+                            lt-md-y-0
+                            lt-md-w-1
+                            lt-md-h-2
+                            lt-lg-x-1
+                            lt-lg-y-0
+                            lt-lg-w-1
+                            lt-lg-h-2">
+                        <div class="lt-body bg-info text-center">
+                            <h3>2</h3>
                         </div>
-                	</div>
+                    </div>
+                    <div
+                     draggable="true"
+                     class="lt
+                            lt-xs-x-0
+                            lt-xs-y-3
+                            lt-xs-w-1
+                            lt-xs-h-1
+                            lt-sm-x-0
+                            lt-sm-y-1
+                            lt-sm-w-1
+                            lt-sm-h-1
+                            lt-md-x-1
+                            lt-md-y-0
+                            lt-md-w-1
+                            lt-md-h-1
+                            lt-lg-x-0
+                            lt-lg-y-1
+                            lt-lg-w-1
+                            lt-lg-h-1">
+                        <div class="lt-body bg-info text-center">
+                            <h3>3</h3>
+                        </div>
+                    </div>
+                    <div
+                     draggable="true"
+                     class="lt
+                            lt-xs-x-0
+                            lt-xs-y-4
+                            lt-xs-w-1
+                            lt-xs-h-2
+                            lt-sm-x-0
+                            lt-sm-y-2
+                            lt-sm-w-2
+                            lt-sm-h-2
+                            lt-md-x-0
+                            lt-md-y-1
+                            lt-md-w-2
+                            lt-md-h-2
+                            lt-lg-x-2
+                            lt-lg-y-0
+                            lt-lg-w-2
+                            lt-lg-h-2">
+                        <div class="lt-body bg-info text-center">
+                            <h3>4</h3>
+                        </div>
+                    </div>
+                   
+                   
                 </div>
-        	</div>
-		</div>
+            </div>
+	</div>
   	</div>			
 
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<%@ include file="/WEB-INF/views/template/inc/chartjsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
-
+	<script src="${pageContext.request.contextPath}/resources/js/layout-grid.js"></script>
      <script>
         $(document).ready(function() {
         	WinMove();   	
@@ -349,6 +254,10 @@
      $( "#resizable" ).resizable({
          containment: "#container"
        });
+     
+
+        $('.dad').dad();
+  
     </script>
 </body>
 </html>

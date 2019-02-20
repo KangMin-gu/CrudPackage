@@ -54,6 +54,14 @@ public class CommonController {
 		mView.setViewName("cm/popnote");
 		return mView;
 	}
+	// 문자발송팝업
+	@RequestMapping(value="/popsms", method=RequestMethod.GET)
+	public ModelAndView authPopSms(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("cm/popsms");
+		return mView;
+	}
+	
 
 	//로고팝업
 	@RequestMapping(value="/poplogo", method=RequestMethod.GET)

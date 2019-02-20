@@ -75,7 +75,12 @@
 	//내부통지팝업
 	$('.note').click(function(e){
 		 openNewWindow('내부통지','/popnote',e.currentTarget.id,1280,850);	
+	});
+	
+	$('.sms').click(function(e){
+		 openNewWindow('문자발송','/popsms',e.currentTarget.id,550,800);	
 	})
+	
 	//영업팝업
 	$('.sales').click(function(e){
 		openNewWindow('영업','/popsales',e.currentTarget.id,650,750);

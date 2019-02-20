@@ -13,13 +13,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CRUD SYSTEM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 </head>
 	<body>
     <div id="wrap" style="margin-top: 0px;">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-            <div class="cti" style="display:none">
+            <div class="cti" style="display:block">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
@@ -42,20 +44,22 @@
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="restBtn">보류 <i class="fa fa-times-circle"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="restBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="delayBtn">보류 <i class="fa fa-times-circle"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="delayCancelBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
                         &nbsp; |&nbsp;
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_blindTransfer('','');" class="btn btn-primary btn-sm status" id="postCleaningBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="postCleaningBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
+                        <li>발신번호</li>
+                        <li><input name="blindCall" id="blindCall" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
+                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
+                        <li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
                         <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-                        <li class="liBtn2"><span>상담창 상태</span>
+                        <li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
                         <strong><span id="status">연결안됨</span></strong>
                         <li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
                         <li class="float-right">
@@ -680,7 +684,7 @@
                     <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
                           	<button class="btn btn-primary btn-sm note" id="email">메일 발송</button>
-                          	<button class="btn btn-primary btn-sm" id="sms">SMS 발송</button>
+                          	<button class="btn btn-primary btn-sm sms" id="sms">SMS 발송</button>
                           	<button class="btn btn-primary btn-sm" id="kakao">Kakao 발송</button> 
                         </div>                                       
                         <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
@@ -710,25 +714,25 @@
                     <li class="call-tit">콜백</li>
                     <li><strong>0</strong></li>
                     <li class="call-tit">통화분배시도</li>
-                    <li><span id="transferTryCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="transferTryCnt">0</span></strong></li>
                     <li class="call-tit">통화분배연결</li>
-                    <li><span id="transferConnectCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="transferConnectCnt">0</span></strong></li>
                     <li class="call-tit">인바운드시도</li>
-                    <li><span id="ibTryCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="ibTryCnt">0</span></strong></li>
                     <li class="call-tit">인바운드연결<li>
-                    <li><span id="ibConnectCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="ibConnectCnt">0</span></strong></li>
                     <li class="call-tit">아웃바운드시도</li>
-                    <li><span id="obTryCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="obTryCnt">0</span></strong></li>
                     <li class="call-tit">아웃바운드연결</li>
-                    <li><span id="obConnectCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="obConnectCnt">0</span></strong></li>
                 </ul>
             </div>
         </div>
     </div>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
-<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
@@ -805,24 +809,6 @@ $(document).ready(function () {
 	        }
 	    });
  };
-
- var second = "0";
- var min = "00";
- var countdown = setInterval(function(){
-         //0초면 초기화 후 이동되는 사이트
- 		
-         if(second == 60){
-        	 second = 00;
-        	 min ++;
-         }
-         
-         if(second < "10"){
-        	 second = "0"+second;
-         }
- 	var time = min+" : "+second;
- 	$('#timer').text(time);
- 	second++;//카운트 증가
-     }, 1000);
 </script>
 
 	

@@ -584,10 +584,14 @@
                                                                 </div>
                                                                 <div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
                                                                     <div class="sms-form">
-                                                                        <div class="sub-text">
-                                                                            <textarea name="senddesc" id="senddesc" placeholder="내용을 입력하세요.">${campSmsForm.SENDDESC }</textarea>
+																		<h4>SMS</h4>
+																		<div class="sub-text">
+                                                                            <textarea name="name" disabled="" placeholder="내용을 입력하세요."></textarea>
                                                                         </div>
-                                                                    </div>
+                                                                        <div class="limit-text">
+                                                                        	<p><span>00</span> / 90</p>
+                                                                        </div>
+                                                                	</div>
                                                                 </div>
                                                                 <input type="hidden" name="no" id="no" value="${campSmsForm.NO }" />
                                         						<input type="hidden" name="sendform" id="sendform" value="2" />

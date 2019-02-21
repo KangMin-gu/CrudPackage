@@ -666,6 +666,7 @@ function ctiEvent(msg){
 			$('#vocLogInSpan').hide();
 			$('#vocLogOutSpan').show();
 			intervalFuncOn();//세션 유지 실행
+			voc_send_message();//콜백 카운터 실행
 	        //callGroupSelect(tmpData[6], tmpData[7], tmpData[8]);//소속그룹선택
             checkGroupInterval = setInterval("checkGroupTimeOut('"+tmpData[6]+"', '"+tmpData[7]+"', '"+tmpData[8]+"')", 1000);
 		}else if(tmpData[4] == "2"){

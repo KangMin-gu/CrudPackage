@@ -110,13 +110,19 @@ public class VocDaoImpl implements VocDao{
 	@Override
 	public int vocBlackHistListCnt(Map<String, Object> param) {
 		int cnt = session.selectOne("sv.vocBlackHistListCnt",param);
-		return 0;
+		return cnt;
 	}
 	//강성고객 리스트 
 	@Override
 	public List<Map<String, Object>> vocBlackHistList(Map<String, Object> param) {
 		List blackHistList = session.selectList("sv.vocBlackHistList",param);
 		return blackHistList;
+	}
+	//VOC 콜백 카운터 (전광판)
+	@Override
+	public Map<String, Object> vocAlarm(Map<String, Object> param) {
+		Map<String,Object> vocAlarm = session.selectOne("sv.vocAlarm",param);
+		return vocAlarm;
 	}
 	
 }

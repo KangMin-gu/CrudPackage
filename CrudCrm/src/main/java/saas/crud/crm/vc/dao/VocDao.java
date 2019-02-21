@@ -21,4 +21,5 @@ public interface VocDao {
 	public List<Map<String,Object>> vocCallBackHistList(Map<String,Object> param);
 	public int vocBlackHistListCnt(Map<String,Object> param);
 	public List<Map<String,Object>> vocBlackHistList(Map<String,Object> param);
+	public Map<String,Object> vocAlarm(Map<String,Object> param);
 }

@@ -28,6 +28,7 @@ import saas.crud.crm.cu.dto.CustDenyDto;
 import saas.crud.crm.cu.dto.CustDto;
 import saas.crud.crm.cu.service.CustService;
 import saas.crud.crm.sv.dto.ServiceDto;
+import saas.crud.crm.sv.service.SvService;
 import saas.crud.crm.vc.service.VocService;
 
 @Controller
@@ -47,10 +48,11 @@ public class VocController {
 	private CodeService codeService;
 	@Autowired
 	private ProductService productService;
-	
 	@Autowired
 	private ContentService contentService;
-
+	@Autowired
+	private SvService svService;
+	
 	@RequestMapping(value="vc/voc", method=RequestMethod.GET)
 	public ModelAndView authvocPage(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -329,9 +331,30 @@ public class VocController {
 	//VOC 고객 - 블랙 이력 조회 
 	@RequestMapping(value="/vc/tab/black",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> authvocBlackHistList(HttpServletRequest request) {	
-		System.out.println("@@@@@@@@@@@@@@@@@");
+	public Map<String,Object> authvocBlackHistList(HttpServletRequest request) {
 		Map<String,Object> blackHistList = vcService.svcVocBlackHistList(request);		
 		return blackHistList;
+	}
+	
+	//VOC 서비스 상세 보기 팝업 (left top bottom 탬플릿 제거) 
+	@RequestMapping(value="/vc/service/{serviceNo}", method=RequestMethod.GET)
+	public ModelAndView authServiceRead(HttpServletRequest request, @PathVariable int serviceNo) {
+		ModelAndView mView = svService.svRead(request, serviceNo);
+		mView.setViewName("sv/svReadNoTemplate");
+		
+		return mView;
+	}
+	
+	//VOC 고객 상세페이지 팝업(기본)
+	@RequestMapping(value="/vc/cust/view/{custno}", method=RequestMethod.GET)
+	public ModelAndView authcustDetail(HttpServletRequest request 
+								 ,@PathVariable int custno) {
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		ModelAndView mView = new ModelAndView();
+		mView = custService.svcCustDetail(custno,siteid);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("cu/custdetailNoTemplate");
+		return mView;
 	}
 }

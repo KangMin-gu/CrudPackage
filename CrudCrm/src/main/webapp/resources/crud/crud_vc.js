@@ -22,11 +22,10 @@ $(".dataCancle").click(function(e) {
 
 $("#custRegBtn").click(function(e) {
 	custFormActivation('insert');// 버튼 변경 이벤트
-
-	opener.$('#addBlackSpan').show();// 강성고객 관련 버튼 제어
+	opener.$('#addBlackSpan').hide();// 강성고객 관련 버튼 제어
 	opener.$('#cancleBlackSpan').hide();
-	opener.$('#blackDiv').hide();
-
+//	opener.$('#blackDiv').hide();
+	opener.$('#custname').css({"background-color":"#ffffff"});
 	window.close();
 });
 
@@ -44,12 +43,19 @@ function popVocCust(){
 
 // 고객 추가
 function goCustInsert() {
+	debugger;
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
-	if(custName.trim() == ''){//입력 값이 없으면 기본값으로 설정.
-		var recieveNo =
-		$("#custname").val('익명');
-	}	
+	//핸드폰 번호 입력값이 없다면 경고 
+	if( $('#mobile1').val().length < 2 || $('#mobile2').val().length < 3 || $('#mobile3').val().length < 3  ){
+		alert('휴대전화 입력 값을 확인해 주세요');
+		return;
+	}
+	if(custName.trim() == ''){//입력 값이 없으면 핸드폰 번호를 기본값으로 설정.
+		var recieveNo = $('#mobile1').val() + $('#mobile2').val() + $('#mobile3').val() ;
+		$("#custname").val(recieveNo);
+	}
+		
 	var param={};
 	param = custDataToJson();
 	$.ajax({
@@ -61,6 +67,7 @@ function goCustInsert() {
 		success : function(data) {
 			$('#custno').val(data);
 			custFormActivation("update", "voc");// 수정 버튼으로 변경
+			$('#addBlackSpan').show()
 			alert("추가 되었습니다.");
 		},
 		error : function(request, status, error) {
@@ -113,11 +120,20 @@ function custDataToJson(){//고객 인풋 필드 데이터 json형식 변경.
     return param;
 }
 
-//블랙추가
+function vocCustDetail(){//VOC 고객 상세정보(팝업) 
+	custNo = $('#custno').val();
+	if(custNo == 0 || custNo == '' ){
+		alert('고객이 선택되지 않았습니다.');
+		return;
+	}
+	openNewWindow('voc','/vc/cust/view/'+custNo,'voc',1200,700);
+ }
+
+//블랙추가 - 블랙리스트 추가 팝업 페이지 호출
 function addBlack(){
 	 var custno = $('#custno').val();
 	 if(custno > 0 ){
-		 openNewWindow('voc','/vc/black/post','voc',700,480);
+		 openNewWindow('voc','/vc/black/post','voc',700,480); 
 	 }else{
 	 	alert('대상이 선택되지 않았습니다.');
 	 }
@@ -136,16 +152,42 @@ function cancleBlack(){
 	        	$('#blackcnt').val(0);
 	        	$('#addBlackSpan').show();
 				$('#cancleBlackSpan').hide();
-				$('#blackDiv').hide();
-	        	alert("해제 되었습니다.");
+				//$('#blackDiv').hide();
+				$('#custname').css({"background-color":"#ffffff"});
+				alert("해제 되었습니다.");
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
 };
+//팝업 - 블랙 추가 실행
+function blackSubmit(fromUrl) {
+	debugger;
+	var custno = $('#custno').val();
+	var receiveno = $('#receiveno').val();
+	var blacktype = $('#blacktype').val();
+	var memo = $('#memo').val();
+	var jsonPrm = {"custno":custno, "receiveno":receiveno, "blacktype":blacktype, "memo":memo };
+	
+	$.ajax({
+		url: fromUrl,
+        method: "POST",
+        dataType: "json",
+        data: jsonPrm,
+        cache: false,
 
-
+		success : function(response) {
+			alert('등록 되었습니다.');
+			opener.$('#bcustno').val(response);
+			opener.$('#addBlackSpan').hide();
+			opener.$('#cancleBlackSpan').show();
+			//opener.$('#blackDiv').show();
+			opener.$('#custname').css({"background-color":"#f8d7da"});
+			window.close();
+		}
+	});
+}
 //********좌측 탭 *************************************************************************************************
 function tabTargetVocService(pageNum){//서비스탭
 	
@@ -168,7 +210,7 @@ function tabTargetVocService(pageNum){//서비스탭
 	        	var length = data.svList.length;
 	        	var html ="";
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/service/"+data.svList[i].SERVICENO+"','voc',750,700);"+'">'+ data.svList[i].SERVICENAME + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td></tr>';
+	        		html = '<tr><td title="'+data.svList[i].SERVICENAME+'"><a onClick="openNewWindow('+"'voc','/vc/service/"+data.svList[i].SERVICENO+"','voc',1200,700);"+'">'+ data.svList[i].SERVICENAME_ + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td></tr>';
 	        		$('#tab1 tbody').append(html);
 	        	}
 	        	var html2= "";
@@ -194,6 +236,11 @@ function tabTargetVocService(pageNum){//서비스탭
 	            if(length != 0){
 	            	$('#tab1 .pagination').append(html2);
 	            }
+	            //테이블 헤더 고정 설정
+	            var tableId = 'svTabTable';
+	            var colWidthArray = [180,120,80,80,80,80,80];
+	            setTableSize(tableId,colWidthArray);
+	            $('#'+tableId+' tbody').css('display','block');	            
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -203,7 +250,7 @@ function tabTargetVocService(pageNum){//서비스탭
 }
 
 function tabTargetBlackHistory(pageNum){//강성고객이력탭
-	
+	debugger;
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/black?custno='+custNo+'&pageNum='+pageNum;
 	
@@ -221,7 +268,7 @@ function tabTargetBlackHistory(pageNum){//강성고객이력탭
 	        	var length = data.blackHistList.length;
 	        	var html ="";
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/service/"+data.blackHistList[i].BLACKTYPE_+"','voc',750,700);"+'">'+ data.blackHistList[i].SERVICENAME + '</a></td><td>' + data.blackHistList[i].RECEPTIONDATE_ + '</td><td>' + data.blackHistList[i].SERVICECHANNEL_ + '</td><td>' + data.blackHistList[i].OWNER_ + '</td><td>' + data.blackHistList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.blackHistList[i].SERVICEOWNER_ + '</td></tr>';
+	        		html = '<tr><td>'+data.blackHistList[i].REGDATE_+'</td><td>'+ data.blackHistList[i].BLACKTYPE_ + '</td><td title="'+data.blackHistList[i].MEMO+'">' + data.blackHistList[i].MEMO_ + '</td><td>' + data.blackHistList[i].USERNAME + '</td><td>' + data.blackHistList[i].ISDELETE_ +  '</td></tr>';
 	        		$('#tab2 tbody').append(html);
 	        	}
 	        	var html2= "";
@@ -247,12 +294,87 @@ function tabTargetBlackHistory(pageNum){//강성고객이력탭
 	            if(length != 0){
 	            	$('#tab2 .pagination').append(html2);
 	            }
+	            //테이블 헤더 고정 설정
+	            var tableId = 'blackTabTable';
+	            var colWidthArray = [80,40,150,70,100];  
+	            setTableSize(tableId,colWidthArray);
+	            $('#'+tableId+' tbody').css('display','block');
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
 	}
+}
+
+function tabTargetCallbackHistory(pageNum){//콜백이력탭
+	
+	var custno = $('#custno').val();
+	var urlStr = '/vc/callback/history?custno='+custno+'&pageNum='+pageNum;
+	if(custno != 0 ){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {  
+	        	
+	        	$('#tab3 tbody tr').remove();
+	        	$('#tab3 .pagination li').remove();
+	        	
+	        	var length = data.callBackHistList.length;
+	        	var html ="";
+	        	var sb = new StringBuffer();
+	        	//todo. string buffer  코드로 변경        	
+	        	for (var i = 0; i < length; i++) {
+	        		sb.append('<tr><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].REGDATE_+'</td>');
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLBACK+'</td>');
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">' + data.callBackHistList[i].CALLER+'</td>'); 
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].USERNAME+'</td>');
+	        		sb.append('<td title="'+data.callBackHistList[i].MEMO+'">'+data.callBackHistList[i].MEMO_+'</td>');
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_);
+	        		sb.append('<input type="hidden" id="callbachistkno'+i+'" value="'+data.callBackHistList[i].CALLBACKHISTNO+'"/>');
+	        		sb.append('<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackHistList[i].CUSTNO+'"/>')
+	        		sb.append('<input type="hidden" id="callcount'+i+'" value="'+data.callBackHistList[i].CALLCOUNT+'"/></td></tr>');
+	        	}
+	        	html = sb.toString();
+	        	$('#tab3 tbody').append(html); 	
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCallbackHistory(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetCallbackHistory(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab3 .pagination').append(html2);
+	            }
+	            //테이블 헤더 고정 설정
+	            var tableId = 'callBackHisTabTable';
+	            var colWidthArray = [100,80,80,80,150,80];
+	            setTableSize(tableId,colWidthArray);
+	            $('#'+tableId+' tbody').css('display','block');
+	            
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+	
 }
 
 function tabTargetVocEmail(pageNum){//email 탭 
@@ -275,8 +397,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 	        	var html ="";
 	        	var hrefStr = '/vc/tab/email/view/';        	
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,500);"+'">'+ data.emailList[i].SUBJECT + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';
-	        		console.log(html);
+	        		html = '<tr><td title="'+data.emailList[i].SUBJECT+'"><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,500);"+'">'+ data.emailList[i].SUBJECT_ + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';        		
 	        		$('#tab7 tbody').append(html);
 	        	}
 	        	var html2= "";
@@ -302,6 +423,12 @@ function tabTargetVocEmail(pageNum){//email 탭
 	            if(length != 0){
 	            	$('#tab7 .pagination').append(html2);
 	            }
+	            
+	            //테이블 헤더 고정 설정
+	            var tableId = 'emailTabTable';
+	            var colWidthArray = [200,200,200,100,80];
+	            setTableSize(tableId,colWidthArray);
+	            $('#'+tableId+' tbody').css('display','block');
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -322,24 +449,30 @@ function tabTargetCallbackList(pageNum){
         dataType: "json",
         cache: false,
         success: function (data) {  
-        	
+        	debugger;
         	$('#callbackTab1 tbody tr').remove();
         	$('#callbackTab1 .pagination li').remove();
         	
         	var length = data.callBackList.length;
         	var html ="";
-        	//todo. string buffer  코드로 변경        	
+        	var sb = new StringBuffer();
+          	
         	for (var i = 0; i < length; i++) {
-        		html = '<tr><td><input type="hidden" id="callbackno'+i+'" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_;
-        		html += '</td><td><a onclick="bindCallBackNo('+"'"+data.callBackList[i].CALLBACK+"'"+');">'+data.callBackList[i].CALLBACK;
-        		html += '</a></td><td>' + data.callBackList[i].CALLER; 
-        		html += '</td><td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');"><i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'; 
-        		html += '</td><td><input type="text" id="vocmemo'+i+'" maxlength="100">';
-        		html += '</td><td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>';
-        		html += '<input type="hidden" id="callbackcustno'+i+'" value="0"/><input type="hidden" id="trunk'+i+'" value="'+data.callBackList[i].TRUNK+'"> <input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>';
-        		       		
-        		$('#callbackTab1 tbody').append(html); 	
+        		sb.append('<tr><td><input type="hidden" id="callbackno'+i+'" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_+'</td>');
+        		sb.append('<td><a onclick="bindCallBackNo('+"'"+data.callBackList[i].CALLBACK+"'"+');">'+data.callBackList[i].CALLBACK+'</a></td>');
+        		sb.append('<td>' + data.callBackList[i].CALLER+'</td>');
+        		sb.append('<td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');">');
+        		sb.append('<i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;');
+        		sb.append('<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'+'</td>'); 
+        		sb.append('<td><input type="text" id="vocmemo'+i+'" maxlength="100">'+'</td>');
+        		sb.append('<td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>');
+        		sb.append('&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>');
+        		sb.append('<input type="hidden" id="callbackcustno'+i+'" value="0"/>');
+        		sb.append('<input type="hidden" id="trunk'+i+'" value="'+data.callBackList[i].TRUNK+'"> <input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>');     		        		
+        		
         	}
+        	html = sb.toString();
+        	$('#callbackTab1 tbody').append(html); 	
         	var html2= "";
         	
         	if (data.page.startPageNum != 1) {
@@ -364,6 +497,11 @@ function tabTargetCallbackList(pageNum){
             	$('#callbackTab1 .pagination').append(html2);
             }
             
+            //테이블 헤더 고정 설정
+            var tableId = 'callBackTabTable';
+            var colWidthArray = [150,100,100,85,190,170];
+            setTableSize(tableId,colWidthArray);
+            $('#'+tableId+' tbody').css('display','block');            
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -374,65 +512,7 @@ function tabTargetCallbackList(pageNum){
 
 
 
-function tabTargetCallbackHistory(pageNum){
-	
-	var custno = $('#custno').val();
-	var urlStr = '/vc/callback/history?custno='+custno+'&pageNum='+pageNum;
-	
-	$.ajax({
-        url: urlStr,
-        method: "GET",
-        dataType: "json",
-        cache: false,
-        success: function (data) {  
-        	
-        	$('#tab3 tbody tr').remove();
-        	$('#tab3 .pagination li').remove();
-        	
-        	var length = data.callBackHistList.length;
-        	var html ="";
-        	//todo. string buffer  코드로 변경        	
-        	for (var i = 0; i < length; i++) {
-        		html = '<tr><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="hidden" id="callbachistkno'+i+'" value="'+data.callBackHistList[i].CALLBACKHISTNO+'"/>'+data.callBackHistList[i].REGDATE_;
-        		html += '</td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLBACK;
-        		html += '</a></td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">' + data.callBackHistList[i].CALLER; 
-        		html += '</td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].USERNAME; 
-        		html += '</td><td><input type="text" readonly value="'+data.callBackHistList[i].MEMO+'" title="'+data.callBackHistList[i].MEMO+'">';
-        		html += '</td><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_;
-        		html += '<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackHistList[i].CUSTNO+'"/><input type="hidden" id="callcount'+i+'" value="'+data.callBackHistList[i].CALLCOUNT+'"/></td></tr>';
-        		  		
-        		$('#tab3 tbody').append(html); 	
-        	}
-        	var html2= "";
-        	
-        	if (data.page.startPageNum != 1) {
-                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCallbackHistory(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
-            } else {
-                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
-            }
-            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
-                if (i == data.page.pageNum) {
-                    html2 += '<li class="footable-page active"><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
-                } else {
-                    html2 += '<li><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
-                }
-            }
-            if (data.page.endPageNum < data.page.totalPageCount) {
-                html2 += '<li><a onclick="tabTargetCallbackHistory(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
-            } else {
-                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
-            }
-            
-            if(length != 0){
-            	$('#tab3 .pagination').append(html2);
-            }
-            
-        },
-        error: function (request, status, error) {
-            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        }
-    });
-}
+
 
 
 // ********고객 팝업
@@ -468,11 +548,14 @@ function vocGetCustInfo(urlStr) {
 			if (blackCnt > 0) { // 블랙리스트 관련 버튼 제어
 				opener.$('#addBlackSpan').hide();
 				opener.$('#cancleBlackSpan').show();
-				opener.$('#blackDiv').show();
+				//opener.$('#blackDiv').show();
+				opener.$('#custname').css({"background-color":"#f8d7da"});
+				alert('블랙리스트에 등록 되어있는 고객입니다.');
 			} else {
 				opener.$('#addBlackSpan').show();
 				opener.$('#cancleBlackSpan').hide();
-				opener.$('#blackDiv').hide();
+//				opener.$('#blackDiv').hide();
+				opener.$('#custname').css({"background-color":"#ffffff"});
 			}
 
 		},
@@ -521,7 +604,8 @@ function custInfoClear() {// 인풋 필드 초기화
 	opener.$('#denymailnomal').iCheck('uncheck');opener.$('#denymailsurvey').iCheck('uncheck');
 	opener.$('#denysmsnomal').iCheck('uncheck');opener.$('#denysmssurvey').iCheck('uncheck');
 	opener.$('#denydmnomal').iCheck('uncheck');opener.$('#denydmsurvey').iCheck('uncheck');
-
+	
+	$('#custname').css({"background-color":"#ffffff"});//블랙리스트로 변경 되었던 css 복구 
 }
 
 function custInfoBinding(data) {// 인풋 필드 데이터 바인딩
@@ -671,14 +755,15 @@ function splitPhoneNum(phoneNum) {// 01로 시작하면 휴대폰에 바인딩. 
 	var phone3;
 
 	if (phoneNum.indexOf("01") == 0) {
-		phone1 = phoneNum.substr(0, 3);
-		phone2 = phoneNum.substr(3, 4);
-		phone3 = phoneNum.substr(7, 4);
-
-		opener.$('#mobile1').val(phone1);
-		opener.$('#mobile2').val(phone2);
-		opener.$('#mobile3').val(phone3);
-
+		if(len == 10){
+			phone1 = phoneNum.substr(0, 3);
+			phone2 = phoneNum.substr(3, 4);
+			phone3 = phoneNum.substr(7, 4);
+		}else{
+			phone1 = phoneNum.substr(0, 3);
+			phone2 = phoneNum.substr(3, 4);
+			phone3 = phoneNum.substr(7, 4);
+		}			
 	} else if (phoneNum.indexOf("02") == 0) {
 		if (len == 9) {
 			phone1 = phoneNum.substr(0, 2);
@@ -688,18 +773,16 @@ function splitPhoneNum(phoneNum) {// 01로 시작하면 휴대폰에 바인딩. 
 			phone1 = phoneNum.substr(0, 3);
 			phone2 = phoneNum.substr(2, 4);
 			phone3 = phoneNum.substr(6, 4);
-		}
-		opener.$('#homtel1').val(phone1);
-		opener.$('#homtel2').val(phone2);
-		opener.$('#homtel3').val(phone3);
+		}		
 	} else {
 		phone1 = phoneNum.substr(0, 3);
 		phone2 = phoneNum.substr(3, 4);
-		phone3 = phoneNum.substr(7, 10);
-		opener.$('#homtel1').val(phone1);
-		opener.$('#homtel2').val(phone2);
-		opener.$('#homtel3').val(phone3);
+		phone3 = phoneNum.substr(7, 5);	
 	}
+	opener.$('#mobile1').val(phone1);
+	opener.$('#mobile2').val(phone2);
+	opener.$('#mobile3').val(phone3);
+
 }
 
 // ******************************************** 고객 팝업 끝

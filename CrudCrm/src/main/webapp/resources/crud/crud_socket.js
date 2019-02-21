@@ -56,5 +56,5 @@ function send_message(){
 }
     //내부통지 알람 MG
     $(document).ready(function(){
-        send_message();
+       send_message();
 });

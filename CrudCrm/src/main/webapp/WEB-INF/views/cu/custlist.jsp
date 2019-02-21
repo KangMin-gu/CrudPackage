@@ -25,10 +25,22 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
-<script>
+<style>
 
+#fixedtable tbody {
+    display:block;
+    height:320px;  
+    width: 1640px;    
+    overflow:auto;
+    overflow-x:hidden;
+}
+#fixedtable thead, #fixedtable tbody tr {
+    display:table;
+    width:1640px;
+    table-layout:fixed;
+}
 
-</script>
+</style>
 </head>
 
 <body>
@@ -242,8 +254,8 @@
                             	</div> 
 							
 								<div class="table-responsive">
-									<table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;">
-															
+									<table class="table table-bordered table-hover" id="fixedtable">
+									<!-- <table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;" id="fixedtable"> 
 										<colgroup>
 											<col width="40px;">
 											<col width="100px;">
@@ -256,7 +268,7 @@
 											<col width="80px;">
 											<col width="80px;">
 											<col width="100px;">
-										</colgroup>
+										</colgroup> -->
 																				
 										<thead>
 											<tr>
@@ -282,7 +294,7 @@
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" id="testtd1"><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
 												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.DEPTNAME }</td>
 												
@@ -324,7 +336,7 @@
 										<tfoot>
 									</table>
 								</div>
-								<div class="m-auto">
+								<div class="m-auto" style="padding-top:10px;">
 									 
 								</form:form>
 								<ul class="pagination">
@@ -371,7 +383,7 @@
 									</ul>  
 															
 								</div>
-								<h4 class="float-right">&middot; 총 자료수 : ${page.totalRows }건</h4>
+								<h4 class="float-right" style="padding-top:10px;">&middot; 총 자료수 : ${page.totalRows }건</h4>
 		
 							</div>
 						</div>
@@ -397,10 +409,10 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>	<!-- datePicker-->	
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script><!-- excel file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- cust js -->
-
-	<script>
-		$(document).ready(function() {	
-			
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
+	<script>	
+	
+		$(document).ready(function() {				
 			// icecks
 			$('.i-checks').iCheck({
 				checkboxClass : 'icheckbox_square-green',
@@ -430,10 +442,32 @@
 				forceParse : false,
 				calendarWeeks : true,
 				autoclose : true
-			});
-					    
-	    
+			});	
+			
+			var colWidthArray = [40,100,180,100,120,180,80,80,80,80,100];
+			var tableId = 'fixedtable';
+			setTableSize(tableId,colWidthArray);
 		});
+	
+		function setTableSize(tableId,colWidthArray){//테이블 해더 고정. 
+			debugger;
+			var tab = $('#'+tableId);
+			var colLen = tab.find('th').length;
+			var tdLen = tab.find('td').length; 
+			var rowLen = tdLen/colLen;
+			
+			for (var i=0;i<rowLen;i++ ){	//모든 th td 에 각각 css적용 
+				for(var j=0;j<colLen;j++){
+					if(i==0){
+						tab.find('th').eq(colLen*i+j).css('border-top','1px solid #EBEBEB');
+						tab.find('th').eq(colLen*i+j).attr("width",colWidthArray[j]);
+					}
+					tab.find('td').eq(colLen*i+j).css('border-top','0px');
+					tab.find('td').eq(colLen*i+j).attr("width",colWidthArray[j]);
+				}
+			}			
+		}
+	
 	</script>
 </body>
 </html>

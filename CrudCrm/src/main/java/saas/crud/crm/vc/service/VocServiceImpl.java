@@ -309,7 +309,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = svDao.svServiceTotalRows(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -443,7 +443,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = vcDao.vocCallBackListCnt(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -485,7 +485,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = vcDao.vocCallBackHistListCnt(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -518,7 +518,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = vcDao.vocBlackHistListCnt(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					

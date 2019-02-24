@@ -32,8 +32,6 @@ body {
 			<div class="wrapper wrapper-content">
 				<div class="row">
 					<div class="col-lg-12 animated fadeInRight article">
-						<form:form action="/note/send" method="post"
-							enctype="multipart/form-data">
 							<div class="mail-box-header">
 								<div class="row">
 									<div class="col-md-6 text-left">
@@ -41,6 +39,7 @@ body {
 									</div>
 								</div>
 							</div>
+							<form:form action="/sendSms" method="post">
 							<div class="mail-box">
 								<div class="mail-body">
 									<!-- 받는이 -->
@@ -51,7 +50,7 @@ body {
                                     		<label class="mr-2 mb-0"><input type="radio" value="1" id="sendtype" name="sendtype">예약발송</label>
 										</div>
 									</div>	
-									<div class="form-group row" id="mysel">
+									<div class="form-group row reserv" id="mysel">
 										<label class="col-md-2 col-form-label" for="touser"><strong>예약발송일시</strong></label>
 										<div class="col-md-10">
 											<div class="input-group p-0">
@@ -59,13 +58,13 @@ body {
                                                 	<span class="input-group-addon">
                                                 		<i class="fa fa-calendar"></i>
                                                 	</span>
-                                                	<input type="text" class="form-control" value="">
+                                                	<input type="text" name="senddate" id="senddate" class="form-control" value="">
                                                 </div>
-                                                <div class="d-flex date date01 col-lg-4 col-md-4 p-0 col-4">
+                                                <div class="d-flex clockpicker col-lg-4 col-md-4 p-0 col-4">
                                                 	<span class="input-group-addon">
                                                 		<i class="fa fa-clock-o"></i>
                                                 	</span>
-                                                	<input type="text" class="form-control" value="">
+                                                	<input type="text" name="sendtime" autocomplete="off" id="sendtime" class="form-control" value="">
                                                 </div>
 											</div>
 										</div>
@@ -74,12 +73,7 @@ body {
 									<div class="form-group row" id="mysel">
 										<label class="col-md-2 col-form-label" for="touser">받는이:</label>
 										<div class="col-md-10">
-											<select data-placeholder=" " id="touser" name="touser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
-								                <c:forEach var="adminMail" items="${adminMail}" >
-								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
-								                	${adminMail.USERNAME}</option>
-								                </c:forEach>
-                							</select>
+											<input id="mobile" name="mobile" type="text" class="form-control" value="">
 										</div>
 									</div>								
 									<div class="form-group row">
@@ -94,29 +88,29 @@ body {
 									<div class="sms-form">
 										<h4>SMS</h4>
 										<div class="sub-text">
-                                        	<textarea name="name" placeholder="내용을 입력하세요."></textarea>
+                                        	<textarea name="senddesc" id ="senddesc" placeholder="내용을 입력하세요."></textarea>
                                         </div>
                                         <div class="limit-text">
                                         	<p><span>00</span> / 90</p>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="lengthType" name="lengthType" value="0">
                                 </div>
+                                
 								<div class="mail-body text-right tooltip-demo">
-									<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip" >
+									<button class="btn btn-sm btn-primary" id="btn" data-toggle="tooltip" >
 										<i class="fa fa-reply"></i> 발송
 									</button>
 									<a href="mailbox.html" class="btn btn-white btn-sm"
 										data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 								</div>
-								<div class="clearfix"></div>
 							</div>
+							</form:form>
 						</div>
-						</form:form>
 					</div>
 				</div>
 			</div>
 			<!-- Content End -->
-	</div>
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
@@ -139,8 +133,28 @@ body {
 		});
 		
 		$('.clockpicker').clockpicker();
+		
+		$('[name="sendtype"]:eq(0)').iCheck('check');
+		
+		$('#mobile').val(opener.$('#phone').val());
 	});
 	
+	$('#btn').click(function(e){
+		//e.preventDefault();
+		smsToLms('senddesc');
+	});
+	
+	$('.i-checks').on('ifChecked', function(event) {
+		var value = event.target.value;
+		var name = event.target.name;
+		if(name =='sendtype'){
+			if(value == 0){
+				$('.reserv').hide();
+			}else{
+				$('.reserv').show();
+			}
+		}
+	});
 </script>
 </body>
 </html>

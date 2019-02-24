@@ -222,4 +222,24 @@
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 
+	<insert id="directSmsSend" parameterType="hashMap">
+		INSERT INTO SC_TRAN (TR_SENDDATE, TR_SENDSTAT, TR_MSGTYPE, TR_PHONE, TR_CALLBACK, TR_MSG)
+		VALUES(current_timestamp(),'0','0',#{mobile},#{callback},#{senddesc})
+	</insert>
+	
+	<insert id="delaySmsSend" parameterType="hashMap">
+		INSERT INTO SC_TRAN (TR_SENDDATE, TR_SENDSTAT, TR_MSGTYPE, TR_PHONE, TR_CALLBACK, TR_MSG)
+		VALUES(concat(#{senddate},' ',#{sendtime}),'0','0',#{mobile},#{callback},#{senddesc})
+	</insert>
+	
+	<insert id="directLmsSend" parameterType="hashMap">
+		INSERT INTO MMS_MSG (SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, TYPE)
+		VALUES(#{title},'01076737157','023367800','0',current_timestamp(), #{senddesc},0)
+	</insert>
+	
+	<insert id="delayLmsSend" parameterType="hashMap">
+		INSERT INTO MMS_MSG (SUBJECT, PHONE, CALLBACK, STATUS, REQDATE, MSG, TYPE)
+		VALUES(#{title},'01076737157','023367800','0',DATE_FORMAT(CONCAT(DATE_FORMAT(#{senddate},'%Y-%m-%d'),' ',#{sendtime},':00'),'%Y-%m-%d %H:%m:%s'), #{senddesc},0)
+	</insert>
+	
 </mapper>

@@ -87,4 +87,24 @@ public class CommonDaoImpl implements CommonDao{
 		return salesList;
 	}
 
+	@Override
+	public void DirectSendSms(Map<String, Object> param) {
+		session.insert("common.directSmsSend",param);
+	}
+
+	@Override
+	public void DelaySendSms(Map<String, Object> param) {
+		session.insert("common.delaySmsSend",param);
+	}
+
+	@Override
+	public void DirectSendLms(Map<String, Object> param) {
+		session.insert("common.directLmsSend",param);
+	}
+
+	@Override
+	public void DelaySendLms(Map<String, Object> param) {
+		session.insert("common.delayLmsSend",param);
+	}
+
 }

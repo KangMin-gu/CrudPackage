@@ -62,7 +62,12 @@ public class CommonController {
 		return mView;
 	}
 	
-
+	// 문자 발송
+	@RequestMapping(value="/sendSms",method=RequestMethod.POST)
+	public void authSendSms(HttpServletRequest request) {
+		commonService.sendSms(request);
+	}
+	
 	//로고팝업
 	@RequestMapping(value="/poplogo", method=RequestMethod.GET)
 	public String authpopLogoForm(HttpServletRequest request) {

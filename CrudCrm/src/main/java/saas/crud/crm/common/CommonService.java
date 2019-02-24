@@ -25,5 +25,7 @@ public interface CommonService {
 	
 	public ModelAndView svcPopNote(HttpServletRequest request);
 	
+	public void sendSms(HttpServletRequest request);
+	
 
 }

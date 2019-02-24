@@ -161,5 +161,9 @@ public class CommonController {
 		mav.setViewName("cm/popsales");
 		return mav;
 	}
+	@RequestMapping(value="/testEditor",method=RequestMethod.POST)
+	public void multi(HttpServletRequest request, HttpServletResponse response) {
+		commonService.test(request,response);
+	}
 	
 }

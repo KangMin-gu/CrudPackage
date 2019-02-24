@@ -34,10 +34,7 @@ $("#custRegBtn").click(function(e) {
 
 	window.close();
 });
-
-
-// 고객 추가
-function goCustInsert() {
+function enterkey(event) {
     if (window.event.keyCode == 13) {//입력 값이 enter 
     	popVocCust();
     }
@@ -254,11 +251,13 @@ function tabTargetVocEmail(pageNum) {// email 탭
 // ********고객 팝업
 // 관련*************************************************************************************************
 
+
 function vocCustSelected(tr) {// tr이 클릭 이벤트
 	var custno = tr.getAttribute("value");
 	var urlStr = "/vc/pop/cust/" + custno;
 	var urlServ = "/vc/pop/service/" + custno;
 	var statusStr = 'update';
+	
 	vocGetCustInfo(urlStr);// 정보획득 후 데이터 바인딩.
 	vocGetServiceInfo(urlServ);
 	custFormActivation('update');// 수정 버튼생성.
@@ -268,7 +267,6 @@ function vocCustSelected(tr) {// tr이 클릭 이벤트
 		window.close();
 	}, 300);
 }
-
 // 고객정보 획득 후 바인딩
 function vocGetCustInfo(urlStr) {
 	$.ajax({
@@ -368,6 +366,10 @@ function serviceInfoBinding(data) {
 	opener.$('#servicecode2').val(data.SERVICECODE2);
 	opener.$('#servicename').val(data.SERVICENAME);
 	opener.$('#servicedesc').val(data.SERVICEDESC);
+	
+	opener.seObject.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
+
+	opener.seObject.getById["servicedesc"].exec("PASTE_HTML", [data.SERVICEDESC]); //내용밀어넣기
 	opener.$('#memo').val(data.MEMO);
 	if (data.SERVICETYPE == 1) {
 

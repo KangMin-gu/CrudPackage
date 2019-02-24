@@ -27,5 +27,7 @@ public interface CommonService {
 	
 	public void sendSms(HttpServletRequest request);
 	
+	public void test(HttpServletRequest request, HttpServletResponse response);
+	
 
 }

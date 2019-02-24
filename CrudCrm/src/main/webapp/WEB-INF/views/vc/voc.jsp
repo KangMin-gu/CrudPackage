@@ -731,6 +731,7 @@
     </div>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
+<script src="${pageContext.request.contextPath}/resources/js/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -739,6 +740,7 @@
 
 <script>
 var intervalId;//전역변수
+var seObject = [];
 function sessMaintain(){//세션유지용
  	$.ajax({
        		url: "/vc/sess",
@@ -769,6 +771,21 @@ $(document).ready(function () {
 	
 	var url = window.location.pathname;
 	vocContents("0",url);
+	
+	
+	
+
+	nhn.husky.EZCreator.createInIFrame({
+
+	    oAppRef: seObject,
+
+	    elPlaceHolder: "servicedesc",
+
+	    sSkinURI: "../resources/js/nse_files/SmartEditor2Skin.html",
+
+	    fCreator: "createSEditor2"
+
+	});
 });
  
  $('#servicecode1').change(function(){
@@ -809,6 +826,12 @@ $(document).ready(function () {
 	        }
 	    });
  };
+ 
+//textArea에 이미지 첨부
+ function pasteHTML(filepath){
+     var sHTML = '<img src="<%=request.getContextPath()%>'+filepath+'">';
+     oEditors.getById["textAreaContent"].exec("PASTE_HTML", [sHTML]);
+ }
 </script>
 
 	

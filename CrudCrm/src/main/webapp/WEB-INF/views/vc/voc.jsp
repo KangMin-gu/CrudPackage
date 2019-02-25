@@ -885,7 +885,7 @@ $(document).ready(function () {
 		
 		for (var i=0;i<rowLen;i++ ){	//모든 th td 에 각각 css적용 
 			for(var j=0;j<colLen;j++){
-				if(i==0){
+				if(i==0){//th 라인설정
 					tab.find('th').eq(colLen*i+j).css('border-top','1px solid #EBEBEB');
 					tab.find('th').eq(colLen*i+j).attr("width",colWidthArray[j]);
 				}

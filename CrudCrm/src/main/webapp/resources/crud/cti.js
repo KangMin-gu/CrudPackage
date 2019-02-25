@@ -958,6 +958,7 @@ function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받�
 	}else{
 		btn.show();	
 	}
+}
 function sessMaintain(){//세션유지용
  	$.ajax({
        		url: "/vc/sess",
@@ -1001,6 +1002,3 @@ function chanegeStatusBtnImage(){//대기, 휴식, 후처리 상태에 대한 cs
 	}
 
 }
-
-/////////////////////////////////////////////////////////////////////웹소켓/////////////////////////////////////////////////////////////////////
-

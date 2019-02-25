@@ -435,7 +435,7 @@ public class VocServiceImpl implements VocService{
 	}
 	
 	@Override
-	public Map<String,Object> vocCallBackList(HttpServletRequest request){
+	public Map<String,Object> vocPopCallBackList(HttpServletRequest request){
 		
 		Map<String,Object> param = crud.searchParam(request);
 		int PAGE_ROW_COUNT = 10;
@@ -449,7 +449,7 @@ public class VocServiceImpl implements VocService{
 		
 		param.put("startRowNum", startRowNum);
 		param.put("endRowNum", endRowNum);
-		List<Map<String,Object>> callBackList = vcDao.vocCallBackList(param);
+		List<Map<String,Object>> callBackList = vcDao.vocPopCallBackList(param);
 		
 		Map<String,Object> result = new HashMap<>();
 		result.put("callBack", callBackList);
@@ -506,7 +506,7 @@ public class VocServiceImpl implements VocService{
 		for(int i=0;i<userListSize;i++) {
 			userNo = Integer.parseInt(userList.get(i).get("USERNO").toString());
 			userName = userList.get(i).get("USERNAME").toString();
-			callBackList = vcDao.vocCallBackList(param);
+			callBackList = vcDao.vocPopCallBackList(param);
 			callBackListSize = callBackList.size();
 			
 			for(int j=0;j<callBackListSize;j++) {
@@ -566,5 +566,97 @@ public class VocServiceImpl implements VocService{
 		int res = vcDao.vocCallBackUpdate(callbackPrm);
 		return res;
 	}
+
+	@Override
+	public Map<String,Object> vocCallBackUserList(HttpServletRequest request){
+		
+		Map<String,Object> param = crud.searchParam(request);
+		int PAGE_ROW_COUNT = 10;
+		int PAGE_DISPLAY_COUNT = 5;
+		
+		int totalRows = auDao.urTotalRows(param);
+		
+		Map<String, Integer> page = crud.paging(request, totalRows, PAGE_ROW_COUNT, PAGE_DISPLAY_COUNT); 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+		
+		param.put("startRowNum", startRowNum);
+		param.put("endRowNum", endRowNum);
+		List<Map<String,Object>> callBackUserList = auDao.urList(param);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("callBackUser", callBackUserList);
+		result.put("page", page);
+		result.put("totalRows",totalRows);
+		return result;
+	}
+	
+	//voc 콜백 내역 리스트 (고객에 대한 콜백내역)
+	@Override
+	public Map<String, Object> svcVocCallBackHistList(HttpServletRequest request) {
+		Map<String, Object> searchVal = crud.searchParam(request);
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		searchVal.put("siteid", siteid);
+		//총자료수
+		int totalRows = vcDao.vocCallBackHistListCnt(searchVal);
+							
+		//paging			
+		int pageRowCount = 10; //한페이지에서 출력될 row
+		int pageDisplayCount = 5; // 페이지 목록 수  
+					
+		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+		page.put("totalRows", totalRows);					
+		//출력할 row 범위설정 
+		int startRowNum = page.get("startRowNum");
+		int endRowNum = page.get("endRowNum");
+						
+		searchVal.put("startRowNum", startRowNum);
+		searchVal.put("endRowNum",endRowNum);
+						
+		//콜백 리스트 출력
+		List<Map<String,Object>> callBackHistList = vcDao.vocCallBackHistList(searchVal);
+					
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		resMap.put("page", page);//페이징 text int 저장
+		resMap.put("callBackHistList", callBackHistList);// 선택 된 페이지 rownum에 해당하는 리스트
+		resMap.put("searchVal",searchVal);//검색조건.
+								
+		return resMap;
+	}
+	
+	//고객 블랙 등록 이력 출력 
+		@Override
+		public Map<String, Object> svcVocBlackHistList(HttpServletRequest request) {
+			Map<String, Object> searchVal = crud.searchParam(request);
+			int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+			
+			searchVal.put("siteid", siteid);
+			//총자료수
+			int totalRows = vcDao.vocBlackHistListCnt(searchVal);
+								
+			//paging			
+			int pageRowCount = 10; //한페이지에서 출력될 row
+			int pageDisplayCount = 5; // 페이지 목록 수  
+						
+			Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
+			page.put("totalRows", totalRows);					
+			//출력할 row 범위설정 
+			int startRowNum = page.get("startRowNum");
+			int endRowNum = page.get("endRowNum");
+							
+			searchVal.put("startRowNum", startRowNum);
+			searchVal.put("endRowNum",endRowNum);
+							
+			//콜백 리스트 출력
+			List<Map<String,Object>> blackHistList = vcDao.vocBlackHistList(searchVal);
+						
+			Map<String, Object> resMap = new HashMap<String, Object>();
+			resMap.put("page", page);//페이징 text int 저장
+			resMap.put("blackHistList", blackHistList);// 선택 된 페이지 rownum에 해당하는 리스트
+			resMap.put("searchVal",searchVal);//검색조건.
+									
+			return resMap;
+		}
 	
 }

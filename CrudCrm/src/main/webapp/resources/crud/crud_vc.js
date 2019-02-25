@@ -1,3 +1,14 @@
+//String Buffer------------------------------------
+var StringBuffer = function() {
+    this.buffer = new Array();
+}
+StringBuffer.prototype.append = function(obj) {
+     this.buffer.push(obj);
+}
+StringBuffer.prototype.toString = function(){
+     return this.buffer.join("");
+}
+
 //icheck css
 if($('.i-checks').length >0){
 	$('.i-checks').iCheck({
@@ -27,13 +38,13 @@ $(".dataCancle").click(function(e) {
 
 $("#custRegBtn").click(function(e) {
 	custFormActivation('insert');// 버튼 변경 이벤트
-
-	opener.$('#addBlackSpan').show();// 강성고객 관련 버튼 제어
+	opener.$('#addBlackSpan').hide();// 강성고객 관련 버튼 제어
 	opener.$('#cancleBlackSpan').hide();
-	opener.$('#blackDiv').hide();
-
+//	opener.$('#blackDiv').hide();
+	opener.$('#custname').css({"background-color":"#ffffff"});
 	window.close();
 });
+
 function enterkey(event) {
     if (window.event.keyCode == 13) {//입력 값이 enter 
     	popVocCust();
@@ -73,6 +84,15 @@ function goCustInsert() {
 	});
 
 }
+
+function vocCustDetail(){//VOC 고객 상세정보(팝업) 
+	custNo = $('#custno').val();
+	if(custNo == 0 || custNo == '' ){
+		alert('고객이 선택되지 않았습니다.');
+		return;
+	}
+	openNewWindow('voc','/vc/cust/view/'+custNo,'voc',1200,700);
+ }
 // 고객 수정
 function goCustUpdate() {
 	var custNo = $("#custno").val();
@@ -114,6 +134,66 @@ function custDataToJson(){//고객 인풋 필드 데이터 json형식 변경.
        }
     }
     return param;
+}
+
+//블랙추가 - 블랙리스트 추가 팝업 페이지 호출
+function addBlack(){
+	 var custno = $('#custno').val();
+	 if(custno > 0 ){
+		 openNewWindow('voc','/vc/black/post','voc',700,480); 
+	 }else{
+	 	alert('대상이 선택되지 않았습니다.');
+	 }
+}
+
+//블랙해제
+function cancleBlack(){
+	 var custno = $('#custno').val();
+	 var urlStr = '/vc/black/del/'+custno;
+	 $.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	$('#blackcnt').val(0);
+	        	$('#addBlackSpan').show();
+				$('#cancleBlackSpan').hide();
+				//$('#blackDiv').hide();
+				$('#custname').css({"background-color":"#ffffff"});
+				alert("해제 되었습니다.");
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+};
+//팝업 - 블랙 추가 실행
+function blackSubmit(fromUrl) {
+
+	var custno = $('#custno').val();
+	var receiveno = $('#receiveno').val();
+	var blacktype = $('#blacktype').val();
+	var memo = $('#memo').val();
+	var jsonPrm = {"custno":custno, "receiveno":receiveno, "blacktype":blacktype, "memo":memo };
+	
+	$.ajax({
+		url: fromUrl,
+        method: "POST",
+        dataType: "json",
+        data: jsonPrm,
+        cache: false,
+
+		success : function(response) {
+			alert('등록 되었습니다.');
+			opener.$('#bcustno').val(response);
+			opener.$('#addBlackSpan').hide();
+			opener.$('#cancleBlackSpan').show();
+			//opener.$('#blackDiv').show();
+			opener.$('#custname').css({"background-color":"#f8d7da"});
+			window.close();
+		}
+	});
 }
 
 // ********좌측 탭
@@ -497,11 +577,14 @@ function vocGetCustInfo(urlStr) {
 			if (blackCnt > 0) { // 블랙리스트 관련 버튼 제어
 				opener.$('#addBlackSpan').hide();
 				opener.$('#cancleBlackSpan').show();
-				opener.$('#blackDiv').show();
+				//opener.$('#blackDiv').show();
+				opener.$('#custname').css({"background-color":"#f8d7da"});
+				alert('블랙리스트에 등록 되어있는 고객입니다.');
 			} else {
 				opener.$('#addBlackSpan').show();
 				opener.$('#cancleBlackSpan').hide();
-				opener.$('#blackDiv').hide();
+//				opener.$('#blackDiv').hide();
+				opener.$('#custname').css({"background-color":"#ffffff"});
 			}
 
 		},
@@ -551,6 +634,7 @@ function custInfoClear() {// 인풋 필드 초기화
 	opener.$('#denysmsnomal').iCheck('uncheck');opener.$('#denysmssurvey').iCheck('uncheck');
 	opener.$('#denydmnomal').iCheck('uncheck');opener.$('#denydmsurvey').iCheck('uncheck');
 
+	$('#custname').css({"background-color":"#ffffff"});//블랙리스트로 변경 되었던 css 복구 
 }
 
 function custInfoBinding(data) {// 인풋 필드 데이터 바인딩
@@ -991,7 +1075,7 @@ $('[name="owner_"]').keyup(function(e){
 });
 function callBackList(pageNum){
 	var callBack  = $('#callback').val();
-	if(callBack != undefined){
+	if(callBack != ''){
 		var url = '/callBackList?pageNum='+pageNum+'&callBack='+callBack;
 	}else{
 		var url = '/callBackList?pageNum='+pageNum;
@@ -1048,7 +1132,7 @@ function callBackList(pageNum){
 }	
 function ctiUserList(pageNum){
 	var userNo  = $('#owner').val();
-	if(userNo != undefined){
+	if(userNo != ''){
 		var url = '/callBackUserList?pageNum='+pageNum+'&userNo='+userNo;
 	}else{
 		var url = '/callBackUserList?pageNum='+pageNum;
@@ -1403,14 +1487,14 @@ if ($('#calendar').length > 0) {
 }
 
 function bindCallBackNo(phoneNo){
-	$('#makeCallNum').val(phoneNo);
+	$('#blindCall').val(phoneNo);
 	$('#phone').val(phoneNo);
 	popVocCust();
 }
 
 function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
 	debugger;
-	$('#makeCallNum').val(phoneNo);
+	$('#blindCall').val(phoneNo);
 	$('#phone').val(phoneNo);
 	 swal({
          title: phoneNo,
@@ -1427,7 +1511,7 @@ function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
  
 function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
 	debugger;
-	$('#makeCallNum').val(phoneNo);
+	$('#blindCall').val(phoneNo);
 	$('#phone').val(phoneNo);
 	 swal({
          title: phoneNo,
@@ -1510,7 +1594,7 @@ function callBackMatching(idx){//매칭 버튼 클릭시 현재 바인딩 된 �
     	$('#callbackcustno'+idx).val(custno);
     	swal.close(); 
     });
-	}
 }
+
 
 

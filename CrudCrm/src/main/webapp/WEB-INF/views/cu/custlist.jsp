@@ -29,29 +29,26 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
-</head>
-<style>
 
+<style>
 
 #fixedtable tbody {
     display:block;
-    height:600px;
+    height:320px;  
+    width: 1640px;    
     overflow:auto;
     overflow-x:hidden;
-    width: 1620px;
 }
 #fixedtable thead, #fixedtable tbody tr {
     display:table;
-    width:1620px;
+    width:1640px;
     table-layout:fixed;
 }
-#fixedtable thead {
-    width: 1620px;
-}
-#fixedtable tbody tr td{
-    width: 40px;
-}
+
 </style>
+
+</head>
+
 <body>
 
 	<div id="wrapper">
@@ -239,8 +236,50 @@
 						<div class="row">
 							<div class="table-responsive">
 	
-									
-									<table id="fixedtable" class="table table-bordered table-hover table-sm" style="border-top: 1px solid #EBEBEB;">						
+								</div>
+								
+							</form:form>
+							
+							<form:form id="commandcheck" class="searchForm" action="/cust" method="PUT">
+							<div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
+																
+								<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
+                              		<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
+                             			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
+                             			<input type="hidden" id="excelUrl" name="excelUrl" value="/custexcel">
+                             			<input type="hidden" id="searchFormId" name="searchFormId" value="command"> 
+                             		</div>                                       
+                              		<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
+                                		<span id="checkVal"></span>
+										<a href="/cust/post" class="btn btn-primary">추가</a> 										
+										<button class="btn btn-primary delete">삭제</button>				
+                              		</div>
+                           		</div>
+								
+							
+                            	<div class="modal inmodal" id="exModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+                                	<div class="modal-dialog" >
+                                    	<div class="modal-content animated fadeIn">
+                                        	<div class="modal-header">
+                                            	<div class="h1 m-t-xs text-navy">
+                                					<span class="loading hamburger"></span>
+                            					</div>
+                                        	</div>
+                                        	<div class="modal-body" style="text-align:center">
+                                        		<p><strong>엑셀 다운로드 중 입니다.</strong></p>
+                                        	</div>
+                                        	<div class="modal-footer">
+                                            	<button type="button" class="btn btn-white" data-dismiss="modal" id="modalCloseBtn" style="display: none;">확인</button>
+                                        	</div>
+                                    	</div>
+                                	</div>
+                            	</div> 
+							
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover" id="fixedtable">
+									<!-- <table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;" id="fixedtable"> 
+
+
 										<colgroup>
 											<col width="25px;">
 											<col width="110px;">
@@ -253,7 +292,7 @@
 											<col width="80px;">
 											<col width="80px;">
 											<col width="100px;">
-										</colgroup>
+										</colgroup> -->
 																				
 										<thead style="text-align:center;">
 											<tr>
@@ -276,8 +315,8 @@
 										<tbody style="text-align:right;">
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
-												<td style="text-align:center;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" id="testtd1"><a href="/cust/view/${list.CUSTNO}
 												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.DEPTNAME }</td>
 												
@@ -323,7 +362,57 @@
 									
 									</div>
 								</div>
-                    		</div>
+
+								<div class="m-auto" style="padding-top:10px;">
+									 
+								</form:form>
+								<ul class="pagination">
+										<c:choose>
+											<c:when test="${page.startPageNum ne 1 }">
+												<li class="footable-page-arrow disabled">	
+													<a href='/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.startPageNum-1 }' >&laquo;</a>													
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&laquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+								
+										<c:forEach var="i" begin="${page.startPageNum }"
+											end="${page.endPageNum }">
+											<c:choose>
+												<c:when test="${i eq page.pageNum }">
+													<li class="footable-page active">
+													<a href = '/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													</li>
+												</c:when>
+												<c:otherwise>
+													<li>
+													<a href = '/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${i }'>${i }</a>
+													</li>
+														
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+										
+										<c:choose>
+											<c:when test="${page.endPageNum lt page.totalPageCount }">
+												<li>
+												<a href = '/cust?custname=${searchVal.custname}&owner=${searchVal.owner}&owner_=${searchVal.owner_}&clino=${searchVal.clino}&mobile=${searchVal.mobile}&email=${searchVal.email}&custgubun=${searchVal.custgubun}&custgrade=${searchVal.custgrade}&fromregdt=${searchVal.fromregdt}&toregdt=${searchVal.toregdt}&infoagree=${searchVal.infoagree}&pageNum=${page.endPageNum+1 }'>&raquo;</a>
+												</li>
+											</c:when>
+											<c:otherwise>
+												<li class="disabled"><a href="javascript:">&raquo;</a>
+												</li>
+											</c:otherwise>
+										</c:choose>
+									</ul>  
+															
+								</div>
+								<h4 class="float-right" style="padding-top:10px;">&middot; 총 자료수 : ${page.totalRows }건</h4>
+		
+							</div>
 						</div>
 					</div>
 				</div>
@@ -347,18 +436,11 @@
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script><!-- excel file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- cust js -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
-	<script>
-		$('#headerFixTable').fixedHeaderTable({
-			height: '200'
-		
-		});
-		
-		$(document).ready(function() {	
-			$('#headerFixTable').fixedHeaderTable({
-				height: '200',
-				minWidth:'800',		
-			});
-			
+
+	<script>	
+	
+		$(document).ready(function() {				
+
 			// icecks
 			$('.i-checks').iCheck({
 				checkboxClass : 'icheckbox_square-green',
@@ -388,11 +470,33 @@
 				forceParse : false,
 				calendarWeeks : true,
 				autoclose : true
-			});
-					    
-	    
+			});	
+			
+			var colWidthArray = [40,100,180,100,120,180,80,80,80,80,100];
+			var tableId = 'fixedtable';
+			setTableSize(tableId,colWidthArray);
 		});
-		
+
+	
+		function setTableSize(tableId,colWidthArray){//테이블 해더 고정. 
+			debugger;
+			var tab = $('#'+tableId);
+			var colLen = tab.find('th').length;
+			var tdLen = tab.find('td').length; 
+			var rowLen = tdLen/colLen;
+			
+			for (var i=0;i<rowLen;i++ ){	//모든 th td 에 각각 css적용 
+				for(var j=0;j<colLen;j++){
+					if(i==0){
+						tab.find('th').eq(colLen*i+j).css('border-top','1px solid #EBEBEB');
+						tab.find('th').eq(colLen*i+j).attr("width",colWidthArray[j]);
+					}
+					tab.find('td').eq(colLen*i+j).css('border-top','0px');
+					tab.find('td').eq(colLen*i+j).attr("width",colWidthArray[j]);
+				}
+			}			
+		}
+	
 	</script>
 </body>
 </html>

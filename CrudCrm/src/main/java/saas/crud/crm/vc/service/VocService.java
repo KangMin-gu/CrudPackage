@@ -25,4 +25,6 @@ public interface VocService {
 	public void svcVocCallBackInsert(Map<String,Object> param);
 	public Map<String,Object>svcVocCallBackList(HttpServletRequest request);
 	public int svcvocCallBackUpdate(Map<String,Object> callbackPrm);
+	public Map<String, Object> svcVocCallBackHistList(HttpServletRequest request);
+	public Map<String,Object> svcVocBlackHistList(HttpServletRequest request);
 }

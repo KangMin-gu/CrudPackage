@@ -16,4 +16,10 @@ public interface VocDao {
 	public int vocCallBackListCnt(Map<String,Object> param);
 	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param);	
 	public int vocCallBackUpdate(Map<String,Object> callbackPrm);
+	public int vocCallBackHistoryInsert(Map<String,Object> param);
+	public int vocCallBackHistListCnt(Map<String,Object> param);
+	public List<Map<String,Object>> vocCallBackHistList(Map<String,Object> param);
+	public int vocBlackHistListCnt(Map<String,Object> param);
+	public List<Map<String,Object>> vocBlackHistList(Map<String,Object> param);
+	public Map<String,Object> vocAlarm(Map<String,Object> param);
 }

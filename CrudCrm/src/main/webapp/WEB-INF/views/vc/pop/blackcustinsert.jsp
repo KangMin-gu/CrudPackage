@@ -88,10 +88,6 @@ body {
 								</table>
 							</div>
 						
-
-
-
-
 					</div>
 				</div>
 
@@ -102,41 +98,15 @@ body {
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 
 	<script>
-		$(document).ready(function() {
-			$('#custname').val(opener.$('#custname').val());
-			$('#custno').val(opener.$('#custno').val());
-			$('#receiveno').val(opener.$('#phone').val());
-
-		});
-
-		function blackSubmit(fromUrl) {
-			debugger;
-			var custno = $('#custno').val();
-			var receiveno = $('#receiveno').val();
-			var blacktype = $('#blacktype').val();
-			var memo = $('#memo').val();
-			var jsonPrm = {"custno":custno, "receiveno":receiveno, "blacktype":blacktype, "memo":memo };
-			
-			$.ajax({
-				url: fromUrl,
-		        method: "POST",
-		        dataType: "json",
-		        data: jsonPrm,
-		        cache: false,
-
-				success : function(response) {
-					alert('등록 되었습니다.');
-					opener.$('#bcustno').val(response);
-					opener.$('#addBlackSpan').hide();
-					opener.$('#cancleBlackSpan').show();
-					opener.$('#blackDiv').show();
-					window.close();
-				}
-			});
-		}
+	$(document).ready(function() {
+		$('#custname').val(opener.$('#custname').val());
+		$('#custno').val(opener.$('#custno').val());
+		$('#receiveno').val(opener.$('#phone').val());
+	});		
+	
 	</script>
 
 </body>

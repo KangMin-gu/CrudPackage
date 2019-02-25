@@ -272,7 +272,8 @@ public class VocController {
 		return 0;
 	}
 
-
+	
+	//VOC 온피아 -> 콜백 받기 
 	@RequestMapping(value="/vc/callback", method=RequestMethod.POST)
 	public ModelAndView VocGetCallBack(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -357,4 +358,53 @@ public class VocController {
 		mView.setViewName("cu/custdetailNoTemplate");
 		return mView;
 	}
+}
+	//VOC - 콜백 테스트용. (**기능 구현 완료 후 반드시 삭제 ) 	
+	@RequestMapping(value="/vc/test",method=RequestMethod.GET)
+	public ModelAndView authvocTest(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("vc/test1");
+		return mView;
+	}
+	
+	@RequestMapping(value="/callBack/div", method=RequestMethod.GET)
+	public ModelAndView authVocCallBackDiv(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("vc/pop/callbackDiv");
+		return mView;
+	}
+	
+	@RequestMapping(value="/callBackList", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authVocCallBackList(HttpServletRequest request){
+		Map<String,Object> callBackList = vcService.vocCallBackList(request);
+		return callBackList;
+	}
+	
+	@RequestMapping(value="/callBackUserList", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authVocCallBackUserList(HttpServletRequest request){
+		Map<String,Object> callBackUserList = vcService.vocCallBackUserList(request);
+		return callBackUserList;
+	}
+	
+	@RequestMapping(value="/callBack/passDiv",method=RequestMethod.GET)
+	@ResponseBody
+	public int authVocCallPassDiv(HttpServletRequest request) {
+		
+		int cnt = vcService.vocCallBackPassDiv(request);
+		
+		return cnt;
+		
+	}
+	
+	@RequestMapping(value="/callBack/autoDiv",method=RequestMethod.GET)
+	@ResponseBody
+	public int authVocCallAtouDiv(HttpServletRequest request) {
+		
+		int cnt = vcService.vocCallBackAutoDiv(request);
+		return cnt;
+	}
+	
+	
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="voc">
+	
+	<select id="callBackList" parameterType="hashMap" resultType="hashMap">
+		SELECT * FROM (
+			SELECT 
+			A.CALLBACKNO
+			,A.CALLER
+			,A.TRUNK
+			,A.CALLBACK
+			,DATE_FORMAT(A.RECEIVEDATE,'%Y-%m-%d') AS RECEIVEDATE_
+			,A.CALLCOUNT
+			,(SELECT USERNAME FROM ME800010 WHERE SITEID = 1 AND USERNO = A.CALLUSER) AS CALLUSER_
+			,@RNUM:=@RNUM + 1 AS ROWNUM 
+			FROM CTI510010 A, (SELECT @RNUM := 0) R
+			WHERE
+			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
+			AND (CALLUSER IS NULL
+					OR IFNULL(CALLCOUNT,0) <![CDATA[<=]]> 3)
+			AND CALLSTATUS IN (0,3)
+			<if test="callBack != null">
+				AND CALLBACK LIKE CONCAT('%',#{callBack},'%')
+			</if>
+		) X
+		<if test="endRowNum != null">
+				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+		</if>
+		
+		ORDER BY X.CALLBACKNO ASC
+		
+		<if test="totalCnt != null">
+			limit ${totalCnt}
+		</if>
+		
+	</select>
+	
+	<update id="callBackUpdate" parameterType="hashMap">
+		UPDATE CTI510010
+		SET CALLUSER = #{userNo}
+		, CALLSTATUS = 1
+		WHERE CALLBACKNO = #{callBackNo}
+	</update>
+	
+	<select id="ctiUserCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) AS CNT FROM ME800010
+		WHERE SITEID = #{siteid}
+		<!--  AND ROLE = #{role} -->
+		<if test="userNo != null">
+			AND USERNO =  #{userNo}
+		</if>
+	</select>
+	
+	<select id="callBackTotalRow" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM CTI510010
+		WHERE
+			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
+			AND (CALLUSER IS NULL
+					OR IFNULL(CALLCOUNT,0) <![CDATA[<=]]> 3)
+			AND CALLSTATUS IN (0,3)
+			<if test="callBack != null">
+				AND CALLBACK LIKE CONCAT('%',#{callBack},'%')
+			</if>
+	</select>
+	
+	<update id="callBackPassDiv" parameterType="hashMap">
+		UPDATE CTI510010
+		SET CALLUSER = #{userNo}
+			,CALLSTATUS = 1
+		WHERE CALLBACKNO IN
+		<foreach collection="callBackNo" item="type" index="index" open="(" separator="," close=")">
+      		#{type}
+       </foreach> 
+	</update>
+	
+</mapper>

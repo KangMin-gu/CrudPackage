@@ -22,4 +22,16 @@ public interface VocDao {
 	public int vocBlackHistListCnt(Map<String,Object> param);
 	public List<Map<String,Object>> vocBlackHistList(Map<String,Object> param);
 	public Map<String,Object> vocAlarm(Map<String,Object> param);
+	public void vocCallBackInsert(Map<String,Object> param);
+	
+	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param);
+	
+	public int vocCallUserCnt(Map<String,Object> param);
+	
+	public void vocCallBackDiv(Map<String,Object> param);
+	
+	public int vocCallBackTotalRow(Map<String,Object> param);
+	
+	public int vocCallBackPassDiv(Map<String,Object> param);
+
 }

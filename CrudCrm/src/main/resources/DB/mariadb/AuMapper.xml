@@ -14,6 +14,7 @@
 		,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
 				ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
 		, CONCAT(A.MOBILE1, A.MOBILE2, A.MOBILE3) AS MOBILE
+		,(SELECT COUNT(*) FROM CTI510010 WHERE CALLSTATUS = 1 AND CALLUSER = A.USERNO) AS CTICOUNT
 		,@RNUM:=@RNUM + 1 AS ROWNUM
 			FROM me800010 A, (SELECT @RNUM := 0) R
 			WHERE A.SITEID = #{siteid}
@@ -37,6 +38,12 @@
 			<if test="enddate != null">
 				AND DATE_FORMAT(REGDATE,'%Y-%m-%d') <![CDATA[<=]]> #{enddate}
 			</if>
+			<if test="role != null">
+				AND ROLE = #{role}
+			</if>
+			<if test="userNo != null">
+				AND USERNO = #{userNo}
+			</if>  
 			
 			ORDER BY A.USERNO DESC
 			) X 
@@ -103,6 +110,9 @@
 			<if test="enddate != null">
 				AND REGDATE <![CDATA[<=]]>#{enddate}
 			</if>
+			<if test="userNo != null">
+				AND USERNO = #{userNo}
+			</if>  
 	</select>
 	<select id="idcheck" parameterType="String" resultType="int">
 		SELECT count(*)

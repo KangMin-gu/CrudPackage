@@ -706,7 +706,6 @@
 		AND DATE_FORMAT(A.VISITDATE,'%Y-%m-%d') = #{visitdate}
 	</select>
 
-	
 	<select id="svProductRead" parameterType="hashMap" resultType="hashMap">
 		SELECT PRODUCTB,PRODUCTM,PRODUCTS
 		,FN_PRODUCT(PRODUCTB,#{siteid}) AS PRODUCTBNAME
@@ -735,6 +734,7 @@
 		)
 		VALUES
 		(
+		)VALUES(
 		#{CALLER}
 		,#{TRUNK}
 		,#{CALLBACK}
@@ -746,6 +746,7 @@
 		,#{callstatus}
 		,#{callcount}
 		)
+
 	</insert>
 	
 	<!-- 콜백 카운터
@@ -969,4 +970,5 @@
 	</if>
 	FROM DUAL	 		
 	</select>
+
 </mapper>

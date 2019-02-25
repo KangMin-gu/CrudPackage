@@ -129,7 +129,7 @@
                             <div class="table-responsive">
                             <table class="table table-bordered" style="border-top: 1px solid #e7eaec;">
                                 <colgroup>
-                                    <col style="width: 50px"/>
+                                    <col style="width: 3%;">
                                     <col style="width: 200px"/>
                                     <col style="width: 200px"/>
                                     <col style="width: 100px"/>

@@ -73,6 +73,7 @@ public class VocDaoImpl implements VocDao{
 	}
 	//VOC 콜백 리스트 
 	@Override
+
 	public List<Map<String,Object>> vocCallBackList(Map<String, Object> param) {
 		List<Map<String,Object>> callBackList = session.selectList("sv.vocCallBackList",param);
 		return callBackList;
@@ -82,11 +83,31 @@ public class VocDaoImpl implements VocDao{
 	public int vocCallBackUpdate(Map<String, Object> callbackPrm) {
 		int res = session.update("sv.vocCallBackUpdate",callbackPrm);
 		return res;
+
+	public void vocCallBackInsert(Map<String,Object> param) {
+		 session.insert("sv.vocCallBack",param);
+
 	}
 	//VOC 콜백 추가. cti에서 받아온 데이터 콜백 테이블에 insert
 	@Override
-	public void vocCallBackInsert(Map<String,Object> param) {
-		 session.insert("sv.vocCallBack",param);
+	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param) {
+		List<Map<String,Object>> callBackList = session.selectList("voc.callBackList",param);
+		return callBackList;
+	}
+	@Override
+	public int vocCallUserCnt(Map<String,Object> param) {
+		int cnt = session.selectOne("voc.ctiUserCnt",param);
+		return cnt;
+	}
+	@Override
+	public void vocCallBackDiv(Map<String,Object> param) {
+		session.update("voc.callBackUpdate",param);
+	}
+
+	@Override
+	public int vocCallBackTotalRow(Map<String, Object> param) {
+		int cnt = session.selectOne("voc.callBackTotalRow",param);
+		return cnt;
 	}
 	//VOC 콜백 히스토리추가
 	@Override
@@ -125,4 +146,9 @@ public class VocDaoImpl implements VocDao{
 		return vocAlarm;
 	}
 	
+	@Override
+	public int vocCallBackPassDiv(Map<String,Object> param) {
+		int cnt = session.update("voc.callBackPassDiv",param);
+		return cnt;
+	}
 }

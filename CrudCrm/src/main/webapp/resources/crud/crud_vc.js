@@ -1,3 +1,4 @@
+
 //String Buffer------------------------------------
 var StringBuffer = function() {
     this.buffer = new Array();
@@ -9,6 +10,23 @@ StringBuffer.prototype.toString = function(){
      return this.buffer.join("");
 }
 //-------------------------------------------------
+
+//icheck css
+if($('.i-checks').length >0){
+	$('.i-checks').iCheck({
+		checkboxClass: 'icheckbox_square-green',
+    	radioClass: 'iradio_square-green',
+	});			
+}
+
+if($('.date').length > 0){
+	$('.date').datepicker({
+		keyboardNavigation:false,
+		forceParse:false,
+		autoclose:true
+	});
+}
+
 
 // 선택 요소 초기화. 
 // 2개의 대상 타겟이 동일한 div에 담겨 있어야 하며  네이밍 규칙이 다음과 같아야한다.
@@ -28,8 +46,6 @@ $("#custRegBtn").click(function(e) {
 	opener.$('#custname').css({"background-color":"#ffffff"});
 	window.close();
 });
-
-// 인입 된 번호로 고객 검색.
 function enterkey(event) {
     if (window.event.keyCode == 13) {//입력 값이 enter 
     	popVocCust();
@@ -41,9 +57,9 @@ function popVocCust(){
 	openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',1260,800);
 }
 
-// 고객 추가
-function goCustInsert() {
 
+//고객 추가
+function goCustInsert(){
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
 	//핸드폰 번호 입력값이 없다면 경고 
@@ -209,6 +225,7 @@ function setTableSize(tableId,colWidthArray){//테이블 해더 고정.
 }
 
 
+
 function tabTargetVocService(pageNum){//서비스탭
 	
 	var custNo = $('#custno').val();
@@ -266,6 +283,73 @@ function tabTargetVocService(pageNum){//서비스탭
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
+// ********좌측 탭
+// *************************************************************************************************
+function tabTargetVocService(pageNum) {// 서비스탭
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/sv?custno=' + custNo;
+
+	var svLinkStr = '<a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">';
+
+	if (custNo != 0) {
+		$
+				.ajax({
+					url : urlStr,
+					method : "GET",
+					dataType : "json",
+					cache : false,
+					success : function(data) {
+						$('#tab1 tbody tr').remove();
+						$('#tab1 .pagination li').remove();
+
+						var length = data.svList.length;
+						var html = "";
+						for (var i = 0; i < length; i++) {
+							html = '<tr><td><a onClick="openNewWindow('
+									+ "'voc','/service/"
+									+ data.svList[i].SERVICENO
+									+ "','voc',750,700);" + '">'
+									+ data.svList[i].SERVICENAME
+									+ '</a></td><td>'
+									+ data.svList[i].RECEPTIONDATE_
+									+ '</td><td>'
+									+ data.svList[i].SERVICECHANNEL_
+									+ '</td><td>' + data.svList[i].OWNER_
+									+ '</td><td>' + data.svList[i].CUSTNAME_
+									+ '</td><td>' + '</td><td>'
+									+ data.svList[i].SERVICEOWNER_
+									+ '</td></tr>';
+							$('#tab1 tbody').append(html);
+						}
+						var html2 = "";
+
+						if (data.page.startPageNum != 1) {
+							html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService('+ eval(data.page.startPageNum - 1)+ ')" >&laquo;</a></li>'
+						} else {
+							html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+						}
+						for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+							if (i == data.page.pageNum) {
+								html2 += '<li class="footable-page active"><a onclick="tabTargetVocService('+ i + ')">' + i + '</a></li>'
+							} else {
+								html2 += '<li><a onclick="tabTargetVocService('+ i + ')">' + i + '</a></li>'
+							}
+						}
+						if (data.page.endPageNum < data.page.totalPageCount) {
+							html2 += '<li><a onclick="tabTargetVocService('+ eval(data.page.endPageNum + 1)+ ')">&raquo;</a></li>'
+						} else {
+							html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+						}
+
+						if (length != 0) {
+							$('#tab1 .pagination').append(html2);
+						}
+					},
+					error : function(request, status, error) {
+						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
+					}
+				});
+
 	}
 }
 
@@ -397,6 +481,7 @@ function tabTargetCallbackHistory(pageNum){//콜백이력탭
 	
 }
 
+
 function tabTargetVocEmail(pageNum){//email 탭 
 
 	var custNo = $('#custno').val();
@@ -454,6 +539,76 @@ function tabTargetVocEmail(pageNum){//email 탭
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 	        }
 	    });
+
+
+function tabTargetVocEmail(pageNum) {// email 탭
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/email?custno=' + custNo;
+
+	if (custNo != 0) {
+		$.ajax({
+					url : urlStr,
+					method : "GET",
+					dataType : "json",
+					cache : false,
+					success : function(data) {
+						$('#tab7 tbody tr').remove();
+						$('#tab7 .pagination li').remove();
+						var emailId = "";
+						var length = data.emailList.length;
+						var html = "";
+						var hrefStr = '/vc/tab/email/view/';
+						for (var i = 0; i < length; i++) {
+							html = '<tr><td><a onClick="openNewWindow('
+									+ "'voc','/vc/tab/email/view/"
+									+ data.emailList[i].EMAILLOGID
+									+ "','voc',960,500);" + '">'
+									+ data.emailList[i].SUBJECT
+									+ '</a></td><td>'
+									+ data.emailList[i].TOEMAIL + '</td><td>'
+									+ data.emailList[i].FROMEMAIL + '</td><td>'
+									+ data.emailList[i].RLTDATE_ + '</td><td>'
+									+ data.emailList[i].MEDIATYPE
+									+ '</td></tr>';
+							console.log(html);
+							$('#tab7 tbody').append(html);
+						}
+						var html2 = "";
+
+						if (data.page.startPageNum != 1) {
+							html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocEmail('
+									+ eval(data.page.startPageNum - 1)
+									+ ')" >&laquo;</a></li>'
+						} else {
+							html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+						}
+						for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+							if (i == data.page.pageNum) {
+								html2 += '<li class="footable-page active"><a onclick="tabTargetVocEmail('
+										+ i + ')">' + i + '</a></li>'
+							} else {
+								html2 += '<li><a onclick="tabTargetVocEmail('
+										+ i + ')">' + i + '</a></li>'
+							}
+						}
+						if (data.page.endPageNum < data.page.totalPageCount) {
+							html2 += '<li><a onclick="tabTargetVocEmail('
+									+ eval(data.page.endPageNum + 1)
+									+ ')">&raquo;</a></li>'
+						} else {
+							html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+						}
+
+						if (length != 0) {
+							$('#tab7 .pagination').append(html2);
+						}
+					},
+					error : function(request, status, error) {
+						alert("code:" + request.status + "\n" + "message:"
+								+ request.responseText + "\n" + "error:"
+								+ error);
+					}
+				});
 
 	}
 }
@@ -538,11 +693,13 @@ function tabTargetCallbackList(pageNum){
 // ********고객 팝업
 // 관련*************************************************************************************************
 
+
 function vocCustSelected(tr) {// tr이 클릭 이벤트
 	var custno = tr.getAttribute("value");
 	var urlStr = "/vc/pop/cust/" + custno;
 	var urlServ = "/vc/pop/service/" + custno;
 	var statusStr = 'update';
+	
 	vocGetCustInfo(urlStr);// 정보획득 후 데이터 바인딩.
 	vocGetServiceInfo(urlServ);
 	custFormActivation('update');// 수정 버튼생성.
@@ -552,7 +709,6 @@ function vocCustSelected(tr) {// tr이 클릭 이벤트
 		window.close();
 	}, 300);
 }
-
 // 고객정보 획득 후 바인딩
 function vocGetCustInfo(urlStr) {
 	$.ajax({
@@ -693,6 +849,10 @@ function serviceInfoBinding(data) {
 	opener.$('#servicecode2').val(data.SERVICECODE2);
 	opener.$('#servicename').val(data.SERVICENAME);
 	opener.$('#servicedesc').val(data.SERVICEDESC);
+	
+	opener.seObject.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
+
+	opener.seObject.getById["servicedesc"].exec("PASTE_HTML", [data.SERVICEDESC]); //내용밀어넣기
 	opener.$('#memo').val(data.MEMO);
 	if (data.SERVICETYPE == 1) {
 
@@ -824,51 +984,7 @@ $('#create').click(function() {
 
 });
 
-// 제품 추가를 눌렀을때
-$(document).on('click', '.plus', function(e) {
-	var productNum = $(e.target).prev().attr('id').substring(7, 8);
-	productPlus(parseInt(productNum));
-});
-// 제품 삭제를 눌렀을때
-	$(document).on('click','.minus',function(e) {
-					$(e.target).parent().prev().find('select:last').after('<button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>');
-					$(e.target).parent().remove();
-	});
 
-// 최근 한건을 가져올때 제품의 갯수를 늘려줌
-function productPlus(length) {
-	var countP = length + 1;
-	var flag = window.location.pathname.indexOf('pop');
-	// 팝업인지 아닌지 비교해서 팝업인경우에는 opener를 늘려주고 아니면 본인을 늘려줌
-	if (flag == -1) {
-		$('.product:last').clone(true).insertAfter(
-				'.select-area .select-box:last');
-		$('.product:last').find('#product' + length + 1).attr('name',
-				'product' + countP + 1).attr('id', 'product' + countP + 1);
-		$('.product:last').find('#product' + length + 2).attr('name',
-				'product' + countP + 2).attr('id', 'product' + countP + 2);
-		$('.product:last').find('#product' + length + 3).attr('name',
-				'product' + countP + 3).attr('id', 'product' + countP + 3);
-		$('.product:last').prev().find('.plus').remove();
-		// 첫번째 인경우에는 삭제버튼만 있으면 되기 떄문
-		if (length == 1) {
-			$('.product:last')
-					.append(
-							'<button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>');
-		}
-	} else {
-		opener.$('.product:last').clone(true).insertAfter(
-				'.select-area .select-box:last');
-		opener.$('.product:last').find('#product' + length + 1).attr('name',
-				'product' + countP + 1).attr('id', 'product' + countP + 1);
-		opener.$('.product:last').find('#product' + length + 2).attr('name',
-				'product' + countP + 2).attr('id', 'product' + countP + 2);
-		opener.$('.product:last').find('#product' + length + 3).attr('name',
-				'product' + countP + 3).attr('id', 'product' + countP + 3);
-		opener.$('.product:last').prev().find('.plus').remove();
-	}
-
-}
 
 $('.asowner').click(function(e) {
 	var custName = $('#custname').val();
@@ -1011,7 +1127,7 @@ function productB() {
 		dataType : "json",
 		cache : false,
 		success : function(data) {
-		
+
 			for (i = 0; i < data.length; i++) {
 				$('.product select:first').append(
 						'<option label="' + data[i].prdname + '" value="'
@@ -1026,7 +1142,7 @@ function productB() {
 }
 
 function vocContents(hash,url){
-	
+
 	var menuType;
 	if(url.indexOf('voc') > 0){
 		menuType = 1;
@@ -1095,6 +1211,207 @@ function cti_test() {
 	});
 }
 
+$('#menu').click(function(e){
+	openNewWindow('콜백분배','/callBack/div',e.currentTarget.id,800,600);
+});
+
+$('#leftSearch').click(function(e){
+	callBackList(1);
+});
+$('[name="owner_"]').keyup(function(e){
+	ctiUserList(1);
+});
+function callBackList(pageNum){
+	var callBack  = $('#callback').val();
+	if(callBack != undefined){
+		var url = '/callBackList?pageNum='+pageNum+'&callBack='+callBack;
+	}else{
+		var url = '/callBackList?pageNum='+pageNum;
+	}
+    $.ajax({
+        url: url ,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	$('.ibox-left .table-responsive tbody tr').remove();
+        	$('.ibox-left .pagination li').remove();
+        	$('.ibox-left .m-auto h4').remove();
+        	var length = data.callBack.length;
+        	var html ="";
+        	for (var i = 0; i < length; i++) {
+        		
+        		html = '<tr><td><input type="checkbox" class="i-checks chksquare" name="callbackno" id="callbackno" value="'+data.callBack[i].CALLBACKNO+'"></td><td>' + data.callBack[i].RECEIVEDATE_ + '</td><td>' + data.callBack[i].CALLER + '</td><td>' + data.callBack[i].CALLBACK + '</td></tr>';
+        		$('.ibox-left .table-responsive tbody').append(html);
+        	}
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCust(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+            }
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetCust(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetCust(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetCust(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            html3 = '<h4 class="float-right">&middot; 총 자료수 : ' +data.totalRows +'건</h4>';
+            
+            $('.ibox-left .pagination').append(html2);
+            $('.ibox-left .m-auto').prepend(html3);
+            
+            $('.i-checks').iCheck({
+        		checkboxClass: 'icheckbox_square-green',
+            	radioClass: 'iradio_square-green',
+        	});	
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}	
+function ctiUserList(pageNum){
+	var userNo  = $('#owner').val();
+	if(userNo != undefined){
+		var url = '/callBackUserList?pageNum='+pageNum+'&userNo='+userNo;
+	}else{
+		var url = '/callBackUserList?pageNum='+pageNum;
+	}
+    $.ajax({
+        url: url ,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	$('.ibox-right .table-responsive tbody tr').remove();
+        	$('.ibox-right .pagination li').remove();
+        	$('.ibox-right .m-auto h4').remove();
+        	var length = data.callBackUser.length;
+        	var html ="";
+        	for (var i = 0; i < length; i++) {
+        		
+        		html = '<tr><td><input type="checkbox" class="i-checks chksquare" name="userno" id="userno" value="'+data.callBackUser[i].USERNO+'"></td><td>' + data.callBackUser[i].USERNAME + '</td><td>' + data.callBackUser[i].USERID + '</td><td>'+data.callBackUser[i].CTICOUNT+'</td></tr>';
+        		$('.ibox-right .table-responsive tbody').append(html);
+        	}
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCust(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+            }
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetCust(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetCust(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetCust(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            html3 = '<h4 class="float-right">&middot; 총 자료수 : ' +data.totalRows +'건</h4>';
+            
+            $('.ibox-right .pagination').append(html2);
+            $('.ibox-right .m-auto').prepend(html3);
+            
+            $('.i-checks').iCheck({
+        		checkboxClass: 'icheckbox_square-green',
+            	radioClass: 'iradio_square-green',
+        	});	
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+$('#passDiv').click(function(e){
+	var callBackLength = $('.ibox-left .checked').length;
+	var userLength = $('.ibox-right .checked').length;
+	
+	var callBackNo="";
+	
+	if(callBackLength == 0){
+		alert("콜백 리스트에서 선택해주세요");
+		return false;
+	}
+	
+	if(userLength == 0){
+		alert("사용자 리스트에서 선택해주세요");
+		return false;
+	}else if(userLength >= 2){
+		alert("한명의 사용자만 선택해주세요");
+		return false;
+	}else{
+		var userNo = $('.ibox-right .checked input').val();
+		var userName = $('.ibox-right .checked').parent().next().text();
+	}
+	
+	if(callBackLength > 0 && userLength > 0){
+		for(i=0;i < callBackLength; i++){
+			var callBackVal = $('.ibox-left .checked:eq('+i+') input').val();
+			callBackNo += callBackVal+",";
+		}
+		
+		var url = "/callBack/passDiv?callBackNo="+callBackNo+"&userNo="+userNo;
+		 $.ajax({
+		        url: url ,
+		        method: "GET",
+		        dataType: "json",
+		        cache: false,
+		        success: function (data) {
+		        	alert(data+"건이 "+ userName +" 에게 할당 되었습니다.");
+		        	self.location.reload();
+		        },
+		        error: function (request, status, error) {
+		            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		        }
+		    });
+	
+	}
+
+});
+
+
+$('#autoDiv').click(function(e){
+	var userNo = $('#owner').val();
+	var callBack = $('#callback').val();
+	
+	if(callBack != "" && userNo != ""){
+		url='/callBack/autoDiv?callBack='+parseInt(callBack)+'&userNo='+parseInt(userNo);
+	}else if(callBack == "" && userNo != ""){
+		url='/callBack/autoDiv?userNo='+parseInt(userNo);
+	}else if(callBack != "" && userNo == ""){
+		url='/callBack/autoDiv?callBack='+parseInt(callBack);
+	}else{
+		url='/callBack/autoDiv';
+	}
+	$.ajax({
+        url: url ,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        	alert("자동 분배 되었습니다.");
+        	self.location.reload();
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+});
+
 $('#asowner').change(
 		function() {
 			var asOwner = $(this).val();
@@ -1150,6 +1467,67 @@ function stopInterval() {
 //************************************콜백 관련 ***********************************************************
 
 
+//제품 추가를 눌렀을때
+$(document).on('click', '.plus', function(e) {
+	var productLength = $('.product').length;
+	if(productLength > 9){
+		alert('제품은 9개 이상 등록할수 없습니다');
+		$('.product:last').remove();
+	}else{
+		if($(e.target).prev().attr('id') != undefined){
+			var productNum = $(e.target).prev().attr('id').substring(7, 8);
+			productPlus(parseInt(productNum));
+		}
+	}
+});
+// 제품 삭제를 눌렀을때
+	$(document).on('click','.minus',function(e) {
+		var productLength = $('.product').length;
+		if(productLength == 2){
+			$(e.target).parent().prev().find('select:last').after('<button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>');
+		}else{
+			$('.product:eq('+parseInt(productLength-2)+')').find('.plus').remove();
+		}
+					$(e.target).parent().remove();
+	});
+
+// 최근 한건을 가져올때 제품의 갯수를 늘려줌
+function productPlus(length) {
+	debugger;
+	var countP = length + 1;
+	var flag = window.location.pathname.indexOf('pop');
+	// 팝업인지 아닌지 비교해서 팝업인경우에는 opener를 늘려주고 아니면 본인을 늘려줌
+	if (flag == -1) {
+		$('.product:last').clone(true).insertAfter(
+				'.select-area .select-box:last');
+		$('.product:last').find('#product' + length + 1).attr('name',
+				'product' + countP + 1).attr('id', 'product' + countP + 1);
+		$('.product:last').find('#product' + length + 2).attr('name',
+				'product' + countP + 2).attr('id', 'product' + countP + 2);
+		$('.product:last').find('#product' + length + 3).attr('name',
+				'product' + countP + 3).attr('id', 'product' + countP + 3);
+		$('.product:last').prev().find('.plus').remove();
+		// 첫번째 인경우에는 삭제버튼만 있으면 되기 떄문
+		if (length == 1) {
+			$('.product:last')
+					.append(
+							'<button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>');
+		}
+	} else {
+		opener.$('.product:last').clone(true).insertAfter(
+				'.select-area .select-box:last');
+		opener.$('.product:last').find('#product' + length + 1).attr('name',
+				'product' + countP + 1).attr('id', 'product' + countP + 1);
+		opener.$('.product:last').find('#product' + length + 2).attr('name',
+				'product' + countP + 2).attr('id', 'product' + countP + 2);
+		opener.$('.product:last').find('#product' + length + 3).attr('name',
+				'product' + countP + 3).attr('id', 'product' + countP + 3);
+		opener.$('.product:last').prev().find('.plus').remove();
+	}
+
+}
+
+
 // 캘린더 시작
 if ($('#calendar').length > 0) {
 	var schList = $('#schList').val();// hidden value에 담겨있는 스케쥴 리스트를
@@ -1195,8 +1573,6 @@ if ($('#calendar').length > 0) {
 				droppable : true, // false - 드래그 박스의 일정 캘린더로 이동이 안됨.
 
 				drop : function(event, a, b) { // 드래그 박스의 일정 캘린더로 드랍시 발생
-												// function
-				
 					var name = $(b.helper).text().trim();
 					var val1 = $(b.helper).children().val();
 					var date = formatDate(event._d);

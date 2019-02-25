@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
+
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->
 <style>
@@ -42,6 +43,13 @@
 </head>
 	<body>
     <div id="wrap" style=" margin-bottom: 40px;margin-top: 70px;">
+
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+</head>
+	<body>
+    <div id="wrap" style="margin-top: 0px;">
+
         <div class="ibox-top">
             <div class="ibox-content clearfix">
 
@@ -62,31 +70,31 @@
 				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
 				<div>
 					<textarea id="messages" cols="150" rows="10"></textarea>
-				<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
-				<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
+					<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
+					<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
-				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<input type="button" value="로그인" onclick="loginGo();">
-				<input type="hidden" id="userno" value="${sessionScope.USERNO }">
-				<input type="hidden" id="chkauth" value="${sessionScope.CHKAUTH }" />
-				<input type="hidden" id="trunk" value="07042622883" /><!-- 동적으로변경 -->
             </div>
-            	 
+            <!-- 박진열 작업 -->
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm dialingBtn" >걸기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm answerBtn" >받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm pickupBtn" >당겨받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm hangUpBtn" >끊기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="delayBtn">보류 <i class="fa fa-times-circle"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="delayCancelBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
                         &nbsp; |&nbsp;
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
+                        <li>발신번호</li>
+                        <li><input name="blindCall" id="blindCall" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
+                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
+                        <li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
+                        <li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
                         <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-                        <li class="liBtn2"><span>상담 상태 : </span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
-                        <span id="status" class="cti_text_nomal" style="display:inline-block; min-width:100px;">연결안됨</span></li>
+                        <li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
+                        <strong><span id="status">연결안됨</span></strong>
                         <li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
                         <li class="float-right">
                             <ul class="top-ul03">
@@ -95,15 +103,17 @@
                                     <span class="li-text">3</span>
                                 </li>
                                 <li>
-                                	<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#ff5555;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
-                                	<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #85ff00;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
+                                	<i id="menu" class="fa fa-bars"></i>
+                                	<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#ff5555e8 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
+                                	<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #85ff00f5;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
                                 </li>
                             </ul>
                         </li>
                     </ul>
+                    <!-- 박진열 작업 -->
                 </div>
         </div>
-        <div class="wrapper wrapper-content" >
+        <div class="wrapper wrapper-content" style="padding-top: 5px;">
             <div class="ibox clearfix">
            
                 <div class="ibox-left">
@@ -624,17 +634,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>접수내용</th>
+                                <th>제목</th>
                                 <td colspan="3">
-                                    <input type="text"class="form-control voc" name="servicename" id="servicename" value="${vocInfo.SERVICENAME }">
+                                    <input type="text"class="form-control voc" name="servicename" style="height:75px;"id="servicename" value="${vocInfo.SERVICENAME }">
                                 </td>
                             </tr>
                             <tr>
                                 <th>상담내용</th>
                                 <td colspan="2">
-                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="2000" style="height: 350px; resize: none;"></textarea>
+                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="1500" style="height: 350px; resize: none;"></textarea>
                                 </td>
-                                <td colspan="1">
+                                <td colspan="1" style="width: 150px;">
                                 
 								</td>
                             </tr>
@@ -777,8 +787,8 @@
                     </table>
                     <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                          	<button class="btn btn-primary btn-sm" id="email">메일 발송</button>
-                          	<button class="btn btn-primary btn-sm" id="sms">SMS 발송</button>
+                          	<button class="btn btn-primary btn-sm note" id="email">메일 발송</button>
+                          	<button class="btn btn-primary btn-sm sms" id="sms">SMS 발송</button>
                           	<button class="btn btn-primary btn-sm" id="kakao">Kakao 발송</button> 
                         </div>                                       
                         <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;">    		
@@ -808,25 +818,26 @@
                     <li class="call-tit">미처리</li>
                     <li><strong>0</strong></li>
                     <li class="call-tit">통화분배시도</li>
-                    <li><span id="transferTryCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="transferTryCnt">0</span></strong></li>
                     <li class="call-tit">통화분배연결</li>
-                    <li><span id="transferConnectCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="transferConnectCnt">0</span></strong></li>
                     <li class="call-tit">인바운드시도</li>
-                    <li><span id="ibTryCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="ibTryCnt">0</span></strong></li>
                     <li class="call-tit">인바운드연결<li>
-                    <li><span id="ibConnectCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="ibConnectCnt">0</span></strong></li>
                     <li class="call-tit">아웃바운드시도</li>
-                    <li><span id="obTryCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="obTryCnt">0</span></strong></li>
                     <li class="call-tit">아웃바운드연결</li>
-                    <li><span id="obConnectCnt"><strong>0</strong></span></li>
+                    <li><strong><span id="obConnectCnt">0</span></strong></li>
                 </ul>
             </div>
         </div>
     </div>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
-<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
@@ -834,6 +845,29 @@
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vocsocket.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
 <script>
+
+var intervalId;//전역변수
+var seObject = [];
+function sessMaintain(){//세션유지용
+ 	$.ajax({
+       		url: "/vc/sess",
+        	method: "GET",
+        	dataType: "json",
+        	cache: false,
+        	success: function (data) {	           		
+        		alert.log('t');//테스트 종료후 삭제
+        	}
+ 	});
+}
+function intervalFuncOn(){
+	var timer = 1740000;//29분마다 실행
+	this.intervalId = setInterval("sessMaintain()",timer);
+}
+function intervalFuncOff(){//세션 유지 타이머 함수 종료 
+	clearInterval(this.intervalId);
+	this.intervalId = null;
+}
+
 
 $(document).ready(function () {
  
@@ -847,38 +881,58 @@ $(document).ready(function () {
 	
 	
 	
+
+	nhn.husky.EZCreator.createInIFrame({
+
+	    oAppRef: seObject,
+
+	    elPlaceHolder: "servicedesc",
+
+	    sSkinURI: "../resources/js/nse_files/SmartEditor2Skin.html",
+
+	    fCreator: "createSEditor2"
+
+	});
 });
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
  });
+ 
  $('[name*=product]').change(function(){
-	 upperProduct(this); 
+	 upperProduct(this);
+
  });
 
- 
- 
- var second = 00;
- var minite = 00;
 
- var countdown = setInterval(function(){
-         //0초면 초기화 후 이동되는 사이트
- 	var time = second+":"+minite;
- 		document.getElementById('timer').innerHtml = time;
- 		document.getElementById('timer').value = time;
- 		
-         second++;//카운트 감소
-         if(second == 60){
-        	 second = 00;
-        	 minite ++;
-         }
-     }, 1000);
+ //블랙해제
+ function cancleBlack(){
+	 var custno = $('#custno').val();
+	 var urlStr = '/vc/black/del/'+custno;
+	 $.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	$('#blackcnt').val(0);
+	        	$('#addBlackSpan').show();
+				$('#cancleBlackSpan').hide();
+				$('#blackDiv').hide();
+	        	alert("해제 되었습니다.");
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+ };
  
+//textArea에 이미지 첨부
+ function pasteHTML(filepath){
+     var sHTML = '<img src="<%=request.getContextPath()%>'+filepath+'">';
+     oEditors.getById["textAreaContent"].exec("PASTE_HTML", [sHTML]);
+ }
 
- 
- 
- 
- 
 </script>
 
 	

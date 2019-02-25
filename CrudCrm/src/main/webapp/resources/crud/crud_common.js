@@ -75,7 +75,12 @@
 	//내부통지팝업
 	$('.note').click(function(e){
 		 openNewWindow('내부통지','/popnote',e.currentTarget.id,1280,850);	
+	});
+	
+	$('.sms').click(function(e){
+		 openNewWindow('문자발송','/popsms',e.currentTarget.id,550,800);	
 	})
+	
 	//영업팝업
 	$('.sales').click(function(e){
 		openNewWindow('영업','/popsales',e.currentTarget.id,650,750);
@@ -626,4 +631,48 @@
     		$('body').addClass('mini-navbar');
     	}   	
     });
+    
+    function smsToLms(id){
+		var str =  $('#'+id).val();
+		var textLength = getTextLength(str);
+		if(textLength > 80){
+            var bool = confirm("80바이트이상 작성하여서 LMS로 자동 전환합니다.");
+            if(bool){
+            	$('#senddesc').val(str);
+            	$('#lengthType').val(1);
+            	alert("Lms로 전환되어 저장됩니다.");
+            	return true;
+            }else{
+            	var limit = '80' //제한byte를 가져온다.
+                var strLength = 0;
+                var strTitle = "";
+                var strPiece = "";
+                var check = false;
+                
+                for (i = 0; i < textLength; i++){
+                    var code = str.charCodeAt(i);
+                    var ch = str.substr(i,1).toUpperCase();
+                    //체크 하는 문자를 저장
+                    strPiece = str.substr(i,1);
+                     
+                    code = parseInt(code);
+                     
+                    if ((ch < "0" || ch > "9") && (ch < "A" || ch > "Z") && ((code > 255) || (code < 0))){
+                        strLength = strLength + 2; //UTF-8 3byte 로 계산
+                    }else{
+                        strLength = strLength + 1;
+                    }
+                    if(strLength>limit){
+                    	$('#lengthType').val(0);
+                    	alert(limit+"byte 초과된 문자는 잘려서 입력 됩니다.");
+                    	 $('#'+id).val(strTitle);
+                    	 e.preventDefault();
+                         return false;
+                    }else{
+                        strTitle = strTitle+strPiece; //제한길이 보다 작으면 자른 문자를 붙여준다.
+                    }
+                }
+            }
+        }
+	}
 	

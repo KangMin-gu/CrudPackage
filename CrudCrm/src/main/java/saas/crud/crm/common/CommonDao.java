@@ -21,4 +21,10 @@ public interface CommonDao {
 	public List<Map<String,Object>> popCustList(Map<String,Object> searchVal);
 	public int totalcntSales(Map<String,Object> searchVal);
 	public List<Map<String,Object>> popSalesList(Map<String,Object> searchVal);
+	
+	public void DirectSendSms(Map<String,Object> param);
+	public void DelaySendSms(Map<String,Object> param);
+	
+	public void DirectSendLms(Map<String,Object> param);
+	public void DelaySendLms(Map<String,Object> param);
 }

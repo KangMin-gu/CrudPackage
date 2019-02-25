@@ -43,7 +43,7 @@ function popVocCust(){
 
 // 고객 추가
 function goCustInsert() {
-	debugger;
+
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
 	//핸드폰 번호 입력값이 없다면 경고 
@@ -163,7 +163,7 @@ function cancleBlack(){
 };
 //팝업 - 블랙 추가 실행
 function blackSubmit(fromUrl) {
-	debugger;
+
 	var custno = $('#custno').val();
 	var receiveno = $('#receiveno').val();
 	var blacktype = $('#blacktype').val();
@@ -189,6 +189,26 @@ function blackSubmit(fromUrl) {
 	});
 }
 //********좌측 탭 *************************************************************************************************
+function setTableSize(tableId,colWidthArray){//테이블 해더 고정. 
+	
+	var tab = $('#'+tableId);
+	var colLen = tab.find('th').length;
+	var tdLen = tab.find('td').length; 
+	var rowLen = tdLen/colLen;
+	
+	for (var i=0;i<rowLen;i++ ){	//모든 th td 에 각각 css적용 
+		for(var j=0;j<colLen;j++){
+			if(i==0){//th 라인설정
+				tab.find('th').eq(colLen*i+j).css('border-top','1px solid #EBEBEB');
+				tab.find('th').eq(colLen*i+j).attr("width",colWidthArray[j]);
+			}
+			tab.find('td').eq(colLen*i+j).css('border-top','0px');
+			tab.find('td').eq(colLen*i+j).attr("width",colWidthArray[j]);
+		}
+	}			
+}
+
+
 function tabTargetVocService(pageNum){//서비스탭
 	
 	var custNo = $('#custno').val();
@@ -250,7 +270,7 @@ function tabTargetVocService(pageNum){//서비스탭
 }
 
 function tabTargetBlackHistory(pageNum){//강성고객이력탭
-	debugger;
+	
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/black?custno='+custNo+'&pageNum='+pageNum;
 	
@@ -261,7 +281,7 @@ function tabTargetBlackHistory(pageNum){//강성고객이력탭
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
-	        	debugger;
+	        	
 	        	$('#tab2 tbody tr').remove();
 	        	$('#tab2 .pagination li').remove();
 	        	
@@ -449,7 +469,7 @@ function tabTargetCallbackList(pageNum){
         dataType: "json",
         cache: false,
         success: function (data) {  
-        	debugger;
+        	
         	$('#callbackTab1 tbody tr').remove();
         	$('#callbackTab1 .pagination li').remove();
         	

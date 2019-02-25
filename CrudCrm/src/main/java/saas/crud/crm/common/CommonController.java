@@ -147,8 +147,7 @@ public class CommonController {
 	}
 	@RequestMapping(value="/mail/deny", method=RequestMethod.POST)
 	@ResponseBody
-	public void MailDenySet(HttpServletRequest request) {
-		
+	public void MailDenySet(HttpServletRequest request) {		
 		// 수신거부 html 생성 및 수신거부 dao 생성 필요
 		commonService.mailDeny(request);
 		
@@ -161,9 +160,5 @@ public class CommonController {
 		mav.setViewName("cm/popsales");
 		return mav;
 	}
-	@RequestMapping(value="/testEditor",method=RequestMethod.POST)
-	public void multi(HttpServletRequest request, HttpServletResponse response) {
-		commonService.test(request,response);
-	}
-	
+
 }

@@ -41,6 +41,7 @@
 					<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
             </div>
+            <!-- 박진열 작업 -->
                     <ul class="top-btn">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
@@ -76,6 +77,7 @@
                             </ul>
                         </li>
                     </ul>
+                    <!-- 박진열 작업 -->
                 </div>
         </div>
         <div class="wrapper wrapper-content" style="padding-top: 5px;">

@@ -65,6 +65,7 @@ public class VocDaoImpl implements VocDao{
 		return bcustno;
 	}
 
+
 	//VOC 콜백 리스트 카운터
 	@Override
 	public int vocCallBackListCnt(Map<String, Object> param) {

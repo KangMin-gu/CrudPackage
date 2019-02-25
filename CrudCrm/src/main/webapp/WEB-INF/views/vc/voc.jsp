@@ -16,21 +16,27 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->
 <style>
-.tabTable {
+.vocTabTable {
 	width: 798px;
+	border-left:none;
+	border-right:none;
+	border-bottom:none;
 }
-.tabTable tbody {
-    display:none;
+.vocTabTable tbody {
+    display:block;
     height:80px;  
     width: 798px;
     overflow:auto;
     overflow-x:hidden;   
-    border-bottom:none 
+    border-bottom:none; 
 }
-.tabTable thead, .tabTable tbody tr {
+.vocTabTable thead, .vocTabTable tbody tr {
     display:table;
     width:798px;
     table-layout:fixed;
+}
+.vocTabTable thead, .tabTable tbody tr {
+   text-align:center;
 }
 </style>
 </head>
@@ -264,7 +270,7 @@
                             <div class="tab-content">
                                 <div role="tabpanel" id="tab1" class="tab-pane active">
                                     <div class="panel-body">
-                                        <table class="table table-bordered tabTable" style="margin-bottom: 16px;" id="svTabTable">
+                                        <table class="table table-bordered vocTabTable" style="margin-bottom: 16px;" id="svTabTable">
                                         	<colgroup>
 												<col width="180px;">
 												<col width="120px;">
@@ -295,7 +301,7 @@
                                 </div>
                                 <div role="tabpanel" id="tab2" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered tabTable" style="margin-bottom: 16px;" id="blackTabTable">
+                                        <table class="table table-bordered vocTabTable" style="margin-bottom: 16px;" id="blackTabTable">
                                         	<colgroup>
 												<col width="80px;">
 												<col width="40px;">
@@ -322,7 +328,7 @@
                                 </div>
                                 <div role="tabpanel" id="tab3" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table tabTable table-bordered" style="margin-bottom: 16px;" id="callBackHisTabTable">
+                                        <table class="table vocTabTable table-bordered" style="margin-bottom: 16px;" id="callBackHisTabTable">
                                         	<colgroup>
 												<col width="80px;">
 												<col width="80px;">
@@ -351,7 +357,7 @@
                                 </div>
                                 <div role="tabpanel" id="tab4" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered" style="margin-bottom: 16px;">
+                                        <table class="table table-bordered vocTabTable" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시4</th>
@@ -382,7 +388,7 @@
                                 </div>
                                 <div role="tabpanel" id="tab5" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered" style="margin-bottom: 16px;">
+                                        <table class="table table-bordered vocTabTable" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시5</th>
@@ -413,7 +419,7 @@
                                 </div>
                                 <div role="tabpanel" id="tab6" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table table-bordered" style="margin-bottom: 16px;">
+                                        <table class="table table-bordered vocTabTable" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
                                                     <th>접수일시6</th>
@@ -480,7 +486,7 @@
                                 </div>
                                 <div role="tabpanel" id="tab7" class="tab-pane">
                                     <div class="panel-body">
-                                        <table class="table tabTable table-bordered" id="emailTabTable" style="margin-bottom: 16px;">
+                                        <table class="table vocTabTable table-bordered" id="emailTabTable" style="margin-bottom: 16px;">
                                             <colgroup>
 												<col width="200px;">
 												<col width="120px;">
@@ -517,7 +523,7 @@
                             <div class="tab-content">
                                 <div role="tabpanel" id="callbackTab1" class="tab-pane active">
                                     <div class="panel-body">
-                                        <table class="table table-bordered tabTable" id="callBackTabTable" style="margin-bottom: 16px;">
+                                        <table class="table table-bordered vocTabTable" id="callBackTabTable" style="margin-bottom: 16px;">
                                         	<colgroup>
 												<col width="150px;">
 												<col width="100px;">

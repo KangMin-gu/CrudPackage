@@ -240,7 +240,7 @@ function tabTargetVocService(pageNum){//서비스탭
 	            var tableId = 'svTabTable';
 	            var colWidthArray = [180,120,80,80,80,80,80];
 	            setTableSize(tableId,colWidthArray);
-	            $('#'+tableId+' tbody').css('display','block');	            
+	            //$('#'+tableId+' tbody').css('display','block');	            
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -298,7 +298,7 @@ function tabTargetBlackHistory(pageNum){//강성고객이력탭
 	            var tableId = 'blackTabTable';
 	            var colWidthArray = [80,40,150,70,100];  
 	            setTableSize(tableId,colWidthArray);
-	            $('#'+tableId+' tbody').css('display','block');
+	           //$('#'+tableId+' tbody').css('display','block');
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -366,7 +366,7 @@ function tabTargetCallbackHistory(pageNum){//콜백이력탭
 	            var tableId = 'callBackHisTabTable';
 	            var colWidthArray = [100,80,80,80,150,80];
 	            setTableSize(tableId,colWidthArray);
-	            $('#'+tableId+' tbody').css('display','block');
+	            //$('#'+tableId+' tbody').css('display','block');
 	            
 	        },
 	        error: function (request, status, error) {
@@ -428,7 +428,7 @@ function tabTargetVocEmail(pageNum){//email 탭
 	            var tableId = 'emailTabTable';
 	            var colWidthArray = [200,200,200,100,80];
 	            setTableSize(tableId,colWidthArray);
-	            $('#'+tableId+' tbody').css('display','block');
+	            //$('#'+tableId+' tbody').css('display','block');
 	        },
 	        error: function (request, status, error) {
 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -501,7 +501,7 @@ function tabTargetCallbackList(pageNum){
             var tableId = 'callBackTabTable';
             var colWidthArray = [150,100,100,85,190,170];
             setTableSize(tableId,colWidthArray);
-            $('#'+tableId+' tbody').css('display','block');            
+            //$('#'+tableId+' tbody').css('display','block');            
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

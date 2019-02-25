@@ -620,7 +620,7 @@
 		SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
-	
+	<!-- 블랙삭제 -->
 	<update id="vocBlackCustDelete" parameterType="hashMap">
 		UPDATE CU120010 
 		SET

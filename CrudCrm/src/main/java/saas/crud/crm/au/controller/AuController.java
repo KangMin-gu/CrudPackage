@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.CodeDto;
+import saas.crud.crm.au.dto.NoticeDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 import saas.crud.crm.au.service.AuService;
@@ -204,15 +205,90 @@ public class AuController {
 		mView.setViewName("au/ma/check/sitecheck");
 		return mView;
 	}
-	
+	//접속중유저 확인
 	@RequestMapping(value="/ma/sitecehck/{userId}", method=RequestMethod.GET)
 	public ModelAndView authSession(HttpServletRequest request, @PathVariable String userId) {
-		ModelAndView mView = auService.authSession(request, userId);
+		ModelAndView mView = auService.session(request, userId);
+		return mView;
+	}
+	//회원사 공지사항
+	@RequestMapping(value="/notice", method=RequestMethod.GET)
+	public ModelAndView authNotice(HttpServletRequest request) {
+		ModelAndView mView = auService.notice(request);
+		mView.setViewName("au/ad/notice");
 		return mView;
 	}
 	
-	@RequestMapping(value="/ad/notice", method=RequestMethod.GET)
-	public String authNotice(HttpServletRequest request) {
-		return "au/ad/notice";
+	//회원사 공지사항 검색
+	@RequestMapping(value="/notice", method=RequestMethod.POST)
+	public ModelAndView authNoticeSearch(HttpServletRequest request) {
+		ModelAndView mView = auService.notice(request);
+		mView.setViewName("au/ad/notice");
+		return mView;
 	}
+	
+	//회원사 공지사항 상세보기
+	@RequestMapping(value="/notice/{noticeId}", method=RequestMethod.GET)
+	public ModelAndView authNoticeDetail(HttpServletRequest request, @PathVariable int noticeId) {
+		ModelAndView mView = auService.noticeDetail(request, noticeId);
+		mView.setViewName("au/ad/noticedetail");
+		return mView;
+	}
+	
+	//회원사 공지폼
+	@RequestMapping(value="/notice/post", method=RequestMethod.GET)
+	public String authNoticeForm() {
+		return "au/ad/noticeform";
+	}
+
+	//회원사 공지등록 
+	@RequestMapping(value="/notice/post", method=RequestMethod.POST)
+	public ModelAndView authNoticeInsert(HttpServletRequest request, @ModelAttribute NoticeDto noticeDto) {
+		int noticeNo = auService.noticeInsert(request, noticeDto);
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("redirect:/notice/"+noticeNo);
+		return mView;
+	}
+	
+	//회원사 공지 수정폼
+	@RequestMapping(value="/notice/post/{noticeId}", method=RequestMethod.GET)
+	public ModelAndView authNoticeUpdateForm(HttpServletRequest request, @PathVariable int noticeId) {
+		ModelAndView mView = auService.noticeDetail(request, noticeId);
+		mView.setViewName("au/ad/noticeupdate");
+		return mView;
+	}
+	
+	//회원사 공지수정
+	@RequestMapping(value="/notice/post/{noticeId}", method=RequestMethod.PUT)
+	public String authNoticeUpdate(HttpServletRequest request, @ModelAttribute NoticeDto noticeDto, @PathVariable int noticeId) {
+		return "redirect:/notice/"+noticeId;
+	}
+	
+	//회원사 공지 삭제
+	@RequestMapping(value="/notice/trash/{noticeId}", method=RequestMethod.PUT)
+	public String authNoticeDelete(HttpServletRequest request, @PathVariable int noticeId) {
+		auService.noticeDelete(request, noticeId);
+		return "redirect:/notice";
+	}
+	
+	
+	
+	//데시보드설정 화면
+	@RequestMapping(value="/dashboard/set", method=RequestMethod.GET)
+	public String authDashboardSet(HttpServletRequest request) {
+		return "au/db/dashboard";
+	}
+	
+	
+	//데시보드설정 화면
+	@RequestMapping(value="/dashboard/set2", method=RequestMethod.GET)
+	public String authDashboardSet2(HttpServletRequest request) {
+		return "au/db/dashboard2";
+	}
+	
+	
+	
+	
+	
+	
 }

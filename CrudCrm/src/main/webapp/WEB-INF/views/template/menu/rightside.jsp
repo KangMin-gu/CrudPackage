@@ -35,7 +35,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a1.jpg">
+											src="">
 
 										<div class="m-t-xs">
 											<i class="fa fa-star text-warning"></i> <i
@@ -54,7 +54,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a2.jpg">
+											src="">
 									</div>
 									<div class="media-body">
 										The point of using Lorem Ipsum is that it has a more-or-less
@@ -67,7 +67,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a3.jpg">
+											src="">
 
 										<div class="m-t-xs">
 											<i class="fa fa-star text-warning"></i> <i
@@ -86,7 +86,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a4.jpg">
+											src="">
 									</div>
 
 									<div class="media-body">
@@ -100,7 +100,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a8.jpg">
+											src="">
 									</div>
 									<div class="media-body">
 
@@ -113,7 +113,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a7.jpg">
+											src="">
 									</div>
 									<div class="media-body">
 										Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor
@@ -126,7 +126,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a3.jpg">
+											src="">
 
 										<div class="m-t-xs">
 											<i class="fa fa-star text-warning"></i> <i
@@ -145,7 +145,7 @@
 								<a href="#">
 									<div class="float-left text-center">
 										<img alt="image" class="rounded-circle message-avatar"
-											src="${pageContext.request.contextPath}/resources/img/a4.jpg">
+											src="">
 									</div>
 									<div class="media-body">
 										Uncover many web sites still in their infancy. Various

@@ -45,16 +45,16 @@ function popVocCust(){
 	openNewWindow('voc','/vc/pop/cust?condition=phone&keyword='+searchPhoneNo,'voc',1260,800);
 }
 
-//고객 추가
-function goCustInsert(){
+// 고객 추가
+function goCustInsert() {
 	var urlStr = "/vc/cust/post";
 	var custName = $("#custname").val();
-	if (custName.trim() == '') {// 입력 값이 없으면 기본값으로 설정.
-		var recieveNo = $("#custname").val('익명');
-	}
-
-	var param = {};
-	param = custDataToJson(param);
+	if(custName.trim() == ''){//입력 값이 없으면 기본값으로 설정.
+		var recieveNo =
+		$("#custname").val('익명');
+	}	
+	var param={};
+	param = custDataToJson();
 	$.ajax({
 		url : urlStr,
 		method : "POST",
@@ -76,10 +76,8 @@ function goCustInsert(){
 // 고객 수정
 function goCustUpdate() {
 	var custNo = $("#custno").val();
-	var urlStr = "/vc/cust/post/" + custNo;
-	var param = {};
-	param = custDataToJson(param);
-
+	var urlStr = "/vc/cust/post/"+custNo;				
+	var param = custDataToJson(param);
 	$.ajax({
 		url : urlStr,
 		method : "POST",
@@ -96,157 +94,374 @@ function goCustUpdate() {
 	});
 }
 
-function custDataToJson(param) {// 고객 인풋 필드 데이터 json형식 변경.
+function custDataToJson(){//고객 인풋 필드 데이터 json형식 변경. 
+	var param={};
 	var custData = $('.custInput');
 	var custLength = custData.length;
-	for (i = 0; i < custLength; i++) {
-		var idVal = custData[i].id;
-		param[idVal] = custData[i].value;
-	}
-	return param;
+	
+    for(i=0; i<custLength;i++){
+       var idVal = custData[i].id;
+           
+       if(idVal.substring(0,4) =='deny' ){ // 수신거부 체크박스 항목일 경우 
+    	   if($('#'+idVal).prop('checked') == true){
+    		   param[idVal] = custData[i].value;//체크 되었으면 값 바인딩
+    	   }else{
+    		   param[idVal] = 0; // 체크 해제 되었다면 0 
+    	   }
+    	   
+       }else{
+    	   param[idVal] = custData[i].value; 
+       }
+    }
+    return param;
 }
 
 // ********좌측 탭
 // *************************************************************************************************
-function tabTargetVocService(pageNum) {// 서비스탭
-	var custNo = $('#custno').val();
-	var urlStr = '/vc/tab/sv?custno=' + custNo;
-
-	var svLinkStr = '<a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">';
-
-	if (custNo != 0) {
-		$
-				.ajax({
-					url : urlStr,
-					method : "GET",
-					dataType : "json",
-					cache : false,
-					success : function(data) {
-						$('#tab1 tbody tr').remove();
-						$('#tab1 .pagination li').remove();
-
-						var length = data.svList.length;
-						var html = "";
-						for (var i = 0; i < length; i++) {
-							html = '<tr><td><a onClick="openNewWindow('
-									+ "'voc','/service/"
-									+ data.svList[i].SERVICENO
-									+ "','voc',750,700);" + '">'
-									+ data.svList[i].SERVICENAME
-									+ '</a></td><td>'
-									+ data.svList[i].RECEPTIONDATE_
-									+ '</td><td>'
-									+ data.svList[i].SERVICECHANNEL_
-									+ '</td><td>' + data.svList[i].OWNER_
-									+ '</td><td>' + data.svList[i].CUSTNAME_
-									+ '</td><td>' + '</td><td>'
-									+ data.svList[i].SERVICEOWNER_
-									+ '</td></tr>';
-							$('#tab1 tbody').append(html);
-						}
-						var html2 = "";
-
-						if (data.page.startPageNum != 1) {
-							html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService('+ eval(data.page.startPageNum - 1)+ ')" >&laquo;</a></li>'
-						} else {
-							html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
-						}
-						for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
-							if (i == data.page.pageNum) {
-								html2 += '<li class="footable-page active"><a onclick="tabTargetVocService('+ i + ')">' + i + '</a></li>'
-							} else {
-								html2 += '<li><a onclick="tabTargetVocService('+ i + ')">' + i + '</a></li>'
-							}
-						}
-						if (data.page.endPageNum < data.page.totalPageCount) {
-							html2 += '<li><a onclick="tabTargetVocService('+ eval(data.page.endPageNum + 1)+ ')">&raquo;</a></li>'
-						} else {
-							html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
-						}
-
-						if (length != 0) {
-							$('#tab1 .pagination').append(html2);
-						}
-					},
-					error : function(request, status, error) {
-						alert("code:" + request.status + "\n" + "message:"+ request.responseText + "\n" + "error:"+ error);
-					}
-				});
-	}
-
+function setTableSize(tableId,colWidthArray){//테이블 해더 고정. 
+	
+	var tab = $('#'+tableId);
+	var colLen = tab.find('th').length;
+	var tdLen = tab.find('td').length; 
+	var rowLen = tdLen/colLen;
+	
+	for (var i=0;i<rowLen;i++ ){	//모든 th td 에 각각 css적용 
+		for(var j=0;j<colLen;j++){
+			if(i==0){//th 라인설정
+				tab.find('th').eq(colLen*i+j).css('border-top','1px solid #EBEBEB');
+				tab.find('th').eq(colLen*i+j).attr("width",colWidthArray[j]);
+			}
+			tab.find('td').eq(colLen*i+j).css('border-top','0px');
+			tab.find('td').eq(colLen*i+j).attr("width",colWidthArray[j]);
+		}
+	}			
 }
 
-function tabTargetVocEmail(pageNum) {// email 탭
+function tabTargetVocService(pageNum){//서비스탭
+	
 	var custNo = $('#custno').val();
-	var urlStr = '/vc/tab/email?custno=' + custNo;
-
-	if (custNo != 0) {
+	var urlStr = '/vc/tab/sv?custno='+custNo+'&pageNum='+pageNum;
+	
+	var svLinkStr = '<a href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">' ;
+	
+	if(custNo != 0 ){
 		$.ajax({
-					url : urlStr,
-					method : "GET",
-					dataType : "json",
-					cache : false,
-					success : function(data) {
-						$('#tab7 tbody tr').remove();
-						$('#tab7 .pagination li').remove();
-						var emailId = "";
-						var length = data.emailList.length;
-						var html = "";
-						var hrefStr = '/vc/tab/email/view/';
-						for (var i = 0; i < length; i++) {
-							html = '<tr><td><a onClick="openNewWindow('
-									+ "'voc','/vc/tab/email/view/"
-									+ data.emailList[i].EMAILLOGID
-									+ "','voc',960,500);" + '">'
-									+ data.emailList[i].SUBJECT
-									+ '</a></td><td>'
-									+ data.emailList[i].TOEMAIL + '</td><td>'
-									+ data.emailList[i].FROMEMAIL + '</td><td>'
-									+ data.emailList[i].RLTDATE_ + '</td><td>'
-									+ data.emailList[i].MEDIATYPE
-									+ '</td></tr>';
-							console.log(html);
-							$('#tab7 tbody').append(html);
-						}
-						var html2 = "";
-
-						if (data.page.startPageNum != 1) {
-							html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocEmail('
-									+ eval(data.page.startPageNum - 1)
-									+ ')" >&laquo;</a></li>'
-						} else {
-							html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
-						}
-						for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
-							if (i == data.page.pageNum) {
-								html2 += '<li class="footable-page active"><a onclick="tabTargetVocEmail('
-										+ i + ')">' + i + '</a></li>'
-							} else {
-								html2 += '<li><a onclick="tabTargetVocEmail('
-										+ i + ')">' + i + '</a></li>'
-							}
-						}
-						if (data.page.endPageNum < data.page.totalPageCount) {
-							html2 += '<li><a onclick="tabTargetVocEmail('
-									+ eval(data.page.endPageNum + 1)
-									+ ')">&raquo;</a></li>'
-						} else {
-							html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
-						}
-
-						if (length != 0) {
-							$('#tab7 .pagination').append(html2);
-						}
-					},
-					error : function(request, status, error) {
-						alert("code:" + request.status + "\n" + "message:"
-								+ request.responseText + "\n" + "error:"
-								+ error);
-					}
-				});
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	
+	        	$('#tab1 tbody tr').remove();
+	        	$('#tab1 .pagination li').remove();
+	        	
+	        	var length = data.svList.length;
+	        	var html ="";
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td title="'+data.svList[i].SERVICENAME+'"><a onClick="openNewWindow('+"'voc','/vc/service/"+data.svList[i].SERVICENO+"','voc',1200,700);"+'">'+ data.svList[i].SERVICENAME_ + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td></tr>';
+	        		$('#tab1 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocService(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetVocService(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetVocService(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetVocService(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab1 .pagination').append(html2);
+	            }
+	            //테이블 헤더 고정 설정
+	            var tableId = 'svTabTable';
+	            var colWidthArray = [180,120,80,80,80,80,80];
+	            setTableSize(tableId,colWidthArray);
+	            //$('#'+tableId+' tbody').css('display','block');	            
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
 	}
-
 }
+
+function tabTargetBlackHistory(pageNum){//강성고객이력탭
+	
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/black?custno='+custNo+'&pageNum='+pageNum;
+	
+	if(custNo != 0 ){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	
+	        	$('#tab2 tbody tr').remove();
+	        	$('#tab2 .pagination li').remove();
+	        	
+	        	var length = data.blackHistList.length;
+	        	var html ="";
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td>'+data.blackHistList[i].REGDATE_+'</td><td>'+ data.blackHistList[i].BLACKTYPE_ + '</td><td title="'+data.blackHistList[i].MEMO+'">' + data.blackHistList[i].MEMO_ + '</td><td>' + data.blackHistList[i].USERNAME + '</td><td>' + data.blackHistList[i].ISDELETE_ +  '</td></tr>';
+	        		$('#tab2 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetBlackHistory(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetBlackHistory(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetBlackHistory(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetBlackHistory(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab2 .pagination').append(html2);
+	            }
+	            //테이블 헤더 고정 설정
+	            var tableId = 'blackTabTable';
+	            var colWidthArray = [80,40,150,70,100];  
+	            setTableSize(tableId,colWidthArray);
+	           //$('#'+tableId+' tbody').css('display','block');
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+}
+
+function tabTargetCallbackHistory(pageNum){//콜백이력탭
+	
+	var custno = $('#custno').val();
+	var urlStr = '/vc/callback/history?custno='+custno+'&pageNum='+pageNum;
+	if(custno != 0 ){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {  
+	        	
+	        	$('#tab3 tbody tr').remove();
+	        	$('#tab3 .pagination li').remove();
+	        	
+	        	var length = data.callBackHistList.length;
+	        	var html ="";
+	        	var sb = new StringBuffer();
+	        	//todo. string buffer  코드로 변경        	
+	        	for (var i = 0; i < length; i++) {
+	        		sb.append('<tr><td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].REGDATE_+'</td>');
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLBACK+'</td>');
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">' + data.callBackHistList[i].CALLER+'</td>'); 
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].USERNAME+'</td>');
+	        		sb.append('<td title="'+data.callBackHistList[i].MEMO+'">'+data.callBackHistList[i].MEMO_+'</td>');
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_);
+	        		sb.append('<input type="hidden" id="callbachistkno'+i+'" value="'+data.callBackHistList[i].CALLBACKHISTNO+'"/>');
+	        		sb.append('<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackHistList[i].CUSTNO+'"/>')
+	        		sb.append('<input type="hidden" id="callcount'+i+'" value="'+data.callBackHistList[i].CALLCOUNT+'"/></td></tr>');
+	        	}
+	        	html = sb.toString();
+	        	$('#tab3 tbody').append(html); 	
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCallbackHistory(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetCallbackHistory(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetCallbackHistory(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab3 .pagination').append(html2);
+	            }
+	            //테이블 헤더 고정 설정
+	            var tableId = 'callBackHisTabTable';
+	            var colWidthArray = [100,80,80,80,150,80];
+	            setTableSize(tableId,colWidthArray);
+	            //$('#'+tableId+' tbody').css('display','block');
+	            
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+	}
+	
+}
+
+function tabTargetVocEmail(pageNum){//email 탭 
+
+	var custNo = $('#custno').val();
+	var urlStr = '/vc/tab/email?custno='+custNo+'&pageNum='+pageNum;
+	
+	if(custNo != 0){
+		$.ajax({
+	        url: urlStr,
+	        method: "GET",
+	        dataType: "json",
+	        cache: false,
+	        success: function (data) {
+	        	
+	        	$('#tab7 tbody tr').remove();
+	        	$('#tab7 .pagination li').remove();
+	        	var emailId = "";
+	        	var length = data.emailList.length;
+	        	var html ="";
+	        	var hrefStr = '/vc/tab/email/view/';        	
+	        	for (var i = 0; i < length; i++) {
+	        		html = '<tr><td title="'+data.emailList[i].SUBJECT+'"><a onClick="openNewWindow('+"'voc','/vc/tab/email/view/"+data.emailList[i].EMAILLOGID+"','voc',960,500);"+'">'+ data.emailList[i].SUBJECT_ + '</a></td><td>' + data.emailList[i].TOEMAIL + '</td><td>' + data.emailList[i].FROMEMAIL + '</td><td>' + data.emailList[i].RLTDATE_ + '</td><td>' + data.emailList[i].MEDIATYPE + '</td></tr>';        		
+	        		$('#tab7 tbody').append(html);
+	        	}
+	        	var html2= "";
+	        	
+	        	if (data.page.startPageNum != 1) {
+	                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetVocEmail(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+	            }
+	            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+	                if (i == data.page.pageNum) {
+	                    html2 += '<li class="footable-page active"><a onclick="tabTargetVocEmail(' + i + ')">'+i+'</a></li>'
+	                } else {
+	                    html2 += '<li><a onclick="tabTargetVocEmail(' + i + ')">'+i+'</a></li>'
+	                }
+	            }
+	            if (data.page.endPageNum < data.page.totalPageCount) {
+	                html2 += '<li><a onclick="tabTargetVocEmail(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+	            } else {
+	                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+	            }
+	            
+	            if(length != 0){
+	            	$('#tab7 .pagination').append(html2);
+	            }
+	            
+	            //테이블 헤더 고정 설정
+	            var tableId = 'emailTabTable';
+	            var colWidthArray = [200,200,200,100,80];
+	            setTableSize(tableId,colWidthArray);
+	            //$('#'+tableId+' tbody').css('display','block');
+	        },
+	        error: function (request, status, error) {
+	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        }
+	    });
+
+	}
+}
+
+//좌측 하단 콜백 탭 
+function tabTargetCallbackList(pageNum){
+	var ctitelno = $('#ctitelno').val();
+	var urlStr = '/vc/callback?status=callback&ctitelno='+ctitelno+'&pageNum='+pageNum;
+	
+	$.ajax({
+        url: urlStr,
+        method: "GET",
+        dataType: "json",
+        cache: false,
+        success: function (data) {  
+        	
+        	$('#callbackTab1 tbody tr').remove();
+        	$('#callbackTab1 .pagination li').remove();
+        	
+        	var length = data.callBackList.length;
+        	var html ="";
+        	var sb = new StringBuffer();
+          	
+        	for (var i = 0; i < length; i++) {
+        		sb.append('<tr><td><input type="hidden" id="callbackno'+i+'" value="'+data.callBackList[i].CALLBACKNO+'"/>'+data.callBackList[i].RECEIVEDATE_+'</td>');
+        		sb.append('<td><a onclick="bindCallBackNo('+"'"+data.callBackList[i].CALLBACK+"'"+');">'+data.callBackList[i].CALLBACK+'</a></td>');
+        		sb.append('<td>' + data.callBackList[i].CALLER+'</td>');
+        		sb.append('<td><button class="btn btn-primary btn-sm dialingBtn"  onclick="callConfirm('+"'"+data.callBackList[i].CALLBACK+"'"+');">');
+        		sb.append('<i class="fa fa-phone"></i></button>' +'&nbsp;&nbsp;');
+        		sb.append('<button class="btn btn-danger btn-sm hangUpBtn" onclick="javascript:func_hangup();" disabled><i class="fa fa-phone"></i></button>'+'</td>'); 
+        		sb.append('<td><input type="text" id="vocmemo'+i+'" maxlength="100">'+'</td>');
+        		sb.append('<td><button class="btn btn-primary btn-sm" onclick="callBackMatching('+i+');">매칭</button>');
+        		sb.append('&nbsp;&nbsp;<button class="btn btn-primary btn-sm" onclick="callBackConfirm('+i+',2);">완료</button>&nbsp;&nbsp;<button class="btn btn-danger btn-sm" onclick="callBackConfirm('+i+',3);">불통</button>');
+        		sb.append('<input type="hidden" id="callbackcustno'+i+'" value="0"/>');
+        		sb.append('<input type="hidden" id="trunk'+i+'" value="'+data.callBackList[i].TRUNK+'"> <input type="hidden" id="callcount'+i+'" value="'+data.callBackList[i].CALLCOUNT+'"/></td></tr>');     		        		
+        		
+        	}
+        	html = sb.toString();
+        	$('#callbackTab1 tbody').append(html); 	
+        	var html2= "";
+        	
+        	if (data.page.startPageNum != 1) {
+                html2 += '<li class="footable-page-arrow disabled"><a onclick="tabTargetCallbackList(' + eval(data.page.startPageNum - 1) + ')" >&laquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&laquo;</a></li>'
+            }
+            for (var i = data.page.startPageNum; i <= data.page.endPageNum; i++) {
+                if (i == data.page.pageNum) {
+                    html2 += '<li class="footable-page active"><a onclick="tabTargetCallbackList(' + i + ')">'+i+'</a></li>'
+                } else {
+                    html2 += '<li><a onclick="tabTargetCallbackList(' + i + ')">'+i+'</a></li>'
+                }
+            }
+            if (data.page.endPageNum < data.page.totalPageCount) {
+                html2 += '<li><a onclick="tabTargetCallbackList(' + eval(data.page.endPageNum + 1)+')">&raquo;</a></li>'
+            } else {
+                html2 += '<li class="disabled"><a href="javascript:">&raquo;</a></li>'
+            }
+            
+            if(length != 0){
+            	$('#callbackTab1 .pagination').append(html2);
+            }
+            
+            //테이블 헤더 고정 설정
+            var tableId = 'callBackTabTable';
+            var colWidthArray = [150,100,100,85,190,170];
+            setTableSize(tableId,colWidthArray);
+            //$('#'+tableId+' tbody').css('display','block');            
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+
+
+
+
+
 
 // ********고객 팝업
 // 관련*************************************************************************************************
@@ -331,6 +546,11 @@ function custInfoClear() {// 인풋 필드 초기화
 	opener.$('#homaddr1').val('');
 	opener.$('#homaddr2').val('');
 	opener.$('#homaddr3').val('');
+	//체크박스 해제 
+	opener.$('#denymailnomal').iCheck('uncheck');opener.$('#denymailsurvey').iCheck('uncheck');
+	opener.$('#denysmsnomal').iCheck('uncheck');opener.$('#denysmssurvey').iCheck('uncheck');
+	opener.$('#denydmnomal').iCheck('uncheck');opener.$('#denydmsurvey').iCheck('uncheck');
+
 }
 
 function custInfoBinding(data) {// 인풋 필드 데이터 바인딩
@@ -353,6 +573,38 @@ function custInfoBinding(data) {// 인풋 필드 데이터 바인딩
 	opener.$('#homaddr2').val(data.HOMADDR2);
 	opener.$('#homaddr3').val(data.HOMADDR3);
 	opener.$('#blackcnt').val(data.BLACKCNT);
+	
+	//체크박스 제어
+	if(data.DENYMAILNOMAL == 1){ //mail일반
+		opener.$('#denymailnomal').iCheck('check'); 
+	}else 
+		opener.$('#denymailnomal').iCheck('uncheck'); 
+	
+	if(data.DENYMAILSURVEY == 1){ //mail해피콜
+		opener.$('#denymailsurvey').iCheck('check'); 
+	}else
+		opener.$('#denymailsurvey').iCheck('uncheck'); 
+	
+	if(data.DENYSMSNOMAL == 1){ //sms일반
+		opener.$('#denysmsnomal').iCheck('check'); 
+	}else
+		opener.$('#denysmsnomal').iCheck('uncheck'); 
+	
+	if(data.DENYSMSSURVEY == 1){ //sms해피콜
+		opener.$('#denysmssurvey').iCheck('check'); 
+	}else
+		opener.$('#denysmssurvey').iCheck('uncheck'); 
+		
+	if(data.DENYDMNOMAL == 1){ //dm일반
+		opener.$('#denydmnomal').iCheck('check'); 
+	}else
+		opener.$('#denydmnomal').iCheck('uncheck'); 
+	
+	if(data.DENYDMSURVEY == 1){ //dm해피콜
+		opener.$('#denydmsurvey').iCheck('check'); 
+	}else
+		opener.$('#denydmsurvey').iCheck('uncheck'); 
+		
 }
 
 function serviceInfoBinding(data) {
@@ -980,6 +1232,8 @@ function stopInterval() {
 		clearInterval(vocTimer);
 	}
 }
+//************************************콜백 관련 ***********************************************************
+
 
 //제품 추가를 눌렀을때
 $(document).on('click', '.plus', function(e) {
@@ -1147,3 +1401,116 @@ if ($('#calendar').length > 0) {
 			});// 캘린더의끝
 
 }
+
+function bindCallBackNo(phoneNo){
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	popVocCust();
+}
+
+function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
+	debugger;
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	 swal({
+         title: phoneNo,
+         text: "번호를 확인해 주세요",
+         showCancelButton: true,
+         confirmButtonColor: "#DD6B55",
+         confirmButtonText: "통 화",
+         closeOnConfirm: false
+     }, function () {
+         swal.close();
+         didCheckMakeCall();
+     });
+ }
+ 
+function callConfirm(phoneNo){//콜백 목록 전화걸기전 확인 alert
+	debugger;
+	$('#makeCallNum').val(phoneNo);
+	$('#phone').val(phoneNo);
+	 swal({
+         title: phoneNo,
+         text: "번호를 확인해 주세요",
+         showCancelButton: true,
+         //confirmButtonColor: "#DD6B55",
+         confirmButtonText: "통 화",
+         closeOnConfirm: false
+     }, function () {
+         swal.close();
+         didCheckMakeCall();
+     });
+ }
+ 
+function callBackConfirm(idx,callstatus){//콜백 목록 처리
+	debugger;
+	var typeText;
+	var titleText;
+	if(callstatus == 2){//완료버튼 클릭시 
+		titleText = "완료 처리 하시겠습니까?";
+		typeText="success";
+	}else if(callstatus == 3){//통화불가버튼 클릭시
+		var callcount = $('#callcount'+idx).val();
+		if(callcount > 2){//현재 콜 시도횟수가 3회 이상이라면
+			titleText = "미해결 처리 하시겠습니까?"
+		}else{
+			titleText = "통화불가 처리 하시겠습니까?";	
+		}
+		typeText="warning";
+	}
+	
+	 swal({
+         title: titleText,
+         text: "",
+         showCancelButton: true,
+         type: typeText,
+         confirmButtonText: "완 료",
+         closeOnConfirm: false
+     }, function () {
+    	 var callbackno = $('#callbackno'+idx).val();
+    	 var custno = $('#callbackcustno'+idx).val();
+    	 var memo = $('#vocmemo'+idx).val();
+    	 var trunk = $('#ctitelno').val();
+  	 
+    	 var jsonPrm = {"callbackno":callbackno, "custno":custno, "memo":memo, "callstatus":callstatus , "trunk":trunk};
+    	 var urlStr = '/vc/callback/post/'+callbackno;
+    	 
+    	 $.ajax({
+ 	        url: urlStr,
+ 	        method: "POST",
+ 	        dataType: "json",
+ 	        data:jsonPrm,
+ 	        cache: false,
+ 	        success: function (data) {
+ 	        	$("#callbackTab1Btn").trigger("click");
+ 	        },
+ 	        error: function (request, status, error) {
+ 	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+ 	        }
+ 	    });
+    	 
+    	 
+         swal.close();         
+     });
+ }
+ 
+function callBackMatching(idx){//매칭 버튼 클릭시 현재 바인딩 된 고객과 콜백 회원을 매칭시킨다. 
+	var custname = $('#custname').val();
+	var custno = $('#custno').val();
+	var phoneNo = $('#mobile1').val()+'-'+$('#mobile2').val()+'-'+$('#mobile3').val();
+		
+	var textStr = "고객명 : "+custname+ " / 휴대폰 : "+phoneNo;	
+	swal({
+        title: "매칭 회원을 확인해주세요",
+        text: textStr,
+        showCancelButton: true,
+        confirmButtonText: "완 료",
+        closeOnConfirm: false
+    }, function () {
+    	$('#callbackcustno'+idx).val(custno);
+    	swal.close(); 
+    });
+	}
+}
+
+

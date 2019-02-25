@@ -13,11 +13,12 @@ function send_message(){
         var jData = JSON.parse(evt.data);
         var noteAlarm = jData.payload.READCHEK;
         var noteImport = jData.payload.IMPORTANT;
-        
+        $('#alarm').hide();
+        $('#noteAlarm').hide();
         if(noteAlarm != 0){        	
             $("#alarm").text(noteAlarm);
             $("#noteAlarm").text(noteAlarm);
-            $('#dropClick span').show();
+            $('#alarm').show();
             $('#noteAlarm').show();
         }else {
         	$('#dropClick span').hide();

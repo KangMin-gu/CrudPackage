@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 </head>
@@ -80,29 +80,14 @@
     </div>
 <p class="text-muted text-center"><small>고객센터 : 02-336-7800 주소: 서울특별시 마포구 독막로 10 성지빌딩 5층 509호</small></p>               
 <p class="text-muted text-center"> <small>Copyright CRUD XaaS SYSTEM &copy; 2018</small> </p>
-
+	
 <!-- Mainly scripts -->
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery-3.1.1.min.js"></script>
-<script 
-	src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<!-- Custom and plugin javascript -->
-<script
-	src="${pageContext.request.contextPath}/resources/js/inspinia.js"></script>
-<!-- Sparkline -->
-<script
-	src="${pageContext.request.contextPath}/resources/js/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- crud js -->	
-<script
-	src="${pageContext.request.contextPath}/resources/crud/crud_common.js"></script>	
-
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/inspinia.js"></script>
 </body>
 </html>

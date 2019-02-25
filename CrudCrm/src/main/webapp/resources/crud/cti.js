@@ -1,7 +1,6 @@
 // CTI 상태정보를 저장할 변수
 var statusCode;//CTI 상태정보 코드
 var statusName;//CTI 상태정보 명칭
-
 var groupCode1;
 var groupCode2;
 var groupCode3;
@@ -11,6 +10,9 @@ var groupCode5;
 var checkGroupInterval;
 //var var_normalize = /[^0-9]/gi; //숫자정규식
 var var_normalize =/^(?=.*[*])|(?=.*[0-9])}/;
+
+var intervalId;//VOC 세션유지용 전역변수
+
 
 function vocLoginGo(){
 	webSocketGo();
@@ -65,8 +67,7 @@ function didCheckMakeCall(){
 	var did = document.getElementById("did");//did체크박스
 	var outCallNum = document.getElementById("outCallNum").innerHTML;//발신표시번호
 	var makeCallNum = document.getElementById("blindCall").value;//발신자번호
-	
-	
+
 	if(did.checked){//did체크시 - did번호
 		func_makeCall(outCallNum, makeCallNum, '');
 	}else{//did해제시 - 그룹대표번호
@@ -198,14 +199,10 @@ function hiddenImgPhone(obj){
 
 //전화기상태이미지
 function changePhoneState(state, stateStr){
-
-	
-	
     var ts = document.getElementById("tellerStatus");    
     ts.value = state;
     chanegeStatusBtnImage();
-    
-      
+
 //true => hide, false => show
     if(state=="0300"){//전화대기 - 걸기, 당겨받기
     	// check
@@ -478,6 +475,7 @@ function func_login(id, password, extension) {
 		return;
 	}
 	goWebSocketSendMsg("on^login^"+ id + "^" + password + "^" + extension);
+	
 }
 
 //강제로그인
@@ -498,6 +496,7 @@ function func_forceLogin(id, password, extension){
 		return;
 	}
 	goWebSocketSendMsg("on^forceLogin^"+ id + "^" + password + "^" + extension);
+	intervalFuncOn();
 }
 
 //로그아웃
@@ -950,7 +949,6 @@ window.onerror = function(msg, url, line){
 	//alert("Message : " + msg + "\n URL : " + url + "Line number : " + line);
 }
 
-
 //크루드시스템 추가
 //작업자 : 신동우
 function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받아 버튼의 disabled 상태 제어
@@ -960,10 +958,27 @@ function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받�
 	}else{
 		btn.show();	
 	}
-	
+function sessMaintain(){//세션유지용
+ 	$.ajax({
+       		url: "/vc/sess",
+        	method: "GET",
+        	dataType: "json",
+        	cache: false,
+        	success: function (data) {	           		
+        		alert.log('t');//테스트 종료후 삭제
+        	}
+ 	});
+}
+function intervalFuncOn(){
+	var timer = 1740000;//29분마다 실행
+	this.intervalId = setInterval("sessMaintain()",timer);//전역변수 intervealId에 sessMaintain() 타이머 실행.
+}
+function intervalFuncOff(){//세션 유지 타이머 함수 종료 
+	clearInterval(this.intervalId);
+	this.intervalId = null;
 }
 
-function chanegeStatusBtnImage(){
+function chanegeStatusBtnImage(){//대기, 휴식, 후처리 상태에 대한 css변경 
 	 var stVal = $('#tellerStatus').val();
 	 var actColor = '#179d82';
 	 var nomalColor = '#104355';

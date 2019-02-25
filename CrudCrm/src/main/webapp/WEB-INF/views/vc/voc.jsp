@@ -11,16 +11,20 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 
 <link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->
+
 </head>
 	<body>
     <div id="wrap" style="margin-top: 0px;">
         <div class="ibox-top">
             <div class="ibox-content clearfix">
+
             <div class="cti" style="display:block">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
@@ -28,12 +32,13 @@
 				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
 				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
 				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
+				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud02">
 				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622864">
+				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622865">
 				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
 				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
-				<span id="outCallNum">07042622886</span>
+				<span id="outCallNum">07042622883</span>
+				<input type="hidden" id="ctitelno" name="ctitelno" value="07042622883" />
 				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
 				<div>
 					<textarea id="messages" cols="150" rows="10"></textarea>
@@ -95,7 +100,7 @@
                     </div>
                         <table class="table table-bordered mb-2">              	
                             <colgroup>
-                                <col style="width: 100px; background: #fafafa;">
+                                <col style="width: 140px; background: #fafafa;">
                                 <col style="width: auto; min-width: 250px;">
                                 <col style="width: 100px; background: #fafafa;">
                                 <col style="width: auto;min-width: 250px;">
@@ -195,6 +200,43 @@
             							<input type="text" class="form-control float-left custInput" name="homaddr3" id="homaddr3" style="width: 220px;">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>수신거부 (일반)</th>
+                                    <td colspan="3">
+            							<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denymailnomal" name="denymailnomal" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denymailnomal">이메일 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denysmsnomal" name="denysmsnomal" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denysmsnomal">SMS 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denydmnomal" name="denydmnomal" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denydmnomal">DM 거부</label>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>수신거부 (해피콜)</th>
+                                    <td colspan="3">
+            							<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denymailsurvey" name="denymailsurvey" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denymailnomal">이메일 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denysmssurvey" name="denysmssurvey" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denysmssurvey">SMS 거부</label>
+										</div>
+										<div class="checkbox float-left col-lg-2 p-0">
+											<input id="denydmsurvey" name="denydmsurvey" type="checkbox" class="i-checks custInput" value="1">
+											<label for="denydmsurvey">DM 거부</label>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                
+                                </tr>
                             </tbody>
                         </table>
                         
@@ -210,16 +252,15 @@
                             		<button class="btn btn-primary btn-sm" id="cancleBlackBtn" onClick="cancleBlack()">블랙 해제</button>
                             	</span>
                          	</div>
-                         </div>
-                        
-                    </div>
+                         </div>       
+                    </div><!-- 좌측 고객div -->
                     <div class="ibox-content bot-cont">
                         
                         <div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li><a class="nav-link" onClick="javascript:tabTargetVocService(1);" data-toggle="tab" href="#tab1" id="tab1Btn">서비스</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab2">강성고객이력</a></li>
-                                <li><a class="nav-link" data-toggle="tab" href="#tab3">콜백이력</a></li>
+                                <li><a class="nav-link" onClick="javascript:tabTargetCallbackHistory(1);" data-toggle="tab" href="#tab3">콜백이력</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab4">SMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab5">MMS</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#tab6">LMS</a></li>
@@ -284,25 +325,15 @@
                                         <table class="table table-bordered" style="margin-bottom: 16px;">
                                             <thead>
                                                 <tr>
-                                                    <th>접수일시3</th>
-                                                    <th>상담구분</th>
-                                                    <th>상담유형</th>
-                                                    <th>접수자</th>
-                                                    <th>고객명</th>
-                                                    <th>접수제품</th>
-                                                    <th>처리자</th>
+                                                    <th>접수일시</th>
+                                                    <th>콜백번호</th>
+                                                    <th>발신자번호</th>
+                                                    <th>상담원</th>
+                                                    <th>메모</th>
+                                                    <th>상태</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>2018-01-01 11:88:88</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>CRUD</td>
-                                                    <td>박진열</td>
-                                                    <td>박진열</td>
-                                                    <td>처리자</td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                         <div class="m-auto" style="text-align:center;padding-top:16px">
@@ -461,7 +492,39 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div><!-- 좌측 탭 div -->
+                    
+                    <div class="ibox-content">
+                    	<div class="tabs-container">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li><a class="nav-link" data-toggle="tab" onClick="javascript:tabTargetCallbackList(1);" href="#callbackTab1" id="callbackTab1Btn">콜백 목록 &nbsp; <i class="fa fa-refresh"></i></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" id="callbackTab1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <table class="table table-bordered" style="margin-bottom: 16px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>접수일시</th>
+                                                    <th>콜백번호</th>
+                                                    <th>발신자번호</th>
+                                                    <th>통화</th>
+                                                    <th>메모</th>
+                                                    <th>처리</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        <div class="m-auto" style="text-align:center;padding-top:16px">
+											<ul class="pagination"></ul>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- 콜백div -->
+                    
                 </div>
                 <div class="ibox-right">
                     <table class="table table-bordered mb-2">
@@ -739,7 +802,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
 <script src="${pageContext.request.contextPath}/resources/crud/cti.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/plugins/sweetalert/custom-sweetalert.min.js"></script><!-- Sweet alert -->
 <script>
 var intervalId;//전역변수
 var seObject = [];
@@ -764,18 +827,14 @@ function intervalFuncOff(){//세션 유지 타이머 함수 종료
 }
 
 $(document).ready(function () {
-	
+ 
 	$('.convey').hide();
 	$('.adminconvey').hide();
 	$('.reservation').hide();
 	$('.as').hide();
 	$('.product .minus:first').remove();
-	
 	var url = window.location.pathname;
 	vocContents("0",url);
-	
-	
-	
 
 	nhn.husky.EZCreator.createInIFrame({
 
@@ -793,11 +852,13 @@ $(document).ready(function () {
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
  });
- 
+
  $('[name*=product]').change(function(){
-	 upperProduct(this);
+	 upperProduct(this); 
  });
 
+ 
+ //블랙추가
  function addBlack(){
 	 var custno = $('#custno').val();
 	 if(custno > 0 ){
@@ -834,6 +895,7 @@ $(document).ready(function () {
      var sHTML = '<img src="<%=request.getContextPath()%>'+filepath+'">';
      oEditors.getById["textAreaContent"].exec("PASTE_HTML", [sHTML]);
  }
+
 </script>
 
 	

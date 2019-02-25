@@ -3,12 +3,15 @@ package saas.crud.crm.au.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.au.dto.MenuDto;
+import saas.crud.crm.au.dto.NoticeDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 
@@ -110,5 +113,42 @@ public class AuDaoImpl implements AuDao{
 		
 		List<Map<String,Object>> asOwner = session.selectList("au.asOwner",siteId);
 		return asOwner;
+	}
+	
+	//회원사 공지사항 리스트
+	@Override
+	public List<Map<String,Object>> notice(Map<String,Object> noticeVal) {
+		List<Map<String,Object>> siteNotice = session.selectList("au.siteNotice", noticeVal);
+		return siteNotice;
+	}
+	
+	//회원사 공지사항 총갯수
+	@Override
+	public int noticeTotalRows(Map<String, Object> noticeVal) {		
+		int totalRows = session.selectOne("au.noticeTotalRows",noticeVal);		
+		return totalRows;
+	}
+	//회원사 공지사항 정보
+	@Override
+	public Map<String,Object> noticeDetail(Map<String, Object> noticeVal) {
+		Map<String, Object> noticeInfo = session.selectOne("au.noticeDetail", noticeVal);
+		return noticeInfo;
+	}
+	//회원사 공지등록
+	@Override
+	public int noticeInsert(NoticeDto noticeDto) {
+		session.insert("au.noticeInsert", noticeDto);
+		int noticeNo = noticeDto.getIcnum();
+		return noticeNo;
+	}
+	//회원사 공지 삭제
+	@Override
+	public void noticeDelete(NoticeDto noticeDto) {
+		session.update("au.noticeDelete",noticeDto);
+	}
+
+	@Override
+	public void noticeUpdate(NoticeDto noticeDto) {
+		session.update("au.noticeUpdate", noticeDto);
 	}
 }

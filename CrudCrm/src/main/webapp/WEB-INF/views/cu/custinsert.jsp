@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CRUD SYSTEM</title>
+<title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 
@@ -449,16 +449,20 @@
 														<th class="border-top-0">EMAIL 거부</th>
 														<td class="border-top-0">
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="emailChec1" type="checkbox" class="i-checks" name="denymailnews" id="denymailnews" value="1">
-																<label for="emailChec1"> 뉴스레터</label>
+																<input type="checkbox" class="i-checks" name="denymailnomal" id="denymailnomal" value="1">
+																<label for="denymailnomal"> 일반</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="emailChec2" type="checkbox" class="i-checks" name="denymailseminar" id="denymailseminar" value="1">
-																<label for="emailChec2"> 세미나</label>
+																<input type="checkbox" class="i-checks" name="denymailsurvey" id="denymailsurvey" value="1">
+																<label for="denymailsurvey"> 해피콜</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="emailChec3" type="checkbox" class="i-checks" name="denymailad" id="denymailad"  value="1">
-																<label for="emailChec3"> 광고</label>
+																<input type="checkbox" class="i-checks" name="denymailseminar" id="denymailseminar" value="1">
+																<label for="denymailseminar"> 세미나</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input type="checkbox" class="i-checks" name="denymailad" id="denymailad"  value="1">
+																<label for="denymailad"> 광고</label>
 															</div>
 														</td>
 													</tr>
@@ -466,12 +470,16 @@
 														<th>SMS 거부</th>
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="smsCheck1" type="checkbox" class="i-checks" name="denysmsseminar" id="denysmsseminar"  value="1">
-																<label for="smsCheck1"> 세미나</label>
+																<input type="checkbox" class="i-checks"  name="denysmsnomal" id="denysmsnomal" value="1">
+																<label for="denysmsnomal"> 일반</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
-																<input id="smsCheck2" type="checkbox" class="i-checks"  name="denysmsnomal" id="denysmsnomal" value="1">
-																<label for="smsCheck2"> 일반</label>
+																<input type="checkbox" class="i-checks"  name="denysmssurvey" id="denysmssurvey" value="1">
+																<label for="denysmssurvey"> 해피콜</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input type="checkbox" class="i-checks" name="denysmsseminar" id="denysmsseminar"  value="1">
+																<label for="denysmsseminar"> 세미나</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="smsCheck3" type="checkbox" class="i-checks" name="denysmsad" id="denysmsad"  value="1">
@@ -482,6 +490,14 @@
 													<tr>
 														<th>DM 거부</th>
 														<td>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input type="checkbox" class="i-checks"  name="denydmnomal" id="denydmnomal" value="1">
+																<label for="denydmnomal"> 일반</label>
+															</div>
+															<div class="checkbox float-left col-lg-2 p-0">
+																<input type="checkbox" class="i-checks"  name="denydmsurvey" id="denydmsurvey" value="1">
+																<label for="denydmsurvey"> 해피콜</label>
+															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="dmCheck1" type="checkbox" class="i-checks" name="denydmnews" id="denydmnews"  value="1">
 																<label for="dmCheck1"> 뉴스레터</label>

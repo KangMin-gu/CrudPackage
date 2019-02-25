@@ -63,68 +63,58 @@ public class NoteDaoImpl implements NoteDao{
 		int notOutReadVal = session.selectOne("note.noteOutReadVal", noteOutVal);
 		return notOutReadVal;
 	}
-	
 	//중요 통지 총 갯수
 	@Override
 	public int notetotalImportRows(Map<String, Object> noteImportVal) {
 		int totalRows = session.selectOne("note.importTotalRows", noteImportVal);
 		return totalRows;
 	}
-	
 	//중요 통지 리스트
 	@Override
 	public List<Map<String, Object>> noteImport(Map<String, Object> noteImportVal) {
 		List<Map<String, Object>> note = session.selectList("note.importbox", noteImportVal);
 		return note;
 	}
-	
 	//중요 통지 안읽은 갯수
 	@Override
 	public int noteImportReadVal(Map<String, Object> noteImportVal) {
 		int notImportReadVal = session.selectOne("note.noteimportReadVal", noteImportVal);
 		return notImportReadVal;
 	}
-	
 	//휴지통 총 갯수
 	@Override
 	public int notetotalTrashRows(Map<String, Object> noteTrashVal) {
 		int totalRows = session.selectOne("note.trashTotalRows", noteTrashVal);
 		return totalRows;
 	}
-	
 	//휴지통 리스트
 	@Override
 	public List<Map<String, Object>> noteTrash(Map<String, Object> noteTrashVal) {
 		List<Map<String, Object>> note = session.selectList("note.trashbox", noteTrashVal);
 		return note;
 	}
-	
 	//휴지통 안읽은 갯수
 	@Override
 	public int noteTrashReadVal(Map<String, Object> noteTrashVal) {
 		int notImportReadVal = session.selectOne("note.notetrashReadVal", noteTrashVal);
 		return notImportReadVal;
 	}
-	
 	//상세 정보
 	@Override
 	public Map<String, Object> noteDetail(Map<String, Object> noteVal) {
 		Map<String, Object> note = session.selectOne("note.noteDetail", noteVal);
 		return note;
 	}
-	
 	//상세정보 CC / To 리스트 뽑기
 	@Override
 	public List<Map<String, Object>> ccList(Map<String, Object> noteTrashVal) {
 		List<Map<String, Object>> ccList = session.selectList("note.ccList", noteTrashVal);
 		return ccList;
 	}
-	
 	public List<Map<String, Object>> toList(Map<String, Object> noteTrashVal){
 		List<Map<String, Object>> toList = session.selectList("note.toList", noteTrashVal);
 		return toList;
 	}
-	
 	//읽음표시
 	@Override
 	public void noteEyeChk(Map<String, Object> noteVal) {
@@ -201,8 +191,8 @@ public class NoteDaoImpl implements NoteDao{
 	}
 	//상단 메세지버튼 팝업
 	@Override
-	public List<Map<String, Object>> noteSummary(int userNo) {
-		List<Map<String, Object>> note = session.selectList("note.noteSummary",userNo);
+	public List<Map<String, Object>> noteSummary(Map<String, Object> summaryVal) {
+		List<Map<String, Object>> note = session.selectList("note.noteSummary",summaryVal);
 		return note;
 	}
 	

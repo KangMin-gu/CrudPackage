@@ -15,57 +15,13 @@
 					<ul class="nav navbar-top-links navbar-right">
 						<!-- <li><span class="m-r-sm text-muted welcome-message">CRUD CRM에 오신 <strong>${sessionScope.USERNAME }</strong>님 환영합니다.</span></li> -->
 						<li class="dropdown">
-							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" id='dropClick'> 
+							<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" id='noteAlaram'> 
 								<i class="fa fa-envelope"></i>
 								<span id="alarm" class="label label-warning"></span>
 							</a>
-							<ul class="dropdown-menu dropdown-messages" id="dropDown">							
-							</ul>
+							<ul class="dropdown-menu dropdown-alerts" id="noteAlaramList"></ul>
 						</li>
-						<!-- 공지사항 알람기능추가 -->
-						<li class="dropdown">
-			                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-			                    <i class="fa fa-bell"></i>  <span class="label label-danger">8</span>
-			                </a>
-			                <ul class="dropdown-menu dropdown-alerts">
-			                    <li>
-			                        <a href="mailbox.html">
-			                            <div>
-			                                <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-			                                <span class="float-right text-muted small">4 minutes ago</span>
-			                            </div>
-			                        </a>
-			                    </li>
-			                    <li class="dropdown-divider"></li>
-			                    <li>
-			                        <a href="profile.html">
-			                            <div>
-			                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-			                                <span class="float-right text-muted small">12 minutes ago</span>
-			                            </div>
-			                        </a>
-			                    </li>
-			                    <li class="dropdown-divider"></li>
-			                    <li>
-			                        <a href="grid_options.html">
-			                            <div>
-			                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-			                                <span class="float-right text-muted small">4 minutes ago</span>
-			                            </div>
-			                        </a>
-			                    </li>
-			                    <li class="dropdown-divider"></li>
-			                    <li>
-			                        <div class="text-center link-block">
-			                            <a href="notifications.html">
-			                                <strong>See All Alerts</strong>
-			                                <i class="fa fa-angle-right"></i>
-			                            </a>
-			                        </div>
-			                    </li>
-			                </ul>
-			            </li>
-			            <!-- 공지사항 알람기능추가 -->
+						
 						<li>
 						<a href="${pageContext.request.contextPath}/logout"> <i class="fa fa-sign-out"></i>로그아웃</a>
 						</li>

@@ -99,6 +99,12 @@ public class CustDaoImpl implements CustDao {
 		int res = session.update("customer.vocCustUpdate",prm);
 		return res;
 	}
+	//VOC 고객 수신거부 수정
+	@Override
+	public int vocCustDenyUpdate(Map<String, Object> prm) {
+		int res = session.update("customer.vocCustDenyUpdate",prm);
+		return res;
+	}
 	
 	//고객 상세 탭 - 캠페인 리스트 카운터
 	@Override
@@ -112,6 +118,7 @@ public class CustDaoImpl implements CustDao {
 		List<Map<String, Object>> campList = session.selectList("customer.custTabCampList",searchVal);
 		return campList;
 	}
+	
 	
 	
 

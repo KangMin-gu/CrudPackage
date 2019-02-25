@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import saas.crud.crm.au.dto.NoticeDto;
 import saas.crud.crm.au.dto.UserDto;
 import saas.crud.crm.au.dto.UserMenuDto;
 
@@ -26,5 +27,10 @@ public interface AuService {
 	public ModelAndView myInfoReadSet(HttpServletRequest request, UserDto userDto);
 	public ModelAndView userPwdReset(HttpServletRequest request, int userNo);
 	public ModelAndView useSessionList(HttpServletRequest reuqest, HttpServletResponse response);
-	public ModelAndView authSession(HttpServletRequest request, String userId);
+	public ModelAndView session(HttpServletRequest request, String userId);
+	public ModelAndView notice(HttpServletRequest request);
+	public ModelAndView noticeDetail(HttpServletRequest request, int noticeId);
+	public int noticeInsert(HttpServletRequest request, NoticeDto noticeDto);
+	public void noticeDelete(HttpServletRequest request, int noticeId);
+	public void noticeUpdate(HttpServletRequest request, NoticeDto noticeDto);
 }

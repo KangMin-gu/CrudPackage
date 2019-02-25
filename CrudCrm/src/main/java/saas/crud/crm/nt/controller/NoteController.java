@@ -212,7 +212,7 @@ public class NoteController {
 	@RequestMapping(value="/note/summary",method=RequestMethod.GET)
 	@ResponseBody
 	public List<Map<String,Object>> noteSummary(HttpServletRequest request) {
-		List<Map<String,Object>> recentlyNote = ntService.noteSummary(request);
-		return recentlyNote;
+		List<Map<String,Object>> alramNoteList = ntService.noteSummary(request);
+		return alramNoteList;
 	}
 }

@@ -417,67 +417,58 @@
 	
 	
 	//메세지 버튼 클릭시 
-	$("#dropClick").click(function(){
-		var dropDown = $("#dropDown");
-		dropDown.empty();
-		
+	$("#noteAlaram").click(function(){	
+		$('#noteAlaramList li').remove();
 		//ajax 메일 테이블 
 		$.ajax({
 			url:"/note/summary",
 			type:"GET",
 			success:function(data){
-				//본문에 추가될 내용 
-				var dropHtml = "";
-				var subject = "";
-				var subjectLen = "";
-				var rltDate = ""; 
+												
+				for(var i = 0; i<data.length; i++){
+					
+					var title = data[i].TITLE;
+					var sender = data[i].SENDER;
+					var senddate = data[i].SENDDATE; 
+					var noticeNo = data[i].NOTICEID;
+					var readChk = data[i].READCHK;
+					var summaryList = "";			
+									
+					///////////////////////
+					summaryList += "<li>";
+					summaryList += "<div class='dropdown-messages-box'>";				
+					summaryList += "<div class='media-body'>";
+					summaryList += "<small class='float-right text-navy'>"+sender+"</small>";
+					summaryList += "<strong class='float-left'>"+"<a href='/note/inbox/"+noticeNo+"'>";
+					summaryList += title;
+					summaryList += "</a></strong></br>";
+					summaryList += "<small class='float-right text-muted'>"+senddate+"</small>";
+					summaryList += "</div>";
+					summaryList += "</div>";
+					summaryList += "</li>";
+					
+					summaryList += "<li class='dropdown-divider'></li>";
+					
+					$('#noteAlaramList').append(summaryList);
+					
+				}	
 				
-				
-				if(data.length != 0){
-				for(var i=0; i<data.length; i++){
+					var foot = "";
+					foot += "<li>";
+					foot += "<div class='text-center link-block'>";
+					foot += "<a href='/note/inbox' class='dropdown-item'>";
+					foot += " <i class='fa fa-envelope'></i> <strong>전체 내부 통지</strong>";
+					foot += " </a>";
+					foot += "</div></li>";
 					
-					//반복문 다 돌고 append 초기화 
-					dropHtml = "";
-					//제목 10자리 끊기 
-					subject = data[i].SUBJECT;
-					subjectLen = data[i].SUBJECT.length;
-					
-					if(subjectLen > 10){
-						subject = subject.substring(0,10)+"...";
-					}
-					//날짜 
-					rltDate = data[i].RLTSTR;
-					rltDate = rltDate.substring(0,16);
-					
-					
-					dropHtml += "<li class='pb-2'><div class='dropdown-messages-box pb-3' style='border-bottom:1px solid #e9ecef'><a class='dropdown-item float-left' href='#' style='color:#A4A4A4;'>";
-					dropHtml +="<small><strong>"+data[i].USERNAME+"</strong></small></a><div class='pt-1'>";
-					dropHtml +="<a class='dropdown-content ml-1' style='font-size:12px;color:black;font-weight: 500;' href=/note/inbox/"+data[i].NOTICENO+">"+subject+"</a><br>"
-					dropHtml +="<small class='text-muted m1-1 float-right' style='position:relative;'>"+rltDate+"</small></div></div></li>";
-					
-					
-					//마지막 바퀴일때 Read AllMessages 출력 
-					if(i == (data.length-1)){
-					dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
-					dropHtml +="<i class='fa fa-envelope'></i> <strong>Read AllMessages</strong>"
-					dropHtml +="</div></li>";
-					}
-					dropDown.append(dropHtml);
-					}
-				}else{
-					dropHtml +="<li><div class='text-center link-block' style='padding-bottom:4px;padding-top:4px;'><a href='/note/inbox' class='dropdown-item' style='padding-bottom:2px;'>"
-					dropHtml +="<i class='fa fa-envelope'></i> <strong>받은 통지가 없습니다</strong>"
-					dropHtml +="</div></li>";
-					
-					dropDown.append(dropHtml);
-				}
+					$('#noteAlaramList').append(foot);
 				
 			},
 			error : function(jqXHR,textStatus,errorThrown){
 				alert("에러발생 관리자에게 문의하세요." + textStatus);
 				
 			}
-		});
+		});	
 	});
 /********************************************************************/	
 	//파일서치키 생성

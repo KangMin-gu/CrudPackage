@@ -144,7 +144,12 @@ public class VocController {
 			
 		custDenyDto.setReguser(userno);
 		custDenyDto.setEdituser(userno);
-				
+		custDenyDto.setDenymailnomal(Integer.parseInt((String)search.get("denymailnomal")));
+		custDenyDto.setDenymailsurvey(Integer.parseInt((String)search.get("denymailsurvey")));
+		custDenyDto.setDenysmsnomal(Integer.parseInt((String)search.get("denysmsnomal")));
+		custDenyDto.setDenysmssurvey(Integer.parseInt((String)search.get("denysmssurvey")));
+		custDenyDto.setDenydmnomal(Integer.parseInt((String)search.get("denydmnomal")));
+		custDenyDto.setDenydmsurvey(Integer.parseInt((String)search.get("denydmsurvey")));
 		int custno = custService.svcCustformInsert(custDto,custDenyDto);
 		
 		return custno;
@@ -264,17 +269,27 @@ public class VocController {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@sess test@@@@@@@@@@@@@@@@@@@");
 		return 0;
 	}
-	
-	//VOC 온피아 -> 콜백 받기 
+
 	@RequestMapping(value="/vc/callback", method=RequestMethod.POST)
 	public ModelAndView VocGetCallBack(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
 		Map<String,Object> callBackMap = crud.searchParam(request);
 		callBackMap.put("callstatus", 0);
+		callBackMap.put("callcount", 0);
 		vcService.svcVocCallBackInsert(callBackMap);
 		
 		return mView;
 	}
+
+		
+	//VOC 콜백 목록 조회 
+	@RequestMapping(value="/vc/callback",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocCallBackList(HttpServletRequest request) {		
+		Map<String,Object> callBackList = vcService.svcVocCallBackList(request);
+		return callBackList;
+	}
+
 	// voc 텝플릿 리스트 
 	@RequestMapping(value="/vocContents",method=RequestMethod.GET)
 	@ResponseBody
@@ -283,12 +298,11 @@ public class VocController {
 		List<Map<String,Object>> vocContentList = contentService.contentUseDescList(request);
 		return vocContentList;
 	}
+
 	@RequestMapping(value="/voc/getContent/{contentNo}",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String,Object> vocGetContent(HttpServletRequest request, @PathVariable int contentNo){
-	
 		Map<String,Object >vocContent = contentService.getContent(request, contentNo);
-		
 		return vocContent;
 	}
 
@@ -339,5 +353,17 @@ public class VocController {
 		return cnt;
 	}
 	
-	
+}
+	//VOC 콜백 상태 변경 (상담원 제어) 
+	@RequestMapping(value="/vc/callback/post/{callbackno}",method=RequestMethod.POST)
+	@ResponseBody
+	public int authvocCallBackUpdate(HttpServletRequest request,@PathVariable int callbackno) {		
+		Map<String,Object> callBackPrm = crud.searchParam(request);
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		callBackPrm.put("callbackno", callbackno);
+		callBackPrm.put("userno", userno);
+		int res = vcService.svcvocCallBackUpdate(callBackPrm);
+		return res;
+
+	}
 }

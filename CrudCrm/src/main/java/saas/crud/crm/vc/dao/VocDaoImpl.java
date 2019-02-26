@@ -68,30 +68,31 @@ public class VocDaoImpl implements VocDao{
 	//VOC 콜백 리스트 카운터
 	@Override
 	public int vocCallBackListCnt(Map<String, Object> param) {
-		int cnt = session.selectOne("sv.vocCallBackListCnt",param);
+		int cnt = session.selectOne("voc.vocCallBackListCnt",param);
 		return cnt;
 	}
 	//VOC 콜백 리스트 
 	@Override
 
 	public List<Map<String,Object>> vocCallBackList(Map<String, Object> param) {
-		List<Map<String,Object>> callBackList = session.selectList("sv.vocCallBackList",param);
+		List<Map<String,Object>> callBackList = session.selectList("voc.vocCallBackList",param);
 		return callBackList;
-	}
-	//VOC 콜백 상태 변경 (상담원)
-	@Override
-	public int vocCallBackUpdate(Map<String, Object> callbackPrm) {
-		int res = session.update("sv.vocCallBackUpdate",callbackPrm);
-		return res;
-
-	public void vocCallBackInsert(Map<String,Object> param) {
-		 session.insert("sv.vocCallBack",param);
-
 	}
 	//VOC 콜백 추가. cti에서 받아온 데이터 콜백 테이블에 insert
 	@Override
-	public List<Map<String,Object>> vocCallBackList(Map<String,Object> param) {
-		List<Map<String,Object>> callBackList = session.selectList("voc.callBackList",param);
+	public void vocCallBackInsert(Map<String,Object> param) {
+		 session.insert("voc.vocCallBack",param);
+	}
+	 
+	//VOC 콜백 상태 변경 (상담원)
+	@Override
+	public int vocCallBackUpdate(Map<String, Object> callbackPrm) {
+		int res = session.update("voc.vocCallBackUpdate",callbackPrm);
+		return res;
+	}
+	@Override
+	public List<Map<String,Object>> vocPopCallBackList(Map<String,Object> param) {
+		List<Map<String,Object>> callBackList = session.selectList("voc.popCallBackList",param);
 		return callBackList;
 	}
 	@Override
@@ -151,4 +152,38 @@ public class VocDaoImpl implements VocDao{
 		int cnt = session.update("voc.callBackPassDiv",param);
 		return cnt;
 	}
+	
+	//콜백 히스토리 리스트 카운터
+	@Override
+	public int vocCallBackHistListCnt(Map<String, Object> param) {
+		int cnt = session.selectOne("voc.vocCallBackHistListCnt",param);
+		return cnt;
+	}
+	//콜백 히스토리 리스트 
+	@Override
+	public List<Map<String, Object>> vocCallBackHistList(Map<String, Object> param) {
+		List<Map<String,Object>> callbackHistList = session.selectList("voc.vocCallBackHistList",param);
+		return callbackHistList;
+	}
+	//강성고객 리스트 카운터
+	@Override
+	public int vocBlackHistListCnt(Map<String, Object> param) {
+		int cnt = session.selectOne("voc.vocBlackHistListCnt",param);
+		return cnt;
+	}
+	//강성고객 리스트 
+	@Override
+	public List<Map<String, Object>> vocBlackHistList(Map<String, Object> param) {
+		List blackHistList = session.selectList("voc.vocBlackHistList",param);
+		return blackHistList;
+	}
+	
+	//VOC 콜백 카운터 (전광판)
+	@Override
+	public Map<String, Object> vocAlarm(Map<String, Object> param) {
+		Map<String,Object> vocAlarm = session.selectOne("voc.vocAlarm",param);
+		return vocAlarm;
+	}
+
+	
 }

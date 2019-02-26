@@ -202,7 +202,8 @@ function changePhoneState(state, stateStr){
     var ts = document.getElementById("tellerStatus");    
     ts.value = state;
     chanegeStatusBtnImage();
-    
+
+//true => hide, false => show
     if(state=="0300"){//전화대기 - 걸기, 당겨받기
     	// check
     	setBtnStatus("answerBtn",false);setBtnStatus("pickupBtn",false);
@@ -951,7 +952,14 @@ window.onerror = function(msg, url, line){
 
 //크루드시스템 추가
 //작업자 : 신동우
-
+function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받아 버튼의 disabled 상태 제어
+	var btn = $('#'+btnId);
+	if(booleanBtnState){
+		btn.hide();	
+	}else{
+		btn.show();	
+	}
+}
 function sessMaintain(){//세션유지용
  	$.ajax({
        		url: "/vc/sess",
@@ -970,25 +978,6 @@ function intervalFuncOn(){
 function intervalFuncOff(){//세션 유지 타이머 함수 종료 
 	clearInterval(this.intervalId);
 	this.intervalId = null;
-}
-
-function setBtnStatus(btnClass,booleanBtnState){//버튼 class, true or false 를 받아 버튼의 disabled 상태 제어
-	/*//버튼 id, true or false 를 받아 버튼의 disabled 상태 제어
-	var btn = document.getElementById(btnId);
-	btn.disabled = booleanBtnState;*/
-	var buttons = document.getElementsByClassName(btnClass);
-	for(var i=0;i<buttons.length;i++){//같은 클래스명의 버튼 동시 제어
-		buttons[i].disabled = booleanBtnState;
-	}
-
-function setBtnStatus(btnId,booleanBtnState){//버튼 id, true or false 를 받아 버튼의 disabled 상태 제어
-	var btn = $('#'+btnId);
-	if(booleanBtnState){
-		btn.hide();	
-	}else{
-		btn.show();	
-	}
-
 }
 
 function chanegeStatusBtnImage(){//대기, 휴식, 후처리 상태에 대한 css변경 
@@ -1014,6 +1003,3 @@ function chanegeStatusBtnImage(){//대기, 휴식, 후처리 상태에 대한 cs
 	}
 
 }
-
-/////////////////////////////////////////////////////////////////////웹소켓/////////////////////////////////////////////////////////////////////
-

@@ -99,14 +99,12 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_vc.js"></script>
-
 	<script>
-	$(document).ready(function() {
-		$('#custname').val(opener.$('#custname').val());
-		$('#custno').val(opener.$('#custno').val());
-		$('#receiveno').val(opener.$('#phone').val());
-	});		
-	
+		$(document).ready(function() {
+			$('#custname').val(opener.$('#custname').val());
+			$('#custno').val(opener.$('#custno').val());
+			$('#receiveno').val(opener.$('#phone').val());
+		});
 	</script>
 
 </body>

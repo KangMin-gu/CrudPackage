@@ -49,6 +49,9 @@ public class VocController {
 	@Autowired
 	private ProductService productService;
 	@Autowired
+	private SvService svService;
+	
+	@Autowired
 	private ContentService contentService;
 	@Autowired
 	private SvService svService;
@@ -61,7 +64,6 @@ public class VocController {
 		mView.addAllObjects(code);
 		mView.addObject("productB",productB);
 		mView.setViewName("vc/voc");
-		//mView.setViewName("vc/vocTest");
 		return mView;
 	}
 	
@@ -264,16 +266,29 @@ public class VocController {
 		return bcustno;
 	}
 	
+	//VOC 고객 - 블랙 이력 조회 
+	@RequestMapping(value="/vc/tab/black",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocBlackHistList(HttpServletRequest request) {
+		Map<String,Object> blackHistList = vcService.svcVocBlackHistList(request);		
+		return blackHistList;
+	}
+	
 	//VOC - 세션유지 	
 	@RequestMapping(value="/vc/sess",method=RequestMethod.GET)
 	@ResponseBody
 	public int authvocSessionMaintain(HttpServletRequest request) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@sess test@@@@@@@@@@@@@@@@@@@");
 		return 0;
 	}
-
 	
-	//VOC 온피아 -> 콜백 받기 
+	//VOC 콜백 목록 조회 
+	@RequestMapping(value="/vc/callback/history",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> authvocCallBackHistList(HttpServletRequest request) {		
+		Map<String,Object> callBackHistList = vcService.svcVocCallBackHistList(request);		
+		return callBackHistList;
+	}
+
 	@RequestMapping(value="/vc/callback", method=RequestMethod.POST)
 	public ModelAndView VocGetCallBack(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -285,10 +300,10 @@ public class VocController {
 		return mView;
 	}
 		
-	//VOC 콜백 목록 조회 
+	//VOC 콜백 분배 팝업 목록 조회 
 	@RequestMapping(value="/vc/callback",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> authvocCallBackList(HttpServletRequest request) {		
+	public Map<String,Object> authVococCallBackList(HttpServletRequest request) {		
 		Map<String,Object> callBackList = vcService.svcVocCallBackList(request);
 		return callBackList;
 	}
@@ -309,47 +324,17 @@ public class VocController {
 		return vocContent;
 	}
 
-	//VOC 콜백 상태 변경 (상담원 제어) 
-	@RequestMapping(value="/vc/callback/post/{callbackno}",method=RequestMethod.POST)
-	@ResponseBody
-	public int authvocCallBackUpdate(HttpServletRequest request,@PathVariable int callbackno) {		
-		Map<String,Object> callBackPrm = crud.searchParam(request);
-		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
-		callBackPrm.put("callbackno", callbackno);
-		callBackPrm.put("userno", userno);
-		int res = vcService.svcvocCallBackUpdate(callBackPrm);//콜백상태를 변경 , 콜백히스토리 insert
-		return res;
-	}
-	
-	//VOC 콜백 목록 조회 
-	@RequestMapping(value="/vc/callback/history",method=RequestMethod.GET)
-	@ResponseBody
-	public Map<String,Object> authvocCallBackHistList(HttpServletRequest request) {		
-		Map<String,Object> callBackHistList = vcService.svcVocCallBackHistList(request);		
-		return callBackHistList;
-	}
-	
-	//VOC 고객 - 블랙 이력 조회 
-	@RequestMapping(value="/vc/tab/black",method=RequestMethod.GET)
-	@ResponseBody
-	public Map<String,Object> authvocBlackHistList(HttpServletRequest request) {
-		Map<String,Object> blackHistList = vcService.svcVocBlackHistList(request);		
-		return blackHistList;
-	}
-	
 	//VOC 서비스 상세 보기 팝업 (left top bottom 탬플릿 제거) 
 	@RequestMapping(value="/vc/service/{serviceNo}", method=RequestMethod.GET)
 	public ModelAndView authServiceRead(HttpServletRequest request, @PathVariable int serviceNo) {
 		ModelAndView mView = svService.svRead(request, serviceNo);
 		mView.setViewName("sv/svReadNoTemplate");
-		
 		return mView;
 	}
 	
 	//VOC 고객 상세페이지 팝업(기본)
 	@RequestMapping(value="/vc/cust/view/{custno}", method=RequestMethod.GET)
-	public ModelAndView authcustDetail(HttpServletRequest request 
-								 ,@PathVariable int custno) {
+	public ModelAndView authcustDetail(HttpServletRequest request ,@PathVariable int custno) {
 		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		ModelAndView mView = new ModelAndView();
 		mView = custService.svcCustDetail(custno,siteid);
@@ -358,15 +343,8 @@ public class VocController {
 		mView.setViewName("cu/custdetailNoTemplate");
 		return mView;
 	}
-}
-	//VOC - 콜백 테스트용. (**기능 구현 완료 후 반드시 삭제 ) 	
-	@RequestMapping(value="/vc/test",method=RequestMethod.GET)
-	public ModelAndView authvocTest(HttpServletRequest request) {
-		ModelAndView mView = new ModelAndView();
-		mView.setViewName("vc/test1");
-		return mView;
-	}
-	
+
+
 	@RequestMapping(value="/callBack/div", method=RequestMethod.GET)
 	public ModelAndView authVocCallBackDiv(HttpServletRequest request) {
 		ModelAndView mView = new ModelAndView();
@@ -377,7 +355,7 @@ public class VocController {
 	@RequestMapping(value="/callBackList", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String,Object> authVocCallBackList(HttpServletRequest request){
-		Map<String,Object> callBackList = vcService.vocCallBackList(request);
+		Map<String,Object> callBackList = vcService.vocPopCallBackList(request);
 		return callBackList;
 	}
 	
@@ -406,5 +384,28 @@ public class VocController {
 		return cnt;
 	}
 	
+	//VOC 콜백 상태 변경 (상담원 제어) 
+	@RequestMapping(value="/vc/callback/post/{callbackno}",method=RequestMethod.POST)
+	@ResponseBody
+	public int authvocCallBackUpdate(HttpServletRequest request,@PathVariable int callbackno) {		
+		Map<String,Object> callBackPrm = crud.searchParam(request);
+		int userno = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());
+		callBackPrm.put("callbackno", callbackno);
+		callBackPrm.put("userno", userno);
+		int res = vcService.svcvocCallBackUpdate(callBackPrm);
+		return res;
+
+	}
 	
+	//VOC 고객 상세페이지 팝업(기본)
+	@RequestMapping(value="/vc/cust/view/{custno}", method=RequestMethod.GET)
+	public ModelAndView authcustDetail(HttpServletRequest request ,@PathVariable int custno) {
+		int siteid = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		ModelAndView mView = new ModelAndView();
+		mView = custService.svcCustDetail(custno,siteid);
+		Map<String,Object> code = codeService.getCode();
+		mView.addAllObjects(code);
+		mView.setViewName("cu/custdetailNoTemplate");
+		return mView;
+	}
 }

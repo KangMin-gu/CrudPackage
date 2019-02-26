@@ -14,6 +14,8 @@
 <title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/voclinkinc.jsp"%>
 
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet"><!-- Sweet Alert -->
 <style>
@@ -42,12 +44,6 @@
 </style>
 </head>
 	<body>
-    <div id="wrap" style=" margin-bottom: 40px;margin-top: 70px;">
-
-<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-</head>
-	<body>
     <div id="wrap" style="margin-top: 0px;">
 
         <div class="ibox-top">
@@ -73,6 +69,9 @@
 					<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
 					<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
 				</div>
+				<input type="hidden" id="userno" value="${sessionScope.USERNO }">
+				<input type="hidden" id="chkauth" value="${sessionScope.CHKAUTH }" />
+				<input type="hidden" id="trunk" value="07042622883" /><!-- 동적으로변경 -->
             </div>
             <!-- 박진열 작업 -->
                     <ul class="top-btn">
@@ -118,9 +117,6 @@
            
                 <div class="ibox-left">
                     <div class="ibox-content left-cont pt-0">
-                    <div class="row alert alert-danger" id="blackDiv" style="margin-left: 0px;margin-right: 0px;padding-top: 6px;padding-bottom: 6px;bottom: 0px;margin-bottom: 5px;display:none;">
-                    	<b>블랙 리스트에 등록 되어 있는 고객입니다.</b>
-                    </div>
                     <div id="custHiddenDiv">
                     	<input type="hidden" id="bcustno" name="bcustno" value="0" />
                     	<input type="hidden" id="blackcnt" name="blackcnt" value="0" />
@@ -141,11 +137,10 @@
                                     </td>
                                     <th>고객명</th>
                                     <td>
-                                    	<!-- <input type="text" class="form-control custInput" id="custname" name="custname"> -->
                                     	<div class="input-group">
-                                            <input type="text" class="form-control custInput" id="custname" name="custname">
-                                            <span class="input-group-addon"><a onclick="vocCustDetail();"><i class="fa fa-user-circle-o"></i></a></span>  
-                                        </div>
+                                    		<input type="text" class="form-control custInput" id="custname" name="custname">
+                                    	 	<span class="input-group-addon"><a onclick="vocCustDetail();"><i class="fa fa-user-circle-o"></i></a></span>
+                                    	 </div>  
                                     </td>
                                   </tr>
                                 <tr>
@@ -162,27 +157,6 @@
 										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel3" id="homtel3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="5">
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>고객구분</th>
-                                    <td>
-                                    	<select class="form-control custInput" name="custgubun" id="custgubun">
-											<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
-											<c:forEach var="code" items="${CUSTGUBUN }">
-                                            	<option label="${code.codename }" value="${code.codeval }"/>
-                                            </c:forEach>
-										</select>
-                                    </td>
-                                    <th>관련고객</th>
-                                    <td>
-                                        <div class="input-group cust" id="relcustname">
-                                            <input type="text" class="form-control" name="relcustname" readonly>
-                                            <input class="custInput" type="hidden" id="relcustno" name="relcustno" value="0" />
-                                            <span class="input-group-addon"><a href="#"><i class="fa fa-search cust"></i></a></span>
-                                            <span class="input-group-addon"><a href="#"><i class="fa fa-times dataCancle"></i></a></span>  
-                                        </div>  
-                                    </td>
-                                </tr>
-                                
                                 <tr>
                                     <th>이메일</th>
                                     <td >
@@ -818,17 +792,17 @@
                     <li class="call-tit">미처리</li>
                     <li><strong>0</strong></li>
                     <li class="call-tit">통화분배시도</li>
-                    <li><strong><span id="transferTryCnt">0</span></strong></li>
+                    <li><span id="transferTryCnt"><strong>0</strong></span></li>
                     <li class="call-tit">통화분배연결</li>
-                    <li><strong><span id="transferConnectCnt">0</span></strong></li>
+                    <li><span id="transferConnectCnt"><strong>0</strong></span></li>
                     <li class="call-tit">인바운드시도</li>
-                    <li><strong><span id="ibTryCnt">0</span></strong></li>
+                    <li><span id="ibTryCnt"><strong>0</strong></span></li>
                     <li class="call-tit">인바운드연결<li>
-                    <li><strong><span id="ibConnectCnt">0</span></strong></li>
+                    <li><span id="ibConnectCnt"><strong>0</strong></span></li>
                     <li class="call-tit">아웃바운드시도</li>
-                    <li><strong><span id="obTryCnt">0</span></strong></li>
+                    <li><span id="obTryCnt"><strong>0</strong></span></li>
                     <li class="call-tit">아웃바운드연결</li>
-                    <li><strong><span id="obConnectCnt">0</span></strong></li>
+                    <li><span id="obConnectCnt"><strong>0</strong></span></li>
                 </ul>
             </div>
         </div>
@@ -845,7 +819,6 @@
 <script src="${pageContext.request.contextPath}/resources/crud/crud_vocsocket.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
 <script>
-
 var intervalId;//전역변수
 var seObject = [];
 function sessMaintain(){//세션유지용
@@ -868,7 +841,6 @@ function intervalFuncOff(){//세션 유지 타이머 함수 종료
 	this.intervalId = null;
 }
 
-
 $(document).ready(function () {
  
 	$('.convey').hide();
@@ -878,9 +850,6 @@ $(document).ready(function () {
 	$('.product .minus:first').remove();
 	var url = window.location.pathname;
 	vocContents("0",url);
-	
-	
-	
 
 	nhn.husky.EZCreator.createInIFrame({
 
@@ -898,34 +867,11 @@ $(document).ready(function () {
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
  });
- 
- $('[name*=product]').change(function(){
-	 upperProduct(this);
 
+ $('[name*=product]').change(function(){
+	 upperProduct(this); 
  });
 
-
- //블랙해제
- function cancleBlack(){
-	 var custno = $('#custno').val();
-	 var urlStr = '/vc/black/del/'+custno;
-	 $.ajax({
-	        url: urlStr,
-	        method: "GET",
-	        dataType: "json",
-	        cache: false,
-	        success: function (data) {
-	        	$('#blackcnt').val(0);
-	        	$('#addBlackSpan').show();
-				$('#cancleBlackSpan').hide();
-				$('#blackDiv').hide();
-	        	alert("해제 되었습니다.");
-	        },
-	        error: function (request, status, error) {
-	            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-	        }
-	    });
- };
  
 //textArea에 이미지 첨부
  function pasteHTML(filepath){

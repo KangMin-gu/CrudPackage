@@ -638,9 +638,6 @@ body {
 		$(document).ready(function () {
 			$('.note-editable').attr('contenteditable',false);
 		});
-		
-		
-	
 	</script>
 </body>
 </html>

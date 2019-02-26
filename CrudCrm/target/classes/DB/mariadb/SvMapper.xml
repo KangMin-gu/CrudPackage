@@ -717,4 +717,125 @@
 		WHERE SITEID = #{siteid}
 		AND SERVICENO = #{serviceno}
 	</select>
+	
+	<insert id="vocCallBackHistoryInsert" parameterType="hashMap">
+	INSERT INTO CTI510020
+	(
+	SITEID
+	,REGDATE
+	,REGUSER
+	,CALLBACKNO
+	,MEMO
+	,CUSTNO
+	,CALLSTATUS
+	,TRUNK
+	)
+	VALUES
+	(
+	#{siteid}
+	,now()
+	,#{userno}
+	,#{callbackno}
+	,#{memo}
+	,#{custno}
+	,#{callstatus}
+	,#{trunk}
+	)
+	</insert>
+	
+	<!-- 콜백 히스토리 카운터 (고객) -->
+	<select id="vocCallBackHistListCnt" parameterType="hashMap" resultType="int">
+	SELECT COUNT(*)
+	FROM CTI510020
+	WHERE 
+		CUSTNO = #{custno}
+		AND SITEID = #{siteid}
+	ORDER BY REGDATE DESC
+	</select>
+	
+	<!-- 콜백 히스토리 리스트 (고객) -->
+	<select id="vocCallBackHistList" parameterType="hashMap" resultType="hashMap">
+	SELECT *
+	FROM (
+		SELECT
+		@RNUM:=@RNUM + 1 AS ROWNUM
+		,A.CALLBACKHISTNO, A.CALLBACKNO, B.CALLER, B.CALLBACK
+		,B.GCODE1, B.GCODE2, B.GCODE3
+		,DATE_FORMAT(B.RECEIVEDATE,'%Y-%m-%d %H:%i:%s') AS RECEIVEDATE_
+		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d %H:%i:%s') AS REGDATE_  
+		,A.CALLSTATUS
+		,(CASE 
+			WHEN A.CALLSTATUS = 0 THEN '접수'
+			WHEN A.CALLSTATUS = 1 THEN '할당'
+			WHEN A.CALLSTATUS = 2 THEN '완료'
+			WHEN A.CALLSTATUS = 3 THEN '통화불가' 
+			WHEN A.CALLSTATUS = 4 THEN '미해결'
+			ELSE ''
+			END) AS CALLSTATUS_		
+		,C.USERNAME		
+		,IFNULL(A.MEMO,'') AS MEMO
+		,CASE WHEN CHAR_LENGTH(A.MEMO) <![CDATA[>=]]> 15 THEN CONCAT( SUBSTRING(A.MEMO,1,12) ,'...' )  
+			ELSE IFNULL(A.MEMO,'')
+			END AS MEMO_
+		
+		FROM CTI510020 A
+		LEFT OUTER JOIN CTI510010 B ON A.CALLBACKNO = B.CALLBACKNO
+		LEFT OUTER JOIN ME800010 C ON A.REGUSER = C.USERNO
+		,(SELECT @RNUM := 0) R
+	
+		WHERE  
+			A.CUSTNO = #{custno}
+			AND A.SITEID = #{siteid}
+		ORDER BY A.REGDATE DESC
+		) X
+	<if test="endRowNum != null">
+	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</if> 
+	</select>
+	
+	<!-- 고객 블랙등록 내역 카운터 -->
+	<select id="vocBlackHistListCnt" parameterType="hashMap" resultType="int">
+	SELECT COUNT(*)
+	FROM CU120010
+	WHERE 
+		CUSTNO = #{custno}
+		AND SITEID = #{siteid}
+	</select>
+	
+	<!-- 고객 블랙등록 내역  -->
+	<select id="vocBlackHistList" parameterType="hashMap" resultType="hashMap">	
+	SELECT *
+	FROM (
+		SELECT
+		@RNUM:=@RNUM + 1 AS ROWNUM
+		,A.BCUSTNO,A.CUSTNO,A.BLACKTYPE
+		,CASE WHEN A.BLACKTYPE = 1 THEN '욕설'
+			WHEN A.BLACKTYPE = 2 THEN '성희롱'
+			WHEN A.BLACKTYPE = 3 THEN '기타'
+			ELSE '' 
+			END AS BLACKTYPE_
+		,A.RECEIVENO
+		,IFNULL(A.MEMO,'') AS MEMO
+		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d %H:%m:%i') AS REGDATE_
+		,CASE WHEN IFNULL(A.ISDELETE = 1,0) THEN CONCAT(DATE_FORMAT(A.EDTDATE,'%Y-%m-%d'),' / ','해제') 
+			ELSE '블랙'
+			END AS ISDELETE_
+		,B.USERNAME
+		,CASE WHEN CHAR_LENGTH(A.MEMO) <![CDATA[>=]]> 20 THEN CONCAT( SUBSTRING(A.MEMO,1,17) ,'...' )  
+			ELSE IFNULL(A.MEMO,'')
+			END AS MEMO_
+		FROM CU120010 A  
+		LEFT OUTER JOIN ME800010 B ON A.REGUSER = B.USERNO   
+		,(SELECT @RNUM := 0) R
+	
+		WHERE 
+			A.CUSTNO = #{custno}
+			AND A.SITEID = #{siteid}
+		ORDER BY A.REGDATE DESC 
+		) X
+	<if test="endRowNum != null">
+	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</if> 
+	</select>
+	
 </mapper>

@@ -711,10 +711,11 @@ function serviceInfoBinding(data) {
 	opener.$('#servicecode2').val(data.SERVICECODE2);
 	opener.$('#servicename').val(data.SERVICENAME);
 	opener.$('#servicedesc').val(data.SERVICEDESC);
-	
-	opener.seObject.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
+	opener.tinymce.activeEditor.setMode('readonly');
+	opener.tinymce.activeEditor.setContent(data.SERVICEDESC);
+	//opener.oEditors.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
 
-	opener.seObject.getById["servicedesc"].exec("PASTE_HTML", [data.SERVICEDESC]); //내용밀어넣기
+	//opener.oEditors.getById["servicedesc"].exec("PASTE_HTML", [data.SERVICEDESC]); //내용밀어넣기
 	opener.$('#memo').val(data.MEMO);
 	if (data.SERVICETYPE == 1) {
 
@@ -834,6 +835,9 @@ $('#create').click(function() {
 	$('.voc').attr('disabled', false);
 	$('.voc').iCheck('enable');
 	$('.voc').val('');
+	//oEditors.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
+	tinymce.activeEditor.setMode('design');
+	tinymce.activeEditor.setContent('');
 	$('.i-checks').iCheck('uncheck');
 	$('[name="vocstep"]:first').iCheck('check');
 	$('[name="servicetype"]:first').iCheck('check');
@@ -861,9 +865,11 @@ $('.asowner').click(function(e) {
 
 $('#save').click(
 		function(e) {
+			//oEditors.getById["servicedesc"].exec("UPDATE_CONTENTS_FIELD", []);    // 에디터의 내용이 textarea에 적용됩니다.
 			var servicetype = $('.servicetype .checked input').val();
 			var servicename = $("#servicename").val();
-			var servicedesc = $("#servicedesc").val();
+			//var servicedesc = $("#servicedesc").val();
+			var servicedesc = tinymce.activeEditor.getContent();
 			var vocstep = $('.check:checked').val();
 			var nextowner = $('#nextowner').val();
 			var conveyreason = $('#conveyreason').val();
@@ -932,6 +938,8 @@ $('#save').click(
 						alert("저장되었습니다.");
 						// 데이터 전부 초기화
 						$('.form-control').val('').keyup();
+						tinymce.activeEditor.setContent('');
+						//oEditors.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
 					}
 				},
 				error : function(request, status, error) {
@@ -1040,7 +1048,10 @@ $(document).on('click', '.content', function(e) {
 		dataType:"json",
 		cache :false,
 		success:function(data){
-			$('#servicedesc').val(data.CONTENT);
+			tinymce.activeEditor.setContent(data.CONTENT);
+			//oEditors.getById["servicedesc"].exec("PASTE_HTML", ['']);
+			//oEditors.getById["servicedesc"].exec("PASTE_HTML", [data.CONTENT]);
+			
 			
 		},
 		error:function(request,status,error){
@@ -1355,7 +1366,6 @@ $(document).on('click', '.plus', function(e) {
 
 // 최근 한건을 가져올때 제품의 갯수를 늘려줌
 function productPlus(length) {
-	debugger;
 	var countP = length + 1;
 	var flag = window.location.pathname.indexOf('pop');
 	// 팝업인지 아닌지 비교해서 팝업인경우에는 opener를 늘려주고 아니면 본인을 늘려줌

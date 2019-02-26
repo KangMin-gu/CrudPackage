@@ -35,7 +35,11 @@
     $('.daumzip').click(function(e){ //이벤트를 걸 인풋,버튼에 daumzip 클래스 추가 
     	new daum.Postcode({
     		oncomplete: function(data) {
-    			var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다
+    			debugger;
+    			var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다\
+    			if(clickId ==''){
+    				clickId = $(e.currentTarget).parent().parent().prev().attr('id');
+    			}
     			var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
     			//addr1 : 우편번호 , addr2 : 도로명 , addr3 : 건물명 +사용자입력  
     			$("#"+head+"addr1").val(data.zonecode);	

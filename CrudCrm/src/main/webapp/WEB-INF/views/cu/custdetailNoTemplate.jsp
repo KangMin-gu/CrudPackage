@@ -601,7 +601,7 @@ body {
 																	<tr>
 																		<td
 																			style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><a
-																			href="${pagecontext.request.contextpath}/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
+																			href="${pagecontext.request.contextpath}/vc/service/${svList.SERVICENO }">${svList.SERVICENAME}</a></td>
 																		<td>${svList.SERVICETYPE_ }</td>
 																		<td>${svList.SERVICECHANNEL_ }</td>
 																		<td>${svList.CUSTNAME_ }</td>
@@ -614,12 +614,6 @@ body {
 																</c:forEach>
 															</tbody>
 														</table>
-														<c:if test='${fn:length(custService) != 0 }'>
-															<div class="text-right">
-																<a href="/service?custno=${custDetail.CUSTNO }"
-																	class="btn btn-primary">서비스이동</a>
-															</div>
-														</c:if>
 													</div>
 												</div>
 												<div role="tabpanel" id="tab2" class="tab-pane overflow-x">

@@ -610,7 +610,7 @@
                             <tr>
                                 <th>제목</th>
                                 <td colspan="3">
-                                    <input type="text"class="form-control voc" name="servicename" style="height:75px;"id="servicename" value="${vocInfo.SERVICENAME }">
+                                    <textarea type="text"class="form-control voc" name="servicename" style="height:75px;"id="servicename" value="${vocInfo.SERVICENAME }">${vocInfo.SERVICENAME }</textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -660,10 +660,10 @@
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks voc">
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="4" id="vocstep4" name="vocstep"> 처리</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep3" name="vocstep"> 처리</label>
                                         <!-- <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>-->
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep6" name="vocstep"> 담당자 이관</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="7" id="vocstep7" name="vocstep"> 상급자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep5" name="vocstep"> 담당자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep6" name="vocstep"> 상급자 이관</label>
                                     </div>
                                 </td>
                             </tr>
@@ -809,7 +809,8 @@
     </div>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
-<script src="${pageContext.request.contextPath}/resources/js/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- <script src="${pageContext.request.contextPath}/resources/SmartEditor/js/HuskyEZCreator.js" charset="utf-8"></script> -->
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -820,7 +821,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
 <script>
 var intervalId;//전역변수
-var seObject = [];
+var oEditors = [];
 function sessMaintain(){//세션유지용
  	$.ajax({
        		url: "/vc/sess",
@@ -850,18 +851,44 @@ $(document).ready(function () {
 	$('.product .minus:first').remove();
 	var url = window.location.pathname;
 	vocContents("0",url);
-
+	/*
 	nhn.husky.EZCreator.createInIFrame({
-
-	    oAppRef: seObject,
-
+	    oAppRef: oEditors,
 	    elPlaceHolder: "servicedesc",
-
-	    sSkinURI: "../resources/js/nse_files/SmartEditor2Skin.html",
-
-	    fCreator: "createSEditor2"
-
+	    sSkinURI: "../resources/SmartEditor/SmartEditor2Skin.html",
+	    fCreator: "createSEditor2",
+	    	htParams : {
+	            bUseToolbar : true,                // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+	            bUseVerticalResizer : true,        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+	            bUseModeChanger : true,            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+	    	}
 	});
+	*/
+	
+	tinymce.init({
+	    selector: '#servicedesc',
+	    theme: 'modern',
+	    images_upload_url: 'postAcceptor.php',
+	    automatic_uploads: false,
+	    width: 600,
+	    height: 300,
+	    plugins: [
+	      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+	      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+	      'save table contextmenu directionality emoticons template paste textcolor'
+	    ],
+	    content_css: 'css/content.css',
+	    toolbar: 'custom_image insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+	    setup: function(editor) {
+            editor.addButton('custom_image', {
+                    title: '이미지삽입',
+                    icon: 'image',
+                    onclick: function() {
+                        window.open("/multifile","tinymcePop","width=400,height=350");
+                    }
+                });
+            }
+	  });
 });
  
  $('#servicecode1').change(function(){
@@ -876,7 +903,7 @@ $(document).ready(function () {
 //textArea에 이미지 첨부
  function pasteHTML(filepath){
      var sHTML = '<img src="<%=request.getContextPath()%>'+filepath+'">';
-     oEditors.getById["textAreaContent"].exec("PASTE_HTML", [sHTML]);
+     oEditors.getById["servicedesc"].exec("PASTE_HTML", [sHTML]);
  }
 
 </script>

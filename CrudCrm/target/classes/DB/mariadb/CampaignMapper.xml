@@ -194,20 +194,21 @@
 			,EDTUSER
 		)
 		SELECT
-			SITEID
-			,CUSTNO
-			,CUSTNAME 
-			,CONCAT(MOBILE1 , MOBILE2 , MOBILE3) AS MOBILE
-			,EMAIL
+			A.SITEID
+			,A.CUSTNO
+			,A.CUSTNAME 
+			,CONCAT(A.MOBILE1 , A.MOBILE2 , A.MOBILE3) AS MOBILE
+			,A.EMAIL
 			,#{campno}
 			,NOW()
 			,#{userno}
 			,NOW()
 			,#{userno}
-		FROM cu100010
-		WHERE SITEID = #{siteid}
-		AND INFOAGREE = '0'
-		AND ISDELETE = 0
+		FROM cu100010 A
+		LEFT OUTER JOIN cu100080 B ON B.CUSTNO = A.CUSTNO
+		WHERE A.SITEID = #{siteid}
+		AND A.INFOAGREE = '0'
+		AND A.ISDELETE = 0
 	<if test="sex != null">
 		AND  SEX = #{sex}
 	</if>

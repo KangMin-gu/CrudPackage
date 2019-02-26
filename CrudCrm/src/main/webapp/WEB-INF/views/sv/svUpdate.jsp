@@ -38,12 +38,9 @@
                 <div class="col-lg-10">
                     <h2>서비스 관리</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/service">서비스 목록</a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <strong>서비스 추가</strong>
-                        </li>
+                        <li class="breadcrumb-item"><a href="/service">목록</a></li>
+						<li class="breadcrumb-item"><a href="/service/${serviceInfo.SERVICENO}">상세 정보</a></li>
+						<li class="breadcrumb-item active"><strong>수정</strong></li>
                     </ol>
                 </div>
             </div>		
@@ -77,7 +74,7 @@
 	                        	</div>													
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<Button type="submit" disabled class="btn btn-primary submit" disabled >저 장</Button>
-									<a href="/service" class="btn btn-primary">목 록</a>
+									<a href="/service/${serviceInfo.SERVICENO }" class="btn btn-primary">취소</a>
 								</div>
 							</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -760,25 +757,26 @@
 			enableSubmit();
 			
 			var step = $('#servicestep').val();
+			debugger;
 			if(step == 1){
 				$('#servicedesc').summernote('disable');
 				$('.service').prop("disabled",true);
 			}
-			if(step >= 2){
+			if(step == 2){
 				$('#servicedesc').summernote('disable');
-				$('#rewarddesc').summernote('disable');
-				
-				$('.service').prop("disabled",true);
-				$('.reward').prop("disabled",true);
-				$('.reward').iCheck('disable');
-				
-			}else if(step == 4){
+				$('.service').prop("disabled",true);				
+			}else if(step == 3){
 				$('#servicedesc').summernote('disable');
 				$('#rewarddesc').summernote('disable');
 				$('.service').prop("disabled",true);
 				$('.reward').prop("disabled",true);
 				$('.reward').iCheck('disable');
-				$('.ract').prop("disabled",true);
+			}else if(step == 5 || step == 6){
+				$('#servicedesc').summernote('disable');
+				$('#rewarddesc').summernote('disable');
+				$('.service').prop("disabled",true);
+				$('.reward').prop("disabled",true);
+				$('.reward').iCheck('disable');
 			}
 			
 			var sessionId = $('#sessionId').val();

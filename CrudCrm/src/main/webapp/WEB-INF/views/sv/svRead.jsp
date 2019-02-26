@@ -63,24 +63,32 @@
                         <div class="ibox-content row">
                         	<div class="box col-12 mb-2 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
                            		<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
-                            		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO }">
-                            			<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
+                            		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+                            			<c:if test="${serviceInfo.SERVICESTEP eq 1 or serviceInfo.SERVICESTEP eq 2 or serviceInfo.SERVICESTEP eq 3 or serviceInfo.SERVICESTEP eq 4 or serviceInfo.SERVICESTEP eq 5 or serviceInfo.SERVICESTEP eq 6}">
+                            				<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
+                            			</c:if>
                             		</c:if>
                             		<c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30' }">
-                            			<a href="#" class="btn btn-primary complete">종결</a>
+                            			<c:if test="${serviceInfo.SERVICESTEP eq 3 } ">
+                            				<a href="#" class="btn btn-primary complete">종결</a>
+                            			</c:if>
                             		</c:if>
                                 </div>
                                 
                            		<div class="float-right text-right" style="padding-right: 0px;">
-                           		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
-                              		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">                              		
-                                		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
-                                		<c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
-										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+                           		
+                              		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                              		<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+                              			<c:if test="${serviceInfo.SERVICESTEP eq 1 or serviceInfo.SERVICESTEP eq 2 or serviceInfo.SERVICESTEP eq 3 or serviceInfo.SERVICESTEP eq 4 or serviceInfo.SERVICESTEP eq 5 or serviceInfo.SERVICESTEP eq 6}">
+                                			<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
+                                			<c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+												<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+											</c:if>
 										</c:if>
-										<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
+									</c:if>
+									<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
 									</form:form>
-								</c:if>
+
                            		</div>
                            	</div>
                             <div class="box1 col-lg-12 col-xl-4 p-0">
@@ -584,22 +592,30 @@
                 </div>
                 <div class="box col-12 mb-2 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
                 	<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
-                    	<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO }">
-                    		<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
+                    	<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+                        	<c:if test="${serviceInfo.SERVICESTEP eq 1 or serviceInfo.SERVICESTEP eq 2 or serviceInfo.SERVICESTEP eq 3 or serviceInfo.SERVICESTEP eq 4 or serviceInfo.SERVICESTEP eq 5 or serviceInfo.SERVICESTEP eq 6}">
+                            	<a href="#" class="btn btn-default servicenext" data-toggle="tooltip" data-placement="top" title="이관"><i class="fa fa-external-link"></i></a>
+                           	</c:if>
                         </c:if>
                         <c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30' }">
-                        	<a href="#" class="btn btn-primary complete">종결</a>
+                        	<c:if test="${serviceInfo.SERVICESTEP eq 3 } ">
+                            	<a href="#" class="btn btn-primary complete">종결</a>
+                            </c:if>
                         </c:if>
                     </div>
                                 
                     <div class="float-right text-right" style="padding-right: 0px;">
-                    	<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
-                    		<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">                              		
-                        		<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
-								<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
-								<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
-							</form:form>
-						</c:if>
+                    	<form:form action="${pageContext.request.contextPath}/service/${serviceInfo.SERVICENO}" method="POST">
+                        	<c:if test="${serviceInfo.OWNER eq sessionScope.USERNO or sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+                            	<c:if test="${serviceInfo.SERVICESTEP eq 1 or serviceInfo.SERVICESTEP eq 2 or serviceInfo.SERVICESTEP eq 3 or serviceInfo.SERVICESTEP eq 4 or serviceInfo.SERVICESTEP eq 5 or serviceInfo.SERVICESTEP eq 6}">
+                                	<a href="${pageContext.request.contextPath}/service/post/${serviceInfo.SERVICENO}" class="btn btn-primary">수정</a>
+                                	<c:if test="${sessionScope.CHKAUTH eq '20' or sessionScope.CHKAUTH eq '30'}">
+										<button class="btn btn-primary" type="submit" value="삭제">삭제</button>
+									</c:if>
+								</c:if>
+							</c:if>
+							<a class="btn btn-primary" href="${pageContext.request.contextPath}/service" >목록</a>
+						</form:form>
                     </div>
                 </div>
                 <div class="col-lg-12" style="background: #ffffff;">

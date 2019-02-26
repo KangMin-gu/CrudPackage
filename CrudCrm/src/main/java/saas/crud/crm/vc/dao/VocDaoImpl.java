@@ -34,8 +34,8 @@ public class VocDaoImpl implements VocDao{
 	//VOC 좌측 탭 - email 리스트 카운트 
 	@Override
 	public int emailListCnt(Map<String, Object> param) {
-		int cnt = session.selectOne("sv.emailListCnt",param);
-		return cnt;
+		int res = session.selectOne("sv.emailListCnt",param);
+		return res;
 	}
 	//VOC 좌측 탭 - email 리스트 
 	@Override
@@ -73,12 +73,11 @@ public class VocDaoImpl implements VocDao{
 	}
 	//VOC 콜백 리스트 
 	@Override
-
 	public List<Map<String,Object>> vocCallBackList(Map<String, Object> param) {
 		List<Map<String,Object>> callBackList = session.selectList("voc.vocCallBackList",param);
 		return callBackList;
 	}
-	//VOC 콜백 추가. cti에서 받아온 데이터 콜백 테이블에 insert
+	
 	@Override
 	public void vocCallBackInsert(Map<String,Object> param) {
 		 session.insert("voc.vocCallBack",param);
@@ -109,42 +108,6 @@ public class VocDaoImpl implements VocDao{
 	public int vocCallBackTotalRow(Map<String, Object> param) {
 		int cnt = session.selectOne("voc.callBackTotalRow",param);
 		return cnt;
-	}
-	//VOC 콜백 히스토리추가
-	@Override
-	public int vocCallBackHistoryInsert(Map<String, Object> param) {
-		int res = session.insert("sv.vocCallBackHistoryInsert",param);
-		return res;
-	}
-	//콜백 히스토리 리스트 카운터
-	@Override
-	public int vocCallBackHistListCnt(Map<String, Object> param) {
-		int cnt = session.selectOne("sv.vocCallBackHistListCnt",param);
-		return cnt;
-	}
-	//콜백 히스토리 리스트 
-	@Override
-	public List<Map<String, Object>> vocCallBackHistList(Map<String, Object> param) {
-		List<Map<String,Object>> callbackHistList = session.selectList("sv.vocCallBackHistList",param);
-		return callbackHistList;
-	}
-	//강성고객 리스트 카운터
-	@Override
-	public int vocBlackHistListCnt(Map<String, Object> param) {
-		int cnt = session.selectOne("sv.vocBlackHistListCnt",param);
-		return cnt;
-	}
-	//강성고객 리스트 
-	@Override
-	public List<Map<String, Object>> vocBlackHistList(Map<String, Object> param) {
-		List blackHistList = session.selectList("sv.vocBlackHistList",param);
-		return blackHistList;
-	}
-	//VOC 콜백 카운터 (전광판)
-	@Override
-	public Map<String, Object> vocAlarm(Map<String, Object> param) {
-		Map<String,Object> vocAlarm = session.selectOne("sv.vocAlarm",param);
-		return vocAlarm;
 	}
 	
 	@Override

@@ -24,6 +24,7 @@ public interface VocDao {
 	public int vocCallBackTotalRow(Map<String,Object> param);
 	
 	public int vocCallBackPassDiv(Map<String,Object> param);
+
 	public void vocCallBackInsert(Map<String,Object> calbackMap);
 	public int vocCallBackListCnt(Map<String,Object> param);
 	public int vocCallBackUpdate(Map<String,Object> callbackPrm);

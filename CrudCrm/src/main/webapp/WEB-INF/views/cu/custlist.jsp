@@ -238,8 +238,6 @@
 	
 								</div>
 								
-							</form:form>
-							
 							<form:form id="commandcheck" class="searchForm" action="/cust" method="PUT">
 							<div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
 																
@@ -316,7 +314,7 @@
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" id="testtd1"><a href="/cust/view/${list.CUSTNO}
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" id="testtd1"><a href="/cust/view/${list.CUSTNO}" />
 												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.DEPTNAME }</td>
 												

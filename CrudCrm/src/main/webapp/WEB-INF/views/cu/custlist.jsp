@@ -14,8 +14,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>IDEA CRM</title>
 <!-- link includ -->
-<%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/jQueryUI/jquery-ui.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/crud/ideafavicon.ico">
 <!-- S: 추가 CSS-->
 <!-- Toastr style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/toastr/toastr.min.css" rel="stylesheet">
@@ -25,6 +29,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <!-- Text spinners style -->
 <link href="${pageContext.request.contextPath}/resources/css/plugins/textSpinners/spinners.css" rel="stylesheet">
+
 <style>
 
 #fixedtable tbody {
@@ -41,6 +46,7 @@
 }
 
 </style>
+
 </head>
 
 <body>
@@ -72,152 +78,166 @@
 				<div class="row justify-content-md-center">
 					<div class="col-lg-12">
 						<div class="ibox">
-							<form:form id="command" class="searchForm" action="/cust" method="POST" commandName="custDto">
-							<span id="selectpage" name="selectpage"> </span>
-							
-								<div class="ibox-content row">
-									<div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
-                        				<div class="col-xl-8 col-lg-12 float-left alert alert-danger w-100" id="msgDiv" style="height:2.00rem;padding-top: 6px;display:none;" >
-		                        			<a class="alert-link" href="#">
-                        						<span id="showMsg"></span>
-                        					</a>
-                        				</div>
-                        				<div class="w-100 text-right">
-											<button type="submit" class="btn btn-primary" data-style="zoom-in" id="submit" name="submit">검색</button>
-											<button type="button" class="btn btn-primary" id="searchResetBtn" name="searchResetBtn">초기화</button> 
-										</div>
-									</div>
-																
-									
-									<div class="row"><br><br></div>
-								
-									<div class="box1 col-lg-12 col-xl-6 p-0">
-										<table class="table table-bordered mb-0">
-											<colgroup>
-												<col style="width: 100px; background: #fafafa;">
-												<col style="width: auto;">
-												<col style="width: 100px; background: #fafafa;">
-												<col style="width: auto;">												
-											</colgroup>
-											<tbody>
-												<tr>
-													<th>등록일</th>
-													<td colspan="3">
-														<div class="input-group p-0  " style="max-height: 26px; height: 26px;">
-                                                    		<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                      			<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
-                                                    		</div>
-                                                    		<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
-                                                    		<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        		<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
-                                                    		</div>
-                                                		</div>	
-													</td>
-												</tr>
-											
-												<tr>
-													<th>고객명</th>
-													<td><input type="text" class="form-control" id="custname" name="custname" value="${searchVal.custname}"></td>
-													<th>휴대폰</th>
-													<td><input type="number" class="form-control" id="mobile" name="mobile" value="${searchVal.mobile}"></td>													
-												</tr>
-												<tr>
-													<th>담당자</th>
-													<td>
-														<div class="input-group owner" id="owner_" >
-															<input type="text" class="form-control" autocomplete="off" name="owner_" value="${searchVal.owner_}" readonly>
-                                                    		<input type="hidden" name="owner" id="owner" value="${searchVal.owner}">
-                                                    		<span class="input-group-addon">
-                                                       			<a><i class="fa fa-search"></i></a>
-                                                    		</span>
-														</div>
-													</td>
-													<th>직장명</th>
-													<td>
-														<div class="input-group cli" id="cliname" >
-															<input type="text" class="form-control" autocomplete="off" name="cliname" value="${searchVal.cliname}" readonly>
-                                                    		<input type="hidden" name="clino" id="clino" value="${searchVal.clino }">
-                                                    		<span class="input-group-addon">
-                                                       			<a><i class="fa fa-search"></i></a>
-                                                    		</span>
-														</div>
-													</td>
-													
-												</tr>
-												
-											</tbody>
-										</table>
-									</div>
-									<div class="box2 col-lg-12 col-xl-6 p-0">
-										<table class="table table-bordered">
-											<colgroup>
-												<col style="width: 100px; background: #fafafa;">
-												<col style="width: auto;">
-												<col style="width: 100px; background: #fafafa;">
-												<col style="width: auto;">												
-											</colgroup>
-											<tbody>
-												<tr>
-													<th>회원구분</th>
-													<td>
-														<select class="form-control" style="height: 1.45rem" name="custgubun" id="custgubun">
-															<option value="0" ${searchVal.custgubun eq "0" ? "selected" :""}>선택</option>
-															<c:forEach var="custGubun" items="${CUSTGUBUN }">
-                                                      			<c:choose>
-                                                         			<c:when test="${searchVal.custgubun eq custGubun.codeval}">
-                                                            			<option selected label="${custGubun.codename }" value="${custGubun.codeval }"/>
-                                                         			</c:when>
-                                                         			<c:otherwise>
-                                                            			<option label="${custGubun.codename }" value="${custGubun.codeval }"/>
-                                                         			</c:otherwise>
-                                                      			</c:choose>
-                                                   			</c:forEach>
-														</select>
-													</td>	 	
-													<th>고객등급</th>
-													<td>
-														<select class="form-control" style="height: 1.52rem" name="custgrade" id="custgrade">
-															<option value="0" ${searchVal.custgrade eq "0" ? "selected" :""}>선택</option>
-																<c:forEach var="custGrade" items="${CUSTGRADE }">
-                                                      			<c:choose>
-                                                         			<c:when test="${searchVal.custgrade eq custGrade.codeval}">
-                                                            			<option selected label="${custGrade.codename }" value="${custGrade.codeval }"/>
-                                                         			</c:when>
-                                                         			<c:otherwise>
-                                                            			<option label="${custGrade.codename }" value="${custGrade.codeval }"/>
-                                                         			</c:otherwise>
-                                                      			</c:choose>
-                                                   			</c:forEach>
-														</select>
-													</td>	
-												</tr>
-												<tr>
-													<th>이메일</th>
-													<td colspan="3"><input type="text" class="form-control" id="email" name="email" value="${searchVal.email}"></td>
-												</tr>
-												
-												<tr>
-													<th>정보활용</th>
-													<td colspan="3">
-														<div class="i-checks" style="height: 1.60rem;">
-															<label class="pr-lg-3 mb-0">
-															<input type="radio" value="0" id="infoagree" name="infoagree"  class="pr-lg-1" checked="checked" ${searchVal.infoagree eq "0" ? "checked='checked'" :""} ><i></i> 동의</label> 
-																<label class="pr-lg-3 mb-0">
-																<input type="radio"value="1" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree eq "1" ? "checked='checked'" :""}><i></i> 거부</label>
-																<label class="mb-0"><input type="radio" value="2" id="infoagree" name="infoagree" class="pr-lg-1" ${searchVal.infoagree gt "1" ? "checked='checked'" :""}><i></i> 전체</label>
-														</div>
-													</td>
-												</tr>												
-											</tbody>
-										</table>
-									</div>
-									
+							<div class="ibox-title">
+	                            <h5>고객 목록<small>현재 사용자의 고객 리스트</small></h5>
+	                            <div class="ibox-tools">
+	                                <a class="collapse-link">
+	                                    <i class="fa fa-chevron-up"></i>
+	                                </a>
+	                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	                                    <i class="fa fa-wrench"></i>
+	                                </a>
+	                                <ul class="dropdown-menu dropdown-user">
+	                                    <li><a href="#" class="dropdown-item">Config option 1</a>
+	                                    </li>
+	                                    <li><a href="#" class="dropdown-item">Config option 2</a>
+	                                    </li>
+	                                </ul>
+	                                <a class="close-link">
+	                                    <i class="fa fa-times"></i>
+	                                </a>
+	                            </div>
+                        	</div>
+                        	
+                        	<div class="ibox-content">
+
+
+
+						<div class="row">
+                         	<div class="col-md-2">
+                             	<div class="form-group row" id="data_5">
+                             		<div class="col-md-4 b">
+                             			<label class="font-normal"><strong>고객명</strong></label>
+                             		</div>
+                                	<div class="col-md-8 a"> 	                                              
+                                		<input type="text" placeholder=".col-md-4" class="form-control">
+                                	</div>                                                   
+                            	</div>
+                             </div>
+                             <div class="col-md-3">
+                             	<div class="form-group row" id="data_5">
+                             		<div class="col-md-3 b">
+                                		<label class="font-normal"><strong>휴대폰</strong></label>     
+                                	</div>       
+                                	<div class="col-md-9 a">                
+                                		<input type="text" placeholder=".col-md-4" class="form-control">  
+                                	</div>                                                          
+                            	</div>
+                             </div>
+                             <div class="col-md-3">
+                             	 <div class="form-group row" id="data_5">
+	                             	 <div class="col-md-3 b">
+		                                <label class="font-normal"><strong>이메일</strong></label>	
+		                             </div>       
+		                             <div class="col-md-9 a">                             
+		                                <input type="text" placeholder=".col-md-4" class="form-control"> 
+		                             </div>   	                                                        
+                            	</div>
+                             </div>
+                             <div class="col-md-2">
+                             	<div class="form-group row" id="data_5">
+                             		<div class="col-md-4 b">
+	                                	<label class="font-normal"><strong>담당자</strong></label>	
+	                                </div>
+	                             	<div class="col-md-8 a">   
+	                                	<input type="text" placeholder=".col-md-4" class="form-control">   
+	                              	</div>                         
+                            	</div>
+                             </div>
+                             <div class="col-md-2">
+                             	<div class="form-group row" id="data_5">
+	                                <div class="col-md-4 b">
+	                                	<label class="font-normal"><strong>직장명</strong></label>	
+	                                </div>
+	                             	<div class="col-md-8 a">   
+	                                	<input type="text" placeholder=".col-md-4" class="form-control">   
+	                              	</div>                           
+                            	</div>
+                             </div>
+                        </div>    
+
+<!-- ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ -->
+
+						<div class="row">
+                         	<div class="col-md-4">
+                             	<div class="form-group row" id="data_5">
+                             		<div class="col-md-2 b">
+                             			<label class="font-normal"><strong>등록일</strong></label>
+                             		</div>
+                                	<div class="col-md-10 a"> 	                                              
+                                			<div class="input-group p-0">
+	                                            <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
+	                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+	                                                 <input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
+	                                            </div>
+                                                  <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
+                                                <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
+                                                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                  <input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
+                                                 </div>
+                                            </div>
+                                	</div>                                                   
+                            	</div>
+                             </div>
+                             <div class="col-md-2">
+                             	<div class="form-group row" id="data_5">
+                             		<div class="col-md-4 b">
+                                		<label class="font-normal"><strong>회원구분</strong></label>     
+                                	</div>       
+                                	<div class="col-md-8 a">                
+                                		<select class="select2_demo_1 form-control">
+	                                        <option value="1">Option 1</option>
+	                                        <option value="2">Option 2</option>
+	                                        <option value="3">Option 3</option>
+	                                        <option value="4">Option 4</option>
+	                                        <option value="5">Option 5</option>
+	                                </select>  
+                                	</div>                                                          
+                            	</div>
+                             </div>
+                             <div class="col-md-2">
+                             	 <div class="form-group row" id="data_5">
+	                             	 <div class="col-md-4 b">
+		                                <label class="font-normal"><strong>회원등급</strong></label>	
+		                             </div>       
+		                             <div class="col-md-8 a">                             
+		                                <select class="select2_demo_1 form-control">
+	                                        <option value="1">Option 1</option>
+	                                        <option value="2">Option 2</option>
+	                                        <option value="3">Option 3</option>
+	                                        <option value="4">Option 4</option>
+	                                        <option value="5">Option 5</option>
+	                                </select> 
+		                             </div>   	                                                        
+                            	</div>
+                             </div>
+                             <div class="col-md-4">
+                             	<div class="form-group row" id="data_5">
+                             		<div class="col-md-2 b">
+	                                	<label class="font-normal"><strong>정보활용</strong></label>	
+	                                </div>
+	                             	<div class="col-md-5 a">   	
+	                                	<div class="i-checks">
+											<label><input type="radio" value="0" id="infoagree" name="infoagree" checked="checked" ${searchVal.infoagree eq "0" ? "checked='checked'" :""} ><i></i> 동의</label> 
+											<label><input type="radio"value="1" id="infoagree" name="infoagree" ${searchVal.infoagree eq "1" ? "checked='checked'" :""}><i></i> 거부</label>
+											<label><input type="radio" value="2" id="infoagree" name="infoagree" ${searchVal.infoagree gt "1" ? "checked='checked'" :""}><i></i> 전체</label>
+										</div>  
+	                              	</div>
+	                              	<div class="col-md-5">
+	                              		<button type="submit" class="btn btn-sm btn-primary" data-style="zoom-in" id="submit" name="submit">검색</button>
+										<button type="button" class="btn btn-sm btn-primary" id="searchResetBtn" name="searchResetBtn">초기화</button>	
+	                              	</div>                         
+                            	</div>
+                             </div>
+                        </div>
+
+<div class="hr-line-dashed"></div>
+
+						<div class="row">
+							<div class="table-responsive">
+	
 								</div>
 								
-							</form:form>
-							
 							<form:form id="commandcheck" class="searchForm" action="/cust" method="PUT">
 							<div class="ibox-content row border-top-0 pt-lg-0 tooltip-demo">
 																
@@ -256,21 +276,23 @@
 								<div class="table-responsive">
 									<table class="table table-bordered table-hover" id="fixedtable">
 									<!-- <table class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;" id="fixedtable"> 
+
+
 										<colgroup>
-											<col width="40px;">
+											<col width="25px;">
+											<col width="110px;">
+											<col width="110px;">
+											<col width="110px;">
+											<col width="110px;">
+											<col width="200px;">
 											<col width="100px;">
-											<col width="180px;">
-											<col width="100px;">
-											<col width="120px;">
-											<col width="180px;">
-											<col width="80px;">
 											<col width="80px;">
 											<col width="80px;">
 											<col width="80px;">
 											<col width="100px;">
 										</colgroup> -->
 																				
-										<thead>
+										<thead style="text-align:center;">
 											<tr>
 												<th>
 													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
@@ -278,10 +300,8 @@
 												<th>고객명</th>
 												<th>직장</th>
 												<th>부서</th>
-												
 												<th>휴대폰</th>
 												<th>이메일</th>
-												
 												<th>담당자</th>
 												<th>회원구분</th>
 												<th>고객등급</th>
@@ -290,11 +310,11 @@
 											</tr>
 										</thead>
 										
-										<tbody>
+										<tbody style="text-align:right;">
 										<c:forEach var="list" items="${custList}"  > 
 											<tr>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"><input type="checkbox" class="i-checks chksquare" id="custno"name="custno" value="${list.CUSTNO}"></td>
-												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" id="testtd1"><a href="/cust/view/${list.CUSTNO}">${list.CUSTNAME }</a></td>
+												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" id="testtd1"><a href="/cust/view/${list.CUSTNO}" />
 												<td style="text-overflow: ellipsis;">${list.CLINAME }</td>
 												<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${list.DEPTNAME }</td>
 												
@@ -335,7 +355,12 @@
 										</tbody>
 										<tfoot>
 									</table>
+									
+									
+									
+									</div>
 								</div>
+
 								<div class="m-auto" style="padding-top:10px;">
 									 
 								</form:form>
@@ -390,8 +415,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- E: 고객 목록 ppt p01-->
-			<!-- Content End -->
+
 
 
 			<!-- foot -->
@@ -410,9 +434,11 @@
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script><!-- excel file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- cust js -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
+
 	<script>	
 	
 		$(document).ready(function() {				
+
 			// icecks
 			$('.i-checks').iCheck({
 				checkboxClass : 'icheckbox_square-green',
@@ -448,6 +474,7 @@
 			var tableId = 'fixedtable';
 			setTableSize(tableId,colWidthArray);
 		});
+
 	
 		function setTableSize(tableId,colWidthArray){//테이블 해더 고정. 
 			debugger;

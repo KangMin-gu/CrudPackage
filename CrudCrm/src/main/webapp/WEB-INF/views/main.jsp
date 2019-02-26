@@ -15,335 +15,286 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>IDEA CRM</title>
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<%@ include file="/WEB-INF/views/template/inc/chartlininc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/jQueryUI/jquery-ui.css" rel="stylesheet">
 </head>
-
-<body onunload="colse()">
-	<div id="wrapper">
+<body>
+	<div id="wrapper" >
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
-			<div class="wrapper wrapper-content animated fadeIn">
-				<div class="p-w-md m-t-sm">
-					<div class="row">					
-						<div class="col-sm-4">
-							<h1 class="m-b-xs">26,900</h1>
-							<small> Sales in current month </small>
-							<div id="sparkline1" class="m-b-sm"></div>
-							<div class="row">
-								<div class="col-4">
-									<small class="stats-label">Pages / Visit</small>
-									<h4>236 321.80</h4>
-								</div>
-
-								<div class="col-4">
-									<small class="stats-label">% New Visits</small>
-									<h4>46.11%</h4>
-								</div>
-								<div class="col-4">
-									<small class="stats-label">Last week</small>
-									<h4>432.021</h4>
-								</div>
-							</div>
-
-						</div>
-						<div class="col-sm-4">
-							<h1 class="m-b-xs">98,100</h1>
-							<small> Sales in last 24h </small>
-							<div id="sparkline2" class="m-b-sm"></div>
-							<div class="row">
-								<div class="col-4">
-									<small class="stats-label">Pages / Visit</small>
-									<h4>166 781.80</h4>
-								</div>
-
-								<div class="col-4">
-									<small class="stats-label">% New Visits</small>
-									<h4>22.45%</h4>
-								</div>
-								<div class="col-4">
-									<small class="stats-label">Last week</small>
-									<h4>862.044</h4>
-								</div>
-							</div>
-
-
-						</div>
-						<div class="col-sm-4">
-
-							<div class="row m-t-xs">
-								<div class="col-6">
-									<h5 class="m-b-xs">Income last month</h5>
-									<h1 class="no-margins">160,000</h1>
-									<div class="font-bold text-navy">
-										98% <i class="fa fa-bolt"></i>
-									</div>
-								</div>
-								<div class="col-6">
-									<h5 class="m-b-xs">Sals current year</h5>
-									<h1 class="no-margins">42,120</h1>
-									<div class="font-bold text-navy">
-										98% <i class="fa fa-bolt"></i>
-									</div>
-								</div>
-							</div>
-
-
-							<table class="table small m-t-sm">
-								<tbody>
-									<tr>
-										<td><strong>142</strong> Projects</td>
-										<td><strong>22</strong> Messages</td>
-
-									</tr>
-									<tr>
-										<td><strong>61</strong> Comments</td>
-										<td><strong>54</strong> Articles</td>
-									</tr>
-									<tr>
-										<td><strong>154</strong> Companies</td>
-										<td><strong>32</strong> Clients</td>
-									</tr>
-								</tbody>
-							</table>
-
-
-
-						</div>
-
-					</div>
-
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="small float-left col-md-3 m-l-lg m-t-md">
-								<strong>Sales char</strong> have evolved over the years
-								sometimes.
-							</div>
-							<div class="small float-right col-md-3 m-t-md text-right">
-								<strong>There are many</strong> variations of passages of Lorem
-								Ipsum available, but the majority have suffered.
-							</div>
-							<div class="flot-chart m-b-xl">
-								<div class="flot-chart-content" id="flot-dashboard5-chart"></div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="ibox">
-
-
-
-								<div class="ibox-content">
-
-									<div class="row">
-										<div class="col-sm-4">
-											<div class="form-group">
-												<label class="col-form-label" for="product_name">Project
-													Name</label> <input type="text" id="product_name"
-													name="product_name" value="" placeholder="Project Name"
-													class="form-control">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="form-group">
-												<label class="col-form-label" for="price">Name</label> <input
-													type="text" id="price" name="price" value=""
-													placeholder="Name" class="form-control">
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="form-group">
-												<label class="col-form-label" for="quantity">Company</label>
-												<input type="text" id="quantity" name="quantity" value=""
-													placeholder="Company" class="form-control">
-											</div>
-										</div>
-										<div class="col-sm-4">
-											<div class="form-group">
-												<label class="col-form-label" for="status">Status</label> <select
-													name="status" id="status" class="form-control">
-													<option value="1" selected="">Completed</option>
-													<option value="0">Pending</option>
-												</select>
-											</div>
-										</div>
-									</div>
-
-									<div class="table-responsive">
-										<table class="table table-striped">
-
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>Master project</td>
-													<td>Patrick Smith</td>
-													<td>$892,074</td>
-													<td>Inceptos Hymenaeos Ltd</td>
-													<td><strong>20%</strong></td>
-													<td>Jul 14, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Alpha project</td>
-													<td>Alice Jackson</td>
-													<td>$963,486</td>
-													<td>Nec Euismod In Company</td>
-													<td><strong>40%</strong></td>
-													<td>Jul 16, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>Betha project</td>
-													<td>John Smith</td>
-													<td>$996,824</td>
-													<td>Erat Volutpat</td>
-													<td><strong>75%</strong></td>
-													<td>Jul 18, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Gamma project</td>
-													<td>Anna Jordan</td>
-													<td>$105,192</td>
-													<td>Tellus Ltd</td>
-													<td><strong>18%</strong></td>
-													<td>Jul 22, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Alpha project</td>
-													<td>Alice Jackson</td>
-													<td>$674,803</td>
-													<td>Nec Euismod In Company</td>
-													<td><strong>40%</strong></td>
-													<td>Jul 16, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>1</td>
-													<td>Master project</td>
-													<td>Patrick Smith</td>
-													<td>$174,729</td>
-													<td>Inceptos Hymenaeos Ltd</td>
-													<td><strong>20%</strong></td>
-													<td>Jul 14, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Gamma project</td>
-													<td>Anna Jordan</td>
-													<td>$823,198</td>
-													<td>Tellus Ltd</td>
-													<td><strong>18%</strong></td>
-													<td>Jul 22, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>1</td>
-													<td>Project <small>This is example of project</small></td>
-													<td>Patrick Smith</td>
-													<td>$778,696</td>
-													<td>Inceptos Hymenaeos Ltd</td>
-													<td><strong>20%</strong></td>
-													<td>Jul 14, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Alpha project</td>
-													<td>Alice Jackson</td>
-													<td>$861,063</td>
-													<td>Nec Euismod In Company</td>
-													<td><strong>40%</strong></td>
-													<td>Jul 16, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>Betha project</td>
-													<td>John Smith</td>
-													<td>$109,125</td>
-													<td>Erat Volutpat</td>
-													<td><strong>75%</strong></td>
-													<td>Jul 18, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Gamma project</td>
-													<td>Anna Jordan</td>
-													<td>$600,978</td>
-													<td>Tellus Ltd</td>
-													<td><strong>18%</strong></td>
-													<td>Jul 22, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Alpha project</td>
-													<td>Alice Jackson</td>
-													<td>$150,161</td>
-													<td>Nec Euismod In Company</td>
-													<td><strong>40%</strong></td>
-													<td>Jul 16, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>1</td>
-													<td>Project <small>This is example of project</small></td>
-													<td>Patrick Smith</td>
-													<td>$160,586</td>
-													<td>Inceptos Hymenaeos Ltd</td>
-													<td><strong>20%</strong></td>
-													<td>Jul 14, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>Gamma project</td>
-													<td>Anna Jordan</td>
-													<td>$110,612</td>
-													<td>Tellus Ltd</td>
-													<td><strong>18%</strong></td>
-													<td>Jul 22, 2015</td>
-													<td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-
-			</div>
-
-			<div class="footer">
-				<%@ include file="/WEB-INF/views/template/menu/foot.jsp"%>
-			</div>
+		<div class="wrapper wrapper-content">
+	        	<div class="row">                                                     
+	               <div class="col-lg-4">
+	                   <div class="ibox ">
+	                      <div class="ibox-title">
+	                           <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
+	                      </div>
+	                      <div class="ibox-content">
+	                          <canvas id="barChart" height="140"></canvas>
+	                      </div>
+	                   </div>
+	              	</div>
+	                <div class="col-lg-4">
+	                   <div class="ibox ">
+	                      <div class="ibox-title">                             
+	                           <h5>상담 유형별</h5>
+	                      </div>
+	                    <div class="ibox-content">
+	                        <canvas id="doughnutChart" height="140"></canvas>
+	                    </div>
+	                   </div>
+	            	</div>
+	            	<div class="col-lg-4">
+	                   <div class="ibox ">
+	                      <div class="ibox-title">
+	                           <h5>3개년 신규 고객 등록 현황(신규고객 등록 합계:1000명)</h5>
+	                      </div>
+	                      <div class="ibox-content">
+	                          <canvas id="barChart" height="140"></canvas>
+	                      </div>
+	                   </div>
+	              	</div>	
+	        	</div>
+		        <div class="row" id="sortable-view">
+		            <div class="col-lg-6">
+		               <div class="ibox ">
+		                   <div class="ibox-title">
+		                       <h5>채널별 캠페인 현황</h5>                          
+		                    </div>
+		                    <div class="ibox-content">                        
+		                            <div id="lineChart"></div>                       
+		                     </div>
+		                  </div>
+		            </div>
+		            <div class="col-lg-6">
+		                  <div class="ibox ">
+			                  <div class="ibox-title">
+			                     <h5>영업 현황 분석</h5>                             
+			                  </div>
+			                  <div class="ibox-content">
+			                       <canvas id="canvas" height="140"></canvas>                
+			                  </div>
+		               	</div>
+		            </div>
+		        </div>
+		        
+		 		<div class="row" id="sortable-view">
+		            <div class="col-lg-6">
+		               <div class="ibox ">
+		                   <div class="ibox-title">
+		                       <h5>채널별 캠페인 현황</h5>                          
+		                    </div>
+		                    <div class="ibox-content">                  
+		                            <div id="lineChart"></div>                       
+		                     </div>
+		                  </div>
+		            </div>
+		            <div class="col-lg-6">
+		                  <div class="ibox ">
+			                  <div class="ibox-title">
+			                     <h5>영업 현황 분석</h5>                             
+			                  </div>
+			                  <div class="ibox-content">
+			                       <canvas id="mixed-chart" width="800" height="140"></canvas>                 
+			                  </div>
+		               	</div>
+		            </div>
+		        </div>
+        	</div>
 		</div>
-
-		<div id="right-sidebar">
-			<%@ include file="/WEB-INF/views/template/menu/rightside.jsp"%>
-		</div>
-	</div>
+  	</div>			
 
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<%@ include file="/WEB-INF/views/template/inc/chartjsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
-	<script>
-		$(document).ready(function(){});
-	</script>
+
+     <script>
+        $(document).ready(function() {
+        	
+       
+        	//채널별 캠페인 현황
+      	  c3.generate({
+                bindto: '#lineChart',
+                data:{
+                    columns: [
+                        ['data1', 30, 200, 100, 400, 150, 250],
+                        ['data2', 50, 20, 10, 40, 15, 25]
+                    ],
+                    colors:{
+                        data1: '#1ab394',
+                        data2: '#BABABA'
+                    }
+                }
+            });
+      	
+      });
+      
+      //월별 신규 고객 등록 현황
+     var barData = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+          {
+              label: "Data 1",
+              backgroundColor: 'rgba(220, 220, 220, 0.5)',
+              pointBorderColor: "#fff",
+              data: [65, 59, 80, 81, 56, 55, 40]
+          },
+          {
+              label: "Data 2",
+              backgroundColor: 'rgba(26,179,148,0.5)',
+              borderColor: "rgba(26,179,148,0.7)",
+              pointBackgroundColor: "rgba(26,179,148,1)",
+              pointBorderColor: "#fff",
+              data: [28, 48, 40, 19, 86, 27, 90]
+          },
+          {
+              label: "Data 2",
+              backgroundColor: 'rgba(26,179,148,0.5)',
+              borderColor: "rgba(26,179,148,0.7)",
+              pointBackgroundColor: "rgba(26,179,148,1)",
+              pointBorderColor: "#fff",
+              data: [28, 48, 40, 19, 86, 27, 90]
+          }
+      ]
+  };
+
+  var barOptions = {
+      responsive: true
+  };
+
+	
+  var ctx2 = document.getElementById("barChart").getContext("2d");
+  new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+
+
+      
+      
+ //상담유형별 PIE chart
+      var doughnutData = {
+              labels: ["App","Software","Laptop" ],
+              datasets: [{
+                  data: [300,50,100],
+                  backgroundColor: ["#a3e1d4","#dedede","#b5b8cf"]
+              }]
+          } ;
+
+
+     var doughnutOptions = {
+              responsive: true
+     };
+
+
+     var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+     new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+     
+//영업현황분석
+
+		var color = Chart.helpers.color;
+		var barChartData = {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+				type: 'bar',
+				label: 'Dataset 1',
+				backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.red,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				type: 'line',
+				label: 'Dataset 2',
+				backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.blue,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				type: 'bar',
+				label: 'Dataset 3',
+				backgroundColor: color(window.chartColors.green).alpha(0.2).rgbString(),
+				borderColor: window.chartColors.green,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}]
+		};
+
+		// Define a plugin to provide data labels
+		Chart.plugins.register({
+			afterDatasetsDraw: function(chart) {
+				var ctx = chart.ctx;
+
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, index) {
+							// Draw the text in black, with the specified font
+							ctx.fillStyle = 'rgb(0, 0, 0)';
+
+							var fontSize = 16;
+							var fontStyle = 'normal';
+							var fontFamily = 'Helvetica Neue';
+							ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+							// Just naively convert to string for now
+							var dataString = dataset.data[index].toString();
+
+							// Make sure alignment settings are correct
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+
+							var padding = 5;
+							var position = element.tooltipPosition();
+							ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+						});
+					}
+				});
+			}
+		});
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Chart.js Combo Bar Line Chart'
+					},
+				}
+			});
+		};
+
+		document.getElementById('randomizeData').addEventListener('click', function() {
+			barChartData.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return randomScalingFactor();
+				});
+			});
+			window.myBar.update();
+		});
+	
+    </script>
 </body>
 </html>

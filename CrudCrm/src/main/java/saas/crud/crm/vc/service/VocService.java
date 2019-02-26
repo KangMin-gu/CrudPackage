@@ -1,6 +1,7 @@
 package saas.crud.crm.vc.service;
 
 
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,8 +24,16 @@ public interface VocService {
 	public Map<String,Object> vocOwnerList(HttpServletRequest request,int asOwner);
 	public ModelAndView vocCalOwnerList(HttpServletRequest request,int asOwner);
 	public void svcVocCallBackInsert(Map<String,Object> param);
+	public Map<String,Object> vocPopCallBackList(HttpServletRequest request);
+	public Map<String,Object> vocCallBackUserList(HttpServletRequest request);
+	
+	public int vocCallBackPassDiv(HttpServletRequest request);
+	
+	public int vocCallBackAutoDiv(HttpServletRequest request);
+
 	public Map<String,Object>svcVocCallBackList(HttpServletRequest request);
 	public int svcvocCallBackUpdate(Map<String,Object> callbackPrm);
+	
 	public Map<String, Object> svcVocCallBackHistList(HttpServletRequest request);
 	public Map<String,Object> svcVocBlackHistList(HttpServletRequest request);
 }

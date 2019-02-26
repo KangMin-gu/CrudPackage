@@ -54,7 +54,20 @@ public class CommonController {
 		mView.setViewName("cm/popnote");
 		return mView;
 	}
-
+	// 문자발송팝업
+	@RequestMapping(value="/popsms", method=RequestMethod.GET)
+	public ModelAndView authPopSms(HttpServletRequest request) {
+		ModelAndView mView = new ModelAndView();
+		mView.setViewName("cm/popsms");
+		return mView;
+	}
+	
+	// 문자 발송
+	@RequestMapping(value="/sendSms",method=RequestMethod.POST)
+	public void authSendSms(HttpServletRequest request) {
+		commonService.sendSms(request);
+	}
+	
 	//로고팝업
 	@RequestMapping(value="/poplogo", method=RequestMethod.GET)
 	public String authpopLogoForm(HttpServletRequest request) {
@@ -134,8 +147,7 @@ public class CommonController {
 	}
 	@RequestMapping(value="/mail/deny", method=RequestMethod.POST)
 	@ResponseBody
-	public void MailDenySet(HttpServletRequest request) {
-		
+	public void MailDenySet(HttpServletRequest request) {		
 		// 수신거부 html 생성 및 수신거부 dao 생성 필요
 		commonService.mailDeny(request);
 		
@@ -148,5 +160,5 @@ public class CommonController {
 		mav.setViewName("cm/popsales");
 		return mav;
 	}
-	
+
 }

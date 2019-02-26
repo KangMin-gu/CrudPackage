@@ -2,8 +2,14 @@ package saas.crud.crm.common;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -298,4 +304,32 @@ public class CommonServiceImpl implements CommonService {
 		mView.addObject("salesList",salesList);
 		return mView;
 	}
+
+	@Override
+	public void sendSms(HttpServletRequest request) {
+		Map<String,Object> param = crud.searchParam(request);
+
+		if(Integer.parseInt(param.get("sendtype").toString()) == 0) {
+			// 즉시발송
+			if(Integer.parseInt(param.get("lengthType").toString()) == 0) {
+				// sms인경우
+				commonDao.DirectSendSms(param);
+			}else {
+				// lms 인경우
+				commonDao.DirectSendLms(param);
+			}
+			
+		}else {
+			// 예약발송
+			if(Integer.parseInt(param.get("lengthType").toString()) == 0) {
+				// sms 인경우
+				commonDao.DelaySendSms(param);
+			}else {
+				// lms 인경우
+				commonDao.DelaySendLms(param);
+			}
+			
+		}
+	}
+
 }

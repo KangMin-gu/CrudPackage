@@ -8,9 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
@@ -20,9 +18,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import saas.crud.crm.au.dao.UserDao;
-import saas.crud.crm.nt.dto.NoteDto;
-import saas.crud.crm.nt.service.NoteService;
 import saas.crud.crm.vc.dao.VocDao;
 
 
@@ -83,4 +78,6 @@ public class VocHandler extends TextWebSocketHandler{
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		list.remove(session);
 	}
+
 }
+

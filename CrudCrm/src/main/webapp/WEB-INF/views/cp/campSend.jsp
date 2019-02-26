@@ -584,10 +584,14 @@
                                                                 </div>
                                                                 <div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
                                                                     <div class="sms-form">
-                                                                        <div class="sub-text">
-                                                                            <textarea name="senddesc" id="senddesc" placeholder="내용을 입력하세요.">${campSmsForm.SENDDESC }</textarea>
+																		<h4>SMS</h4>
+																		<div class="sub-text">
+                                                                            <textarea name="name" disabled="" placeholder="내용을 입력하세요."></textarea>
                                                                         </div>
-                                                                    </div>
+                                                                        <div class="limit-text">
+                                                                        	<p><span>00</span> / 90</p>
+                                                                        </div>
+                                                                	</div>
                                                                 </div>
                                                                 <input type="hidden" name="no" id="no" value="${campSmsForm.NO }" />
                                         						<input type="hidden" name="sendform" id="sendform" value="2" />
@@ -879,6 +883,7 @@
 </div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script><!-- summernote-->		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
@@ -914,49 +919,9 @@
 		}
 		campContents(id,url);
 	});
-		
+
 	$('#btn').click(function(e){
-		 var str =  $('#senddesc').val();
-		var textLength = getTextLength(str);
-		debugger;
-		if(textLength > 80){
-            var bool = confirm("80바이트이상 작성하여서 LMS로 자동 전환합니다.");
-            if(bool){
-            	$('#senddesc').val(str);
-            	alert("Lms로 전환되어 저장됩니다.");
-            	return true;
-            }else{
-            	var limit = '80' //제한byte를 가져온다.
-                var strLength = 0;
-                var strTitle = "";
-                var strPiece = "";
-                var check = false;
-                
-                for (i = 0; i < textLength; i++){
-                    var code = str.charCodeAt(i);
-                    var ch = str.substr(i,1).toUpperCase();
-                    //체크 하는 문자를 저장
-                    strPiece = str.substr(i,1);
-                     
-                    code = parseInt(code);
-                     
-                    if ((ch < "0" || ch > "9") && (ch < "A" || ch > "Z") && ((code > 255) || (code < 0))){
-                        strLength = strLength + 2; //UTF-8 3byte 로 계산
-                    }else{
-                        strLength = strLength + 1;
-                    }
-                    if(strLength>limit){
-                    	alert(limit+"byte 초과된 문자는 잘려서 입력 됩니다.");
-                    	 $('#senddesc').val(strTitle);
-                    	 e.preventDefault();
-                         return false;
-                    }else{
-                        strTitle = strTitle+strPiece; //제한길이 보다 작으면 자른 문자를 붙여준다.
-                    }
-                }
-            }
-        }
-		
+		smsToLms('senddesc');
 	});
 
 	</script>		

@@ -40,5 +40,3 @@ function voc_send_message(){
     	timerCallback();        
     }, 5000);
 }
-
-   

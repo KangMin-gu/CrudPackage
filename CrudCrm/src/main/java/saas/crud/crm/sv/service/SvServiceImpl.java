@@ -177,7 +177,6 @@ public class SvServiceImpl implements SvService{
 		if(serviceNo == 0) {
 			serviceDto.setIsdelete(0);
 			serviceNo = svDao.svInsert(serviceDto);
-			
 		}
 		
 		String visitDate = rewardDto.getVisitdate();
@@ -209,7 +208,7 @@ public class SvServiceImpl implements SvService{
 				ractDto.setServiceno(serviceNo);
 				ractDto.setReguser(userNo);
 				svDao.ractInsert(ractDto);
-				serviceDto.setServicestep(4);
+				serviceDto.setServicestep(3);
 				svDao.svStepUpdate(serviceDto);
 			}
 		}

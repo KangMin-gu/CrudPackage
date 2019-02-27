@@ -716,6 +716,7 @@
                                         </tr>
                                         <input type="hidden" id="sessionNo" name="sessionNo" value="${sessionScope.USERNO }"/>
                                         <input type="hidden" id="serviceno" name="serviceno" value="${serviceInfo.SERVICENO }"/>
+                                        <input type="hidden" id="rewardno" name="rewardno" value="${rewardInfo.REWARDNO }"/>
                                     </tbody>
                                 </table>
                             </div>

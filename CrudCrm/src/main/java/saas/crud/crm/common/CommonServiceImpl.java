@@ -355,7 +355,6 @@ public class CommonServiceImpl implements CommonService {
 	                    }
 	                    String path = "";
 	                    path = folder +"\\"+ currentTimestamp +"_"+ files[i].getOriginalFilename();
-	                    //path = folder +"\\"+ files[i].getOriginalFilename();
 	                    File destination = new File(path);
 	                    files[i].transferTo(destination);
 	                    result.append("/tinyMCE/"+currentTimestamp +'_'+ files[i].getOriginalFilename());

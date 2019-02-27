@@ -764,6 +764,11 @@ function serviceInfoBinding(data) {
 		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).append('<option label="' + item.PRODUCTSNAME + '" value="'+ item.PRODUCTS + '"/>');
 		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).next().remove();
 	});
+	
+	var length = opener.$('#create').length;
+	if(length == 0){
+		
+	}
 
 }
 
@@ -842,10 +847,15 @@ $('#create').click(function() {
 	$('[name="vocstep"]:first').iCheck('check');
 	$('[name="servicetype"]:first').iCheck('check');
 	$('#create').hide();
+	$('#save').show();
 	$('.product').not(':first').remove();
 	$('.product:first select').empty();
 	$('.product:first select').append('<option label="선택" value=""></option>');
 	$('tbody .plus').attr('disabled', false);
+	var productLength = $('.plus').length;
+	if(productLength == 0){
+		$('.product').append('<button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>');
+	}
 	productB();
 
 });
@@ -939,6 +949,8 @@ $('#save').click(
 						// 데이터 전부 초기화
 						$('.form-control').val('').keyup();
 						tinymce.activeEditor.setContent('');
+						$('#create').show();
+						$('#save').hide();
 						//oEditors.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
 					}
 				},

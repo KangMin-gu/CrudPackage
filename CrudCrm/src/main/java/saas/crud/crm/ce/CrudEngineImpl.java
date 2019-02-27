@@ -272,11 +272,14 @@ public class CrudEngineImpl implements CrudEngine{
 			String value = request.getParameter(name);
 			if(value == "") {
 				value = null;
-			}else {
+			}
+			/*
+			else {
 				if(name.contains("desc")) {
 					value = value.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 				}
 			}
+			*/
 			search.put(name, value);
 		}
 		

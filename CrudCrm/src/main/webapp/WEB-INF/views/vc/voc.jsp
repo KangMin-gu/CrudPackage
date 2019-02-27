@@ -56,9 +56,9 @@
 				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
 				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
 				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud02">
+				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
 				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622865">
+				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622864">
 				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
 				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
 				<span id="outCallNum">07042622883</span>
@@ -851,45 +851,60 @@ $(document).ready(function () {
 	$('.product .minus:first').remove();
 	var url = window.location.pathname;
 	vocContents("0",url);
-	/*
-	nhn.husky.EZCreator.createInIFrame({
-	    oAppRef: oEditors,
-	    elPlaceHolder: "servicedesc",
-	    sSkinURI: "../resources/SmartEditor/SmartEditor2Skin.html",
-	    fCreator: "createSEditor2",
-	    	htParams : {
-	            bUseToolbar : true,                // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-	            bUseVerticalResizer : true,        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-	            bUseModeChanger : true,            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-	    	}
-	});
-	*/
-	
+
 	tinymce.init({
-	    selector: '#servicedesc',
-	    theme: 'modern',
-	    images_upload_url: 'postAcceptor.php',
-	    automatic_uploads: false,
-	    width: 600,
-	    height: 300,
-	    plugins: [
-	      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-	      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-	      'save table contextmenu directionality emoticons template paste textcolor'
-	    ],
-	    content_css: 'css/content.css',
-	    toolbar: 'custom_image insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
-	    setup: function(editor) {
-            editor.addButton('custom_image', {
-                    title: '이미지삽입',
-                    icon: 'image',
-                    onclick: function() {
-                        window.open("/multifile","tinymcePop","width=400,height=350");
-                    }
-                });
-            }
-	  });
+	      selector: '#servicedesc',  // change this value according to your HTML
+	      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
+	      setup: function(editor) {
+
+	              // create input and insert in the DOM
+	              var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
+	              $(editor.getElement()).parent().append(inp);
+
+	              // add the image upload button to the editor toolbar
+	              editor.addButton('imageupload', {
+	                text: 'Add image',  
+	                icon: 'image',
+	                onclick: function(e) { // when toolbar button is clicked, open file select modal
+	                  inp.trigger('click');
+	                }
+	              });
+
+	              // when a file is selected, upload it to the server
+	              inp.on("change", function(e){
+	                uploadFile($(this), editor);
+	              });
+
+
+	            function uploadFile(inp, editor) {
+	              var input = inp.get(0);
+	              var data = new FormData();
+	              data.append('files', input.files[0]);
+
+	              $.ajax({
+	                url: '${pageContext.request.contextPath}/tinyMCE',
+	                type: 'POST',
+	                data: data,
+	                cache:false,
+	                enctype: 'multipart/form-data',
+	                dataType : 'json',
+	                processData: false, // Don't process the files
+	                contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+	                success: function(data, textStatus, jqXHR) {
+	                  editor.insertContent('<img class="content-img" src="${pageContext.request.contextPath}' + data.location + '" data-mce-src="${pageContext.request.contextPath}' + data.location + '" />');
+	                },
+	                error: function(jqXHR, textStatus, errorThrown) {
+	                  if(jqXHR.responseText) {
+	                    errors = JSON.parse(jqXHR.responseText).errors
+	                    alert('Error uploading image: ' + errors.join(", ") + '. Make sure the file is an image and has extension jpg/jpeg/png.');
+	                  }
+	                }
+	              });
+	            }
+	      }
+	    });
 });
+
  
  $('#servicecode1').change(function(){
 	 upperCode('servicecode1'); 
@@ -898,13 +913,6 @@ $(document).ready(function () {
  $('[name*=product]').change(function(){
 	 upperProduct(this); 
  });
-
- 
-//textArea에 이미지 첨부
- function pasteHTML(filepath){
-     var sHTML = '<img src="<%=request.getContextPath()%>'+filepath+'">';
-     oEditors.getById["servicedesc"].exec("PASTE_HTML", [sHTML]);
- }
 
 </script>
 

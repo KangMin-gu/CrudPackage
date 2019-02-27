@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -94,6 +95,14 @@ public class CommonController {
 	public void fileupload(HttpServletResponse response, HttpServletRequest request, @RequestParam List<MultipartFile> mFile, 
 			@RequestParam MultipartFile sFile, @RequestParam String fileSearchKey) {
 		crud.fileUpload(response, request, mFile, sFile, fileSearchKey);
+	}
+	
+	@RequestMapping(value = "/tinyMCE", method = RequestMethod.POST)
+	@ResponseBody
+	public String handleTinyMCEUpload(@RequestParam("files") MultipartFile files[], HttpServletRequest request) {
+	    String filePath = "/tinyMCE/" +files[0].getOriginalFilename();
+	    String result = commonService.uploadFilesFromTinyMCE("tinyMCE", files, false,request);
+	    return "{\"location\":\"" + result + "\"}";
 	}
 	// 고객팝업
 	@RequestMapping(value="/popcust", method=RequestMethod.GET)

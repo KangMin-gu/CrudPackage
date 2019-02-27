@@ -26,4 +26,6 @@ public interface CommonService {
 	public ModelAndView svcPopNote(HttpServletRequest request);
 	
 	public void sendSms(HttpServletRequest request);
+	
+	public String uploadFilesFromTinyMCE(String prefix, MultipartFile files[], boolean isMain, HttpServletRequest request);
 }

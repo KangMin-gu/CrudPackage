@@ -323,10 +323,12 @@ public class CampaignServiceImpl implements CampaignService{
 		campaignFormDto.setCampno(campNo);
 		int sendForm = campaignFormDto.getSendform();
 		String sendTime = campaignFormDto.getSendtime();
-		
-		if(sendTime.contains(",")) {
-			sendTime = sendTime.substring(0, 5);
-			campaignFormDto.setSendtime(sendTime);
+		int sendType = campaignFormDto.getSendtype();
+		if(sendType != 1) {
+			if(sendTime.contains(",")) {
+				sendTime = sendTime.substring(0, 5);
+				campaignFormDto.setSendtime(sendTime);
+			}
 		}
 		
 		MultipartFile sFile = null;
@@ -556,6 +558,8 @@ public class CampaignServiceImpl implements CampaignService{
 
 		return mView;
 	}
+	
+	
 
 	
 }

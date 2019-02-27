@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -330,6 +331,46 @@ public class CommonServiceImpl implements CommonService {
 			}
 			
 		}
+	}
+	public String uploadFilesFromTinyMCE(String prefix, MultipartFile files[], boolean isMain,HttpServletRequest request) {
+	    try {
+	        
+	        StringBuffer result = new StringBuffer();
+	        Calendar calendar = Calendar.getInstance();
+	        String years= String.valueOf(calendar.get(Calendar.YEAR)) ;
+			String months= String.valueOf(calendar.get(Calendar.MONTH) + 1) ;
+			SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String currentTimestamp = sd.format(calendar.getTime());
+			
+			String folder = request.getSession().getServletContext().getRealPath("/") + prefix;// +"\\" +years +"\\" + months;
+
+	        for (int i = 0; i < files.length; i++) {
+	            if (!files[i].isEmpty()) {
+	                try {
+	                    try {
+	                        File theDir = new File(folder);
+	                        theDir.mkdir();
+	                    } catch (SecurityException se) {
+	                        se.printStackTrace();
+	                    }
+	                    String path = "";
+	                    path = folder +"\\"+ currentTimestamp +"_"+ files[i].getOriginalFilename();
+	                    //path = folder +"\\"+ files[i].getOriginalFilename();
+	                    File destination = new File(path);
+	                    files[i].transferTo(destination);
+	                    result.append("/tinyMCE/"+currentTimestamp +'_'+ files[i].getOriginalFilename());
+	                } catch (Exception e) {
+	                    throw new RuntimeException("이미지 저장에 실패하였습니다.", e);
+	                }
+
+	            } else
+	                result.append(files[i].getOriginalFilename() + " 실패. ");
+	        }
+	        return result.toString();
+
+	    } catch (Exception e) {
+	        return "이미지 파일을 업로드 하는중 문제가 생겼습니다." + " => " + e.getMessage();
+	    }
 	}
 
 }

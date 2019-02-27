@@ -136,7 +136,8 @@ body {
 		
 		$('[name="sendtype"]:eq(0)').iCheck('check');
 		
-		$('#mobile').val(opener.$('#phone').val());
+		var mobile = opener.$('#mobile1').val() + opener.$('#mobile2').val() + opener.$('#mobile3').val();
+		$('#mobile').val(mobile);
 	});
 	
 	$('#btn').click(function(e){

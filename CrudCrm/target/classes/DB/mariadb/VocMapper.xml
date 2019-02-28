@@ -304,4 +304,19 @@
 	FROM DUAL	 		
 	</select>
 	
+	<insert id="recInsert" parameterType="hashMap">
+	INSERT INTO CTI510030
+	(
+	REQNO
+	,RECDATE
+	,RECEXT
+	,RECFILENAME
+	)VALUES(
+	#{reqno}
+	,#{recdate}
+	,#{recext}
+	,#{recfilename}
+	)
+	</insert>
+	
 </mapper>

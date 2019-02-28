@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,8 @@ public interface CommonService {
 	public ModelAndView svcPopNote(HttpServletRequest request);
 	
 	public void sendSms(HttpServletRequest request);
+	
+	public void mailSend(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest mtfRequest);
 	
 	public String uploadFilesFromTinyMCE(String prefix, MultipartFile files[], boolean isMain, HttpServletRequest request);
 }

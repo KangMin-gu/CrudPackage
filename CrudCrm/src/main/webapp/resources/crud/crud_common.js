@@ -81,9 +81,13 @@
 		 openNewWindow('내부통지','/popnote',e.currentTarget.id,1280,850);	
 	});
 	
+	$('.mail').click(function(e){
+		 openNewWindow('메일발송','/popmail',e.currentTarget.id,1280,850);	
+	});
+	
 	$('.sms').click(function(e){
 		 openNewWindow('문자발송','/popsms',e.currentTarget.id,550,800);	
-	})
+	});
 	
 	//영업팝업
 	$('.sales').click(function(e){
@@ -144,10 +148,37 @@
 		var sFileName = $("form [for=mFile]").text();
 		window.opener.$("#filename").val(sFileName);
 	});	
-/******************************************************************/		
+/******************************************************************/
+	// tinymce4 이미지 업로드
+	 function minymceUploadFile(inp, editor) {
+         var input = inp.get(0);
+         var data = new FormData();
+         data.append('files', input.files[0]);
+
+         $.ajax({
+           url: '${pageContext.request.contextPath}/tinyMCE',
+           type: 'POST',
+           data: data,
+           cache:false,
+           enctype: 'multipart/form-data',
+           dataType : 'json',
+           processData: false, // Don't process the files
+           contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+           success: function(data, textStatus, jqXHR) {
+             editor.insertContent('<img class="content-img" src="${pageContext.request.contextPath}' + data.location + '" data-mce-src="${pageContext.request.contextPath}' + data.location + '" />');
+           },
+           error: function(jqXHR, textStatus, errorThrown) {
+             if(jqXHR.responseText) {
+               errors = JSON.parse(jqXHR.responseText).errors
+               alert('Error uploading image: ' + errors.join(", ") + '. Make sure the file is an image and has extension jpg/jpeg/png.');
+             }
+           }
+         });
+       }
+	
+	
 	var newWindow = null;
     // 부모 window 가 실행
-	
 	
 	function openNewWindow(name,url,target,x,y){
 		// specs -> 팝업창의 설정들을 정의해 둔 부분

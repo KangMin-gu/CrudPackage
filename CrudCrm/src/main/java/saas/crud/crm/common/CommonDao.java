@@ -27,4 +27,6 @@ public interface CommonDao {
 	
 	public void DirectSendLms(Map<String,Object> param);
 	public void DelaySendLms(Map<String,Object> param);
+	
+	public void mailSend(Map<String,Object> param);
 }

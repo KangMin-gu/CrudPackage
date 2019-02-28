@@ -106,5 +106,10 @@ public class CommonDaoImpl implements CommonDao{
 	public void DelaySendLms(Map<String, Object> param) {
 		session.insert("common.delayLmsSend",param);
 	}
+	
+	@Override
+	public void mailSend(Map<String,Object> param) {
+		session.insert("common.mailSend",param);
+	}
 
 }

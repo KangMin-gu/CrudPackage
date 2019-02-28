@@ -397,4 +397,9 @@ public class VocController {
 		mView.setViewName("cu/custdetailNoTemplate");
 		return mView;
 	}
+	//VOC 녹취정보 저장
+	@RequestMapping(value="/vc/rec", method=RequestMethod.POST)
+	public void authVocRecInsert(HttpServletRequest request) {
+		vcService.VocRecInsert(request);
+	}
 }

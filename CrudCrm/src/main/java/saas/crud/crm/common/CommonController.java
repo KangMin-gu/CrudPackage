@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.ce.EUploadDto;
+import saas.crud.crm.nt.dto.NoteDto;
 
 @Controller
 public class CommonController {
@@ -53,6 +54,13 @@ public class CommonController {
 	public ModelAndView authpopNote(HttpServletRequest request) {
 		ModelAndView mView = commonService.svcPopNote(request);
 		mView.setViewName("cm/popnote");
+		return mView;
+	}
+	
+	@RequestMapping(value="/popmail",method=RequestMethod.GET)
+	public ModelAndView authPopMail(HttpServletRequest request) {
+		ModelAndView mView = commonService.svcPopNote(request);
+		mView.setViewName("cm/popmail");
 		return mView;
 	}
 	// 문자발송팝업
@@ -131,7 +139,10 @@ public class CommonController {
 		
 		Map<String,Object> clientDetail = commonService.svcPopGetClientDetail(request,cliNo);
 		return clientDetail;
-		
+	}
+	@RequestMapping(value="/mail/send", method=RequestMethod.POST)
+	public void authPopMailSend(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+		commonService.mailSend(response,request,mtfRequest);
 	}
 
 	// 메일 클릭여부

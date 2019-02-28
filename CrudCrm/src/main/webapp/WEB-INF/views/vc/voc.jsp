@@ -48,8 +48,7 @@
 
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-
-            <div class="cti" style="display:none">
+            <div class="cti" style="display:block">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
@@ -72,9 +71,12 @@
 				<input type="hidden" id="userno" value="${sessionScope.USERNO }">
 				<input type="hidden" id="chkauth" value="${sessionScope.CHKAUTH }" />
 				<input type="hidden" id="trunk" value="07042622883" /><!-- 동적으로변경 -->
+				<input type="hidden" id="reqno" name="reqno" value="" /><!-- 서비스랑 연결할 REQNO -->
             </div>
             <!-- 박진열 작업 -->
                     <ul class="top-btn">
+                    <div>
+                    	<div style="display: inline;">
                     	<li>수신번호 </li>
                         <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
                         <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
@@ -83,14 +85,20 @@
                         <li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="delayBtn">보류 <i class="fa fa-times-circle"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="delayCancelBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
                         &nbsp; |&nbsp;
+                        </div>
+                        <div style="display: inline;">
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
+                        </div>
+                        <div style="display: inline;">
                         <li>발신번호</li>
                         <li><input name="blindCall" id="blindCall" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
                         <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
                         <li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
                         <li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
+                        </div>
+                        <div style="display: inline;">
                         <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
                         <li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
                         <strong><span id="status">연결안됨</span></strong>
@@ -108,6 +116,8 @@
                                 </li>
                             </ul>
                         </li>
+                        </div>
+                        </div>
                     </ul>
                     <!-- 박진열 작업 -->
                 </div>
@@ -752,7 +762,7 @@
                             	</td>
                             </tr>
                             <tr>
-                                <th>이력 및 메모</th>
+                                <th>메모</th>
                                 <td colspan="3" >
                                     <textarea name="memo" id="memo" class="form-control voc" style="height: 150px; resize: none;"></textarea>
                                 </td>
@@ -761,7 +771,7 @@
                     </table>
                     <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
                         <div class="col-lg-4 col-sm-4 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
-                          	<button class="btn btn-primary btn-sm note" id="email">메일 발송</button>
+                          	<button class="btn btn-primary btn-sm mail" id="email">메일 발송</button>
                           	<button class="btn btn-primary btn-sm sms" id="sms">SMS 발송</button>
                           	<button class="btn btn-primary btn-sm" id="kakao">Kakao 발송</button> 
                         </div>                                       
@@ -863,7 +873,7 @@ $(document).ready(function () {
 
 	              // add the image upload button to the editor toolbar
 	              editor.addButton('imageupload', {
-	                text: 'Add image',  
+	                text: 'image',  
 	                icon: 'image',
 	                onclick: function(e) { // when toolbar button is clicked, open file select modal
 	                  inp.trigger('click');
@@ -872,35 +882,8 @@ $(document).ready(function () {
 
 	              // when a file is selected, upload it to the server
 	              inp.on("change", function(e){
-	                uploadFile($(this), editor);
+	            	  minymceUploadFile($(this), editor);
 	              });
-
-
-	            function uploadFile(inp, editor) {
-	              var input = inp.get(0);
-	              var data = new FormData();
-	              data.append('files', input.files[0]);
-
-	              $.ajax({
-	                url: '${pageContext.request.contextPath}/tinyMCE',
-	                type: 'POST',
-	                data: data,
-	                cache:false,
-	                enctype: 'multipart/form-data',
-	                dataType : 'json',
-	                processData: false, // Don't process the files
-	                contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-	                success: function(data, textStatus, jqXHR) {
-	                  editor.insertContent('<img class="content-img" src="${pageContext.request.contextPath}' + data.location + '" data-mce-src="${pageContext.request.contextPath}' + data.location + '" />');
-	                },
-	                error: function(jqXHR, textStatus, errorThrown) {
-	                  if(jqXHR.responseText) {
-	                    errors = JSON.parse(jqXHR.responseText).errors
-	                    alert('Error uploading image: ' + errors.join(", ") + '. Make sure the file is an image and has extension jpg/jpeg/png.');
-	                  }
-	                }
-	              });
-	            }
 	      }
 	    });
 });

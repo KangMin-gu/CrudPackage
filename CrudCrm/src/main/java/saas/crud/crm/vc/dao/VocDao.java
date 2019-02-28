@@ -37,4 +37,6 @@ public interface VocDao {
 	
 	public Map<String,Object> vocAlarm(Map<String,Object> param);
 	
+	public void vocRecInsert(Map<String,Object> param);
+	
 }

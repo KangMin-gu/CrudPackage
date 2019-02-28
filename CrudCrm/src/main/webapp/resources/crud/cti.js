@@ -827,6 +827,26 @@ function ctiEvent(msg){
 
 	}else if(tmpData[0] == "93") {			/// 모든상담원상태 요구에 대한 응답
 		
+	}else if(tmpData[0] == "58") {
+		var fileName = tmpData[8];
+		var fileNameArray = fileName.split('-');
+		$('#reqno').val(fileNameArray[0]+fileNameArray[1]);
+		
+		var jsonPrm = {"reqno":fileNameArray[0]+fileNameArray[1], "recdate":tmpData[9], "recext":fileNameArray[1], "recfilename":fileName };
+		debugger;
+		$.ajax({
+       		url: "/vc/rec",
+        	method: "POST",
+        	dataType: "json",
+        	data: jsonPrm,
+        	cache: false,
+        	success: function (data) {	           		
+        		alert("녹취저장완료");
+        	}
+ 	});
+		
+		
+		
 	}else if(tmpData[0] == "94"){// 상담원 상태 변경 
 		if(tmpData[1] == document.getElementById("cti_login_id").value) {				// 받은 데이터가 로그인한 상담원의 아이디와 같은 경우
             if(document.getElementById("checkGroupValue2").value == "Y"){
@@ -1001,5 +1021,4 @@ function chanegeStatusBtnImage(){//대기, 휴식, 후처리 상태에 대한 cs
 		$('#restBtn').css({"background-color":nomalColor,"border-color": nomalColor});
 		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
 	}
-
 }

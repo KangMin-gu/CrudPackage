@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -370,6 +371,37 @@ public class CommonServiceImpl implements CommonService {
 	    } catch (Exception e) {
 	        return "이미지 파일을 업로드 하는중 문제가 생겼습니다." + " => " + e.getMessage();
 	    }
+	}
+
+	@Override
+	public void mailSend(HttpServletResponse response, HttpServletRequest request, MultipartHttpServletRequest mtfRequest) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		int fromUserNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());			
+		String toCust = request.getParameter("custmail");
+		String ccUserList[] = request.getParameterValues("ccuser");
+		String content = request.getParameter("content");
+		String title = request.getParameter("title");
+		int custNo = Integer.parseInt(request.getParameter("custno").toString());
+		
+		Map<String,Object> param = new HashMap();
+		
+		param.put("siteid", siteId);
+		param.put("custno", custNo);
+		param.put("content", content);
+		param.put("title", title);
+		param.put("tocust", toCust);
+		
+		if(ccUserList != null) {
+			for(String b : ccUserList) {
+				int ccUserNo = Integer.parseInt(b);
+				param.put("tocust", ccUserNo);
+				
+
+			}
+		}
+		
+		
+		
 	}
 
 }

@@ -658,5 +658,13 @@ public class VocServiceImpl implements VocService{
 									
 			return resMap;
 		}
+
+		@Override
+		public void VocRecInsert(HttpServletRequest request) {
+			
+			Map<String,Object> param = crud.searchParam(request);
+			
+			vcDao.vocRecInsert(param);
+		}
 	
 }

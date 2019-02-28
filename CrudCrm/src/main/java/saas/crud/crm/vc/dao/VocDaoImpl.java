@@ -147,6 +147,11 @@ public class VocDaoImpl implements VocDao{
 		Map<String,Object> vocAlarm = session.selectOne("voc.vocAlarm",param);
 		return vocAlarm;
 	}
+	
+	public void vocRecInsert(Map<String,Object> param) {
+		
+		session.insert("voc.recInsert",param);
+	}
 
 	
 }

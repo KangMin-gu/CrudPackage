@@ -20,7 +20,7 @@ var strCtiBrowser = "";
 var urlStr = "http://203.239.159.133:8090";
 
 $(document).ready(function() {
-	var nucIdx = opener.$('nucIdx').val();
+	var nucIdx = opener.$('#nucIdx').val();
 	audio();
 	fn_nuc_url_conv_check(nucIdx);
 });
@@ -59,7 +59,7 @@ function fn_nuc_url_conv_check(nucIdx){
 	debugger;
 	var nucStatus = "N";
 	var nucFile = "";
-	var checkHomeUrl = "http://203.239.159.133:8090/wav/urldown/";
+	var checkHomeUrl = urlStr+"/wav/urldown/";
 	
 	$.ajax({
 		type : "POST",
@@ -73,6 +73,7 @@ function fn_nuc_url_conv_check(nucIdx){
 			nucFile = req.nucFile;
 			//녹취변환성공시
 			if(nucStatus == "Y"){
+				debugger;
 				$("#checkTryCount").val("0");
 				$("#nucFile").val(nucFile);
 

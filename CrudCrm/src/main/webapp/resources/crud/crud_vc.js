@@ -246,11 +246,11 @@ function tabTargetVocService(pageNum){//서비스탭
 	        	var html ="";
 	        	var sb = new StringBuffer();
 	        	for (var i = 0; i < length; i++) {
-	        		sb.append('<tr><td title="'+data.svList[i].SERVICENAME+'"><a onClick="openNewWindow('+"'voc','/vc/service/"+data.svList[i].SERVICENO+"','voc',1200,700);"+'">'+ data.svList[i].SERVICENAME_ + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td><td>');	        		
-	        		if(data.svList[i].REQNO != null && data.svList[i].REQNO != ''){
-	        			sb.append('&nbsp;&nbsp;<a onclick="goPlay('+data.svList[i].RECDATE_+','+data.svList[i].RECEXT+','+data.svList[i].RECFILENAME+');"><i class="fa fa-play-circle" style="font-size:17px;"></i></a>');
-	        		}	
-	        		sb.append('</td></tr>')
+	        		sb.append('<tr><td title="'+data.svList[i].SERVICENAME+'"><a onClick="openNewWindow('+"'voc','/vc/service/"+data.svList[i].SERVICENO+"','voc',1200,700);"+'">'+ data.svList[i].SERVICENAME_ + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td><td>');	        		
+	        		if(data.svList[i].REQNO != undefined){
+	        			sb.append('&nbsp;&nbsp;<a onclick="goPlay('+"'"+data.svList[i].RECDATE_+"'"+','+"'"+data.svList[i].RECEXT+"'"+','+"'"+data.svList[i].RECFILENAME +"'"+');"><i class="fa fa-play-circle" style="font-size:17px;"></i></a>');
+	        		}
+	        		sb.append('&nbsp;</td></tr>');
 	        	}
 	        	html = sb.toString();
 	        	$('#tab1 tbody').append(html);
@@ -279,7 +279,7 @@ function tabTargetVocService(pageNum){//서비스탭
 	            }
 	            //테이블 헤더 고정 설정
 	            var tableId = 'svTabTable';
-	            var colWidthArray = [180,80,60,80,80,80,80,50];
+	            var colWidthArray = [180,80,80,80,80,80,50];
 	            setTableSize(tableId,colWidthArray);
 	            //$('#'+tableId+' tbody').css('display','block');	            
 	        },
@@ -379,7 +379,7 @@ function tabTargetCallbackHistory(pageNum){//콜백이력탭
 	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_+'/td><td>');
 	        		
 	        		if(data.callBackHistList[i].REQNO != null && data.callBackHistList[i].REQNO != ''){
-	        			sb.append('&nbsp;&nbsp;<a onclick="goPlay('+data.callBackHistList[i].RECDATE_+','+data.callBackHistList[i].RECEXT+','+data.callBackHistList[i].RECFILENAME+');"><i class="fa fa-play-circle" style="font-size:17px;"></i></a>');
+	        			sb.append('&nbsp;&nbsp;<a onclick="goPlay('+"'"+data.callBackHistList[i].RECDATE_+"'"+','+"'"+data.callBackHistList[i].RECEXT+"'"+','+"'"+data.callBackHistList[i].RECFILENAME+"'"+');"><i class="fa fa-play-circle" style="font-size:17px;"></i></a>');
 	        		}
 	        		
 	        		sb.append('<input type="hidden" id="callbachistkno'+i+'" value="'+data.callBackHistList[i].CALLBACKHISTNO+'"/>');
@@ -1671,7 +1671,7 @@ function goPlay(recDate, recExt, recFilename){
 			$('#nucIdx').val(result_idx);
 			if(result_code == 0){
 				//fn_nuc_url_conv_check(result_idx);
-				openNewWindow('rec','/vc/pop/rec','rec',500,120);
+				openNewWindow('rec','/vc/pop/rec','',500,120);
 			}else{
 				alert(result_msg);
 			}

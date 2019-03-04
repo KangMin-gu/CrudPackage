@@ -289,7 +289,6 @@
                                         	<colgroup>
 												<col width="180px;">
 												<col width="80px;">
-												<col width="60px;">
 												<col width="80px;">
 												<col width="80px;">
 												<col width="80px;">
@@ -300,7 +299,6 @@
                                                 <tr>
                                                     <th>서비스명</th>
                                                     <th>접수일시</th>
-                                                    <th>상담유형</th>
                                                     <th>접수자</th>
                                                     <th>고객명</th>
                                                     <th>접수제품</th>

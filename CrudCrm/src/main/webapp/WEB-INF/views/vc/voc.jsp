@@ -130,7 +130,8 @@
                     <div id="custHiddenDiv">
                     	<input type="hidden" id="bcustno" name="bcustno" value="0" />
                     	<input type="hidden" id="blackcnt" name="blackcnt" value="0" />
-                    	<input class="custInput" type="hidden" id="custno" name="custno" value="0" />
+                    	<input type="hidden" id="custno" name="custno" value="0" />
+                    	<input type="hidden" id="nucIdx"  name="nucIdx" value="" /><!-- 녹취 키값  -->
                     </div>
                         <table class="table table-bordered mb-2">              	
                             <colgroup>
@@ -165,6 +166,26 @@
                                     	<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel1" id="homtel1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4">        		
 										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel2" id="homtel2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4"> 
 										<input type="text" class="form-control col-3 float-left mr-2 custInput" name="homtel3" id="homtel3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="5">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>고객구분</th>
+                                    <td>
+                                    	<select class="form-control custInput" name="custgubun" id="custgubun">
+											<option value="0" ${custUpdate.CUSTGUBUN eq "0" ? "selected" :""}>선택</option>
+											<c:forEach var="code" items="${CUSTGUBUN }">
+                                            	<option label="${code.codename }" value="${code.codeval }"/>
+                                            </c:forEach>
+										</select>
+                                    </td>
+                                    <th>관련고객</th>
+                                    <td>
+                                        <div class="input-group cust" id="relcustname">
+                                            <input type="text" class="form-control" name="relcustname" readonly>
+                                            <input class="custInput" type="hidden" id="relcustno" name="relcustno" value="0" />
+                                            <span class="input-group-addon"><a href="#"><i class="fa fa-search cust"></i></a></span>
+                                            <span class="input-group-addon"><a href="#"><i class="fa fa-times dataCancle"></i></a></span>  
+                                        </div>  
                                     </td>
                                 </tr>
                                 <tr>
@@ -267,12 +288,13 @@
                                         <table class="table table-bordered vocTabTable" style="margin-bottom: 16px;" id="svTabTable">
                                         	<colgroup>
 												<col width="180px;">
-												<col width="120px;">
+												<col width="80px;">
+												<col width="60px;">
 												<col width="80px;">
 												<col width="80px;">
 												<col width="80px;">
 												<col width="80px;">
-												<col width="80px;">
+												<col width="50px;">
 											</colgroup>
                                             <thead>
                                                 <tr>
@@ -283,6 +305,7 @@
                                                     <th>고객명</th>
                                                     <th>접수제품</th>
                                                     <th>처리자</th>
+                                                    <th>녹취</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -329,7 +352,8 @@
 												<col width="80px;">
 												<col width="80px;">
 												<col width="150px;">
-												<col width="80px;">
+												<col width="50px;">
+												<col width="50px;">
 											</colgroup>
                                             <thead>
                                                 <tr>
@@ -339,6 +363,7 @@
                                                     <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">상담원</th>
                                                     <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">메모</th>
                                                     <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">상태</th>
+                                                    <th style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">녹취</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

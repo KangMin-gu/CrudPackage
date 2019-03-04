@@ -20,8 +20,11 @@
 			, IFNULL( (SELECT USERNAME FROM me800010 WHERE USERNO = A.OWNER) ,'') AS OWNER_ 
 			, FN_GETCODE('SERVICESTEP',A.SERVICESTEP,1) AS SERVICESTEP_
 			, FN_GETCODE('SERVICETYPE',A.SERVICETYPE,1) AS SERVICETYPE_
+			,B.RECDATE, B.RECEXT, B.RECFILENAME, A.REQNO
+			,REPLACE(B.RECDATE,'-','') AS RECDATE_
 			, @RNUM:=@RNUM + 1 AS ROWNUM
 			FROM sv300010 A
+			LEFT OUTER JOIN cti510030 B ON A.REQNO = B.REQNO
 			,(SELECT @RNUM := 0) R
 			WHERE A.ISDELETE = 0
 			AND A.SITEID = #{siteid}
@@ -717,30 +720,7 @@
 		AND SERVICENO = #{serviceno}
 	</select>
 	
-	<insert id="vocCallBackHistoryInsert" parameterType="hashMap">
-	INSERT INTO CTI510020
-	(
-	SITEID
-	,REGDATE
-	,REGUSER
-	,CALLBACKNO
-	,MEMO
-	,CUSTNO
-	,CALLSTATUS
-	,TRUNK
-	)
-	VALUES
-	(
-	#{siteid}
-	,now()
-	,#{userno}
-	,#{callbackno}
-	,#{memo}
-	,#{custno}
-	,#{callstatus}
-	,#{trunk}
-	)
-	</insert>
+	
 	
 	<!-- 콜백 히스토리 카운터 (고객) -->
 	<select id="vocCallBackHistListCnt" parameterType="hashMap" resultType="int">

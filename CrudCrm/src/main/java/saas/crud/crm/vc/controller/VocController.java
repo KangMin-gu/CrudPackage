@@ -401,5 +401,9 @@ public class VocController {
 	@RequestMapping(value="/vc/rec", method=RequestMethod.POST)
 	public void authVocRecInsert(HttpServletRequest request) {
 		vcService.VocRecInsert(request);
+	//voc 녹취듣기
+	@RequestMapping(value="/vc/pop/rec", method=RequestMethod.GET)
+	public String authplayRecording(HttpServletRequest request) {
+		return "vc/pop/vocrec";
 	}
 }

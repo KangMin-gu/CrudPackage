@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -390,17 +391,28 @@ public class CommonServiceImpl implements CommonService {
 		param.put("content", content);
 		param.put("title", title);
 		param.put("tocust", toCust);
+		param.put("userno",fromUserNo);
+		commonDao.mailSend(param);
 		
 		if(ccUserList != null) {
 			for(String b : ccUserList) {
-				int ccUserNo = Integer.parseInt(b);
-				param.put("tocust", ccUserNo);
-				
-
+				//int ccUserNo = Integer.parseInt(b);
+				param.put("tocust", b);
+				commonDao.mailSend(param);
 			}
 		}
-		
-		
+		StringBuffer buf = new StringBuffer();
+		buf.append("<script>alert('발송되었습니다.'); self.close();</script>");
+		response.setContentType("text/html; charset=UTF-8");
+		 
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(buf);					 
+			out.flush();
+		} catch (IOException e) {					
+			e.printStackTrace();
+		}
 		
 	}
 

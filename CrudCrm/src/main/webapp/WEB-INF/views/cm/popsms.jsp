@@ -84,16 +84,9 @@ body {
 										</div>
 									</div>
 								</div>
-								<div class="box6 col-lg-12 col-xl-6" style="padding-top: 4rem;">
-									<div class="sms-form">
-										<h4>SMS</h4>
-										<div class="sub-text">
-                                        	<textarea name="senddesc" id ="senddesc" placeholder="내용을 입력하세요."></textarea>
-                                        </div>
-                                        <div class="limit-text">
-                                        	<p><span>00</span> / 90</p>
-                                        </div>
-                                    </div>
+								<div class="box6 col-lg-12 col-xl-12">
+								<label class="col-md-2 col-form-label" for="senddesc">내용:</label>
+									<textarea id="senddesc" name="senddesc" cols="65" rows="5"></textarea>
                                     <input type="hidden" id="lengthType" name="lengthType" value="0">
                                 </div>
                                 

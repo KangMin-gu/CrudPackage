@@ -37,7 +37,7 @@ body {
 			<div class="wrapper wrapper-content">
 				<div class="row">
 					<div class="col-lg-12 animated fadeInRight article">
-						<form:form action="/note/send" method="post"
+						<form:form action="/mail/send" method="post"
 							enctype="multipart/form-data">
 							<div class="mail-box-header">
 								<div class="row">
@@ -71,7 +71,7 @@ body {
 										<div class="col-md-10">
 											<select data-placeholder=" " id="ccuser" name="ccuser" class="chosen-select" multiple="" style="width: 350px; display: none;" tabindex="-1">   						              
 								                <c:forEach var="adminMail" items="${adminMail}" >
-								                	<option value="${adminMail.USERNAME},${adminMail.USERNO},${adminMail.EMAIL}">
+								                	<option value="${adminMail.EMAIL}">
 								                	${adminMail.USERNAME}</option>
 								                </c:forEach>
                 							</select>
@@ -187,6 +187,12 @@ body {
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
+		
+		$('#sub').click(function(e){
+			
+			self.close();
+			
+		});
 		
 		
 	});

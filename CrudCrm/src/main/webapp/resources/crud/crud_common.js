@@ -86,7 +86,7 @@
 	});
 	
 	$('.sms').click(function(e){
-		 openNewWindow('문자발송','/popsms',e.currentTarget.id,550,800);	
+		 openNewWindow('문자발송','/popsms',e.currentTarget.id,550,600);	
 	});
 	
 	//영업팝업

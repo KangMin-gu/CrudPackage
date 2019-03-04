@@ -31,6 +31,7 @@ public interface VocDao {
 	
 	public int vocCallBackHistListCnt(Map<String,Object> param);
 	public List<Map<String,Object>> vocCallBackHistList(Map<String,Object> param);
+	public int vocCallBackHistoryInsert(Map<String,Object> param);
 	
 	public int vocBlackHistListCnt(Map<String,Object> param);
 	public List<Map<String,Object>> vocBlackHistList(Map<String,Object> param);

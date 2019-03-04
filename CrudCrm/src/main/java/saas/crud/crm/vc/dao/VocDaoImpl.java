@@ -129,6 +129,13 @@ public class VocDaoImpl implements VocDao{
 		List<Map<String,Object>> callbackHistList = session.selectList("voc.vocCallBackHistList",param);
 		return callbackHistList;
 	}
+	//VOC 콜백 히스토리추가
+	@Override
+	public int vocCallBackHistoryInsert(Map<String, Object> param) {
+		int res = session.insert("voc.vocCallBackHistoryInsert",param);
+		return res;
+	}
+	
 	//강성고객 리스트 카운터
 	@Override
 	public int vocBlackHistListCnt(Map<String, Object> param) {

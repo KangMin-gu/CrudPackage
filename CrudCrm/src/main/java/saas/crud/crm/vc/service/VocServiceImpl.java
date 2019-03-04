@@ -310,7 +310,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = svDao.svServiceTotalRows(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -342,7 +342,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = vcDao.emailListCnt(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -536,7 +536,7 @@ public class VocServiceImpl implements VocService{
 		int totalRows = vcDao.vocCallBackListCnt(searchVal);
 							
 		//paging			
-		int pageRowCount = 3; //한페이지에서 출력될 row
+		int pageRowCount = 10; //한페이지에서 출력될 row
 		int pageDisplayCount = 5; // 페이지 목록 수  
 					
 		Map<String, Integer> page =  crud.paging(request, totalRows,pageRowCount,pageDisplayCount);//page text 리턴 					
@@ -564,6 +564,7 @@ public class VocServiceImpl implements VocService{
 	@Override
 	public int svcvocCallBackUpdate(Map<String, Object> callbackPrm) {
 		int res = vcDao.vocCallBackUpdate(callbackPrm);
+		vcDao.vocCallBackHistoryInsert(callbackPrm);
 		return res;
 	}
 

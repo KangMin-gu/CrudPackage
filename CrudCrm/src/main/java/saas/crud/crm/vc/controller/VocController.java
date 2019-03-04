@@ -397,4 +397,9 @@ public class VocController {
 		mView.setViewName("cu/custdetailNoTemplate");
 		return mView;
 	}
+	//voc 녹취듣기
+	@RequestMapping(value="/vc/pop/rec", method=RequestMethod.GET)
+	public String authplayRecording(HttpServletRequest request) {
+		return "vc/pop/vocrec";
+	}
 }

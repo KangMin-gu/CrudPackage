@@ -563,7 +563,7 @@
 		</if>
 	</select>
 	
-	<insert id="contentsInsert" parameterType="campaignContentsDto">
+	<!--<insert id="contentsInsert" parameterType="campaignContentsDto">
 		<selectKey keyProperty="no"  resultType="integer" order="AFTER">
 		
 		INSERT INTO Crud_SaaS.dbo.T_CAMP_CONTENTS(
@@ -621,16 +621,16 @@
 			,EDTUSER = #{edtuser}
 		WHERE NO = #{no}
 		AND SITEID = #{siteid} 
-	</update>
+	</update> -->
 	
-	<update id="contentsDelete" parameterType="campaignContentsDto">
+	<!-- <update id="contentsDelete" parameterType="campaignContentsDto">
 		UPDATE Crud_SaaS.dbo.T_CAMP_CONTENTS
 			SET EDTDATE = getDate()
 			,EDTUSER= #{edtuser}
 			,ISDELETE = 1
 		WHERE NO = #{no}
 		AND SITEID = #{siteid}
-	</update>
+	</update> -->
 	
 	<update id="send" statementType="CALLABLE" parameterType="hashMap">
 		{ call CAMP_SEND(#{siteid, mode=IN, jdbcType=INTEGER, javaType=int},#{userno, mode=IN, jdbcType=INTEGER, javaType=int},#{campno, mode=IN, jdbcType=INTEGER, javaType=int},#{sendform, mode=IN, jdbcType=INTEGER, javaType=int})}

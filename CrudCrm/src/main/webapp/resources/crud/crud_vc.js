@@ -225,7 +225,7 @@ function setTableSize(tableId,colWidthArray){//테이블 해더 고정.
 }
 
 function tabTargetVocService(pageNum){//서비스탭
-	
+	debugger;
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/sv?custno='+custNo+'&pageNum='+pageNum;
 	
@@ -238,16 +238,22 @@ function tabTargetVocService(pageNum){//서비스탭
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
-	        	
+	        	debugger;
 	        	$('#tab1 tbody tr').remove();
 	        	$('#tab1 .pagination li').remove();
 	        	
 	        	var length = data.svList.length;
 	        	var html ="";
+	        	var sb = new StringBuffer();
 	        	for (var i = 0; i < length; i++) {
-	        		html = '<tr><td title="'+data.svList[i].SERVICENAME+'"><a onClick="openNewWindow('+"'voc','/vc/service/"+data.svList[i].SERVICENO+"','voc',1200,700);"+'">'+ data.svList[i].SERVICENAME_ + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td></tr>';
-	        		$('#tab1 tbody').append(html);
+	        		sb.append('<tr><td title="'+data.svList[i].SERVICENAME+'"><a onClick="openNewWindow('+"'voc','/vc/service/"+data.svList[i].SERVICENO+"','voc',1200,700);"+'">'+ data.svList[i].SERVICENAME_ + '</a></td><td>' + data.svList[i].RECEPTIONDATE_ + '</td><td>' + data.svList[i].SERVICECHANNEL_ + '</td><td>' + data.svList[i].OWNER_ + '</td><td>' + data.svList[i].CUSTNAME_ + '</td><td>'+  '</td><td>' + data.svList[i].SERVICEOWNER_ + '</td><td>');	        		
+	        		if(data.svList[i].REQNO != null && data.svList[i].REQNO != ''){
+	        			sb.append('&nbsp;&nbsp;<a onclick="goPlay('+data.svList[i].RECDATE_+','+data.svList[i].RECEXT+','+data.svList[i].RECFILENAME+');"><i class="fa fa-play-circle" style="font-size:17px;"></i></a>');
+	        		}	
+	        		sb.append('</td></tr>')
 	        	}
+	        	html = sb.toString();
+	        	$('#tab1 tbody').append(html);
 	        	var html2= "";
 	        	
 	        	if (data.page.startPageNum != 1) {
@@ -273,7 +279,7 @@ function tabTargetVocService(pageNum){//서비스탭
 	            }
 	            //테이블 헤더 고정 설정
 	            var tableId = 'svTabTable';
-	            var colWidthArray = [180,120,80,80,80,80,80];
+	            var colWidthArray = [180,80,60,80,80,80,80,50];
 	            setTableSize(tableId,colWidthArray);
 	            //$('#'+tableId+' tbody').css('display','block');	            
 	        },
@@ -370,7 +376,12 @@ function tabTargetCallbackHistory(pageNum){//콜백이력탭
 	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">' + data.callBackHistList[i].CALLER+'</td>'); 
 	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].USERNAME+'</td>');
 	        		sb.append('<td title="'+data.callBackHistList[i].MEMO+'">'+data.callBackHistList[i].MEMO_+'</td>');
-	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_);
+	        		sb.append('<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data.callBackHistList[i].CALLSTATUS_+'/td><td>');
+	        		
+	        		if(data.callBackHistList[i].REQNO != null && data.callBackHistList[i].REQNO != ''){
+	        			sb.append('&nbsp;&nbsp;<a onclick="goPlay('+data.callBackHistList[i].RECDATE_+','+data.callBackHistList[i].RECEXT+','+data.callBackHistList[i].RECFILENAME+');"><i class="fa fa-play-circle" style="font-size:17px;"></i></a>');
+	        		}
+	        		
 	        		sb.append('<input type="hidden" id="callbachistkno'+i+'" value="'+data.callBackHistList[i].CALLBACKHISTNO+'"/>');
 	        		sb.append('<input type="hidden" id="callbackcustno'+i+'" value="'+data.callBackHistList[i].CUSTNO+'"/>')
 	        		sb.append('<input type="hidden" id="callcount'+i+'" value="'+data.callBackHistList[i].CALLCOUNT+'"/></td></tr>');
@@ -402,7 +413,7 @@ function tabTargetCallbackHistory(pageNum){//콜백이력탭
 	            }
 	            //테이블 헤더 고정 설정
 	            var tableId = 'callBackHisTabTable';
-	            var colWidthArray = [100,80,80,80,150,80];
+	            var colWidthArray = [100,80,80,80,150,50,50];
 	            setTableSize(tableId,colWidthArray);
 	            //$('#'+tableId+' tbody').css('display','block');
 	            
@@ -1355,7 +1366,7 @@ $(document).on('click', '.plus', function(e) {
 
 // 최근 한건을 가져올때 제품의 갯수를 늘려줌
 function productPlus(length) {
-	debugger;
+	
 	var countP = length + 1;
 	var flag = window.location.pathname.indexOf('pop');
 	// 팝업인지 아닌지 비교해서 팝업인경우에는 opener를 늘려주고 아니면 본인을 늘려줌
@@ -1567,11 +1578,12 @@ function callBackConfirm(idx,callstatus){//콜백 목록 처리
     	 var custno = $('#callbackcustno'+idx).val();
     	 var memo = $('#vocmemo'+idx).val();
     	 var trunk = $('#trunk'+idx).val();
+    	 var reqno = $('#reqno').val();
     	 if(callstatus == 3 && callcount > 2){//callcount가 3이상일때 불통 버튼 클릭 시 status = 4 미해결 
     		 callstatus = 4;
     	 }
     	 
-    	 var jsonPrm = {"callbackno":callbackno, "custno":custno, "memo":memo, "callstatus":callstatus , "trunk":trunk};
+    	 var jsonPrm = {"callbackno":callbackno, "custno":custno, "memo":memo, "callstatus":callstatus , "trunk":trunk, "reqno":reqno };
     	 var urlStr = '/vc/callback/post/'+callbackno;
     	 
     	 $.ajax({
@@ -1612,5 +1624,46 @@ function callBackMatching(idx){//매칭 버튼 클릭시 현재 바인딩 된 �
 
 }
 
+//************************녹취********************************
+
+function goPlay(recDate, recExt, recFilename){
+	var urlStr = "http://203.239.159.133:8090";
+	debugger;
+	var recIdx = '';	
+    var nucIdx = 0;
+	$.ajax({
+		type : "POST",
+		url : urlStr+"/ncrUrlConvInput.do",    	
+		data : {
+			"rec_idx" : recIdx,
+			"rec_ext" : recExt,
+			"rec_date" : recDate,
+			"rec_file" : recFilename
+		},
+		dataType : "json",
+		success : function(req) {
+			debugger;
+			var result_code = req.result_code;//상태
+			var result_msg = req.result_msg;
+			var result_idx = req.result_idx;
+			$('#nucIdx').val(result_idx);
+			if(result_code == 0){
+				//fn_nuc_url_conv_check(result_idx);
+				openNewWindow('rec','/vc/pop/rec','rec',500,120);
+			}else{
+				alert(result_msg);
+			}
+		},		
+		error : function(result, status, err) {
+			debugger;
+			alert(result + " / " + status + " / " + err);
+		},
+		beforeSend: function() {
+		    
+		},
+		complete: function(){
+		}
+	});		
+}
 
 

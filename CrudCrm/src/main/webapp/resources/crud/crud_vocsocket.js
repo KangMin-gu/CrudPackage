@@ -16,7 +16,7 @@ function voc_send_message(){
        //console.log(callbackcnt);//테스트 완료 후 삭제
         $('#callbackCnt').text(callbackCnt);
         $('#successCallback').text(successCallback);
-        console.log(callbackCnt+' / '+successCallback);
+        //console.log(callbackCnt+' / '+successCallback);
     };
 
     sock.onclose = function(evt) {

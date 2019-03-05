@@ -15,7 +15,6 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
@@ -378,7 +377,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea name="servicedesc" class="form-control summernote" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
+                                                <textarea name="servicedesc" class="form-control tinymce" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -546,7 +545,7 @@
                                         <tr>
                                             <th class="border-top-0">상세내역</th>
                                             <td class="border-top-0">
-                                            	<textarea name="rewarddesc" class="form-control summernote" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+                                            	<textarea name="rewarddesc" class="form-control tinymce" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -703,7 +702,7 @@
                                         <tr>
                                             <th>처리내용</th>
                                             <td>
-                                                <textarea class="summernote" name="ractdesc" id="ractdesc">${ractInfo.RACTDESC }</textarea>
+                                                <textarea class="tinymce" name="ractdesc" id="ractdesc">${ractInfo.RACTDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -751,8 +750,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	 <script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 	 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-	 
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
+	 <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>

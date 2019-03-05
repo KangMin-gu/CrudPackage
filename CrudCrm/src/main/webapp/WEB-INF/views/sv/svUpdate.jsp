@@ -15,7 +15,6 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
@@ -375,7 +374,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea name="servicedesc" class="form-control summernote" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
+                                                <textarea name="servicedesc" class="form-control tinymce" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -408,7 +407,7 @@
                         <div class="ibox-title row">
                             <h4>현상 파악</h4>
                             <div class="ibox-tools">
-                            <div class="float-left" style="height:2.00rem;padding-left: 0px;" >
+                            <div class="float-left" id="rewardSame" style="height:2.00rem;padding-left: 0px;" >
                             	<a href="" class="btn btn-primary" data-placement="right">접수정보와 동일</a>               
                              </div>
                             <a class="collapse-link">
@@ -533,7 +532,7 @@
                                         <tr>
                                             <th class="border-top-0">상세내역</th>
                                             <td class="border-top-0">
-                                            	<textarea name="rewarddesc" class="form-control summernote" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+                                            	<textarea name="rewarddesc" class="form-control tinymce" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -603,7 +602,7 @@
                         <div class="ibox-title row">
                             <h4>처리 정보</h4>
                             <div class="ibox-tools">
-                            	<div class="float-left" style="height:2.00rem;padding-left: 0px;" >
+                            	<div class="float-left" id="ractSame" style="height:2.00rem;padding-left: 0px;" >
                             		<a href="" class="btn btn-primary" data-placement="right">현상파악과 동일</a>               
                              	</div>
                             	<a class="collapse-link">
@@ -692,7 +691,7 @@
                                         <tr>
                                             <th>처리내용</th>
                                             <td>
-                                                <textarea class="summernote" name="ractdesc" id="ractdesc">${ractInfo.RACTDESC }</textarea>
+                                                <textarea class="tinymce" name="ractdesc" id="ractdesc">${ractInfo.RACTDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -745,7 +744,7 @@
 	
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>
@@ -758,23 +757,23 @@
 			enableSubmit();
 			
 			var step = $('#servicestep').val();
-			debugger;
 			if(step == 1){
-				$('#servicedesc').summernote('disable');
+				tinyMCE.EditorManager.editors[0].setMode('readonly');
 				$('.service').prop("disabled",true);
 			}
 			if(step == 2){
-				$('#servicedesc').summernote('disable');
+				
+				tinyMCE.EditorManager.editors[0].setMode('readonly');
 				$('.service').prop("disabled",true);				
 			}else if(step == 3){
-				$('#servicedesc').summernote('disable');
-				$('#rewarddesc').summernote('disable');
+				tinyMCE.EditorManager.editors[0].setMode('readonly');
+				tinyMCE.EditorManager.editors[1].setMode('readonly');
 				$('.service').prop("disabled",true);
 				$('.reward').prop("disabled",true);
 				$('.reward').iCheck('disable');
 			}else if(step == 5 || step == 6){
-				$('#servicedesc').summernote('disable');
-				$('#rewarddesc').summernote('disable');
+				tinyMCE.EditorManager.editors[0].setMode('readonly');
+				tinyMCE.EditorManager.editors[1].setMode('readonly');
 				$('.service').prop("disabled",true);
 				$('.reward').prop("disabled",true);
 				$('.reward').iCheck('disable');
@@ -783,7 +782,7 @@
 			var sessionId = $('#sessionId').val();
 			var owner = $('#owner').val();
 			if(sessionId != owner ){
-				$('#ractdesc').summernote('disable');
+				tinyMCE.EditorManager.editors[2].setMode('readonly');
 				$('.ract').prop("disabled",true);
 			}
 	

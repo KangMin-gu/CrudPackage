@@ -94,8 +94,7 @@ body {
 									<button class="btn btn-sm btn-primary" id="btn" data-toggle="tooltip" >
 										<i class="fa fa-reply"></i> 발송
 									</button>
-									<a href="mailbox.html" class="btn btn-white btn-sm"
-										data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
+									<a href="javascript:self.close();" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 								</div>
 							</div>
 							</form:form>

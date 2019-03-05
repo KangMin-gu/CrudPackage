@@ -1,17 +1,5 @@
-if($('.summernote').length > 0){
-	$('#servicedesc').summernote({
-		height : 200,
-		dialogsInBody: true
-	});
-				
-	$('#ractdesc').summernote({
-		height:200,
-		dialogsInBody: true
-	});
-	$('#rewarddesc').summernote({
-		height:200,
-		dialogsInBody: true
-	});
+if($('.tinymce').length > 0){
+	tinymceEditor();
 }
 
 if($('.date').length > 0){
@@ -158,7 +146,9 @@ $('#rewardSame').click(function(e){
 	var serviceDesc = $('#servicedesc').val();
 	
 	$('#visitdate').val(receptionDate);
-	$('#rewarddesc').summernote('code',serviceDesc);
+	//$('#rewarddesc').summernote('code',serviceDesc);
+	tinyMCE.EditorManager.editors[1].setContent(serviceDesc);
+	//tinymce.activeEditor.setMode('readonly');
 	$('[name="rewardowner_"]').val(owner_);
 	$('[name="rewardowner"]').val(owner);
 
@@ -169,10 +159,10 @@ $('#ractSame').click(function(e){
 	var receptionDate = $('#receptiondate').val();
 	var owner_ = $('[name="owner_"]').val();
 	var owner = $('[name="owner"]').val();
-	var serviceDesc = $('#servicedesc').val();
+	var rewardDesc = $('#rewarddesc').val();
 	
 	$('#ractdate').val(receptionDate);
-	$('#ractdesc').summernote('code',serviceDesc);
+	tinyMCE.EditorManager.editors[2].setContent(rewardDesc);
 	$('[name="ractowner_"]').val(owner_);
 	$('[name="ractowner"]').val(owner);
 });

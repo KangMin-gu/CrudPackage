@@ -306,7 +306,7 @@
 	</if>
 	FROM DUAL	 		
 	</select>
-
+	
 	<insert id="recInsert" parameterType="hashMap">
 	INSERT INTO CTI510030
 	(
@@ -321,7 +321,7 @@
 	,#{recfilename}
 	)
 	</insert>
-
+	
 	<insert id="vocCallBackHistoryInsert" parameterType="hashMap">
 	INSERT INTO CTI510020
 	(

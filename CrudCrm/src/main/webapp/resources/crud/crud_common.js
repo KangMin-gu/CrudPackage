@@ -1,5 +1,31 @@
 
+function tinymceEditor(){
+	tinymce.init({
+	    
+	      selector: '.tinymce',  // change this value according to your HTML
+	      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
+	      setup: function(editor) {
 
+	              // create input and insert in the DOM
+	              var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
+	              $(editor.getElement()).parent().append(inp);
+
+	              // add the image upload button to the editor toolbar
+	              editor.addButton('imageupload', {
+	                text: 'image',  
+	                icon: 'image',
+	                onclick: function(e) { // when toolbar button is clicked, open file select modal
+	                  inp.trigger('click');
+	                }
+	              });
+
+	              // when a file is selected, upload it to the server
+	              inp.on("change", function(e){
+	            	  minymceUploadFile($(this), editor);
+	              });
+	      }
+	    });
+};
 	$('.custom-file-input').on('change', function() {
 		   let fileName = $(this).val().split('\\').pop();
 		   $(this).next('.custom-file-label').addClass("selected").html(fileName);
@@ -156,7 +182,7 @@
          data.append('files', input.files[0]);
 
          $.ajax({
-           url: '${pageContext.request.contextPath}/tinyMCE',
+           url: '/tinyMCE',
            type: 'POST',
            data: data,
            cache:false,
@@ -165,7 +191,7 @@
            processData: false, // Don't process the files
            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
            success: function(data, textStatus, jqXHR) {
-             editor.insertContent('<img class="content-img" src="${pageContext.request.contextPath}' + data.location + '" data-mce-src="${pageContext.request.contextPath}' + data.location + '" />');
+             editor.insertContent('<img class="content-img" src="' + data.location + '" data-mce-src="' + data.location + '" />');
            },
            error: function(jqXHR, textStatus, errorThrown) {
              if(jqXHR.responseText) {

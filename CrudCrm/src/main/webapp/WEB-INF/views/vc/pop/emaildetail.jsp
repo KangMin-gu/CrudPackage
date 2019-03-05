@@ -117,8 +117,7 @@ body {
 
 
 	<!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>		
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>	
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 <script>

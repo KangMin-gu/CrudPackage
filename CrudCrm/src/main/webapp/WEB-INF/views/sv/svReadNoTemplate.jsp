@@ -15,9 +15,6 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link
-	href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css"
-	rel="stylesheet">
 <style>
 body {
 	background-color: #f3f3f4;
@@ -271,7 +268,7 @@ body {
 									<tbody>
 										<tr>
 											<th class="border-top-0">서비스내용</th>
-											<td class="border-top-0"><textarea class="summernote"
+											<td class="border-top-0"><textarea class="tinymce"
 													id="servicedesc">${serviceInfo.SERVICEDESC }</textarea></td>
 										</tr>
 									</tbody>
@@ -393,7 +390,7 @@ body {
 									<tbody>
 										<tr>
 											<th>상세내역</th>
-											<td><textarea class="summernote" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+											<td><textarea class="tinymce" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
 											</td>
 											<input type="hidden" id="serviceno"
 												value="${serviceInfo.SERVICENO }" />
@@ -522,7 +519,7 @@ body {
 									<tbody>
 										<tr>
 											<th>처리내용</th>
-											<td><textarea class="summernote" id="ractdesc">${ractInfo.RACTDESC }</textarea>
+											<td><textarea class="tinymce" id="ractdesc">${ractInfo.RACTDESC }</textarea>
 											</td>
 										</tr>
 									</tbody>
@@ -628,15 +625,12 @@ body {
 
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
-	<!-- summernote-->
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
-	<!-- summernote-->
 	<script>
 		$(document).ready(function () {
-			$('.note-editable').attr('contenteditable',false);
+			tinymce.activeEditor.setMode('readonly');
 		});
 	</script>
 </body>

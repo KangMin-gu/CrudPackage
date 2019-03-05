@@ -152,7 +152,8 @@ function tabTargetCust(pageNum){
 		opener.$("#"+parentid).next().val(tr.getAttribute("value"));
 		opener.$("#"+parentid).val(tr.children.title.textContent).trigger('keyup');
 		opener.$("#senddesc").text(tr.children.content.textContent).trigger('keyup');
-		opener.$('#senddesc').summernote('code', tr.children.content.textContent);
+
+		opener.tinymce.activeEditor.setContent(tr.children.content.textContent);
 		window.close();
 	}
 	
@@ -215,7 +216,7 @@ function tabTargetCust(pageNum){
 		var accordion = $(e.currentTarget).children().attr('id');
 		if(accordion == 'accordion'){
 			var text = e.target.parentElement.innerHTML;
-			$('.summernote').summernote('code',text);
+			tinymce.activeEditor.setContent(text);
 			//ibox-tools 클릭 ( 화살표 모양 클릭해서 접음)
 			$(e.currentTarget).parent().parent().children('.ibox-title').children('.ibox-tools').children().click();
 		}

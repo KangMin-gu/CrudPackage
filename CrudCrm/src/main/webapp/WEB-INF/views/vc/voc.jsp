@@ -48,7 +48,7 @@
 
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-            <div class="cti" style="display:block">
+            <div class="cti" style="display:none">
            		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
 				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
 				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
@@ -249,9 +249,6 @@
 										</div>
                                     </td>
                                 </tr>
-                                <tr>
-                                
-                                </tr>
                             </tbody>
                         </table>
                         
@@ -265,9 +262,6 @@
                             		<button class="btn btn-primary btn-sm" id="cancleBlackBtn" onClick="cancleBlack()">블랙 해제</button>
                             	</span>
                             </div>                                       
-                            <div class="col-lg-4 col-sm-4 float-right text-right mb-2 w-100" style="padding-right: 0px;"><!-- 오른쪽 버튼제어 -->    		
-								
-                         	</div>
                          </div>       
                     </div><!-- 좌측 고객div -->
                     <div class="ibox-content bot-cont" style="padding-top:0px;">
@@ -649,7 +643,7 @@
                             <tr>
                                 <th>상담내용</th>
                                 <td colspan="2">
-                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc" cols="1500" style="height: 350px; resize: none;"></textarea>
+                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc tinymce" cols="1500" style="height: 350px; resize: none;"></textarea>
                                 </td>
                                 <td colspan="1" style="width: 150px;">
                                 
@@ -885,30 +879,7 @@ $(document).ready(function () {
 	var url = window.location.pathname;
 	vocContents("0",url);
 
-	tinymce.init({
-	      selector: '#servicedesc',  // change this value according to your HTML
-	      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
-	      setup: function(editor) {
-
-	              // create input and insert in the DOM
-	              var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
-	              $(editor.getElement()).parent().append(inp);
-
-	              // add the image upload button to the editor toolbar
-	              editor.addButton('imageupload', {
-	                text: 'image',  
-	                icon: 'image',
-	                onclick: function(e) { // when toolbar button is clicked, open file select modal
-	                  inp.trigger('click');
-	                }
-	              });
-
-	              // when a file is selected, upload it to the server
-	              inp.on("change", function(e){
-	            	  minymceUploadFile($(this), editor);
-	              });
-	      }
-	    });
+	tinymceEditor();
 });
 
  

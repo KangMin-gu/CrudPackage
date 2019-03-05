@@ -19,9 +19,6 @@
 	href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css"
 	rel="stylesheet">
 <link
-	href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css"
-	rel="stylesheet">
-<link
 	href="${pageContext.request.contextPath}/resources/css/plugins/chosen/chosen.css"
 	rel="stylesheet">
 	<style>
@@ -48,7 +45,7 @@ body {
 										<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip">
 											<i class="fa fa-reply"></i> 발송
 										</button>
-										<a href="mailbox.html" class="btn btn-white btn-sm"
+										<a href="javascript:self.close();" class="btn btn-white btn-sm"
 											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 									</div>
 								</div>
@@ -105,20 +102,13 @@ body {
 									</div>
 								</div>
 								<div class="mail-body text-right tooltip-demo">
-								
-								
-									
-										<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip" >
-											<i class="fa fa-reply"></i> 발송
-										</button>
-									
-									
-									
-									<a href="mailbox.html" class="btn btn-white btn-sm"
-										data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
+									<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip" >
+										<i class="fa fa-reply"></i> 발송
+									</button>
+									<a href="javascript:self.close();" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 								</div>
 								<div class="clearfix">
-								<input type="hidden" name="custno" id="custno">
+									<input type="hidden" name="custno" id="custno">
 								</div>
 							</div>
 						</form:form>
@@ -136,13 +126,10 @@ body {
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
-	
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
 		
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
-<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	<script>
 	
 	$(document).ready(function() {
@@ -150,30 +137,7 @@ body {
 		$('#custmail').val(opener.$('#email').val());
 		$('#custno').val(opener.$('#custno').val());
 		// tinymce -> 에디터
-		tinymce.init({
-		      selector: '#content',  // change this value according to your HTML
-		      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
-		      setup: function(editor) {
-
-		              // create input and insert in the DOM
-		              var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
-		              $(editor.getElement()).parent().append(inp);
-
-		              // add the image upload button to the editor toolbar
-		              editor.addButton('imageupload', {
-		                text: 'image',  
-		                icon: 'image',
-		                onclick: function(e) { // when toolbar button is clicked, open file select modal
-		                  inp.trigger('click');
-		                }
-		              });
-
-		              // when a file is selected, upload it to the server
-		              inp.on("change", function(e){
-		            	  minymceUploadFile($(this), editor);
-		              });
-		      }
-		    });
+		tinymceEditor();
 		
 		//chosen
 		$('.chosen-select').chosen(

@@ -15,7 +15,6 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 </head>
 
@@ -482,17 +481,11 @@
 </div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script><!-- summernote-->		
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>
 	
-	window.onload = function () {
-		
-	}
-	
 	$(document).ready(function () {
-		$('.summernote').summernote({});
 		
 		$('.date').datepicker({
 			keyboardNavigation:false,
@@ -500,7 +493,7 @@
 			autoclose:true
 		});
 		enableSubmit();
-		debugger;
+		
 		var length = $('.addr').length
 		for (i = 2; i <= length; i++){
 			if($('#addr'+i+'1').val().trim() == ''){

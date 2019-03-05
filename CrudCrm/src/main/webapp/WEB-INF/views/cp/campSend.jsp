@@ -15,7 +15,6 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
 </head>
@@ -371,7 +370,7 @@
                                                         <table class="table table-bordered">
                                                             <tr>
                                                                 <td>
-                                                                    <textarea name="senddesc" id="senddesc"  class="form-control summernote" style="resize:none; height: 8em;">${campEmailForm.SENDDESC }</textarea>
+                                                                    <textarea name="senddesc" id="senddesc"  class="form-control tinymce" style="resize:none; height: 8em;">${campEmailForm.SENDDESC }</textarea>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -884,14 +883,16 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script><!-- summernote-->		
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script><!-- summernote-->
+	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>	
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script>
 	
 	$(document).ready(function () {
-		$('.summernote').summernote();
+		
+		tinymceEditor();
+		
 		$('.clockpicker').clockpicker();	
 		$('.date').datepicker({
 			keyboardNavigation:false,

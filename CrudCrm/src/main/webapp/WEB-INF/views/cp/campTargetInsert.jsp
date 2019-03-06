@@ -15,6 +15,7 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 </head>
 
@@ -296,6 +297,68 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="box1 col-lg-12 col-xl-6 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">메일수신거부</th>
+                                            <td class="border-top-0">
+                                            	<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denymailnomal" name="denymailnomal" type="checkbox" class="i-checks" value="1">
+													<label for="denymailnomal">NOMAL </label>
+												</div>
+												<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denymailsurvey" name="denymailsurvey" type="checkbox" class="i-checks" value="1">
+													<label for="denymailsurvey">SURVEY</label>
+												</div>
+												<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denymailnews" name="denymailnews" type="checkbox" class="i-checks" value="1">
+													<label for="denymailnews">NEWS</label>
+												</div>
+												<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denymailad" name="denymailad" type="checkbox" class="i-checks" value="1">
+													<label for="denymailad">AD</label>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="box1 col-lg-12 col-xl-6 p-0">
+                                <table class="table table-bordered mb-0 border-top-0">
+                                    <colgroup>
+                                        <col style="width: 110px; background: #fafafa;">
+                                        <col style="width: auto;">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th class="border-top-0">SMS수신거부</th>
+                                            <td class="border-top-0">
+                                            	<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denysmsnomal" name="denysmsnomal" type="checkbox" class="i-checks" value="1">
+													<label for="denysmsnomal">NOMAL </label>
+												</div>
+												<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denysmssurvey" name="denysmssurvey" type="checkbox" class="i-checks" value="1">
+													<label for="denysmsnomal">SURVEY</label>
+												</div>
+												<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denysmsnews" name="denysmsnews" type="checkbox" class="i-checks" value="1">
+													<label for="denysmsnews">NEWS</label>
+												</div>
+												<div class="checkbox float-left col-lg-2 p-0">
+													<input id="denysmsad" name="denysmsad" type="checkbox" class="i-checks" value="1">
+													<label for="denysmsad">AD</label>
+												</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="box1 col-lg-12 col-xl-6 p-0 addr" style="display:block">
                                     <table class="table table-bordered mb-0 border-top-0">
                                         <colgroup>
@@ -481,6 +544,7 @@
 </div>
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>		
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script>

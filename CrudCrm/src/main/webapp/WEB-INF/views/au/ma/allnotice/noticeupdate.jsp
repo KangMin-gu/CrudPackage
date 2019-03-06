@@ -20,7 +20,6 @@
 	rel="stylesheet">
 <!-- DatePicker -->
 <link href="/resources/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="/resources/css/animate.css" rel="stylesheet">
 <link href="/resources/css/style.css" rel="stylesheet">
 </head>
@@ -75,7 +74,7 @@
 								<div class="hr-line-dashed" style="margin-top: 0px;"></div>
 								<div class="row">
 									<div class="col-md-8 offset-md-2">
-										<textarea class="summernote" id="content" name="content" style="height: 500px;" >${noticeInfo.CONTENT}</textarea>
+										<textarea class="tinymce" id="content" name="content" style="height: 500px;" >${noticeInfo.CONTENT}</textarea>
 										<div class="clearfix"></div>
 									</div>	
 								</div>
@@ -109,11 +108,10 @@
 	<!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	<script>
 		$(document).ready(function() {		
-			$('.summernote').summernote();
-			$('.note-editable').css('height','300px');
+			tinymceEditor();
 			
 			$('#header option').each(function(){
 				if($(this).val()=="${noticeInfo.HEADER}"){

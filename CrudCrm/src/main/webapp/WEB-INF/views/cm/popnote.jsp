@@ -18,9 +18,6 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css"
 	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css"
-	rel="stylesheet">
 
 <!-- choosen -->
 <link
@@ -106,7 +103,7 @@ body {
 										<a href="${url}" class="btn-primary confirm btn" id="confirm">Confirm</a>
 										 -->
 								<div class="mail-text h-200">
-									<textarea class="summernote" id="content" name="content"
+									<textarea class="tinymce" id="content" name="content"
 										style="height: 100px;">
 									
 										
@@ -154,8 +151,7 @@ body {
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
 	
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 		
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
@@ -180,10 +176,9 @@ body {
 		emailTemplate += '<a style="text-decoration: none; color: #FFF; background-color: #1ab394; border: solid #1ab394; border-width: 5px 10px; line-height: 2; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;">Confirm Email Address</a>'
 		emailTemplate += '</div></div></div></body>'
 		
+		tinymceEditor();
 		
-		$('.summernote').summernote();	
-		
-		$('.summernote').summernote('code',emailTemplate);
+		tinymce.activeEditor.setContent(emailTemplate);
 		
 		//chosen
 		$('.chosen-select').chosen(

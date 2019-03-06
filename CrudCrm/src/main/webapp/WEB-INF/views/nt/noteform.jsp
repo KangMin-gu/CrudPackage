@@ -18,9 +18,6 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css"
 	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/plugins/summernote/summernote-bs4.css"
-	rel="stylesheet">
 <!-- choosen -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/plugins/chosen/chosen.css"
@@ -110,7 +107,7 @@
 								</div>
 								
 									<div class="mail-text h-200">
-										<textarea class="summernote" id="content" name="content"
+										<textarea class="tinymce" id="content" name="content"
 											style="height: 100px;"></textarea>
 										<div class="clearfix"></div>
 									</div>
@@ -153,11 +150,8 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
 	
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/summernote/summernote-bs4.js"></script>
-		
-	<script
-		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>	
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/validate/jquery.validate.min.js"></script>
@@ -181,8 +175,7 @@
 				}
 				);
 		
-		$('.summernote').summernote();
-		$('.note-editable').css('height','300px');
+		tinymceEditor();
 	
 		$('#submit').click(function(){
 			var touser = $('#touser').val();

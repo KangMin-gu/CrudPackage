@@ -625,12 +625,12 @@ public class ExcelDownLoad {
 			cell.setCellStyle(columnColor);
 			
 			cell = row.createCell(1);
-			cell.setCellValue("접수유형");
+			cell.setCellValue("접수구분");
 			cell.setCellStyle(style);
 			cell.setCellStyle(columnColor);
 			
 			cell = row.createCell(2);
-			cell.setCellValue("접수매체");
+			cell.setCellValue("접수유형");
 			cell.setCellStyle(style);
 			cell.setCellStyle(columnColor);
 			
@@ -672,8 +672,8 @@ public class ExcelDownLoad {
 					row = sheet.createRow(rowNum+1);			
 					String rcvName = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICENAME");
 					String rcvType = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICETYPE_");
-					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICECHANNEL_");
-					String custName = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTNO_");
+					String rcvChannel = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICECODE_");
+					String custName = crud.getMapValueNullCheck(note.get(rowNum-1), "CUSTNAME_");
 					String cliName = crud.getMapValueNullCheck(note.get(rowNum-1), "CLINO_");
 					String rcvDate = crud.getMapValueNullCheck(note.get(rowNum-1), "RECEPTIONDATE_");
 					String rcvOwner = crud.getMapValueNullCheck(note.get(rowNum-1), "SERVICEOWNER_");

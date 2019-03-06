@@ -85,7 +85,7 @@ body {
 								</div>
 								
 								<div class="mail-text h-200">
-									<textarea class="summernote" id="content" name="content"
+									<textarea class="tinymce" id="content" name="content"
 										style="height: 300px;">
 	
 										</textarea>

@@ -144,7 +144,7 @@
                                     	<tr>
                                         	<th class="border-top-0">비고</th>
                                             <td class="border-top-0">
-                                            	<textarea name="content" id="content"  class="form-control summernote" style="resize:none; height: 8em;">${contentInfo.CONTENT }</textarea>
+                                            	<textarea name="content" id="content"  class="form-control tinymce" style="resize:none; height: 8em;">${contentInfo.CONTENT }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -171,6 +171,12 @@
 <!-- js includ -->
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+	<script>
+		$(document).ready(function(){
+			tinymceEditor();
+		});
+	</script>
 
 </body>
 </html>

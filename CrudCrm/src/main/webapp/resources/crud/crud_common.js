@@ -1,10 +1,14 @@
 
 function tinymceEditor(){
 	tinymce.init({
-	    
+		  height : "300",
 	      selector: '.tinymce',  // change this value according to your HTML
 	      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
 	      setup: function(editor) {
+	    	  debugger;
+	    	  if ($('#'+editor.id).prop('readonly')) {
+	    		  editor.settings.readonly = true;
+	          }
 
 	              // create input and insert in the DOM
 	              var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
@@ -12,7 +16,7 @@ function tinymceEditor(){
 
 	              // add the image upload button to the editor toolbar
 	              editor.addButton('imageupload', {
-	                text: 'image',  
+	                text: '이미지',  
 	                icon: 'image',
 	                onclick: function(e) { // when toolbar button is clicked, open file select modal
 	                  inp.trigger('click');

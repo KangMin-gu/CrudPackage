@@ -146,9 +146,7 @@ $('#rewardSame').click(function(e){
 	var serviceDesc = $('#servicedesc').val();
 	
 	$('#visitdate').val(receptionDate);
-	//$('#rewarddesc').summernote('code',serviceDesc);
 	tinyMCE.EditorManager.editors[1].setContent(serviceDesc);
-	//tinymce.activeEditor.setMode('readonly');
 	$('[name="rewardowner_"]').val(owner_);
 	$('[name="rewardowner"]').val(owner);
 

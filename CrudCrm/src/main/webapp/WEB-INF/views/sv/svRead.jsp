@@ -21,8 +21,6 @@
 	<div id="wrapper">
 <!-- leftside -->	
 		<%@ include file="/WEB-INF/views/template/menu/leftside.jsp"%>
-
-        </div>
 <!-- Top -->    
 	<div id="page-wrapper" class="gray-bg">
 		<%@ include file="/WEB-INF/views/template/menu/top.jsp"%>
@@ -312,7 +310,7 @@
                                         <tr>
                                             <th class="border-top-0">서비스내용</th>
                                             <td class="border-top-0">
-                                                <textarea class="tinymce" id="servicedesc">${serviceInfo.SERVICEDESC }</textarea>
+                                                <textarea class="tinymce" id="servicedesc" readonly="readonly">${serviceInfo.SERVICEDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -432,7 +430,7 @@
                                         <tr>
                                             <th>상세내역</th>
                                             <td>
-                                                <textarea class="tinymce" id="rewarddesc">${rewardInfo.REWARDDESC }</textarea>
+                                                <textarea class="tinymce" id="rewarddesc" readonly="readonly">${rewardInfo.REWARDDESC }</textarea>
                                             </td>
                                             <input type="hidden" id="serviceno" value="${serviceInfo.SERVICENO }" /> 
                                         </tr>
@@ -560,7 +558,7 @@
                                         <tr>
                                             <th>처리내용</th>
                                             <td>
-                                                <textarea class="tinymce" id="ractdesc">${ractInfo.RACTDESC }</textarea>
+                                                <textarea class="tinymce" id="ractdesc" readonly="readonly">${ractInfo.RACTDESC }</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -701,14 +699,6 @@
 	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
 	
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sv.js"></script>
-	<script>
-		$(document).ready(function () {
-			
-			tinymce.activeEditor.setMode('readonly');
-		});
-		
-		
-	
-	</script>
+
 </body>
 </html>

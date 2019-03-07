@@ -274,6 +274,7 @@ public class CampaignServiceImpl implements CampaignService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		Map<String,Object> param = new HashMap();
 		
+		List<Object> test = new ArrayList<Object>();
 		CampaignDto campaignDto = new CampaignDto();
 		campaignDto.setSiteid(siteId);
 		campaignDto.setEdtuser(userNo);
@@ -296,7 +297,11 @@ public class CampaignServiceImpl implements CampaignService{
 			String name = (String)params.nextElement();
 			String value = request.getParameter(name);
 			if(value != "") {
-				if(!name.equals("campno"))
+				if(name.contains("deny")) {
+					Map<String,Object> deny = new HashMap();
+					deny.put(name, value);
+					test.add(name+"="+value);
+				}
 					param.put("name", name);
 					param.put("value", value);
 					param.put(name, value);
@@ -304,6 +309,7 @@ public class CampaignServiceImpl implements CampaignService{
 					campaignDao.campTargetHistInsert(param);
 			}
 		}
+		param.put("deny", test);
 		campaignDao.campTargetCustDelete(param);
 		campaignDao.campTargetCustInsert(param);
 		

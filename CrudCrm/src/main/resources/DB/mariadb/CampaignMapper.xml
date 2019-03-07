@@ -248,7 +248,9 @@
 	<if test="addr41 != null">
 		AND LEFT(HOMADDR2,2) = #{addr41}
 	</if>
-	
+	<foreach collection="deny" item="item" index="index" open="AND (" separator="OR" close=")">
+      		${item}
+    </foreach> 
 	</insert>
 	
 	<insert id="targetInsert" parameterType="hashMap">

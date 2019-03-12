@@ -2,21 +2,21 @@
 function tinymceEditor(){
 	tinymce.init({
 		  height : "300",
+		  language: 'ko_KR',
+		  language_url : '/resources/tinymce/langs/ko_KR.js',
 	      selector: '.tinymce',  // change this value according to your HTML
-	      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
+	      toolbar: 'insertfile undo redo | fontselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link imageupload | print preview media fullpage | forecolor backcolor emoticons',
+	      font_formats: "맑은고딕='맑은고딕';굴림=굴림;돋음=돋음;바탕=바탕;궁서=궁서;Arial=Arial;Times=Times;Verdana=Verdana;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats",
 	      setup: function(editor) {
-	    	  debugger;
 	    	  if ($('#'+editor.id).prop('readonly')) {
 	    		  editor.settings.readonly = true;
 	          }
-
 	              // create input and insert in the DOM
 	              var inp = $('<input id="tinymce-uploader" type="file" name="pic" accept="image/*" style="display:none">');
 	              $(editor.getElement()).parent().append(inp);
 
 	              // add the image upload button to the editor toolbar
 	              editor.addButton('imageupload', {
-	                text: '이미지',  
 	                icon: 'image',
 	                onclick: function(e) { // when toolbar button is clicked, open file select modal
 	                  inp.trigger('click');
@@ -610,6 +610,27 @@ function tinymceEditor(){
             }
         });
     });	 
+    
+  //엑셀양식-다운로드
+    $("#excelFormBtn").on("click", function () {
+    	
+    	var $exModal = $("#exModal");
+		var url = $('#excelFormUrl').val();//해당 페이지의 hidden값에서 url을 얻는다.
+        $exModal.dialog({ modal: true });//모달 작동
+      	$('.ui-front').removeAttr('style');//불필요한 css 이미지삭제
+      	
+        $.fileDownload(url, {
+            successCallback: function (url) {
+            	$exModal.dialog('close');
+            	$('#modalCloseBtn').trigger('click');  
+            },
+            failCallback: function (responseHtml, url) {
+            	$exModal.dialog('close');
+            	$('#modalCloseBtn').trigger('click');
+            }
+        });
+    });	 
+    
     
     function formatDate(date) {
     	var time = new Date(date);

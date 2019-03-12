@@ -19,7 +19,7 @@
 			FROM me800010 A, (SELECT @RNUM := 0) R
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
-			AND A.MASTERYN != 1
+			AND IFNULL(A.MASTERYN,0) != 1
 			<if test="username != null">
 				AND A.USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>
@@ -91,7 +91,7 @@
 			FROM me800010
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
-			AND MASTERYN != 1
+			AND IFNULL(MASTERYN,0) != 0
 			<if test="username != null">
 				AND USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>
@@ -145,6 +145,7 @@
 				,REGUSER
 				,EDTDATE
 				,EDTUSER
+				,MASTERYN
 			)VALUES(
 			#{siteid}
 			,#{username}
@@ -166,6 +167,7 @@
 			,#{reguser}
 			,NOW()
 			,#{edtuser}
+			,0
 			)
 		<selectKey keyProperty="userno"  resultType="integer" order="AFTER">
 			SELECT LAST_INSERT_ID()

@@ -129,7 +129,7 @@ body {
 		
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
-	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+	<script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
 	<script>
 	
 	$(document).ready(function() {

@@ -910,6 +910,7 @@ $('#save').click(
 			var visitaddr1 = $('#visitaddr1').val();
 			var visitaddr2 = $('#visitaddr2').val();
 			var visitaddr3 = $('#visitaddr3').val();
+			var reqno = $('#reqno').val();
 
 			var param = {
 				"custno" : custno,
@@ -933,7 +934,8 @@ $('#save').click(
 				"visittime" : visittime,
 				"visitaddr1" : visitaddr1,
 				"visitaddr2" : visitaddr2,
-				"visitaddr3" : visitaddr3
+				"visitaddr3" : visitaddr3,
+				"reqno" : reqno
 			};
 
 			var productNum = $('.plus:last').prev().attr('id').substring(7, 8);

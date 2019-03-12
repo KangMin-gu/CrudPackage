@@ -48,81 +48,80 @@
 
         <div class="ibox-top">
             <div class="ibox-content clearfix">
-            <div class="cti" style="display:none">
-           		 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
-				웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
-				서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
-				<input type="button" value="웹소켓접속" onclick="webSocketGo();">
-				<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
-				<br/>
-				아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
-				비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-				전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622864">
-				<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
-				<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
-				<span id="outCallNum">07042622883</span>
-				<input type="hidden" id="ctitelno" name="ctitelno" value="07042622883" />
-				<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
-				<div>
-					<textarea id="messages" cols="150" rows="10"></textarea>
-					<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
-					<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
-				</div>
-				<input type="hidden" id="userno" value="${sessionScope.USERNO }">
-				<input type="hidden" id="chkauth" value="${sessionScope.CHKAUTH }" />
-				<input type="hidden" id="trunk" value="07042622883" /><!-- 동적으로변경 -->
-				<input type="hidden" id="reqno" name="reqno" value="" /><!-- 서비스랑 연결할 REQNO -->
-            </div>
+            	<div class="cti" style="display:none">
+           			 서버아이피: <input type="text" name="cti_server_ip" id="cti_server_ip" value="127.0.0.1">
+					웹소켓아이피: <input type="text" name="cti_server_socket_ip" id="cti_server_socket_ip" value="203.239.159.133">
+					서버포트: <input type="text" name="cti_server_port" id="cti_server_port" value="7070">
+					<input type="button" value="웹소켓접속" onclick="webSocketGo();">
+					<input type="button" value="웹소켓끊기" onclick="func_logout();goWebSocketDisconnect();">
+					<br/>
+					아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
+					비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
+					전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622864">
+					<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
+					<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
+					<span id="outCallNum">07042622883</span>
+					<input type="hidden" id="ctitelno" name="ctitelno" value="07042622883" />
+					<input type="checkbox" class="check" id="did" onclick="javascript:didCheck();">
+					<div>
+						<textarea id="messages" cols="150" rows="10"></textarea>
+						<input type="button" value="로그초기화" onclick="javascript:document.getElementById('messages').value='';">
+						<select name="callGroup" id="callGroup" style="width:131px;" onchange="javascrpt:changeGroup();"></select>
+					</div>
+					<input type="hidden" id="userno" value="${sessionScope.USERNO }">
+					<input type="hidden" id="chkauth" value="${sessionScope.CHKAUTH }" />
+					<input type="hidden" id="trunk" value="07042622883" /><!-- 동적으로변경 -->
+					<input type="hidden" id="reqno" name="reqno" value="" /><!-- 서비스랑 연결할 REQNO -->
+            	</div>
             <!-- 박진열 작업 -->
-                    <ul class="top-btn">
-                    <div>
-                    	<div style="display: inline;">
-                    	<li>수신번호 </li>
-                        <li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="delayBtn">보류 <i class="fa fa-times-circle"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="delayCancelBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
-                        &nbsp; |&nbsp;
+                <ul class="top-btn">
+                    <div style="height:30px;">
+                    	<div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 30px;">
+                    		<li>수신번호 </li>
+                        	<li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
+                        	<li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
+                        	<li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
+                        	<li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
+                        	<li class="liBtn"><button onClick="javascript:func_hold();" class="btn btn-primary btn-sm status" id="delayBtn">보류 <i class="fa fa-times-circle"></i></button></li>
+                        	<li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="delayCancelBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
+                        	&nbsp; |&nbsp;
+                        </div>
+                        <div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 400px;padding-top: 2px;">
+                        	<li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
+                        	<li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
+                        	<li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
+                        </div>
+                        <div class="ctidetail" style="display: inline;">
+                        	<li>발신번호</li>
+                        	<li><input name="blindCall" id="blindCall" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
+                        	<li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
+                        	<li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
+                        	<li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
+                        </div>
+                        <div class="ctidetail" style="display: inline;">
+                        	<li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
+                        </div>
+                        <div class="ctidetail" style="display: inline;">
+                        	<li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
+                        	<strong><span id="status">연결안됨</span></strong>
+                        	<li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
                         </div>
                         <div style="display: inline;">
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
+                        	<li class="float-right">
+                            	<ul class="top-ul03 menu">
+                                	<li>
+                                		<i id="menu" class="fa fa-bars"></i>
+                                		<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#d11507 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
+                                		<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #75bc63;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
+                                	</li>
+                            	</ul>
+                        	</li>
                         </div>
-                        <div style="display: inline;">
-                        <li>발신번호</li>
-                        <li><input name="blindCall" id="blindCall" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
-                        <li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
-                        <li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
-                        <li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
-                        </div>
-                        <div style="display: inline;">
-                        <li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-                        <li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
-                        <strong><span id="status">연결안됨</span></strong>
-                        <li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
-                        <li class="float-right">
-                            <ul class="top-ul03">
-                                <li onClick="window.open('notice.html','','resizable=yes,menubar=no,toolbar=yes,width=850,height=500,scrollbars=yes')">
-                                    <i class="fa fa-bell"></i>
-                                    <span class="li-text">3</span>
-                                </li>
-                                <li>
-                                	<i id="menu" class="fa fa-bars"></i>
-                                	<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#ff5555e8 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
-                                	<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #85ff00f5;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
-                                </li>
-                            </ul>
-                        </li>
-                        </div>
-                        </div>
-                    </ul>
-                    <!-- 박진열 작업 -->
-                </div>
+                    </div>
+                </ul>
+            </div>
         </div>
-        <div class="wrapper wrapper-content" style="padding-top: 5px;">
+        <div class="wrapper wrapper-content" style="padding-top: 10px;">
             <div class="ibox clearfix">
            
                 <div class="ibox-left">
@@ -837,7 +836,7 @@
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
 <!-- <script src="${pageContext.request.contextPath}/resources/SmartEditor/js/HuskyEZCreator.js" charset="utf-8"></script> -->
-<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+<script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -871,6 +870,7 @@ function intervalFuncOff(){//세션 유지 타이머 함수 종료
 
 $(document).ready(function () {
  
+	$('.ctidetail').hide();
 	$('.convey').hide();
 	$('.adminconvey').hide();
 	$('.reservation').hide();

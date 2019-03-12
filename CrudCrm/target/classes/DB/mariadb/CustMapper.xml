@@ -11,13 +11,13 @@
 			SITEID = #{siteid}
 			AND ISDELETE = 0 
 			<if test="custname != null">
-			AND CUSTNAME like '%'+#{custname}+'%'
+			AND CUSTNAME like CONCAT('%',#{custname},'%')
 			</if>
 			<if test="mobile != null">
-			AND MOBILE1+MOBILE2+MOBILE3 like '%'+#{mobile}+'%'
+			AND CONCAT(MOBILE1,MOBILE2,MOBILE3) like CONCAT('%',#{mobile},'%')
 			</if>
 			<if test="email != null">
-			AND EMAIL like '%'+#{email}+'%'
+			AND EMAIL like CONCAT('%',#{email},'%')
 			</if>
 			<if test="custgubun != null and custgubun != 0">
 			AND CUSTGUBUN = #{custgubun}

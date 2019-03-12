@@ -272,7 +272,99 @@ public class ExcelDownLoad {
 
 
 	}
-	
+	@RequestMapping(value="/userexcelform",method=RequestMethod.GET)
+	public void auUserForm(HttpServletRequest request, HttpServletResponse response) {
+		SXSSFWorkbook wb = new SXSSFWorkbook();
+		SXSSFCell cell;
+		SXSSFSheet sheet = wb.createSheet();
+		SXSSFRow row = sheet.createRow(0);
+		CellStyle style = wb.createCellStyle();
+		CellStyle columnColor = wb.createCellStyle();
+		CellStyle headerColor = wb.createCellStyle();
+		
+		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBorderLeft(CellStyle.BORDER_THIN);	// 셀 좌측에 얇은 실선 적용.
+		style.setBorderRight(CellStyle.BORDER_THIN);	// 셀 우측에 얇은 실선 적용.
+		style.setBorderTop(CellStyle.BORDER_THIN);	// 셀 윗쪽에 얇은 실선 적용.
+		columnColor.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+		columnColor.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		columnColor.setAlignment(CellStyle.ALIGN_CENTER);
+		
+		cell = row.createCell(0);
+		cell.setCellValue("사용자목록");
+		cell.setCellStyle(columnColor);
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+		
+		
+		row = sheet.createRow(1);
+		cell = row.createCell(0);
+		cell.setCellValue("사용자명");
+		cell.setCellStyle(style);
+		cell.setCellStyle(columnColor);
+		
+		cell = row.createCell(1);
+		cell.setCellValue("사용자ID");
+		cell.setCellStyle(style);
+		cell.setCellStyle(columnColor);
+		
+		cell = row.createCell(2);
+		cell.setCellValue("직책");
+		cell.setCellStyle(style);
+		cell.setCellStyle(columnColor);
+		
+		cell = row.createCell(3);
+		cell.setCellValue("입사일자");
+		cell.setCellStyle(style);
+		cell.setCellStyle(columnColor);
+		
+		cell = row.createCell(4);
+		cell.setCellValue("등록일");
+		cell.setCellStyle(style);
+		cell.setCellStyle(columnColor);
+		try {
+			//여기서부터 다운로드 
+			response.setHeader("Set-Cookie", "fileDownload=true; path=/");
+			String fileDate = crud.fileSearchKey(request);	
+			String excelfileName = fileDate+"_엑셀업로드양식(사용자).xlsx";
+			response.setHeader("Content-Disposition", String.format("attachment; filename=\""+excelfileName+"\""));
+			wb.write(response.getOutputStream());
+			
+		} catch (Exception e) {
+			response.setHeader("Set-Cookie", "fileDownload=false; path=/");
+			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+			response.setHeader("Content-Type", "text/html; charset=utf-8");
+			
+			logger.debug("error---------------떨어");
+			e.printStackTrace();
+			OutputStream out = null;
+			try {
+				out = response.getOutputStream();
+				logger.debug("error---------------");
+				byte[] data = new String("fail..").getBytes();
+				out.write(data, 0, data.length);
+			} catch (Exception ignore) {
+				ignore.printStackTrace();
+			} finally {
+				if (out != null)
+					try {
+						out.close();
+					} catch (Exception ignore) {
+						ignore.printStackTrace();
+					}
+			}
+
+		} finally {
+			// 디스크 적었던 임시파일을 제거합니다.
+			wb.dispose();
+
+			try {
+				wb.close();
+			} catch (Exception ignore) {
+				ignore.printStackTrace();
+			}
+		}
+		
+	}
 	//고객목록 대용량 엑셀 다운로드
 		@RequestMapping(value = "/userexcel", method = RequestMethod.GET)
 		public void adUser(HttpServletRequest request, HttpServletResponse response) {

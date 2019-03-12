@@ -17,6 +17,7 @@
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
 <link href="${pageContext.request.contextPath}/resources/css/plugins/steps/jquery.steps.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 </head>
 
 <body>
@@ -345,6 +346,68 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <div class="box1 col-lg-12 col-xl-6 p-0">
+                                				<table class="table table-bordered mb-0 border-top-0">
+                                    				<colgroup>
+                                        				<col style="width: 120px; background: #fafafa;">
+                                        				<col style="width: auto;">
+                                    				</colgroup>
+                                    				<tbody>
+                                        				<tr>
+                                            				<th class="border-top-0">메일수신거부</th>
+                                            				<td class="border-top-0">
+                                            					<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denymailnomal" name="denymailnomal" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYMAILNOMAL eq "1" ? "checked='checked'" : ""}>
+																	<label for="denymailnomal">NOMAL </label>
+																</div>
+																<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denymailsurvey" name="denymailsurvey" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYMAILSURVEY eq "1" ? "checked='checked'" : ""}>
+																	<label for="denymailsurvey">SURVEY</label>
+																</div>
+																<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denymailnews" name="denymailnews" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYMAILNEWS eq "1" ? "checked='checked'" : ""}>
+																	<label for="denymailnews">NEWS</label>
+																</div>
+																<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denymailad" name="denymailad" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYMAILAD eq "1" ? "checked='checked'" : ""}>
+																	<label for="denymailad">AD</label>
+																</div>
+                                            				</td>
+                                        				</tr>
+                                    				</tbody>
+                                				</table>
+                            				</div>
+                            				<div class="box1 col-lg-12 col-xl-6 p-0">
+                                				<table class="table table-bordered mb-0 border-top-0">
+                                    				<colgroup>
+                                        				<col style="width: 120px; background: #fafafa;">
+                                        				<col style="width: auto;">
+                                    				</colgroup>
+                                    				<tbody>
+                                        				<tr>
+                                            				<th class="border-top-0">SMS수신거부</th>
+                                            				<td class="border-top-0">
+                                            					<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denysmsnomal" name="denysmsnomal" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYSMSNOMAL eq "1" ? "checked='checked'" : ""}>
+																	<label for="denysmsnomal">NOMAL </label>
+																</div>
+																<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denysmssurvey" name="denysmssurvey" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYSMSSURVEY eq "1" ? "checked='checked'" : ""}>
+																	<label for="denysmssurvey">SURVEY</label>
+																</div>
+																<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denysmsnews" name="denysmsnews" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYSMSNEWS eq "1" ? "checked='checked'" : ""}>
+																	<label for="denysmsnews">NEWS</label>
+																</div>
+																<div class="checkbox float-left col-lg-2 p-0">
+																	<input id="denysmsad" name="denysmsad" type="checkbox" class="i-checks" disabled="disabled" ${campInfo.DENYSMSAD eq "1" ? "checked='checked'" : ""}>
+																	<label for="denysmsad">AD</label>
+																</div>
+                                            				</td>
+                                        				</tr>
+                                    				</tbody>
+                                				</table>
+                            				</div>
                                             <div class="box1 col-lg-12 col-xl-6 p-0 addr">
                                                 <table class="table table-bordered mb-0">
                                                     <colgroup>
@@ -733,7 +796,7 @@
                                                                     <table class="table table-bordered">
                                                                         <tr>
                                                                             <td>
-                                                                                <textarea name="campdesc" id="campdesc"  class="form-control tinymce" style="resize:none; height: 8em;">${campEmailForm.SENDDESC }</textarea>
+                                                                                <textarea name="senddesc" id="senddesc"  class="form-control tinymce" readonly="readonly" style="resize:none; height: 8em;">${campEmailForm.SENDDESC }</textarea>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -1056,15 +1119,16 @@
 		</div>
 </div>
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+<script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cp.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/steps/jquery.steps.min.js"></script>
-	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+	
 	<script>
 	$(document).ready(function () {
-
-		tinymceEditor();
-		
+			
 		$('#wizard').steps({
 			headerTag: "h1",
 			enableAllSteps: true,
@@ -1081,7 +1145,13 @@
 				$('#addr'+i).parents('table').parent().css('display','none');
 			}
 		}
-	
+		setTimeout(function() { 
+			tinymceEditor();
+		}, 2000)
+		
+		
+		//tinymceEditor();
+		//tinymce.activeEditor.setContent($('#senddesc').val());
 	});
 
 	</script>

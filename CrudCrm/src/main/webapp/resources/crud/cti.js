@@ -508,6 +508,7 @@ function func_logout(){
 	goWebSocketDisconnect();
 	$('#vocLogInSpan').show();
 	$('#vocLogOutSpan').hide();
+	$('.ctidetail').hide();
 	intervalFuncOff();
 	alert("로그아웃 되었습니다.");
 }
@@ -662,6 +663,7 @@ function ctiEvent(msg){
 		if(tmpData[4] == "1"){
 			alert("로그인되었습니다.");
 			$('#vocLogInSpan').hide();
+			$('.ctidetail').show();
 			$('#vocLogOutSpan').show();
 			intervalFuncOn();//세션 유지 실행
 			voc_send_message();//콜백 카운터 실행
@@ -685,6 +687,7 @@ function ctiEvent(msg){
     	alert("강제로그아웃 되었습니다.");
     	$('#vocLogInSpan').show();
 		$('#vocLogOutSpan').hide();
+		$('.ctidetail').hide();
 		document.getElementById("status").innerHTML = "연결안됨";
 		document.getElementById("transferTryCnt").innerHTML = "0";
 		document.getElementById("transferConnectCnt").innerHTML = "0";
@@ -903,6 +906,7 @@ function ctiEvent(msg){
         	func_logout();
         	$('#vocLogInSpan').show();
         	$('#vocLogOutSpan').hide();
+        	$('.ctidetail').hide();
             
         }
     } 

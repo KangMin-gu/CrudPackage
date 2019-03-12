@@ -285,10 +285,4 @@ public class AuController {
 	public String authDashboardSet2(HttpServletRequest request) {
 		return "au/db/dashboard2";
 	}
-	
-	
-	
-	
-	
-	
 }

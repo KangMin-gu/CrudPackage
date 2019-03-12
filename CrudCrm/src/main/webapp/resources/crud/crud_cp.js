@@ -1,3 +1,4 @@
+
 if($('.i-checks').length >0){
 	$('.i-checks').iCheck({
 		checkboxClass: 'icheckbox_square-green',

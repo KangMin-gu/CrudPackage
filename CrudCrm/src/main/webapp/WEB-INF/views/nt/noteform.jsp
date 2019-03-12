@@ -150,7 +150,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	
 	
-	<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>	
+	<script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_upload.js"></script>

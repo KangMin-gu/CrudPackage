@@ -199,6 +199,7 @@
 		,ISDELETE
 		,MEMO
 		,COMPLETE
+		,REQNO
 		)VALUES(
 		#{servicename}
 		,#{servicedesc}
@@ -221,6 +222,7 @@
 		,#{isdelete}
 		,#{memo}
 		,#{complete}
+		,#{reqno}
 		)
 		<selectKey keyProperty="serviceno"  resultType="integer" order="AFTER">
 			SELECT LAST_INSERT_ID()

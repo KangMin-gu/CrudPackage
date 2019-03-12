@@ -750,7 +750,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
 	 <script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 	 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-	 <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+	 <script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/clockpicker/clockpicker.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/select2/select2.full.min.js"></script>

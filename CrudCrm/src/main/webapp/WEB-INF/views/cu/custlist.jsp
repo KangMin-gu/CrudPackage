@@ -108,12 +108,12 @@
 														<div class="input-group p-0  " style="max-height: 26px; height: 26px;">
                                                     		<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
                                                       			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                      			<input type="text" class="form-control" id="fromregdt" name="fromregdt"  autocomplete="off" value="${searchVal.fromregdt }">
+                                                      			<input type="text" class="form-control" name="fromregdt" id="fromregdt" autocomplete="off" data-mask="9999-99-99" value="${searchVal.fromregdt }">
                                                     		</div>
                                                     		<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     		<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
                                                         		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        		<input type="text" class="form-control" id="toregdt" name="toregdt"  autocomplete="off" value="${searchVal.toregdt }">
+                                                        		<input type="text" class="form-control" id="toregdt" name="toregdt" autocomplete="off" data-mask="9999-99-99" value="${searchVal.toregdt }">
                                                     		</div>
                                                 		</div>	
 													</td>
@@ -255,9 +255,8 @@
                                 	</div>
                             	</div> 
 							<div  >
-								<div class="table-responsive">
+								<div class="table-responsive" style="width: 1800px;">
 									<table id="fixedtable" class="table table-bordered table-hover" style="border-top: 1px solid #EBEBEB;">
-															
 										<colgroup>
 											<col width="40px;">
 											<col width="100px;">
@@ -277,18 +276,18 @@
 												<th>
 													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
 												</th>
-												<th>고객명</th>
-												<th>직장</th>
-												<th>부서</th>
+												<th style="text-align: center;">고객명</th>
+												<th style="text-align: center;">직장</th>
+												<th style="text-align: center;">부서</th>
 												
-												<th>휴대폰</th>
-												<th>이메일</th>
+												<th style="text-align: center;">휴대폰</th>
+												<th style="text-align: center;">이메일</th>
 												
-												<th>담당자</th>
-												<th>회원구분</th>
-												<th>고객등급</th>
-												<th>정보활용</th>
-												<th>등록일</th>
+												<th style="text-align: center;">담당자</th>
+												<th style="text-align: center;">회원구분</th>
+												<th style="text-align: center;">고객등급</th>
+												<th style="text-align: center;">정보활용</th>
+												<th style="text-align: center;">등록일</th>
 											</tr>
 										</thead>
 										
@@ -414,6 +413,7 @@
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script><!-- excel file download -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_cu.js"></script><!-- cust js -->
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.fixedheadertable.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 	<script>
 		$('#headerFixTable').fixedHeaderTable({
 			height: '200'

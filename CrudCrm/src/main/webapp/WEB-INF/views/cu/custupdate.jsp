@@ -603,11 +603,11 @@
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input type="checkbox" class="i-checks" name="denytelnews" id="denytelnews"  value="1" ${custUpdate.DENYTELNEWS eq "1" ? "checked='checked'" : ""}>
-																<label for="denytelnews"> 뉴스거부</label>
+																<label for="denytelnews"> 뉴스 거부</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input type="checkbox" class="i-checks" name="denytelseminar" id="denytelseminar"  value="1" ${custUpdate.DENYTELSEMINAR eq "1" ? "checked='checked'" : ""}> 
-																<label for="denytelseminar"> 세미나거부</label>
+																<label for="denytelseminar"> 세미나 거부</label>
 															</div>
 														</td>
 													</tr>
@@ -616,11 +616,11 @@
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input type="checkbox" class="i-checks" name="denyfax" id="denyfax"  value="1" ${custUpdate.DENYFAX eq "1" ? "checked='checked'" : ""}>
-																<label for="denyfax"> FAX거부</label>
+																<label for="denyfax"> FAX 거부</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input type="checkbox" class="i-checks" name="denyvisit" id="denyvisit"  value="1" ${custUpdate.DENYVISIT eq "1" ? "checked='checked'" : ""}>
-																<label for="denyvisit"> 방문거부</label>
+																<label for="denyvisit"> 방문 거부</label>
 															</div>
 														</td>
 													</tr>

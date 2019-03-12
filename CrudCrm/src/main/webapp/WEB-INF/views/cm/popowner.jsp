@@ -64,10 +64,10 @@ body {
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>사용자명</th>
-									<th>아이디</th>
-									<th>직급</th>
-									<th>권한</th>
+									<th style="text-align: center">사용자명</th>
+									<th style="text-align: center">아이디</th>
+									<th style="text-align: center">직급</th>
+									<th style="text-align: center">권한</th>
 								</tr>
 							</thead>
 							<tbody>

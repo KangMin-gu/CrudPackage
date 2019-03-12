@@ -66,9 +66,9 @@ body {
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
-									<th>거래처명</th>
-									<th>호칭명</th>
-									<th>담당자</th>
+									<th style="text-align: center">거래처명</th>
+									<th style="text-align: center">호칭명</th>
+									<th style="text-align: center">담당자</th>
 									
 								</tr>
 							</thead>

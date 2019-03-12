@@ -47,8 +47,7 @@ body {
 										<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip">
 											<i class="fa fa-reply"></i> 발송
 										</button>
-										<a href="mailbox.html" class="btn btn-white btn-sm"
-											data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
+										<a href="javascript:self.close();" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 									</div>
 								</div>
 							</div>
@@ -127,11 +126,7 @@ body {
 										<button class="btn btn-sm btn-primary" id="sub" data-toggle="tooltip" >
 											<i class="fa fa-reply"></i> 발송
 										</button>
-									
-									
-									
-									<a href="mailbox.html" class="btn btn-white btn-sm"
-										data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
+										<a href="javascript:self.close();" class="btn btn-white btn-sm" data-toggle="tooltip"><i class="fa fa-times"></i> 취소</a>
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -152,7 +147,7 @@ body {
 	
 	
 	<script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
-		
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/plugins/chosen/chosen.jquery.js"></script>
 

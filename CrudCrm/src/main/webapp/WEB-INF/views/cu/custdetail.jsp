@@ -481,11 +481,11 @@
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="callCheck1" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYTELNEWS eq "1" ? "checked='checked'" : ""}>
-																<label for="callCheck1"> 뉴스거부</label>
+																<label for="callCheck1"> 뉴스 거부</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="callCheck2" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYTELSEMINAR eq "1" ? "checked='checked'" : ""}>
-																<label for="callCheck2"> 세미나거부</label>
+																<label for="callCheck2"> 세미나 거부</label>
 															</div>
 														</td>
 													</tr>
@@ -494,11 +494,11 @@
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="etcCheck1" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYFAX eq "1" ? "checked='checked'" : ""}>
-																<label for="etcCheck1"> FAX거부</label>
+																<label for="etcCheck1"> FAX 거부</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="etcCheck2" type="checkbox" class="i-checks" disabled="disabled" ${custDetail.DENYVISIT eq "1" ? "checked='checked'" : ""}>
-																<label for="etcCheck2"> 방문거부</label>
+																<label for="etcCheck2"> 방문 거부</label>
 															</div>
 														</td>
 													</tr>
@@ -562,15 +562,15 @@
 																
 																<thead>
 																	<tr>
-																		 <th>서비스명</th>
-                                        								 <th>접수유형</th>
-                                         								 <th>접수매체</th>
-                                        							  	 <th>고객명</th>
-                                        								 <th>거래처명</th>
-                                        								 <th>접수일</th>
-                                      								     <th>접수자</th>
-                                        								 <th>담당자</th>
-                                        								 <th>처리상태</th>
+																		 <th style="text-align: center;">서비스명</th>
+                                        								 <th style="text-align: center;">접수유형</th>
+                                         								 <th style="text-align: center;">접수매체</th>
+                                        							  	 <th style="text-align: center;">고객명</th>
+                                        								 <th style="text-align: center;">거래처명</th>
+                                        								 <th style="text-align: center;">접수일</th>
+                                      								     <th style="text-align: center;">접수자</th>
+                                        								 <th style="text-align: center;">담당자</th>
+                                        								 <th style="text-align: center;">처리상태</th>
 																	</tr>
 																</thead>
 																<tbody>			
@@ -619,11 +619,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th>영업건명</th>
-																		<th>예상수주일</th>
-																		<th>영업담당자</th>
-																		<th>현단계</th>
-																		<th>단계진입일</th>
+																		<th style="text-align: center;">영업건명</th>
+																		<th style="text-align: center;">예상수주일</th>
+																		<th style="text-align: center;">영업담당자</th>
+																		<th style="text-align: center;">현단계</th>
+																		<th style="text-align: center;">단계진입일</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -655,11 +655,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th>접촉자</th>
-																		<th>접촉일</th>
-																		<th>고객명</th>
-																		<th>접촉매체</th>
-																		<th>접촉메모</th>
+																		<th style="text-align: center;">접촉자</th>
+																		<th style="text-align: center;">접촉일</th>
+																		<th style="text-align: center;">고객명</th>
+																		<th style="text-align: center;">접촉매체</th>
+																		<th style="text-align: center;">접촉메모</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>
@@ -689,11 +689,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th>캠페인명</th>
-																		<th>시작일</th>
-																		<th>종료일</th>
-																		<th>채널매체</th>
-																		<th>캠페인담당자</th>
+																		<th style="text-align: center;">캠페인명</th>
+																		<th style="text-align: center;">시작일</th>
+																		<th style="text-align: center;">종료일</th>
+																		<th style="text-align: center;">채널매체</th>
+																		<th style="text-align: center;">캠페인담당자</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>

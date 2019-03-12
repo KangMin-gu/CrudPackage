@@ -107,8 +107,8 @@
                                                             	<option label="${code.codename }" value="${code.codeval }"/>
                                                    			</c:forEach>
                                                 		</select>	
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3" >
+														<input type="number" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrktel2" id="wrktel2" > 
+														<input type="number" class="form-control col-3 float-left validate phone3V phone-group" name="wrktel3" id="wrktel3" >
 													</td>
 												</tr>
 											</tbody>
@@ -144,8 +144,8 @@
                                                    			</c:forEach>
 														</select>
                                                 		
-														<input type="text" class="form-control col-3 float-left mr-2 error validate phone2V phone-group required" name="mobile2" id="mobile2"  > 
-														<input type="text" class="form-control col-3 float-left error validate phone3V phone-group required" name="mobile3" id="mobile3"  >														
+														<input type="number" class="form-control col-3 float-left mr-2 error validate phone2V phone-group required" name="mobile2" id="mobile2"  > 
+														<input type="number" class="form-control col-3 float-left error validate phone3V phone-group required" name="mobile3" id="mobile3"  >														
 														<span id="msgRegular"></span>
 													</td>
 												</tr>
@@ -159,8 +159,8 @@
                                                    			</c:forEach>
                                                 		 </select>
 													
-														<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" > 
-														<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3" >
+														<input type="number" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="wrkfax2" id="wrkfax2" > 
+														<input type="number" class="form-control col-3 float-left validate phone3V phone-group" name="wrkfax3" id="wrkfax3" >
 													</td>
 												</tr>
 											</tbody>
@@ -179,11 +179,11 @@
 												</tr>
 												<tr>
 													<th>이메일</th>
-													<td><input type="email" class="form-control validate emailV" style="height: 1.45rem" name="email" id="email" ></td>
+													<td><input type="email" class="form-control validate emailV onlyeng"  style="height: 1.45rem" name="email" id="email" ></td>
 												</tr>
 												<tr>
 													<th>홈페이지</th>
-													<td><input type="text" class="form-control validate homepageV"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) www.crudsystem.co.kr "></td>
+													<td><input type="text" class="form-control validate homepageV onlyeng"  style="height: 1.45rem" name="wrkurl" id="wrkurl" placeholder="ex) www.crudsystem.co.kr "></td>
 												</tr>
 											</tbody>
 										</table>
@@ -258,8 +258,8 @@
                                                             	<option label="${code.codename }" value="${code.codeval }"/>
                                                    				</c:forEach>
                                                 			</select>	
-															<input type="text" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" > 
-															<input type="text" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3">
+															<input type="number" class="form-control col-3 float-left mr-2 validate phone2V phone-group" name="homtel2" id="homtel2" > 
+															<input type="number" class="form-control col-3 float-left validate phone3V phone-group" name="homtel3" id="homtel3">
 														</td>
 													</tr>
 													<tr>
@@ -517,11 +517,11 @@
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="callCheck1" type="checkbox" class="i-checks" name="denytelnews" id="denytelnews"  value="1">
-																<label for="callCheck1"> 뉴스거부</label>
+																<label for="callCheck1"> 뉴스 거부</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="callCheck2" type="checkbox" class="i-checks" name="denytelseminar" id="denytelseminar"  value="1"> 
-																<label for="callCheck2"> 세미나거부</label>
+																<label for="callCheck2"> 세미나 거부</label>
 															</div>
 														</td>
 													</tr>
@@ -530,11 +530,11 @@
 														<td>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="etcCheck1" type="checkbox" class="i-checks" name="denyfax" id="denyfax"  value="1">
-																<label for="etcCheck1"> FAX거부</label>
+																<label for="etcCheck1"> FAX 거부</label>
 															</div>
 															<div class="checkbox float-left col-lg-2 p-0">
 																<input id="etcCheck2" type="checkbox" class="i-checks" name="denyvisit" id="denyvisit"  value="1">
-																<label for="etcCheck2"> 방문거부</label>
+																<label for="etcCheck2"> 방문 거부</label>
 															</div>
 														</td>
 													</tr>

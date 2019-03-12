@@ -103,14 +103,14 @@
                         </div>
                         <div class="ctidetail" style="display: inline;">
                         	<li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
-                        	<strong><span id="status">연결안됨</span></strong>
-                        	<li class="mr-2 ml-2"><strong>고객대기 <span id="cti_waitting_cnt">0</span></strong></li>
+                        	<strong id="status">연결안됨</strong>
+                        	<li class="mr-2 ml-2">고객대기 <strong id="cti_waitting_cnt">0</strong></li>
                         </div>
                         <div style="display: inline;">
                         	<li class="float-right">
                             	<ul class="top-ul03 menu">
                                 	<li>
-                                		<i id="menu" class="fa fa-bars"></i>
+                                		<i id="menu" class="fa fa-bars" style="padding-right: 5px;"></i>
                                 		<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#d11507 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
                                 		<span id="vocLogOutSpan" style="display:none;"><i class="fa fa-power-off" style="color: #75bc63;" id="vocLogOutBtn" onclick="func_logout();"></i></span>
                                 	</li>

@@ -581,7 +581,7 @@
                                 <td colspan="3">
                                     <div class="i-checks servicetype voc">
                                     	<c:forEach var="serviceType" items="${SERVICETYPE }">
-                                    		<label class="mr-2 mb-0"><input type="radio" value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
+                                    		<label class="mr-2 mb-0"><input type="radio" disabled value="${serviceType.codeval }" id="servicetype" name="servicetype">${serviceType.codename}</label>
                                         </c:forEach>
                                     </div>
                                 </td>
@@ -589,7 +589,7 @@
                             <tr>
                                 <th>접수유형</th>
                                 <td colspan="3" class="clearfix">
-                                    <select class="form-control float-left mr-2 col-sm-5 voc" name="servicecode1" id="servicecode1">
+                                    <select class="form-control float-left mr-2 col-sm-5 voc" disabled name="servicecode1" id="servicecode1">
                                         <option label="선택" value=""/>
                                         <c:forEach var="serviceCode1" items="${SERVICECODE1 }">
                                             <c:choose>
@@ -602,7 +602,7 @@
                                         	</c:choose>
                                     	</c:forEach>
                                     </select>
-                                    <select class="form-control float-left mr-2 col-sm-5 voc" name="servicecode2" id="servicecode2" upper ="servicecode1">
+                                    <select class="form-control float-left mr-2 col-sm-5 voc" disabled name="servicecode2" id="servicecode2" upper ="servicecode1">
                                         <option label="선택" value=""/>
                                         
                                     </select>
@@ -614,16 +614,16 @@
                                     <div class="select-area mt-1">
                                         <!-- S: 이 영역을 계속 추가 하면 됨 -->
                                          <div class="select-box mb-1 product" style="height: 29px;">
-                                            <select id="product11" name="product11"  class="form-control d-inline-block mr-2 voc">
+                                            <select id="product11" name="product11" disabled class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                                 <c:forEach var="productB" items="${productB }">
                                             		<option label="${productB.prdname }" value="${productB.prdno }"/>
                                     			</c:forEach>
                                             </select>
-                                            <select id="product12" name="product12"  class="form-control d-inline-block mr-2 voc">
+                                            <select id="product12" name="product12" disabled class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                             </select>
-                                            <select id="product13" name="product13" class="form-control d-inline-block mr-2 voc">
+                                            <select id="product13" name="product13" disabled class="form-control d-inline-block mr-2 voc">
                                             	<option value="">선택</option>
                                             </select>
                                             <button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>
@@ -636,13 +636,13 @@
                             <tr>
                                 <th>제목</th>
                                 <td colspan="3">
-                                    <textarea type="text"class="form-control voc" name="servicename" style="height:75px;"id="servicename" value="${vocInfo.SERVICENAME }">${vocInfo.SERVICENAME }</textarea>
+                                    <textarea type="text"class="form-control voc" disabled name="servicename" style="height:75px;"id="servicename" value="${vocInfo.SERVICENAME }">${vocInfo.SERVICENAME }</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <th>상담내용</th>
                                 <td colspan="2">
-                                    <textarea name="servicedesc" id="servicedesc" class="form-control voc tinymce" cols="1500" style="height: 350px; resize: none;"></textarea>
+                                    <textarea name="servicedesc" id="servicedesc" readonly="readonly" class="form-control voc tinymce" cols="1500" style="height: 350px; resize: none;"></textarea>
                                 </td>
                                 <td colspan="1" style="width: 150px;">
                                 
@@ -655,7 +655,7 @@
                             			<span class="input-group-addon">
                                     		<span class="fa fa-calendar"></span>
                                 		</span>
-                                		<input type="text" class="form-control voc" readOnly="true" name="visitdate" id="visitdate" value="">
+                                		<input type="text" class="form-control voc"  readOnly="true" name="visitdate" id="visitdate" value="">
                             		</div>
                             	</td>
                             	<th>방문 기사</th>
@@ -686,10 +686,10 @@
                                 <th>상담결과</th>
                                 <td colspan="3">
                                     <div class="i-checks voc">
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="3" id="vocstep3" name="vocstep"> 처리</label>
+                                        <label class="mr-2 mb-0"><input type="radio" disabled class="check" value="3" id="vocstep3" name="vocstep"> 처리</label>
                                         <!-- <label class="mb-0"><input type="radio" class="check" value="4" id="vocstep3" name="vocstep"> 상담예약</label>-->
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="5" id="vocstep5" name="vocstep"> 담당자 이관</label>
-                                        <label class="mr-2 mb-0"><input type="radio" class="check" value="6" id="vocstep6" name="vocstep"> 상급자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" disabled class="check" value="5" id="vocstep5" name="vocstep"> 담당자 이관</label>
+                                        <label class="mr-2 mb-0"><input type="radio" disabled class="check" value="6" id="vocstep6" name="vocstep"> 상급자 이관</label>
                                     </div>
                                 </td>
                             </tr>
@@ -744,7 +744,7 @@
                             <tr class="adminconvey">
                             	<th>비고</th>
                             	<td colspan="3">
-                            		<textarea id="conveydesc" class="form-control voc" name="conveydesc" cols="80" rows="3"></textarea>
+                            		<textarea id="conveydesc" disabled class="form-control voc" name="conveydesc" cols="80" rows="3"></textarea>
                             	</td>
                             </tr>
                             <tr class="reservation">
@@ -780,7 +780,7 @@
                             <tr>
                                 <th>메모</th>
                                 <td colspan="3" >
-                                    <textarea name="memo" id="memo" class="form-control voc" style="height: 150px; resize: none;"></textarea>
+                                    <textarea name="memo" id="memo" disabled class="form-control voc" style="height: 150px; resize: none;"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -875,6 +875,7 @@ $(document).ready(function () {
 	$('.adminconvey').hide();
 	$('.reservation').hide();
 	$('.as').hide();
+	$('#save').hide();
 	$('.product .minus:first').remove();
 	var url = window.location.pathname;
 	vocContents("0",url);

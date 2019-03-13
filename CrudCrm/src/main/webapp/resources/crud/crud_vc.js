@@ -225,7 +225,6 @@ function setTableSize(tableId,colWidthArray){//테이블 해더 고정.
 }
 
 function tabTargetVocService(pageNum){//서비스탭
-	debugger;
 	var custNo = $('#custno').val();
 	var urlStr = '/vc/tab/sv?custno='+custNo+'&pageNum='+pageNum;
 	
@@ -238,7 +237,6 @@ function tabTargetVocService(pageNum){//서비스탭
 	        dataType: "json",
 	        cache: false,
 	        success: function (data) {
-	        	debugger;
 	        	$('#tab1 tbody tr').remove();
 	        	$('#tab1 .pagination li').remove();
 	        	
@@ -589,6 +587,7 @@ function vocGetCustInfo(urlStr) {
 		method : "GET",
 		dataType : "json",
 		cache : false,
+		async : false,
 		success : function(data) {
 			custInfoClear();// 기존 입력 된 데이터 삭제
 			custInfoBinding(data);// 바인딩
@@ -622,6 +621,7 @@ function vocGetServiceInfo(urlServ) {
 		method : "GET",
 		dataType : "json",
 		cache : false,
+		async : false,
 		success : function(data) {
 			serviceInfoBinding(data);// 바인딩
 		},
@@ -964,6 +964,11 @@ $('#save').click(
 						tinymce.activeEditor.setContent('');
 						$('#create').show();
 						$('#save').hide();
+						$('[id*=product]').attr('disabled',true);
+						$('#servicename').attr('disabled',true);
+						$('#memo').attr('disabled',true);
+						opener.tinymce.activeEditor.setMode('readonly');
+						$('.voc').iCheck('disable');
 						//oEditors.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
 					}
 				},
@@ -1650,7 +1655,6 @@ function callBackMatching(idx){//매칭 버튼 클릭시 현재 바인딩 된 �
 
 function goPlay(recDate, recExt, recFilename){
 	var urlStr = "http://203.239.159.133:8090";
-	debugger;
 	var recIdx = '';	
     var nucIdx = 0;
 	$.ajax({
@@ -1664,7 +1668,6 @@ function goPlay(recDate, recExt, recFilename){
 		},
 		dataType : "json",
 		success : function(req) {
-			debugger;
 			var result_code = req.result_code;//상태
 			var result_msg = req.result_msg;
 			var result_idx = req.result_idx;
@@ -1677,7 +1680,6 @@ function goPlay(recDate, recExt, recFilename){
 			}
 		},		
 		error : function(result, status, err) {
-			debugger;
 			alert(result + " / " + status + " / " + err);
 		},
 		beforeSend: function() {

@@ -1337,11 +1337,9 @@ $('#asowner').change(
 		});
 
 // 타이머
-var second = 0;
-var min = 00;
-
 function startInterval() {
 	second = 1;
+	min = 00;
 	vocTimer = setInterval(function() {
 		// 0초면 초기화 후 이동되는 사이트
 		if (second == 60) {

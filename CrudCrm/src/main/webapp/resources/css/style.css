@@ -9588,4 +9588,5 @@ button {cursor:pointer !important;}
 .select-area{width: 100%; max-height: 95px; overflow-y: auto;}
 .fa-calendar{cursor:pointer}
 .onlyeng{ime-mode:disabled}
+.tablecenter{text-align: center;}
 

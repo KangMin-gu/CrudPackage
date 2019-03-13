@@ -76,9 +76,9 @@
             <!-- 박진열 작업 -->
                 <ul class="top-btn">
                     <div style="height:30px;">
-                    	<div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 30px;">
+                    	<div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 180px;">
                     		<li>수신번호 </li>
-                        	<li><input name="makeCallNum" id="makeCallNum" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
+                        	<li><input name="makeCallNum" id="makeCallNum" type="text" style="width:240px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
                         	<li class="liBtn"><button onclick="javascript:func_answer();" class="btn btn-primary btn-sm" id="answerBtn">받기 <i class="fa fa-phone"></i></button></li>
                         	<li class="liBtn"><button onclick="javascript:func_pickup();" class="btn btn-primary btn-sm" id="pickupBtn">당겨받기 <i class="fa fa-phone"></i></button></li>
                         	<li class="liBtn"><button onclick="javascript:func_hangup();" class="btn btn-primary btn-sm" id="hangUpBtn">끊기 <i class="fa fa-phone"></i></button></li>
@@ -86,22 +86,22 @@
                         	<li class="liBtn"><button onClick="javascript:func_unhold();" class="btn btn-primary btn-sm status" id="delayCancelBtn">보류해제 <i class="fa fa-times-circle-o"></i></button></li>
                         	&nbsp; |&nbsp;
                         </div>
-                        <div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 400px;padding-top: 2px;">
+                        <div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 550px;padding-top: 2px;">
                         	<li class="liBtn"><button onClick="javascript:func_changeTellerStatus('0300');"class="btn btn-primary btn-sm status" id="waitingBtn">대기 <i class="fa fa-spinner"></i></button></li>
                         	<li class="liBtn"><button onClick="javascript:func_changeTellerStatus('R001');" class="btn btn-primary btn-sm status" id="restBtn">휴식 <i class="fa fa-coffee"></i></button></li>
                         	<li class="liBtn"><button onClick="javascript:func_changeTellerStatus('W004');" class="btn btn-primary btn-sm status" id="postCleaningBtn">후처리 <i class="fa fa-phone"></i></button></li>&nbsp; | &nbsp;
                         </div>
-                        <div class="ctidetail" style="display: inline;">
+                        <div class="ctidetail" style="display: inline; position:fixed;top:20px; left:790px">
+                        	<li><span id="timer">00 : 00</span></li>&nbsp; | &nbsp;
+                        </div>
+                        <div class="ctidetail" style="display: inline;position:fixed;top:20px;left:850px">
                         	<li>발신번호</li>
                         	<li><input name="blindCall" id="blindCall" type="text" style="width:90px;ime-mode:disabled" onKeyPress="return CheckNumeric();" onPaste="return fnPaste();" class="cti_input"></li>
                         	<li class="liBtn"><button onclick="javascript:didCheckMakeCall();" class="btn btn-primary btn-sm" id="dialingBtn">걸기 <i class="fa fa-phone"></i></button></li>
-                        	<li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">블라인드호전환<i class="fa fa-mail-forward"></i></button></li>&nbsp; | &nbsp;
-                        	<li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>&nbsp; | &nbsp;
+                        	<li class="liBtn"><button onClick="javascript:func_blindTransfer(document.getElementById('blindCall').value,'');" class="btn btn-primary btn-sm status" id="transferBtn">호전환<i class="fa fa-mail-forward"></i></button></li>
+                        	<li class="liBtn"><button onClick="javascript:func_threeWayCall();" class="btn btn-primary btn-sm status" id="threeWayBtn">3자 통화<i class="fa fa-group"></i></button></li>
                         </div>
-                        <div class="ctidetail" style="display: inline;">
-                        	<li><span id="timer">00 : 00 : 00</span></li>&nbsp; | &nbsp;
-                        </div>
-                        <div class="ctidetail" style="display: inline;">
+                        <div class="ctidetail" style="display: inline;position:fixed;top:20px;left:1200px">
                         	<li class="liBtn2"><span>상담창 상태</span><input type="hidden" id="tellerStatus" name="tellerStatus"/>
                         	<strong id="status">연결안됨</strong>
                         	<li class="mr-2 ml-2">고객대기 <strong id="cti_waitting_cnt">0</strong></li>

@@ -2,7 +2,7 @@
 
 .clearfix:after{content: ''; display: block; clear: both;}
 html{height: auto;}
-body{overflow-x: auto; background-color: #ffffff;}
+body{background-color: #ffffff;body;overflow-y: hidden; overflow-x: hidden;}
 #wrap{width: 100%; height: auto; margin: 100px 0;}
 .wrapper-content{padding: 0;}
 #page-wrapper{margin-left: 0 !important; padding: 0 !important; min-width: 1650px;}

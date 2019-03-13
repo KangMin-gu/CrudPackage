@@ -171,12 +171,12 @@
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" name="userno"></th>
-                                        <th>사용자명</th>
-                                        <th>사용자ID</th>
-                                        <th>직책</th>
-                                        <th>입사일자</th>
-                                        <th>사용자상태</th>
-                                        <th>등록일시</th>
+                                        <th class="tablecenter">사용자명</th>
+                                        <th class="tablecenter">사용자ID</th>
+                                        <th class="tablecenter">직책</th>
+                                        <th class="tablecenter">입사일자</th>
+                                        <th class="tablecenter">사용자상태</th>
+                                        <th class="tablecenter">등록일시</th>
                                     </tr>
                                 </thead>
                                 <tbody>

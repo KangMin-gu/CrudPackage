@@ -11,7 +11,7 @@ public class Encryptor {
 			        pbeEnc.setAlgorithm("PBEWithMD5AndDES");
 			        pbeEnc.setPassword("jasyptPass"); // PBE 값(XML PASSWORD설정)
 			        
-			        String url = pbeEnc.encrypt("jdbc:mysql://211.233.87.130:3306/crud_saas?allowMultiQueries=true");
+			        String url = pbeEnc.encrypt("jdbc:mysql://125.129.242.156:3306/crud_saas?allowMultiQueries=true");
 			        String username = pbeEnc.encrypt("root");
 			        String password = pbeEnc.encrypt("crudsystem1008!");
 			        

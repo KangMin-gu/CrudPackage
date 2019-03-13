@@ -244,7 +244,7 @@ function changePhoneState(state, stateStr){
     	// check
     	setBtnStatus("answerBtn",true);setBtnStatus("pickupBtn",true);
     	setBtnStatus("hangUpBtn",false);setBtnStatus("delayBtn",false);
-    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",true);
+    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",false);
     	setBtnStatus("transferBtn",false);setBtnStatus("threeWayBtn",true);
     }else if(state=="0322"){//호분배 실패 - X
           changePhoneStateNone();
@@ -262,7 +262,7 @@ function changePhoneState(state, stateStr){
     }else if(state=="0331"){//Out 연결 - 걸기, 끊기, 보류, 블라인드 호전환
     	setBtnStatus("answerBtn",true);setBtnStatus("pickupBtn",true);
     	setBtnStatus("hangUpBtn",false);setBtnStatus("delayBtn",false);
-    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",true);
+    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",false);
     	setBtnStatus("transferBtn",false);setBtnStatus("threeWayBtn",true);
     }else if(state=="0332"){//Out 실패
           changePhoneStateNone();

@@ -562,15 +562,15 @@
 																
 																<thead>
 																	<tr>
-																		 <th style="text-align: center;">서비스명</th>
-                                        								 <th style="text-align: center;">접수유형</th>
-                                         								 <th style="text-align: center;">접수매체</th>
-                                        							  	 <th style="text-align: center;">고객명</th>
-                                        								 <th style="text-align: center;">거래처명</th>
-                                        								 <th style="text-align: center;">접수일</th>
-                                      								     <th style="text-align: center;">접수자</th>
-                                        								 <th style="text-align: center;">담당자</th>
-                                        								 <th style="text-align: center;">처리상태</th>
+																		 <th class="tablecenter">서비스명</th>
+                                        								 <th class="tablecenter">접수유형</th>
+                                         								 <th class="tablecenter">접수매체</th>
+                                        							  	 <th class="tablecenter">고객명</th>
+                                        								 <th class="tablecenter">거래처명</th>
+                                        								 <th class="tablecenter">접수일</th>
+                                      								     <th class="tablecenter">접수자</th>
+                                        								 <th class="tablecenter">담당자</th>
+                                        								 <th class="tablecenter">처리상태</th>
 																	</tr>
 																</thead>
 																<tbody>			
@@ -619,11 +619,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th style="text-align: center;">영업건명</th>
-																		<th style="text-align: center;">예상수주일</th>
-																		<th style="text-align: center;">영업담당자</th>
-																		<th style="text-align: center;">현단계</th>
-																		<th style="text-align: center;">단계진입일</th>
+																		<th class="tablecenter">영업건명</th>
+																		<th class="tablecenter">예상수주일</th>
+																		<th class="tablecenter">영업담당자</th>
+																		<th class="tablecenter">현단계</th>
+																		<th class="tablecenter">단계진입일</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -655,11 +655,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th style="text-align: center;">접촉자</th>
-																		<th style="text-align: center;">접촉일</th>
-																		<th style="text-align: center;">고객명</th>
-																		<th style="text-align: center;">접촉매체</th>
-																		<th style="text-align: center;">접촉메모</th>
+																		<th class="tablecenter">접촉자</th>
+																		<th class="tablecenter">접촉일</th>
+																		<th class="tablecenter">고객명</th>
+																		<th class="tablecenter">접촉매체</th>
+																		<th class="tablecenter">접촉메모</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>
@@ -689,11 +689,11 @@
 															<table class="table table-bordered">
 																<thead>
 																	<tr>
-																		<th style="text-align: center;">캠페인명</th>
-																		<th style="text-align: center;">시작일</th>
-																		<th style="text-align: center;">종료일</th>
-																		<th style="text-align: center;">채널매체</th>
-																		<th style="text-align: center;">캠페인담당자</th>
+																		<th class="tablecenter">캠페인명</th>
+																		<th class="tablecenter">시작일</th>
+																		<th class="tablecenter">종료일</th>
+																		<th class="tablecenter">채널매체</th>
+																		<th class="tablecenter">캠페인담당자</th>
 																	</tr>
 																</thead>
 																<tbody></tbody>

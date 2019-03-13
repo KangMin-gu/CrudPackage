@@ -276,18 +276,18 @@
 												<th>
 													<input type="checkbox" class="i-checks" id="icheckAll" name = "icheckAll" >
 												</th>
-												<th style="text-align: center;">고객명</th>
-												<th style="text-align: center;">직장</th>
-												<th style="text-align: center;">부서</th>
+												<th class="tablecenter">고객명</th>
+												<th class="tablecenter">직장</th>
+												<th class="tablecenter">부서</th>
 												
-												<th style="text-align: center;">휴대폰</th>
-												<th style="text-align: center;">이메일</th>
+												<th class="tablecenter">휴대폰</th>
+												<th class="tablecenter">이메일</th>
 												
-												<th style="text-align: center;">담당자</th>
-												<th style="text-align: center;">회원구분</th>
-												<th style="text-align: center;">고객등급</th>
-												<th style="text-align: center;">정보활용</th>
-												<th style="text-align: center;">등록일</th>
+												<th class="tablecenter">담당자</th>
+												<th class="tablecenter">회원구분</th>
+												<th class="tablecenter">고객등급</th>
+												<th class="tablecenter">정보활용</th>
+												<th class="tablecenter">등록일</th>
 											</tr>
 										</thead>
 										

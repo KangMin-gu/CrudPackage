@@ -19,17 +19,6 @@ public class VocDaoImpl implements VocDao{
 	
 	@Autowired
 	private SqlSession session;
-
-	@Override
-	public int vocInsert(Map<String, Object> param) {
-		int cnt = session.insert("vc.insert",param);
-		return cnt;
-	}
-
-	@Override
-	public void vocGoodsInsert(Map<String, Object> param) {
-		session.insert("vc.goodsInsert",param);
-	}
 	
 	//VOC 좌측 탭 - email 리스트 카운트 
 	@Override
@@ -54,14 +43,14 @@ public class VocDaoImpl implements VocDao{
 	//VOC 블랙 추가 
 	@Override
 	public int vocBlackCustInsert(Map<String,Object> blackInsMap){
-		session.insert("sv.vocBlackCustInsert",blackInsMap);
+		session.insert("voc.vocBlackCustInsert",blackInsMap);
 		int bcustno = (int)blackInsMap.get("bcustno");
 		return bcustno;
 	}
 	//VOC 블랙 삭제
 	@Override
 	public int vocBlackCustDelete(Map<String, Object> param) {
-		int bcustno = session.update("sv.vocBlackCustDelete",param);
+		int bcustno = session.update("voc.vocBlackCustDelete",param);
 		return bcustno;
 	}
 

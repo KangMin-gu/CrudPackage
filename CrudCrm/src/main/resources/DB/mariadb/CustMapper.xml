@@ -44,24 +44,22 @@
 	
 	<!-- 고객 리스트 출력 -->
 	<select id="custList" parameterType="hashMap" resultType="hashMap">
-		SELECT
-		 *
-		FROM (
-			SELECT 
-			@RNUM:=@RNUM + 1 AS ROWNUM
-			, CU.CUSTNO, CU.CUSTNAME, CU.DEPTNAME, CU.DUTY
-			, CONCAT(CU.MOBILE1,'-',CU.MOBILE2,'-',CU.MOBILE3) AS MOBILE
-			, CU.EMAIL, CU.SEX
-			, CU.OWNER, B.USERNAME AS OWNER_
-			, CU.CUSTGUBUN, CU.CUSTGRADE, CU.INFOAGREE
-			, DATE_FORMAT(CU.REGDATE,'%Y-%m-%d') AS REGDATE
-			, CU.CLINO, C.CLINAME 
-			FROM cu100010 CU  
-			LEFT OUTER JOIN me800010 AS B ON CU.OWNER = B.USERNO 
-			LEFT OUTER JOIN sa200010 AS C ON CU.CLINO = C.CLINO
-			,(SELECT @RNUM := 0) R	
-			WHERE
-				CU.SITEID = #{siteid}
+		SELECT * FROM (
+			SELECT *, @RNUM:=@RNUM + 1 AS ROWNUM
+			FROM (
+				SELECT 
+			 		CU.CUSTNO, CU.CUSTNAME, CU.DEPTNAME, CU.DUTY
+					, CONCAT(CU.MOBILE1,'-',CU.MOBILE2,'-',CU.MOBILE3) AS MOBILE
+					, CU.EMAIL, CU.SEX
+					, CU.OWNER, B.USERNAME AS OWNER_
+					, CU.CUSTGUBUN, CU.CUSTGRADE, CU.INFOAGREE
+					, DATE_FORMAT(CU.REGDATE,'%Y-%m-%d') AS REGDATE
+					, CU.CLINO, C.CLINAME 
+				FROM cu100010 CU  
+				LEFT OUTER JOIN me800010 AS B ON CU.OWNER = B.USERNO 
+				LEFT OUTER JOIN sa200010 AS C ON CU.CLINO = C.CLINO
+				INNER JOIN (SELECT @RNUM := 0) R	
+				WHERE CU.SITEID = #{siteid}
 				AND CU.ISDELETE = 0 
 				<if test="custname != null">
 				AND CU.CUSTNAME like CONCAT('%',#{custname},'%')
@@ -96,8 +94,9 @@
 				</if>
 			ORDER BY CU.CUSTNAME	
 			) T
+		) XX
 		<if test="endRowNum != null">
-		WHERE ROWNUM between #{startRowNum} and #{endRowNum}
+		WHERE XX.ROWNUM between #{startRowNum} and #{endRowNum}
 		</if>	
 	</select>
 	
@@ -522,35 +521,28 @@
 	<!-- 고객상세-탭 캠페인 리스트 -->
 	<select id="custTabCampList" parameterType="hashMap" resultType="hashMap">
 	
-	SELECT
-	*
-	FROM
-		(
-		SELECT
-  		@RNUM:=@RNUM + 1 AS ROWNUM
-		,B.CAMPNO, B.CAMPNAME
-		,B.CAMPTYPE, B.CAMPSTEP
-		,DATE_FORMAT(B.STARTDATE,'%Y-%m-%d') AS STARTDATE
-		,DATE_FORMAT(B.ENDDATE,'%Y-%m-%d') AS ENDDATE
-		,B.OWNER
-		,C.USERNAME 
-	
-		FROM cp400021 A  
-		INNER JOIN cp400010 B ON A.CAMPNO = B.CAMPNO  
-		LEFT OUTER JOIN me800010 C ON B.OWNER = C.USERNO 
-		,(SELECT @RNUM := 0) R
-		WHERE 
-			B.ISDELETE = 0  
+	SELECT * FROM (
+		SELECT *, @RNUM:=@RNUM + 1 AS ROWNUM
+		FROM(
+			SELECT B.CAMPNO, B.CAMPNAME,B.CAMPTYPE, B.CAMPSTEP
+					,DATE_FORMAT(B.STARTDATE,'%Y-%m-%d') AS STARTDATE
+					,DATE_FORMAT(B.ENDDATE,'%Y-%m-%d') AS ENDDATE
+					,B.OWNER,C.USERNAME 
+			FROM cp400021 A  
+			INNER JOIN cp400010 B ON A.CAMPNO = B.CAMPNO  
+			LEFT OUTER JOIN me800010 C ON B.OWNER = C.USERNO 
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE B.ISDELETE = 0  
 			AND B.SITEID = #{siteid} 
 			AND A.CUSTNO = #{custno}
 			<if test="campname != null">
-			AND B.CAMPNAME LIKE CONCAT('%',#{campname},'%')
+				AND B.CAMPNAME LIKE CONCAT('%',#{campname},'%')
 			</if>
-			
 		ORDER BY B.CAMPNO DESC
 		) T
-		<if test="endRowNum != null">
-		WHERE ROWNUM between #{startRowNum} and #{endRowNum}
-		</if>	
+	) XX
+	<if test="endRowNum != null">
+		WHERE XX.ROWNUM between #{startRowNum} and #{endRowNum}
+	</if>	
 	</select>
 </mapper>

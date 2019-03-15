@@ -3,7 +3,8 @@
 <mapper namespace="cp">
 	
 	<select id="list" parameterType="hashMap" resultType="hashMap">
-		SELECT * FROM (
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
 			SELECT A.CAMPNO
 				, A.CAMPNAME
 				, A.CAMPTYPE
@@ -26,13 +27,12 @@
 				, CASE WHEN E.SENDFORM = 1 THEN 'EMAIL'
 					   WHEN E.SENDFORM = 2 THEN 'SMS/LMS'
 					   WHEN E.SENDFORM = 4 THEN 'MMS' END AS CAMPFORM_
-				,@RNUM:=@RNUM + 1 AS ROWNUM
 			FROM cp400010 A
 			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 GROUP BY CAMPNO) B ON B.CAMPNO = A.CAMPNO
 			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE CLICKYN = 0 GROUP BY CAMPNO) C ON C.CAMPNO = A.CAMPNO
 			LEFT OUTER JOIN (SELECT CAMPNO,COUNT(EMAILLOGID) AS CNT FROM sys980010 WHERE RLTCODE = 20 GROUP BY CAMPNO) D ON C.CAMPNO = A.CAMPNO
 			LEFT OUTER JOIN cp400030 E ON E.CAMPNO = A.CAMPNO
-			,(SELECT @RNUM := 0) R
+			INNER JOIN (SELECT @RNUM := 0) R
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="campname != null">
@@ -58,9 +58,10 @@
 			</if>
 			ORDER BY A.CAMPNO DESC
 			) X 
-			<if test="endRowNum != null">
-				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
-			</if>
+		) XX 
+		<if test="endRowNum != null">
+			WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
+		</if>
 	</select>
 		<select id="detail" parameterType="hashMap" resultType="hashMap">
 		SELECT 
@@ -327,32 +328,34 @@
 	</select>
 	
 	<select id="targetCustList" parameterType="hashMap" resultType="hashMap">
-		SELECT * FROM 
-		(SELECT 
-			 A.CUSTNO
-			,A.CUSTNAME
-			,A.MOBILENO
-			,A.EMAIL
-			,CASE WHEN B.INFOAGREE = 0 THEN '동의'
-				  WHEN B.INFOAGREE = 1 THEN '미동의' END AS INFOAGREE_
-			,CASE WHEN B.CUSTGUBUN = 1 THEN '회원'
-				  WHEN B.CUSTGUBUN = 2 THEN '비회원' END AS CUSTGUBUN_
-			,CASE WHEN B.CUSTGRADE = 1 THEN '일반'
-				  WHEN B.CUSTGRADE = 2 THEN 'VIP'
-				  WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
-			,CONCAT(B.HOMADDR1 ,' ', B.HOMADDR2 , B.HOMADDR3) AS ADDR_
-			,@RNUM:=@RNUM + 1 AS ROWNUM
-		FROM cp400021 A 
-		INNER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
-		,(SELECT @RNUM := 0) R
-		WHERE A.SITEID = #{siteid}
-		AND A.CAMPNO = #{campno}
-		AND B.ISDELETE = 0
-		<if test="custname != null">
-			AND  A.CUSTNAME LIKE CONCAT('%', #{custname} ,'%')
-		</if>
-		) X
-		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+		SELECT * FROM (
+			SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM 
+				(SELECT 
+			 	A.CUSTNO
+				,A.CUSTNAME
+				,A.MOBILENO
+				,A.EMAIL
+				,CASE WHEN B.INFOAGREE = 0 THEN '동의'
+				  	WHEN B.INFOAGREE = 1 THEN '미동의' END AS INFOAGREE_
+				,CASE WHEN B.CUSTGUBUN = 1 THEN '회원'
+				  	WHEN B.CUSTGUBUN = 2 THEN '비회원' END AS CUSTGUBUN_
+				,CASE WHEN B.CUSTGRADE = 1 THEN '일반'
+				  	WHEN B.CUSTGRADE = 2 THEN 'VIP'
+				  	WHEN B.CUSTGRADE = 3 THEN 'VVIP' END AS CUSTGRADE_
+				,CONCAT(B.HOMADDR1 ,' ', B.HOMADDR2 , B.HOMADDR3) AS ADDR_
+			
+				FROM cp400021 A 
+				INNER JOIN cu100010 B ON B.CUSTNO = A.CUSTNO
+				INNER JOIN (SELECT @RNUM := 0) R
+				WHERE A.SITEID = #{siteid}
+				AND A.CAMPNO = #{campno}
+				AND B.ISDELETE = 0
+				<if test="custname != null">
+					AND  A.CUSTNAME LIKE CONCAT('%', #{custname} ,'%')
+				</if>
+				) X
+			) XX
+			WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
 	
 	<insert id="formInsert" parameterType="campaignFormDto">

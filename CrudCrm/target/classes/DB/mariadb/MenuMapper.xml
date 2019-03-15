@@ -3,26 +3,26 @@
 <mapper namespace="menu">
 
     <select id="list" parameterType="hashMap" resultType="hashMap">
+     	
      	SELECT * FROM (
-     	SELECT 
-     		A.MENUNO,A.MENUNAME
-     		,(SELECT LICENSENAME FROM ma900020 WHERE LICENSENO = A.LICENSENO) AS LICENSENO_
-     		,A.MENUDESC,A.MENUVAL
-     		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
-     		,A.ISDELETE
-     		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-     	,@RNUM:=@RNUM + 1 AS ROWNUM
-     	FROM ma900030 A ,(SELECT @RNUM := 0) R
-     	WHERE A.ISDELETE = 0
-     	<if test ="menuName != null">
-     		AND A.MENUNAME LIKE CONCAT('%',#{menuName},'%')
-     	</if>
-     	<if test ="menuVal != null">
-     		AND A.MENUVAL LIKE CONCAT('%',#{menuVal},'%')
-     	</if>
-    	 ORDER BY A.MENUNO DESC
-     	) X 
-     	WHERE ROWNUM Between #{startRowNum} and #{endRowNum}
+     		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+     			SELECT A.MENUNO,A.MENUNAME,A.ISDELETE,A.MENUDESC,A.MENUVAL
+     				  ,(SELECT LICENSENAME FROM ma900020 WHERE LICENSENO = A.LICENSENO) AS LICENSENO_
+     				  ,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
+     				  ,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
+     			FROM ma900030 A 
+     			INNER JOIN (SELECT @RNUM := 0) R
+     			WHERE A.ISDELETE = 0
+     			<if test ="menuName != null">
+     				AND A.MENUNAME LIKE CONCAT('%',#{menuName},'%')
+     			</if>
+     			<if test ="menuVal != null">
+     				AND A.MENUVAL LIKE CONCAT('%',#{menuVal},'%')
+     			</if>
+    	 		ORDER BY A.MENUNO DESC
+     		) X 
+     	) XX
+     	WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
     </select>
     <select id="totalRow" parameterType="hashMap" resultType="int">
      	SELECT 

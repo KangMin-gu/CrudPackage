@@ -74,7 +74,7 @@
 					<input type="hidden" id="reqno" name="reqno" value="" /><!-- 서비스랑 연결할 REQNO -->
             	</div>
             <!-- 박진열 작업 -->
-                <ul class="top-btn">
+                <ul class="top-btn" style="padding-bottom: 20px;">
                     <div style="height:30px;">
                     	<div class="ctidetail" style="display: inline;position: fixed;top: 20px;left: 180px;">
                     		<li>수신번호 </li>
@@ -108,7 +108,7 @@
                         </div>
                         <div style="display: inline;">
                         	<li class="float-right">
-                            	<ul class="top-ul03 menu">
+                            	<ul class="top-ul03 menu"style="padding-top: 15px;">
                                 	<li>
                                 		<i id="menu" class="fa fa-bars" style="padding-right: 5px;"></i>
                                 		<span id="vocLogInSpan"><i class="fa fa-power-off" style="color:#d11507 ;" id="vocLogInBtn" onclick="vocLoginGo();"></i></span>
@@ -780,7 +780,7 @@
                             <tr>
                                 <th>메모</th>
                                 <td colspan="3" >
-                                    <textarea name="memo" id="memo" disabled class="form-control voc" style="height: 150px; resize: none;"></textarea>
+                                    <textarea name="memo" id="memo" disabled class="form-control voc" style="height: 80px; resize: none;"></textarea>
                                 </td>
                             </tr>
                         </tbody>
@@ -877,6 +877,7 @@ $(document).ready(function () {
 	$('.as').hide();
 	$('#save').hide();
 	$('.product .minus:first').remove();
+	$('.product .plus:first').attr('disabled',true);
 	var url = window.location.pathname;
 	vocContents("0",url);
 

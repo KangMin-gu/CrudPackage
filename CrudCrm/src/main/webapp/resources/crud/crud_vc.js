@@ -719,6 +719,7 @@ function serviceInfoBinding(data) {
 				}
 			});
 	opener.$('#servicecode1').val(data.SERVICECODE1);
+	opener.$('#servicecode2').append('<option value='+data.SERVICECODE2+'>'+data.SERVICECODE2+'</option>');
 	opener.$('#servicecode2').val(data.SERVICECODE2);
 	opener.$('#servicename').val(data.SERVICENAME);
 	opener.$('#servicedesc').val(data.SERVICEDESC);
@@ -761,11 +762,13 @@ function serviceInfoBinding(data) {
 	opener.$('.plus').hide();
 
 	opener.$('tbody .plus').attr('disabled', true);
-
+	
+	$('.product:gt(0)').remove();
+	
 	$.each(data.product, function(index, item) {
-		if (index != 0) {
-			procutPlus(index);
-		}
+	    if(index > 0){
+            productPlus(index);
+        }
 		opener.$('#product' + parseInt(parseInt(index + 1) + '1')).empty();
 		opener.$('#product' + parseInt(parseInt(index + 1) + '2')).empty();
 		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).empty();
@@ -775,12 +778,6 @@ function serviceInfoBinding(data) {
 		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).append('<option label="' + item.PRODUCTSNAME + '" value="'+ item.PRODUCTS + '"/>');
 		opener.$('#product' + parseInt(parseInt(index + 1) + '3')).next().remove();
 	});
-	
-	var length = opener.$('#create').length;
-	if(length == 0){
-		
-	}
-
 }
 
 // 버튼 생성 메서드
@@ -1384,11 +1381,13 @@ $(document).on('click', '.plus', function(e) {
 // 제품 삭제를 눌렀을때
 	$(document).on('click','.minus',function(e) {
 		var productLength = $('.product').length;
-		if(productLength == 2){
+		var selectId = $(e.target).parent().find('select:last').attr('id');
+		var lastId = $('.product:last select:last').attr('id');
+		if(selectId == lastId){
 			$(e.target).parent().prev().find('select:last').after('<button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>');
-		}else{
-			$('.product:eq('+parseInt(productLength-2)+')').find('.plus').remove();
 		}
+		
+		//$(e.target).parent().prev().find('select:last').after('<button class="plus btn btn-primary d-inline-block btn-sm mr-2">추가</button>');
 					$(e.target).parent().remove();
 	});
 
@@ -1409,9 +1408,7 @@ function productPlus(length) {
 		$('.product:last').prev().find('.plus').remove();
 		// 첫번째 인경우에는 삭제버튼만 있으면 되기 떄문
 		if (length == 1) {
-			$('.product:last')
-					.append(
-							'<button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>');
+			$('.product:last').append('<button class="minus btn btn-primary d-inline-block btn-sm mr-2">삭제</button>');
 		}
 	} else {
 		opener.$('.product:last').clone(true).insertAfter(

@@ -74,3 +74,13 @@ local.properties
 CrudCrm/target/m2e-wtp/web-resources/META-INF/maven/saas.crud/crm/pom.properties
 CrudCrm/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 *.properties
+CrudCrm/.idea/workspace.xml
+CrudCrm/.idea/misc.xml
+CrudCrm/.idea/encodings.xml
+CrudCrm/.idea/compiler.xml
+CrudCrm/.idea/codeStyles/codeStyleConfig.xml
+CrudCrm/.idea/artifacts/CrudCrm_war_exploded.xml
+CrudCrm/.idea/artifacts/CrudCrm_war.xml
+CrudCrm/.idea/vcs.xml
+CrudCrm/.idea/modules.xml
+CrudCrm/.idea/CrudCrm.iml

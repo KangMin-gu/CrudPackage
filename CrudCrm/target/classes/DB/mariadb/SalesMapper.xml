@@ -38,28 +38,24 @@
 	</select>	
 	<!-- 영업 리스트 -->
 	<select id="salesList" parameterType="hashMap" resultType="hashMap">
-	SELECT 
-		ROWNUM, SALESNO, SALENAME
-		,CLINO, CLINAME, SALESTATE
-		,(CASE WHEN DATE_FORMAT(FORDDATE,'%Y%m%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(FORDDATE,'%Y%m%d') END) AS FORDDATE
-		,(CASE WHEN DATE_FORMAT(RORDDATE,'%Y%m%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(RORDDATE,'%Y%m%d') END) AS RORDDATE
-		,(CASE WHEN DATE_FORMAT(STATEDATE,'%Y%m%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(STATEDATE,'%Y%m%d') END) AS STATEDATE
-		,OWNER, USERNAME		
-	FROM (
-		SELECT
-			@RNUM:=@RNUM + 1 AS ROWNUM
-			,A.SALESNO, A.SALENAME
-			,A.CLINO, B.CLINAME
-			,A.FORDDATE, A.RORDDATE
-			,A.SALESTATE, A.STATEDATE
-			,A.OWNER, C.USERNAME
-		FROM sa210010 A 
-		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
-		LEFT OUTER JOIN me800010 C ON A.OWNER = C.USERNO   
-		,(SELECT @RNUM := 0) R
-		
-		WHERE 
-			A.SITEID = #{siteid}
+	SELECT * FROM (
+		SELECT SALESNO, SALENAME
+			,CLINO, CLINAME, SALESTATE
+			,(CASE WHEN DATE_FORMAT(FORDDATE,'%Y-%m-%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(FORDDATE,'%Y-%m-%d') END) AS FORDDATE
+			,(CASE WHEN DATE_FORMAT(RORDDATE,'%Y-%m-%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(RORDDATE,'%Y-%m-%d') END) AS RORDDATE
+			,(CASE WHEN DATE_FORMAT(STATEDATE,'%Y-%m-%d') = '1900-01-01' THEN '' ELSE DATE_FORMAT(STATEDATE,'%Y-%m-%d') END) AS STATEDATE
+			,OWNER, USERNAME,@RNUM:=@RNUM + 1 AS ROWNUM		
+		FROM (
+			SELECT A.SALESNO, A.SALENAME
+				,A.CLINO, B.CLINAME
+				,A.FORDDATE, A.RORDDATE
+				,A.SALESTATE, A.STATEDATE
+				,A.OWNER, C.USERNAME
+			FROM sa210010 A 
+			LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
+			LEFT OUTER JOIN me800010 C ON A.OWNER = C.USERNO   
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="salename != null">
 			AND SALENAME LIKE CONCAT('%',#{salename},'%')
@@ -88,6 +84,7 @@
 			
 		ORDER BY SALESNO DESC
 		) T 
+	) XX
 	<if test="endRowNum != null">	
 	WHERE 
 		ROWNUM between #{startRowNum} and #{endRowNum}	
@@ -342,40 +339,33 @@
 	<!-- 영업 관련고객 리스트 -->
 	<select id="salesCustList" parameterType="hashMap" resultType="hashMap">	
 	
-	SELECT
-		ROWNUM
-		,SALESCUSTNO
-		,KEYMAN, ROLENAME, MEMO
-		,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
-		,SALESNO, SALENAME
-		,CLINO, CLINAME
-
-	FROM (
-		SELECT
-			@RNUM:=@RNUM + 1 AS ROWNUM
-			,A.SALESCUSTNO
-			,A.KEYMAN, A.ROLENAME, A.MEMO
-			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
-			,C.SALESNO, C.SALENAME
-			,D.CLINO, D.CLINAME
-		FROM sa250010 A 
-		INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
-		INNER JOIN sa210010 C ON A.SALESNO = C.SALESNO
-		LEFT OUTER JOIN sa200010 D ON B.CLINO = D.CLINO
-		,(SELECT @RNUM := 0) R
-		WHERE 
-			A.SITEID = #{siteid}			
+	SELECT * FROM (
+		SELECT @RNUM:=@RNUM + 1 AS ROWNUM, SALESCUSTNO
+				,KEYMAN, ROLENAME, MEMO
+				,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
+				,SALESNO, SALENAME,CLINO, CLINAME
+		FROM (
+			SELECT
+				A.SALESCUSTNO
+				,A.KEYMAN, A.ROLENAME, A.MEMO
+				,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
+				,C.SALESNO, C.SALENAME
+				,D.CLINO, D.CLINAME
+			FROM sa250010 A 
+			INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
+			INNER JOIN sa210010 C ON A.SALESNO = C.SALESNO
+			LEFT OUTER JOIN sa200010 D ON B.CLINO = D.CLINO
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID = #{siteid}			
 			AND A.SALESNO = #{salesno}							
 			AND A.ISDELETE = 0
 			<if test="custname != null">
-			AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
+				AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
 			</if>
-			
-		ORDER BY B.CUSTNAME
+			ORDER BY B.CUSTNAME
 		)t
-		
-	WHERE 
-		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
+	) XX
+	WHERE XX.ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
 	</select>
 
 	<!-- 접촉 리스트 카운터-->
@@ -402,43 +392,35 @@
 
 	<!-- 접촉 리스트 -->
 	<select id="salesContList" parameterType="hashMap" resultType="hashMap">	
-	SELECT * 
-	FROM
-	(
-	SELECT  
-	@RNUM:=@RNUM + 1 AS ROWNUM
-	,A.CONTNO
-	,A.CTTUSER
-	,A.CUSTNO
-	,CONCAT(DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y-%m-%d') ,' ', IFNULL(A.CTTTIME,''))  AS CTTDATE 	
-	,IFNULL(A.MEMO,'') AS MEMO
-	,A.CTTLOCATION
-	,IFNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
-	,A.CLINO
-	,A.SALESNO
-	, B.CUSTNAME, C.USERNAME
-	FROM cu110010 A 
-	INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
-	INNER JOIN me800010 C ON A.CTTUSER = C.USERNO
-	,(SELECT @RNUM := 0) R
-	WHERE 
-		A.SITEID = #{siteid}
-		AND A.ISDELETE = 0 
-		<if test="salesno != null and salesno != 0">
-		AND A.SALESNO = #{salesno}
-		</if>
-		<if test="clino != null and clino != 0">
-		AND A.CLINO = #{clino}
-		</if>
-		<if test="contcustname != null">
-		AND B.CUSTNAME like CONCAT('%', #{contcustname} ,'%')
-		</if>
-
-		
-	ORDER BY A.CONTNO DESC
-	) T
-	WHERE
-		ROWNUM between #{startRowNum} and #{endRowNum}		   
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+			SELECT A.CONTNO,A.CTTUSER,A.CUSTNO
+					,CONCAT(DATE_FORMAT(IFNULL(A.CTTDATE,''),'%Y-%m-%d') ,' ', IFNULL(A.CTTTIME,''))  AS CTTDATE 	
+					,IFNULL(A.MEMO,'') AS MEMO
+					,A.CTTLOCATION
+					,IFNULL(A.CTTCHANNEL,'') AS CTTCHANNEL
+					,A.CLINO
+					,A.SALESNO
+					, B.CUSTNAME, C.USERNAME
+			FROM cu110010 A 
+			INNER JOIN CU100010 B ON A.CUSTNO = B.CUSTNO
+			INNER JOIN me800010 C ON A.CTTUSER = C.USERNO
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID = #{siteid}
+				AND A.ISDELETE = 0 
+			<if test="salesno != null and salesno != 0">
+				AND A.SALESNO = #{salesno}
+			</if>
+			<if test="clino != null and clino != 0">
+				AND A.CLINO = #{clino}
+			</if>
+			<if test="contcustname != null">
+				AND B.CUSTNAME like CONCAT('%', #{contcustname} ,'%')
+			</if>
+			ORDER BY A.CONTNO DESC
+		) T
+	) XX
+	WHERE XX.ROWNUM between #{startRowNum} and #{endRowNum}		   
 	</select>
 	
 	<!-- 영업관련고객 추가 -->
@@ -550,62 +532,47 @@
 		
 	<!-- 영업단계 리스트 -->
 	<select id="salesStateList" parameterType="hashMap" resultType="hashMap">
-		
-	SELECT 
-	*
-	FROM
-	(
-	SELECT
-	@RNUM:=@RNUM + 1 AS ROWNUM
-	,A.SALESTATENO, A.SITEID, A.SALESNO
-	,DATE_FORMAT(A.ENTDATE,'%Y-%m-%d') AS ENTDATE 
-
-	,CASE WHEN A.STATE = 1 THEN '계약성공종료'
-		  WHEN A.STATE = 2 THEN '계약중'
-		  WHEN A.STATE = 3 THEN '제안서제출'
-		  WHEN A.STATE = 4 THEN '접촉중'
-		  WHEN A.STATE = 5 THEN '문의'
-		  WHEN A.STATE = 6 THEN '중도포기'
-		  WHEN A.STATE = 7 THEN '경쟁실패'
-		  ELSE ''
-		  END AS STATE
-	,CASE WHEN A.PRESTATE = 1 THEN '계약성공종료'
-		  WHEN A.PRESTATE = 2 THEN '계약중'
-		  WHEN A.PRESTATE = 3 THEN '제안서제출'
-		  WHEN A.PRESTATE = 4 THEN '접촉중'
-		  WHEN A.PRESTATE = 5 THEN '문의'
-		  WHEN A.PRESTATE = 6 THEN '중도포기'
-		  WHEN A.PRESTATE = 7 THEN '경쟁실패'
-		  ELSE ''
-		  END AS PRESTATE	
-	,CASE WHEN A.MODREASON = 1 THEN '영업진행'
-		  WHEN A.MODREASON = 2 THEN '업무중단'
-		  WHEN A.MODREASON = 3 THEN '폐업'
-		  WHEN A.MODREASON = 4 THEN '거래처요청'
-		  WHEN A.MODREASON = 5 THEN '기타'
-		  ELSE ''
-		  END AS MODREASON
-	, A.SSDESC
-	, A.PROB
-	,A.REGUSER, B.USERNAME  
-	 
-	FROM sa210020 A 
-	LEFT OUTER JOIN me800010 B ON A.REGUSER = B.USERNO
-	,(SELECT @RNUM := 0) R
-	
-	WHERE
-		A.SALESNO = #{salesno}
-		AND A.SITEID =#{siteid}
-		<if test="state != null and state != 0">
-		AND A.STATE = #{state}
-		</if>
-		
-	ORDER BY A.SALESTATENO DESC
-	) AS T 
-	<if test="endRowNum != null">	
-	WHERE 
-		ROWNUM between #{startRowNum} and #{endRowNum}	
-	</if>			
+		SELECT * FROM (
+			SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+				SELECT A.SALESTATENO, A.SITEID, A.SALESNO
+					,DATE_FORMAT(A.ENTDATE,'%Y-%m-%d') AS ENTDATE 
+					,CASE WHEN A.STATE = 1 THEN '계약성공종료'
+		  				  WHEN A.STATE = 2 THEN '계약중'
+		  				  WHEN A.STATE = 3 THEN '제안서제출'
+		  				  WHEN A.STATE = 4 THEN '접촉중'
+		  				  WHEN A.STATE = 5 THEN '문의'
+		  				  WHEN A.STATE = 6 THEN '중도포기'
+		  				  WHEN A.STATE = 7 THEN '경쟁실패'
+		  			ELSE '' END AS STATE
+					,CASE WHEN A.PRESTATE = 1 THEN '계약성공종료'
+		  				  WHEN A.PRESTATE = 2 THEN '계약중'
+		  				  WHEN A.PRESTATE = 3 THEN '제안서제출'
+		  				  WHEN A.PRESTATE = 4 THEN '접촉중'
+		  				  WHEN A.PRESTATE = 5 THEN '문의'
+		  				  WHEN A.PRESTATE = 6 THEN '중도포기'
+		  				  WHEN A.PRESTATE = 7 THEN '경쟁실패'
+		  			ELSE '' END AS PRESTATE	
+					,CASE WHEN A.MODREASON = 1 THEN '영업진행'
+		  				  WHEN A.MODREASON = 2 THEN '업무중단'
+		  				  WHEN A.MODREASON = 3 THEN '폐업'
+		  				  WHEN A.MODREASON = 4 THEN '거래처요청'
+		  				  WHEN A.MODREASON = 5 THEN '기타'
+		  			ELSE '' END AS MODREASON
+					, A.SSDESC, A.PROB,A.REGUSER, B.USERNAME  
+				FROM sa210020 A 
+				LEFT OUTER JOIN me800010 B ON A.REGUSER = B.USERNO
+				INNER JOIN (SELECT @RNUM := 0) R
+				WHERE A.SALESNO = #{salesno}
+				AND A.SITEID =#{siteid}
+				<if test="state != null and state != 0">
+					AND A.STATE = #{state}
+				</if>
+				ORDER BY A.SALESTATENO DESC
+			) AS T 
+		) XX
+		<if test="endRowNum != null">	
+			WHERE XX.ROWNUM between #{startRowNum} and #{endRowNum}	
+		</if>			
 	</select>
 	
 	<!-- 영업단계 추가 -->
@@ -954,45 +921,35 @@
 	
 	<!-- 고객 상세 탭 - 영업 리스트 -->
 	<select id="custTabSalesList" parameterType="hashMap" resultType="hashMap">	
-	SELECT
-	*
-	FROM
-		(
-		SELECT
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.SALESNO , A.SALENAME 
-		,DATE_FORMAT(A.FORDDATE,'%Y-%m-%d') AS FORDDATE
-		,A.OWNER
-		,CASE WHEN A.SALESTATE = 1 THEN '계약성공종료' 
-	  	  	WHEN A.SALESTATE = 2 THEN '계약중' 
-	  	  	WHEN A.SALESTATE = 3 THEN '제안서제출' 
-	  	  	WHEN A.SALESTATE = 4 THEN '접촉중' 
-	  	  	WHEN A.SALESTATE = 5 THEN '문의' 
-	  	  	WHEN A.SALESTATE = 6 THEN '중도포기' 
-	  	  	WHEN A.SALESTATE = 7 THEN '경쟁실패' 
-	  	  	ELSE '' 
-	  	 	 END AS SALESTATE
-		,DATE_FORMAT(A.STATEDATE,'%Y-%m-%d') AS STATEDATE
-		,C.USERNAME
-	
-		FROM sa210010 A 
-		LEFT OUTER JOIN sa250010 B ON A.SALESNO = B.SALESNO
-		INNER JOIN me800010 C ON A.OWNER = C.USERNO
-		,(SELECT @RNUM := 0) R
-	
-		WHERE
-			B.ISDELETE = 0 AND A.ISDELETE =0
+	SELECT * FROM (
+		SELECT *, @RNUM:=@RNUM + 1 AS ROWNUM FROM (
+			SELECT A.SALESNO, A.SALENAME, A.OWNER,C.USERNAME 
+					,DATE_FORMAT(A.FORDDATE,'%Y-%m-%d') AS FORDDATE
+					,CASE WHEN A.SALESTATE = 1 THEN '계약성공종료' 
+	  	  					WHEN A.SALESTATE = 2 THEN '계약중' 
+	  	  					WHEN A.SALESTATE = 3 THEN '제안서제출' 
+	  	  					WHEN A.SALESTATE = 4 THEN '접촉중' 
+	  	  					WHEN A.SALESTATE = 5 THEN '문의' 
+	  	  					WHEN A.SALESTATE = 6 THEN '중도포기' 
+	  	  					WHEN A.SALESTATE = 7 THEN '경쟁실패' 
+	  	  			ELSE '' END AS SALESTATE
+					,DATE_FORMAT(A.STATEDATE,'%Y-%m-%d') AS STATEDATE
+			FROM sa210010 A 
+			LEFT OUTER JOIN sa250010 B ON A.SALESNO = B.SALESNO
+			INNER JOIN me800010 C ON A.OWNER = C.USERNO
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE B.ISDELETE = 0 AND A.ISDELETE =0
 			AND A.SITEID = #{siteid}
 			AND CUSTNO = #{custno}
 			<if test="salename != null">
-			AND A.SALENAME like CONCAT('%',#{salename},'%') 
+				AND A.SALENAME like CONCAT('%',#{salename},'%') 
 			</if>
-			
-		ORDER BY A.SALESNO DESC	 
+			ORDER BY A.SALESNO DESC	 
 		) AS T
+	) XX
 	WHERE
 		<if test="endRowNum != null">	 
-		ROWNUM between #{startRowNum} and #{endRowNum}	
+		XX.ROWNUM between #{startRowNum} and #{endRowNum}	
 		</if>
 		 
 	</select>

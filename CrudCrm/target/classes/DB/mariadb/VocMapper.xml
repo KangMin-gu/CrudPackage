@@ -6,31 +6,29 @@
 	status 호출 구분 값 : callback = 상담원-할당 된 목록 , assign = 관리자-할당 해야 할 목록, history = 고객의 콜백내역   
 	CALLSTATUS : 0=접수 , 1=할당, 2=완료, 3=통화불가, 4=미해결-->
 	<select id="vocCallBackList" parameterType="hashMap" resultType="hashMap">
-	SELECT *
-	FROM (
-		SELECT
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CALLBACKNO, A.CALLER, A.CALLBACK, A.TRUNK, IFNULL(A.CALLCOUNT,'') AS CALLCOUNT
-		,A.GCODE1, A.GCODE2, A.GCODE3
-		,DATE_FORMAT(A.RECEIVEDATE,'%Y-%m-%d %H:%i:%s') AS RECEIVEDATE_
-		,DATE_FORMAT(A.CALLDATE,'%Y-%m-%d %H:%i:%s') AS CALLDATE_  
-		,A.CALLSTATUS
-		,(CASE 
-			WHEN CALLSTATUS = 0 THEN '접수'
-			WHEN CALLSTATUS = 1 THEN '할당'
-			WHEN CALLSTATUS = 2 THEN '완료'
-			WHEN CALLSTATUS = 3 THEN '통화불가' 
-			WHEN CALLSTATUS = 4 THEN '미해결'
-			ELSE ''
-			END) AS CALLSTATUS_
-		,A.CALLUSER
-		,IFNULL(A.CUSTNO,'') AS CUSTNO ,B.USERNAME
-		,IFNULL(A.MEMO,'') AS MEMO		
-				
-		FROM CTI510010 A
-		LEFT OUTER JOIN ME800010 B ON A.CALLUSER = B.USERNO
-		,(SELECT @RNUM := 0) R
-	
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM
+		FROM (
+			SELECT
+				A.CALLBACKNO, A.CALLER, A.CALLBACK, A.TRUNK, IFNULL(A.CALLCOUNT,'') AS CALLCOUNT
+				,A.GCODE1, A.GCODE2, A.GCODE3
+				,DATE_FORMAT(A.RECEIVEDATE,'%Y-%m-%d %H:%i:%s') AS RECEIVEDATE_
+				,DATE_FORMAT(A.CALLDATE,'%Y-%m-%d %H:%i:%s') AS CALLDATE_  
+				,A.CALLSTATUS
+				,(CASE 
+					WHEN CALLSTATUS = 0 THEN '접수'
+					WHEN CALLSTATUS = 1 THEN '할당'
+					WHEN CALLSTATUS = 2 THEN '완료'
+					WHEN CALLSTATUS = 3 THEN '통화불가' 
+					WHEN CALLSTATUS = 4 THEN '미해결'
+					ELSE ''
+				END) AS CALLSTATUS_
+				,A.CALLUSER
+				,IFNULL(A.CUSTNO,'') AS CUSTNO ,B.USERNAME
+				,IFNULL(A.MEMO,'') AS MEMO		
+			FROM CTI510010 A
+			LEFT OUTER JOIN ME800010 B ON A.CALLUSER = B.USERNO
+			INNER JOIN (SELECT @RNUM := 0) R
 		WHERE  
 		<choose>
 			<when test='status.equals("callback")'>
@@ -50,8 +48,9 @@
 		</choose>	
 		ORDER BY A.RECEIVEDATE DESC
 		) X
+	) XX
 	<if test="endRowNum != null">
-	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</if> 
 	</select>
 	
@@ -115,7 +114,8 @@
 	</insert>
 	
 	<select id="popCallBackList" parameterType="hashMap" resultType="hashMap">
-		SELECT * FROM (
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
 			SELECT 
 			A.CALLBACKNO
 			,A.CALLER
@@ -124,26 +124,25 @@
 			,DATE_FORMAT(A.RECEIVEDATE,'%Y-%m-%d') AS RECEIVEDATE_
 			,A.CALLCOUNT
 			,(SELECT USERNAME FROM ME800010 WHERE SITEID = 1 AND USERNO = A.CALLUSER) AS CALLUSER_
-			,@RNUM:=@RNUM + 1 AS ROWNUM 
-			FROM CTI510010 A, (SELECT @RNUM := 0) R
-			WHERE
-			TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
+			 
+			FROM CTI510010 A
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE TRUNK = (SELECT CTITELNO FROM MA900010 WHERE SITEID = #{siteid}) 
 			AND (CALLUSER IS NULL
 					OR IFNULL(CALLCOUNT,0) <![CDATA[<=]]> 3)
 			AND CALLSTATUS IN (0,3)
 			<if test="callBack != null">
 				AND CALLBACK LIKE CONCAT('%',#{callBack},'%')
 			</if>
+			ORDER BY CALLBACKNO ASC
 		) X
-		<if test="endRowNum != null">
-				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
-		</if>
-		
-		ORDER BY X.CALLBACKNO ASC
-		
-		<if test="totalCnt != null">
-			limit ${totalCnt}
-		</if>
+	) XX
+	<if test="endRowNum != null">
+		WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
+	</if>
+	<if test="totalCnt != null">
+		limit ${totalCnt}
+	</if>
 		
 	</select>
 	
@@ -197,44 +196,41 @@
 	
 	<!-- 콜백 히스토리 리스트 (고객) -->
 	<select id="vocCallBackHistList" parameterType="hashMap" resultType="hashMap">
-	SELECT *
-	FROM (
-		SELECT
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CALLBACKHISTNO, A.CALLBACKNO, B.CALLER, B.CALLBACK, A.REQNO
-		,B.GCODE1, B.GCODE2, B.GCODE3
-		,DATE_FORMAT(B.RECEIVEDATE,'%Y-%m-%d %H:%i:%s') AS RECEIVEDATE_
-		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d %H:%i:%s') AS REGDATE_  
-		,A.CALLSTATUS
-		,(CASE 
-			WHEN A.CALLSTATUS = 0 THEN '접수'
-			WHEN A.CALLSTATUS = 1 THEN '할당'
-			WHEN A.CALLSTATUS = 2 THEN '완료'
-			WHEN A.CALLSTATUS = 3 THEN '통화불가' 
-			WHEN A.CALLSTATUS = 4 THEN '미해결'
-			ELSE ''
-			END) AS CALLSTATUS_		
-		,C.USERNAME		
-		,IFNULL(A.MEMO,'') AS MEMO
-		,CASE WHEN CHAR_LENGTH(A.MEMO) <![CDATA[>=]]> 15 THEN CONCAT( SUBSTRING(A.MEMO,1,12) ,'...' )  
-			ELSE IFNULL(A.MEMO,'')
-			END AS MEMO_
-		,D.RECDATE, D.RECEXT, D.RECFILENAME
-		,REPLACE(D.RECDATE,'-','') AS RECDATE_
-		
-		FROM CTI510020 A
-		LEFT OUTER JOIN CTI510010 B ON A.CALLBACKNO = B.CALLBACKNO
-		LEFT OUTER JOIN ME800010 C ON A.REGUSER = C.USERNO
-		LEFT OUTER JOIN CTI510030 D ON A.REQNO = D.REQNO
-		,(SELECT @RNUM := 0) R
-	
-		WHERE  
-			A.CUSTNO = #{custno}
-			AND A.SITEID = #{siteid}
-		ORDER BY A.REGDATE DESC
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM
+			FROM (
+				SELECT A.CALLBACKHISTNO, A.CALLBACKNO, B.CALLER, B.CALLBACK, A.REQNO
+					,B.GCODE1, B.GCODE2, B.GCODE3
+					,DATE_FORMAT(B.RECEIVEDATE,'%Y-%m-%d %H:%i:%s') AS RECEIVEDATE_
+					,DATE_FORMAT(A.REGDATE,'%Y-%m-%d %H:%i:%s') AS REGDATE_  
+					,A.CALLSTATUS
+					,(CASE 
+						WHEN A.CALLSTATUS = 0 THEN '접수'
+						WHEN A.CALLSTATUS = 1 THEN '할당'
+						WHEN A.CALLSTATUS = 2 THEN '완료'
+						WHEN A.CALLSTATUS = 3 THEN '통화불가' 
+						WHEN A.CALLSTATUS = 4 THEN '미해결'
+						ELSE ''
+					END) AS CALLSTATUS_		
+					,C.USERNAME		
+					,IFNULL(A.MEMO,'') AS MEMO
+					,CASE WHEN CHAR_LENGTH(A.MEMO) <![CDATA[>=]]> 15 THEN CONCAT( SUBSTRING(A.MEMO,1,12) ,'...' )  
+						ELSE IFNULL(A.MEMO,'')
+						END AS MEMO_
+					,D.RECDATE, D.RECEXT, D.RECFILENAME
+					,REPLACE(D.RECDATE,'-','') AS RECDATE_
+				FROM CTI510020 A
+				LEFT OUTER JOIN CTI510010 B ON A.CALLBACKNO = B.CALLBACKNO
+				LEFT OUTER JOIN ME800010 C ON A.REGUSER = C.USERNO
+				LEFT OUTER JOIN CTI510030 D ON A.REQNO = D.REQNO
+				INNER JOIN (SELECT @RNUM := 0) R
+				WHERE A.CUSTNO = #{custno}
+				AND A.SITEID = #{siteid}
+			ORDER BY A.REGDATE DESC
 		) X
+	) XX
 	<if test="endRowNum != null">
-	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</if> 
 	</select>
 	
@@ -261,38 +257,35 @@
 	</select>
 	
 	<!-- 고객 블랙등록 내역  -->
-	<select id="vocBlackHistList" parameterType="hashMap" resultType="hashMap">	
-	SELECT *
-	FROM (
-		SELECT
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.BCUSTNO,A.CUSTNO,A.BLACKTYPE
-		,CASE WHEN A.BLACKTYPE = 1 THEN '욕설'
-			WHEN A.BLACKTYPE = 2 THEN '성희롱'
-			WHEN A.BLACKTYPE = 3 THEN '기타'
-			ELSE '' 
-			END AS BLACKTYPE_
-		,A.RECEIVENO
-		,IFNULL(A.MEMO,'') AS MEMO
-		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d %H:%m:%i') AS REGDATE_
-		,CASE WHEN IFNULL(A.ISDELETE = 1,0) THEN CONCAT(DATE_FORMAT(A.EDTDATE,'%Y-%m-%d'),' / ','해제') 
-			ELSE '블랙'
-			END AS ISDELETE_
-		,B.USERNAME
-		,CASE WHEN CHAR_LENGTH(A.MEMO) <![CDATA[>=]]> 20 THEN CONCAT( SUBSTRING(A.MEMO,1,17) ,'...' )  
-			ELSE IFNULL(A.MEMO,'')
-			END AS MEMO_
-		FROM CU120010 A  
-		LEFT OUTER JOIN ME800010 B ON A.REGUSER = B.USERNO   
-		,(SELECT @RNUM := 0) R
-	
-		WHERE 
-			A.CUSTNO = #{custno}
-			AND A.SITEID = #{siteid}
+	<select id="vocBlackHistList" parameterType="hashMap" resultType="hashMap">
+	SELECT * FROM ( 	
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+			SELECT A.BCUSTNO,A.CUSTNO,A.BLACKTYPE
+					,CASE WHEN A.BLACKTYPE = 1 THEN '욕설'
+						WHEN A.BLACKTYPE = 2 THEN '성희롱'
+						WHEN A.BLACKTYPE = 3 THEN '기타'
+						ELSE '' 
+					END AS BLACKTYPE_
+					,A.RECEIVENO
+					,IFNULL(A.MEMO,'') AS MEMO
+					,DATE_FORMAT(A.REGDATE,'%Y-%m-%d %H:%m:%i') AS REGDATE_
+					,CASE WHEN IFNULL(A.ISDELETE = 1,0) THEN CONCAT(DATE_FORMAT(A.EDTDATE,'%Y-%m-%d'),' / ','해제') 
+						ELSE '블랙'
+						END AS ISDELETE_
+					,B.USERNAME
+					,CASE WHEN CHAR_LENGTH(A.MEMO) <![CDATA[>=]]> 20 THEN CONCAT( SUBSTRING(A.MEMO,1,17) ,'...' )  
+						ELSE IFNULL(A.MEMO,'')
+						END AS MEMO_
+			FROM CU120010 A  
+			LEFT OUTER JOIN ME800010 B ON A.REGUSER = B.USERNO   
+			INNER JOIN (SELECT @RNUM := 0) R
+		WHERE A.CUSTNO = #{custno}
+		AND A.SITEID = #{siteid}
 		ORDER BY A.REGDATE DESC 
 		) X
+	) XX
 	<if test="endRowNum != null">
-	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+	WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</if> 
 	</select>
 	
@@ -348,4 +341,47 @@
 	,#{reqno}
 	)
 	</insert>
+	
+		
+	<!-- voc 블랙추가  -->
+	<insert id="vocBlackCustInsert" parameterType="hashMap">		
+		INSERT INTO cu120010
+		(		
+			CUSTNO
+			,BLACKTYPE
+			,RECEIVENO
+			,MEMO
+			,REGDATE
+			,REGUSER
+			,ISDELETE
+			,SITEID
+		)
+		VALUES
+		(	
+			#{custno}
+			,#{blacktype}
+			,#{receiveno}
+			,#{memo}
+			,NOW()
+			,#{userno}
+			,0
+			,#{siteid}
+		)
+		<selectKey keyProperty="bcustno"  resultType="integer" order="AFTER">
+		SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 블랙삭제 -->
+	<update id="vocBlackCustDelete" parameterType="hashMap">
+		UPDATE CU120010 
+		SET
+		EDTUSER = #{userno}
+		,EDTDATE = NOW()
+		,ISDELETE = 1
+		WHERE
+			CUSTNO = #{custno}
+			AND SITEID = #{siteid}
+			AND ISDELETE = 0
+	</update>
+	
 </mapper>

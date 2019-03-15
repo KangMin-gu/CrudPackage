@@ -3,20 +3,20 @@
 <mapper namespace="au">
 	
 	<select id="list" parameterType="hashMap" resultType="hashMap">
-		SELECT * FROM (
-			SELECT A.USERNO,A.USERNAME,A.USERID
-		,A.EMAIL,A.USERDUTY
-		,CASE WHEN A.ISDELETE = 0 THEN '사용'
-			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-		,CASE WHEN DATE_FORMAT(A.REGDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
-				ELSE DATE_FORMAT(A.REGDATE,'%Y-%m-%d') END AS REGDATE
-		,A.MOBILE1,A.MOBILE2,A.MOBILE3
-		,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
-				ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
-		, CONCAT(A.MOBILE1, A.MOBILE2, A.MOBILE3) AS MOBILE
-		,(SELECT COUNT(*) FROM CTI510010 WHERE CALLSTATUS = 1 AND CALLUSER = A.USERNO) AS CTICOUNT
-		,@RNUM:=@RNUM + 1 AS ROWNUM
-			FROM me800010 A, (SELECT @RNUM := 0) R
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+			SELECT A.USERNO,A.USERNAME,A.USERID,A.EMAIL,A.USERDUTY
+					,CASE WHEN A.ISDELETE = 0 THEN '사용'
+			  			  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+					,CASE WHEN DATE_FORMAT(A.REGDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+						  ELSE DATE_FORMAT(A.REGDATE,'%Y-%m-%d') END AS REGDATE
+					,A.MOBILE1,A.MOBILE2,A.MOBILE3
+					,CASE WHEN DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') = '1900-01-01' THEN ''
+						  ELSE DATE_FORMAT(A.ENTERDATE,'%Y-%m-%d') END AS ENTERDATE
+					, CONCAT(A.MOBILE1, A.MOBILE2, A.MOBILE3) AS MOBILE
+					,(SELECT COUNT(*) FROM CTI510010 WHERE CALLSTATUS = 1 AND CALLUSER = A.USERNO) AS CTICOUNT		
+			FROM me800010 A
+			INNER JOIN (SELECT @RNUM := 0) R
 			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			AND IFNULL(A.MASTERYN,0) != 1
@@ -47,9 +47,10 @@
 			
 			ORDER BY A.USERNO DESC
 			) X 
-			<if test="endRowNum != null">
-				WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
-			</if>
+		) XX
+		<if test="endRowNum != null">
+			WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
+		</if>
 		
 	</select>
 		<select id="detail" parameterType="userDto" resultType="hashMap">
@@ -302,15 +303,15 @@
 	<select  id="siteNotice" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
 			SELECT A.ICNUM, 			
-			CASE A.HEADER
-				WHEN 0 THEN '전체' 
-				WHEN 1 THEN '공지' 
-				WHEN 2 THEN '알림' 
-				WHEN 3 THEN '뉴스'  
-			END AS HEADER
-			, A.SUBJECT, A.CONTENT, A.LINKURL, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE, A.ISDELETE, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM crud_saas.ma900040 AS A
-			LEFT OUTER JOIN crud_saas.me800010 AS B ON A.REGUSER = B.USERNO,(SELECT @RNUM := 0) R			
+				CASE A.HEADER
+					WHEN 0 THEN '전체' 
+					WHEN 1 THEN '공지' 
+					WHEN 2 THEN '알림' 
+					WHEN 3 THEN '뉴스'  
+				END AS HEADER
+				, A.SUBJECT, A.CONTENT, A.LINKURL, B.USERNAME, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE, A.ISDELETE
+			FROM ma900040 AS A
+			LEFT OUTER JOIN me800010 AS B ON A.REGUSER = B.USERNO
 			WHERE A.ISDELETE = 0 AND A.SITEID = #{siteid}
 				<if test="title != null">
 					AND A.SUBJECT LIKE CONCAT('%',#{title},'%')
@@ -318,7 +319,8 @@
 				<if test="editor != null">
 					AND B.USERNAME LIKE CONCAT('%',#{editor},'%')
 				</if>			
-			order by A.ICNUM DESC ) AS result			
+			order by A.ICNUM DESC ) AS result
+			LIMIT 5			
 	</select>
 	<!-- 회원사 공지 상세 -->
 	<select id="noticeDetail" parameterType="hashMap" resultType="hashMap">

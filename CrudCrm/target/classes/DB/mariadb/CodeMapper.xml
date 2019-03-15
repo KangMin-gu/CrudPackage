@@ -4,35 +4,32 @@
 
     <select id="list" parameterType="codeDto" resultType="hashMap">
     SELECT * FROM (
-    SELECT 
-    A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
-    ,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
- 
-    ,CASE WHEN A.ISDELETE = 0 THEN '사용'
-    	  WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
-   	,A.ISDELETE
-   	,B.CODENAME AS UPPERCODENAME
-   	,A.UPPERCODEGRP
-   	,@RNUM:=@RNUM + 1 AS ROWNUM
-    FROM sys990020 A 
-    LEFT OUTER JOIN sys990020 B ON B.CODENO = A.UPPERCODEGRP
-    ,(SELECT @RNUM := 0) R
-    WHERE A.ISDELETE = 0
-    <if test ="siteid == 1">
-    	AND A.SITEID = 1
-    </if>
-    <if test="siteid != 1">
-    	AND A.SITEID = #{siteid}
-    </if>
-    <if test ="codename != null">
-    	AND A.CODENAME LIKE CONCAT('%',#{codename},'%')
-    </if>
-    <if test ="codegrp != null">
-    	AND A.CODEGRP LIKE CONCAT('%',#{codegrp},'%')
-    </if>
-    ) X 
-    
-    WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+    	SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+    		SELECT A.CODENO,A.CODEGRP,A.CODENAME,A.CODEVAL
+    			  ,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
+    			  ,CASE WHEN A.ISDELETE = 0 THEN '사용'
+    	  				WHEN A.ISDELETE = 1 THEN '미사용' END AS ISDELETE_
+   				  ,A.ISDELETE
+   				  ,B.CODENAME AS UPPERCODENAME ,A.UPPERCODEGRP
+    		FROM sys990020 A 
+    		LEFT OUTER JOIN sys990020 B ON B.CODENO = A.UPPERCODEGRP
+    		INNER JOIN (SELECT @RNUM := 0) R
+    		WHERE A.ISDELETE = 0
+    		<if test ="siteid == 1">
+    			AND A.SITEID = 1
+    		</if>
+    		<if test="siteid != 1">
+    			AND A.SITEID = #{siteid}
+    		</if>
+    		<if test ="codename != null">
+    			AND A.CODENAME LIKE CONCAT('%',#{codename},'%')
+    		</if>
+    		<if test ="codegrp != null">
+    			AND A.CODEGRP LIKE CONCAT('%',#{codegrp},'%')
+    		</if>
+    		) X 
+    	) XX
+    	WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
     </select>
     
     <select id="totalRow" parameterType="codeDto" resultType="int">

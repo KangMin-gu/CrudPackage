@@ -48,7 +48,7 @@ public class SvServiceImpl implements SvService{
 		Map<String, Object> search = crud.searchParam(request);
 		String uri = request.getRequestURI();
 		if(uri.contains("convey")) {
-			search.put("servicestep", 6);
+			search.put("servicestep1", "5,6");
 		}
 
 		int totalRows = svDao.svServiceTotalRows(search);

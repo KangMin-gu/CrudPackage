@@ -3,26 +3,23 @@
 <mapper namespace="content">
 <select id="contentList" parameterType="hashMap" resultType="hashMap">
 		SELECT * FROM (
-			SELECT 
-			A.CONTENTNO
-			, A.FORMTYPE
-			, A.MENUTYPE
-			, CASE WHEN A.MENUTYPE = 1 THEN 'VOC'
-				   WHEN A.MENUTYPE = 2 THEN '캠페인' END MENUTYPE_
-			, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
-				   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
-				   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
-			, A.TITLE, A.CONTENT, A.PURP
-			, A.SITEID, A.ISDELETE
-			, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-			, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
-			, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
-			, USECNT
-			, @RNUM:=@RNUM + 1 AS ROWNUM
-			FROM sys990050 A ,(SELECT @RNUM := 0) R
-			WHERE A.SITEID = #{siteid}
-			AND A.ISDELETE = 0
+			SELECT *, @RNUM:=@RNUM + 1 AS ROWNUM FROM (
+				SELECT A.CONTENTNO, A.FORMTYPE, A.MENUTYPE
+					, CASE WHEN A.MENUTYPE = 1 THEN 'VOC'
+				   		   WHEN A.MENUTYPE = 2 THEN '캠페인' END MENUTYPE_
+					, CASE WHEN A.FORMTYPE = 1 THEN 'EMAIL'
+				   		   WHEN A.FORMTYPE = 2 THEN 'SMS/LMS'
+				   		   WHEN A.FORMTYPE = 3 THEN 'MMS' END FORMTYPE_
+					, A.TITLE, A.CONTENT, A.PURP, A.SITEID, A.ISDELETE
+					, DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE_
+					, (SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
+					, DATE_FORMAT(A.EDTDATE,'%Y-%m-%d') AS EDTDATE_
+					, (SELECT USERNAME FROM me800010 WHERE USERNO = A.EDTUSER) AS EDTUSER_
+					, USECNT
+				FROM sys990050 A 
+				INNER JOIN (SELECT @RNUM := 0) R
+				WHERE A.SITEID = #{siteid}
+				AND A.ISDELETE = 0
 			<if test="title != null">
 				AND  TITLE LIKE CONCAT('%',#{title},'%')
 			</if>
@@ -33,7 +30,8 @@
 				AND  MENUTYPE = #{menutype}
 			</if>
 			) X 
-			WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+		) XX
+		WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
 	
 	<select id="contentUseDescList" parameterType="hashMap" resultType="hashMap">

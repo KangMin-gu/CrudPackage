@@ -33,24 +33,23 @@
 	
 	<!-- 거래처리스트 -->
 	<select id="clientList" parameterType="hashMap" resultType="hashMap">
-	SELECT 
-		ROWNUM
-		,CLINO, CLINAME, CALLNAME, ADDR,BSTYPE,MEMO
-		,IMPORTANCE, FRIENDLY
-		,OWNER, USERNAME 
-	FROM (
-		SELECT
-			@RNUM:=@RNUM + 1 AS ROWNUM
-			,CLINO, CLINAME, CALLNAME
-			,CONCAT(CLIADDR1,' ',CLIADDR2,' ',CLIADDR3) AS ADDR 
-			,BSTYPE,MEMO
+	
+	SELECT * FROM (
+		SELECT 
+			CLINO, CLINAME, CALLNAME, ADDR,BSTYPE,MEMO
 			,IMPORTANCE, FRIENDLY
-			,A.OWNER, B.USERNAME 
-		FROM sa200010 A 
-		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO	
-		,(SELECT @RNUM := 0) R
-		WHERE 
-			A.SITEID = #{siteid}
+			,OWNER, USERNAME,@RNUM:=@RNUM + 1 AS ROWNUM
+		FROM (
+			SELECT
+				CLINO, CLINAME, CALLNAME
+				,CONCAT(CLIADDR1,' ',CLIADDR2,' ',CLIADDR3) AS ADDR 
+				,BSTYPE,MEMO
+				,IMPORTANCE, FRIENDLY
+				,A.OWNER, B.USERNAME 
+			FROM sa200010 A 
+			LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO	
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID = #{siteid}
 			AND A.ISDELETE = 0
 			<if test="cliname != null">
 			AND A.CLINAME LIKE CONCAT('%',#{cliname},'%')
@@ -70,11 +69,11 @@
 			<if test="friendly != null and friendly != 0">
 			AND FRIENDLY = #{friendly}
 			</if>
-		ORDER BY CLINAME
+			ORDER BY CLINAME
+			) X
 		) T
 	<if test="endRowNum != null">	 
-	WHERE 
-		ROWNUM between #{startRowNum} and #{endRowNum}	
+	WHERE T.ROWNUM between #{startRowNum} and #{endRowNum}	
 	</if>
 	</select>
 	
@@ -266,37 +265,36 @@
 	<!-- 거래처 화면 관련고객 리스트 -->
 	<select id="cliCustList" parameterType="hashMap" resultType="hashMap">	
 	
-	SELECT
-		ROWNUM,CLICUSTNO
-		,KEYMAN, ROLENAME, MEMO
-		,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
-		,CLINO, CLINAME
-
-	FROM (
+	SELECT * FROM (
 		SELECT
-			@RNUM:=@RNUM + 1 AS ROWNUM
-			,A.CLICUSTNO
+			CLICUSTNO, KEYMAN, ROLENAME, MEMO
+			,CUSTNO, CUSTNAME, DEPTNAME, DUTY, EMAIL
+			,CLINO, CLINAME
+			,@RNUM:=@RNUM + 1 AS ROWNUM
+		FROM (
+			SELECT
+			
+			A.CLICUSTNO
 			,A.KEYMAN, A.ROLENAME, A.MEMO
 			,B.CUSTNO, B.CUSTNAME, B.DEPTNAME, B.DUTY, B.EMAIL
 			,C.CLINO, C.CLINAME
-		FROM sa280010 A  
-		INNER JOIN CU100010 B  ON A.CUSTNO = B.CUSTNO
-		INNER JOIN sa200010 C  ON A.CLINO = C.CLINO
-		,(SELECT @RNUM := 0) R
+			FROM sa280010 A  
+			INNER JOIN CU100010 B  ON A.CUSTNO = B.CUSTNO
+			INNER JOIN sa200010 C  ON A.CLINO = C.CLINO
+			INNER JOIN (SELECT @RNUM := 0) R
 	
-		WHERE 
-			A.SITEID = #{siteid}			
-			AND A.CLINO = #{clino}							
-			AND A.ISDELETE = 0
-			<if test="custname != null">
-			AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
-			</if>
-			
-		ORDER BY B.CUSTNAME
-		)t
-		
+			WHERE 
+				A.SITEID = #{siteid}			
+				AND A.CLINO = #{clino}							
+				AND A.ISDELETE = 0
+				<if test="custname != null">
+				AND B.CUSTNAME like CONCAT('%',#{custname} ,'%')
+				</if>
+			ORDER BY B.CUSTNAME
+			) t
+		) X
 	WHERE 
-		ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
+		X.ROWNUM between #{startRowNum} and #{endRowNum}		  			  		
 	</select>
 		
 	<!-- 거래처관련고객 추가 -->

@@ -3,23 +3,23 @@
 <mapper namespace="li">
 	
 	<select id="list" parameterType="hashMap" resultType="hashMap">
+	
 	SELECT * FROM (
-		SELECT 
-		A.LICENSENO
-		,A.LICENSENAME
-		,A.LICENSECOST
-		,(SELECT COUNT(*) FROM me810010 WHERE LICENSENO = A.LICENSENO GROUP BY LICENSENO) AS TOTALCNT
-		,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
-		,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
-		 ,@RNUM:=@RNUM + 1 AS ROWNUM
-			FROM ma900020 A,(SELECT @RNUM := 0) R
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+			SELECT A.LICENSENO,A.LICENSENAME,A.LICENSECOST
+				  ,(SELECT COUNT(*) FROM me810010 WHERE LICENSENO = A.LICENSENO GROUP BY LICENSENO) AS TOTALCNT
+				  ,DATE_FORMAT(A.REGDATE,'%Y-%m-%d') AS REGDATE
+				  ,(SELECT USERNAME FROM me800010 WHERE USERNO = A.REGUSER) AS REGUSER_
+			FROM ma900020 A
+			INNER JOIN (SELECT @RNUM := 0) R
 			WHERE ISDELETE = '0'
 			<if test="licensename != null">
 				AND LICENSENAME LIKE CONCAT('%',#{licensename},'%')
 			</if>
 			ORDER BY A.LICENSENO DESC
 			) X
-	WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
+		) XX
+	WHERE XX.ROWNUM Between #{startRowNum} and #{endRowNum}
 	</select>
 	
 	<select id="totalRows" parameterType="hashMap" resultType="int">

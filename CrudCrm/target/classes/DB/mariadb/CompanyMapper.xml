@@ -3,37 +3,38 @@
 <mapper namespace="company">
 
     <select id="list" parameterType="hashMap" resultType="hashMap">
+     	
      	SELECT * FROM (
-     	SELECT 
-     	A.SITENAME,A.SITEID,A.PRSDNAME
-     	,REPLACE(CONCAT(A.BSNO1,'-',A.BSNO2,'-',A.BSNO3),'--','') AS BSNO
-     	,REPLACE(CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3),'--','') AS MOBILE
-     	,A.BSTYPE
-     	,IF(DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')='1900-01-01','',DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')) AS FREGDATE 
-     	,CASE WHEN A.SITESIZE = '1' THEN '대기업'
-     		  WHEN A.SITESIZE = '2' THEN '중견기업'
-     		  WHEN A.SITESIZE = '3' THEN '중소기업'
-     		  WHEN A.SITESIZE = '4' THEN '소기업' END AS SITESIZE
-     	,CASE WHEN A.ISDELETE = '0' THEN '사용'
-     		  WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE
-     	,@RNUM:=@RNUM + 1 AS ROWNUM
-     	,(SELECT SUM(BUYCNT) AS BUYCNT FROM me810010 WHERE SITEID = A.SITEID) AS BUYCNT
-     	FROM ma900010 A,(SELECT @RNUM := 0) R
-     	WHERE A.ISDELETE = 0
-     	<if test ="strDate != null">
-     		AND IFNULL(A.FREGDATE,'1900-01-01')<![CDATA[>=]]> #{strDate}
-     	</if>
-     	<if test ="endDate != null">
-     		AND IFNULL(A.FREGDATE,'1900-01-01') <![CDATA[<=]]> #{endDate}
-     	</if>
-     	<if test ="sitename != null">
-     		AND A.SITENAME LIKE CONCAT('%',#{sitename},'%')
-     	</if>
-     	<if test ="sitesize != null">
-     		AND A.SITESIZE = #{sitesize}
-     	</if>
-     	ORDER BY A.SITEID DESC
-     	) X 
+     		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM FROM (
+     			SELECT A.SITENAME,A.SITEID,A.PRSDNAME,A.BSTYPE
+     					,REPLACE(CONCAT(A.BSNO1,'-',A.BSNO2,'-',A.BSNO3),'--','') AS BSNO
+     					,REPLACE(CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3),'--','') AS MOBILE
+     					,IF(DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')='1900-01-01','',DATE_FORMAT(A.FREGDATE,'%Y-%m-%d')) AS FREGDATE 
+     					,CASE WHEN A.SITESIZE = '1' THEN '대기업'
+     		  				WHEN A.SITESIZE = '2' THEN '중견기업'
+     		  				WHEN A.SITESIZE = '3' THEN '중소기업'
+     		  				WHEN A.SITESIZE = '4' THEN '소기업' END AS SITESIZE
+     					,CASE WHEN A.ISDELETE = '0' THEN '사용'
+     		  				WHEN A.ISDELETE = '1' THEN '미사용' END AS ISDELETE
+     					,(SELECT SUM(BUYCNT) AS BUYCNT FROM me810010 WHERE SITEID = A.SITEID) AS BUYCNT
+     			FROM ma900010 A
+     			INNER JOIN (SELECT @RNUM := 0) R
+     			WHERE A.ISDELETE = 0
+     		<if test ="strDate != null">
+     			AND IFNULL(A.FREGDATE,'1900-01-01')<![CDATA[>=]]> #{strDate}
+     		</if>
+     		<if test ="endDate != null">
+	     		AND IFNULL(A.FREGDATE,'1900-01-01') <![CDATA[<=]]> #{endDate}
+     		</if>
+     		<if test ="sitename != null">
+	     		AND A.SITENAME LIKE CONCAT('%',#{sitename},'%')
+     		</if>
+     		<if test ="sitesize != null">
+	     		AND A.SITESIZE = #{sitesize}
+     		</if>
+     		ORDER BY A.SITEID DESC
+     		) X 
+     	) XX
      	<if test ="endRowNum != null">
      		WHERE X.ROWNUM Between #{startRowNum} and #{endRowNum}
      	</if>

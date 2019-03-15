@@ -25,15 +25,13 @@
 	</select>
 	<!-- 담당자로 설정 할 수 있는 회원 목록 출력  -->
 	<select id="popUserList" parameterType="hashMap" resultType="hashMap">
-		SELECT * 
-		FROM  
-			(
-			SELECT 
-			
-			@RNUM:=@RNUM + 1 AS ROWNUM
-			,USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
-			FROM me800010 ,(SELECT @RNUM := 0) R
-			WHERE 
+		SELECT * FROM (
+			SELECT * ,@RNUM:=@RNUM + 1 AS ROWNUM
+			FROM  (
+				SELECT USERNO, USERNAME, USERID, USERDUTY,CHKAUTH
+				FROM me800010 
+				INNER JOIN (SELECT @RNUM := 0) R
+				WHERE 
 				SITEID= #{siteid}
 				AND ISDELETE = 0
 				<if test="username != null">
@@ -44,8 +42,8 @@
 				</if>
 			ORDER BY USERNAME
 			) T
-		WHERE 
-			ROWNUM BETWEEN #{startRowNum} and #{endRowNum}
+		) XX
+		WHERE XX.ROWNUM BETWEEN #{startRowNum} and #{endRowNum}
 		
 	</select>
 	
@@ -62,26 +60,22 @@
 	</select>
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
 	<select id="popClientList" parameterType="hashMap" resultType="hashMap">
-	SELECT * 
-	FROM  
-		(
-		SELECT 		
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER
-		,B.USERNAME 
-		FROM sa200010 A 
-		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
-		,(SELECT @RNUM := 0) R
-		WHERE 
-			A.SITEID= #{siteid}
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM 
+		FROM  (
+			SELECT A.CLINO, A.CLINAME, A.CALLNAME, A.OWNER, B.USERNAME 
+			FROM sa200010 A 
+			LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="cliname != null">
 				AND CLINAME like CONCAT('%',#{cliname},'%')
 			</if>
-		ORDER BY A.CLINAME
-		) T
-	WHERE 
-		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
+			ORDER BY A.CLINAME
+			) T
+		) XX
+	WHERE XX.ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 	
 		<!-- 회원사의 고객 수 카운터  -->
@@ -119,36 +113,21 @@
 	
 	<!-- 선택할 수 있는 거래처 목록 출력  -->
 	<select id="popCustList" parameterType="hashMap" resultType="hashMap">
-	SELECT * 
-	FROM  
-		(
-		SELECT 
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME
-		,CASE WHEN  
-			REPLACE(CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3),' ','') = ''  THEN ''
-		ELSE 
-			CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) 
-		END AS MOBILE
-		,CASE WHEN  
-			REPLACE(CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3),' ','') = ''  THEN ''
-		ELSE 
-			CONCAT(A.HOMTEL1,'-',A.HOMTEL2,'-',A.HOMTEL3) 
-		END AS HOMTEL
-		,CASE WHEN  
-			REPLACE(CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3),' ','') = ''  THEN ''
-		ELSE 
-			CONCAT(A.WRKTEL1,'-',A.WRKTEL2,'-',A.WRKTEL3) 
-		END AS WRKTEL
-		,A.EMAIL
-		,CONCAT(A.HOMADDR1 ,' ' , A.HOMADDR2 ,' ' , A.HOMADDR3) AS HOMADDR_
-		
-		FROM CU100010 A 
-		LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
-		,(SELECT @RNUM := 0) R
-
-		WHERE 
-			A.SITEID= #{siteid}
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM 
+		FROM  (
+			SELECT A.CUSTNO,A.CUSTNAME,A.CLINO,B.CLINAME
+				, CASE WHEN REPLACE(CONCAT(A.MOBILE1,A.MOBILE2,A.MOBILE3),' ','') = ''  THEN ''
+						ELSE CONCAT(A.MOBILE1,'-',A.MOBILE2,'-',A.MOBILE3) END AS MOBILE
+				, CASE WHEN REPLACE(CONCAT(A.HOMTEL1,A.HOMTEL2,A.HOMTEL3),' ','') = ''  THEN ''
+				ELSE CONCAT(A.HOMTEL1,'-',A.HOMTEL2,'-',A.HOMTEL3) END AS HOMTEL
+				, CASE WHEN REPLACE(CONCAT(A.WRKTEL1,A.WRKTEL2,A.WRKTEL3),' ','') = ''  THEN ''
+				ELSE CONCAT(A.WRKTEL1,'-',A.WRKTEL2,'-',A.WRKTEL3) END AS WRKTEL
+				, A.EMAIL, CONCAT(A.HOMADDR1 ,' ' , A.HOMADDR2 ,' ' , A.HOMADDR3) AS HOMADDR_
+				FROM CU100010 A 
+			LEFT OUTER JOIN sa200010 B ON A.CLINO = B.CLINO
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="custname != null">
 				AND A.CUSTNAME like CONCAT('%',#{custname},'%')
@@ -174,8 +153,9 @@
 					AND A.CUSTNAME like CONCAT('%',#{keyword},'%') 
 				</when>
 			</choose>			
-		ORDER BY A.CUSTNO
-		) T
+			ORDER BY A.CUSTNO
+			) T
+		) X
 	WHERE 
 		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
@@ -198,28 +178,23 @@
 	</select>
 	<!-- 선택할 수 있는 영업 목록 출력  -->
 	<select id="popSalesList" parameterType="hashMap" resultType="hashMap">
-	SELECT * 
-	FROM  
-		(
-		SELECT 		
-		@RNUM:=@RNUM + 1 AS ROWNUM
-		,A.SALESNO, A.SALENAME, A.CLINO, A.OWNER
-		,B.USERNAME
-		,C.CLINAME 
-		FROM sa210010 A 
-		LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
-		LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
-		,(SELECT @RNUM := 0) R
-		WHERE 
-			A.SITEID= #{siteid}
+	SELECT * FROM (
+		SELECT *,@RNUM:=@RNUM + 1 AS ROWNUM
+		FROM  (
+			SELECT A.SALESNO, A.SALENAME, A.CLINO, A.OWNER,B.USERNAME,C.CLINAME 
+			FROM sa210010 A 
+			LEFT OUTER JOIN me800010 B ON A.OWNER = B.USERNO
+			LEFT OUTER JOIN sa200010 C ON A.CLINO = C.CLINO
+			INNER JOIN (SELECT @RNUM := 0) R
+			WHERE A.SITEID= #{siteid}
 			AND A.ISDELETE = 0
 			<if test="salename != null">
 				AND SALENAME like CONCAT('%',#{salename},'%')
 			</if>
-		ORDER BY A.SALENAME
-		) T
-	WHERE 
-		ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
+			ORDER BY A.SALENAME
+			) T
+		) XX
+	WHERE XX.ROWNUM BETWEEN #{startRowNum} and #{endRowNum}		
 	</select>
 
 	<insert id="directSmsSend" parameterType="hashMap">

@@ -183,6 +183,7 @@
 		var routeVal;
 		var custNo = $('#custno').val();
 		var cliNo = $('#clino').val();
+		var saleName = $('#salename').val();
 		if (custNo != null){
 			routeName = "custno";
 			routeVal = custNo;
@@ -190,8 +191,12 @@
 			routeName = "clino";
 			routeVal = cliNo;
 		}
-			
-		var urlStr = '/sales/client/view/tab/sales?'+routeName+'='+routeVal+'&pageNum='+pageNum+'&salename='+saleName;
+		if(saleName != ''){
+			var urlStr = '/sales/client/view/tab/sales?'+routeName+'='+routeVal+'&pageNum='+pageNum+'&salename='+encodeURI(saleName);
+		}else{
+			var urlStr = '/sales/client/view/tab/sales?'+routeName+'='+routeVal+'&pageNum='+pageNum;
+		}
+		
 		
 		$.ajax({
 	        url: urlStr,

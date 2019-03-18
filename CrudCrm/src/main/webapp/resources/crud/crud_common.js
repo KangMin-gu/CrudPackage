@@ -305,8 +305,6 @@ function tinymceEditor(){
 		var id = tr.getAttribute("value");
 		opener.$('[name="'+parentid+'"]').next().val(id);		
 		opener.$('[name="'+parentid+'"]').val(tr.children.salename.textContent).trigger('keyup');		
-		
-		popClientClick(id);
 
 		setTimeout(function(){
 			window.close();

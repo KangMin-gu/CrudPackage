@@ -67,16 +67,16 @@
 			AND A.CLINO = #{clino}
 			</if>	
 			<if test="fromrorddt != null">
-			AND DATE_FORMAT(RORDDATE,'%Y%m%d') <![CDATA[>=]]> #{fromrorddt}
+			AND DATE_FORMAT(RORDDATE,'%Y-%m-%d') <![CDATA[>=]]> #{fromrorddt}
 			</if>
 			<if test="tororddt != null">
-			AND DATE_FORMAT(RORDDATE,'%Y%m%d') <![CDATA[<=]]> #{tororddt}
+			AND DATE_FORMAT(RORDDATE,'%Y-%m-%d') <![CDATA[<=]]> #{tororddt}
 			</if>
 			<if test="fromforddt != null">
-			AND DATE_FORMAT(FORDDATE,'%Y%m%d') <![CDATA[>=]]> #{fromforddt}
+			AND DATE_FORMAT(FORDDATE,'%Y-%m-%d') <![CDATA[>=]]> #{fromforddt}
 			</if>
 			<if test="toforddt != null">
-			AND DATE_FORMAT(FORDDATE,'%Y%m%d') <![CDATA[<=]]> #{toforddt}
+			AND DATE_FORMAT(FORDDATE,'%Y-%m-%d') <![CDATA[<=]]> #{toforddt}
 			</if>
 			<if test="salestate != null and salestate != 0">
 			AND A.SALESTATE = #{salestate}

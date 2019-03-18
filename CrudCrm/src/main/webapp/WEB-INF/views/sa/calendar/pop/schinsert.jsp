@@ -138,7 +138,7 @@ body {
 										<td>
 											<div class="input-group date">
                                     			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    			<input type="text" class="form-control" id="enddate" name="enddate" >
+                                    			<input type="text" class="form-control" id="enddate" name="enddate" value="${startdate }" >
                                 			</div>
                                 				
                                 			<div class="input-group clockpicker" data-autoclose="true">

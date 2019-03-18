@@ -74,12 +74,12 @@
 													<div class="input-group p-0">
 														<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
 															<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-															<input type="text"class="form-control reset" id="fromforddt" name="fromforddt" value="${searchVal.fromforddt }" autocomplete="off">
+															<input type="text"class="form-control reset" id="fromforddt" name="fromforddt" value="${searchVal.fromforddt }" autocomplete="off" data-mask="9999-99-99">
 														</div>
 														<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
 														<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
 															<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-															<input type="text" class="form-control reset" id="toforddt" name="toforddt" value="${searchVal.toforddt }" autocomplete="off">
+															<input type="text" class="form-control reset" id="toforddt" name="toforddt" value="${searchVal.toforddt }" autocomplete="off" data-mask="9999-99-99">
 														</div>
 														</div>
 													</td>
@@ -100,12 +100,12 @@
 														<div class="input-group p-0">
 															<div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
 																<span class="input-group-addon"> <i class="fa fa-calendar"></i> </span> 
-																<input type="text" class="form-control reset" id="fromrorddt" name="fromrorddt" value="${searchVal.fromrorddt }" autocomplete="off">
+																<input type="text" class="form-control reset" id="fromrorddt" name="fromrorddt" value="${searchVal.fromrorddt }" autocomplete="off" data-mask="9999-99-99">
 															</div>
 															<h3 class="text-center col-lg-1 col-1 p-0">~</h3>
 															<div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
 																<span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-																<input type="text" class="form-control reset" id="tororddt" name="tororddt" value="${searchVal.tororddt }" autocomplete="off">
+																<input type="text" class="form-control reset" id="tororddt" name="tororddt" value="${searchVal.tororddt }" autocomplete="off" data-mask="9999-99-99">
 															</div>
 														</div>
 													</td>
@@ -229,12 +229,12 @@
 								<thead>
 									<tr>
 										<th><input type="checkbox" class="i-checks" id="icheckAll" name="icheckAll"></th>
-										<th>영업건명</th>
-										<th>거래처명</th>
-										<th>예상수주일</th>
-										<th>실수주일</th>
-										<th>현단계</th>
-										<th>영업담당자</th>
+										<th class="tablecenter">영업건명</th>
+										<th class="tablecenter">거래처명</th>
+										<th class="tablecenter">예상수주일</th>
+										<th class="tablecenter">실수주일</th>
+										<th class="tablecenter">현단계</th>
+										<th class="tablecenter">영업담당자</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -336,6 +336,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script><!-- radioBox-->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_sa.js"></script><!-- 영업js -->
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script>	<!-- excel file download -->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 	<script>
 			
 		$(document).ready(function() {

@@ -53,16 +53,29 @@
                                     <tbody>
                                         <tr>
                                             <td class="border-0">
-												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">이관목록</a>
-												<a href="javascript:void(0);" id="CUSTGUBUN" class="btn btn-primary mb-1 button">회원구분</a>
-												<a href="javascript:void(0);" id="CUSTGRADE" class="btn btn-primary mb-1 button">고객등급</a>
-												<a href="javascript:void(0);" id="FRIENDLY" class="btn btn-primary mb-1 button">친밀도</a>
-												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">캠페인유형</a>
-												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">서비스채널</a>
-												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">중요도</a>
-												<a href="javascript:void(0);" id="" class="btn btn-primary mb-1 button">영업단계</a>												
+                                            	<span class="text-success">고객 관련 : </span>
+                                            	<a href="javascript:void(0);" id="CUSTGRADE" class="btn btn-primary mb-1 button">고객등급</a>
+                                            	<a href="javascript:void(0);" id="CUSTGUBUN" class="btn btn-primary mb-1 button">회원구분</a>
+												<a href="javascript:void(0);" id="ACTGRADE" class="btn btn-primary mb-1 button">활동등급</a>												
                                             </td>
-                                        </tr>                                   
+                                        </tr>
+                                        <tr>
+                                            <td class="border-0">
+                                            	<span class="text-success">영업 관련 : </span>
+                                            	<a href="javascript:void(0);" id="FRIENDLY" class="btn btn-primary mb-1 button">친밀도</a>
+												<a href="javascript:void(0);" id="IMPORTANCE" class="btn btn-primary mb-1 button">중요도</a>									
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-0">
+                                            <span class="text-success">서비스 관련 : </span>
+												<a href="javascript:void(0);" id="SERVICECODE1" class="btn btn-primary mb-1 button">접수유형1</a>
+												<a href="javascript:void(0);" id="SERVICECODE2" class="btn btn-primary mb-1 button">접수유형2</a>
+												<a href="javascript:void(0);" id="REWARDTYPE" class="btn btn-primary mb-1 button">현상</a>
+												<a href="javascript:void(0);" id="CAUSECODE" class="btn btn-primary mb-1 button">원인구분</a>
+												<a href="javascript:void(0);" id="DELAYTYPE" class="btn btn-primary mb-1 button">지연사유</a>												
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table> 
                             </div>                                            

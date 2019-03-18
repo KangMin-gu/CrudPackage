@@ -59,7 +59,7 @@
 								<div class="box col-12 tooltip-demo" style="padding-left: 0px;padding-right: 0px;">
 									<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
 										<!-- <a href="/sales" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="목록"><i class="fa fa-list"></i></a> -->
-	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
+	                              		<a href="#" class="note btn btn-default" data-toggle="tooltip" data-placement="top" title="내부통지"><i class="fa fa-envelope"></i></a>
 	                              		<a href="#" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="SMS" style="padding-top: 5px;padding-bottom: 5px;height: 33px;width: 39px;"><i class="fa fa-mobile" style="font-size:20px;"></i></a>												
 	                          		</div>													
 									<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
@@ -271,12 +271,12 @@
 													</colgroup>
 													<thead>
 														<tr>
-															<th>고객명</th>
-															<th>직장명</th>
-															<th>직책</th>
-															<th>키맨여부</th>
-															<th>역할</th>
-															<th>메모</th>
+															<th class="tablecenter">고객명</th>
+															<th class="tablecenter">직장명</th>
+															<th class="tablecenter">직책</th>
+															<th class="tablecenter">키맨여부</th>
+															<th class="tablecenter">역할</th>
+															<th class="tablecenter">메모</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -302,7 +302,7 @@
 											
 												<div class="m-auto" style="float:center;"> 
 													<c:if test="${fn:length(salesCustList) ne 0 }"> 
-													<ul class="pagination">
+													<ul class="pagination justify-content-center">
 														<c:choose>
 															<c:when test="${page.startPageNum ne 1 }">
 																<li class="footable-page-arrow disabled">	
@@ -392,18 +392,18 @@
 													</colgroup>
 													<thead>
 														<tr>
-															<th>변경일</th>
-															<th>이전단계</th>
-															<th>변경단계</th>
-															<th>변경사유</th>
-															<th>확률</th>
-															<th>등록자</th>
+															<th class="tablecenter">변경일</th>
+															<th class="tablecenter">이전단계</th>
+															<th class="tablecenter">변경단계</th>
+															<th class="tablecenter">변경사유</th>
+															<th class="tablecenter">확률</th>
+															<th class="tablecenter">등록자</th>
 														</tr>
 													</thead>
 													<tbody></tbody>
 												</table>
 												<div class="m-auto" style="float:center;">
-													<ul class="pagination"></ul>
+													<ul class="pagination justify-content-center"></ul>
 												</div>	
 											</div>
 										</div>
@@ -436,17 +436,17 @@
 													</colgroup>
 													<thead>
 														<tr>
-															<th>고객명</th>
-															<th>접촉자</th>
-															<th>접촉일</th>
-															<th>접촉매체</th>
-															<th>접촉메모</th>
+															<th class="tablecenter">고객명</th>
+															<th class="tablecenter">접촉자</th>
+															<th class="tablecenter">접촉일</th>
+															<th class="tablecenter">접촉매체</th>
+															<th class="tablecenter">접촉메모</th>
 														</tr>
 													</thead>
 													<tbody></tbody>
 												</table>
 												<div class="m-auto" style="float:center;">
-												<ul class="pagination"></ul>
+												<ul class="pagination justify-content-center"></ul>
 												</div>
 											</div>
 										</div>

@@ -88,11 +88,11 @@
 	</select>
 	
 	<select id="totalRows" parameterType="hashMap" resultType="int">
-	SELECT count(*)
+		SELECT count(*)
 			FROM me800010
 			WHERE SITEID = #{siteid}
 			AND ISDELETE = 0
-			AND IFNULL(MASTERYN,0) != 0
+			AND IFNULL(MASTERYN,0) != 1
 			<if test="username != null">
 				AND USERNAME LIKE CONCAT('%',#{username},'%')
 			</if>
@@ -178,15 +178,7 @@
 	<update id="update" parameterType="userDto">
 		UPDATE me800010
 			SET 
-				USERPASSWORD = #{userpassword}
-				<if test="userdesc != null">
-				,USERDESC = #{userdesc}
-				</if>
-				,EMAIL = #{email}
-				<if test="enterdate != ''">
-				,ENTERDATE = #{enterdate}
-				</if>
-				,USERDUTY = #{userduty}
+				USERDUTY = #{userduty}
 				,MOBILE1 = #{mobile1}
 				,MOBILE2 = #{mobile2}
 				,MOBILE3 = #{mobile3}
@@ -195,6 +187,13 @@
 				,TELNO3 = #{telno3}
 				<if test="chkauth != null">
 				,CHKAUTH = #{chkauth}
+				</if>
+				<if test="userdesc != null">
+				,USERDESC = #{userdesc}
+				</if>
+				,EMAIL = #{email}
+				<if test="enterdate != ''">
+				,ENTERDATE = #{enterdate}
 				</if>
 				,EDTDATE = NOW()
 				,EDTUSER = #{edtuser}

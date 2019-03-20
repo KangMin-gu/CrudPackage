@@ -748,7 +748,7 @@ function serviceInfoBinding(data) {
 			opener.$('#conveyreason').val(data.convey.CONVEYREASON);
 			opener.$('#conveydesc').val(data.convey.CONVEYDESC);
 		}
-	} else if (data.SERVICETYPE == 3) {
+	} else if (data.SERVICETYPE == 2) {
 		opener.$('#visitdate').val(data.reward.VISITDATE);
 		opener.$('#visitaddr1').val(data.reward.VISITADDR1);
 		opener.$('#visitaddr2').val(data.reward.VISITADDR2);
@@ -883,10 +883,13 @@ $('.asowner').click(function(e) {
 
 $('#save').click(
 		function(e) {
-			//oEditors.getById["servicedesc"].exec("UPDATE_CONTENTS_FIELD", []);    // 에디터의 내용이 textarea에 적용됩니다.
+			var reqno = $('#reqno').val();
+			
+			if(reqno == ""){
+				alert("고객과의 전화를 끊어주세요");
+			}else{
 			var servicetype = $('.servicetype .checked input').val();
 			var servicename = $("#servicename").val();
-			//var servicedesc = $("#servicedesc").val();
 			var servicedesc = tinymce.activeEditor.getContent();
 			var vocstep = $('.check:checked').val();
 			var nextowner = $('#nextowner').val();
@@ -907,7 +910,7 @@ $('#save').click(
 			var visitaddr1 = $('#visitaddr1').val();
 			var visitaddr2 = $('#visitaddr2').val();
 			var visitaddr3 = $('#visitaddr3').val();
-			var reqno = $('#reqno').val();
+			
 
 			var param = {
 				"custno" : custno,
@@ -964,8 +967,10 @@ $('#save').click(
 						$('[id*=product]').attr('disabled',true);
 						$('#servicename').attr('disabled',true);
 						$('#memo').attr('disabled',true);
-						opener.tinymce.activeEditor.setMode('readonly');
+						tinymce.activeEditor.setMode('readonly');
 						$('.voc').iCheck('disable');
+						$('#servicetype').iCheck('check');
+						$('#custname').css({"background-color":"#ffffff"});
 						//oEditors.getById["servicedesc"].exec("SET_IR", [""]); //내용초기화
 					}
 				},
@@ -974,8 +979,8 @@ $('#save').click(
 							+ request.responseText + "\n" + "error:" + error);
 				}
 			});
-
-		});
+		}
+	});
 
 $('.i-checks').on('ifChecked', function(event) {
 	var value = event.target.value;
@@ -1076,10 +1081,6 @@ $(document).on('click', '.content', function(e) {
 		cache :false,
 		success:function(data){
 			tinymce.activeEditor.setContent(data.CONTENT);
-			//oEditors.getById["servicedesc"].exec("PASTE_HTML", ['']);
-			//oEditors.getById["servicedesc"].exec("PASTE_HTML", [data.CONTENT]);
-			
-			
 		},
 		error:function(request,status,error){
 			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

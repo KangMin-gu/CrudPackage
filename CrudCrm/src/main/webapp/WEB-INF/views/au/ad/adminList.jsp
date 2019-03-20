@@ -72,11 +72,11 @@
                                             <td>
                                                 <div class="input-group p-0">
                                                     <div class="d-flex date date01 col-lg-5 col-md-5 p-0 col-5">
-                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="strdate" id="strdate" value="${search.strdate }">
+                                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" data-mask="9999-99-99" name="strdate" id="strdate" value="${search.strdate }">
                                                     </div>
                                                     <h3 class="text-center col-lg-1 col-1 p-0">~</h3>
                                                     <div class="d-flex date date02 col-lg-5 col-md-5 p-0 col-5">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" name="enddate" id="enddate" value="${search.enddate }">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control reset" autocomplete="off" data-mask="9999-99-99" name="enddate" id="enddate" value="${search.enddate }">
                                                     </div>
                                                 </div>
                                             </td>
@@ -129,14 +129,12 @@
                             <div class="box col-12" style="padding-left: 0px;padding-right: 0px;">
 								<div class="col-xl-4 col-lg-12 float-left mb-2 w-100" style="height:2.00rem;padding-left: 0px;" >
                              		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
-                             		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#exModal"  id="excelFormBtn" onClick ><i class="fa fa-file-excel-o" ></i></button>
                              		<input type="hidden" id="excelUrl" name="excelUrl" value="/userexcel">
-                             		<input type="hidden" id="excelFormUrl" name="excelFormUrl" value="/userexcelform">
                              		<input type="hidden" id="searchFormId" name="searchFormId" value="command"> 
                              	</div> 												
 								<div class="col-xl-4 col-lg-12 float-right text-right mb-2 w-100" style="padding-right: 0px;">
 									<a href="${pageContext.request.contextPath}/ad/user/post" class="btn btn-primary">추가</a>
-									<a href="javascript:void(0);" class="btn btn-primary" >삭제</a>
+									<button class="btn btn-primary" >삭제</button>
 								</div>
 							</div>
 							
@@ -260,6 +258,7 @@
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_excelfile.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script> <!-- radioBox-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 	<script>
     $( document ).ready(function() {
     	

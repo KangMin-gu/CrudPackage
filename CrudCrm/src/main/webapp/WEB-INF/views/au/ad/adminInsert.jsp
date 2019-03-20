@@ -139,7 +139,7 @@
                                             <th><label for="bsno">사용자 ID</label></th>
                                             <td height="40">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" maxlength="20" name="userid" id="userid" value="${user.USERID}">
+                                                    <input type="text" class="form-control" style="ime-mode:disabled;" maxlength="20" name="userid" id="userid" value="${user.USERID}">
                                                 </div>
                                             </td>
                                         </tr>
@@ -150,7 +150,7 @@
                                             		<span class="input-group-addon">
                                     					<span class="fa fa-calendar"></span>
                                 					</span>
-                                            		<input type="text" class="form-control float-left date validate dateV" autocomplete="off" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
+                                            		<input type="text" class="form-control float-left date validate dateV" autocomplete="off" data-mask="9999-99-99" name="enterdate" id="enterdate" value="${user.ENTERDATE }">
                                             	</div>
                                             </td>
                                         </tr>
@@ -238,6 +238,7 @@
 	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/crud/crud_validate.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->
+	<script src="${pageContext.request.contextPath}/resources/js/plugins/jasny/jasny-bootstrap.min.js"></script>
 	<script>
 	$(document).ready(function () {
 		$('.date').datepicker({

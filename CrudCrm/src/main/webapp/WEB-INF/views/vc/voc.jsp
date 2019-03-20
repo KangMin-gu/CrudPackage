@@ -205,9 +205,9 @@
                                 <tr>
                                     <th>주소</th>
                                     <td colspan="3">
-            							<div class="input-group pl-0 float-left mr-2" style="width: 180px;">
-            								<input type="text" class="form-control custInput daumzip" name="homaddr1" id="homaddr1" readonly>
-            								<span class="input-group-addon"><a href="#"><i class="fa fa-search daumzip" id="homaddr1"></i></a>
+            							<div class="input-group pl-0 float-left mr-2 daumzip" style="width: 180px;">
+            								<input type="text" class="form-control custInput" name="homaddr1" id="homaddr1" readonly>
+            								<span class="input-group-addon"><a href="#"><i class="fa fa-search" id="homaddr1"></i></a>
             								</span>
             							</div>
             							<input type="text" class="form-control float-left mr-2 custInput" name="homaddr2" id="homaddr2" readonly style="width: 220px;">

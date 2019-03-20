@@ -98,6 +98,7 @@ public class VocServiceImpl implements VocService{
 		serviceDto.setReceptiondate(currentTime);
 		serviceDto.setServicename(search.get("servicename").toString());
 		serviceDto.setComplete(0);
+		serviceDto.setReqno(search.get("reqno").toString());
 		if(search.get("memo") != null) {
 			serviceDto.setMemo(search.get("memo").toString());
 		}

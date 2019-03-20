@@ -904,7 +904,11 @@ function ctiEvent(msg){
 			document.getElementById("avgWait").innerHTML = tmpData[25];
 			document.getElementById("sumCall").innerHTML = tmpData[27];
 			document.getElementById("ResponseRate").innerHTML = parseFloat(tmpData[10]/tmpData[9] * 100).toFixed(2) + '%'
-
+			
+			document.getElementById("makeCallNum").innerHTML = '';
+			document.getElementById("makeCallNum").value = '';
+			document.getElementById("bindCall").innerHTML = '';
+			document.getElementById("bindCall").value = '';
 		}
 	}else if(tmpData[0] == "95"){// 고객대기자수 
 		document.getElementById("cti_waitting_cnt").innerText =  tmpData[1];

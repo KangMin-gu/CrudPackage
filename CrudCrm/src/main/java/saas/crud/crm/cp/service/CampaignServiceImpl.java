@@ -470,18 +470,27 @@ public class CampaignServiceImpl implements CampaignService{
 				campOrder = Integer.parseInt(tempMap.get("CAMPORDER").toString());
 				if(j==campOrder) {
 					if(tempMap.get("CODENAME") != null) {
-						name = tempMap.get("CODENAME").toString();
 						if(name.equals(tempMap.get("CODENAME").toString())) {
 							sb.append(tempMap.get("VALUE"));
 							sb.append("|");
 							regdate = tempMap.get("REGDATE").toString();
+							name = tempMap.get("CODENAME").toString();
 						}else {
-							sb.append(tempMap.get("CODENAME"));
-							sb.append("-");
-							sb.append(tempMap.get("VALUE"));
-							sb.append("|");
+							if(tempMap.get("CODENAME").toString().contains("거부")) {
+								sb.append(tempMap.get("CODENAME"));
+								sb.append("|");
+							}else {
+								sb.append(tempMap.get("CODENAME"));
+								sb.append("-");
+								sb.append(tempMap.get("VALUE"));
+								sb.append("|");
+								name = tempMap.get("CODENAME").toString();
+								regdate = tempMap.get("REGDATE").toString();
+							}
 						}
 					}
+				}else {
+					name ="";
 				}
 			}
 			Map<String,Object> input = new HashMap<>();

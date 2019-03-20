@@ -15,6 +15,7 @@
 <title>IDEA CRM</title>
 <!-- link includ -->
 <%@ include file="/WEB-INF/views/template/inc/linkinc.jsp"%>
+<link href="${pageContext.request.contextPath}/resources/css/plugins/iCheck/custom.css" rel="stylesheet">
 </head>
 
 <body>
@@ -73,13 +74,6 @@
                         </div>
                         </form:form>
                         <div class="ibox-content row border-top-0 pt-lg-0">
-                            <div class="w-100 text-right mb-2">
-                            
-                                <div class="d-inline-block mt-sx-1">
-                                <a href="javascript:void(0);" class="btn btn-primary">엑셀다운로드</a>
-                                </div>
-                             
-                            </div>
                             <div class="overflow-x w-100 head">
                             <table class="table table-bordered">
                                 <thead>
@@ -166,7 +160,9 @@
 	</div>
 
 <!-- js includ -->
-	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>		
+<script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>	
+	<%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
+		
 
 </body>
 </html>

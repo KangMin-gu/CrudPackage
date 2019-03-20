@@ -1,3 +1,11 @@
+/*
+if($('.i-checks').length >0){
+	$('.i-checks').iCheck({
+		checkboxClass: 'icheckbox_square-green',
+    	radioClass: 'iradio_square-green',
+	});			
+}
+*/
 
 function tinymceEditor(){
 	tinymce.init({
@@ -65,10 +73,10 @@ function tinymceEditor(){
     $('.daumzip').click(function(e){ //이벤트를 걸 인풋,버튼에 daumzip 클래스 추가 
     	new daum.Postcode({
     		oncomplete: function(data) {
-    			debugger;
     			var clickId = e.currentTarget.id;//클릭한 id값 을 받아온다\
     			if(clickId ==''){
-    				clickId = $(e.currentTarget).parent().parent().prev().attr('id');
+    				//clickId = $(e.currentTarget).parent().parent().prev().attr('id');
+    				clickId = e.target.id;
     			}
     			var head = clickId.substr(0,clickId.indexOf('addr'));//id의 헤더만 잘라낸다. ex)homaddr1-> hom
     			//addr1 : 우편번호 , addr2 : 도로명 , addr3 : 건물명 +사용자입력  

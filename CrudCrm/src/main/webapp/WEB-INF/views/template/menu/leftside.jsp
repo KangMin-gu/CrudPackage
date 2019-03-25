@@ -114,7 +114,7 @@
 	                        
 	                        <li><a href="${pageContext.request.contextPath}/vc/satis">고객만족도 관리</a></li>  
 	                        <li><a href="form_basic.html">콜백 관리</a></li>
-	                        <li><a href="form_basic.html">관리자 리포트</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/vc/report">관리자 리포트</a></li>
 	                        <li><a href="form_basic.html">사용자 리포트</a></li>   
 	                    </ul>
 	                </li>

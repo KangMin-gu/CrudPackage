@@ -384,4 +384,37 @@
 			AND ISDELETE = 0
 	</update>
 	
+	<insert id="endCall" parameterType="hashMap">
+		INSERT INTO CTI510040
+		(
+			USERNO,
+			SITEID,
+			TRANSFERTRYCNT,
+			TRANSFERCONNECTCNT,
+			IBTRYCNT,
+			IBCONNECTCNT,
+			OBTRYCNT,
+			OBCONNECTCNT,
+			AVGCALL,
+			AVGWAIT,
+			SUMCALL,
+			RESPONSERATE,
+			REGDATE
+		)VALUES(
+			#{userno},
+			#{siteid},
+			#{transferTryCnt},
+			#{transferConnectCnt},
+			#{ibTryCnt},
+			#{ibConnectCnt},
+			#{obTryCnt},
+			#{obConnectCnt},
+			#{avgCall},
+			#{avgWait},
+			#{sumCall},
+			#{ResponseRate},
+			CURRENT_TIMESTAMP()
+		)
+	</insert>
+	
 </mapper>

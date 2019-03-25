@@ -38,4 +38,5 @@ public interface VocDao {
 	
 	public void vocRecInsert(Map<String,Object> param);
 	
+	public void endCall(Map<String,Object> param);
 }

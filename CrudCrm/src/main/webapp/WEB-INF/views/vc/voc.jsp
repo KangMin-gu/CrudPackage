@@ -57,7 +57,7 @@
 					<br/>
 					아이디 : <input type="text" name="cti_login_id" id="cti_login_id" value="crud01">
 					비밀번호 : <input type="text" name="cti_login_pwd" id="cti_login_pwd" value="0000">
-					전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622864">
+					전화번호 : <input type="text" name="cti_login_ext" id="cti_login_ext" value="07042622865">
 					<input type="hidden" name="checkGroupValue" id="checkGroupValue" value="N">
 					<input type="hidden" name="checkGroupValue2" id="checkGroupValue2" value="N">
 					<span id="outCallNum">07042622883</span>
@@ -835,7 +835,6 @@
     </div>
 <%@ include file="/WEB-INF/views/template/inc/jsinc.jsp"%>
 <%@ include file="/WEB-INF/views/template/inc/vocjsinc.jsp"%>
-<!-- <script src="${pageContext.request.contextPath}/resources/SmartEditor/js/HuskyEZCreator.js" charset="utf-8"></script> -->
 <script src="${pageContext.request.contextPath}/resources/tinymce/tinymce.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/iCheck/icheck.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plugins/datapicker/bootstrap-datepicker.js"></script><!-- datepicker-->

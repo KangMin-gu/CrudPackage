@@ -668,5 +668,17 @@ public class VocServiceImpl implements VocService{
 			
 			vcDao.vocRecInsert(param);
 		}
+		// VOC 전화 종료하면 일평균 데이터 수집
+		@Override
+		public void vocEndCall(HttpServletRequest request) {
+			
+		int userNo = Integer.parseInt(request.getSession().getAttribute("USERNO").toString());	
+		Map<String,Object> param = crud.searchParam(request);
+		param.put("userno",userNo);
+		
+		vcDao.endCall(param);			
+		
+			
+		}
 	
 }

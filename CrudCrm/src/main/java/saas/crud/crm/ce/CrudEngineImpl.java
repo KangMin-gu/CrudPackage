@@ -262,9 +262,12 @@ public class CrudEngineImpl implements CrudEngine{
 	//검색조건 파라미터 추출
 	@Override
 	public Map<String, Object> searchParam(HttpServletRequest request) {
-	int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		Map<String,Object> search = new HashMap();
+		if(request.getSession().getAttribute("SITEID") != null) {
+			int SITEID = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+			search.put("siteid", SITEID);
+		}
 		Enumeration params = request.getParameterNames();
 		
 		while (params.hasMoreElements()) {
@@ -282,9 +285,6 @@ public class CrudEngineImpl implements CrudEngine{
 			*/
 			search.put(name, value);
 		}
-		
-		search.put("siteid", SITEID);
-		
 		return search;
 		
 	}

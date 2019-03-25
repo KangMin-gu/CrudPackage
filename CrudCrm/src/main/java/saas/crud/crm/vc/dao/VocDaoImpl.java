@@ -145,9 +145,16 @@ public class VocDaoImpl implements VocDao{
 		return vocAlarm;
 	}
 	
+	@Override
 	public void vocRecInsert(Map<String,Object> param) {
 		
 		session.insert("voc.recInsert",param);
+	}
+	
+	// VOC 전화 끊으면 일평균 데이터 바로바로 저장
+	@Override
+	public void endCall(Map<String,Object> param) {
+		session.insert("voc.endCall",param);
 	}
 
 	

@@ -407,4 +407,13 @@ public class VocController {
 	public String authplayRecording(HttpServletRequest request) {
 		return "vc/pop/vocrec";
 	}
+	//voc 전화끊으면 DB에 일평균 데이터 저장
+	@RequestMapping(value="/vc/endcall",method=RequestMethod.POST)
+	@ResponseBody
+	public int authEndCall(HttpServletRequest request) {
+		
+		vcService.vocEndCall(request);
+		
+		return 0;
+	}
 }

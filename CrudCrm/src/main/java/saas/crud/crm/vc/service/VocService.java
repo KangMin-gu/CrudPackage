@@ -38,4 +38,6 @@ public interface VocService {
 	public Map<String,Object> svcVocBlackHistList(HttpServletRequest request);
 	
 	public void VocRecInsert(HttpServletRequest request);
+	
+	public void vocEndCall(HttpServletRequest request);
 }

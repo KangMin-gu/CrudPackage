@@ -1,3 +1,5 @@
+	 
+
 // CTI 상태정보를 저장할 변수
 var statusCode;//CTI 상태정보 코드
 var statusName;//CTI 상태정보 명칭
@@ -216,7 +218,6 @@ function changePhoneState(state, stateStr){
     }else if(state=="0310"){//In 전화중 - 받기, 끊기
     	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",false);
     	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
-
     }else if(state=="0311"){//In 연결 - 걸기, 끊기, 보류, 블라인드 호전환
     	setBtnStatus("dialingBtn",true);setBtnStatus("answerBtn",true);
     	setBtnStatus("pickupBtn",true);setBtnStatus("hangUpBtn",false);
@@ -252,7 +253,7 @@ function changePhoneState(state, stateStr){
     	//check
     	setBtnStatus("answerBtn",true);setBtnStatus("pickupBtn",true);
     	setBtnStatus("hangUpBtn",false);setBtnStatus("delayBtn",false);
-    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",true);
+    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",false);
     	setBtnStatus("transferBtn",false);setBtnStatus("threeWayBtn",true);
     	$('#status').css('color','red');
     	$('#status').text('재연결');
@@ -274,7 +275,7 @@ function changePhoneState(state, stateStr){
     }else if(state=="0335"){//Out 재연결 - 걸기, 끊기,보류, 블라인드호전환
     	setBtnStatus("answerBtn",true);setBtnStatus("pickupBtn",true);
     	setBtnStatus("hangUpBtn",false);setBtnStatus("delayBtn",false);
-    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",true);
+    	setBtnStatus("delayCancelBtn",true);setBtnStatus("dialingBtn",false);
     	setBtnStatus("transferBtn",false);setBtnStatus("threeWayBtn",true);
     	$('#status').css('color','yellow');
     	$('#status').text('재연결');
@@ -516,6 +517,7 @@ function func_logout(){
 	if(func_loadingCheck() == false){
 		return;
 	}
+	checkGroupTimeOut();
 	goWebSocketSendMsg("on^logout");
 	goWebSocketDisconnect();
 	$('#vocLogInSpan').show();
@@ -841,7 +843,21 @@ function ctiEvent(msg){
 		document.getElementById("checkGroupValue").value = "Y";//CTI에 등록된 그룹정보체크
 
 	}else if(tmpData[0] == "93") {			/// 모든상담원상태 요구에 대한 응답
-		
+		var id = document.getElementById("cti_login_id").value;
+		if(tmpData[1] == id){
+			var jsonPrm = {"transferTryCnt":tmpData[9], "transferConnectCnt":tmpData[10], "ibTryCnt":tmpData[11], "ibConnectCnt":tmpData[12]
+			,"obTryCnt":tmpData[13],"obConnectCnt":tmpData[14],"avgCall":tmpData[24],"avgWait":tmpData[25],"sumCall":tmpData[27],"ResponseRate":parseFloat(tmpData[10]/tmpData[9] * 100).toFixed(2) + '%'};
+			
+			$.ajax({
+				url: "/vc/endcall",
+				method: "POST",
+				dataType: "json",
+				data: jsonPrm,
+				cache: false,
+				success: function (data) {	           		
+				}
+			});
+		}
 	}else if(tmpData[0] == "58") {
 		var fileName = tmpData[8];
 		var fileNameArray = fileName.split('-');
@@ -858,8 +874,6 @@ function ctiEvent(msg){
         		alert("녹취저장완료");
         	}
  	});
-		
-		
 		
 	}else if(tmpData[0] == "94"){// 상담원 상태 변경 
 		if(tmpData[1] == document.getElementById("cti_login_id").value) {				// 받은 데이터가 로그인한 상담원의 아이디와 같은 경우
@@ -891,8 +905,6 @@ function ctiEvent(msg){
 			stopInterval();
 			startInterval();
 
-			//stopInterval();
-
 			document.getElementById("transferTryCnt").innerHTML =  tmpData[9];
 			document.getElementById("transferConnectCnt").innerHTML =  tmpData[10];
 			document.getElementById("ibTryCnt").innerHTML =  tmpData[11];
@@ -906,9 +918,7 @@ function ctiEvent(msg){
 			document.getElementById("ResponseRate").innerHTML = parseFloat(tmpData[10]/tmpData[9] * 100).toFixed(2) + '%'
 			
 			document.getElementById("makeCallNum").innerHTML = '';
-			document.getElementById("makeCallNum").value = '';
-			document.getElementById("bindCall").innerHTML = '';
-			document.getElementById("bindCall").value = '';
+			document.getElementById("makeCallNum").value = '';			
 		}
 	}else if(tmpData[0] == "95"){// 고객대기자수 
 		document.getElementById("cti_waitting_cnt").innerText =  tmpData[1];
@@ -970,7 +980,7 @@ function onError(event) {
 	document.getElementById('messages').value += '오류 : ' + event.data + "\n";	
 }
 
-function onClose(event){
+function onClose(event){	
 	document.getElementById('messages').value += "웹소켓 접속 끊김\n";
 }
 
@@ -1041,3 +1051,7 @@ function chanegeStatusBtnImage(){//대기, 휴식, 후처리 상태에 대한 cs
 		$('#postCleaningBtn').css({"background-color":nomalColor,"border-color": nomalColor});	
 	}
 }
+
+window.onbeforeunload = function (e) {
+	func_logout();
+};

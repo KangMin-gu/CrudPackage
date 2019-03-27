@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import saas.crud.crm.ce.CrudEngine;
 import saas.crud.crm.rp.dao.ReportDao;
 
 @Service
@@ -20,6 +21,8 @@ public class ReportServiceImpl implements ReportService{
 
 	@Autowired
 	private ReportDao reportDao;
+	@Autowired
+	private CrudEngine crud;
 	
 	@Override
 	public ModelAndView vcReportList(HttpServletRequest request) {
@@ -41,10 +44,11 @@ public class ReportServiceImpl implements ReportService{
 		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
 		
 		ModelAndView mView = new ModelAndView();
-		Map<String,Object> param = new HashMap<>();
+		Map<String,Object> param = crud.searchParam(request);
 		param.put("siteid", siteId);
 		
 		List<Map<String,Object>> vcServiceCodeReport = reportDao.vcServiceCodeReport(param);
+		int vcServiceCodeReportCnt = reportDao.vcServiceCodeReportCnt(param);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonStr = "";
 		try {
@@ -53,7 +57,9 @@ public class ReportServiceImpl implements ReportService{
 			
 			e.printStackTrace();
 		}
-		mView.addObject("serviceCodeReport",jsonStr.toString());
+		mView.addObject("serviceCodeReport",vcServiceCodeReport);
+		mView.addObject("serviceCodeReportJson",jsonStr.toString());
+		mView.addObject("serviceCodeReportCnt",vcServiceCodeReportCnt);
 		return mView;
 	}
 

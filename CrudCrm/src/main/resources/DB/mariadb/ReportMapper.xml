@@ -12,14 +12,31 @@
 			) X
 	</select>
 	
-	
-	
-	
 	<select id="vcServiceCodeReport" parameterType="hashMap" resultType="hashMap">
-		SELECT FN_GETCODE('servicecode1',servicecode1,#{siteid}) as label , COUNT(servicecode1) as value
+		SELECT FN_GETCODE('servicecode1',servicecode1,#{siteid}) as label , COUNT(servicecode1) as value,SERVICECODE1
 			FROM SV300010
 			WHERE SITEID = #{siteid}
+			AND ISDELETE = 0
+			<if test="datefr != null">
+				AND RECEPTIONDATE <![CDATA[>=]]> #{datefr}
+			</if>
+			<if test="dateto != null">
+				AND RECEPTIONDATE <![CDATA[<=]]> #{dateto}
+			</if>
 			GROUP BY servicecode1
+	</select>
+	
+	<select id="vcServiceCodeReportCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(SERVICENO) AS CNT
+			FROM SV300010
+			WHERE SITEID = #{siteid}
+			AND ISDELETE = 0
+			<if test="datefr != null">
+				AND RECEPTIONDATE <![CDATA[>=]]> #{datefr}
+			</if>
+			<if test="dateto != null">
+				AND RECEPTIONDATE <![CDATA[<=]]> #{dateto}
+			</if>
 	</select>
 	
 </mapper>

@@ -25,8 +25,12 @@ public class ReportDaoImpl implements ReportDao{
 		
 		List<Map<String,Object>> vcServiceCodeReport = session.selectList("rp.vcServiceCodeReport",param);
 		return vcServiceCodeReport;
-		
 	}
 	
+	@Override
+	public int vcServiceCodeReportCnt(Map<String,Object> param) {
+		int cnt = session.selectOne("rp.vcServiceCodeReportCnt", param);
+		return cnt;
+	}
 
 }

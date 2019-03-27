@@ -35,13 +35,27 @@
         <div class="wrapper wrapper-content animated fadeInRight">
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
                     <a href="#" class="btn btn-default"><i class="fa fa-envelope fa-lg"></i></a>
                     <a href="#" class="btn btn-default"><i class="fa fa-mobile fa-lg"></i></a>
                     <a href="#" class="btn btn-default"><i class="fa fa-comment fa-lg"></i></a>
                     <a href="#" class="btn btn-default"><i class="fa fa-file-excel-o fa-lg"></i></a>
                     <a href="#" class="btn btn-default"><i class="fa fa-file-pdf-o fa-lg"></i></a>
                 </div>
+                
+                <div class="col-lg-6">
+                <form:form action="/vc/report/1" method="POST">
+                	<div class="container">
+						<div class="row">
+							<div class="d-flex col-lg-12">													
+								<input id="datefr" name="datefr" type="text" class="form-control" value="${search.datefr }" placeholder="시작일">						                                    		
+ 							    <input id="dateto" name="dateto" type="text" class="form-control" value="${search.dateto }" placeholder="종료일">																	
+								<button type="submit" class="btn btn-sm btn-primary">검색</button>
+							</div>								
+						</div>
+					</div>
+				</form:form>																																													
+				</div>	
             </div>
 
             <br/>
@@ -61,41 +75,30 @@
                                       <div class="col-lg-12">
                                           <div class="row">
                                               <div class="col-lg-12">
-                                                  총 건수 : 12,222
+                                                  총 건수 : ${serviceCodeReportCnt }
                                               </div>
-                                              <div class="col-lg-12">
-                                                  <div id="morris-donut-chart" ></div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="col-lg-12">
-                                          <div class="table-responsive">
-                                              <table class="table table-bordered" style="white-space:nowrap;">
-                                                  <colgroup>
-                                                      <col width="5%">
-                                                      <col width="10%">
-                                                      <col width="5%">
-                                                      <col width="10%">
-                                                      <col width="5%">
-                                                      <col width="10%">
-                                                      <col width="5%">
-                                                      <col width="10%">
-                                                  </colgroup>
-                                                  <tbody>
-                                                    <tr>
-                                                        <th>일반 문의</th>
-                                                        <td>50</td>
-                                                        <th>칭찬</th>
-                                                        <td>5</td>
-                                                        <th>불만</th>
-                                                        <td>10</td>
-                                                        <th>AS문의</th>
-                                                        <td>35</td>
-                                                    </tr>
+                                              <div class="col-lg-3">
+                                              	<div class="table-responsive">
+                                              		<table class="table table-bordered" style="white-space:nowrap;">
+                                                  		<colgroup>
+                                                      		<col width="40%">
+                                                      		<col width="60%">
+                                                  		</colgroup>
+                                                  	<tbody>
+                                                  	
+                                                  	<c:forEach var="vcServiceCodeReport" items="${serviceCodeReport }">
+                                                    	<tr>
+                                                        	<th>${vcServiceCodeReport.label }</th>
+                                                        	<td>${vcServiceCodeReport.value }</td>
+                                                    	</tr>
+                                                    </c:forEach>
                                                   </tbody>
                                               </table>
+                                          </div>
+                                              </div>
+                                              <div class="col-lg-9">
+                                                  <div id="morris-donut-chart" ></div>
+                                              </div>
                                           </div>
                                       </div>
                                   </div>
@@ -160,7 +163,7 @@
                         <div class="col-lg-12">
                             <div class="ibox">
                                 <div class="ibox-title">
-                                    <h5><i class="fa fa-certificate"></i> 불만유형 집계</h5>
+                                    <h5><i class="fa fa-certificate"></i> 담당자별 상담 집계</h5>
                                     <div class="ibox-tools">
                                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                     </div>
@@ -178,8 +181,6 @@
                                             <tr>
                                                 <th>기간</th>
                                                 <td>2018/12/10 - 2019/3/20</td>
-                                                <th>출처</th>
-                                                <td>해피콜, 인바운드, 아웃바운드</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -235,8 +236,7 @@
 <script>
 
 
-var result = ${serviceCodeReport};
-debugger;
+var result = ${serviceCodeReportJson};
     Morris.Donut({
         element: 'morris-donut-chart',
         /*
@@ -249,6 +249,12 @@ debugger;
 		data:result,
         resize: true,
         colors: ['#87d6c6', '#54cdb4','#1ab394','#1ab394'],
+    }).on('click', function (i, row) {  
+        // Do your actions
+       // Example:
+    	   debugger;
+       alert(i);
+    
     });
 
     Morris.Bar({

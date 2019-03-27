@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import saas.crud.crm.rp.dao.ReportDao;
 
 @Service
@@ -27,9 +30,30 @@ public class ReportServiceImpl implements ReportService{
 		Map<String,Object> param = new HashMap<>();
 		param.put("siteid", siteId);
 	
-		List<Map<String,Object>> vcReportList = reportDao.vcReportList(param);s
+		List<Map<String,Object>> vcReportList = reportDao.vcReportList(param);
 
 		mView.addObject("vcReportList",vcReportList);
+		return mView;
+	}
+
+	@Override
+	public ModelAndView vcReportDetail(HttpServletRequest request) {
+		int siteId = Integer.parseInt(request.getSession().getAttribute("SITEID").toString());
+		
+		ModelAndView mView = new ModelAndView();
+		Map<String,Object> param = new HashMap<>();
+		param.put("siteid", siteId);
+		
+		List<Map<String,Object>> vcServiceCodeReport = reportDao.vcServiceCodeReport(param);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(vcServiceCodeReport);
+		} catch (JsonProcessingException e) {
+			
+			e.printStackTrace();
+		}
+		mView.addObject("serviceCodeReport",jsonStr.toString());
 		return mView;
 	}
 

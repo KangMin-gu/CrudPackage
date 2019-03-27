@@ -6,5 +6,9 @@ import java.util.Map;
 public interface ReportDao {
 	
 	public List<Map<String,Object>> vcReportList(Map<String,Object> param);
+	
+	
+	
+	public List<Map<String,Object>> vcServiceCodeReport(Map<String,Object> param);
 
 }

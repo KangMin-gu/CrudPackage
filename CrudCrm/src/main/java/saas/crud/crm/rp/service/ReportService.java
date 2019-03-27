@@ -7,4 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 public interface ReportService {
 
 	public ModelAndView vcReportList(HttpServletRequest request);
+	
+	
+	public ModelAndView vcReportDetail(HttpServletRequest request);
 }

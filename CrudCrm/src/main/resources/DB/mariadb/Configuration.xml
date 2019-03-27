@@ -52,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="DB/mariadb/ProductMapper.xml"/>
 		<mapper resource="DB/mariadb/ContentMapper.xml"/>
 		<mapper resource="DB/mariadb/VocMapper.xml"/>
+		<mapper resource="DB/mariadb/ReportMapper.xml"/>
 	</mappers>
 	
 </configuration>

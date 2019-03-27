@@ -28,4 +28,13 @@ public class ReportController {
 		mView.setViewName("rp/vocList");
 		return mView;
 	}
+	
+	@RequestMapping(value="/vc/report/{reportNo}", method=RequestMethod.GET)
+	public ModelAndView authVcReportDetail(HttpServletRequest request) {
+		ModelAndView mView = reportService.vcReportDetail(request);
+		
+		mView.setViewName("rp/vocListView");
+		return mView;
+		
+	}
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="rp">
 	
-	<select id="vcReportlist" parameterType="hashMap" resultType="hashMap">
+	<select id="vcReportList" parameterType="hashMap" resultType="hashMap">
 	SELECT * FROM (
 		SELECT *
 			FROM RP600010 A
@@ -10,6 +10,16 @@
 			WHERE A.SITEID = #{siteid}
 			ORDER BY A.REPORTNO DESC
 			) X
+	</select>
+	
+	
+	
+	
+	<select id="vcServiceCodeReport" parameterType="hashMap" resultType="hashMap">
+		SELECT FN_GETCODE('servicecode1',servicecode1,#{siteid}) as label , COUNT(servicecode1) as value
+			FROM SV300010
+			WHERE SITEID = #{siteid}
+			GROUP BY servicecode1
 	</select>
 	
 </mapper>

@@ -12,11 +12,21 @@ public class ReportDaoImpl implements ReportDao{
 
 	@Autowired
 	private SqlSession session;
+	
 	@Override
 	public List<Map<String, Object>> vcReportList(Map<String, Object> param) {
 		
 		List<Map<String,Object>> vcReportList = session.selectList("rp.vcReportList",param); 
 		return vcReportList;
 	}
+	
+	@Override 
+	public List<Map<String,Object>> vcServiceCodeReport(Map<String,Object> param){
+		
+		List<Map<String,Object>> vcServiceCodeReport = session.selectList("rp.vcServiceCodeReport",param);
+		return vcServiceCodeReport;
+		
+	}
+	
 
 }
